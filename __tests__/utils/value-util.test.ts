@@ -1,11 +1,10 @@
-import { isEmpty } from "../../src/utils/ValueUtils";
+import { isEmpty } from "../../src/utils";
 
 describe('isEmpty_함수', () => {
   test('null_또는_undefined는_비어있다고_판단해야_한다.', () => {
     // Given: null과 undefined
     const nullValue = null;
     const undefinedValue = undefined;
-
     // When & Then
     expect(isEmpty(nullValue)).toBe(true);
     expect(isEmpty(undefinedValue)).toBe(true);
