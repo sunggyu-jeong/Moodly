@@ -2,15 +2,16 @@ import "../global.css"
 import { NavigationContainer } from '@react-navigation/native';
 import RootStack from './navigation/RootStack';
 import { navigationRef } from "./utils";
-import { RealmProvider } from "./provider/RealmProvider";
+import { Provider } from "react-redux";
 import 'react-native-get-random-values';
+import store from "./redux/store";
 
 export default function App() {
   return (
-    <NavigationContainer ref={navigationRef}>
-      <RealmProvider>
+    <Provider store={store}>
+      <NavigationContainer ref={navigationRef}>
         <RootStack />
-      </RealmProvider>
-    </NavigationContainer>
+      </NavigationContainer>
+    </Provider>
   );
 }

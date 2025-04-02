@@ -1,6 +1,6 @@
-import { RealmContext } from "@/context/RealmContext";
-import { EmotionDiary } from "@/scheme/EmotionDiary.scheme";
-import { isNotEmpty } from "@/utils";
+import { RealmContext } from "../context";
+import { EmotionDiary } from "../scheme";
+import { isNotEmpty } from "../utils"
 import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import Realm from "realm";
 
@@ -15,6 +15,7 @@ export const RealmProvider = ({ children }: RealmProviderProps) => {
   const openRealm = useCallback(async (): Promise<void> => {
     try {
       const realmInstance = await Realm.open({ schema: [EmotionDiary] });
+      console.log(">>>>>>>>>>> realm is located at: " + realm?.path)
       realmRef.current = realmInstance;
       setRealm(realmInstance);
     } catch(error) {

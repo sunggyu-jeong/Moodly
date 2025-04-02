@@ -1,4 +1,4 @@
-import { goBack } from "@/utils";
+import { goBack } from "../../utils";
 import { Image, TouchableOpacity } from "react-native";
 
 const BackButtonAtom = () => (

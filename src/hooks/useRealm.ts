@@ -1,10 +1,40 @@
-import { RealmContext, RealmContextType } from "@/context/RealmContext";
-import { useContext } from "react";
+// useRealmLifecycle.ts
+import { useCallback, useEffect, useRef, useState } from "react";
+import Realm from "realm";
+import { isNotEmpty } from "../utils";
+import { EmotionDiary } from "../scheme";
 
-export const useRealm = (): RealmContextType => {
-  const context = useContext(RealmContext);
-  if (context === undefined) {
-    throw new Error('useRealm must be used within a RealmProvider');
-  }
-  return context;
-};
+export function useRealm() {
+  const realmRef = useRef<Realm | null>(null);
+  const [realm, setRealm] = useState<Realm | null>(null);
+
+  const openRealm = useCallback(async () => {
+    try {
+      const realmInstance = await Realm.open({ schema: [EmotionDiary] });
+      realmRef.current = realmInstance;
+      setRealm(realmInstance);
+      console.log("Realm opened at path:", realmInstance.path);
+    } catch (error) {
+      console.error("Realm을 여는 도중 오류가 발생했습니다.", error);
+    }
+  }, []);
+
+  // Realm 닫기
+  const closeRealm = useCallback(() => {
+    if (isNotEmpty(realmRef.current) && !realmRef.current!.isClosed) {
+      realmRef.current!.close();
+      realmRef.current = null;
+      setRealm(null);
+      console.log("Realm closed.");
+    }
+  }, []);
+
+  useEffect(() => {
+    openRealm();
+    return () => {
+      closeRealm();
+    };
+  }, [openRealm, closeRealm]);
+
+  return { realm, openRealm, closeRealm };
+}

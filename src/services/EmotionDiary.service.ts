@@ -1,11 +1,9 @@
 import Realm from 'realm';
-import { EmotionDiary } from "@/scheme/EmotionDiary.scheme";
+import { EmotionDiary, EmotionDiaryDTO } from "../scheme";
 import { v4 as uuidv4 } from 'uuid';
-import { isEmpty, isNotEmpty } from '@/utils';
+import { isEmpty, isNotEmpty } from "../utils";
 
-export type CreateDiaryInput = Omit<EmotionDiary, "emotion_id" | "created_at" | "updated_at">;
-
-export function getDiaryByMonth(realm: Realm, recordDate: Date): EmotionDiary[] {
+export function selectDiaryByMonth(realm: Realm, recordDate: Date): EmotionDiary[] {
   const year = recordDate.getFullYear();
   const month = recordDate.getMonth();
 
@@ -13,17 +11,17 @@ export function getDiaryByMonth(realm: Realm, recordDate: Date): EmotionDiary[] 
   const endDate = new Date(year, month, 1, 0, 0, 0);
 
   const results = realm
-  .objects<EmotionDiary>("EmotionDiary")
-  .filtered("created_at >= $0 && created_at < $1", startDate, endDate);
+                    .objects<EmotionDiary>("EmotionDiary")
+                    .filtered("created_at >= $0 && created_at < $1", startDate, endDate);
 
   return [...results];
 }
 
-export function getDiaryById(realm: Realm, emotionId: string): EmotionDiary | null {
+export function selectDiaryById(realm: Realm, emotionId: string): EmotionDiary | null {
   return realm.objectForPrimaryKey<EmotionDiary>("EmotionDiary", emotionId) ?? null;
 }
 
-export function addDiary(realm: Realm, data: CreateDiaryInput): void | Error {
+export function createDiary(realm: Realm, data: EmotionDiaryDTO): void | Error {
   try {
     realm.write(() => {
       realm.create<EmotionDiary>("EmotionDiary", {
@@ -38,10 +36,11 @@ export function addDiary(realm: Realm, data: CreateDiaryInput): void | Error {
   }
 }
 
-export function updateDiary(realm: Realm, emotionId: string, updates: Partial<EmotionDiary>): void | Error {
+export function updateDiary(realm: Realm, emotionId: string, updates: Partial<EmotionDiaryDTO>): void | Error {
   try {
     realm.write(() => {
       const target = realm.objectForPrimaryKey<EmotionDiary>("EmotionDiary", emotionId);
+        
       if (isEmpty(target)) return;
   
       Object.entries(updates).forEach(([key, value]) => {

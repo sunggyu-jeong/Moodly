@@ -1,5 +1,15 @@
 import Realm from 'realm';
 
+export interface EmotionDiaryDTO {
+  emotionId?: string;
+  userId: number;
+  iconId: number;
+  recordDate: Date;
+  description: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
 export class EmotionDiary extends Realm.Object<EmotionDiary> {
   // 감정기록 고유번호(PK)
   emotion_id!: string;
@@ -29,4 +39,16 @@ export class EmotionDiary extends Realm.Object<EmotionDiary> {
       updated_at: 'date',
     },
   };
+
+  toDTO(): EmotionDiaryDTO {
+    return {
+      emotionId: this.emotion_id,
+      userId: this.id,
+      iconId: this.icon_id,
+      recordDate: this.record_date,
+      description: this.description,
+      createdAt: this.created_at,
+      updatedAt: this.updated_at,
+    };
+  }
 }
