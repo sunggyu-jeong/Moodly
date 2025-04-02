@@ -1,8 +1,8 @@
 import Realm from 'realm';
 
 export class EmotionDiary extends Realm.Object<EmotionDiary> {
-  // 감정기록 아이디
-  emotion_id!: number;
+  // 감정기록 고유번호(PK)
+  emotion_id!: string;
   // 유저 ID
   id!: number;
   // 아이콘 ID
