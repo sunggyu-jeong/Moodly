@@ -14,28 +14,32 @@
  *
  * @testcase 위치: __tests__/utils/ValueUtil.test.ts
  */
-export const isEmpty = <T>(value: T): boolean => {
-  /** 주어진 값이 null이거나 undefined인 경우 */
+export function isEmpty<T>(value: T[] | null | undefined): value is [] | null | undefined;
+export function isEmpty(value: string | null | undefined): value is "" | null | undefined;
+export function isEmpty<T>(value: T | null | undefined): value is null | undefined;
+export function isEmpty(value: any): boolean {
+  // 주어진 값이 null 또는 undefined인 경우
   if (value === null || value === undefined) return true;
-  /** 주어진 값이 문자열이고, 공백을 제거한 문자열이 빈값일 경우 */
+  // 문자열의 경우, 공백을 제거한 값이 빈 문자열이면 true
   if (typeof value === 'string' && value.trim() === '') return true;
-  /** 주어진 값이 배열이고, 배열의 길이가 0일 경우 */
+  // 배열인 경우, 길이가 0이면 true
   if (Array.isArray(value) && value.length === 0) return true;
-  /** 주어진 값이 객체이고, 객체의 데이터가 빈 경우 */
-  if (
-    typeof value === 'object' &&
-    !Array.isArray(value) &&
-    Object.keys(value).length === 0
-  )
+  // 객체인 경우, (배열 제외) 키가 하나도 없으면 true
+  if (typeof value === 'object' && !Array.isArray(value) && Object.keys(value).length === 0)
     return true;
-  /** 주어진 값이 숫자이고, Nan 일 경우 */
-  if (typeof value === 'number' && Number.isNaN(value) === true) return true;
-
-  /** 위 주어진 케이스가 아닐경우, 값이 있다고 판단 */
+  // 숫자인 경우, NaN이면 true
+  if (typeof value === 'number' && Number.isNaN(value)) return true;
+  // 그 외의 경우 값이 있다고 판단
   return false;
-};
+}
 
-export const isNotEmpty = <T>(value: T): boolean => !isEmpty(value)
+
+export function isNotEmpty<T>(value: T[] | null | undefined): value is [T, ...T[]];
+export function isNotEmpty(value: string | null | undefined): value is string;
+export function isNotEmpty<T>(value: T | null | undefined): value is T;
+export function isNotEmpty(value: any): boolean {
+  return !isEmpty(value);
+}
 
 /**
  * 주어진 값이 비어있는 경우 기본값을 반환하고, 그렇지 않으면 주어진 값을 반환
