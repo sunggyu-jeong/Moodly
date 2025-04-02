@@ -1,13 +1,15 @@
-import React from 'react';
 import "../global.css"
 import { NavigationContainer } from '@react-navigation/native';
 import RootStack from './navigation/RootStack';
-import { navigationRef } from './utils/navigation.util';
+import { navigationRef } from "./utils";
+import { RealmProvider } from "./provider/RealmProvider";
 
 export default function App() {
   return (
     <NavigationContainer ref={navigationRef}>
-      <RootStack />
+      <RealmProvider>
+        <RootStack />
+      </RealmProvider>
     </NavigationContainer>
   );
 }
