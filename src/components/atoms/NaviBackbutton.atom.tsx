@@ -1,5 +1,5 @@
-import { Image, TouchableOpacity, View } from "react-native";
-import { goBack } from "../../utils/navigation.util";
+import { goBack } from "@/utils";
+import { Image, TouchableOpacity } from "react-native";
 
 const BackButtonAtom = () => (
   <TouchableOpacity onPress={goBack} className="w-7">

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, Button } from 'react-native';
-import { navigate } from '../utils/navigation.util';
 import NavigationBarOrga from '../components/organisms/NavigationBar.orga';
+import { navigate } from '@/utils';
 
 const PushTestPage = () => {
   const navigationBarConfig = {
