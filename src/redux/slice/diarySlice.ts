@@ -10,7 +10,7 @@ import { addAsyncThunkCase } from "../..//utils";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Realm from 'realm';
 
-const searchDiaryByIdThunk = createAsyncThunk<EmotionDiaryDTO | undefined, {realm: Realm, emotionId: string}, { rejectValue: string }>(
+const searchDiaryByIdThunk = createAsyncThunk<EmotionDiaryDTO | undefined, {realm: Realm, emotionId: number}, { rejectValue: string }>(
   'diary/searchDiaryById',
   async (payload, { rejectWithValue }) => {
     try {
@@ -45,7 +45,7 @@ const addDiaryThunk = createAsyncThunk<void, {realm: Realm, data: EmotionDiaryDT
   }
 )
 
-const modifyDiaryThunk = createAsyncThunk<void, {realm: Realm, emotionId: string, data: EmotionDiaryDTO}, { rejectValue: string }>(
+const modifyDiaryThunk = createAsyncThunk<void, {realm: Realm, emotionId: number, data: EmotionDiaryDTO}, { rejectValue: string }>(
   'diary/modifyDiary',
   async (payload, { rejectWithValue }) => {
     try {
@@ -56,7 +56,7 @@ const modifyDiaryThunk = createAsyncThunk<void, {realm: Realm, emotionId: string
   }
 )
 
-const removeDiaryThunk = createAsyncThunk<void, {realm: Realm, emotionId: string}, { rejectValue: string }>(
+const removeDiaryThunk = createAsyncThunk<void, {realm: Realm, emotionId: number}, { rejectValue: string }>(
   'diary/removeDiary',
   async (payload, { rejectWithValue }) => {
     try {

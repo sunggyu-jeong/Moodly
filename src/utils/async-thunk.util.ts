@@ -33,7 +33,7 @@ export function addAsyncThunkCase<T, S>(
     }
   });
 
-  builder.addCase(thunk.rejected, (state: S, action: PayloadAction<any>) => {
+  builder.addCase(thunk.rejected, (state: S, action: PayloadAction<T>) => {
     (state as any)[statusKey].status = AsyncStatus.Failed;
     (state as any)[errorKey].error = action.payload || defaultErrorMessage;
   });

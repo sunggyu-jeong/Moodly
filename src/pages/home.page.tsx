@@ -16,7 +16,7 @@ const HomePage = () => {
   const exampleDiaryDTO: EmotionDiaryDTO = {  
     userId: 101,           
     iconId: 3,             
-    recordDate: new Date("2023-08-01"),
+    recordDate: new Date(),
     description: "오늘은 기분이 좋았다!",
   };
 
