@@ -9,6 +9,7 @@ import {
 import { addAsyncThunkCase } from "../..//utils";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Realm from 'realm';
+import { EmotionDataProps } from "../../components/organisms/EmotionCarouselList.orga";
 
 const searchDiaryByIdThunk = createAsyncThunk<EmotionDiaryDTO | undefined, {realm: Realm, emotionId: number}, { rejectValue: string }>(
   'diary/searchDiaryById',
@@ -75,6 +76,7 @@ interface DiaryState {
   addDiary: AsyncOperationState;
   modifyDiary: AsyncOperationState;
   removeDiary: AsyncOperationState;
+  selectedEmotion: EmotionDataProps | null;
 }
 
 const initialState: DiaryState = {
@@ -85,13 +87,16 @@ const initialState: DiaryState = {
   addDiary: { ...initialAsyncState },
   modifyDiary: { ...initialAsyncState },
   removeDiary: { ...initialAsyncState },
+  selectedEmotion: null,
 };
 
 const diarySlice = createSlice({
   name: "diary",
   initialState: initialState,
   reducers: {
-
+    setSelectedEmotion: (state, action) => {
+      state.selectedEmotion = action.payload;
+    }
   },
   extraReducers: (builder) => {
     addAsyncThunkCase<EmotionDiaryDTO | undefined, DiaryState>(
@@ -148,5 +153,7 @@ export {
   modifyDiaryThunk,
   removeDiaryThunk,
 }
+
+export const { setSelectedEmotion } = diarySlice.actions;
 
 export default diarySlice.reducer;
