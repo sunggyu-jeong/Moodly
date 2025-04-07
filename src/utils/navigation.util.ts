@@ -24,3 +24,15 @@ export function goBack() {
     navigationRef.goBack();
   }
 }
+
+export function resetTo<RouteName extends keyof RootStackParamList>(
+  screen: RouteName,
+  params?: RootStackParamList[RouteName]
+) {
+  if (navigationRef.isReady()) {
+    navigationRef.reset({
+      index: 0,
+      routes: [{ name: screen, params }],
+    });
+  }
+}
