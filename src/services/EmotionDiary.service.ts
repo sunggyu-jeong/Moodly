@@ -1,6 +1,6 @@
 import Realm from 'realm';
 import { EmotionDiary, EmotionDiaryDTO } from "../scheme";
-import { isEmpty, isNotEmpty } from "../utils";
+import { isNotEmpty } from "../utils";
 
 export function selectDiaryByMonth(realm: Realm, recordDate: Date): EmotionDiary[] {
   const year = recordDate.getFullYear();
@@ -45,12 +45,12 @@ export function updateDiary(realm: Realm, emotionId: number, updates: Partial<Em
     realm.write(() => {
       const target = realm.objectForPrimaryKey<EmotionDiary>("EmotionDiary", emotionId);
         
-      if (isEmpty(target)) return;
-  
-      Object.entries(updates).forEach(([key, value]) => {
-        (target as any)[key] = value;
-      });
-      target.updated_at = new Date();
+      if (isNotEmpty(target)) {
+        Object.entries(updates).forEach(([key, value]) => {
+          (target as any)[key] = value;
+        });
+        target.updated_at = new Date();
+      }      
     });
   } catch(error) {
     throw new Error("감정기록을 수정하는 도중 오류가 발생했습니다.");
