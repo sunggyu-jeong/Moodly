@@ -1,4 +1,4 @@
-import { createNavigationContainerRef } from '@react-navigation/native';
+import { createNavigationContainerRef, StackActions } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation/RootStack';
 
 export const navigationRef = createNavigationContainerRef<RootStackParamList>();
@@ -22,6 +22,18 @@ export function canGoBack() {
 export function goBack() {
   if (canGoBack()) {
     navigationRef.goBack();
+  }
+}
+
+export function resetToRoot() {
+  if (navigationRef.isReady()) {
+    const routeNames = navigationRef.getRootState()?.routeNames ?? [];
+    const routes = routeNames.filter((r) => r !== 'Splash');
+    const rootRoute = routes[0];
+
+    if (rootRoute) {
+      navigationRef.dispatch(StackActions.replace(rootRoute));
+    }
   }
 }
 
