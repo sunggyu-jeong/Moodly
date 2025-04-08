@@ -20,7 +20,7 @@ const NavigationBarOrga = ({
   return (
     <SafeAreaView className="bg-white">
       <View className="flex-row items-center h-10 px-[10px] bg-white">
-        <View className="flex-1 justify-start">
+        <View className="flex-1 justify-start ml-3">
           {showBackButton ? <BackButtonAtom /> : null}
         </View>
         <View className="flex-3 items-center">

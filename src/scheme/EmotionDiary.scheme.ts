@@ -2,10 +2,10 @@ import Realm from 'realm';
 
 export interface EmotionDiaryDTO {
   emotionId?: number;
-  userId: number;
-  iconId: number;
-  recordDate: Date;
-  description: string;
+  userId?: number;
+  iconId?: number;
+  recordDate?: Date;
+  description?: string;
   createdAt?: Date;
   updatedAt?: Date;
 }
