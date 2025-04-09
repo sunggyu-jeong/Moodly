@@ -28,11 +28,13 @@ export function goBack() {
 export function resetToRoot() {
   if (navigationRef.isReady()) {
     const routeNames = navigationRef.getRootState()?.routeNames ?? [];
-    const routes = routeNames.filter((r) => r !== 'Splash');
+    const routes = routeNames.filter((r) => r !== '스플래시');
     const rootRoute = routes[0];
 
     if (rootRoute) {
-      navigationRef.dispatch(StackActions.replace(rootRoute));
+      navigationRef.dispatch(
+        StackActions.popToTop()
+      );
     }
   }
 }

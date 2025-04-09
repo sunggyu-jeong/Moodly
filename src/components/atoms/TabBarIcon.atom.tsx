@@ -1,0 +1,14 @@
+import { Image, ImageSourcePropType, View } from "react-native";
+
+interface TabbarIconProps {
+  source: ImageSourcePropType;
+} 
+const TabBarIcon = ({ source }: TabbarIconProps) => {
+  return (
+    <View className="flex-1 justify-end">
+      <Image source={source} className="w-6 h-6" />
+    </View>
+  )
+} 
+
+export default TabBarIcon;
