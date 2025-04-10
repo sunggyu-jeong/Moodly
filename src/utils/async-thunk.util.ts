@@ -18,8 +18,8 @@ export function addAsyncThunkCase<T, S>(
   thunk: any,
   statusKey: keyof S,
   errorKey: keyof S,
-  onFulfilled?: (state: S, action: PayloadAction<T>) => void,
-  defaultErrorMessage?: string
+  defaultErrorMessage?: string,
+  onFulfilled?: (state: S, action: PayloadAction<T>) => void
 ) {
   builder.addCase(thunk.pending, (state: S) => {
     (state as any)[statusKey].status = AsyncStatus.Pending;
@@ -30,6 +30,8 @@ export function addAsyncThunkCase<T, S>(
     (state as any)[statusKey].status = AsyncStatus.Succeeded;
     if (onFulfilled) {
       onFulfilled(state, action);
+    } else {
+      (state as any)[statusKey].data = action.payload;
     }
   });
 
