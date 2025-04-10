@@ -2,6 +2,13 @@ import Realm from 'realm';
 import { EmotionDiary, EmotionDiaryDTO } from "../scheme";
 import { isNotEmpty } from "../utils";
 
+export function selectDiaryCount(realm: Realm): number {
+  const results = realm
+      .objects<EmotionDiary>("EmotionDiary")
+      .length
+  return results
+}
+
 export function selectDiaryByMonth(realm: Realm, recordDate: Date): EmotionDiary[] {
   const year = recordDate.getFullYear();
   const month = recordDate.getMonth(); 
@@ -29,7 +36,7 @@ export function createDiary(realm: Realm, data: EmotionDiaryDTO): void | Error {
         emotion_id: nextId,
         id: data.userId,                    
         icon_id: data.iconId,               
-        record_date: data.recordDate,       
+        record_date: new Date(data.recordDate ?? Date()),
         description: data.description,
         created_at: new Date(),
         updated_at: new Date()

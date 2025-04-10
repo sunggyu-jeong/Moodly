@@ -16,7 +16,7 @@ export type AsyncStatusType = typeof AsyncStatus[keyof typeof AsyncStatus];
 
 /**
  * 비동기 작업의 초기 상태
- * 상태와 에러 필드만 포함한다
+ * 상태와 에러 필드, 데이터를 포함한다
  *
  * @example
  * const myAsyncState: AsyncOperationState = {
@@ -24,28 +24,18 @@ export type AsyncStatusType = typeof AsyncStatus[keyof typeof AsyncStatus];
  *   error: null,
  * };
  */
-export const initialAsyncState: AsyncOperationState = {
+export const createInitialAsyncState = <T>(initialData?: T): AsyncOperationState<T> => ({
   status: AsyncStatus.Idle,
   error: null,
-};
+  data: initialData,
+});
 
 /**
  * 비동기 작업의 상태를 나타내는 인터페이스
  * 이 인터페이스는 작업의 현재 상태와 에러 메시지를 관리한다
  */
-export interface AsyncOperationState {
+export interface AsyncOperationState<T> {
   status: AsyncStatusType;
   error: string | null;
-}
-
-/**
- * 비동기 작업의 상태를 나타내는 인터페이스,
- * 추가로 작업 결과 데이터(data)를 함께 관리한다
- *
- * @template T - 관리할 데이터의 타입
- */
-export interface AsyncState<T> {
-  data: T;
-  status: AsyncStatusType;
-  error: string | null;
+  data?: T;
 }

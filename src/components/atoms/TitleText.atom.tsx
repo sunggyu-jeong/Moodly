@@ -12,7 +12,7 @@ const TitleText = ({ children, style, ...props}: TitleTextProps) => {
     <Text
       {...props}
       className="text-pretendard font-bold tracking-[-0.5px] text-center leading-[40px]"
-      style={[{ fontSize: getScaleSize(28) }, style]}
+      style={[{ fontSize: getScaleSize(30) }, style]}
     >
       {children}
     </Text>

@@ -4,10 +4,10 @@ export interface EmotionDiaryDTO {
   emotionId?: number;
   userId?: number;
   iconId?: number;
-  recordDate?: Date;
+  recordDate?: string;
   description?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export class EmotionDiary extends Realm.Object<EmotionDiary> {
@@ -45,10 +45,10 @@ export class EmotionDiary extends Realm.Object<EmotionDiary> {
       emotionId: this.emotion_id,
       userId: this.id,
       iconId: this.icon_id,
-      recordDate: new Date(this.record_date),
+      recordDate: new Date(this.record_date).toISOString(),
       description: this.description,
-      createdAt: new Date(this.created_at),
-      updatedAt: new Date(this.updated_at),
+      createdAt: new Date(this.created_at).toISOString(),
+      updatedAt: new Date(this.updated_at).toISOString(),
     };
   }
 }

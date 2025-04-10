@@ -1,3 +1,4 @@
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useScale } from "../hooks";
 import { resetTo } from "../utils";
 import { useEffect } from "react";
@@ -13,19 +14,19 @@ const SplashPage = () => {
   }, [])
 
   return (
-    <View className="bg-slate-50 flex-1 justify-center items-center">
-      <View style={{ marginTop: -33 }}>
+    <SafeAreaView className="bg-slate-50 flex-1">
+      <View className="mt-[88.5px]">
         <Text
           className="text-pretendard font-bold tracking-[-0.5px] text-center"
-          style={{ marginBottom: getScaleSize(22), fontSize: getScaleSize(44) }}
+          style={{ marginBottom: getScaleSize(35), fontSize: getScaleSize(56) }}
         >
           Moodly
         </Text>
-        <Text className="text-[#606060] font-pretendard font-medium text-base tracking-[-0.5px] text-center align-middle">
-          귀여운 감정 친구들과 함께, 하루를 기록해봐요
+        <Text className="text-[#606060] font-pretendard font-medium text-[21px] tracking-[-0.5px] text-center align-middle leading-[32px]">
+          귀여운 감정 친구들과 함께{"\n"} 하루를 기록해봐요
         </Text>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
