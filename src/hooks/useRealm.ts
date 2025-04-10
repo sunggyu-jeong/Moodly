@@ -13,7 +13,9 @@ export function useRealm() {
       const realmInstance = await Realm.open({ schema: [EmotionDiary] });
       realmRef.current = realmInstance;
       setRealm(realmInstance);
+
       console.log("Realm opened at path:", realmInstance.path);
+      return realmInstance;
     } catch (error) {
       console.error("Realm을 여는 도중 오류가 발생했습니다.", error);
     }
@@ -28,13 +30,6 @@ export function useRealm() {
       console.log("Realm closed.");
     }
   }, []);
-
-  useEffect(() => {
-    openRealm();
-    return () => {
-      closeRealm();
-    };
-  }, [openRealm, closeRealm]);
-
-  return { realm, openRealm, closeRealm };
+  
+  return { openRealm, closeRealm };
 }
