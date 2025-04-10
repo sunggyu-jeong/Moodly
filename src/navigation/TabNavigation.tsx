@@ -3,7 +3,7 @@ import HomePage from "../pages/home.page";
 import SettingPage from "../pages/setting.page";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import TabBarIcon from "../components/atoms/TabBarIcon.atom";
-import { images } from "../assets/images";
+import { IMAGES } from "../assets/images";
 
 const Tab = createBottomTabNavigator();
 
@@ -22,7 +22,7 @@ const TabNavigation = () => {
         component={HomePage}
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabBarIcon source={images.useHome} />
+            <TabBarIcon source={focused ? IMAGES.homeActive : IMAGES.homeInactive} />
           ),
         }}
       />
@@ -31,7 +31,7 @@ const TabNavigation = () => {
         component={DiaryListPage} 
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabBarIcon source={images.useBookOpen} />
+            <TabBarIcon source={focused ? IMAGES.bookOpenActive : IMAGES.bookOpenInactive} />
           ),
         }}
       />
@@ -40,7 +40,7 @@ const TabNavigation = () => {
         component={SettingPage} 
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabBarIcon source={images.useSetting} />
+            <TabBarIcon source={focused ? IMAGES.settingsActive : IMAGES.settingsInactive} />
           ),
         }}
       />
