@@ -10,6 +10,7 @@ import {
 import { addAsyncThunkCase } from "../..//utils";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Realm from 'realm';
+import { Emotions } from "../../components/atoms/EmotionIcon.atom";
 
 const searchDiaryCountThunk = createAsyncThunk<number | undefined, {realm: Realm}, { rejectValue: string }>(
   'diary/searchDiaryCount',
@@ -89,7 +90,7 @@ interface DiaryState {
   addDiary: AsyncOperationState<void>;
   modifyDiary: AsyncOperationState<void>;
   removeDiary: AsyncOperationState<void>;
-  selectedEmotion: React.ReactNode;
+  selectedEmotion: Emotions | null;
 }
 
 const initialState: DiaryState = {
