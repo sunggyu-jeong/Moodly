@@ -91,6 +91,7 @@ interface DiaryState {
   modifyDiary: AsyncOperationState<void>;
   removeDiary: AsyncOperationState<void>;
   selectedEmotion: Emotions | null;
+  todayDiary: EmotionDiaryDTO;
 }
 
 const initialState: DiaryState = {
@@ -103,6 +104,15 @@ const initialState: DiaryState = {
   modifyDiary: createInitialAsyncState<void>(),
   removeDiary: createInitialAsyncState<void>(),
   selectedEmotion: null,
+  todayDiary: {
+    emotionId: undefined,
+    userId: undefined,
+    iconId: undefined,
+    recordDate: undefined,
+    description: undefined,
+    createdAt: undefined,
+    updatedAt: undefined,
+  }
 };
 
 const diarySlice = createSlice({
@@ -111,6 +121,9 @@ const diarySlice = createSlice({
   reducers: {
     setSelectedEmotion: (state, action) => {
       state.selectedEmotion = action.payload;
+    },
+    setTodayDiary: (state, action) => {
+      state.todayDiary = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -165,9 +178,9 @@ export {
   searchDiaryByMonthThunk,
   addDiaryThunk,
   modifyDiaryThunk,
-  removeDiaryThunk,
+  removeDiaryThunk
 }
 
-export const { setSelectedEmotion } = diarySlice.actions;
+export const { setSelectedEmotion, setTodayDiary } = diarySlice.actions;
 
 export default diarySlice.reducer;

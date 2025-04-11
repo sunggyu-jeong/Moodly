@@ -54,7 +54,7 @@ const HomePage = () => {
           className="w-full"
           style={{ marginTop: getScaleSize(66) }}
         >
-          <ActionButton onPress={() => { navigate("감정선택")}}>
+          <ActionButton onPress={() => { navigate("SelectEmotion")}}>
             들려주러 가기
           </ActionButton>
         </View>

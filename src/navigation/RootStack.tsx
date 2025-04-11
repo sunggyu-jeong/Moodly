@@ -7,23 +7,23 @@ import WriteDiaryCompletePage from "../pages/write-diary-complete.page";
 import TabNavigation from "./TabNavigation";
 
 export type RootStackParamList = {
-  '스플래시': undefined; 
-  '메인화면': undefined; 
-  '감정선택': undefined;
-  '일기작성': EmotionDiaryDTO;
-  '작성완료': undefined;
+  Splash: undefined;
+  Main: undefined;
+  SelectEmotion: undefined;
+  WriteDiary: undefined;
+  Complete: undefined;
 };
 
 const Stack = createNativeStackNavigator();
 
 const RootStack = () => {
   return (
-    <Stack.Navigator initialRouteName="스플래시" screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="스플래시" component={SplashPage} />
-      <Stack.Screen name="메인화면" component={TabNavigation} />
-      <Stack.Screen name="감정선택" component={SelectEmotionPage} />
-      <Stack.Screen name="일기작성" component={WriteDiaryPage} />
-      <Stack.Screen name="작성완료" component={WriteDiaryCompletePage} />
+    <Stack.Navigator initialRouteName="Splash" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Splash" component={SplashPage} />
+      <Stack.Screen name="Main" component={TabNavigation} />
+      <Stack.Screen name="SelectEmotion" component={SelectEmotionPage} />
+      <Stack.Screen name="WriteDiary" component={WriteDiaryPage} />
+      <Stack.Screen name="Complete" component={WriteDiaryCompletePage} />
     </Stack.Navigator>
   )
 }

@@ -1,8 +1,9 @@
-import { SafeAreaView, View } from "react-native";
+import { View } from "react-native";
 import BackButtonAtom from "../atoms/NaviBackbutton.atom";
 import NavigationTitleAtom from "../atoms/NaviTitle.atom";
 import { isNotEmpty } from "../../utils";
 import NaviActionButtonAtom, { NaviActionButtonAtomProps } from "../atoms/NaviActionButton.atom";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export interface NavigationBarConfig {
   showBackButton?: boolean;

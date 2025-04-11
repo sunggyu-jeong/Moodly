@@ -9,7 +9,7 @@ const SplashPage = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      resetTo("메인화면");
+      resetTo("Main");
     }, 2000);
   }, [])
 
