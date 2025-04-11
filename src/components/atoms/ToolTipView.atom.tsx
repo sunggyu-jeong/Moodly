@@ -6,7 +6,7 @@ const ToolTipView = ({ style }: ViewProps) => {
 
   return (
     <View className="w-full h-[87px]" style={style}>
-      <View className="mx-8 h-[63px] bg-[rgba(0,0,0,0.02)] rounded-[29px] justify-center items-center">
+      <View className="h-[63px] bg-[#F4F1EC] rounded-[29px] justify-center items-center">
         <Text 
           className="text-pretendard font-semibold tracking-[-0.5px] text-center"
           style={{ fontSize: getScaleSize(21) }}
@@ -16,7 +16,7 @@ const ToolTipView = ({ style }: ViewProps) => {
       </View>
       <View className="w-full items-center mt-[0px]">
         <View
-          className="w-0 h-0 border-l-[10px] border-r-[10px] border-t-[10px] border-l-transparent border-r-transparent border-t-[rgba(0,0,0,0.02)]"
+          className="w-0 h-0 border-l-[10px] border-r-[10px] border-t-[10px] border-l-transparent border-r-transparent border-t-[#F3F1EC]"
         />
       </View>
     </View>
