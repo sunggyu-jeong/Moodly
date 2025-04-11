@@ -7,5 +7,6 @@ export const IMAGES = {
   bookOpenInactive: require('./book-open-inactive.png'),
   smile: require('./smile.png'),
   back: require('./back.png'),
+  right: require('./right.png'),
   more: require('./more.png'),
 }

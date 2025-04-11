@@ -6,7 +6,7 @@ interface ActionButtonProps {
   children: React.ReactNode;
 }
 
-const ActionButton = ({ onPress, children }: ActionButtonProps) => {
+const ActionButtonAtom = ({ onPress, children }: ActionButtonProps) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -19,4 +19,4 @@ const ActionButton = ({ onPress, children }: ActionButtonProps) => {
   );
 };
 
-export default ActionButton;
+export default ActionButtonAtom;

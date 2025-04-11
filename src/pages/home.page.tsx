@@ -1,12 +1,12 @@
 import { useAppDispatch, useAppSelector, useRealm, useScale } from "../hooks";
-import ActionButton from "../components/atoms/ActionButton.atom";
-import { Button, Image, Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import { isNotEmpty, navigate } from "../utils";
 import TitleText from "../components/atoms/TitleText.atom";
 import { searchDiaryCountThunk } from "../redux/slice/diarySlice";
 import { IMAGES } from "../assets/images";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
+import ActionButtonAtom from "../components/atoms/ActionButton.atom";
 
 const HomePage = () => {
   const { getScaleSize } = useScale();
@@ -57,9 +57,9 @@ const HomePage = () => {
           className="w-full"
           style={{ marginTop: getScaleSize(66) }}
         >
-          <ActionButton onPress={() => { navigate("SelectEmotion")}}>
+          <ActionButtonAtom onPress={() => { navigate("SelectEmotion")}}>
             들려주러 가기
-          </ActionButton>
+          </ActionButtonAtom>
         </View>
       </View>
     </>

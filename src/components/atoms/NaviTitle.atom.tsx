@@ -2,9 +2,11 @@ import { Text } from "react-native"
 
 interface NavigationTitleAtomProps {
   title: string,
-  style?: string
 }
 
-const NavigationTitleAtom = ({ title, style }: NavigationTitleAtomProps) => <Text className={style}>{title}</Text>
+const NavigationTitleAtom = ({ title }: NavigationTitleAtomProps) => 
+  <Text className="font-bold text-[20px] text-black tracking-[-0.5px] text-center">
+    {title}
+  </Text>
 
 export default NavigationTitleAtom;

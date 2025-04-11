@@ -8,17 +8,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export interface NavigationBarConfig {
   showBackButton?: boolean;
   title?: string;
-  titleStyle?: string;
   actionButtons?: NaviActionButtonAtomProps[];
 } 
 
 const NavigationBarOrga = ({
   showBackButton = true,
   title,
-  titleStyle,
   actionButtons,
 }: NavigationBarConfig) => {
-  // 왼쪽 혹은 가운데에 아이템이 존재하는지 체크
   const hasLeftCenter = showBackButton || (title && title.trim() !== "");
 
   return (
@@ -35,8 +32,8 @@ const NavigationBarOrga = ({
         )}
 
         {title && (
-          <View>
-            <NavigationTitleAtom title={title} style={titleStyle} />
+          <View className="items-center flex-1">
+            <NavigationTitleAtom title={title} />
           </View>
         )}
 

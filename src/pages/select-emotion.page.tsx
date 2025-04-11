@@ -3,13 +3,13 @@ import TitleText from "../components/atoms/TitleText.atom";
 import { useAppDispatch, useAppSelector, useScale } from "../hooks";
 import { View } from "react-native";
 import { IMAGES } from "../assets/images";
-import ActionButton from "../components/atoms/ActionButton.atom";
 import EmotionListOrga from "../components/organisms/EmotionList.orga";
 import SelectedEmotionOrga from "../components/organisms/SelectedEmotion.orga";
 import { Emotions } from "../components/atoms/EmotionIcon.atom";
 import { EmotionDiaryDTO } from "../scheme";
 import { setTodayDiary } from "../redux/slice/diarySlice";
 import { navigate } from "../utils";
+import ActionButtonAtom from "../components/atoms/ActionButton.atom";
 
 const TEST_DATA: Emotions[] = [
   {
@@ -80,9 +80,9 @@ const SelectEmotionPage = () => {
           className="w-full"
           style={{ marginBottom: getScaleSize(57) }}
         >
-          <ActionButton onPress={handleSelectEmotion}>
+          <ActionButtonAtom onPress={handleSelectEmotion}>
             선택 완료
-          </ActionButton>
+          </ActionButtonAtom>
         </View>
       </View>
     </>

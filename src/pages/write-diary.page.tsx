@@ -3,11 +3,11 @@ import ToolTipView from "../components/atoms/ToolTipView.atom";
 import NavigationBarOrga from "../components/organisms/NavigationBar.orga";
 import { View, Image, ScrollView } from "react-native";
 import DiaryTextBox from "../components/atoms/DiaryTextBox.atom";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { isNotEmpty, navigate } from "../utils";
-import ActionButton from "../components/atoms/ActionButton.atom";
 import { IMAGES } from "../assets/images";
 import { addDiaryThunk } from "../redux/slice/diarySlice";
+import ActionButtonAtom from "../components/atoms/ActionButton.atom";
 
 const WriteDiaryPage = () => {
   const { getScaleSize } = useScale();
@@ -56,9 +56,9 @@ const WriteDiaryPage = () => {
           className="w-full absolute"
           style={{ marginBottom: getScaleSize(57) }}
         >
-          <ActionButton onPress={handleSave}>
+          <ActionButtonAtom onPress={handleSave}>
             작성완료
-          </ActionButton>
+          </ActionButtonAtom>
         </View>
       </ScrollView>
     </>

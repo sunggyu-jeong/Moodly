@@ -106,7 +106,6 @@ const initialState: DiaryState = {
   selectedEmotion: null,
   todayDiary: {
     emotionId: undefined,
-    userId: undefined,
     iconId: undefined,
     recordDate: undefined,
     description: undefined,
