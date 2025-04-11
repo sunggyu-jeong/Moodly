@@ -57,7 +57,7 @@ const SelectEmotionPage = () => {
 
   const handleSelectEmotion = () => {
     const emotion: EmotionDiaryDTO = {
-      emotionId: selectedEmotion?.id,
+      iconId: selectedEmotion?.id,
     }
     dispatch(setTodayDiary(emotion));
     navigate("WriteDiary");

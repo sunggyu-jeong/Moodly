@@ -2,7 +2,6 @@ import Realm from 'realm';
 
 export interface EmotionDiaryDTO {
   emotionId?: number;
-  userId?: number;
   iconId?: number;
   recordDate?: string;
   description?: string;
@@ -13,8 +12,6 @@ export interface EmotionDiaryDTO {
 export class EmotionDiary extends Realm.Object<EmotionDiary> {
   // 감정기록 고유번호(PK)
   emotion_id!: number;
-  // 유저 ID
-  id!: number;
   // 아이콘 ID
   icon_id!: number;
   // 감정 기록일
@@ -31,7 +28,6 @@ export class EmotionDiary extends Realm.Object<EmotionDiary> {
     primaryKey: 'emotion_id',
     properties: {
       emotion_id: 'int',
-      id: 'int',
       icon_id: 'int',
       record_date: 'date',
       description: 'string',
@@ -43,7 +39,6 @@ export class EmotionDiary extends Realm.Object<EmotionDiary> {
   toDTO(): EmotionDiaryDTO {
     return {
       emotionId: this.emotion_id,
-      userId: this.id,
       iconId: this.icon_id,
       recordDate: new Date(this.record_date).toISOString(),
       description: this.description,

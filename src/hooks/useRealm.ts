@@ -1,4 +1,3 @@
-// useRealmLifecycle.ts
 import { useCallback, useEffect, useRef, useState } from "react";
 import Realm from "realm";
 import { isNotEmpty } from "../utils";
@@ -10,7 +9,21 @@ export function useRealm() {
 
   const openRealm = useCallback(async () => {
     try {
-      const realmInstance = await Realm.open({ schema: [EmotionDiary] });
+      const realmInstance = await Realm.open({
+        schema: [EmotionDiary],
+        schemaVersion: 2, 
+        onMigration: (oldRealm: Realm, newRealm: Realm) => {
+          if (oldRealm.schemaVersion < 2) {
+            const oldDiaryObjects = oldRealm.objects('EmotionDiary');
+            const newDiaryObjects = newRealm.objects('EmotionDiary');
+            for (let i = 0; i < oldDiaryObjects.length; i++) {
+              if ('id' in oldDiaryObjects[i]) {
+                delete newDiaryObjects[i].id;
+              }
+            }
+          }
+        },
+      });
       realmRef.current = realmInstance;
       setRealm(realmInstance);
 

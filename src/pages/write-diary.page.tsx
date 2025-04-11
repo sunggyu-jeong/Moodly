@@ -1,22 +1,33 @@
-import { useScale } from "../hooks";
+import { useAppDispatch, useAppSelector, useRealm, useScale } from "../hooks";
 import ToolTipView from "../components/atoms/ToolTipView.atom";
 import NavigationBarOrga from "../components/organisms/NavigationBar.orga";
-import { View, ScrollView, TouchableOpacity, Text } from "react-native";
+import { View, Image, ScrollView } from "react-native";
 import DiaryTextBox from "../components/atoms/DiaryTextBox.atom";
-import { KeyboardAccessoryView } from 'react-native-keyboard-accessory'
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { isNotEmpty, navigate } from "../utils";
+import ActionButton from "../components/atoms/ActionButton.atom";
+import { IMAGES } from "../assets/images";
+import { addDiaryThunk } from "../redux/slice/diarySlice";
 
 const WriteDiaryPage = () => {
   const { getScaleSize } = useScale();
   const textBoxRef = useRef<{ getText: () => string }>(null);
+  const scrollViewRef = useRef<ScrollView>(null);
+  const todayDiary = useAppSelector((state) => state.diarySlice.todayDiary);
+  const dispatch = useAppDispatch();
+  const { openRealm, closeRealm } = useRealm();
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    const realm = await openRealm();
     const text = textBoxRef.current?.getText();
-    if (isNotEmpty(text)) {
+    // 텍스트 최소 길이
+    if (isNotEmpty(text) && isNotEmpty(realm)) {
       console.log("저장된 일기:", text);
-      //FIXME: - 여기에 저장 로직 추가
-      // navigate("작성완료");
+      await dispatch(addDiaryThunk({ realm, data: { 
+        ...todayDiary,
+        description: text,
+      }}));
+      navigate("Complete");
     }
   }
 
@@ -24,34 +35,32 @@ const WriteDiaryPage = () => {
     <>
       <NavigationBarOrga />
       <ScrollView 
+        ref={scrollViewRef}
         className="bg-white flex-1" 
-        contentContainerStyle={{ alignItems: 'center',paddingBottom: 100 }}
+        contentContainerStyle={{
+          flexGrow: 1,
+          justifyContent: 'flex-end',
+          alignItems: 'center',
+          paddingHorizontal: getScaleSize(25),
+          paddingBottom: 150,
+        }}
         keyboardShouldPersistTaps="handled"
       >
         <ToolTipView style={{ marginBottom: getScaleSize(14) }} />
-        <View 
-          className="bg-[#D9D9D9] aspect-square w-1/3 rounded-full"
-          style={{ marginBottom: getScaleSize(32)}} />
+        <Image
+          source={IMAGES.smile}
+          style={{ marginBottom: getScaleSize(32), width: getScaleSize(137), height: getScaleSize(137) }} />
         <DiaryTextBox ref={textBoxRef} />
-      </ScrollView>
-      <KeyboardAccessoryView
-        alwaysVisible={false}
-        style={{
-          backgroundColor: '#ffffff',
-          left: 0,
-          right: 0,
-          bottom: 0,
-          zIndex: 10,
-        }}
-      >
+        <View className="flex-1" />
         <View 
-          className="w-full h-[41px] px-4 py-2 border-t border-gray-300 flex-row justify-end items-center"
+          className="w-full absolute"
+          style={{ marginBottom: getScaleSize(57) }}
         >
-          <TouchableOpacity onPress={() => { navigate("작성완료") }}>
-            <Text style={{ color: '#007AFF', fontWeight: 'bold' }}>저장</Text>
-          </TouchableOpacity>
+          <ActionButton onPress={handleSave}>
+            작성완료
+          </ActionButton>
         </View>
-      </KeyboardAccessoryView>
+      </ScrollView>
     </>
   )
 }

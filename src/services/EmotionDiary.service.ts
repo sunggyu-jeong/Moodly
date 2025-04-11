@@ -32,17 +32,18 @@ export function createDiary(realm: Realm, data: EmotionDiaryDTO): void | Error {
     const maxId = realm.objects('EmotionDiary').max('emotion_id');
     const nextId = (typeof maxId === 'number' ? maxId : 0) + 1;
     realm.write(() => {
-      realm.create<EmotionDiary>("EmotionDiary", {
-        emotion_id: nextId,
-        id: data.userId,                    
+      const newDiary = realm.create<EmotionDiary>("EmotionDiary", {
+        emotion_id: nextId,                
         icon_id: data.iconId,               
-        record_date: new Date(data.recordDate ?? Date()),
+        record_date: new Date(),
         description: data.description,
         created_at: new Date(),
         updated_at: new Date()
       });
+      console.log("다이어리 생성 완료:", newDiary);
     });
   } catch(error) {
+    console.error("Error creating diary:", error);
     throw new Error("감정기록을 추가하는 도중 오류가 발생했습니다.");
   }
 }

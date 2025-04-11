@@ -1,12 +1,17 @@
+import { useScale } from "../../hooks";
 import { Text, View, ViewProps } from "react-native";
 
 const ToolTipView = ({ style }: ViewProps) => {
+  const { getScaleSize } = useScale();
+
   return (
-    <View className="w-[207px] h-[87px]" style={style}>
-      <View className="w-[207px] h-[66px] bg-[rgba(0,0,0,0.02)] rounded-3xl justify-center items-center">
-        <Text className="text-pretendard font-semibold tracking-[-0.5px] text-center">        
-          어떤 일이 있었는지{"\n"}
-          말해줄래?
+    <View className="w-full h-[87px]" style={style}>
+      <View className="mx-8 h-[63px] bg-[rgba(0,0,0,0.02)] rounded-[29px] justify-center items-center">
+        <Text 
+          className="text-pretendard font-semibold tracking-[-0.5px] text-center"
+          style={{ fontSize: getScaleSize(21) }}
+        >        
+          어떤 일이 있었는지 말해줄래?
         </Text>
       </View>
       <View className="w-full items-center mt-[0px]">

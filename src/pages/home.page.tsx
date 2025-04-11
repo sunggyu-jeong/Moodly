@@ -5,7 +5,8 @@ import { isNotEmpty, navigate } from "../utils";
 import TitleText from "../components/atoms/TitleText.atom";
 import { searchDiaryCountThunk } from "../redux/slice/diarySlice";
 import { IMAGES } from "../assets/images";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 
 const HomePage = () => {
   const { getScaleSize } = useScale();
@@ -21,9 +22,11 @@ const HomePage = () => {
     }
   }
   
-  useEffect(() => {
-    initialize();
-  }, [])
+  useFocusEffect(
+    useCallback(() => {
+      initialize();
+    }, [])
+  );
 
   return (
     <>
