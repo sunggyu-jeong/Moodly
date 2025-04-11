@@ -9,7 +9,7 @@ export interface NavigationBarConfig {
   showBackButton?: boolean;
   title?: string;
   titleStyle?: string;
-  actionButtons?: NaviActionButtonAtomProps[]
+  actionButtons?: NaviActionButtonAtomProps[];
 } 
 
 const NavigationBarOrga = ({
@@ -18,25 +18,38 @@ const NavigationBarOrga = ({
   titleStyle,
   actionButtons,
 }: NavigationBarConfig) => {
+  // 왼쪽 혹은 가운데에 아이템이 존재하는지 체크
+  const hasLeftCenter = showBackButton || (title && title.trim() !== "");
+
   return (
     <SafeAreaView className="bg-white">
-      <View className="flex-row items-center h-10 px-[10px] bg-white">
-        <View className="flex-1 justify-start ml-3">
-          {showBackButton ? <BackButtonAtom /> : null}
-        </View>
-        <View className="flex-3 items-center">
-          <NavigationTitleAtom title={title ?? ""} style={titleStyle} />
-        </View>
-        <View className="flex-1 justify-start">
-          {
-            isNotEmpty(actionButtons) && 
-            actionButtons
-              .map((el, index) => <NaviActionButtonAtom key={index} {...el} />) 
-          }
-        </View>
+      <View
+        className={`flex-row items-center h-10 px-[10px] bg-white ${
+          hasLeftCenter ? "justify-between" : "justify-end"
+        }`}
+      >
+        {showBackButton && (
+          <View className="ml-3">
+            <BackButtonAtom />
+          </View>
+        )}
+
+        {title && (
+          <View>
+            <NavigationTitleAtom title={title} style={titleStyle} />
+          </View>
+        )}
+
+        {isNotEmpty(actionButtons) && (
+          <View className="mr-6">
+            {actionButtons.map((el, index) => (
+              <NaviActionButtonAtom key={index} {...el} />
+            ))}
+          </View>
+        )}
       </View>
     </SafeAreaView>
-  )
-}
+  );
+};
 
 export default NavigationBarOrga;
