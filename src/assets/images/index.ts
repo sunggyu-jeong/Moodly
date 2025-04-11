@@ -8,5 +8,7 @@ export const IMAGES = {
   smile: require('./smile.png'),
   back: require('./back.png'),
   right: require('./right.png'),
+  monthLeft: require('./month-left.png'),
+  monthRight: require('./month-right.png'),
   more: require('./more.png'),
 }
