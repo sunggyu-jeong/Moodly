@@ -11,6 +11,7 @@ import { addAsyncThunkCase } from "../..//utils";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Realm from 'realm';
 import { Emotions } from "../../components/atoms/EmotionIcon.atom";
+import dayjs from "dayjs";
 
 const searchDiaryCountThunk = createAsyncThunk<number | undefined, {realm: Realm}, { rejectValue: string }>(
   'diary/searchDiaryCount',
@@ -84,25 +85,26 @@ const removeDiaryThunk = createAsyncThunk<void, {realm: Realm, emotionId: number
 interface DiaryState {
   diaryCount: AsyncOperationState<number>;
   emotionDiaryList: AsyncOperationState<EmotionDiaryDTO[]>;
-  selectedEmotionDiary: AsyncOperationState<EmotionDiaryDTO>;
   searchById: AsyncOperationState<void>;
-  searchByMonth: AsyncOperationState<void>;
+  searchByMonth: AsyncOperationState<EmotionDiaryDTO[]>;
   addDiary: AsyncOperationState<void>;
   modifyDiary: AsyncOperationState<void>;
   removeDiary: AsyncOperationState<void>;
+  selectedDiary: EmotionDiaryDTO;
   selectedEmotion: Emotions | null;
   todayDiary: EmotionDiaryDTO;
+  selectedMonth: string;
 }
 
 const initialState: DiaryState = {
   diaryCount: createInitialAsyncState<number>(),
   emotionDiaryList: createInitialAsyncState<EmotionDiaryDTO[]>(),
-  selectedEmotionDiary: createInitialAsyncState<EmotionDiaryDTO>(),
   searchById: createInitialAsyncState<void>(),
-  searchByMonth: createInitialAsyncState<void>(),
+  searchByMonth: createInitialAsyncState<EmotionDiaryDTO[]>(),
   addDiary: createInitialAsyncState<void>(),
   modifyDiary: createInitialAsyncState<void>(),
   removeDiary: createInitialAsyncState<void>(),
+  selectedDiary: {},
   selectedEmotion: null,
   todayDiary: {
     emotionId: undefined,
@@ -111,7 +113,8 @@ const initialState: DiaryState = {
     description: undefined,
     createdAt: undefined,
     updatedAt: undefined,
-  }
+  },
+  selectedMonth: dayjs().toISOString(),
 };
 
 const diarySlice = createSlice({
@@ -123,6 +126,12 @@ const diarySlice = createSlice({
     },
     setTodayDiary: (state, action) => {
       state.todayDiary = action.payload;
+    },
+    setSelectedMonth: (state, action) => {
+      state.selectedMonth = action.payload;
+    },
+    setSelectedDiary: (state, action) => {
+      state.selectedDiary = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -140,7 +149,7 @@ const diarySlice = createSlice({
       'searchById',
       '조회 요청이 실패했습니다. 잠시 후 다시 시도해주세요'
     );
-    addAsyncThunkCase<EmotionDiaryDTO[] | undefined, DiaryState>(
+    addAsyncThunkCase<EmotionDiaryDTO[], DiaryState>(
       builder,
       searchDiaryByMonthThunk,
       'searchByMonth',
@@ -180,6 +189,11 @@ export {
   removeDiaryThunk
 }
 
-export const { setSelectedEmotion, setTodayDiary } = diarySlice.actions;
+export const { 
+  setSelectedEmotion, 
+  setTodayDiary, 
+  setSelectedMonth,
+  setSelectedDiary
+} = diarySlice.actions;
 
 export default diarySlice.reducer;

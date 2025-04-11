@@ -2,53 +2,13 @@ import NavigationBarOrga from "../components/organisms/NavigationBar.orga";
 import TitleText from "../components/atoms/TitleText.atom";
 import { useAppDispatch, useAppSelector, useScale } from "../hooks";
 import { View } from "react-native";
-import { IMAGES } from "../assets/images";
 import EmotionListOrga from "../components/organisms/EmotionList.orga";
 import SelectedEmotionOrga from "../components/organisms/SelectedEmotion.orga";
-import { Emotions } from "../components/atoms/EmotionIcon.atom";
 import { EmotionDiaryDTO } from "../scheme";
 import { setTodayDiary } from "../redux/slice/diarySlice";
 import { navigate } from "../utils";
 import ActionButtonAtom from "../components/atoms/ActionButton.atom";
-
-const TEST_DATA: Emotions[] = [
-  {
-    id: 1,
-    icon: IMAGES.smile,
-    text: '행복',
-    description: '테스트1'
-  },
-  {
-    id: 2,
-    icon: IMAGES.smile,
-    text: '슬픔',
-    description: '테스트2'
-  },
-  {
-    id: 3,
-    icon: IMAGES.smile,
-    text: '불안',
-    description: '테스트3'
-  },
-  {
-    id: 4,
-    icon: IMAGES.smile,
-    text: '아무생각없음',
-    description: '테스트3'
-  },
-  {
-    id: 5,
-    icon: IMAGES.smile,
-    text: '신남',
-    description: '테스트3'
-  },
-  {
-    id: 6,
-    icon: IMAGES.smile,
-    text: '기대',
-    description: '테스트3'
-  }
-];
+import { ICON_DATA } from "../constant/Icons";
 
 const SelectEmotionPage = () => {
   const { getScaleSize } = useScale();
@@ -74,7 +34,7 @@ const SelectEmotionPage = () => {
         </TitleText>
         <SelectedEmotionOrga />
         <View className="flex-1" />
-        <EmotionListOrga emotionList={TEST_DATA} />
+        <EmotionListOrga emotionList={ICON_DATA} />
 
         <View 
           className="w-full"

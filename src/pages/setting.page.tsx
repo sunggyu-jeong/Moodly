@@ -1,7 +1,8 @@
-import { Image, Text, TouchableOpacity } from "react-native";
+import { Image, Text, View } from "react-native";
 import SettingList from "../components/molecules/SettingList.atom";
 import NavigationBarOrga from "../components/organisms/NavigationBar.orga";
 import { IMAGES } from "../assets/images";
+import NavigationTitleAtom from "../components/atoms/NaviTitle.atom";
 
 const SettingPage = () => {
   enum SETTING_EVENT_TYPE {
@@ -36,8 +37,10 @@ const SettingPage = () => {
 
   return (
     <>
-      <NavigationBarOrga showBackButton={false} title="설정" />
-      <SettingList items={SETTING_LIST_ITEM} />
+      <NavigationBarOrga showBackButton={false} centerComponent={<NavigationTitleAtom title="설정" />} />
+      <View className="bg-white flex-1">
+        <SettingList items={SETTING_LIST_ITEM} />
+      </View>      
     </>
   )
 }

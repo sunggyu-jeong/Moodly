@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import TabBarIcon from "../components/atoms/TabBarIcon.atom";
 import { IMAGES } from "../assets/images";
 import DiaryDetailPage from "../pages/diary-detail.page";
+import DiaryCardList from "../components/organisms/DiaryCardList.orga";
 
 const Tab = createBottomTabNavigator();
 
@@ -20,7 +21,7 @@ const TabNavigation = () => {
       }}>
       <Tab.Screen 
         name="홈" 
-        component={DiaryDetailPage}
+        component={HomePage}
         options={{
           tabBarIcon: ({ focused }) => (
             <TabBarIcon source={focused ? IMAGES.homeActive : IMAGES.homeInactive} />

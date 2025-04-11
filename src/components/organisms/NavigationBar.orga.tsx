@@ -7,19 +7,19 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export interface NavigationBarConfig {
   showBackButton?: boolean;
-  title?: string;
+  centerComponent?: React.ReactNode;
   actionButtons?: NaviActionButtonAtomProps[];
 } 
 
 const NavigationBarOrga = ({
   showBackButton = true,
-  title,
+  centerComponent,
   actionButtons,
 }: NavigationBarConfig) => {
-  const hasLeftCenter = showBackButton || (title && title.trim() !== "");
+  const hasLeftCenter = showBackButton || (isNotEmpty(centerComponent));
 
   return (
-    <SafeAreaView className="bg-white">
+    <SafeAreaView className="bg-white h-0">
       <View
         className={`flex-row items-center h-10 px-[10px] bg-white ${
           hasLeftCenter ? "justify-between" : "justify-end"
@@ -31,9 +31,9 @@ const NavigationBarOrga = ({
           </View>
         )}
 
-        {title && (
+        {centerComponent && (
           <View className="items-center flex-1">
-            <NavigationTitleAtom title={title} />
+            {centerComponent}
           </View>
         )}
 

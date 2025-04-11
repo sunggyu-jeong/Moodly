@@ -6,7 +6,7 @@ import DiaryTextBox from "../components/atoms/DiaryTextBox.atom";
 import { useRef } from "react";
 import { isNotEmpty, navigate } from "../utils";
 import { IMAGES } from "../assets/images";
-import { addDiaryThunk } from "../redux/slice/diarySlice";
+import { addDiaryThunk, setSelectedDiary } from "../redux/slice/diarySlice";
 import ActionButtonAtom from "../components/atoms/ActionButton.atom";
 
 const WriteDiaryPage = () => {
@@ -23,10 +23,10 @@ const WriteDiaryPage = () => {
     // 텍스트 최소 길이
     if (isNotEmpty(text) && isNotEmpty(realm)) {
       console.log("저장된 일기:", text);
-      await dispatch(addDiaryThunk({ realm, data: { 
-        ...todayDiary,
-        description: text,
-      }}));
+      const diary = { ...todayDiary, description: text };
+      await dispatch(addDiaryThunk({ realm, data: diary }));
+      await closeRealm();
+      await dispatch(setSelectedDiary(diary));
       navigate("Complete");
     }
   }
@@ -41,12 +41,12 @@ const WriteDiaryPage = () => {
           flexGrow: 1,
           justifyContent: 'flex-end',
           alignItems: 'center',
-          paddingHorizontal: getScaleSize(25),
+          paddingHorizontal: 24,
           paddingBottom: 150,
         }}
         keyboardShouldPersistTaps="handled"
       >
-        <ToolTipView style={{ marginBottom: getScaleSize(14) }} />
+        <ToolTipView style={{ marginTop: getScaleSize(17.5), marginBottom: getScaleSize(14) }} />
         <Image
           source={IMAGES.smile}
           style={{ marginBottom: getScaleSize(32), width: getScaleSize(137), height: getScaleSize(137) }} />

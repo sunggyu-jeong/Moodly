@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { useScale } from "../hooks";
 import { Text, View } from "react-native";
-import { resetToRoot } from "../utils";
+import { navigate } from "../utils";
 
 const WriteDiaryCompletePage = () => {
   const { getScaleSize } = useScale();
 
   useEffect(() => {
     setTimeout(() => {
-      resetToRoot();
+      navigate("DiaryDetail");
     }, 2000);
   }, [])
 
