@@ -1,4 +1,4 @@
-import { createNavigationContainerRef, StackActions } from '@react-navigation/native';
+import { CommonActions, createNavigationContainerRef, StackActions } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation/RootStack';
 
 export const navigationRef = createNavigationContainerRef<RootStackParamList>();
@@ -49,4 +49,9 @@ export function resetTo<RouteName extends keyof RootStackParamList>(
       routes: [{ name: screen, params }],
     });
   }
+}
+
+export function dismissModalToScreen() {
+  navigationRef.dispatch(StackActions.popToTop());
+  goBack();
 }

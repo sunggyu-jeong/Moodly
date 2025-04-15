@@ -8,6 +8,8 @@ import { isNotEmpty, navigate } from "../utils";
 import { IMAGES } from "../assets/images";
 import { addDiaryThunk, setSelectedDiary } from "../redux/slice/diarySlice";
 import ActionButtonAtom from "../components/atoms/ActionButton.atom";
+import { NaviActionButtonAtomProps } from "../components/atoms/NaviActionButton.atom";
+import NaviDismiss from "../components/atoms/NaviDismiss.atom";
 
 const WriteDiaryPage = () => {
   const { getScaleSize } = useScale();
@@ -16,6 +18,11 @@ const WriteDiaryPage = () => {
   const todayDiary = useAppSelector((state) => state.diarySlice.todayDiary);
   const dispatch = useAppDispatch();
   const { openRealm, closeRealm } = useRealm();
+
+  const actionButtons: NaviActionButtonAtomProps[] = [{
+    item: <NaviDismiss />,
+    disabled: false,
+  }]
 
   const handleSave = async () => {
     const realm = await openRealm();
@@ -27,13 +34,13 @@ const WriteDiaryPage = () => {
       await dispatch(addDiaryThunk({ realm, data: diary }));
       await closeRealm();
       await dispatch(setSelectedDiary(diary));
-      navigate("Complete");
+      navigate("DiaryStack", { screen: "Complete" });
     }
   }
 
   return (
     <>
-      <NavigationBarOrga />
+      <NavigationBarOrga actionButtons={actionButtons} />
       <ScrollView 
         ref={scrollViewRef}
         className="bg-white flex-1" 

@@ -1,18 +1,15 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SplashPage from "../pages/splash.page";
-import SelectEmotionPage from "../pages/select-emotion.page";
-import WriteDiaryPage from "../pages/write-diary.page";
-import WriteDiaryCompletePage from "../pages/write-diary-complete.page";
 import TabNavigation from "./TabNavigation";
-import DiaryDetailPage from "../pages/diary-detail.page";
+import DiaryStack, { DiaryStackParamList } from "./DiaryStack";
 
 export type RootStackParamList = {
   Splash: undefined;
   Main: undefined;
-  SelectEmotion: undefined;
-  WriteDiary: undefined;
-  Complete: undefined;
-  DiaryDetail: undefined;
+  DiaryStack: {
+    screen?: keyof DiaryStackParamList;
+    params?: DiaryStackParamList[keyof DiaryStackParamList];
+  } | undefined;
 };
 
 const Stack = createNativeStackNavigator();
@@ -22,10 +19,11 @@ const RootStack = () => {
     <Stack.Navigator initialRouteName="Splash" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Splash" component={SplashPage} />
       <Stack.Screen name="Main" component={TabNavigation} />
-      <Stack.Screen name="SelectEmotion" component={SelectEmotionPage} />
-      <Stack.Screen name="WriteDiary" component={WriteDiaryPage} />
-      <Stack.Screen name="Complete" component={WriteDiaryCompletePage} />
-      <Stack.Screen name="DiaryDetail" component={DiaryDetailPage} />
+      <Stack.Screen
+        name="DiaryStack"
+        component={DiaryStack}
+        options={{ presentation: "fullScreenModal" }}
+      />
     </Stack.Navigator>
   )
 }

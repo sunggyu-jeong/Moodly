@@ -11,4 +11,5 @@ export const IMAGES = {
   monthLeft: require('./month-left.png'),
   monthRight: require('./month-right.png'),
   more: require('./more.png'),
+  xmark: require('./xmark.png'), 
 }

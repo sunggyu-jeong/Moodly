@@ -1,7 +1,7 @@
 import { GestureResponderEvent, TouchableOpacity } from "react-native"
 
 export interface NaviActionButtonAtomProps {
-  onPress: (event: GestureResponderEvent) => void;
+  onPress?: (event: GestureResponderEvent) => void;
   disabled?: boolean;
   item: React.ReactNode;
 } 
