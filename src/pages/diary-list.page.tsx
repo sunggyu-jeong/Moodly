@@ -27,7 +27,8 @@ const DiaryListPage = () => {
             onPressLeft={() => {handleChangeMonth("left")}}
             onPressRight={() => {handleChangeMonth("right")}}
             rightDisabled={currentMonth.isSame(dayjs(selectedMonth), "month") ? true : false}
-          />} 
+          />
+        } 
       />
       <ScrollView 
         className="flex-1 bg-white"

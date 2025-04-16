@@ -3,7 +3,7 @@ import NavigationBarOrga from "../components/organisms/NavigationBar.orga";
 import { Image, ScrollView, Text } from "react-native";
 import { NaviActionButtonAtomProps } from "../components/atoms/NaviActionButton.atom";
 import { useAppDispatch, useAppSelector, useScale } from "../hooks";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { resetToRoot } from "../utils";
 import { setSelectedDiary, setSelectedEmotion } from "../redux/slice/diarySlice";
 import { ICON_DATA } from "../constant/Icons";
@@ -12,12 +12,12 @@ const DiaryDetailPage = () => {
   const selectedDiary = useAppSelector((state) => state.diarySlice.selectedDiary);
   const dispatch = useAppDispatch();
   const { getScaleSize } = useScale();
+  
 
   const actionButtons: NaviActionButtonAtomProps[] = [{
     item: <NaviMore />,
     disabled: false,
     onPress: () => {
-      console.log('Edit button pressed');
     },
   }]
 

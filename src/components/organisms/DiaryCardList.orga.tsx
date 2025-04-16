@@ -32,7 +32,7 @@ const DiaryCardListOrga = () => {
 
   const handleDiaryDetail = (item: EmotionDiaryDTO) => {
     dispatch(setSelectedDiary(item));
-    navigate("DiaryDetail");
+    navigate("DiaryStack", { screen: "DiaryDetail" });
   }
 
   return (

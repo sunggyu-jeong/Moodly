@@ -7,6 +7,8 @@ import { IMAGES } from "../assets/images";
 import { useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import ActionButtonAtom from "../components/atoms/ActionButton.atom";
+import DimmedView from "../components/atoms/DimmedView.atom";
+import PopupContainer from "../components/organisms/PopupContainer.orga";
 
 const HomePage = () => {
   const { getScaleSize } = useScale();

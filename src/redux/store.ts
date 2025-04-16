@@ -1,7 +1,9 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import diarySlice from "./slice/diarySlice"
+import diarySlice from "./slice/diarySlice";
+import commonSlice from "./slice/commonSlice";
 
 const reducers = combineReducers({
+  commonSlice: commonSlice,
   diarySlice: diarySlice
 });
 
