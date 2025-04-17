@@ -13,7 +13,7 @@ const DiaryTextBox = forwardRef((_, ref) => {
   return (
     <View className="w-full relative">
       <TextInput 
-        className="mx-[0px] bg-[#F3F1EC] rounded-[20px] px-[24px] pt-[24px] pb-[40px] text-pretendard text-[15px]"
+        className="mx-[0px] bg-[white] rounded-[20px] pt-[24px] pb-[40px] text-pretendard text-[15px]"
         style={{ maxHeight: getScaleSize(263), minHeight: getScaleSize(150) }}
         placeholder="왜 그 감정을 느꼈는지 알려줘"
         value={text}
@@ -22,7 +22,7 @@ const DiaryTextBox = forwardRef((_, ref) => {
         multiline
         textAlignVertical="top"
       />
-      <Text
+      {/* <Text
         style={{
           position: 'absolute',
           right: 48,
@@ -30,7 +30,7 @@ const DiaryTextBox = forwardRef((_, ref) => {
           color: '#999',
           fontSize: 15
         }}
-      >{`${text.length}/500`}</Text>
+      >{`${text.length}/500`}</Text> */}
     </View>
   )
 });
