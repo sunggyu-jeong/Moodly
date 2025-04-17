@@ -9,6 +9,20 @@ export function selectDiaryCount(realm: Realm): number {
   return results
 }
 
+export function hasDiaryForDay(realm: Realm, recordDate: Date): boolean {
+  const year = recordDate.getFullYear();
+  const month = recordDate.getMonth();
+  const day = recordDate.getDate();
+
+  const startOfDay = new Date(year, month, day, 0, 0, 0);
+  const endOfDay = new Date(year, month, day + 1, 0, 0, 0);
+
+  const results = realm
+    .objects<EmotionDiary>("EmotionDiary")
+    .filtered("record_date >= $0 AND record_date < $1", startOfDay, endOfDay);
+  return [...results].length > 0;
+}
+
 export function selectDiaryByMonth(realm: Realm, recordDate: Date): EmotionDiary[] {
   const year = recordDate.getFullYear();
   const month = recordDate.getMonth(); 

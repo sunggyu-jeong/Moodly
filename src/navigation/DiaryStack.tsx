@@ -8,7 +8,7 @@ export type DiaryStackParamList = {
   SelectEmotion: undefined;
   WriteDiary: undefined;
   Complete: undefined;
-  DiaryDetail: undefined;
+  DiaryDetail: { origin: string };
 };
 
 const Stack = createNativeStackNavigator<DiaryStackParamList>();
@@ -22,7 +22,7 @@ const DiaryStack = () => {
       <Stack.Screen name="SelectEmotion" component={SelectEmotionPage} options={{ presentation: 'fullScreenModal'}} />
       <Stack.Screen name="WriteDiary" component={WriteDiaryPage} />
       <Stack.Screen name="Complete" component={WriteDiaryCompletePage} />
-      <Stack.Screen name="DiaryDetail" component={DiaryDetailPage} />
+      <Stack.Screen name="DiaryDetail" component={DiaryDetailPage} initialParams={{ origin: "DiaryStack" }} />
     </Stack.Navigator>
   );
 };

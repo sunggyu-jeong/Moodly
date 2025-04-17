@@ -1,24 +1,24 @@
 import { useAppDispatch, useAppSelector, useRealm, useScale } from "../hooks";
 import { Image, Text, View } from "react-native";
 import { isNotEmpty, navigate } from "../utils";
-import TitleText from "../components/atoms/TitleText.atom";
-import { searchDiaryCountThunk } from "../redux/slice/diarySlice";
+import { searchDiaryCountThunk, searchDiaryForDayThunk } from "../redux/slice/diarySlice";
 import { IMAGES } from "../assets/images";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import ActionButtonAtom from "../components/atoms/ActionButton.atom";
-import DimmedView from "../components/atoms/DimmedView.atom";
-import PopupContainer from "../components/organisms/PopupContainer.orga";
+import ToolTipView from "../components/atoms/ToolTipView.atom";
 
 const HomePage = () => {
   const { getScaleSize } = useScale();
   const dispatch = useAppDispatch();
   const { openRealm, closeRealm } = useRealm();
   const diaryCount = useAppSelector((state) => state.diarySlice.diaryCount);
+  const isDiaryExist = useAppSelector((state) => state.diarySlice.isDiaryExist);
   
   const initialize = async () => {    
     const realm = await openRealm();
     if (isNotEmpty(realm)) {
+      await dispatch(searchDiaryForDayThunk({ realm, recordDate: new Date() }));
       await dispatch(searchDiaryCountThunk({ realm }));
       closeRealm();
     }
@@ -30,13 +30,16 @@ const HomePage = () => {
     }, [])
   );
 
+  useEffect(() => {
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>", isDiaryExist)
+  })
+
   return (
     <>
       <View className="bg-white flex-1 first:justify-center items-center">
-        <TitleText style={{ marginBottom: getScaleSize(78) }}>
-          오늘 하루 어땠어?{"\n"}
-          이야기를 들려줘!
-        </TitleText>
+        <ToolTipView style={{ marginBottom: getScaleSize(78) }} 
+          text={isDiaryExist.data ?  "일기를 소중히 저장했어!" : "오늘 하루 어땠어? 이야기를 들려줘!"}
+        />
         <Image
           source={IMAGES.smile} 
           className="aspect-square w-2/3" 
@@ -59,8 +62,8 @@ const HomePage = () => {
           className="w-full"
           style={{ marginTop: getScaleSize(66) }}
         >
-          <ActionButtonAtom onPress={() => { navigate("DiaryStack") }}>
-            들려주러 가기
+          <ActionButtonAtom onPress={() => { navigate("DiaryStack") }} disabled={isDiaryExist.data}>
+            {isDiaryExist.data ? "일기 작성 완료" : "들려주러 가기"}
           </ActionButtonAtom>
         </View>
       </View>

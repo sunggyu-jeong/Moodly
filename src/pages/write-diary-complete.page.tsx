@@ -8,7 +8,7 @@ const WriteDiaryCompletePage = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      navigate("DiaryDetail");
+      navigate("DiaryStack", { screen: "DiaryDetail", params: { origin: "DiaryStack" } });
     }, 2000);
   }, [])
 

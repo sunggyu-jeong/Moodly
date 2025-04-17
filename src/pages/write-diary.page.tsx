@@ -1,15 +1,15 @@
 import { useAppDispatch, useAppSelector, useRealm, useScale } from "../hooks";
-import ToolTipView from "../components/atoms/ToolTipView.atom";
 import NavigationBarOrga from "../components/organisms/NavigationBar.orga";
-import { View, Image, ScrollView } from "react-native";
+import { View, Image, ScrollView, TouchableOpacity, Text } from "react-native";
 import DiaryTextBox from "../components/atoms/DiaryTextBox.atom";
 import { useRef } from "react";
 import { isNotEmpty, navigate } from "../utils";
 import { IMAGES } from "../assets/images";
 import { addDiaryThunk, setSelectedDiary } from "../redux/slice/diarySlice";
-import ActionButtonAtom from "../components/atoms/ActionButton.atom";
 import { NaviActionButtonAtomProps } from "../components/atoms/NaviActionButton.atom";
 import NaviDismiss from "../components/atoms/NaviDismiss.atom";
+import TitleText from "../components/atoms/TitleText.atom";
+import { KeyboardAccessoryView } from 'react-native-keyboard-accessory';
 
 const WriteDiaryPage = () => {
   const { getScaleSize } = useScale();
@@ -53,21 +53,24 @@ const WriteDiaryPage = () => {
         }}
         keyboardShouldPersistTaps="handled"
       >
-        <ToolTipView style={{ marginTop: getScaleSize(17.5), marginBottom: getScaleSize(14) }} />
+        <TitleText>
+          어떤 일이 있었는지 말해줄래?
+        </TitleText> 
         <Image
           source={IMAGES.smile}
           style={{ marginBottom: getScaleSize(32), width: getScaleSize(137), height: getScaleSize(137) }} />
         <DiaryTextBox ref={textBoxRef} />
         <View className="flex-1" />
-        <View 
-          className="w-full absolute"
-          style={{ marginBottom: getScaleSize(57) }}
-        >
-          <ActionButtonAtom onPress={handleSave}>
-            작성완료
-          </ActionButtonAtom>
-        </View>
       </ScrollView>
+      <KeyboardAccessoryView>
+        <TouchableOpacity 
+          onPress={handleSave}
+        >
+          <Text className="leading-10 text-right mr-5">
+            저장
+          </Text>
+        </TouchableOpacity>
+      </KeyboardAccessoryView>
     </>
   )
 }

@@ -3,6 +3,7 @@ import { EmotionDiary, EmotionDiaryDTO } from "../../scheme";
 import { 
   createDiary,
   deleteDiary, 
+  hasDiaryForDay, 
   selectDiaryById, 
   selectDiaryByMonth, 
   selectDiaryCount, 
@@ -82,6 +83,19 @@ const removeDiaryThunk = createAsyncThunk<void, {realm: Realm, emotionId: number
   }
 )
 
+const searchDiaryForDayThunk = createAsyncThunk<boolean, {realm: Realm, recordDate: Date}, { rejectValue: string }>(
+  'diary/isDiaryExist',
+  async (payload, { rejectWithValue }) => {
+    try {
+      const result = hasDiaryForDay(payload.realm, payload.recordDate);
+      return result;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+)
+
+
 interface DiaryState {
   diaryCount: AsyncOperationState<number>;
   emotionDiaryList: AsyncOperationState<EmotionDiaryDTO[]>;
@@ -94,6 +108,7 @@ interface DiaryState {
   selectedEmotion: Emotions | null;
   todayDiary: EmotionDiaryDTO;
   selectedMonth: string;
+  isDiaryExist: AsyncOperationState<boolean>;
 }
 
 const initialState: DiaryState = {
@@ -104,6 +119,7 @@ const initialState: DiaryState = {
   addDiary: createInitialAsyncState<void>(),
   modifyDiary: createInitialAsyncState<void>(),
   removeDiary: createInitialAsyncState<void>(),
+  isDiaryExist: createInitialAsyncState<boolean>(),
   selectedDiary: {},
   selectedEmotion: null,
   todayDiary: {
@@ -177,6 +193,13 @@ const diarySlice = createSlice({
       'removeDiary',
       '삭제 요청이 실패했습니다. 잠시 후 다시 시도해주세요.'
     );
+    addAsyncThunkCase<boolean, DiaryState>(
+      builder,
+      searchDiaryForDayThunk,
+      'isDiaryExist',
+      'isDiaryExist',
+      '조회 실패했습니다. 잠시 후 다시 시도해주세요.'
+    );
   }
 })
 
@@ -186,7 +209,8 @@ export {
   searchDiaryByMonthThunk,
   addDiaryThunk,
   modifyDiaryThunk,
-  removeDiaryThunk
+  removeDiaryThunk,
+  searchDiaryForDayThunk
 }
 
 export const { 

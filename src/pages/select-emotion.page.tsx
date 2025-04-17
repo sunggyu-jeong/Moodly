@@ -35,8 +35,7 @@ const SelectEmotionPage = () => {
       <View className="bg-white items-center flex-1">
         <TitleText 
           style={{ marginTop: getScaleSize(49.5)}}>
-          오늘 너의 마음과{"\n"}
-          가장 닮은 친구를 골라줘
+          오늘 너의 마음과 가장 닮은 친구를 골라줘
         </TitleText>
         <SelectedEmotionOrga />
         <View className="flex-1" />
