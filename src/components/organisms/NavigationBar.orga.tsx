@@ -6,6 +6,7 @@ import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context"
 
 export interface NavigationBarConfig {
   showBackButton?: boolean;
+  leftComponents?: NaviActionButtonAtomProps[] | null;
   centerComponent?: React.ReactNode;
   actionButtons?: NaviActionButtonAtomProps[];
 } 
@@ -14,6 +15,7 @@ const NavigationBarOrga = ({
   showBackButton = true,
   centerComponent,
   actionButtons,
+  leftComponents,
 }: NavigationBarConfig) => {
   const hasLeftCenter = showBackButton || (isNotEmpty(centerComponent));
   const insets = useSafeAreaInsets();
@@ -28,6 +30,14 @@ const NavigationBarOrga = ({
         {showBackButton && (
           <View className="ml-3">
             <BackButtonAtom />
+          </View>
+        )}
+        
+        {isNotEmpty(leftComponents) && (
+          <View className="ml-3">
+            {leftComponents.map((el, index) => (
+              <NaviActionButtonAtom key={index} {...el} />
+            ))}
           </View>
         )}
 

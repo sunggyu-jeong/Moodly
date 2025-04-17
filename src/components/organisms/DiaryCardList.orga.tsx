@@ -1,9 +1,8 @@
 import { TouchableOpacity, View } from "react-native";
-import { IMAGES } from "../../assets/images";
 import DiaryCardHeader from "../molecules/DiaryCardHeader.mol";
 import DiaryCardContent from "../molecules/DiaryCardContent.mol";
 import { useFocusEffect } from "@react-navigation/native";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { useAppSelector, useRealm } from "../../hooks";
 import { isNotEmpty, navigate } from "../../utils";
 import { useAppDispatch } from "../../hooks";
@@ -32,7 +31,7 @@ const DiaryCardListOrga = () => {
 
   const handleDiaryDetail = (item: EmotionDiaryDTO) => {
     dispatch(setSelectedDiary(item));
-    navigate("DiaryStack", { screen: "DiaryDetail" });
+    navigate("DiaryDetail", { origin: "RootStack"});
   }
 
   return (
