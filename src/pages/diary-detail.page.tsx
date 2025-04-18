@@ -1,8 +1,8 @@
 import NavigationBarOrga from "../components/organisms/NavigationBar.orga";
-import { Image, ScrollView, Text } from "react-native";
+import { Image, ScrollView, Text, View, TouchableOpacity } from "react-native";
 import { NaviActionButtonAtomProps } from "../components/atoms/NaviActionButton.atom";
 import { useAppDispatch, useAppSelector, useRealm, useScale } from "../hooks";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { dismissModalToScreen, isNotEmpty, resetToRoot } from "../utils";
 import { removeDiaryThunk, setSelectedDiary, setSelectedEmotion } from "../redux/slice/diarySlice";
 import { ICON_DATA } from "../constant/Icons";
@@ -10,7 +10,9 @@ import NaviDismiss from "../components/atoms/NaviDismiss.atom";
 import { useRoute, RouteProp } from "@react-navigation/native";
 import NaviMore from "../components/atoms/NaviMore.atom";
 import PopupContainer from "../components/organisms/PopupContainer.orga";
-import { setShowModalPopup } from "../redux/slice/commonSlice";
+import { setShowDropdownView } from "../redux/slice/commonSlice";
+import { DropDownEventIdentifier, DropDownItemAtomProps } from "../components/atoms/DropdownItem.atom";
+import { IMAGES } from "../assets/images";
 
 type DiaryDetailRouteParams = {
   params: {
@@ -24,7 +26,7 @@ const DiaryDetailPage = () => {
   const { getScaleSize } = useScale();
   const route = useRoute<RouteProp<DiaryDetailRouteParams, 'params'>>();
   const { openRealm, closeRealm } = useRealm();
-  // console.log('진입 경로:', route.params.origin);
+  const dropdownButtonRef = useRef<View>(null);
 
   const leftComponents: NaviActionButtonAtomProps[] = [{
     item: <NaviDismiss />,
@@ -32,12 +34,26 @@ const DiaryDetailPage = () => {
   }]
 
   const actionButtons: NaviActionButtonAtomProps[] = [{
-    item: <NaviMore />,
+    item: (
+      <TouchableOpacity ref={dropdownButtonRef} onPress={openDropdown}>
+        <NaviMore />
+      </TouchableOpacity>
+    ),
     disabled: false,
-    onPress: () => {
-      dispatch(setShowModalPopup(true));
-    }
   }]
+
+  const props: DropDownItemAtomProps[] = [
+    {
+      text: "수정하기",
+      source: IMAGES.iconModify,
+      eventIdentifier: DropDownEventIdentifier.MODIFY_DIARY
+    },
+    {
+      text: "삭제하기",
+      source: IMAGES.iconDelete,
+      eventIdentifier: DropDownEventIdentifier.DELETE_DIARY
+    }
+  ]
 
   useEffect(() => {
     return () => {
@@ -46,6 +62,16 @@ const DiaryDetailPage = () => {
       resetToRoot();
     }
   }, [])
+
+  function openDropdown() {
+    dropdownButtonRef.current?.measureInWindow((x, y, width, height) => {
+      dispatch(setShowDropdownView({
+        visibility: true,
+        dropdownList: props,
+        pos: { x, y: y + height + 5 }
+      }));
+    });
+  };
 
   const handleRemoveDiary = async () => {
     const realm = await openRealm();
@@ -74,6 +100,7 @@ const DiaryDetailPage = () => {
         leftComponents={route.params.origin == "diaryStack" ? leftComponents : null} 
         actionButtons={actionButtons} 
       />
+      
       <ScrollView 
         className="flex-1 bg-white"
         contentContainerStyle={{

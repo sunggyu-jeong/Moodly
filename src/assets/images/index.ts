@@ -14,4 +14,6 @@ export const IMAGES = {
   xmark: require('./xmark.png'), 
   backup: require('./backup.png'), 
   feedbackChat: require('./feedback-chat.png'), 
+  iconDelete: require('./icon-delete.png'), 
+  iconModify: require('./icon-modify.png'), 
 }

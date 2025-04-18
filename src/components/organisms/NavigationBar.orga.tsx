@@ -21,7 +21,7 @@ const NavigationBarOrga = ({
   const insets = useSafeAreaInsets();
 
   return (
-    <SafeAreaView edges={["left", "right", "bottom"]} className="bg-white" style={{ paddingTop: insets.top}}>
+    <SafeAreaView edges={["left", "right", "bottom"]} className="bg-white" style={{ paddingTop: insets.top }}>
       <View
         className={`flex-row items-center h-10 px-[10px] bg-white ${
           hasLeftCenter ? "justify-between" : "justify-end"

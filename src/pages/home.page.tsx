@@ -3,7 +3,7 @@ import { Image, Text, View } from "react-native";
 import { isNotEmpty, navigate } from "../utils";
 import { searchDiaryCountThunk, searchDiaryForDayThunk } from "../redux/slice/diarySlice";
 import { IMAGES } from "../assets/images";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import ActionButtonAtom from "../components/atoms/ActionButton.atom";
 import ToolTipView from "../components/atoms/ToolTipView.atom";
@@ -14,7 +14,7 @@ const HomePage = () => {
   const { openRealm, closeRealm } = useRealm();
   const diaryCount = useAppSelector((state) => state.diarySlice.diaryCount);
   const isDiaryExist = useAppSelector((state) => state.diarySlice.isDiaryExist);
-  
+
   const initialize = async () => {    
     const realm = await openRealm();
     if (isNotEmpty(realm)) {
@@ -29,10 +29,6 @@ const HomePage = () => {
       initialize();
     }, [])
   );
-
-  useEffect(() => {
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>>", isDiaryExist)
-  })
 
   return (
     <>
