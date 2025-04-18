@@ -3,8 +3,10 @@ import SettingList from "../components/molecules/SettingList.atom";
 import NavigationBarOrga from "../components/organisms/NavigationBar.orga";
 import { IMAGES } from "../assets/images";
 import NavigationTitleAtom from "../components/atoms/NaviTitle.atom";
+import { useScale } from "../hooks";
 
 const SettingPage = () => {
+  const { getScaleSize } = useScale();
   enum SETTING_EVENT_TYPE {
     BACKUP = "backup",
     BUG_REPORT = "bug_report",
@@ -12,17 +14,13 @@ const SettingPage = () => {
   
   const SETTING_LIST_ITEM = [
     {
-      title: '앱 버전',
-      rightComponent: <Text className="font-semibold text-lg">1.0.0</Text>,
-    },
-    {
       title: '백업',
-      rightComponent: (<Image source={IMAGES.right} />),
+      rightComponent: (<Image source={IMAGES.backup} />),
       onPress: () => handlePress(SETTING_EVENT_TYPE.BACKUP),
     },
     {
-      title: '버그 제보하기/건의사항',
-      rightComponent: (<Image source={IMAGES.right} />),
+      title: '피드백 보내기',
+      rightComponent: (<Image source={IMAGES.feedbackChat} />),
       onPress: () => handlePress(SETTING_EVENT_TYPE.BUG_REPORT),
     },
   ]
@@ -38,8 +36,11 @@ const SettingPage = () => {
   return (
     <>
       <NavigationBarOrga showBackButton={false} centerComponent={<NavigationTitleAtom title="설정" />} />
-      <View className="bg-white flex-1">
+      <View className="bg-white flex-1" style={{ paddingTop: getScaleSize(80) }}>
         <SettingList items={SETTING_LIST_ITEM} />
+        <Text className="text-center items-center mb-5 font-pretendard font-light text-base">
+          앱 버전 : 1.0.0
+        </Text>
       </View>      
     </>
   )

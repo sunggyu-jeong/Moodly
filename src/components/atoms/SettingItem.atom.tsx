@@ -1,6 +1,7 @@
+import { IMAGES } from '../../assets/images';
 import { useScale } from '../../hooks';
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 
 export interface SettingItemAtomProps {
   title: string;
@@ -17,13 +18,17 @@ const SettingItemAtom = ({ title, rightComponent, onPress }: SettingItemAtomProp
       onPress={onPress}
       className="flex-row items-center justify-between p-4"
     >
-      <Text 
-        className="font-semibold"
-        style={{ fontSize: getScaleSize(16) }}
-      >
-        {title}
-      </Text>
-      {rightComponent && <View>{rightComponent}</View>}
+      <View className="flex-row items-center">
+        {rightComponent && <View>{rightComponent}</View>}
+        <Text
+          numberOfLines={1}
+          className="font-normal font-pretendard tracking-[-0.5px] ml-4"
+          style={{ fontSize: getScaleSize(16) }}
+        >
+          {title}
+        </Text>
+      </View>
+      <Image source={IMAGES.right} />
     </Container>
   );
 };
