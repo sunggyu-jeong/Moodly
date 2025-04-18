@@ -18,11 +18,6 @@ const ToolTipView = ({ ...props }: ToolTipViewProps) => {
           {props.text}
         </Text>
       </View>
-      {/* <View className="w-full items-center mt-[0px]">
-        <View
-          className="w-0 h-0 border-l-[10px] border-r-[10px] border-t-[10px] border-l-transparent border-r-transparent border-t-[#F3F1EC]"
-        />
-      </View> */}
     </View>
   )
 }

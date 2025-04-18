@@ -22,15 +22,6 @@ const DiaryTextBox = forwardRef((_, ref) => {
         multiline
         textAlignVertical="top"
       />
-      {/* <Text
-        style={{
-          position: 'absolute',
-          right: 48,
-          bottom: 24,
-          color: '#999',
-          fontSize: 15
-        }}
-      >{`${text.length}/500`}</Text> */}
     </View>
   )
 });
