@@ -18,6 +18,7 @@ const DropDownItemAtom = ({ ...props }: DropDownItemAtomProps) => {
   const dispatch = useAppDispatch();
   const handleDropdownEvents = (eventIdentifier: keyof typeof DropDownEventIdentifier) => {
     dispatch(setShowDropdownView({visibility: false, dropdownList: null, pos: {x: null, y: null}}))
+    console.log(">>>")
     switch (eventIdentifier)  {
       case DropDownEventIdentifier.MODIFY_DIARY:
         // navigate("WriteDiary", { origin: "RootStack" });

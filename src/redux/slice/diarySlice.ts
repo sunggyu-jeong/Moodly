@@ -55,7 +55,8 @@ const addDiaryThunk = createAsyncThunk<void, {realm: Realm, data: EmotionDiaryDT
   'diary/addDiary',
   async (payload, { rejectWithValue }) => {
     try {
-      createDiary(payload.realm, payload.data);
+      const result: number | Error = createDiary(payload.realm, payload.data);
+      return result;
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
@@ -102,7 +103,7 @@ interface DiaryState {
   emotionDiaryList: AsyncOperationState<EmotionDiaryDTO[]>;
   searchById: AsyncOperationState<void>;
   searchByMonth: AsyncOperationState<EmotionDiaryDTO[]>;
-  addDiary: AsyncOperationState<void>;
+  addDiary: AsyncOperationState<number>;
   modifyDiary: AsyncOperationState<void>;
   removeDiary: AsyncOperationState<void>;
   selectedDiary: EmotionDiaryDTO;
@@ -117,7 +118,7 @@ const initialState: DiaryState = {
   emotionDiaryList: createInitialAsyncState<EmotionDiaryDTO[]>(),
   searchById: createInitialAsyncState<void>(),
   searchByMonth: createInitialAsyncState<EmotionDiaryDTO[]>(),
-  addDiary: createInitialAsyncState<void>(),
+  addDiary: createInitialAsyncState<number>(),
   modifyDiary: createInitialAsyncState<void>(),
   removeDiary: createInitialAsyncState<void>(),
   isDiaryExist: createInitialAsyncState<boolean>(),
@@ -173,7 +174,7 @@ const diarySlice = createSlice({
       'searchByMonth',
       '조회 요청이 실패했습니다. 잠시 후 다시 시도해주세요.'
     );
-    addAsyncThunkCase<void, DiaryState>(
+    addAsyncThunkCase<number, DiaryState>(
       builder,
       addDiaryThunk,
       'addDiary',

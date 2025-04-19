@@ -31,7 +31,10 @@ const WriteDiaryPage = () => {
     if (isNotEmpty(text) && isNotEmpty(realm)) {
       console.log("저장된 일기:", text);
       const diary = { ...todayDiary, description: text };
-      await dispatch(addDiaryThunk({ realm, data: diary }));
+      const result = await dispatch(addDiaryThunk({ realm, data: diary }));
+      const emotionId = result.payload as number | undefined;
+      diary.emotionId = emotionId;
+      console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", diary)
       await closeRealm();
       await dispatch(setSelectedDiary(diary));
       navigate("DiaryStack", { screen: "Complete" });
@@ -49,7 +52,6 @@ const WriteDiaryPage = () => {
           justifyContent: 'flex-end',
           alignItems: 'center',
           paddingHorizontal: 24,
-          paddingBottom: 150,
         }}
         keyboardShouldPersistTaps="handled"
       >
@@ -68,13 +70,11 @@ const WriteDiaryPage = () => {
         <View className="flex-1" />
       </ScrollView>
       <KeyboardAccessoryView>
-        <TouchableOpacity 
-          onPress={handleSave}
-        >
-          <Text className="leading-10 text-right mr-5">
-            저장
-          </Text>
-        </TouchableOpacity>
+      <TouchableOpacity onPress={handleSave} className="ml-auto w-10 mr-5">
+        <Text className="text-right leading-10 whitespace-nowrap">
+          저장
+        </Text>
+      </TouchableOpacity>
       </KeyboardAccessoryView>
     </>
   )

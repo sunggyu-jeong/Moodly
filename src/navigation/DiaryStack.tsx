@@ -3,6 +3,7 @@ import SelectEmotionPage from "../pages/select-emotion.page";
 import WriteDiaryPage from "../pages/write-diary.page";
 import WriteDiaryCompletePage from "../pages/write-diary-complete.page";
 import DiaryDetailPage from "../pages/diary-detail.page";
+import DropDownAnimationTemp from "../components/templates/DropDownAnimation.temp";
 
 export type DiaryStackParamList = {
   SelectEmotion: undefined;
@@ -15,15 +16,19 @@ const Stack = createNativeStackNavigator<DiaryStackParamList>();
 
 const DiaryStack = () => {
   return (
-    <Stack.Navigator
-      initialRouteName="SelectEmotion"
-      screenOptions={{ headerShown: false }}
-    >
-      <Stack.Screen name="SelectEmotion" component={SelectEmotionPage} options={{ presentation: 'fullScreenModal'}} />
-      <Stack.Screen name="WriteDiary" component={WriteDiaryPage} />
-      <Stack.Screen name="Complete" component={WriteDiaryCompletePage} />
-      <Stack.Screen name="DiaryDetail" component={DiaryDetailPage} initialParams={{ origin: "DiaryStack" }} />
-    </Stack.Navigator>
+    <>
+      <Stack.Navigator
+        initialRouteName="SelectEmotion"
+        screenOptions={{ headerShown: false }}
+      >
+        <Stack.Screen name="SelectEmotion" component={SelectEmotionPage} options={{ presentation: 'fullScreenModal'}} />
+        <Stack.Screen name="WriteDiary" component={WriteDiaryPage} />
+        <Stack.Screen name="Complete" component={WriteDiaryCompletePage} />
+        <Stack.Screen name="DiaryDetail" component={DiaryDetailPage} initialParams={{ origin: "DiaryStack" }} />
+      </Stack.Navigator>
+      <DropDownAnimationTemp />
+    </>
+    
   );
 };
 

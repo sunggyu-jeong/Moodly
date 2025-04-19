@@ -40,12 +40,15 @@ const NavigationBarOrga = ({
             ))}
           </View>
         )}
+        <View className="flex-1" />
 
         {centerComponent && (
           <View className="items-center flex-1">
             {centerComponent}
           </View>
         )}
+
+        <View className="flex-1" />
 
         {isNotEmpty(actionButtons) && (
           <View className="mr-[10px]">

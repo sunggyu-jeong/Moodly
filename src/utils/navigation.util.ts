@@ -26,16 +26,11 @@ export function goBack() {
 }
 
 export function resetToRoot() {
-  if (navigationRef.isReady()) {
-    const routeNames = navigationRef.getRootState()?.routeNames ?? [];
-    const routes = routeNames.filter((r) => r !== 'Splash');
-    const rootRoute = routes[0];
+  if (!navigationRef.isReady()) return;
 
-    if (rootRoute) {
-      navigationRef.dispatch(
-        StackActions.popToTop()
-      );
-    }
+  const state = navigationRef.getRootState();
+  if (state.routes.length > 1) {
+    navigationRef.dispatch(StackActions.popToTop());
   }
 }
 

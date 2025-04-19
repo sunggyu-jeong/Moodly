@@ -57,7 +57,7 @@ const DiaryDetailPage = () => {
 
   useEffect(() => {
     return () => {
-      dispatch(setSelectedEmotion(null));
+      dispatch(setSelectedEmotion(ICON_DATA[0]));
       dispatch(setSelectedDiary({}));
       resetToRoot();
     }
@@ -97,7 +97,7 @@ const DiaryDetailPage = () => {
       />
       <NavigationBarOrga 
         showBackButton={route.params.origin == "RootStack"} 
-        leftComponents={route.params.origin == "diaryStack" ? leftComponents : null} 
+        leftComponents={route.params.origin == "DiaryStack" ? leftComponents : null} 
         actionButtons={actionButtons} 
       />
       

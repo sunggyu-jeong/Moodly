@@ -26,6 +26,9 @@ const PopupContainer = ({ ...props }: PopupContainerProps) => {
       duration: 150,
       useNativeDriver: true,
     }).start();
+    return () => {
+      dispatch(setShowModalPopup(false));  
+    }
   }, []);
 
   const handleCloseModal = () => {
