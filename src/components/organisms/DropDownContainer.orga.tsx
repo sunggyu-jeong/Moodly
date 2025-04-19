@@ -16,7 +16,7 @@ const DropDownOrga = () => {
 
   return (
     <View
-      className="justify-center w-[148px] rounded-xl bg-white shadow-sm z-[999]"
+      className="justify-center w-[148px] rounded-xl bg-white shadow-[0px_10px_40px_0px_rgba(0,0,0,0.12)] z-[999]"
     >
       {dropdownList.map((item, idx) => (
         <React.Fragment key={idx}>

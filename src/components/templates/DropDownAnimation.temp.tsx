@@ -28,7 +28,7 @@ const DropdownAnimationTemplate = () => {
         duration: 150,
         useNativeDriver: true,
       }).start(({ finished }) => {
-        // if (finished) setRendered(false);
+        if (finished) setRendered(false);
       });
     }
   }, [visibility, pos, animationValue]);

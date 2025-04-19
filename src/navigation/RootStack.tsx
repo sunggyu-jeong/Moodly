@@ -3,6 +3,7 @@ import SplashPage from "../pages/splash.page";
 import TabNavigation from "./TabNavigation";
 import DiaryStack, { DiaryStackParamList } from "./DiaryStack";
 import DiaryDetailPage from "../pages/diary-detail.page";
+import WriteDiaryPage from "../pages/write-diary.page";
 
 export type RootStackParamList = {
   Splash: undefined;
@@ -27,6 +28,7 @@ const RootStack = () => {
         options={{ presentation: "fullScreenModal" }}
       />
       <Stack.Screen name="DiaryDetail" component={DiaryDetailPage} />
+      <Stack.Screen name="WriteDiary" component={WriteDiaryPage} />
     </Stack.Navigator>
   )
 }

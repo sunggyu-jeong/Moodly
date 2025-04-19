@@ -1,5 +1,5 @@
 import { Animated, View, Modal } from "react-native";
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import PopupHeader from "../molecules/PopupHeader.mol";
 import PopupFooter from "../molecules/PopupFooter.mol";
 import DimmedViewAtom from "../atoms/DimmedView.atom";
@@ -52,4 +52,4 @@ const PopupContainer = ({ ...props }: PopupContainerProps) => {
   );
 }
 
-export default PopupContainer;
+export default React.memo(PopupContainer);

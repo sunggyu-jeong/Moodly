@@ -6,7 +6,7 @@ import EmotionListOrga from "../components/organisms/EmotionList.orga";
 import SelectedEmotionOrga from "../components/organisms/SelectedEmotion.orga";
 import { EmotionDiaryDTO } from "../scheme";
 import { setTodayDiary } from "../redux/slice/diarySlice";
-import { navigate, resetToRoot } from "../utils";
+import { navigate } from "../utils";
 import ActionButtonAtom from "../components/atoms/ActionButton.atom";
 import { ICON_DATA } from "../constant/Icons";
 import NaviDismiss from "../components/atoms/NaviDismiss.atom";
@@ -34,13 +34,12 @@ const SelectEmotionPage = () => {
       <NavigationBarOrga showBackButton={false} actionButtons={actionButtons} />
       <View className="bg-white items-center flex-1">
         <TitleText 
-          style={{ marginTop: getScaleSize(49.5)}}>
+          style={{ marginTop: getScaleSize(64)}}>
           오늘 너의 마음과 가장 닮은 친구를 골라줘
         </TitleText>
         <SelectedEmotionOrga />
         <View className="flex-1" />
         <EmotionListOrga emotionList={ICON_DATA} />
-            
         <View 
           className="w-full"
           style={{ marginBottom: getScaleSize(57) }}

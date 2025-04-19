@@ -1,4 +1,7 @@
 import { Image, Text, TouchableOpacity, View } from "react-native";
+import { useAppDispatch } from "../../hooks";
+import { setShowDropdownView, setShowModalPopup } from "../../redux/slice/commonSlice";
+import { navigate } from "../../utils";
 
 export const DropDownEventIdentifier = {
   MODIFY_DIARY: "MODIFY_DIARY",
@@ -12,10 +15,15 @@ export interface DropDownItemAtomProps {
 }
 
 const DropDownItemAtom = ({ ...props }: DropDownItemAtomProps) => {
+  const dispatch = useAppDispatch();
   const handleDropdownEvents = (eventIdentifier: keyof typeof DropDownEventIdentifier) => {
+    dispatch(setShowDropdownView({visibility: false, dropdownList: null, pos: {x: null, y: null}}))
     switch (eventIdentifier)  {
       case DropDownEventIdentifier.MODIFY_DIARY:
+        // navigate("WriteDiary", { origin: "RootStack" });
       case DropDownEventIdentifier.DELETE_DIARY:
+        dispatch(setShowModalPopup(true));
+        break;
     }
   }
 

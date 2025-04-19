@@ -19,12 +19,13 @@ const EmotionIcon = ({ emotion }: { emotion: Emotions }) => {
   return (
     <View
       key={emotion.id}
-      className="w-[20%] my-[5px] items-center justify-center h-[50px] aspect-square"
+      className="w-[20%] items-center justify-center h-[50px] aspect-square"
     >
       <Pressable onPress={() => { handleSelectEmotion(emotion) }}>
         <Image
           source={emotion.icon} 
-          style={{ width: 48, height: 48, aspectRatio: 1 }}  />
+          resizeMode="cover"
+          style={{ width: 56, height: 56, aspectRatio: 1 }}  />
       </Pressable>
     </View>
   )

@@ -13,6 +13,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Realm from 'realm';
 import { Emotions } from "../../components/atoms/EmotionIcon.atom";
 import dayjs from "dayjs";
+import { ICON_DATA } from "../../constant/Icons";
 
 const searchDiaryCountThunk = createAsyncThunk<number | undefined, {realm: Realm}, { rejectValue: string }>(
   'diary/searchDiaryCount',
@@ -121,7 +122,7 @@ const initialState: DiaryState = {
   removeDiary: createInitialAsyncState<void>(),
   isDiaryExist: createInitialAsyncState<boolean>(),
   selectedDiary: {},
-  selectedEmotion: null,
+  selectedEmotion: ICON_DATA[0],
   todayDiary: {
     emotionId: undefined,
     iconId: undefined,

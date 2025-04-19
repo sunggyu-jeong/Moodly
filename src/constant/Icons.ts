@@ -31,11 +31,5 @@ export const ICON_DATA: Emotions[] = [
     icon: IMAGES.smile,
     text: '신남',
     description: '테스트3'
-  },
-  {
-    id: 6,
-    icon: IMAGES.smile,
-    text: '기대',
-    description: '테스트3'
   }
 ];
