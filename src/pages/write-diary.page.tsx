@@ -53,12 +53,17 @@ const WriteDiaryPage = () => {
         }}
         keyboardShouldPersistTaps="handled"
       >
-        <TitleText>
+        <TitleText style={{ marginTop: getScaleSize(63) }}>
           어떤 일이 있었는지 말해줄래?
         </TitleText> 
         <Image
           source={IMAGES.smile}
-          style={{ marginBottom: getScaleSize(32), width: getScaleSize(137), height: getScaleSize(137) }} />
+          style={{ 
+            marginTop: getScaleSize(26), 
+            marginBottom: getScaleSize(32), 
+            width: getScaleSize(137), 
+            height: getScaleSize(137) }} 
+        />
         <DiaryTextBox ref={textBoxRef} />
         <View className="flex-1" />
       </ScrollView>
