@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
 import { dismissModalToScreen, isNotEmpty, resetToRoot } from "../utils";
 import { removeDiaryThunk, setSelectedDiary, setSelectedEmotion } from "../redux/slice/diarySlice";
 import { ICON_DATA } from "../constant/Icons";
-import NaviDismiss from "../components/atoms/NaviDismiss.atom";
+import NaviDismiss from "../components/atoms/IconButton.atom";
 import { useRoute, RouteProp } from "@react-navigation/native";
 import NaviMore from "../components/atoms/NaviMore.atom";
 import PopupContainer from "../components/organisms/PopupContainer.orga";

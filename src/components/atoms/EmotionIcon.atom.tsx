@@ -1,34 +1,20 @@
-import { useAppDispatch } from "../../hooks";
-import { setSelectedEmotion } from "../../redux/slice/diarySlice";
 import { Image, Pressable, View } from "react-native";
 
-export interface Emotions {
-  id: number;
+export interface PureEmotionIconAtomProps {
   icon: any;
-  text: string;
-  description: string;
+  onPress: () => void;
 }
 
-const EmotionIcon = ({ emotion }: { emotion: Emotions }) => {
-  const dispatch = useAppDispatch();
+const EmotionIconAtom = ({ ...props }: PureEmotionIconAtomProps) => (
+  <View className="w-[20%] items-center justify-center h-[50px] aspect-square">
+    <Pressable onPress={props.onPress}>
+      <Image
+        source={props.icon}
+        resizeMode="cover"
+        style={{ width: 56, height: 56, aspectRatio: 1 }}
+      />
+    </Pressable>
+  </View>
+);
 
-  const handleSelectEmotion = (item: Emotions) => {
-    dispatch(setSelectedEmotion(item));
-  }
-
-  return (
-    <View
-      key={emotion.id}
-      className="w-[20%] items-center justify-center h-[50px] aspect-square"
-    >
-      <Pressable onPress={() => { handleSelectEmotion(emotion) }}>
-        <Image
-          source={emotion.icon} 
-          resizeMode="cover"
-          style={{ width: 56, height: 56, aspectRatio: 1 }}  />
-      </Pressable>
-    </View>
-  )
-}
-
-export default EmotionIcon;
+export default EmotionIconAtom;
