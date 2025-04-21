@@ -17,11 +17,11 @@ export interface DropDownItemAtomProps {
 const DropDownItemAtom = ({ ...props }: DropDownItemAtomProps) => {
   const dispatch = useAppDispatch();
   const handleDropdownEvents = (eventIdentifier: keyof typeof DropDownEventIdentifier) => {
-    dispatch(setShowDropdownView({visibility: false, dropdownList: null, pos: {x: null, y: null}}))
-    console.log(">>>")
+    dispatch(setShowDropdownView({visibility: false, dropdownList: null, pos: {x: null, y: null}}));
     switch (eventIdentifier)  {
       case DropDownEventIdentifier.MODIFY_DIARY:
-        // navigate("WriteDiary", { origin: "RootStack" });
+        navigate("WriteDiary", { origin: "RootStack"});
+        break;
       case DropDownEventIdentifier.DELETE_DIARY:
         dispatch(setShowModalPopup(true));
         break;
