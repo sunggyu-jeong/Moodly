@@ -34,7 +34,6 @@ const WriteDiaryPage = () => {
       const result = await dispatch(addDiaryThunk({ realm, data: diary }));
       const emotionId = result.payload as number | undefined;
       diary.emotionId = emotionId;
-      console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", diary)
       await closeRealm();
       await dispatch(setSelectedDiary(diary));
       navigate("DiaryStack", { screen: "Complete" });
@@ -70,11 +69,14 @@ const WriteDiaryPage = () => {
         <View className="flex-1" />
       </ScrollView>
       <KeyboardAccessoryView>
-      <TouchableOpacity onPress={handleSave} className="ml-auto w-10 mr-5">
-        <Text className="text-right leading-10 whitespace-nowrap">
-          저장
-        </Text>
-      </TouchableOpacity>
+        <TouchableOpacity onPress={handleSave} className="ml-auto w-10 mr-5">
+          <Text 
+            className="font-semibold text-right leading-10 whitespace-nowrap"
+            style={{ fontSize: getScaleSize(16) }}
+          >
+            저장
+          </Text>
+        </TouchableOpacity>
       </KeyboardAccessoryView>
     </>
   )

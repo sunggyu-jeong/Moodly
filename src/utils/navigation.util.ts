@@ -47,8 +47,6 @@ export function resetTo<RouteName extends keyof RootStackParamList>(
 }
 
 export function dismissModalToScreen() {
-  if (navigationRef.isReady() && navigationRef.canGoBack()) {
-    navigationRef.dispatch(StackActions.popToTop());
-    navigationRef.goBack();
-  }
+  navigationRef.dispatch(StackActions.popToTop());
+  goBack();
 }

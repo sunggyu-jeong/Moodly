@@ -21,7 +21,8 @@ const DropDownItemAtom = ({ ...props }: DropDownItemAtomProps) => {
     console.log(">>>")
     switch (eventIdentifier)  {
       case DropDownEventIdentifier.MODIFY_DIARY:
-        // navigate("WriteDiary", { origin: "RootStack" });
+        // navigate("DiaryStack", { screen: "WriteDiary", params: { origin: "RootStack" } });
+        return;
       case DropDownEventIdentifier.DELETE_DIARY:
         dispatch(setShowModalPopup(true));
         break;

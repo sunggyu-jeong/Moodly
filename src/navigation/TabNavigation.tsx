@@ -4,8 +4,6 @@ import SettingPage from "../pages/setting.page";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import TabBarIcon from "../components/atoms/TabBarIcon.atom";
 import { IMAGES } from "../assets/images";
-import DiaryDetailPage from "../pages/diary-detail.page";
-import DiaryCardList from "../components/organisms/DiaryCardList.orga";
 
 const Tab = createBottomTabNavigator();
 
