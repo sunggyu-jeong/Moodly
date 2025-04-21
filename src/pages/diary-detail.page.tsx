@@ -59,7 +59,6 @@ const DiaryDetailPage = () => {
     return () => {
       dispatch(setSelectedEmotion(ICON_DATA[0]));
       dispatch(setSelectedDiary({}));
-      resetToRoot();
     }
   }, [])
 

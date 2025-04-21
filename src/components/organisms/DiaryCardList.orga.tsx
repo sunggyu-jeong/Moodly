@@ -1,10 +1,10 @@
-import { TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import DiaryCardHeader from "../molecules/DiaryCardHeader.mol";
 import DiaryCardContent from "../molecules/DiaryCardContent.mol";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
-import { useAppSelector, useRealm } from "../../hooks";
-import { isNotEmpty, navigate } from "../../utils";
+import { useAppSelector, useRealm, useScale } from "../../hooks";
+import { isEmpty, isNotEmpty, navigate } from "../../utils";
 import { useAppDispatch } from "../../hooks";
 import { searchDiaryByMonthThunk, setSelectedDiary } from "../../redux/slice/diarySlice";
 import { EmotionDiaryDTO } from "../../scheme";
@@ -14,6 +14,7 @@ const DiaryCardListOrga = () => {
   const dispatch = useAppDispatch();
   const selectedMonth = useAppSelector((state) => state.diarySlice.selectedMonth);
   const searchByMonth = useAppSelector((state) => state.diarySlice.searchByMonth);
+  const { getScaleSize } = useScale();
   
   useFocusEffect(
     useCallback(() => {
@@ -35,24 +36,37 @@ const DiaryCardListOrga = () => {
   }
 
   return (
-    <View className="justify-start items-stretch w-full mt-[11.5px]">
+    <>
       {
         isNotEmpty(searchByMonth?.data) && (
-          searchByMonth?.data?.map((entry, index) => (
-          <TouchableOpacity onPress={() => { handleDiaryDetail(entry)}} key={index}> 
-            <View key={index} className="bg-[#F0F0F0] p-4 mb-4 rounded-[9px]">
-              {
-                isNotEmpty(searchByMonth?.data) && (
-                  <DiaryCardHeader iconId={entry.iconId} recordDate={entry.recordDate} />
-                )
-              }
-              <DiaryCardContent content={entry.description ?? ""} />
-            </View>
-          </TouchableOpacity>
-          ))
+          <View className="flex-1 justify-start items-stretch w-full">
+            {
+            searchByMonth?.data?.map((entry, index) => (
+              <TouchableOpacity onPress={() => { handleDiaryDetail(entry)}} key={index}> 
+                <View key={index} className="bg-[#F0F0F0] p-4 mb-4 rounded-[9px]">
+                  {
+                    isNotEmpty(searchByMonth?.data) && (
+                      <DiaryCardHeader iconId={entry.iconId} recordDate={entry.recordDate} />
+                    )
+                  }
+                  <DiaryCardContent content={entry.description ?? ""} />
+                </View>
+              </TouchableOpacity>
+            ))
+            }
+          </View>
         )
       }
-    </View>
+      {
+        isEmpty(searchByMonth.data) && (
+          <View className="w-full min-h-[70vh] justify-center items-center">
+            <Text className="font-pretendard tracking-[-0.5px]" style={{ fontSize: getScaleSize(14)}}>
+              작성한 일기가 없어요!
+            </Text>
+          </View>
+        )
+      }
+    </>
   );
 };
 

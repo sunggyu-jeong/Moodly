@@ -37,7 +37,7 @@ const DiaryListPage = () => {
         } 
       />
       <ScrollView 
-        className="flex-1 bg-white"
+        className="bg-white"
         contentContainerStyle={{ paddingHorizontal: 24 }}
       >
         <DiaryCardListOrga />

@@ -1,7 +1,8 @@
 import { ImageSourcePropType } from "react-native";
 import { useAppDispatch } from "../../hooks";
 import { setShowDropdownView, setShowModalPopup } from "../../redux/slice/commonSlice";
-import { navigate } from "../../utils";
+import { CommonActions } from '@react-navigation/native';
+import { navigateFlow, NavigationFlow, navigationRef } from '../../utils';
 import DropDownItemAtom from "../atoms/DropdownItem.atom";
 
 export const DropDownEventIdentifier = {
@@ -20,7 +21,7 @@ const DropDownItem = ({ ...props }: DropDownItemProps) => {
   const handle = () => {
     dispatch(setShowDropdownView({ visibility: false, dropdownList: null, pos: {x: null, y: null} }));
     if (props.eventIdentifier === DropDownEventIdentifier.MODIFY_DIARY) {
-      navigate("WriteDiary", { origin: "RootStack"});
+      navigateFlow(NavigationFlow.DiaryDetailToEmotionWriteWithReturn);
     } else {
       dispatch(setShowModalPopup(true));
     }

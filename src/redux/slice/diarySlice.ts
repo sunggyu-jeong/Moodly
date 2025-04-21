@@ -11,9 +11,9 @@ import {
 import { addAsyncThunkCase } from "../..//utils";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Realm from 'realm';
-import { Emotions } from "../../components/atoms/EmotionIcon.atom";
 import dayjs from "dayjs";
 import { ICON_DATA } from "../../constant/Icons";
+import { Emotions } from "../../components/molecules/EmotionIcon.mol";
 
 const searchDiaryCountThunk = createAsyncThunk<number | undefined, {realm: Realm}, { rejectValue: string }>(
   'diary/searchDiaryCount',
@@ -55,8 +55,7 @@ const addDiaryThunk = createAsyncThunk<void, {realm: Realm, data: EmotionDiaryDT
   'diary/addDiary',
   async (payload, { rejectWithValue }) => {
     try {
-      const result: number | Error = createDiary(payload.realm, payload.data);
-      return result;
+      createDiary(payload.realm, payload.data);
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
