@@ -4,7 +4,7 @@ import { NaviActionButtonAtomProps } from "../components/atoms/NaviActionButton.
 import { useAppDispatch, useAppSelector, useRealm, useScale } from "../hooks";
 import { useEffect, useRef } from "react";
 import { dismissModalToScreen, goBack, isNotEmpty, resetToRoot } from "../utils";
-import { removeDiaryThunk, setSelectedDiary, setSelectedEmotion } from "../redux/slice/diarySlice";
+import { removeDiaryThunk, setSelectedDiary, setSelectedIcon } from "../redux/slice/diarySlice";
 import { ICON_DATA } from "../constant/Icons";
 import { useRoute, RouteProp } from "@react-navigation/native";
 import NaviMore from "../components/atoms/NaviMore.atom";
@@ -57,7 +57,7 @@ const DiaryDetailPage = () => {
 
   useEffect(() => {
     return () => {
-      dispatch(setSelectedEmotion(ICON_DATA[0]));
+      dispatch(setSelectedIcon(ICON_DATA[0]));
       dispatch(setSelectedDiary({}));
     }
   }, [])

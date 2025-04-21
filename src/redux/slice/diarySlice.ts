@@ -106,7 +106,7 @@ interface DiaryState {
   modifyDiary: AsyncOperationState<void>;
   removeDiary: AsyncOperationState<void>;
   selectedDiary: EmotionDiaryDTO;
-  selectedEmotion: Emotions | null;
+  selectedIcon: Emotions | null;
   todayDiary: EmotionDiaryDTO;
   selectedMonth: string;
   isDiaryExist: AsyncOperationState<boolean>;
@@ -122,7 +122,7 @@ const initialState: DiaryState = {
   removeDiary: createInitialAsyncState<void>(),
   isDiaryExist: createInitialAsyncState<boolean>(),
   selectedDiary: {},
-  selectedEmotion: ICON_DATA[0],
+  selectedIcon: ICON_DATA[0],
   todayDiary: {
     emotionId: undefined,
     iconId: undefined,
@@ -138,8 +138,8 @@ const diarySlice = createSlice({
   name: "diary",
   initialState: initialState,
   reducers: {
-    setSelectedEmotion: (state, action) => {
-      state.selectedEmotion = action.payload;
+    setSelectedIcon: (state, action) => {
+      state.selectedIcon = action.payload;
     },
     setTodayDiary: (state, action) => {
       state.todayDiary = action.payload;
@@ -215,7 +215,7 @@ export {
 }
 
 export const { 
-  setSelectedEmotion, 
+  setSelectedIcon, 
   setTodayDiary, 
   setSelectedMonth,
   setSelectedDiary

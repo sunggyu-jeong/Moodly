@@ -5,7 +5,7 @@ import { View } from "react-native";
 import EmotionListOrga from "../components/organisms/EmotionList.orga";
 import SelectedEmotionOrga from "../components/organisms/SelectedEmotion.orga";
 import { EmotionDiaryDTO } from "../scheme";
-import { setSelectedEmotion, setTodayDiary } from "../redux/slice/diarySlice";
+import { setSelectedIcon, setTodayDiary } from "../redux/slice/diarySlice";
 import { isNotEmpty, navigate } from "../utils";
 import ActionButtonAtom from "../components/atoms/ActionButton.atom";
 import { ICON_DATA } from "../constant/Icons";
@@ -16,7 +16,7 @@ import { useEffect } from "react";
 const SelectEmotionPage = () => {
   const { getScaleSize } = useScale();
   const dispatch = useAppDispatch();
-  const selectedEmotion = useAppSelector((state) => state.diarySlice.selectedEmotion);
+  const selectedEmotion = useAppSelector((state) => state.diarySlice.selectedIcon);
   const actionButtons: NaviActionButtonAtomProps[] = [{
     item: <NaviDismiss />,
     disabled: false,
@@ -34,14 +34,15 @@ const SelectEmotionPage = () => {
   useEffect(() => {
     return () => {
       dispatch(setTodayDiary(null));
-      dispatch(setSelectedEmotion(ICON_DATA[0]));
+      dispatch(setSelectedIcon(ICON_DATA[0]));
     }
   }, [])
 
   useEffect(() => {
     // 수정일 때 사용
     if(isNotEmpty(selectedDiary)) {
-      setSelectedEmotion(selectedDiary.emotionId);
+      console.log(">>>>>>>>>>>>>>>>>>>>", ICON_DATA.find((el) => el.id === selectedDiary.iconId))
+      dispatch(setSelectedIcon(ICON_DATA.find((el) => el.id === selectedDiary.iconId)));
       const emotion: EmotionDiaryDTO = {
         iconId: selectedDiary?.iconId,
       };

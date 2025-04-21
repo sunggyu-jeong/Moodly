@@ -20,6 +20,7 @@ const DropDownItem = ({ ...props }: DropDownItemProps) => {
   const dispatch = useAppDispatch();
   const handle = () => {
     dispatch(setShowDropdownView({ visibility: false, dropdownList: null, pos: {x: null, y: null} }));
+    
     if (props.eventIdentifier === DropDownEventIdentifier.MODIFY_DIARY) {
       navigateFlow(NavigationFlow.DiaryDetailToEmotionWriteWithReturn);
     } else {

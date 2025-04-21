@@ -1,5 +1,5 @@
 import { IMAGES } from "../assets/images";
-import { Emotions } from "../components/atoms/EmotionIcon.atom";
+import { Emotions } from "../components/molecules/EmotionIcon.mol";
 
 export const ICON_DATA: Emotions[] = [
   {
