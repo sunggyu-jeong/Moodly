@@ -6,13 +6,13 @@ import { useEffect, useRef } from "react";
 import { dismissModalToScreen, isNotEmpty, resetToRoot } from "../utils";
 import { removeDiaryThunk, setSelectedDiary, setSelectedEmotion } from "../redux/slice/diarySlice";
 import { ICON_DATA } from "../constant/Icons";
-import NaviDismiss from "../components/atoms/NaviDismiss.atom";
 import { useRoute, RouteProp } from "@react-navigation/native";
 import NaviMore from "../components/atoms/NaviMore.atom";
 import PopupContainer from "../components/organisms/PopupContainer.orga";
 import { setShowDropdownView } from "../redux/slice/commonSlice";
-import { DropDownEventIdentifier, DropDownItemAtomProps } from "../components/atoms/DropdownItem.atom";
 import { IMAGES } from "../assets/images";
+import { DropDownEventIdentifier, DropDownItemProps } from "../components/molecules/DropDownItem.mol";
+import NaviDismiss from "../components/molecules/NaviDismiss.mol";
 
 type DiaryDetailRouteParams = {
   params: {
@@ -42,7 +42,7 @@ const DiaryDetailPage = () => {
     disabled: false,
   }]
 
-  const props: DropDownItemAtomProps[] = [
+  const props: DropDownItemProps[] = [
     {
       text: "수정하기",
       source: IMAGES.iconModify,

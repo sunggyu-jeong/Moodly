@@ -1,8 +1,8 @@
 import React from "react";
 import { View } from "react-native";
-import DropDownItemAtom from "../atoms/DropdownItem.atom";
 import { useAppSelector } from "../../hooks";
 import { isEmpty } from "../../utils";
+import DropDownItem from "../molecules/DropDownItem.mol";
 
 
 const DropDownOrga = () => {
@@ -20,7 +20,7 @@ const DropDownOrga = () => {
     >
       {dropdownList.map((item, idx) => (
         <React.Fragment key={idx}>
-          <DropDownItemAtom {...item} />
+          <DropDownItem {...item} />
           {idx < dropdownList.length - 1 && (
             <View className="h-[1px] bg-gray-200" />
           )}

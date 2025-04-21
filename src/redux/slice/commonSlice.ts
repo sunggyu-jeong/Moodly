@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { DropDownItemAtomProps } from "../../components/atoms/DropdownItem.atom";
+import { DropDownItemProps } from "../../components/molecules/DropDownItem.mol";
 
 interface ShowDropdownViewPayload {
   visibility: boolean;
-  dropdownList: DropDownItemAtomProps[] | null;
+  dropdownList: DropDownItemProps[] | null;
   pos: { x: number | null, y: number | null }
 }
 

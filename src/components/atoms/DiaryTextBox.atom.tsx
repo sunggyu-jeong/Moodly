@@ -1,6 +1,6 @@
 import { useScale } from "../../hooks";
 import { forwardRef, useImperativeHandle, useState } from "react";
-import { Text, TextInput, View } from "react-native";
+import { TextInput, View } from "react-native";
 
 const DiaryTextBox = forwardRef((_, ref) => {
   const [text, setText]  = useState("");

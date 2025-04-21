@@ -1,10 +1,10 @@
 import NavigationBarOrga from "../components/organisms/NavigationBar.orga";
 import DiaryCardListOrga from "../components/organisms/DiaryCardList.orga";
 import { ScrollView } from "react-native";
-import DiaryMonthAtom from "../components/atoms/DiaryMonth.atom";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import dayjs from "dayjs";
 import { setSelectedMonth } from "../redux/slice/diarySlice";
+import DiaryMonth from "../components/molecules/DiaryMonth.mol";
 
 const DiaryListPage = () => {
   const selectedMonth = useAppSelector((state) => state.diarySlice.selectedMonth);
@@ -20,7 +20,7 @@ const DiaryListPage = () => {
       <NavigationBarOrga 
         showBackButton={false} 
         centerComponent={
-          <DiaryMonthAtom 
+          <DiaryMonth
             monthLabel={(dayjs(selectedMonth).month() + 1) < 10
               ? dayjs(selectedMonth).format("M월")
               : dayjs(selectedMonth).format("MM월")} 

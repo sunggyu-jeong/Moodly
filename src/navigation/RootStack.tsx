@@ -13,6 +13,7 @@ export type RootStackParamList = {
     params?: DiaryStackParamList[keyof DiaryStackParamList];
   } | undefined;
   DiaryDetail: { origin: string };
+  WriteDiary: { origin: string };
 };
 
 const Stack = createNativeStackNavigator();

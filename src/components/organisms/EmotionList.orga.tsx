@@ -1,6 +1,6 @@
 import { View } from "react-native";
-import EmotionIcon, { Emotions } from "../atoms/EmotionIcon.atom";
 import { useScale } from "../../hooks";
+import EmotionIcon, { Emotions } from "../molecules/EmotionIcon.mol";
 
 
 interface EmotionListProps {

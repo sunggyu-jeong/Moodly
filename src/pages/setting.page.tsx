@@ -1,5 +1,5 @@
 import { Image, Text, View } from "react-native";
-import SettingList from "../components/molecules/SettingList.atom";
+import SettingList from "../components/organisms/SettingList.orga";
 import NavigationBarOrga from "../components/organisms/NavigationBar.orga";
 import { IMAGES } from "../assets/images";
 import NavigationTitleAtom from "../components/atoms/NaviTitle.atom";
