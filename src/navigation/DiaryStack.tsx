@@ -4,6 +4,7 @@ import WriteDiaryPage from "../pages/write-diary.page";
 import WriteDiaryCompletePage from "../pages/write-diary-complete.page";
 import DiaryDetailPage from "../pages/diary-detail.page";
 import DropDownAnimationTemp from "../components/templates/DropDownAnimation.temp";
+import { CommonActions } from '@react-navigation/native';
 
 export type DiaryStackParamList = {
   SelectEmotion: undefined;

@@ -4,17 +4,20 @@ import SettingPage from "../pages/setting.page";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import TabBarIcon from "../components/atoms/TabBarIcon.atom";
 import { IMAGES } from "../assets/images";
+import { useScale } from "../hooks";
 
 const Tab = createBottomTabNavigator();
 
 const TabNavigation = () => {
+  const { getScaleSize } = useScale();
+
   return (
     <Tab.Navigator 
       screenOptions={{ 
         headerShown: false, 
         tabBarShowLabel: false,
         tabBarStyle: {
-          height: 102,
+          height: getScaleSize(102),
         },
       }}>
       <Tab.Screen 

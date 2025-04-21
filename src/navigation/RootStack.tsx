@@ -13,7 +13,6 @@ export type RootStackParamList = {
     params?: DiaryStackParamList[keyof DiaryStackParamList];
   } | undefined;
   DiaryDetail: { origin: string };
-  WriteDiary: { origin: string };
 };
 
 const Stack = createNativeStackNavigator();
@@ -29,7 +28,6 @@ const RootStack = () => {
         options={{ presentation: "fullScreenModal" }}
       />
       <Stack.Screen name="DiaryDetail" component={DiaryDetailPage} />
-      <Stack.Screen name="WriteDiary" component={WriteDiaryPage} />
     </Stack.Navigator>
   )
 }

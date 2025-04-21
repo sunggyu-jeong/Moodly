@@ -1,13 +1,23 @@
 import { useScale } from "../../hooks";
 import { forwardRef, useImperativeHandle, useState } from "react";
 import { TextInput, View } from "react-native";
+export interface DiaryTextBoxHandle {
+  getText: () => string;
+  setText: (text: string) => void;
+}
 
-const DiaryTextBox = forwardRef((_, ref) => {
-  const [text, setText]  = useState("");
+interface DiaryTextBoxProps {
+  initialText?: string;
+}
+
+const DiaryTextBox = forwardRef<DiaryTextBoxHandle, DiaryTextBoxProps>(
+  ({ initialText = "" }, ref) => {
+  const [text, setText] = useState(initialText);
   const { getScaleSize } = useScale();
 
   useImperativeHandle(ref, () => ({
-    getText: () => text
+    getText: () => text,
+    setText,
   }));
 
   return (

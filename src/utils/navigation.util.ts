@@ -3,6 +3,11 @@ import { RootStackParamList } from '../navigation/RootStack';
 
 export const navigationRef = createNavigationContainerRef<RootStackParamList>();
 
+export enum NavigationFlow {
+  DiaryDetailToWriteDiaryWithEmotionStack,
+  DiaryDetailToEmotionWriteWithReturn,
+}
+
 export function navigate<RouteName extends keyof RootStackParamList>(
   ...args: RouteName extends unknown
     ? undefined extends RootStackParamList[RouteName]
@@ -47,6 +52,38 @@ export function resetTo<RouteName extends keyof RootStackParamList>(
 }
 
 export function dismissModalToScreen() {
-  navigationRef.dispatch(StackActions.popToTop());
-  goBack();
+  if (navigationRef.isReady() && navigationRef.canGoBack()) {
+    navigationRef.dispatch(StackActions.popToTop());
+    navigationRef.goBack();
+  }
+}
+
+export function navigateFlow(flow: NavigationFlow) {
+  if (!navigationRef.isReady()) return;
+
+  switch (flow) {
+    case NavigationFlow.DiaryDetailToEmotionWriteWithReturn:
+      const rootState = navigationRef.getRootState();
+      const newRoutes = [...rootState.routes];
+      
+      navigationRef.reset({
+        index: newRoutes.length,
+        routes: [
+          ...newRoutes,
+          {
+            name: "DiaryStack",
+            state: {
+              index: 1,
+              routes: [
+                { name: "SelectEmotion" },
+                { name: "WriteDiary" },
+              ],
+            },
+          } as any,
+        ],
+      });
+      break;
+    default:
+      break;
+  }
 }
