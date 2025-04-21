@@ -9,8 +9,8 @@ import { setTodayDiary } from "../redux/slice/diarySlice";
 import { navigate } from "../utils";
 import ActionButtonAtom from "../components/atoms/ActionButton.atom";
 import { ICON_DATA } from "../constant/Icons";
-import NaviDismiss from "../components/atoms/IconButton.atom";
 import { NaviActionButtonAtomProps } from "../components/atoms/NaviActionButton.atom";
+import NaviDismiss from "../components/molecules/NaviDismiss.mol";
 
 const SelectEmotionPage = () => {
   const { getScaleSize } = useScale();

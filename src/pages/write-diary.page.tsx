@@ -7,9 +7,9 @@ import { isNotEmpty, navigate } from "../utils";
 import { IMAGES } from "../assets/images";
 import { addDiaryThunk, setSelectedDiary } from "../redux/slice/diarySlice";
 import { NaviActionButtonAtomProps } from "../components/atoms/NaviActionButton.atom";
-import NaviDismiss from "../components/atoms/IconButton.atom";
 import TitleText from "../components/atoms/TitleText.atom";
 import { KeyboardAccessoryView } from 'react-native-keyboard-accessory';
+import NaviDismiss from "../components/molecules/NaviDismiss.mol";
 
 const WriteDiaryPage = () => {
   const { getScaleSize } = useScale();
