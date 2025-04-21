@@ -3,13 +3,13 @@ import { Image, ScrollView, Text, View, TouchableOpacity } from "react-native";
 import { NaviActionButtonAtomProps } from "../components/atoms/NaviActionButton.atom";
 import { useAppDispatch, useAppSelector, useRealm, useScale } from "../hooks";
 import { useEffect, useRef } from "react";
-import { dismissModalToScreen, isNotEmpty, resetToRoot } from "../utils";
+import { dismissModalToScreen, goBack, isNotEmpty, resetToRoot } from "../utils";
 import { removeDiaryThunk, setSelectedDiary, setSelectedEmotion } from "../redux/slice/diarySlice";
 import { ICON_DATA } from "../constant/Icons";
 import { useRoute, RouteProp } from "@react-navigation/native";
 import NaviMore from "../components/atoms/NaviMore.atom";
 import PopupContainer from "../components/organisms/PopupContainer.orga";
-import { setShowDropdownView } from "../redux/slice/commonSlice";
+import { setShowDropdownView, setShowToastView } from "../redux/slice/commonSlice";
 import { IMAGES } from "../assets/images";
 import { DropDownEventIdentifier, DropDownItemProps } from "../components/molecules/DropDownItem.mol";
 import NaviDismiss from "../components/molecules/NaviDismiss.mol";
@@ -79,7 +79,12 @@ const DiaryDetailPage = () => {
       try {
         await dispatch(removeDiaryThunk({realm, emotionId: selectedDiary.emotionId}));
         closeRealm();
-        dismissModalToScreen();
+        if (route.params.origin == "RootStack") {
+          goBack();
+          dispatch(setShowToastView(true));
+        } else {
+          dismissModalToScreen();
+        }
       } catch(error) {
         console.log(">>>>>>>>>>>", error);
       }
