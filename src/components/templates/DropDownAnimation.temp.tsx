@@ -1,20 +1,27 @@
-import React, { useRef, useCallback, useEffect, useState } from 'react'
-import { Animated, TouchableOpacity, StyleSheet } from 'react-native'
-import DropDownOrga from '../organisms/DropDownContainer.orga'
-import { useAppDispatch, useAppSelector } from '../../hooks'
-import { setShowDropdownView } from '../../redux/slice/commonSlice'
+import { useCallback, useEffect, useRef } from 'react';
+import { Animated, StyleSheet, TouchableOpacity } from 'react-native';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setShowDropdownView } from '../../redux/slice/commonSlice';
+import DropDownOrga from '../organisms/DropDownContainer.orga';
 
 const DropdownAnimationTemplate = () => {
   const animationValue = useRef(new Animated.Value(0)).current;
-  const { visibility, pos } = useAppSelector(state => state.commonSlice.showDropDownView) || { visibility: false, pos: { x: null, y: null } };
+  const showDropDownView = useAppSelector((state) => state.commonSlice.showDropDownView);
   const dispatch = useAppDispatch();
 
   const onClose = useCallback(() => {
-    dispatch(setShowDropdownView({ visibility: null, dropdownList: null ,pos: {x: null, y: null} }));
+    dispatch(
+      setShowDropdownView({
+        visibility: false,
+        dropdownList: showDropDownView?.dropdownList ?? [],
+        pos: { x: showDropDownView?.pos?.x ?? 0, y: showDropDownView?.pos?.y ?? 0 },
+      })
+    );
   }, [dispatch]);
 
   useEffect(() => {
-    if (visibility && pos) {
+    console.log(showDropDownView?.visibility);
+    if (showDropDownView?.visibility) {
       Animated.timing(animationValue, {
         toValue: 1,
         duration: 200,
@@ -23,22 +30,33 @@ const DropdownAnimationTemplate = () => {
     } else {
       Animated.timing(animationValue, {
         toValue: 0,
-        duration: 150,
+        duration: 200,
         useNativeDriver: true,
       }).start(({ finished }) => {
-        // if (finished) dispatch(setShowDropdownView({ visibility: null, dropdownList: null ,pos: {x: null, y: null} }));
+        if (finished) {
+          dispatch(
+            setShowDropdownView({
+              visibility: null,
+              dropdownList: null,
+              pos: { x: null, y: null },
+            })
+          );
+        }
       });
     }
-  }, [visibility, pos, animationValue]);
+  }, [showDropDownView?.visibility]);
 
   return (
     <>
-      <TouchableOpacity style={StyleSheet.absoluteFill} onPress={onClose} />
+      <TouchableOpacity
+        style={StyleSheet.absoluteFill}
+        onPress={onClose}
+      />
       <Animated.View
         style={{
-          position: "absolute",
-          top: (pos?.y ?? 0),
-          left: (pos?.x ?? 0) - 120,
+          position: 'absolute',
+          top: showDropDownView?.pos?.y ?? 0,
+          left: (showDropDownView?.pos?.x ?? 0) - 120,
           opacity: animationValue,
           transform: [
             {
@@ -53,7 +71,7 @@ const DropdownAnimationTemplate = () => {
         <DropDownOrga />
       </Animated.View>
     </>
-  )
-}
+  );
+};
 
-export default React.memo(DropdownAnimationTemplate);
+export default DropdownAnimationTemplate;

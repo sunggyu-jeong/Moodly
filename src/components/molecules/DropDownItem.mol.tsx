@@ -1,10 +1,7 @@
 import { ImageSourcePropType } from 'react-native';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { MODAL_CONFIRM_ACTION_KEY } from '../../manager/OverlayManager';
-import {
-  setShowDropdownView,
-  setShowModalPopup,
-} from '../../redux/slice/commonSlice';
+import { setShowDropdownView, setShowModalPopup } from '../../redux/slice/commonSlice';
 import { navigateFlow, NavigationFlow } from '../../utils';
 import DropDownItemAtom from '../atoms/DropdownItem.atom';
 
@@ -21,6 +18,7 @@ export interface DropDownItemProps {
 
 const DropDownItem = ({ ...props }: DropDownItemProps) => {
   const dispatch = useAppDispatch();
+  const showDropDownView = useAppSelector((state) => state.commonSlice.showDropDownView);
   const handle = () => {
     dispatch(
       setShowDropdownView({
@@ -50,9 +48,7 @@ const DropDownItem = ({ ...props }: DropDownItemProps) => {
     <DropDownItemAtom
       text={props.text}
       source={props.source}
-      textColor={
-        props.eventIdentifier === 'DELETE_DIARY' ? '#FF0000' : '#212123'
-      }
+      textColor={props.eventIdentifier === 'DELETE_DIARY' ? '#FF0000' : '#212123'}
       onPress={handle}
     />
   );

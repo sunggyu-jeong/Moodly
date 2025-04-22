@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import ToastAnimated from '../components/molecules/ToastAnimated.mol';
 import PopupContainerOrga from '../components/organisms/PopupContainer.orga';
+import DropdownAnimationTemplate from '../components/templates/DropDownAnimation.temp';
 import { useAppSelector } from '../hooks';
 
 export const MODAL_CONFIRM_ACTION_KEY = {
@@ -7,15 +9,13 @@ export const MODAL_CONFIRM_ACTION_KEY = {
 } as const;
 
 const OverlayManager = () => {
-  // 토스트
   const showToastView = useAppSelector((state) => state.commonSlice.showToastView);
-
-  // 모달
-  // const modalConfig = useAppSelector(state => state.commonSlice.modalPopupConfig);
   const showModalPopup = useAppSelector((state) => state.commonSlice.showModalPopup);
-
-  // // 드롭다운
   const showDropDownView = useAppSelector((state) => state.commonSlice.showDropDownView);
+
+  useEffect(() => {
+    console.log('>>>>>>sdfkdsjfkldsj', showDropDownView);
+  }, [showDropDownView]);
 
   return (
     <>
@@ -38,7 +38,7 @@ const OverlayManager = () => {
         />
       )}
 
-      {/* {showDropDownView?.visibility && <DropDownAnimationTemp />} */}
+      {showDropDownView?.visibility !== null && <DropdownAnimationTemplate />}
     </>
   );
 };
