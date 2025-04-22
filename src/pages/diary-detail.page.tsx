@@ -55,13 +55,6 @@ const DiaryDetailPage = () => {
     }
   ]
 
-  useEffect(() => {
-    return () => {
-      dispatch(setSelectedIcon(ICON_DATA[0]));
-      dispatch(setSelectedDiary({}));
-    }
-  }, [])
-
   function openDropdown() {
     dropdownButtonRef.current?.measureInWindow((x, y, width, height) => {
       dispatch(setShowDropdownView({

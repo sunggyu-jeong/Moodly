@@ -4,7 +4,6 @@ import WriteDiaryPage from "../pages/write-diary.page";
 import WriteDiaryCompletePage from "../pages/write-diary-complete.page";
 import DiaryDetailPage from "../pages/diary-detail.page";
 import DropDownAnimationTemp from "../components/templates/DropDownAnimation.temp";
-import { CommonActions } from '@react-navigation/native';
 
 export type DiaryStackParamList = {
   SelectEmotion: undefined;
@@ -22,7 +21,7 @@ const DiaryStack = () => {
         initialRouteName="SelectEmotion"
         screenOptions={{ headerShown: false }}
       >
-        <Stack.Screen name="SelectEmotion" component={SelectEmotionPage} options={{ presentation: 'fullScreenModal'}} />
+        <Stack.Screen name="SelectEmotion" component={SelectEmotionPage} />
         <Stack.Screen name="WriteDiary" component={WriteDiaryPage} />
         <Stack.Screen name="Complete" component={WriteDiaryCompletePage} />
         <Stack.Screen name="DiaryDetail" component={DiaryDetailPage} initialParams={{ origin: "DiaryStack" }} />

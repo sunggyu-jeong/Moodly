@@ -1,12 +1,13 @@
 import { useAppDispatch, useAppSelector, useRealm, useScale } from "../hooks";
 import { Image, Text, View } from "react-native";
 import { isNotEmpty, navigate } from "../utils";
-import { searchDiaryCountThunk, searchDiaryForDayThunk } from "../redux/slice/diarySlice";
+import { searchDiaryCountThunk, searchDiaryForDayThunk, setSelectedDiary, setSelectedIcon, setTodayDiary } from "../redux/slice/diarySlice";
 import { IMAGES } from "../assets/images";
 import { useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import ActionButtonAtom from "../components/atoms/ActionButton.atom";
 import ToolTipView from "../components/atoms/ToolTipView.atom";
+import { ICON_DATA } from "../constant/Icons";
 
 const HomePage = () => {
   const { getScaleSize } = useScale();
@@ -26,8 +27,12 @@ const HomePage = () => {
   
   useFocusEffect(
     useCallback(() => {
+      // 홈 화면에 진입할 때마다 기존에 선택된 일기 정보 초기화
+      dispatch(setSelectedIcon(ICON_DATA[0]));
+      dispatch(setSelectedDiary({}));
+      dispatch(setTodayDiary(null));
       initialize();
-    }, [])
+    }, [dispatch])
   );
 
   return (

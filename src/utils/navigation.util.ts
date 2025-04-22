@@ -1,5 +1,6 @@
 import { CommonActions, createNavigationContainerRef, StackActions } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation/RootStack';
+import { InteractionManager } from 'react-native';
 
 export const navigationRef = createNavigationContainerRef<RootStackParamList>();
 
@@ -27,6 +28,15 @@ export function canGoBack() {
 export function goBack() {
   if (canGoBack()) {
     navigationRef.goBack();
+    InteractionManager.runAfterInteractions(() => {
+      console.log("dismissModalToScreen completed:", navigationRef.getRootState());
+    });
+  }
+}
+
+export function dismiss() {
+  if (canGoBack()) {
+    navigationRef.dispatch(CommonActions.goBack());
   }
 }
 
@@ -52,9 +62,21 @@ export function resetTo<RouteName extends keyof RootStackParamList>(
 }
 
 export function dismissModalToScreen() {
-  if (navigationRef.isReady() && navigationRef.canGoBack()) {
-    navigationRef.dispatch(StackActions.popToTop());
-    navigationRef.goBack();
+  if (!navigationRef.isReady()) return;
+
+  const rootState = navigationRef.getRootState();
+  const lastRoute = rootState.routes[rootState.routes.length - 1];
+
+  if (lastRoute.name === 'DiaryStack' && lastRoute.state) {
+    const nestedKey = lastRoute.state.key;
+    const popToTopAction = StackActions.popToTop();
+    navigationRef.dispatch({ ...popToTopAction, target: nestedKey });
+
+    navigationRef.dispatch(CommonActions.goBack());
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", rootState, lastRoute)
+    InteractionManager.runAfterInteractions(() => {
+      console.log("dismissModalToScreen completed:", navigationRef.getRootState(), nestedKey, popToTopAction);
+    });
   }
 }
 

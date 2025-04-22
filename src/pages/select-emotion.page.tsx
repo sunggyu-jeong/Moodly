@@ -32,16 +32,8 @@ const SelectEmotionPage = () => {
   }
 
   useEffect(() => {
-    return () => {
-      dispatch(setTodayDiary(null));
-      dispatch(setSelectedIcon(ICON_DATA[0]));
-    }
-  }, [])
-
-  useEffect(() => {
     // 수정일 때 사용
     if(isNotEmpty(selectedDiary)) {
-      console.log(">>>>>>>>>>>>>>>>>>>>", ICON_DATA.find((el) => el.id === selectedDiary.iconId))
       dispatch(setSelectedIcon(ICON_DATA.find((el) => el.id === selectedDiary.iconId)));
       const emotion: EmotionDiaryDTO = {
         iconId: selectedDiary?.iconId,

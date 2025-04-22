@@ -46,8 +46,6 @@ const WriteDiaryPage = () => {
     const emotionId = result.payload as number | undefined;
     diary.emotionId = emotionId;
 
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", diary);
-
     await closeRealm();
     dispatch(setSelectedDiary(diary));
     navigate("DiaryStack", { screen: "Complete" });
