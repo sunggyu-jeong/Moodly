@@ -6,17 +6,15 @@ import { setShowDropdownView } from '../../redux/slice/commonSlice'
 
 const DropdownAnimationTemplate = () => {
   const animationValue = useRef(new Animated.Value(0)).current;
-  const { visibility, pos } = useAppSelector(state => state.commonSlice.showDropDownView);
+  const { visibility, pos } = useAppSelector(state => state.commonSlice.showDropDownView) || { visibility: false, pos: { x: null, y: null } };
   const dispatch = useAppDispatch();
-  const [rendered, setRendered] = useState(false);
 
   const onClose = useCallback(() => {
-    dispatch(setShowDropdownView({ visibility: false, dropdownList: null ,pos: {x: null, y: null} }));
+    dispatch(setShowDropdownView({ visibility: null, dropdownList: null ,pos: {x: null, y: null} }));
   }, [dispatch]);
 
   useEffect(() => {
     if (visibility && pos) {
-      setRendered(true);
       Animated.timing(animationValue, {
         toValue: 1,
         duration: 200,
@@ -28,12 +26,10 @@ const DropdownAnimationTemplate = () => {
         duration: 150,
         useNativeDriver: true,
       }).start(({ finished }) => {
-        if (finished) setRendered(false);
+        // if (finished) dispatch(setShowDropdownView({ visibility: null, dropdownList: null ,pos: {x: null, y: null} }));
       });
     }
   }, [visibility, pos, animationValue]);
-
-  if (!rendered) return null;
 
   return (
     <>

@@ -1,5 +1,5 @@
-import { useRef, useEffect } from "react";
-import { Animated } from "react-native";
+import { useRef, useEffect, useState } from "react";
+import { Animated, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ToastBaseAtom from "../atoms/ToastView.atom";
 import { useAppSelector } from "../../hooks";
@@ -16,9 +16,9 @@ const ToastAnimated = ({ text }: ToastAnimatedProps) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (showToastView) {
+    if (showToastView?.visibility) {
       translateY.setValue(-40);
-      Animated.timing(translateY, { toValue: 0, duration: 200, useNativeDriver: true }).start();
+      Animated.timing(translateY, { toValue: 55, duration: 200, useNativeDriver: true }).start();
 
       const timer = setTimeout(() => {
         Animated.timing(translateY, {
@@ -27,19 +27,19 @@ const ToastAnimated = ({ text }: ToastAnimatedProps) => {
           useNativeDriver: true,
         }).start(({ finished }) => {
           if (finished) {
-            dispatch(setShowToastView(false));
+            dispatch(setShowToastView({visibility: null, message:""}));
           }
         });
-      }, 2000);
+      }, 1500);
       return () => clearTimeout(timer);
     }
   }, [showToastView]);
 
   return (
-    <Animated.View className="absolute inset-x-0 top-0 z-[999] transform" style={{ transform: [{ translateY }] }}>
-      <SafeAreaView className="mx-5 items-center">
+    <Animated.View className="absolute inset-x-0 top-0 h-[40px] z-[999] transform" style={{ transform: [{ translateY }] }}>
+      <View className="mx-5 items-center">
         <ToastBaseAtom text={text} />
-      </SafeAreaView>
+      </View>
     </Animated.View>
   );
 };

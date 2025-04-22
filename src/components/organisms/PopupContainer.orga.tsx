@@ -21,21 +21,29 @@ const PopupContainer = ({ ...props }: PopupContainerProps) => {
   const translateY = useRef(new Animated.Value(100)).current;
 
   useEffect(() => {
-    Animated.timing(translateY, {
-      toValue: 0,
-      duration: 150,
-      useNativeDriver: true,
-    }).start();
-    return () => {
-      dispatch(setShowModalPopup(false));  
+    if (showModalPopup) {
+      Animated.timing(translateY, {
+        toValue: 0,
+        duration: 150,
+        useNativeDriver: true,
+      }).start();
+    } else {
+      Animated.timing(translateY, {
+        toValue: 0,
+        duration: 150,
+        useNativeDriver: true,
+      }).start(({ finished }) => {
+        if(finished) {
+          dispatch(setShowModalPopup(null));
+        }
+      });
     }
-  }, []);
+  }, [showModalPopup]);
 
   const handleCloseModal = () => {
     dispatch(setShowModalPopup(false));
   }
 
-  if (!showModalPopup) return null;
   return (
     <Modal transparent visible onRequestClose={handleCloseModal} animationType="fade">
       <DimmedViewAtom onPress={handleCloseModal}>

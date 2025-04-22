@@ -73,7 +73,7 @@ const DiaryDetailPage = () => {
         closeRealm();
         if (route.params.origin == "RootStack") {
           goBack();
-          dispatch(setShowToastView(true));
+          // dispatch(setShowToastView({ visibility: true, message: "일기가 삭제되었어요!"}));
         } else {
           dismissModalToScreen();
         }
@@ -85,13 +85,13 @@ const DiaryDetailPage = () => {
 
   return (
     <>
-      <PopupContainer 
+      {/* <PopupContainer 
         title="일기를 삭제할까요?" 
         message="삭제한 일기는 복구가 어려워요." 
         cancelText="취소" 
         confirmText="확인"
         onConfirm={handleRemoveDiary}
-      />
+      /> */}
       <NavigationBarOrga 
         showBackButton={route.params.origin == "RootStack"} 
         leftComponents={route.params.origin == "DiaryStack" ? leftComponents : null} 

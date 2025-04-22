@@ -8,7 +8,7 @@ import store from "./redux/store";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import 'dayjs/locale/ko'
 import dayjs from "dayjs";
-import DropDownAnimationTemp from "./components/templates/DropDownAnimation.temp";
+import OverlayManager from "./manager/OverlayManager";
 
 dayjs.locale("ko")
 
@@ -20,7 +20,7 @@ export default function App() {
           <RootStack />
         </NavigationContainer>
       </SafeAreaProvider>
-      <DropDownAnimationTemp />
+      <OverlayManager />
     </Provider>
   );
 }

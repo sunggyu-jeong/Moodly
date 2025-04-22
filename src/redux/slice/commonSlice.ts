@@ -1,36 +1,43 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { DropDownItemProps } from "../../components/molecules/DropDownItem.mol";
 
-interface ShowDropdownViewPayload {
-  visibility: boolean;
+interface DropdownViewPayload {
+  visibility?: boolean | null;
   dropdownList: DropDownItemProps[] | null;
   pos: { x: number | null, y: number | null }
 }
 
+interface ToastViewPayload {
+  visibility?: boolean | null
+  message: string
+}
+
 interface CommonState {
-  showModalPopup: boolean;
-  showDropDownView: ShowDropdownViewPayload;
-  showToastView: boolean;
+  showModalPopup?: boolean | null;
+  showDropDownView?: DropdownViewPayload;
+  showToastView?: ToastViewPayload;
 }
 
 const initialState: CommonState = {
   showModalPopup: false,
   showDropDownView: { visibility: false, dropdownList: null, pos: { x: null, y: null } },
-  showToastView: false,
+  showToastView: { visibility: null, message: '' },
 };
 
 const commonSlice = createSlice({
   name: "common",
   initialState: initialState,
   reducers: {
-    setShowModalPopup: (state, action: PayloadAction<boolean>) => {
+    setShowModalPopup: (state, action: PayloadAction<boolean | null>) => {
+      console.log('>>>>>>>>>>>>>>>>>>>>>>>>1', action)
       state.showModalPopup = action.payload;
     },
-    setShowDropdownView: (state, action: PayloadAction<ShowDropdownViewPayload>) => {
-      console.log('>>>>>>>>>>>>>>>>>>>>>>>>', action)
+    setShowDropdownView: (state, action: PayloadAction<DropdownViewPayload>) => {
+      console.log('>>>>>>>>>>>>>>>>>>>>>>>>2', action)
       state.showDropDownView = action.payload;
     },
-    setShowToastView: (state, action: PayloadAction<boolean>) => {
+    setShowToastView: (state, action: PayloadAction<ToastViewPayload>) => {
+      console.log('>>>>>>>>>>>>>>>>>>>>>>>>3', action)
       state.showToastView = action.payload
     }
   },

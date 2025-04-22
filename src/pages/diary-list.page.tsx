@@ -6,10 +6,10 @@ import dayjs from "dayjs";
 import { setSelectedMonth } from "../redux/slice/diarySlice";
 import DiaryMonth from "../components/molecules/DiaryMonth.mol";
 import ToastAnimated from "../components/molecules/ToastAnimated.mol";
+import ToastBaseAtom from "../components/atoms/ToastView.atom";
 
 const DiaryListPage = () => {
   const selectedMonth = useAppSelector((state) => state.diarySlice.selectedMonth);
-  const showToastView = useAppSelector((state) => state.commonSlice.showToastView);
   const currentMonth = dayjs();
   const dispatch = useAppDispatch();  
 
@@ -19,10 +19,6 @@ const DiaryListPage = () => {
 
   return (
     <>
-      {
-        showToastView &&
-        <ToastAnimated text="일기가 삭제되었어요!" />
-      }
       <NavigationBarOrga 
         showBackButton={false} 
         centerComponent={

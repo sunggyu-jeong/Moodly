@@ -8,6 +8,7 @@ import { isEmpty, isNotEmpty, navigate } from "../../utils";
 import { useAppDispatch } from "../../hooks";
 import { searchDiaryByMonthThunk, setSelectedDiary } from "../../redux/slice/diarySlice";
 import { EmotionDiaryDTO } from "../../scheme";
+import { setShowToastView } from "../../redux/slice/commonSlice";
 
 const DiaryCardListOrga = () => {
   const { openRealm, closeRealm } = useRealm();
@@ -31,8 +32,9 @@ const DiaryCardListOrga = () => {
   }
 
   const handleDiaryDetail = (item: EmotionDiaryDTO) => {
-    dispatch(setSelectedDiary(item));
-    navigate("DiaryDetail", { origin: "RootStack"});
+    dispatch(setShowToastView({visibility: true, message: "테스트입니다!"}))
+    // dispatch(setSelectedDiary(item));
+    // navigate("DiaryDetail", { origin: "RootStack"});
   }
 
   return (
