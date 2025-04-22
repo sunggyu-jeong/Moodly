@@ -1,14 +1,14 @@
-import { Text, TouchableOpacity, View } from "react-native";
-import DiaryCardHeader from "../molecules/DiaryCardHeader.mol";
-import DiaryCardContent from "../molecules/DiaryCardContent.mol";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
-import { useAppSelector, useRealm, useScale } from "../../hooks";
-import { isEmpty, isNotEmpty, navigate } from "../../utils";
-import { useAppDispatch } from "../../hooks";
-import { searchDiaryByMonthThunk, setSelectedDiary } from "../../redux/slice/diarySlice";
+import { Text, TouchableOpacity, View } from "react-native";
+import { useAppDispatch, useAppSelector, useRealm, useScale } from "../../hooks";
+import { MODAL_CONFIRM_ACTION_KEY } from "../../manager/OverlayManager";
+import { setShowModalPopup } from "../../redux/slice/commonSlice";
+import { searchDiaryByMonthThunk } from "../../redux/slice/diarySlice";
 import { EmotionDiaryDTO } from "../../scheme";
-import { setShowToastView } from "../../redux/slice/commonSlice";
+import { isEmpty, isNotEmpty } from "../../utils";
+import DiaryCardContent from "../molecules/DiaryCardContent.mol";
+import DiaryCardHeader from "../molecules/DiaryCardHeader.mol";
 
 const DiaryCardListOrga = () => {
   const { openRealm, closeRealm } = useRealm();
@@ -32,7 +32,14 @@ const DiaryCardListOrga = () => {
   }
 
   const handleDiaryDetail = (item: EmotionDiaryDTO) => {
-    dispatch(setShowToastView({visibility: true, message: "테스트입니다!"}))
+    dispatch(setShowModalPopup({
+      visibility: true, 
+      title: '일기를 삭제할까요?',
+      message: "삭제한 일기는 복구가 어려워요.",
+      cancelText:"취소",
+      confirmText:"확인",
+      confirmActionKey: MODAL_CONFIRM_ACTION_KEY.DELETE_DIARY
+    }));
     // dispatch(setSelectedDiary(item));
     // navigate("DiaryDetail", { origin: "RootStack"});
   }

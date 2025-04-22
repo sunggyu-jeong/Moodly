@@ -1,16 +1,16 @@
-import "../global.css"
 import { NavigationContainer } from '@react-navigation/native';
-import RootStack from './navigation/RootStack';
-import { navigationRef } from "./utils";
-import { Provider } from "react-redux";
+import dayjs from 'dayjs';
+import 'dayjs/locale/ko';
 import 'react-native-get-random-values';
-import store from "./redux/store";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import 'dayjs/locale/ko'
-import dayjs from "dayjs";
-import OverlayManager from "./manager/OverlayManager";
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Provider } from 'react-redux';
+import '../global.css';
+import OverlayManager from './manager/OverlayManager';
+import RootStack from './navigation/RootStack';
+import store from './redux/store';
+import { navigationRef } from './utils';
 
-dayjs.locale("ko")
+dayjs.locale('ko');
 
 export default function App() {
   return (
@@ -19,8 +19,8 @@ export default function App() {
         <NavigationContainer ref={navigationRef}>
           <RootStack />
         </NavigationContainer>
+        <OverlayManager />
       </SafeAreaProvider>
-      <OverlayManager />
     </Provider>
   );
 }

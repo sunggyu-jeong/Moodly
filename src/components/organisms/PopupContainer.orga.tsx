@@ -1,10 +1,10 @@
-import { Animated, View, Modal } from "react-native";
-import React, { useEffect, useRef } from "react";
-import PopupHeader from "../molecules/PopupHeader.mol";
-import PopupFooter from "../molecules/PopupFooter.mol";
-import DimmedViewAtom from "../atoms/DimmedView.atom";
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import { setShowModalPopup } from "../../redux/slice/commonSlice";
+import React, { useEffect, useRef } from 'react';
+import { Animated, Modal, View } from 'react-native';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setShowModalPopup } from '../../redux/slice/commonSlice';
+import DimmedViewAtom from '../atoms/DimmedView.atom';
+import PopupFooter from '../molecules/PopupFooter.mol';
+import PopupHeader from '../molecules/PopupHeader.mol';
 
 interface PopupContainerProps {
   title: string;
@@ -18,41 +18,75 @@ const PopupContainer = ({ ...props }: PopupContainerProps) => {
   const showModalPopup = useAppSelector((state) => state.commonSlice.showModalPopup);
   const dispatch = useAppDispatch();
 
-  const translateY = useRef(new Animated.Value(100)).current;
+  const translateY = useRef(new Animated.Value(50)).current;
+  const opacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    if (showModalPopup) {
-      Animated.timing(translateY, {
-        toValue: 0,
-        duration: 150,
-        useNativeDriver: true,
-      }).start();
+    if (showModalPopup?.visibility) {
+      Animated.parallel([
+        Animated.timing(translateY, {
+          toValue: 0,
+          duration: 150,
+          useNativeDriver: true,
+        }),
+        Animated.timing(opacity, { toValue: 1, duration: 150, useNativeDriver: true }),
+      ]).start();
     } else {
-      Animated.timing(translateY, {
-        toValue: 0,
-        duration: 150,
-        useNativeDriver: true,
-      }).start(({ finished }) => {
-        if(finished) {
-          dispatch(setShowModalPopup(null));
+      Animated.parallel([
+        Animated.timing(translateY, {
+          toValue: 50,
+          duration: 150,
+          useNativeDriver: true,
+        }),
+        Animated.timing(opacity, { toValue: 0, duration: 150, useNativeDriver: true }),
+      ]).start(({ finished }) => {
+        if (finished) {
+          dispatch(
+            setShowModalPopup({
+              visibility: null,
+              title: '',
+              message: '',
+              confirmActionKey: '',
+            })
+          );
         }
       });
     }
   }, [showModalPopup]);
 
   const handleCloseModal = () => {
-    dispatch(setShowModalPopup(false));
-  }
+    dispatch(
+      setShowModalPopup({
+        visibility: false,
+        title: showModalPopup?.title ?? '',
+        message: showModalPopup?.message ?? '',
+        confirmText: showModalPopup?.confirmText,
+        cancelText: showModalPopup?.cancelText,
+        confirmActionKey: showModalPopup?.confirmActionKey ?? '',
+      })
+    );
+  };
 
   return (
-    <Modal transparent visible onRequestClose={handleCloseModal} animationType="fade">
+    <Modal
+      transparent
+      visible
+      onRequestClose={handleCloseModal}
+      animationType="fade"
+    >
       <DimmedViewAtom onPress={handleCloseModal}>
-        <Animated.View style={{ transform: [{ translateY }] }} className="flex-1 justify-center p-10">
+        <Animated.View
+          style={{ transform: [{ translateY }], opacity: opacity }}
+          className="flex-1 justify-center p-10"
+        >
           <View className="w-full h-[177px] bg-white rounded-xl items-center">
-            <PopupHeader title={props.title} message={props.message} />
-            <PopupFooter 
-              onCancel={handleCloseModal} 
-              onConfirm={props.onConfirm} 
+            <PopupHeader
+              title={props.title}
+              message={props.message}
+            />
+            <PopupFooter
+              onCancel={handleCloseModal}
+              onConfirm={props.onConfirm}
               cancelText={props.cancelText}
               confirmText={props.confirmText}
             />
@@ -61,6 +95,6 @@ const PopupContainer = ({ ...props }: PopupContainerProps) => {
       </DimmedViewAtom>
     </Modal>
   );
-}
+};
 
 export default React.memo(PopupContainer);

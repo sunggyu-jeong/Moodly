@@ -1,6 +1,6 @@
-import { dismissModalToScreen } from "../../utils";
-import { IMAGES } from "../../assets/images";
-import IconButtonAtom from "../atoms/IconButton.atom";
+import { IMAGES } from '../../assets/images';
+import { dismissModalToScreen } from '../../utils';
+import IconButtonAtom from '../atoms/IconButton.atom';
 
 const NaviDismiss = () => {
   const handleDismiss = () => {

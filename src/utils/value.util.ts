@@ -15,7 +15,7 @@
  * @testcase 위치: __tests__/utils/ValueUtil.test.ts
  */
 export function isEmpty<T>(value: T[] | null | undefined): value is [] | null | undefined;
-export function isEmpty(value: string | null | undefined): value is "" | null | undefined;
+export function isEmpty(value: string | null | undefined): value is '' | null | undefined;
 export function isEmpty<T>(value: T | null | undefined): value is null | undefined;
 export function isEmpty(value: any): boolean {
   // 주어진 값이 null 또는 undefined인 경우
@@ -25,14 +25,17 @@ export function isEmpty(value: any): boolean {
   // 배열인 경우, 길이가 0이면 true
   if (Array.isArray(value) && value.length === 0) return true;
   // 객체인 경우, (배열 제외) 키가 하나도 없으면 true
-  if (typeof value === 'object' && !Array.isArray(value) && Object.keys(value).length === 0)
+  if (
+    typeof value === 'object' &&
+    !Array.isArray(value) &&
+    Object.keys(value).length === 0
+  )
     return true;
   // 숫자인 경우, NaN이면 true
   if (typeof value === 'number' && Number.isNaN(value)) return true;
   // 그 외의 경우 값이 있다고 판단
   return false;
 }
-
 
 export function isNotEmpty<T>(value: T[] | null | undefined): value is [T, ...T[]];
 export function isNotEmpty(value: string | null | undefined): value is string;

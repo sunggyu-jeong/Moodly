@@ -20,7 +20,7 @@ const ToastAnimated = ({ text }: ToastAnimatedProps) => {
     if (showToastView?.visibility) {
       translateY.setValue(-40);
       Animated.parallel([
-        Animated.timing(translateY, { toValue: 55, duration: 200, useNativeDriver: true }),
+        Animated.timing(translateY, { toValue: 0, duration: 200, useNativeDriver: true }),
         Animated.timing(opacity, { toValue: 1, duration: 200, useNativeDriver: true }),
       ]).start();
 
@@ -39,8 +39,8 @@ const ToastAnimated = ({ text }: ToastAnimatedProps) => {
   }, [showToastView]);
 
   return (
-    <Animated.View className="absolute inset-x-0 top-0 h-[40px] z-[999] transform" style={{ transform: [{ translateY }], opacity: opacity }}>
-      <SafeAreaView className="mx-5 items-center">
+    <Animated.View className="absolute inset-x-0 top-0 z-[999] transform" style={{ transform: [{ translateY }], opacity: opacity, height: 125 }}>
+      <SafeAreaView className="mx-5 items-center h-full">
         <ToastBaseAtom text={text} />
       </SafeAreaView>
     </Animated.View>

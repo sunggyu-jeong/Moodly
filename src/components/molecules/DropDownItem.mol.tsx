@@ -1,13 +1,16 @@
-import { ImageSourcePropType } from "react-native";
-import { useAppDispatch } from "../../hooks";
-import { setShowDropdownView, setShowModalPopup } from "../../redux/slice/commonSlice";
-import { CommonActions } from '@react-navigation/native';
-import { navigateFlow, NavigationFlow, navigationRef } from '../../utils';
-import DropDownItemAtom from "../atoms/DropdownItem.atom";
+import { ImageSourcePropType } from 'react-native';
+import { useAppDispatch } from '../../hooks';
+import { MODAL_CONFIRM_ACTION_KEY } from '../../manager/OverlayManager';
+import {
+  setShowDropdownView,
+  setShowModalPopup,
+} from '../../redux/slice/commonSlice';
+import { navigateFlow, NavigationFlow } from '../../utils';
+import DropDownItemAtom from '../atoms/DropdownItem.atom';
 
 export const DropDownEventIdentifier = {
-  MODIFY_DIARY: "MODIFY_DIARY",
-  DELETE_DIARY: "DELETE_DIARY"
+  MODIFY_DIARY: 'MODIFY_DIARY',
+  DELETE_DIARY: 'DELETE_DIARY',
 } as const;
 
 export interface DropDownItemProps {
@@ -19,12 +22,27 @@ export interface DropDownItemProps {
 const DropDownItem = ({ ...props }: DropDownItemProps) => {
   const dispatch = useAppDispatch();
   const handle = () => {
-    dispatch(setShowDropdownView({ visibility: null, dropdownList: null, pos: {x: null, y: null} }));
-    
+    dispatch(
+      setShowDropdownView({
+        visibility: null,
+        dropdownList: null,
+        pos: { x: null, y: null },
+      })
+    );
+
     if (props.eventIdentifier === DropDownEventIdentifier.MODIFY_DIARY) {
       navigateFlow(NavigationFlow.DiaryDetailToEmotionWriteWithReturn);
     } else {
-      dispatch(setShowModalPopup(true));
+      dispatch(
+        setShowModalPopup({
+          visibility: true,
+          title: '일기를 삭제할까요?',
+          message: '삭제한 일기는 복구가 어려워요.',
+          cancelText: '취소',
+          confirmText: '확인',
+          confirmActionKey: MODAL_CONFIRM_ACTION_KEY.DELETE_DIARY,
+        })
+      );
     }
   };
 

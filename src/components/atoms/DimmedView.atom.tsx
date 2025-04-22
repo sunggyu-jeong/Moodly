@@ -7,10 +7,9 @@ interface DimmedViewProps {
 
 const DimmedViewAtom = ({ ...props }: DimmedViewProps) => {
   return (
-    <TouchableOpacity onPress={props.onPress}>
+    <TouchableOpacity onPress={props.onPress} activeOpacity={1} style={{ flex: 1 }}>
       <View 
-        className="w-full h-full"
-        style={{ backgroundColor: 'rgba(0,0,0,0.4)' }}>
+        style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.4)' }}>
         { props.children }
       </View>
     </TouchableOpacity>
