@@ -1,5 +1,5 @@
-import { useRef, useEffect, useState } from "react";
-import { Animated, View } from "react-native";
+import { useRef, useEffect } from "react";
+import { Animated } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ToastBaseAtom from "../atoms/ToastView.atom";
 import { useAppSelector } from "../../hooks";
@@ -14,18 +14,21 @@ const ToastAnimated = ({ text }: ToastAnimatedProps) => {
   const translateY = useRef(new Animated.Value(-40)).current;
   const showToastView = useAppSelector((state) => state.commonSlice.showToastView);
   const dispatch = useDispatch();
+  const opacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     if (showToastView?.visibility) {
       translateY.setValue(-40);
-      Animated.timing(translateY, { toValue: 55, duration: 200, useNativeDriver: true }).start();
+      Animated.parallel([
+        Animated.timing(translateY, { toValue: 55, duration: 200, useNativeDriver: true }),
+        Animated.timing(opacity, { toValue: 1, duration: 200, useNativeDriver: true }),
+      ]).start();
 
       const timer = setTimeout(() => {
-        Animated.timing(translateY, {
-          toValue: -40,
-          duration: 200,
-          useNativeDriver: true,
-        }).start(({ finished }) => {
+        Animated.parallel([
+          Animated.timing(translateY, { toValue: -40, duration: 200, useNativeDriver: true }),
+          Animated.timing(opacity, { toValue: 0, duration: 200, useNativeDriver: true }),
+        ]).start(({ finished }) => {
           if (finished) {
             dispatch(setShowToastView({visibility: null, message:""}));
           }
@@ -36,10 +39,10 @@ const ToastAnimated = ({ text }: ToastAnimatedProps) => {
   }, [showToastView]);
 
   return (
-    <Animated.View className="absolute inset-x-0 top-0 h-[40px] z-[999] transform" style={{ transform: [{ translateY }] }}>
-      <View className="mx-5 items-center">
+    <Animated.View className="absolute inset-x-0 top-0 h-[40px] z-[999] transform" style={{ transform: [{ translateY }], opacity: opacity }}>
+      <SafeAreaView className="mx-5 items-center">
         <ToastBaseAtom text={text} />
-      </View>
+      </SafeAreaView>
     </Animated.View>
   );
 };
