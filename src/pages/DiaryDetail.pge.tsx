@@ -77,7 +77,7 @@ const DiaryDetail = () => {
 
   const handleRemoveDiary = async () => {
     const realm = await openRealm();
-    if (isNotEmpty(realm) && isNotEmpty(selectedDiary.emotionId)) {
+    if (isNotEmpty(realm) && isNotEmpty(selectedDiary?.emotionId)) {
       try {
         await dispatch(removeDiaryThunk({ realm, emotionId: selectedDiary.emotionId }));
         closeRealm();
@@ -95,13 +95,6 @@ const DiaryDetail = () => {
 
   return (
     <>
-      {/* <PopupContainer 
-        title="일기를 삭제할까요?" 
-        message="삭제한 일기는 복구가 어려워요." 
-        cancelText="취소" 
-        confirmText="확인"
-        onConfirm={handleRemoveDiary}
-      /> */}
       <NavigationBar
         showBackButton={route.params.origin == 'RootStack'}
         leftComponents={route.params.origin == 'DiaryStack' ? leftComponents : null}
@@ -124,7 +117,7 @@ const DiaryDetail = () => {
           className="font-pretendard font-medium text-center tracking-[-0.5px] mx-6 leading-[30px]"
           style={{ marginTop: getScaleSize(34), fontSize: getScaleSize(18) }}
         >
-          {selectedDiary.description}
+          {selectedDiary?.description}
         </Text>
       </ScrollView>
     </>

@@ -1,1 +1,1 @@
-export * from "./EmotionDiary.service"
+export * from './diary/EmotionDiaryService';

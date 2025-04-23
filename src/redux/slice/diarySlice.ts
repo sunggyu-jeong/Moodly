@@ -1,141 +1,101 @@
-import { AsyncOperationState, createInitialAsyncState } from "../../constant/ApiStatus";
-import { EmotionDiary, EmotionDiaryDTO } from "../../scheme";
-import { 
-  createDiary,
-  deleteDiary, 
-  hasDiaryForDay, 
-  selectDiaryById, 
-  selectDiaryByMonth, 
-  selectDiaryCount, 
-  updateDiary } from "../../services";
-import { addAsyncThunkCase } from "../..//utils";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
+import dayjs from 'dayjs';
 import Realm from 'realm';
-import dayjs from "dayjs";
-import { ICON_DATA } from "../../constant/Icons";
-import { Emotions } from "../../components/molecules/EmotionIcon.mol";
+import { Emotions } from '../../components/molecules/EmotionIcon.mol';
+import { AsyncOperationState, createInitialAsyncState } from '../../constant/ApiStatus';
+import { ICON_DATA } from '../../constant/Icons';
+import { EmotionDiaryDTO } from '../../scheme';
+import {
+  createDiary,
+  deleteDiary,
+  hasDiaryForDay,
+  selectDiaryById,
+  selectDiaryByMonth,
+  selectDiaryCount,
+  updateDiary,
+} from '../../services';
+import { createServiceThunk } from '../../services/ServiceThunk';
+import { addAsyncThunkCase } from '../../utils';
 
-const searchDiaryCountThunk = createAsyncThunk<number | undefined, {realm: Realm}, { rejectValue: string }>(
+const searchDiaryCountThunk = createServiceThunk<number, { realm: Realm }>(
   'diary/searchDiaryCount',
-  async (payload, { rejectWithValue }) => {
-    try {
-      const result: number = selectDiaryCount(payload.realm);
-      return result;
-    } catch(error: any) {
-      return rejectWithValue(error.message)
-    }
+  async ({ realm }) => {
+    return selectDiaryCount(realm);
   }
-)
+);
 
-const searchDiaryByIdThunk = createAsyncThunk<EmotionDiaryDTO | undefined, {realm: Realm, emotionId: number}, { rejectValue: string }>(
-  'diary/searchDiaryById',
-  async (payload, { rejectWithValue }) => {
-    try {
-      const result: EmotionDiary | null = selectDiaryById(payload.realm, payload.emotionId);
-      return result?.toDTO();
-    } catch (error: any) {
-      return rejectWithValue(error.message);
-    }
-  }
-)
+const searchDiaryByIdThunk = createServiceThunk<
+  EmotionDiaryDTO | null,
+  { realm: Realm; emotionId: number }
+>('diary/searchDiaryById', async ({ realm, emotionId }) => {
+  return selectDiaryById(realm, emotionId);
+});
 
-const searchDiaryByMonthThunk = createAsyncThunk<EmotionDiaryDTO[], {realm: Realm, recordDate: Date}, { rejectValue: string }>(
-  'diary/searchDiaryByMonth',
-  async (payload, { rejectWithValue }) => {
-    try {
-      const result: EmotionDiary[] = selectDiaryByMonth(payload.realm, payload.recordDate) || [];
-      return result?.map((el) => el.toDTO());
-    } catch (error: any) {
-      return rejectWithValue(error.message);
-    }
-  }
-)
+const searchDiaryByMonthThunk = createServiceThunk<
+  EmotionDiaryDTO[],
+  { realm: Realm; recordDate: Date }
+>('diary/searchDiaryByMonth', async ({ realm, recordDate }) => {
+  return selectDiaryByMonth(realm, recordDate);
+});
 
-const addDiaryThunk = createAsyncThunk<void, {realm: Realm, data: EmotionDiaryDTO}, { rejectValue: string }>(
+const addDiaryThunk = createServiceThunk<void, { realm: Realm; data: EmotionDiaryDTO }>(
   'diary/addDiary',
-  async (payload, { rejectWithValue }) => {
-    try {
-      createDiary(payload.realm, payload.data);
-    } catch (error: any) {
-      return rejectWithValue(error.message);
-    }
+  async ({ realm, data }) => {
+    createDiary(realm, data);
   }
-)
+);
 
-const modifyDiaryThunk = createAsyncThunk<void, {realm: Realm, emotionId: number, data: EmotionDiaryDTO}, { rejectValue: string }>(
-  'diary/modifyDiary',
-  async (payload, { rejectWithValue }) => {
-    try {
-      updateDiary(payload.realm, payload.emotionId, payload.data);
-    } catch (error: any) {
-      return rejectWithValue(error.message);
-    }
-  }
-)
+const modifyDiaryThunk = createServiceThunk<
+  void,
+  { realm: Realm; emotionId: number; data: EmotionDiaryDTO }
+>('diary/modifyDiary', async ({ realm, emotionId, data }) => {
+  updateDiary(realm, emotionId, data);
+});
 
-const removeDiaryThunk = createAsyncThunk<void, {realm: Realm, emotionId: number}, { rejectValue: string }>(
+const removeDiaryThunk = createServiceThunk<void, { realm: Realm; emotionId: number }>(
   'diary/removeDiary',
-  async (payload, { rejectWithValue }) => {
-    try {
-      deleteDiary(payload.realm, payload.emotionId);
-    } catch (error: any) {
-      return rejectWithValue(error.message);
-    }
+  async ({ realm, emotionId }) => {
+    deleteDiary(realm, emotionId);
   }
-)
+);
 
-const searchDiaryForDayThunk = createAsyncThunk<boolean, {realm: Realm, recordDate: Date}, { rejectValue: string }>(
-  'diary/isDiaryExist',
-  async (payload, { rejectWithValue }) => {
-    try {
-      const result = hasDiaryForDay(payload.realm, payload.recordDate);
-      return result;
-    } catch (error: any) {
-      return rejectWithValue(error.message);
-    }
-  }
-)
-
+const searchDiaryForDayThunk = createServiceThunk<
+  boolean,
+  { realm: Realm; recordDate: Date }
+>('diary/isDiaryExist', async ({ realm, recordDate }) => {
+  return hasDiaryForDay(realm, recordDate);
+});
 
 interface DiaryState {
   diaryCount: AsyncOperationState<number>;
-  emotionDiaryList: AsyncOperationState<EmotionDiaryDTO[]>;
-  searchById: AsyncOperationState<void>;
+  searchById: AsyncOperationState<EmotionDiaryDTO>;
   searchByMonth: AsyncOperationState<EmotionDiaryDTO[]>;
   addDiary: AsyncOperationState<number>;
   modifyDiary: AsyncOperationState<void>;
   removeDiary: AsyncOperationState<void>;
-  selectedDiary: EmotionDiaryDTO;
+  selectedDiary: EmotionDiaryDTO | null;
   selectedIcon: Emotions | null;
-  todayDiary: EmotionDiaryDTO;
+  todayDiary: EmotionDiaryDTO | null;
   selectedMonth: string;
   isDiaryExist: AsyncOperationState<boolean>;
 }
 
 const initialState: DiaryState = {
   diaryCount: createInitialAsyncState<number>(),
-  emotionDiaryList: createInitialAsyncState<EmotionDiaryDTO[]>(),
-  searchById: createInitialAsyncState<void>(),
+  searchById: createInitialAsyncState<EmotionDiaryDTO>(),
   searchByMonth: createInitialAsyncState<EmotionDiaryDTO[]>(),
   addDiary: createInitialAsyncState<number>(),
   modifyDiary: createInitialAsyncState<void>(),
   removeDiary: createInitialAsyncState<void>(),
   isDiaryExist: createInitialAsyncState<boolean>(),
-  selectedDiary: {},
+  selectedDiary: null,
   selectedIcon: ICON_DATA[0],
-  todayDiary: {
-    emotionId: undefined,
-    iconId: undefined,
-    recordDate: undefined,
-    description: undefined,
-    createdAt: undefined,
-    updatedAt: undefined,
-  },
+  todayDiary: null,
   selectedMonth: dayjs().toISOString(),
 };
 
 const diarySlice = createSlice({
-  name: "diary",
+  name: 'diary',
   initialState: initialState,
   reducers: {
     setSelectedIcon: (state, action) => {
@@ -149,76 +109,66 @@ const diarySlice = createSlice({
     },
     setSelectedDiary: (state, action) => {
       state.selectedDiary = action.payload;
-    }
+    },
   },
   extraReducers: (builder) => {
-    addAsyncThunkCase<number | undefined, DiaryState>(
+    addAsyncThunkCase<number, DiaryState>({
       builder,
-      searchDiaryCountThunk,
-      "diaryCount",
-      "diaryCount",
-      "검색어 갯수 조회 요청이 실패했습니다. 잠시 후 다시 시도해주세요"
-    ),
-    addAsyncThunkCase<EmotionDiaryDTO | undefined, DiaryState>(
+      thunk: searchDiaryCountThunk,
+      key: 'diaryCount',
+      defaultErrorMessage:
+        '검색어 갯수 조회 요청이 실패했습니다. 잠시 후 다시 시도해주세요',
+    });
+    addAsyncThunkCase<EmotionDiaryDTO | null, DiaryState>({
       builder,
-      searchDiaryByIdThunk,
-      'searchById',
-      'searchById',
-      '조회 요청이 실패했습니다. 잠시 후 다시 시도해주세요'
-    );
-    addAsyncThunkCase<EmotionDiaryDTO[], DiaryState>(
+      thunk: searchDiaryByIdThunk,
+      key: 'searchById',
+      defaultErrorMessage: '조회 요청이 실패했습니다. 잠시 후 다시 시도해주세요',
+    });
+    addAsyncThunkCase<EmotionDiaryDTO[], DiaryState>({
       builder,
-      searchDiaryByMonthThunk,
-      'searchByMonth',
-      'searchByMonth',
-      '조회 요청이 실패했습니다. 잠시 후 다시 시도해주세요.'
-    );
-    addAsyncThunkCase<number, DiaryState>(
+      thunk: searchDiaryByMonthThunk,
+      key: 'searchByMonth',
+      defaultErrorMessage: '조회 요청이 실패했습니다. 잠시 후 다시 시도해주세요.',
+    });
+    addAsyncThunkCase<void, DiaryState>({
       builder,
-      addDiaryThunk,
-      'addDiary',
-      'addDiary',
-      '등록 요청이 실패했습니다. 잠시 후 다시 시도해주세요.'
-    );
-    addAsyncThunkCase<void, DiaryState>(
+      thunk: addDiaryThunk,
+      key: 'addDiary',
+      defaultErrorMessage: '등록 요청이 실패했습니다. 잠시 후 다시 시도해주세요.',
+    });
+    addAsyncThunkCase<void, DiaryState>({
       builder,
-      modifyDiaryThunk,
-      'modifyDiary',
-      'modifyDiary',
-      '수정 요청이 실패했습니다. 잠시 후 다시 시도해주세요.'
-    );
-    addAsyncThunkCase<void, DiaryState>(
+      thunk: modifyDiaryThunk,
+      key: 'modifyDiary',
+      defaultErrorMessage: '수정 요청이 실패했습니다. 잠시 후 다시 시도해주세요.',
+    });
+    addAsyncThunkCase<void, DiaryState>({
       builder,
-      removeDiaryThunk,
-      'removeDiary',
-      'removeDiary',
-      '삭제 요청이 실패했습니다. 잠시 후 다시 시도해주세요.'
-    );
-    addAsyncThunkCase<boolean, DiaryState>(
+      thunk: removeDiaryThunk,
+      key: 'removeDiary',
+      defaultErrorMessage: '삭제 요청이 실패했습니다. 잠시 후 다시 시도해주세요.',
+    });
+    addAsyncThunkCase<boolean, DiaryState>({
       builder,
-      searchDiaryForDayThunk,
-      'isDiaryExist',
-      'isDiaryExist',
-      '조회 실패했습니다. 잠시 후 다시 시도해주세요.'
-    );
-  }
-})
+      thunk: searchDiaryForDayThunk,
+      key: 'isDiaryExist',
+      defaultErrorMessage: '조회 실패했습니다. 잠시 후 다시 시도해주세요.',
+    });
+  },
+});
 
 export {
-  searchDiaryCountThunk,
-  searchDiaryByIdThunk,
-  searchDiaryByMonthThunk,
   addDiaryThunk,
   modifyDiaryThunk,
   removeDiaryThunk,
-  searchDiaryForDayThunk
-}
+  searchDiaryByIdThunk,
+  searchDiaryByMonthThunk,
+  searchDiaryCountThunk,
+  searchDiaryForDayThunk,
+};
 
-export const { 
-  setSelectedIcon, 
-  setTodayDiary, 
-  setSelectedMonth,
-  setSelectedDiary
-} = diarySlice.actions;
+export const { setSelectedIcon, setTodayDiary, setSelectedMonth, setSelectedDiary } =
+  diarySlice.actions;
 
 export default diarySlice.reducer;

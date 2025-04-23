@@ -35,15 +35,4 @@ export class EmotionDiary extends Realm.Object<EmotionDiary> {
       updated_at: 'date',
     },
   };
-
-  toDTO(): EmotionDiaryDTO {
-    return {
-      emotionId: this.emotion_id,
-      iconId: this.icon_id,
-      recordDate: new Date(this.record_date).toISOString(),
-      description: this.description,
-      createdAt: new Date(this.created_at).toISOString(),
-      updatedAt: new Date(this.updated_at).toISOString(),
-    };
-  }
 }
