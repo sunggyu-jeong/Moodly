@@ -1,9 +1,17 @@
-import { useEffect, useRef } from 'react';
-import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { KeyboardAccessoryView } from 'react-native-keyboard-accessory';
+import { useEffect, useRef, useState } from 'react';
+import {
+  Animated,
+  Image,
+  Keyboard,
+  KeyboardAvoidingView,
+  ScrollView,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import { IMAGES } from '../assets/images';
 import DiaryTextBox, { DiaryTextBoxHandle } from '../components/atoms/DiaryTextBox.atm';
 import HeaderText from '../components/atoms/HeaderText.atm';
+import KeyboardAccessory from '../components/atoms/KeyboardAccessory.atm';
 import { NaviActionButtonProps } from '../components/atoms/NaviActionButton.atm';
 import NaviDismiss from '../components/molecules/NaviDismiss.mol';
 import NavigationBar from '../components/organisms/NavigationBar.org';
@@ -22,13 +30,38 @@ const WriteDiary = () => {
   const dispatch = useAppDispatch();
   const { openRealm, closeRealm } = useRealm();
   const selectedDiary = useAppSelector((state) => state.diarySlice.selectedDiary);
-
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState<boolean | null>(null);
+  const [keyboardHeight, setKeyboardHeight] = useState(450);
+  const ACCESSORY_HEIGHT = getScaleSize(40);
+  const accessoryPosition = useRef(new Animated.Value(-ACCESSORY_HEIGHT)).current;
   const actionButtons: NaviActionButtonProps[] = [
     {
       item: <NaviDismiss />,
       disabled: false,
     },
   ];
+
+  useEffect(() => {
+    const sub = Keyboard.addListener('keyboardWillShow', (e) => {
+      setKeyboardHeight(e.endCoordinates.height);
+      sub.remove();
+    });
+    if (isNotEmpty(selectedDiary)) {
+      textBoxRef.current?.setText(selectedDiary?.description ?? '');
+    }
+  }, []);
+
+  useEffect(() => {
+    Animated.timing(accessoryPosition, {
+      toValue: isKeyboardVisible ? keyboardHeight : 0,
+      duration: 250,
+      useNativeDriver: false,
+    }).start(({ finished }) => {
+      if (finished && isKeyboardVisible === false) {
+        setIsKeyboardVisible(null);
+      }
+    });
+  }, [isKeyboardVisible, keyboardHeight]);
 
   const handleSave = async () => {
     const realm = await openRealm();
@@ -37,7 +70,6 @@ const WriteDiary = () => {
     // 텍스트 및 Realm 체크
     if (!isNotEmpty(text) || !isNotEmpty(realm)) return;
 
-    console.log('저장된 일기:', text);
     const diary = { ...todayDiary, description: text };
 
     // 수정 또는 추가 Thunk 결정
@@ -59,54 +91,54 @@ const WriteDiary = () => {
     navigate('DiaryStack', { screen: 'Complete' });
   };
 
-  useEffect(() => {
-    if (isNotEmpty(selectedDiary)) {
-      textBoxRef.current?.setText(selectedDiary?.description ?? '');
-    }
-  }, [selectedDiary]);
-
   return (
     <>
       <NavigationBar actionButtons={actionButtons} />
-      <ScrollView
-        ref={scrollViewRef}
-        className="bg-white flex-1"
-        contentContainerStyle={{
-          flexGrow: 1,
-          justifyContent: 'flex-end',
-          alignItems: 'center',
-          paddingHorizontal: 24,
-        }}
-        keyboardShouldPersistTaps="handled"
+      <KeyboardAvoidingView
+        style={{ flex: 1, backgroundColor: 'white' }}
+        behavior="padding"
+        keyboardVerticalOffset={ACCESSORY_HEIGHT}
       >
-        <HeaderText style={{ marginTop: getScaleSize(63) }}>
-          어떤 일이 있었는지 말해줄래?
-        </HeaderText>
-        <Image
-          source={IMAGES.smile}
-          style={{
-            marginTop: getScaleSize(26),
-            marginBottom: getScaleSize(32),
-            width: getScaleSize(137),
-            height: getScaleSize(137),
+        <TouchableWithoutFeedback
+          onPress={() => {
+            Keyboard.dismiss();
+            setIsKeyboardVisible(false);
           }}
-        />
-        <DiaryTextBox ref={textBoxRef} />
-        <View className="flex-1" />
-      </ScrollView>
-      <KeyboardAccessoryView>
-        <TouchableOpacity
-          onPress={handleSave}
-          className="ml-auto w-10 mr-5"
         >
-          <Text
-            className="font-semibold text-right leading-10 whitespace-nowrap"
-            style={{ fontSize: getScaleSize(16) }}
+          <View className="bg-white flex-1 items-center px-6">
+            <HeaderText style={{ marginTop: getScaleSize(63) }}>
+              어떤 일이 있었는지 말해줄래?
+            </HeaderText>
+            <Image
+              source={IMAGES.smile}
+              style={{
+                marginTop: getScaleSize(26),
+                marginBottom: getScaleSize(32),
+                width: getScaleSize(137),
+                height: getScaleSize(137),
+              }}
+            />
+            <DiaryTextBox
+              ref={textBoxRef}
+              onFocus={() => setIsKeyboardVisible(true)}
+              onBlur={() => setIsKeyboardVisible(false)}
+            />
+            <View className="flex-1" />
+          </View>
+        </TouchableWithoutFeedback>
+        {isNotEmpty(isKeyboardVisible) && (
+          <Animated.View
+            style={{
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              bottom: accessoryPosition,
+            }}
           >
-            저장
-          </Text>
-        </TouchableOpacity>
-      </KeyboardAccessoryView>
+            <KeyboardAccessory onPress={handleSave} />
+          </Animated.View>
+        )}
+      </KeyboardAvoidingView>
     </>
   );
 };

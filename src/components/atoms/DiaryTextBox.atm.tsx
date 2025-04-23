@@ -8,10 +8,15 @@ export interface DiaryTextBoxHandle {
 
 interface DiaryTextBoxProps {
   initialText?: string;
+  onFocus: () => void;
+  onBlur: () => void;
 }
 
 const DiaryTextBox = forwardRef<DiaryTextBoxHandle, DiaryTextBoxProps>(
-  ({ initialText = '' }, ref) => {
+  (
+    { initialText = '', ...props }: DiaryTextBoxProps,
+    ref: React.Ref<DiaryTextBoxHandle>
+  ) => {
     const [text, setText] = useState(initialText);
 
     useImperativeHandle(ref, () => ({
@@ -20,10 +25,11 @@ const DiaryTextBox = forwardRef<DiaryTextBoxHandle, DiaryTextBoxProps>(
     }));
 
     return (
-      <View className="w-full relative">
+      <View className="w-full flex-1 relative">
         <TextInput
-          className="mx-[0px] bg-[white] rounded-[20px] pt-[67px] pb-[40px] text-pretendard text-[15px]"
-          style={{ maxHeight: getScaleSize(263), minHeight: getScaleSize(150) }}
+          className="flex-1 mx-[0px] bg-transparent rounded-[20px] pt-[67px] text-pretendard text-[15px] pb-40"
+          style={{ flex: 1, fontSize: getScaleSize(15), minHeight: getScaleSize(150) }}
+          {...props}
           placeholder="왜 그 감정을 느꼈는지 알려줘"
           value={text}
           onChangeText={setText}
