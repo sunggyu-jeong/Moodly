@@ -2,8 +2,8 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
 import { Image, Text, View } from 'react-native';
 import { IMAGES } from '../assets/images';
-import ActionButton from '../components/atoms/ActionButton.atom';
-import ToolTipView from '../components/atoms/ToolTipView.atom';
+import ActionButton from '../components/atoms/ActionButton.atm';
+import ToolTipView from '../components/atoms/ToolTipView.atm';
 import { ICON_DATA } from '../constant/Icons';
 import { useAppDispatch, useAppSelector, useRealm, useScale } from '../hooks';
 import {
@@ -15,7 +15,7 @@ import {
 } from '../redux/slice/diarySlice';
 import { isNotEmpty, navigate } from '../utils';
 
-const HomePage = () => {
+const Home = () => {
   const { getScaleSize } = useScale();
   const dispatch = useAppDispatch();
   const { openRealm, closeRealm } = useRealm();
@@ -88,4 +88,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Home;

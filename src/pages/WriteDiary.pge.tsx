@@ -2,9 +2,9 @@ import { useEffect, useRef } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { KeyboardAccessoryView } from 'react-native-keyboard-accessory';
 import { IMAGES } from '../assets/images';
-import DiaryTextBox, { DiaryTextBoxHandle } from '../components/atoms/DiaryTextBox.atom';
-import HeaderText from '../components/atoms/HeaderText.atom';
-import { NaviActionButtonProps } from '../components/atoms/NaviActionButton.atom';
+import DiaryTextBox, { DiaryTextBoxHandle } from '../components/atoms/DiaryTextBox.atm';
+import HeaderText from '../components/atoms/HeaderText.atm';
+import { NaviActionButtonProps } from '../components/atoms/NaviActionButton.atm';
 import NaviDismiss from '../components/molecules/NaviDismiss.mol';
 import NavigationBar from '../components/organisms/NavigationBar.org';
 import { useAppDispatch, useAppSelector, useRealm, useScale } from '../hooks';
@@ -15,7 +15,7 @@ import {
 } from '../redux/slice/diarySlice';
 import { isNotEmpty, navigate } from '../utils';
 
-const WriteDiaryPage = () => {
+const WriteDiary = () => {
   const { getScaleSize } = useScale();
   const textBoxRef = useRef<DiaryTextBoxHandle | null>(null);
   const scrollViewRef = useRef<ScrollView>(null);
@@ -112,4 +112,4 @@ const WriteDiaryPage = () => {
   );
 };
 
-export default WriteDiaryPage;
+export default WriteDiary;

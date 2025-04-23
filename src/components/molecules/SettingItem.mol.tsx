@@ -1,6 +1,6 @@
 import { Image, TouchableOpacity, View } from 'react-native';
 import { IMAGES } from '../../assets/images';
-import Typography from '../atoms/Typography.atom';
+import Typography from '../atoms/Typography.atm';
 
 export interface SettingItemProps {
   title: string;

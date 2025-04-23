@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { View } from 'react-native';
-import ActionButton from '../components/atoms/ActionButton.atom';
-import HeaderText from '../components/atoms/HeaderText.atom';
-import { NaviActionButtonProps } from '../components/atoms/NaviActionButton.atom';
+import ActionButton from '../components/atoms/ActionButton.atm';
+import HeaderText from '../components/atoms/HeaderText.atm';
+import { NaviActionButtonProps } from '../components/atoms/NaviActionButton.atm';
 import NaviDismiss from '../components/molecules/NaviDismiss.mol';
 import EmotionList from '../components/organisms/EmotionList.org';
 import NavigationBar from '../components/organisms/NavigationBar.org';
@@ -13,7 +13,7 @@ import { setSelectedIcon, setTodayDiary } from '../redux/slice/diarySlice';
 import { EmotionDiaryDTO } from '../scheme';
 import { isNotEmpty, navigate } from '../utils';
 
-const SelectEmotionPage = () => {
+const SelectEmotion = () => {
   const { getScaleSize } = useScale();
   const dispatch = useAppDispatch();
   const selectedEmotion = useAppSelector((state) => state.diarySlice.selectedIcon);
@@ -68,4 +68,4 @@ const SelectEmotionPage = () => {
   );
 };
 
-export default SelectEmotionPage;
+export default SelectEmotion;

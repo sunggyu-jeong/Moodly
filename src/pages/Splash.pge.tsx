@@ -1,17 +1,17 @@
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useScale } from "../hooks";
-import { resetTo } from "../utils";
-import { useEffect } from "react";
-import { Text, View } from "react-native";
+import { useEffect } from 'react';
+import { Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useScale } from '../hooks';
+import { resetTo } from '../utils';
 
-const SplashPage = () => {
+const Splash = () => {
   const { getScaleSize } = useScale();
 
   useEffect(() => {
     setTimeout(() => {
-      resetTo("Main");
+      resetTo('Main');
     }, 2000);
-  }, [])
+  }, []);
 
   return (
     <SafeAreaView className="bg-slate-50 flex-1">
@@ -23,11 +23,11 @@ const SplashPage = () => {
           Moodly
         </Text>
         <Text className="text-[#606060] font-pretendard font-medium text-[21px] tracking-[-0.5px] text-center align-middle leading-[32px]">
-          귀여운 감정 친구들과 함께{"\n"} 하루를 기록해봐요
+          귀여운 감정 친구들과 함께{'\n'} 하루를 기록해봐요
         </Text>
       </View>
     </SafeAreaView>
   );
 };
 
-export default SplashPage;
+export default Splash;

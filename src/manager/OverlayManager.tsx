@@ -1,6 +1,6 @@
 import ToastAnimated from '../components/molecules/ToastAnimated.mol';
 import PopupContainerOrga from '../components/organisms/PopupContainer.org';
-import DropDownAnimation from '../components/templates/DropDownAnimation.temp';
+import DropDownAnimation from '../components/templates/DropDownAnimation.tem';
 import { useAppSelector } from '../hooks';
 
 export const MODAL_CONFIRM_ACTION_KEY = {

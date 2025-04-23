@@ -4,7 +4,7 @@ import { IMAGES } from '../../assets/images';
 import { ICON_DATA } from '../../constant/Icons';
 import { useScale } from '../../hooks';
 import { EmotionDiaryDTO } from '../../scheme';
-import Avatar from '../atoms/Avatar.atom';
+import Avatar from '../atoms/Avatar.atm';
 
 const DiaryCardHeader = ({ iconId, recordDate }: EmotionDiaryDTO) => {
   const { getScaleSize } = useScale();

@@ -2,8 +2,8 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 import { useRef } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { IMAGES } from '../assets/images';
-import { NaviActionButtonProps } from '../components/atoms/NaviActionButton.atom';
-import NaviMore from '../components/atoms/NaviMore.atom';
+import { NaviActionButtonProps } from '../components/atoms/NaviActionButton.atm';
+import NaviMore from '../components/atoms/NaviMore.atm';
 import {
   DropDownEventIdentifier,
   DropDownItemProps,
@@ -22,7 +22,7 @@ type DiaryDetailRouteParams = {
   };
 };
 
-const DiaryDetailPage = () => {
+const DiaryDetail = () => {
   const selectedDiary = useAppSelector((state) => state.diarySlice.selectedDiary);
   const dispatch = useAppDispatch();
   const { getScaleSize } = useScale();
@@ -132,4 +132,4 @@ const DiaryDetailPage = () => {
   );
 };
 
-export default DiaryDetailPage;
+export default DiaryDetail;

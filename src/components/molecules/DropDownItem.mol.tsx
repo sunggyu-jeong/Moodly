@@ -3,7 +3,7 @@ import { useAppDispatch } from '../../hooks';
 import { MODAL_CONFIRM_ACTION_KEY } from '../../manager/OverlayManager';
 import { setShowDropdownView, setShowModalPopup } from '../../redux/slice/commonSlice';
 import { navigateFlow, NavigationFlow } from '../../utils';
-import SelectableItem from '../atoms/SelectableItem.atom';
+import SelectableItem from '../atoms/SelectableItem.atm';
 
 export const DropDownEventIdentifier = {
   MODIFY_DIARY: 'MODIFY_DIARY',

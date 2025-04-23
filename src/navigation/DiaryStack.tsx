@@ -1,8 +1,8 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import DiaryDetailPage from '../pages/diary-detail.page';
-import SelectEmotionPage from '../pages/select-emotion.page';
-import WriteDiaryCompletePage from '../pages/write-diary-complete.page';
-import WriteDiaryPage from '../pages/write-diary.page';
+import DiaryDetail from '../pages/DiaryDetail.pge';
+import SelectEmotion from '../pages/SelectEmotion.pge';
+import WriteDiary from '../pages/WriteDiary.pge';
+import WriteDiaryComplete from '../pages/WriteDiaryComplete.pge';
 
 export type DiaryStackParamList = {
   SelectEmotion: undefined;
@@ -22,19 +22,19 @@ const DiaryStack = () => {
       >
         <Stack.Screen
           name="SelectEmotion"
-          component={SelectEmotionPage}
+          component={SelectEmotion}
         />
         <Stack.Screen
           name="WriteDiary"
-          component={WriteDiaryPage}
+          component={WriteDiary}
         />
         <Stack.Screen
           name="Complete"
-          component={WriteDiaryCompletePage}
+          component={WriteDiaryComplete}
         />
         <Stack.Screen
           name="DiaryDetail"
-          component={DiaryDetailPage}
+          component={DiaryDetail}
           initialParams={{ origin: 'DiaryStack' }}
         />
       </Stack.Navigator>

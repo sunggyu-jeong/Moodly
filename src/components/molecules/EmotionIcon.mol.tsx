@@ -1,6 +1,6 @@
 import { useAppDispatch } from '../../hooks';
 import { setSelectedIcon } from '../../redux/slice/diarySlice';
-import EmotionSymbol from '../atoms/EmotionSymbol.atom';
+import EmotionSymbol from '../atoms/EmotionSymbol.atm';
 
 export interface Emotions {
   id: number;

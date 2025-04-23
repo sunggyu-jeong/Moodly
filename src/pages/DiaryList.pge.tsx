@@ -6,7 +6,7 @@ import NavigationBar from '../components/organisms/NavigationBar.org';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { setSelectedMonth } from '../redux/slice/diarySlice';
 
-const DiaryListPage = () => {
+const DiaryList = () => {
   const selectedMonth = useAppSelector((state) => state.diarySlice.selectedMonth);
   const currentMonth = dayjs();
   const dispatch = useAppDispatch();
@@ -54,4 +54,4 @@ const DiaryListPage = () => {
   );
 };
 
-export default DiaryListPage;
+export default DiaryList;

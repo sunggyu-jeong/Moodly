@@ -1,11 +1,11 @@
 import { Image, Text, View } from 'react-native';
 import { IMAGES } from '../assets/images';
-import NaviTitleDisplay from '../components/atoms/NaviTitle.atom';
+import NaviTitleDisplay from '../components/atoms/NaviTitle.atm';
 import NavigationBar from '../components/organisms/NavigationBar.org';
-import SettingList from '../components/organisms/SettingList.orga';
+import SettingList from '../components/organisms/SettingList.org';
 import { useScale } from '../hooks';
 
-const SettingPage = () => {
+const Setting = () => {
   const { getScaleSize } = useScale();
   enum SETTING_EVENT_TYPE {
     BACKUP = 'backup',
@@ -52,4 +52,4 @@ const SettingPage = () => {
   );
 };
 
-export default SettingPage;
+export default Setting;

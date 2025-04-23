@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Animated, Modal, View } from 'react-native';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setShowModalPopup } from '../../redux/slice/commonSlice';
-import DimmedView from '../atoms/DimmedView.atom';
+import DimmedView from '../atoms/DimmedView.atm';
 import PopupFooter from '../molecules/PopupFooter.mol';
 import PopupHeader from '../molecules/PopupHeader.mol';
 

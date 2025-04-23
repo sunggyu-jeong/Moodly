@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector, useRealm, useScale } from '../../hooks'
 import { searchDiaryByMonthThunk, setSelectedDiary } from '../../redux/slice/diarySlice';
 import { EmotionDiaryDTO } from '../../scheme';
 import { isEmpty, isNotEmpty, navigate } from '../../utils';
-import DiaryCardContent from '../atoms/DiaryCardContent.atom';
+import DiaryCardContent from '../atoms/DiaryCardContent.atm';
 import DiaryCardHeader from '../molecules/DiaryCardHeader.mol';
 
 const DiaryCardList = () => {

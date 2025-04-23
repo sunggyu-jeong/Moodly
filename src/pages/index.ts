@@ -1,2 +1,2 @@
-export * from "./home.page"
-export * from "./splash.page"
+export * from './Home.pge';
+export * from './Splash.pge';

@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../hooks';
 import { setShowToastView } from '../../redux/slice/commonSlice';
-import ToastBase from '../atoms/ToastView.atom';
+import ToastBase from '../atoms/ToastView.atm';
 
 interface ToastAnimatedProps {
   text: string;
