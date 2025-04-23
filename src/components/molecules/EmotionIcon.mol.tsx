@@ -13,7 +13,6 @@ const EmotionIcon = ({ emotion }: { emotion: Emotions }) => {
   const dispatch = useAppDispatch();
 
   const handleSelectEmotion = () => {
-    console.log('>>>>', emotion);
     dispatch(setSelectedIcon(emotion));
   };
 

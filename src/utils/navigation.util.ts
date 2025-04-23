@@ -1,6 +1,9 @@
-import { CommonActions, createNavigationContainerRef, StackActions } from '@react-navigation/native';
+import {
+  CommonActions,
+  createNavigationContainerRef,
+  StackActions,
+} from '@react-navigation/native';
 import { RootStackParamList } from '../navigation/RootStack';
-import { InteractionManager } from 'react-native';
 
 export const navigationRef = createNavigationContainerRef<RootStackParamList>();
 
@@ -12,7 +15,7 @@ export enum NavigationFlow {
 export function navigate<RouteName extends keyof RootStackParamList>(
   ...args: RouteName extends unknown
     ? undefined extends RootStackParamList[RouteName]
-      ? | [screen: RouteName]| [screen: RouteName, params: RootStackParamList[RouteName]]
+      ? [screen: RouteName] | [screen: RouteName, params: RootStackParamList[RouteName]]
       : [screen: RouteName, params: RootStackParamList[RouteName]]
     : never
 ) {
@@ -28,9 +31,6 @@ export function canGoBack() {
 export function goBack() {
   if (canGoBack()) {
     navigationRef.goBack();
-    InteractionManager.runAfterInteractions(() => {
-      console.log("dismissModalToScreen completed:", navigationRef.getRootState());
-    });
   }
 }
 
@@ -73,10 +73,6 @@ export function dismissModalToScreen() {
     navigationRef.dispatch({ ...popToTopAction, target: nestedKey });
 
     navigationRef.dispatch(CommonActions.goBack());
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", rootState, lastRoute)
-    InteractionManager.runAfterInteractions(() => {
-      console.log("dismissModalToScreen completed:", navigationRef.getRootState(), nestedKey, popToTopAction);
-    });
   }
 }
 
@@ -87,19 +83,16 @@ export function navigateFlow(flow: NavigationFlow) {
     case NavigationFlow.DiaryDetailToEmotionWriteWithReturn:
       const rootState = navigationRef.getRootState();
       const newRoutes = [...rootState.routes];
-      
+
       navigationRef.reset({
         index: newRoutes.length,
         routes: [
           ...newRoutes,
           {
-            name: "DiaryStack",
+            name: 'DiaryStack',
             state: {
               index: 1,
-              routes: [
-                { name: "SelectEmotion" },
-                { name: "WriteDiary" },
-              ],
+              routes: [{ name: 'SelectEmotion' }, { name: 'WriteDiary' }],
             },
           } as any,
         ],

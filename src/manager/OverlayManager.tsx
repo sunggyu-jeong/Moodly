@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import ToastAnimated from '../components/molecules/ToastAnimated.mol';
 import PopupContainerOrga from '../components/organisms/PopupContainer.org';
 import DropDownAnimation from '../components/templates/DropDownAnimation.temp';
@@ -12,10 +11,6 @@ const OverlayManager = () => {
   const showToastView = useAppSelector((state) => state.commonSlice.showToastView);
   const showModalPopup = useAppSelector((state) => state.commonSlice.showModalPopup);
   const showDropDownView = useAppSelector((state) => state.commonSlice.showDropDownView);
-
-  useEffect(() => {
-    console.log('>>>>>>sdfkdsjfkldsj', showDropDownView);
-  }, [showDropDownView]);
 
   return (
     <>

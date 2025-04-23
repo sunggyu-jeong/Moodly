@@ -38,20 +38,18 @@ const commonSlice = createSlice({
   initialState: initialState,
   reducers: {
     setShowModalPopup: (state, action: PayloadAction<ModalViewPayload>) => {
-      console.log('>>>>>>>>>>>>>>>>>>>>>>>>1', action);
       state.showModalPopup = action.payload;
     },
     setShowDropdownView: (state, action: PayloadAction<DropdownViewPayload>) => {
-      console.log('>>>>>>>>>>>>>>>>>>>>>>>>2', action);
       state.showDropDownView = action.payload;
     },
     setShowToastView: (state, action: PayloadAction<ToastViewPayload>) => {
-      console.log('>>>>>>>>>>>>>>>>>>>>>>>>3', action);
       state.showToastView = action.payload;
     },
   },
 });
 
-export const { setShowModalPopup, setShowDropdownView, setShowToastView } = commonSlice.actions;
+export const { setShowModalPopup, setShowDropdownView, setShowToastView } =
+  commonSlice.actions;
 
 export default commonSlice.reducer;
