@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
-import { useScale } from '../../hooks';
 
 interface ActionButtonProps {
   onPress: () => void;
@@ -9,8 +8,6 @@ interface ActionButtonProps {
 }
 
 const ActionButton = ({ ...props }: ActionButtonProps) => {
-  const { getScaleSize } = useScale();
-
   return (
     <TouchableOpacity
       onPress={props.onPress}

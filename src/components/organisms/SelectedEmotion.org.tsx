@@ -1,9 +1,8 @@
 import { Image, Text, View } from 'react-native';
-import { useAppSelector, useScale } from '../../hooks';
+import { getScaleSize, useAppSelector } from '../../hooks';
 
 const SelectedEmotion = () => {
   const selectedIcon = useAppSelector((state) => state.diarySlice.selectedIcon);
-  const { getScaleSize } = useScale();
 
   return (
     <View style={{ marginTop: getScaleSize(66) }}>

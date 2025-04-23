@@ -1,11 +1,12 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
-import { useAppDispatch, useAppSelector, useRealm, useScale } from '../../hooks';
+import { TouchableOpacity, View } from 'react-native';
+import { useAppDispatch, useAppSelector, useRealm } from '../../hooks';
 import { searchDiaryByMonthThunk, setSelectedDiary } from '../../redux/slice/diarySlice';
 import { EmotionDiaryDTO } from '../../scheme';
 import { isEmpty, isNotEmpty, navigate } from '../../utils';
 import DiaryCardContent from '../atoms/DiaryCardContent.atm';
+import DiaryEmptyMent from '../atoms/DiaryEmptyMent.atm';
 import DiaryCardHeader from '../molecules/DiaryCardHeader.mol';
 
 const DiaryCardList = () => {
@@ -13,7 +14,6 @@ const DiaryCardList = () => {
   const dispatch = useAppDispatch();
   const selectedMonth = useAppSelector((state) => state.diarySlice.selectedMonth);
   const searchByMonth = useAppSelector((state) => state.diarySlice.searchByMonth);
-  const { getScaleSize } = useScale();
 
   useFocusEffect(
     useCallback(() => {
@@ -63,16 +63,7 @@ const DiaryCardList = () => {
           ))}
         </View>
       )}
-      {isEmpty(searchByMonth.data) && (
-        <View className="w-full min-h-[70vh] justify-center items-center">
-          <Text
-            className="font-pretendard tracking-[-0.5px]"
-            style={{ fontSize: getScaleSize(14) }}
-          >
-            작성한 일기가 없어요!
-          </Text>
-        </View>
-      )}
+      {isEmpty(searchByMonth.data) && <DiaryEmptyMent />}
     </>
   );
 };

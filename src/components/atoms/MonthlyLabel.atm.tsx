@@ -1,11 +1,17 @@
 import { Text } from 'react-native';
+import { getScaleSize } from '../../hooks';
 
 interface MonthlyLabelProps {
   label: string;
 }
 
 const MonthlyLabel = ({ label }: MonthlyLabelProps) => (
-  <Text className="font-semibold text-[23px] tracking-[-0.5px]">{label}</Text>
+  <Text
+    className="font-semibold tracking-[-0.5px]"
+    style={{ fontSize: getScaleSize(18) }}
+  >
+    {label}
+  </Text>
 );
 
 export default MonthlyLabel;

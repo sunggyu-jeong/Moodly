@@ -11,7 +11,7 @@ import {
 import NaviDismiss from '../components/molecules/NaviDismiss.mol';
 import NavigationBar from '../components/organisms/NavigationBar.org';
 import { ICON_DATA } from '../constant/Icons';
-import { useAppDispatch, useAppSelector, useRealm, useScale } from '../hooks';
+import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '../hooks';
 import { setShowDropdownView, setShowToastView } from '../redux/slice/commonSlice';
 import { removeDiaryThunk } from '../redux/slice/diarySlice';
 import { dismissModalToScreen, goBack, isNotEmpty } from '../utils';
@@ -25,7 +25,6 @@ type DiaryDetailRouteParams = {
 const DiaryDetail = () => {
   const selectedDiary = useAppSelector((state) => state.diarySlice.selectedDiary);
   const dispatch = useAppDispatch();
-  const { getScaleSize } = useScale();
   const route = useRoute<RouteProp<DiaryDetailRouteParams, 'params'>>();
   const { openRealm, closeRealm } = useRealm();
   const dropdownButtonRef = useRef<View>(null);

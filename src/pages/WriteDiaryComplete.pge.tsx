@@ -1,12 +1,10 @@
 import { useEffect } from 'react';
 import { Image, Text, View } from 'react-native';
 import { IMAGES } from '../assets/images';
-import { useScale } from '../hooks';
+import { getScaleSize } from '../hooks';
 import { navigate } from '../utils';
 
 const WriteDiaryComplete = () => {
-  const { getScaleSize } = useScale();
-
   useEffect(() => {
     setTimeout(() => {
       navigate('DiaryStack', { screen: 'DiaryDetail', params: { origin: 'DiaryStack' } });

@@ -8,13 +8,12 @@ import EmotionList from '../components/organisms/EmotionList.org';
 import NavigationBar from '../components/organisms/NavigationBar.org';
 import SelectedEmotion from '../components/organisms/SelectedEmotion.org';
 import { ICON_DATA } from '../constant/Icons';
-import { useAppDispatch, useAppSelector, useScale } from '../hooks';
+import { getScaleSize, useAppDispatch, useAppSelector } from '../hooks';
 import { setSelectedIcon, setTodayDiary } from '../redux/slice/diarySlice';
 import { EmotionDiaryDTO } from '../scheme';
 import { isNotEmpty, navigate } from '../utils';
 
 const SelectEmotion = () => {
-  const { getScaleSize } = useScale();
   const dispatch = useAppDispatch();
   const selectedEmotion = useAppSelector((state) => state.diarySlice.selectedIcon);
   const actionButtons: NaviActionButtonProps[] = [

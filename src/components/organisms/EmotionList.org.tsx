@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { useScale } from '../../hooks';
+import { getScaleSize } from '../../hooks';
 import EmotionIcon, { Emotions } from '../molecules/EmotionIcon.mol';
 
 interface EmotionListProps {
@@ -7,7 +7,6 @@ interface EmotionListProps {
 }
 
 const EmotionList = ({ emotionList }: EmotionListProps) => {
-  const { getScaleSize } = useScale();
   return (
     <View
       className="flex flex-row flex-wrap mx-6"

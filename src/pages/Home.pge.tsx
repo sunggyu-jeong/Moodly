@@ -5,7 +5,7 @@ import { IMAGES } from '../assets/images';
 import ActionButton from '../components/atoms/ActionButton.atm';
 import ToolTipView from '../components/atoms/ToolTipView.atm';
 import { ICON_DATA } from '../constant/Icons';
-import { useAppDispatch, useAppSelector, useRealm, useScale } from '../hooks';
+import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '../hooks';
 import {
   searchDiaryCountThunk,
   searchDiaryForDayThunk,
@@ -16,7 +16,6 @@ import {
 import { isNotEmpty, navigate } from '../utils';
 
 const Home = () => {
-  const { getScaleSize } = useScale();
   const dispatch = useAppDispatch();
   const { openRealm, closeRealm } = useRealm();
   const diaryCount = useAppSelector((state) => state.diarySlice.diaryCount);

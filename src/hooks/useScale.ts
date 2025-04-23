@@ -1,13 +1,16 @@
-import { Dimensions } from "react-native";
+import { Dimensions } from 'react-native';
 
 const BASE_WIDTH = 414;
+const { width: screenWidth } = Dimensions.get('window');
+const ratio = screenWidth / BASE_WIDTH;
 
-export const useScale = (exponent: number = 1.4) => {
-  const { width: screenWidth } = Dimensions.get("window");
-  const ratio = screenWidth / BASE_WIDTH;
+/**
+ * 화면 크기에 비례하여 주어진 픽셀 크기를 스케일링합니다.
+ * @param size 원본 크기(px)
+ * @param exponent 스케일 지수 (기본값 1.4)
+ * @returns 스케일된 정수 크기(px)
+ */
+export function getScaleSize(size: number, exponent: number = 1.4): number {
   const scale = Math.pow(ratio, exponent);
-  const getScaleSize = (size: number) => Math.round(size * scale);
-  return {
-    getScaleSize,
-  };
+  return Math.round(size * scale);
 }

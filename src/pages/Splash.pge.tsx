@@ -1,12 +1,10 @@
 import { useEffect } from 'react';
 import { Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useScale } from '../hooks';
 import { resetTo } from '../utils';
+import { getScaleSize } from '../hooks';
 
 const Splash = () => {
-  const { getScaleSize } = useScale();
-
   useEffect(() => {
     setTimeout(() => {
       resetTo('Main');

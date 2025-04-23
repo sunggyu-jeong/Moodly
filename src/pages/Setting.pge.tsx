@@ -3,10 +3,9 @@ import { IMAGES } from '../assets/images';
 import NaviTitleDisplay from '../components/atoms/NaviTitle.atm';
 import NavigationBar from '../components/organisms/NavigationBar.org';
 import SettingList from '../components/organisms/SettingList.org';
-import { useScale } from '../hooks';
+import { getScaleSize } from '../hooks';
 
 const Setting = () => {
-  const { getScaleSize } = useScale();
   enum SETTING_EVENT_TYPE {
     BACKUP = 'backup',
     BUG_REPORT = 'bug_report',

@@ -7,7 +7,7 @@ import HeaderText from '../components/atoms/HeaderText.atm';
 import { NaviActionButtonProps } from '../components/atoms/NaviActionButton.atm';
 import NaviDismiss from '../components/molecules/NaviDismiss.mol';
 import NavigationBar from '../components/organisms/NavigationBar.org';
-import { useAppDispatch, useAppSelector, useRealm, useScale } from '../hooks';
+import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '../hooks';
 import {
   addDiaryThunk,
   modifyDiaryThunk,
@@ -16,7 +16,6 @@ import {
 import { isNotEmpty, navigate } from '../utils';
 
 const WriteDiary = () => {
-  const { getScaleSize } = useScale();
   const textBoxRef = useRef<DiaryTextBoxHandle | null>(null);
   const scrollViewRef = useRef<ScrollView>(null);
   const todayDiary = useAppSelector((state) => state.diarySlice.todayDiary);
