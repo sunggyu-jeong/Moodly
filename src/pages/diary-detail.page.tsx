@@ -2,14 +2,14 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 import { useRef } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { IMAGES } from '../assets/images';
-import { NaviActionButtonAtomProps } from '../components/atoms/NaviActionButton.atom';
+import { NaviActionButtonProps } from '../components/atoms/NaviActionButton.atom';
 import NaviMore from '../components/atoms/NaviMore.atom';
 import {
   DropDownEventIdentifier,
   DropDownItemProps,
 } from '../components/molecules/DropDownItem.mol';
 import NaviDismiss from '../components/molecules/NaviDismiss.mol';
-import NavigationBarOrga from '../components/organisms/NavigationBar.orga';
+import NavigationBar from '../components/organisms/NavigationBar.org';
 import { ICON_DATA } from '../constant/Icons';
 import { useAppDispatch, useAppSelector, useRealm, useScale } from '../hooks';
 import { setShowDropdownView, setShowToastView } from '../redux/slice/commonSlice';
@@ -30,14 +30,14 @@ const DiaryDetailPage = () => {
   const { openRealm, closeRealm } = useRealm();
   const dropdownButtonRef = useRef<View>(null);
 
-  const leftComponents: NaviActionButtonAtomProps[] = [
+  const leftComponents: NaviActionButtonProps[] = [
     {
       item: <NaviDismiss />,
       disabled: false,
     },
   ];
 
-  const actionButtons: NaviActionButtonAtomProps[] = [
+  const actionButtons: NaviActionButtonProps[] = [
     {
       item: (
         <TouchableOpacity
@@ -103,7 +103,7 @@ const DiaryDetailPage = () => {
         confirmText="확인"
         onConfirm={handleRemoveDiary}
       /> */}
-      <NavigationBarOrga
+      <NavigationBar
         showBackButton={route.params.origin == 'RootStack'}
         leftComponents={route.params.origin == 'DiaryStack' ? leftComponents : null}
         actionButtons={actionButtons}

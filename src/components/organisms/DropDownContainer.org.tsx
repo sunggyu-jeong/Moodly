@@ -4,7 +4,7 @@ import { useAppSelector } from '../../hooks';
 import { isNotEmpty } from '../../utils';
 import DropDownItem from '../molecules/DropDownItem.mol';
 
-const DropDownOrga = () => {
+const DropDownContainer = () => {
   const showDropDownView = useAppSelector((state) => state.commonSlice.showDropDownView);
 
   return (
@@ -22,4 +22,4 @@ const DropDownOrga = () => {
   );
 };
 
-export default DropDownOrga;
+export default DropDownContainer;

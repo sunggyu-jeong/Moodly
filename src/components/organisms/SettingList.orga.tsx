@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import SettingItem from '../molecules/SettingItem.mol';
 
 interface SettingListItem {
@@ -12,7 +12,7 @@ interface SettingListProps {
   items: SettingListItem[];
 }
 
-const SettingListOrga = ({ items }: SettingListProps) => {
+const SettingList = ({ items }: SettingListProps) => {
   return (
     <View className="flex-1">
       {items.map((item, index) => {
@@ -24,7 +24,10 @@ const SettingListOrga = ({ items }: SettingListProps) => {
           />
         );
         return item.onPress ? (
-          <TouchableOpacity key={index} onPress={item.onPress}>
+          <TouchableOpacity
+            key={index}
+            onPress={item.onPress}
+          >
             {content}
           </TouchableOpacity>
         ) : (
@@ -35,4 +38,4 @@ const SettingListOrga = ({ items }: SettingListProps) => {
   );
 };
 
-export default SettingListOrga;
+export default SettingList;

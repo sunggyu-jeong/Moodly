@@ -1,11 +1,11 @@
-import { Image, Pressable, View } from "react-native";
+import { Image, Pressable, View } from 'react-native';
 
-export interface PureEmotionIconAtomProps {
+export interface EmotionSymbolProps {
   icon: any;
   onPress: () => void;
 }
 
-const EmotionIconAtom = ({ ...props }: PureEmotionIconAtomProps) => (
+const EmotionSymbol = ({ ...props }: EmotionSymbolProps) => (
   <View className="w-[20%] items-center justify-center h-[50px] aspect-square">
     <Pressable onPress={props.onPress}>
       <Image
@@ -17,4 +17,4 @@ const EmotionIconAtom = ({ ...props }: PureEmotionIconAtomProps) => (
   </View>
 );
 
-export default EmotionIconAtom;
+export default EmotionSymbol;

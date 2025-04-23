@@ -1,8 +1,8 @@
 import dayjs from 'dayjs';
 import { ScrollView } from 'react-native';
 import DiaryMonth from '../components/molecules/DiaryMonth.mol';
-import DiaryCardListOrga from '../components/organisms/DiaryCardList.orga';
-import NavigationBarOrga from '../components/organisms/NavigationBar.orga';
+import DiaryCardList from '../components/organisms/DiaryCardList.org';
+import NavigationBar from '../components/organisms/NavigationBar.org';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { setSelectedMonth } from '../redux/slice/diarySlice';
 
@@ -23,7 +23,7 @@ const DiaryListPage = () => {
 
   return (
     <>
-      <NavigationBarOrga
+      <NavigationBar
         showBackButton={false}
         centerComponent={
           <DiaryMonth
@@ -48,7 +48,7 @@ const DiaryListPage = () => {
         className="bg-white"
         contentContainerStyle={{ paddingHorizontal: 24 }}
       >
-        <DiaryCardListOrga />
+        <DiaryCardList />
       </ScrollView>
     </>
   );

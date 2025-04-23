@@ -1,12 +1,11 @@
-import { ImageSourcePropType } from "react-native";
-import { useScale } from "../../hooks";
-import { Image } from "react-native";
+import { Image, ImageSourcePropType } from 'react-native';
+import { useScale } from '../../hooks';
 
 export interface AvatarAtomProps {
   source: ImageSourcePropType;
 }
 
-const AvatarAtom = ({ source }: AvatarAtomProps) => {
+const Avatar = ({ source }: AvatarAtomProps) => {
   const { getScaleSize } = useScale();
   return (
     <Image
@@ -15,6 +14,6 @@ const AvatarAtom = ({ source }: AvatarAtomProps) => {
       className="mr-[10px]"
     />
   );
-}
+};
 
-export default AvatarAtom;
+export default Avatar;

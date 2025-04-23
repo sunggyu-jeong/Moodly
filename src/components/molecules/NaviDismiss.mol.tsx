@@ -1,6 +1,6 @@
 import { IMAGES } from '../../assets/images';
 import { dismissModalToScreen } from '../../utils';
-import IconButtonAtom from '../atoms/IconButton.atom';
+import IconButton from '../atoms/IconButton.atom';
 
 const NaviDismiss = () => {
   const handleDismiss = () => {
@@ -8,7 +8,7 @@ const NaviDismiss = () => {
   };
 
   return (
-    <IconButtonAtom
+    <IconButton
       icon={IMAGES.xmark}
       onPress={handleDismiss}
     />

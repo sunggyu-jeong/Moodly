@@ -2,9 +2,9 @@ import { useCallback, useEffect, useRef } from 'react';
 import { Animated, StyleSheet, TouchableOpacity } from 'react-native';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setShowDropdownView } from '../../redux/slice/commonSlice';
-import DropDownOrga from '../organisms/DropDownContainer.orga';
+import DropDownContainer from '../organisms/DropDownContainer.org';
 
-const DropdownAnimationTemplate = () => {
+const DropDownAnimation = () => {
   const animationValue = useRef(new Animated.Value(0)).current;
   const showDropDownView = useAppSelector((state) => state.commonSlice.showDropDownView);
   const dispatch = useAppDispatch();
@@ -68,10 +68,10 @@ const DropdownAnimationTemplate = () => {
           ],
         }}
       >
-        <DropDownOrga />
+        <DropDownContainer />
       </Animated.View>
     </>
   );
 };
 
-export default DropdownAnimationTemplate;
+export default DropDownAnimation;

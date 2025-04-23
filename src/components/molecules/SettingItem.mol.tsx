@@ -1,6 +1,6 @@
 import { Image, TouchableOpacity, View } from 'react-native';
 import { IMAGES } from '../../assets/images';
-import TypographyAtom from '../atoms/Typography.atom';
+import Typography from '../atoms/Typography.atom';
 
 export interface SettingItemProps {
   title: string;
@@ -8,7 +8,7 @@ export interface SettingItemProps {
   onPress?: () => void;
 }
 
-const SettingItem = ({...props}: SettingItemProps) => {
+const SettingItem = ({ ...props }: SettingItemProps) => {
   const Container = props.onPress ? TouchableOpacity : View;
 
   return (
@@ -18,7 +18,7 @@ const SettingItem = ({...props}: SettingItemProps) => {
     >
       <View className="flex-row items-center">
         {props.rightComponent && <View className="mr-4">{props.rightComponent}</View>}
-        <TypographyAtom variant="body">{props.title}</TypographyAtom>
+        <Typography variant="body">{props.title}</Typography>
       </View>
       <Image source={IMAGES.right} />
     </Container>

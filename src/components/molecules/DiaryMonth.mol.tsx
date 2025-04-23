@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { IMAGES } from '../../assets/images';
-import ArrowButtonAtom from '../atoms/ArrowButton.atom';
-import MonthLabelAtom from '../atoms/MonthLabel.atom';
+import ArrowButton from '../atoms/ArrowButton.atom';
+import MonthlyLabel from '../atoms/MonthlyLabel.atom';
 
 interface DiaryMonthProps {
   monthLabel: string;
@@ -12,13 +12,13 @@ interface DiaryMonthProps {
 
 const DiaryMonth = ({ ...props }: DiaryMonthProps) => (
   <View className="flex-row items-center justify-center">
-    <ArrowButtonAtom
+    <ArrowButton
       source={IMAGES.monthLeft}
       onPress={props.onPressLeft}
       style="mr-[18px]"
     />
-    <MonthLabelAtom label={props.monthLabel} />
-    <ArrowButtonAtom
+    <MonthlyLabel label={props.monthLabel} />
+    <ArrowButton
       source={IMAGES.monthRight}
       onPress={props.onPressRight}
       disabled={props.rightDisabled}

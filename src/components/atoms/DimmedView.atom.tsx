@@ -5,7 +5,7 @@ interface DimmedViewProps {
   onPress?: () => void;
 }
 
-const DimmedViewAtom = ({ ...props }: DimmedViewProps) => {
+const DimmedView = ({ ...props }: DimmedViewProps) => {
   return (
     <TouchableOpacity
       onPress={props.onPress}
@@ -19,4 +19,4 @@ const DimmedViewAtom = ({ ...props }: DimmedViewProps) => {
   );
 };
 
-export default DimmedViewAtom;
+export default DimmedView;

@@ -1,6 +1,6 @@
-import { useScale } from '../../hooks';
 import React from 'react';
-import { TouchableOpacity, Text } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
+import { useScale } from '../../hooks';
 
 interface ActionButtonProps {
   onPress: () => void;
@@ -8,17 +8,17 @@ interface ActionButtonProps {
   disabled?: boolean;
 }
 
-const ActionButtonAtom = ({ ...props }: ActionButtonProps) => {
+const ActionButton = ({ ...props }: ActionButtonProps) => {
   const { getScaleSize } = useScale();
 
   return (
     <TouchableOpacity
       onPress={props.onPress}
       className="rounded-[42px] mx-[25px] h-[56px] justify-center items-center"
-      style={{ backgroundColor: props.disabled ? '#A8A8A8': '#000000' }}
+      style={{ backgroundColor: props.disabled ? '#A8A8A8' : '#000000' }}
       disabled={props.disabled}
     >
-      <Text 
+      <Text
         className="text-pretendard font-semibold tracking-[-0.5px] text-white text-center"
         style={{ fontSize: getScaleSize(16) }}
       >
@@ -28,4 +28,4 @@ const ActionButtonAtom = ({ ...props }: ActionButtonProps) => {
   );
 };
 
-export default ActionButtonAtom;
+export default ActionButton;

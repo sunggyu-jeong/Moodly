@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import PopupButton from "../atoms/PopupButton.atom";
+import PopupButton from "../atoms/ModalButton.atom";
 import { isNotEmpty } from "../../utils";
 
 interface PopupFooterProps {

@@ -1,12 +1,12 @@
 import { Text, TouchableOpacity } from "react-native";
 
-interface PopupButtonProps {
+interface ModalButtonProps {
   text: string;
   textColor: string;
   bgColor?: string;
   onPress: () => void;
 }
-const PopupButtonAtom = ({ ...button }: PopupButtonProps) => {
+const ModalButton = ({ ...button }: ModalButtonProps) => {
   return (
     <TouchableOpacity 
       onPress={button.onPress} 
@@ -19,4 +19,4 @@ const PopupButtonAtom = ({ ...button }: PopupButtonProps) => {
   );
 }
 
-export default PopupButtonAtom;
+export default ModalButton;

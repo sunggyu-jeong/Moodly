@@ -5,10 +5,10 @@ import { useAppDispatch, useAppSelector, useRealm, useScale } from '../../hooks'
 import { searchDiaryByMonthThunk, setSelectedDiary } from '../../redux/slice/diarySlice';
 import { EmotionDiaryDTO } from '../../scheme';
 import { isEmpty, isNotEmpty, navigate } from '../../utils';
-import DiaryCardContent from '../molecules/DiaryCardContent.mol';
+import DiaryCardContent from '../atoms/DiaryCardContent.atom';
 import DiaryCardHeader from '../molecules/DiaryCardHeader.mol';
 
-const DiaryCardListOrga = () => {
+const DiaryCardList = () => {
   const { openRealm, closeRealm } = useRealm();
   const dispatch = useAppDispatch();
   const selectedMonth = useAppSelector((state) => state.diarySlice.selectedMonth);
@@ -77,4 +77,4 @@ const DiaryCardListOrga = () => {
   );
 };
 
-export default DiaryCardListOrga;
+export default DiaryCardList;

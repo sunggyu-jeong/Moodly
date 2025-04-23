@@ -1,10 +1,10 @@
-import { useRef, useEffect } from "react";
-import { Animated } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import ToastBaseAtom from "../atoms/ToastView.atom";
-import { useAppSelector } from "../../hooks";
-import { useDispatch } from "react-redux";
-import { setShowToastView } from "../../redux/slice/commonSlice";
+import { useEffect, useRef } from 'react';
+import { Animated } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useDispatch } from 'react-redux';
+import { useAppSelector } from '../../hooks';
+import { setShowToastView } from '../../redux/slice/commonSlice';
+import ToastBase from '../atoms/ToastView.atom';
 
 interface ToastAnimatedProps {
   text: string;
@@ -26,11 +26,15 @@ const ToastAnimated = ({ text }: ToastAnimatedProps) => {
 
       const timer = setTimeout(() => {
         Animated.parallel([
-          Animated.timing(translateY, { toValue: -40, duration: 200, useNativeDriver: true }),
+          Animated.timing(translateY, {
+            toValue: -40,
+            duration: 200,
+            useNativeDriver: true,
+          }),
           Animated.timing(opacity, { toValue: 0, duration: 200, useNativeDriver: true }),
         ]).start(({ finished }) => {
           if (finished) {
-            dispatch(setShowToastView({visibility: null, message:""}));
+            dispatch(setShowToastView({ visibility: null, message: '' }));
           }
         });
       }, 1500);
@@ -39,9 +43,12 @@ const ToastAnimated = ({ text }: ToastAnimatedProps) => {
   }, [showToastView]);
 
   return (
-    <Animated.View className="absolute inset-x-0 top-0 z-[999] transform" style={{ transform: [{ translateY }], opacity: opacity, height: 125 }}>
+    <Animated.View
+      className="absolute inset-x-0 top-0 z-[999] transform"
+      style={{ transform: [{ translateY }], opacity: opacity, height: 125 }}
+    >
       <SafeAreaView className="mx-5 items-center h-full">
-        <ToastBaseAtom text={text} />
+        <ToastBase text={text} />
       </SafeAreaView>
     </Animated.View>
   );

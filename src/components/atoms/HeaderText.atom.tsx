@@ -1,11 +1,11 @@
-import { useScale } from "../../hooks";
-import { Text, TextProps } from "react-native";
+import { Text, TextProps } from 'react-native';
+import { useScale } from '../../hooks';
 
-interface TitleTextProps extends TextProps { 
+interface HeaderTextProps extends TextProps {
   children: React.ReactNode;
 }
 
-const TitleText = ({ children, style, ...props}: TitleTextProps) => {
+const HeaderText = ({ children, style, ...props }: HeaderTextProps) => {
   const { getScaleSize } = useScale();
 
   return (
@@ -17,6 +17,6 @@ const TitleText = ({ children, style, ...props}: TitleTextProps) => {
       {children}
     </Text>
   );
-}
+};
 
-export default TitleText;
+export default HeaderText;

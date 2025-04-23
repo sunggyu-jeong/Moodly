@@ -1,9 +1,9 @@
 import { ImageSourcePropType } from 'react-native';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppDispatch } from '../../hooks';
 import { MODAL_CONFIRM_ACTION_KEY } from '../../manager/OverlayManager';
 import { setShowDropdownView, setShowModalPopup } from '../../redux/slice/commonSlice';
 import { navigateFlow, NavigationFlow } from '../../utils';
-import DropDownItemAtom from '../atoms/DropdownItem.atom';
+import SelectableItem from '../atoms/SelectableItem.atom';
 
 export const DropDownEventIdentifier = {
   MODIFY_DIARY: 'MODIFY_DIARY',
@@ -18,7 +18,6 @@ export interface DropDownItemProps {
 
 const DropDownItem = ({ ...props }: DropDownItemProps) => {
   const dispatch = useAppDispatch();
-  const showDropDownView = useAppSelector((state) => state.commonSlice.showDropDownView);
   const handle = () => {
     dispatch(
       setShowDropdownView({
@@ -45,7 +44,7 @@ const DropDownItem = ({ ...props }: DropDownItemProps) => {
   };
 
   return (
-    <DropDownItemAtom
+    <SelectableItem
       text={props.text}
       source={props.source}
       textColor={props.eventIdentifier === 'DELETE_DIARY' ? '#FF0000' : '#212123'}

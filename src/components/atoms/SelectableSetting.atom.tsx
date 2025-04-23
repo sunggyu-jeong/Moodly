@@ -3,13 +3,13 @@ import { useScale } from '../../hooks';
 import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 
-export interface SettingItemAtomProps {
+export interface SelectableSettingProps {
   title: string;
   rightComponent?: React.ReactNode;
   onPress?: () => void;
 }
 
-const SettingItemAtom = ({ title, rightComponent, onPress }: SettingItemAtomProps) => {
+const SelectableSetting = ({ title, rightComponent, onPress }: SelectableSettingProps) => {
   const Container = onPress ? TouchableOpacity : View;
   const { getScaleSize } = useScale();
 
@@ -33,4 +33,4 @@ const SettingItemAtom = ({ title, rightComponent, onPress }: SettingItemAtomProp
   );
 };
 
-export default SettingItemAtom;
+export default SelectableSetting;

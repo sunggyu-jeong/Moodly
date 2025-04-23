@@ -1,6 +1,6 @@
-import { useAppDispatch } from "../../hooks";
-import { setSelectedIcon } from "../../redux/slice/diarySlice";
-import EmotionIconAtom from "../atoms/EmotionIcon.atom";
+import { useAppDispatch } from '../../hooks';
+import { setSelectedIcon } from '../../redux/slice/diarySlice';
+import EmotionSymbol from '../atoms/EmotionSymbol.atom';
 
 export interface Emotions {
   id: number;
@@ -13,11 +13,16 @@ const EmotionIcon = ({ emotion }: { emotion: Emotions }) => {
   const dispatch = useAppDispatch();
 
   const handleSelectEmotion = () => {
-    console.log(">>>>", emotion)
+    console.log('>>>>', emotion);
     dispatch(setSelectedIcon(emotion));
   };
 
-  return <EmotionIconAtom icon={emotion.icon} onPress={handleSelectEmotion} />;
+  return (
+    <EmotionSymbol
+      icon={emotion.icon}
+      onPress={handleSelectEmotion}
+    />
+  );
 };
 
 export default EmotionIcon;

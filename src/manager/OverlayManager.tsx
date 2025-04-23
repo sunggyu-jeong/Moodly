@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import ToastAnimated from '../components/molecules/ToastAnimated.mol';
-import PopupContainerOrga from '../components/organisms/PopupContainer.orga';
-import DropdownAnimationTemplate from '../components/templates/DropDownAnimation.temp';
+import PopupContainerOrga from '../components/organisms/PopupContainer.org';
+import DropDownAnimation from '../components/templates/DropDownAnimation.temp';
 import { useAppSelector } from '../hooks';
 
 export const MODAL_CONFIRM_ACTION_KEY = {
@@ -38,7 +38,7 @@ const OverlayManager = () => {
         />
       )}
 
-      {showDropDownView?.visibility !== null && <DropdownAnimationTemplate />}
+      {showDropDownView?.visibility !== null && <DropDownAnimation />}
     </>
   );
 };

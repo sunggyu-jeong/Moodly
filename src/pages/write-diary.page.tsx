@@ -1,16 +1,19 @@
-import { useAppDispatch, useAppSelector, useRealm, useScale } from "../hooks";
-import NavigationBarOrga from "../components/organisms/NavigationBar.orga";
-import { View, Image, ScrollView, TouchableOpacity, Text } from "react-native";
-import DiaryTextBox from "../components/atoms/DiaryTextBox.atom";
-import { useEffect, useRef } from "react";
-import { DiaryTextBoxHandle } from "../components/atoms/DiaryTextBox.atom";
-import { isNotEmpty, navigate } from "../utils";
-import { IMAGES } from "../assets/images";
-import { addDiaryThunk, modifyDiaryThunk, setSelectedDiary } from "../redux/slice/diarySlice";
-import { NaviActionButtonAtomProps } from "../components/atoms/NaviActionButton.atom";
-import TitleText from "../components/atoms/TitleText.atom";
+import { useEffect, useRef } from 'react';
+import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { KeyboardAccessoryView } from 'react-native-keyboard-accessory';
-import NaviDismiss from "../components/molecules/NaviDismiss.mol";
+import { IMAGES } from '../assets/images';
+import DiaryTextBox, { DiaryTextBoxHandle } from '../components/atoms/DiaryTextBox.atom';
+import HeaderText from '../components/atoms/HeaderText.atom';
+import { NaviActionButtonProps } from '../components/atoms/NaviActionButton.atom';
+import NaviDismiss from '../components/molecules/NaviDismiss.mol';
+import NavigationBar from '../components/organisms/NavigationBar.org';
+import { useAppDispatch, useAppSelector, useRealm, useScale } from '../hooks';
+import {
+  addDiaryThunk,
+  modifyDiaryThunk,
+  setSelectedDiary,
+} from '../redux/slice/diarySlice';
+import { isNotEmpty, navigate } from '../utils';
 
 const WriteDiaryPage = () => {
   const { getScaleSize } = useScale();
@@ -21,10 +24,12 @@ const WriteDiaryPage = () => {
   const { openRealm, closeRealm } = useRealm();
   const selectedDiary = useAppSelector((state) => state.diarySlice.selectedDiary);
 
-  const actionButtons: NaviActionButtonAtomProps[] = [{
-    item: <NaviDismiss />,
-    disabled: false,
-  }]
+  const actionButtons: NaviActionButtonProps[] = [
+    {
+      item: <NaviDismiss />,
+      disabled: false,
+    },
+  ];
 
   const handleSave = async () => {
     const realm = await openRealm();
@@ -33,12 +38,16 @@ const WriteDiaryPage = () => {
     // 텍스트 및 Realm 체크
     if (!isNotEmpty(text) || !isNotEmpty(realm)) return;
 
-    console.log("저장된 일기:", text);
+    console.log('저장된 일기:', text);
     const diary = { ...todayDiary, description: text };
 
     // 수정 또는 추가 Thunk 결정
     const thunk = isNotEmpty(selectedDiary)
-      ? modifyDiaryThunk({ realm, emotionId: selectedDiary?.emotionId ?? -1, data: diary })
+      ? modifyDiaryThunk({
+          realm,
+          emotionId: selectedDiary?.emotionId ?? -1,
+          data: diary,
+        })
       : addDiaryThunk({ realm, data: diary });
 
     // 실행 및 결과 처리
@@ -48,21 +57,21 @@ const WriteDiaryPage = () => {
 
     await closeRealm();
     dispatch(setSelectedDiary(diary));
-    navigate("DiaryStack", { screen: "Complete" });
-  }
+    navigate('DiaryStack', { screen: 'Complete' });
+  };
 
   useEffect(() => {
     if (isNotEmpty(selectedDiary)) {
-      textBoxRef.current?.setText(selectedDiary?.description ?? "");
+      textBoxRef.current?.setText(selectedDiary?.description ?? '');
     }
-  }, [selectedDiary])
+  }, [selectedDiary]);
 
   return (
     <>
-      <NavigationBarOrga actionButtons={actionButtons} />
-      <ScrollView 
+      <NavigationBar actionButtons={actionButtons} />
+      <ScrollView
         ref={scrollViewRef}
-        className="bg-white flex-1" 
+        className="bg-white flex-1"
         contentContainerStyle={{
           flexGrow: 1,
           justifyContent: 'flex-end',
@@ -71,23 +80,27 @@ const WriteDiaryPage = () => {
         }}
         keyboardShouldPersistTaps="handled"
       >
-        <TitleText style={{ marginTop: getScaleSize(63) }}>
+        <HeaderText style={{ marginTop: getScaleSize(63) }}>
           어떤 일이 있었는지 말해줄래?
-        </TitleText> 
+        </HeaderText>
         <Image
           source={IMAGES.smile}
-          style={{ 
-            marginTop: getScaleSize(26), 
-            marginBottom: getScaleSize(32), 
-            width: getScaleSize(137), 
-            height: getScaleSize(137) }} 
+          style={{
+            marginTop: getScaleSize(26),
+            marginBottom: getScaleSize(32),
+            width: getScaleSize(137),
+            height: getScaleSize(137),
+          }}
         />
         <DiaryTextBox ref={textBoxRef} />
         <View className="flex-1" />
       </ScrollView>
       <KeyboardAccessoryView>
-        <TouchableOpacity onPress={handleSave} className="ml-auto w-10 mr-5">
-          <Text 
+        <TouchableOpacity
+          onPress={handleSave}
+          className="ml-auto w-10 mr-5"
+        >
+          <Text
             className="font-semibold text-right leading-10 whitespace-nowrap"
             style={{ fontSize: getScaleSize(16) }}
           >
@@ -96,7 +109,7 @@ const WriteDiaryPage = () => {
         </TouchableOpacity>
       </KeyboardAccessoryView>
     </>
-  )
-}
+  );
+};
 
 export default WriteDiaryPage;
