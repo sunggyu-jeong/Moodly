@@ -1,6 +1,6 @@
-import { useScale } from "../../hooks";
-import { forwardRef, useImperativeHandle, useState } from "react";
-import { TextInput, View } from "react-native";
+import { forwardRef, useImperativeHandle, useState } from 'react';
+import { TextInput, View } from 'react-native';
+import { getScaleSize } from '../../hooks';
 export interface DiaryTextBoxHandle {
   getText: () => string;
   setText: (text: string) => void;
@@ -11,29 +11,29 @@ interface DiaryTextBoxProps {
 }
 
 const DiaryTextBox = forwardRef<DiaryTextBoxHandle, DiaryTextBoxProps>(
-  ({ initialText = "" }, ref) => {
-  const [text, setText] = useState(initialText);
-  const { getScaleSize } = useScale();
+  ({ initialText = '' }, ref) => {
+    const [text, setText] = useState(initialText);
 
-  useImperativeHandle(ref, () => ({
-    getText: () => text,
-    setText,
-  }));
+    useImperativeHandle(ref, () => ({
+      getText: () => text,
+      setText,
+    }));
 
-  return (
-    <View className="w-full relative">
-      <TextInput 
-        className="mx-[0px] bg-[white] rounded-[20px] pt-[67px] pb-[40px] text-pretendard text-[15px]"
-        style={{ maxHeight: getScaleSize(263), minHeight: getScaleSize(150) }}
-        placeholder="왜 그 감정을 느꼈는지 알려줘"
-        value={text}
-        onChangeText={setText}
-        maxLength={500}
-        multiline
-        textAlignVertical="top"
-      />
-    </View>
-  )
-});
+    return (
+      <View className="w-full relative">
+        <TextInput
+          className="mx-[0px] bg-[white] rounded-[20px] pt-[67px] pb-[40px] text-pretendard text-[15px]"
+          style={{ maxHeight: getScaleSize(263), minHeight: getScaleSize(150) }}
+          placeholder="왜 그 감정을 느꼈는지 알려줘"
+          value={text}
+          onChangeText={setText}
+          maxLength={500}
+          multiline
+          textAlignVertical="top"
+        />
+      </View>
+    );
+  }
+);
 
 export default DiaryTextBox;

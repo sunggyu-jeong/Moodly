@@ -1,13 +1,11 @@
 import { Text, TextProps } from 'react-native';
-import { useScale } from '../../hooks';
+import { getScaleSize } from '../../hooks';
 
 interface HeaderTextProps extends TextProps {
   children: React.ReactNode;
 }
 
 const HeaderText = ({ children, style, ...props }: HeaderTextProps) => {
-  const { getScaleSize } = useScale();
-
   return (
     <Text
       {...props}

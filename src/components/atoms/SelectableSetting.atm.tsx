@@ -1,7 +1,7 @@
-import { IMAGES } from '../../assets/images';
-import { useScale } from '../../hooks';
 import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { IMAGES } from '../../assets/images';
+import { getScaleSize } from '../../hooks';
 
 export interface SelectableSettingProps {
   title: string;
@@ -9,9 +9,12 @@ export interface SelectableSettingProps {
   onPress?: () => void;
 }
 
-const SelectableSetting = ({ title, rightComponent, onPress }: SelectableSettingProps) => {
+const SelectableSetting = ({
+  title,
+  rightComponent,
+  onPress,
+}: SelectableSettingProps) => {
   const Container = onPress ? TouchableOpacity : View;
-  const { getScaleSize } = useScale();
 
   return (
     <Container

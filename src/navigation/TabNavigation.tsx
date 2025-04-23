@@ -1,16 +1,14 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { IMAGES } from '../assets/images';
 import TabBarIcon from '../components/atoms/TabBarIcon.atm';
-import { useScale } from '../hooks';
 import DiaryList from '../pages/DiaryList.pge';
 import Home from '../pages/Home.pge';
 import Setting from '../pages/Setting.pge';
+import { getScaleSize } from '../hooks';
 
 const Tab = createBottomTabNavigator();
 
 const TabNavigation = () => {
-  const { getScaleSize } = useScale();
-
   return (
     <Tab.Navigator
       screenOptions={{
