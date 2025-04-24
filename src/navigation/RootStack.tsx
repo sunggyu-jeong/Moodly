@@ -1,9 +1,9 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import OverlayManager from '../manager/OverlayManager';
 import DiaryDetail from '../pages/DiaryDetail.pge';
 import Splash from '../pages/Splash.pge';
 import DiaryStack, { DiaryStackParamList } from './DiaryStack';
 import TabNavigation from './TabNavigation';
-import OverlayManager from '../manager/OverlayManager';
 
 export type RootStackParamList = {
   Splash: undefined;

@@ -1,11 +1,15 @@
 import { Text } from 'react-native';
+import { getScaleSize } from '../../hooks';
 
 interface NaviTitleDisplayProps {
   title: string;
 }
 
 const NaviTitleDisplay = ({ title }: NaviTitleDisplayProps) => (
-  <Text className="font-bold text-[20px] text-black tracking-[-0.5px] text-center">
+  <Text
+    className="font-bold text-black tracking-[-0.5px] text-center"
+    style={{ fontSize: getScaleSize(18) }}
+  >
     {title}
   </Text>
 );

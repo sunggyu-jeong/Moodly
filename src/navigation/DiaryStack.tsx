@@ -38,6 +38,9 @@ const DiaryStack = () => {
           name="DiaryDetail"
           component={DiaryDetail}
           initialParams={{ origin: 'DiaryStack' }}
+          options={{
+            gestureEnabled: false,
+          }}
         />
       </Stack.Navigator>
     </>

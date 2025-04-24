@@ -25,12 +25,14 @@ interface CommonState {
   showModalPopup?: ModalViewPayload;
   showDropDownView?: DropdownViewPayload;
   showToastView?: ToastViewPayload;
+  overlayEventHandler: string | null;
 }
 
 const initialState: CommonState = {
   showModalPopup: { visibility: null, title: '', message: '', confirmActionKey: '' },
   showDropDownView: { visibility: false, dropdownList: null, pos: { x: null, y: null } },
   showToastView: { visibility: null, message: '' },
+  overlayEventHandler: null,
 };
 
 const commonSlice = createSlice({
@@ -46,10 +48,17 @@ const commonSlice = createSlice({
     setShowToastView: (state, action: PayloadAction<ToastViewPayload>) => {
       state.showToastView = action.payload;
     },
+    setOverlayEventHandler: (state, action: PayloadAction<string | null>) => {
+      state.overlayEventHandler = action.payload;
+    },
   },
 });
 
-export const { setShowModalPopup, setShowDropdownView, setShowToastView } =
-  commonSlice.actions;
+export const {
+  setShowModalPopup,
+  setShowDropdownView,
+  setShowToastView,
+  setOverlayEventHandler,
+} = commonSlice.actions;
 
 export default commonSlice.reducer;

@@ -1,5 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { IMAGES } from '../assets/images';
 import TabBarIcon from '../components/atoms/TabBarIcon.atm';
 import { getScaleSize } from '../hooks';
@@ -13,17 +14,15 @@ const TabNavigation = () => {
   const insets = useSafeAreaInsets();
 
   return (
-    <SafeAreaView
-      className="flex-1 bg-white"
-      edges={['bottom']}
-    >
+    <View className="flex-1 bg-white">
       <Tab.Navigator
         screenOptions={{
           headerShown: false,
           tabBarShowLabel: false,
           tabBarStyle: {
-            height: getScaleSize(49),
-            paddingBottom: insets.bottom,
+            height: getScaleSize(49) + insets.bottom,
+            paddingBottom: 0,
+            backgroundColor: 'white',
           },
         }}
       >
@@ -59,7 +58,7 @@ const TabNavigation = () => {
           }}
         />
       </Tab.Navigator>
-    </SafeAreaView>
+    </View>
   );
 };
 

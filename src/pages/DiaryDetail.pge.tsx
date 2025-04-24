@@ -1,5 +1,5 @@
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { IMAGES } from '../assets/images';
 import { NaviActionButtonProps } from '../components/atoms/NaviActionButton.atm';
@@ -12,7 +12,12 @@ import NaviDismiss from '../components/molecules/NaviDismiss.mol';
 import NavigationBar from '../components/organisms/NavigationBar.org';
 import { ICON_DATA } from '../constant/Icons';
 import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '../hooks';
-import { setShowDropdownView, setShowToastView } from '../redux/slice/commonSlice';
+import { MODAL_CONFIRM_ACTION_KEY } from '../manager/OverlayManager';
+import {
+  setOverlayEventHandler,
+  setShowDropdownView,
+  setShowToastView,
+} from '../redux/slice/commonSlice';
 import { removeDiaryThunk } from '../redux/slice/diarySlice';
 import { dismissModalToScreen, goBack, isNotEmpty } from '../utils';
 
@@ -24,6 +29,9 @@ type DiaryDetailRouteParams = {
 
 const DiaryDetail = () => {
   const selectedDiary = useAppSelector((state) => state.diarySlice.selectedDiary);
+  const overlayEventHandler = useAppSelector(
+    (state) => state.commonSlice.overlayEventHandler
+  );
   const dispatch = useAppDispatch();
   const route = useRoute<RouteProp<DiaryDetailRouteParams, 'params'>>();
   const { openRealm, closeRealm } = useRealm();
@@ -62,6 +70,14 @@ const DiaryDetail = () => {
       eventIdentifier: DropDownEventIdentifier.DELETE_DIARY,
     },
   ];
+  useEffect(() => {
+    if (
+      isNotEmpty(overlayEventHandler) &&
+      overlayEventHandler === MODAL_CONFIRM_ACTION_KEY.DELETE_DIARY
+    ) {
+      handleRemoveDiary();
+    }
+  }, [overlayEventHandler]);
 
   function openDropdown() {
     dropdownButtonRef.current?.measureInWindow((x, y, width, height) => {
@@ -76,20 +92,29 @@ const DiaryDetail = () => {
   }
 
   const handleRemoveDiary = async () => {
-    const realm = await openRealm();
-    if (isNotEmpty(realm) && isNotEmpty(selectedDiary?.emotionId)) {
-      try {
-        await dispatch(removeDiaryThunk({ realm, emotionId: selectedDiary.emotionId }));
-        closeRealm();
-        if (route.params.origin == 'RootStack') {
-          goBack();
-        } else {
-          dismissModalToScreen();
-        }
-        dispatch(setShowToastView({ visibility: true, message: '일기가 삭제되었어요!' }));
-      } catch (error) {
-        console.log('>>>>>>>>>>>', error);
+    try {
+      const realm = await openRealm();
+      if (!isNotEmpty(realm) || !isNotEmpty(selectedDiary?.emotionId)) {
+        throw new Error('선택된 일기가 없거나 Realm을 열 수 없습니다.');
       }
+      await dispatch(removeDiaryThunk({ realm, emotionId: selectedDiary.emotionId }));
+      if (route.params.origin === 'RootStack') {
+        goBack();
+      } else {
+        dismissModalToScreen();
+      }
+      dispatch(setShowToastView({ visibility: true, message: '일기가 삭제되었어요!' }));
+    } catch (error) {
+      console.error('handleRemoveDiary error:', error);
+      dispatch(
+        setShowToastView({
+          visibility: true,
+          message: '일기를 삭제하는 도중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
+        })
+      );
+    } finally {
+      closeRealm();
+      dispatch(setOverlayEventHandler(null));
     }
   };
 

@@ -3,7 +3,7 @@ import { getScaleSize } from '../../hooks';
 
 const DiaryEmptyMent = () => {
   return (
-    <View className="w-full min-h-[70vh] justify-center items-center">
+    <View className="flex-1 bg-white justify-center items-center">
       <Text
         className="font-pretendard tracking-[-0.5px]"
         style={{ fontSize: getScaleSize(21) }}

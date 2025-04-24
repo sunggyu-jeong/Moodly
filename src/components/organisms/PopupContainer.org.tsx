@@ -18,7 +18,7 @@ const PopupContainer = ({ ...props }: PopupContainerProps) => {
   const showModalPopup = useAppSelector((state) => state.commonSlice.showModalPopup);
   const dispatch = useAppDispatch();
 
-  const translateY = useRef(new Animated.Value(50)).current;
+  const translateY = useRef(new Animated.Value(30)).current;
   const opacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const PopupContainer = ({ ...props }: PopupContainerProps) => {
     } else {
       Animated.parallel([
         Animated.timing(translateY, {
-          toValue: 50,
+          toValue: 30,
           duration: 150,
           useNativeDriver: true,
         }),

@@ -1,13 +1,19 @@
+import { useFocusEffect } from '@react-navigation/native';
 import dayjs from 'dayjs';
+import { useCallback } from 'react';
 import { ScrollView } from 'react-native';
+import DiaryEmptyMent from '../components/atoms/DiaryEmptyMent.atm';
 import DiaryMonth from '../components/molecules/DiaryMonth.mol';
 import DiaryCardList from '../components/organisms/DiaryCardList.org';
 import NavigationBar from '../components/organisms/NavigationBar.org';
-import { useAppDispatch, useAppSelector } from '../hooks';
-import { setSelectedMonth } from '../redux/slice/diarySlice';
+import { useAppDispatch, useAppSelector, useRealm } from '../hooks';
+import { searchDiaryByMonthThunk, setSelectedMonth } from '../redux/slice/diarySlice';
+import { isEmpty, isNotEmpty } from '../utils';
 
 const DiaryList = () => {
+  const { openRealm, closeRealm } = useRealm();
   const selectedMonth = useAppSelector((state) => state.diarySlice.selectedMonth);
+  const searchByMonth = useAppSelector((state) => state.diarySlice.searchByMonth);
   const currentMonth = dayjs();
   const dispatch = useAppDispatch();
 
@@ -19,6 +25,21 @@ const DiaryList = () => {
           .toISOString()
       )
     );
+  };
+  useFocusEffect(
+    useCallback(() => {
+      initialize();
+    }, [selectedMonth])
+  );
+
+  const initialize = async () => {
+    const realm = await openRealm();
+    if (isNotEmpty(realm)) {
+      await dispatch(
+        searchDiaryByMonthThunk({ realm, recordDate: new Date(selectedMonth) })
+      );
+      closeRealm();
+    }
   };
 
   return (
@@ -44,12 +65,16 @@ const DiaryList = () => {
           />
         }
       />
-      <ScrollView
-        className="bg-white"
-        contentContainerStyle={{ paddingHorizontal: 24 }}
-      >
-        <DiaryCardList />
-      </ScrollView>
+      {isNotEmpty(searchByMonth?.data) && (
+        <ScrollView
+          className="bg-white"
+          contentContainerStyle={{ paddingHorizontal: 24 }}
+        >
+          <DiaryCardList />
+        </ScrollView>
+      )}
+
+      {isEmpty(searchByMonth?.data) && <DiaryEmptyMent />}
     </>
   );
 };

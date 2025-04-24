@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
-import { Animated } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Animated, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../hooks';
 import { setShowToastView } from '../../redux/slice/commonSlice';
@@ -15,6 +15,7 @@ const ToastAnimated = ({ text }: ToastAnimatedProps) => {
   const showToastView = useAppSelector((state) => state.commonSlice.showToastView);
   const dispatch = useDispatch();
   const opacity = useRef(new Animated.Value(0)).current;
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     if (showToastView?.visibility) {
@@ -45,11 +46,16 @@ const ToastAnimated = ({ text }: ToastAnimatedProps) => {
   return (
     <Animated.View
       className="absolute inset-x-0 top-0 z-[999] transform"
-      style={{ transform: [{ translateY }], opacity: opacity, height: 125 }}
+      style={{
+        transform: [{ translateY }],
+        opacity: opacity,
+        height: 40,
+        marginTop: insets.top,
+      }}
     >
-      <SafeAreaView className="mx-5 items-center h-full">
+      <View className="mx-5 items-center h-full">
         <ToastBase text={text} />
-      </SafeAreaView>
+      </View>
     </Animated.View>
   );
 };
