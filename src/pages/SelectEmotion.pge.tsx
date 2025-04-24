@@ -54,8 +54,9 @@ const SelectEmotion = () => {
           오늘 너의 마음과 가장 닮은 친구를 골라줘
         </HeaderText>
         <SelectedEmotion />
-        <EmotionList emotionList={ICON_DATA} />
         <View className="flex-1" />
+        <EmotionList emotionList={ICON_DATA} />
+        
         <View
           className="w-full"
           style={{ marginBottom: getScaleSize(57) }}

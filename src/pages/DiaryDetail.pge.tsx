@@ -151,7 +151,7 @@ const DiaryDetail = () => {
           style={{ width: getScaleSize(137), height: getScaleSize(137) }}
         />
         <Text
-          className="font-pretendard font-medium text-start tracking-[-0.5px] mx-6 leading-[30px]"
+          className="font-pretendard font-medium text-start tracking-[-0.5px] px-6 leading-[30px] w-full"
           style={{ marginTop: getScaleSize(34), fontSize: getScaleSize(18) }}
         >
           {selectedDiary?.description}

@@ -1,41 +1,67 @@
-import { forwardRef, useImperativeHandle, useState } from 'react';
-import { TextInput, View } from 'react-native';
+import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import {
+  NativeSyntheticEvent,
+  TextInput,
+  TextInputContentSizeChangeEventData,
+  TextInputFocusEventData,
+  View,
+} from 'react-native';
 import { getScaleSize } from '../../hooks';
 export interface DiaryTextBoxHandle {
   getText: () => string;
-  setText: (text: string) => void;
 }
 
 interface DiaryTextBoxProps {
   initialText?: string;
-  onFocus: () => void;
-  onBlur: () => void;
+  onFocus?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
+  onBlur?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
+  onContentSizeChange?: (
+    e: NativeSyntheticEvent<TextInputContentSizeChangeEventData>
+  ) => void;
 }
 
 const DiaryTextBox = forwardRef<DiaryTextBoxHandle, DiaryTextBoxProps>(
   (
-    { initialText = '', ...props }: DiaryTextBoxProps,
+    { initialText = '', onFocus, onBlur, onContentSizeChange }: DiaryTextBoxProps,
     ref: React.Ref<DiaryTextBoxHandle>
   ) => {
     const [text, setText] = useState(initialText);
 
+    useEffect(() => {
+      setText(initialText);
+    }, [initialText]);
+
     useImperativeHandle(ref, () => ({
       getText: () => text,
-      setText,
+      setText: (value: string) => {
+        setText(value);
+      },
     }));
 
     return (
       <View className="w-full flex-1 relative">
         <TextInput
-          className="flex-1 mx-[0px] bg-transparent rounded-[20px] pt-[67px] text-pretendard text-[15px] pb-40 leading-6"
-          style={{ flex: 1, fontSize: getScaleSize(15), minHeight: getScaleSize(150) }}
-          {...props}
+          className="flex-1 mx-[0px] bg-transparent rounded-[20px] text-pretendard text-[15px] pb-40 leading-6"
+          style={{
+            fontSize: getScaleSize(15),
+            minHeight: getScaleSize(150),
+            paddingTop: getScaleSize(67),
+          }}
           placeholder="왜 그 감정을 느꼈는지 알려줘"
           value={text}
-          onChangeText={setText}
           maxLength={500}
           multiline
           textAlignVertical="top"
+          onChangeText={(value) => setText(value)}
+          onContentSizeChange={(e) => {
+            if (onContentSizeChange) onContentSizeChange(e);
+          }}
+          onFocus={(e) => {
+            if (onFocus) onFocus(e);
+          }}
+          onBlur={(e) => {
+            if (onBlur) onBlur(e);
+          }}
         />
       </View>
     );

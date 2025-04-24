@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { IMAGES } from '../assets/images';
 import DiaryTextBox, { DiaryTextBoxHandle } from '../components/atoms/DiaryTextBox.atm';
 import HeaderText from '../components/atoms/HeaderText.atm';
@@ -32,6 +33,7 @@ const WriteDiary = () => {
   const [keyboardHeight, setKeyboardHeight] = useState(450);
   const ACCESSORY_HEIGHT = getScaleSize(40);
   const accessoryPosition = useRef(new Animated.Value(-ACCESSORY_HEIGHT)).current;
+  const scrollRef = useRef<KeyboardAwareScrollView>(null);
   const actionButtons: NaviActionButtonProps[] = [
     {
       item: <NaviDismiss />,
@@ -44,9 +46,6 @@ const WriteDiary = () => {
       setKeyboardHeight(e.endCoordinates.height);
       sub.remove();
     });
-    if (isNotEmpty(selectedDiary)) {
-      textBoxRef.current?.setText(selectedDiary?.description ?? '');
-    }
   }, []);
 
   useEffect(() => {
@@ -103,7 +102,22 @@ const WriteDiary = () => {
             setIsKeyboardVisible(false);
           }}
         >
-          <View className="bg-white flex-1 items-center px-6">
+          <KeyboardAwareScrollView
+            ref={scrollRef}
+            style={{ flex: 1 }}
+            contentContainerStyle={{
+              flexGrow: 1,
+              alignItems: 'center',
+              paddingHorizontal: getScaleSize(24),
+              paddingTop: getScaleSize(63),
+              paddingBottom: isKeyboardVisible ? ACCESSORY_HEIGHT : getScaleSize(32),
+            }}
+            enableOnAndroid={true}
+            extraScrollHeight={ACCESSORY_HEIGHT}
+            keyboardOpeningTime={150}
+            enableResetScrollToCoords={false}
+            keyboardShouldPersistTaps="handled"
+          >
             <HeaderText style={{ marginTop: getScaleSize(63) }}>
               어떤 일이 있었는지 말해줄래?
             </HeaderText>
@@ -118,11 +132,19 @@ const WriteDiary = () => {
             />
             <DiaryTextBox
               ref={textBoxRef}
-              onFocus={() => setIsKeyboardVisible(true)}
+              initialText={isNotEmpty(selectedDiary) ? selectedDiary.description : ''}
+              onFocus={(e) => {
+                setIsKeyboardVisible(true);
+                scrollRef.current?.scrollToFocusedInput(e.target, ACCESSORY_HEIGHT / 4);
+              }}
               onBlur={() => setIsKeyboardVisible(false)}
+              onContentSizeChange={(e) => {
+                scrollRef.current?.scrollToFocusedInput(e.target, ACCESSORY_HEIGHT / 4);
+              }}
             />
+
             <View className="flex-1" />
-          </View>
+          </KeyboardAwareScrollView>
         </TouchableWithoutFeedback>
         {isNotEmpty(isKeyboardVisible) && (
           <Animated.View
