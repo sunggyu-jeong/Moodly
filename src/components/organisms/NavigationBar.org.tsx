@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { isNotEmpty } from '../../utils';
 import NaviActionButton, { NaviActionButtonProps } from '../atoms/NaviActionButton.atm';
 import NaviBackButton from '../atoms/NaviBackButton.atm';
@@ -21,13 +21,12 @@ const NavigationBar = ({
   const insets = useSafeAreaInsets();
 
   return (
-    <SafeAreaView
-      edges={['left', 'right', 'bottom']}
+    <View
       className="bg-white"
       style={{ paddingTop: insets.top }}
     >
       <View
-        className={`flex-row items-center h-10 px-[10px] bg-white ${
+        className={`flex-row items-center h-[40px] px-[10px] bg-white ${
           hasLeftCenter ? 'justify-between' : 'justify-end'
         }`}
       >
@@ -66,7 +65,7 @@ const NavigationBar = ({
           </View>
         )}
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

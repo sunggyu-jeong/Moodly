@@ -39,7 +39,7 @@ const DiaryCardList = () => {
   return (
     <>
       {isNotEmpty(searchByMonth?.data) && (
-        <View className="flex-1 justify-start items-stretch w-full">
+        <View className="flex-1 justify-start items-stretch w-full mt-[19px]">
           {searchByMonth?.data?.map((entry, index) => (
             <TouchableOpacity
               onPress={() => {

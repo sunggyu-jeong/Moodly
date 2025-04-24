@@ -1,4 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import OverlayManager from '../manager/OverlayManager';
 import DiaryDetail from '../pages/DiaryDetail.pge';
 import SelectEmotion from '../pages/SelectEmotion.pge';
 import WriteDiary from '../pages/WriteDiary.pge';
@@ -16,6 +17,7 @@ const Stack = createNativeStackNavigator<DiaryStackParamList>();
 const DiaryStack = () => {
   return (
     <>
+      <OverlayManager />
       <Stack.Navigator
         initialRouteName="SelectEmotion"
         screenOptions={{ headerShown: false }}

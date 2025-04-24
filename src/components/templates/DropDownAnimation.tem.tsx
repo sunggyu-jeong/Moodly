@@ -20,7 +20,6 @@ const DropDownAnimation = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log(showDropDownView?.visibility);
     if (showDropDownView?.visibility) {
       Animated.timing(animationValue, {
         toValue: 1,
@@ -49,12 +48,13 @@ const DropDownAnimation = () => {
   return (
     <>
       <TouchableOpacity
-        style={StyleSheet.absoluteFill}
+        style={[StyleSheet.absoluteFill, { zIndex: 998 }]}
         onPress={onClose}
       />
       <Animated.View
         style={{
           position: 'absolute',
+          zIndex: 998,
           top: showDropDownView?.pos?.y ?? 0,
           left: (showDropDownView?.pos?.x ?? 0) - 120,
           opacity: animationValue,
