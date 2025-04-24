@@ -3,6 +3,7 @@ import PopupContainerOrga from '../components/organisms/PopupContainer.org';
 import DropDownAnimation from '../components/templates/DropDownAnimation.tem';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { setOverlayEventHandler } from '../redux/slice/commonSlice';
+import { isNotEmpty } from '../utils';
 
 export const MODAL_CONFIRM_ACTION_KEY = {
   DELETE_DIARY: 'DELETE_DIARY',
@@ -16,11 +17,11 @@ const OverlayManager = () => {
 
   return (
     <>
-      {showToastView?.visibility !== null && (
+      {isNotEmpty(showToastView?.visibility) && (
         <ToastAnimated text={showToastView?.message ?? ''} />
       )}
 
-      {showModalPopup?.visibility !== null && (
+      {isNotEmpty(showModalPopup?.visibility) && (
         <PopupContainerOrga
           title={showModalPopup?.title ?? ''}
           message={showModalPopup?.message ?? ''}
@@ -36,7 +37,7 @@ const OverlayManager = () => {
         />
       )}
 
-      {showDropDownView?.visibility !== null && <DropDownAnimation />}
+      {isNotEmpty(showDropDownView?.visibility) && <DropDownAnimation />}
     </>
   );
 };
