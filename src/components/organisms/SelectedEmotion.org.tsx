@@ -8,17 +8,17 @@ const SelectedEmotion = () => {
     <View style={{ marginTop: getScaleSize(66) }}>
       <Image
         source={selectedIcon?.icon}
-        style={{ width: getScaleSize(188), height: getScaleSize(188) }}
+        style={{ width: getScaleSize(140), height: getScaleSize(140) }}
       />
       <Text
-        className="font-bold text-center tracking-[-0.5px] mt-[69px]"
-        style={{ fontSize: getScaleSize(24) }}
+        className="font-bold text-center tracking-[-0.5px]"
+        style={{ fontSize: getScaleSize(24), marginTop: getScaleSize(62.5) }}
       >
         {selectedIcon?.text}
       </Text>
       <Text
-        className="font-medium text-center mt-4"
-        style={{ fontSize: getScaleSize(16) }}
+        className="font-medium text-center"
+        style={{ fontSize: getScaleSize(16), marginTop: getScaleSize(16) }}
       >
         {selectedIcon?.description}
       </Text>

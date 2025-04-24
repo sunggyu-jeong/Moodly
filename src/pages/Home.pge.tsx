@@ -42,36 +42,40 @@ const Home = () => {
 
   return (
     <>
-      <View className="bg-white flex-1 first:justify-center items-center">
-        <ToolTipView
-          style={{ marginBottom: getScaleSize(78) }}
-          text={
-            isDiaryExist.data
-              ? '일기를 소중히 저장했어!'
-              : '오늘 하루 어땠어? 이야기를 들려줘!'
-          }
-        />
-        <Image
-          source={IMAGES.smile}
-          className="aspect-square w-2/3"
-        />
-
+      <View className="bg-white flex-1">
+        <View
+          className="flex-1 justify-center items-center"
+          style={{ marginTop: getScaleSize(100) }}
+        >
+          <ToolTipView
+            style={{ marginBottom: getScaleSize(38) }}
+            text={
+              isDiaryExist.data
+                ? '일기를 소중히 저장했어!'
+                : '오늘 하루 어땠어? 이야기를 들려줘!'
+            }
+          />
+          <Image
+            source={IMAGES.smile}
+            className="aspect-square"
+            style={{ width: getScaleSize(160), height: getScaleSize(160) }}
+          />
+        </View>
         <Text
-          className="font-pretendard font-bold text-center tracking-[-0.5px]"
-          style={{ marginTop: getScaleSize(17), fontSize: getScaleSize(18) }}
+          className="font-pretendard font-semibold text-center tracking-[-0.5px]"
+          style={{ marginBottom: getScaleSize(6), fontSize: getScaleSize(14) }}
         >
           일기 작성 수
         </Text>
         <Text
-          className="font-pretendard font-bold text-center tracking-[-0.5px]"
-          style={{ marginTop: getScaleSize(11), fontSize: getScaleSize(39) }}
+          className="font-pretendard font-semibold text-center tracking-[-0.5px]"
+          style={{ marginBottom: getScaleSize(45), fontSize: getScaleSize(28) }}
         >
           {diaryCount.data}
         </Text>
-
         <View
           className="w-full"
-          style={{ marginTop: getScaleSize(66) }}
+          style={{ marginBottom: getScaleSize(44) }}
         >
           <ActionButton
             onPress={() => {
