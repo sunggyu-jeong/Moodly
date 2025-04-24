@@ -12,14 +12,13 @@ const DiaryCardHeader = ({ iconId, recordDate }: EmotionDiaryDTO) => {
   return (
     <View className="flex-row mb-[18px] items-center">
       <Avatar source={emotionSource?.icon || IMAGES.smile} />
-      <View>
+      <View className="flex flex-col">
         <Text
-          className="font-semibold tracking-[-0.5px] text-black/50"
+          className="font-semibold tracking-[-0.5px] text-black/50 mb-2"
           style={{ fontSize: getScaleSize(14) }}
         >
           {dayjs(recordDate).format('MM월 DD일')}
         </Text>
-        <View className="flex-1" />
         <Text
           className="font-semibold tracking-[-0.5px]"
           style={{ fontSize: getScaleSize(16) }}

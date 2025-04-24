@@ -76,8 +76,19 @@ export function updateDiary(
       const target = realm.objectForPrimaryKey<EmotionDiary>('EmotionDiary', emotionId);
 
       if (isNotEmpty(target)) {
+        const fieldMap: Record<string, string> = {
+          emotionId: 'emotion_id',
+          iconId: 'icon_id',
+          recordDate: 'record_date',
+          description: 'description',
+          createdAt: 'created_at',
+          updatedAt: 'updated_at',
+        };
         Object.entries(updates).forEach(([key, value]) => {
-          (target as any)[key] = value;
+          const realmKey = fieldMap[key];
+          if (realmKey && value !== undefined) {
+            (target as any)[realmKey] = value;
+          }
         });
         target.updated_at = new Date();
       }

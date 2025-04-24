@@ -16,6 +16,7 @@ import { MODAL_CONFIRM_ACTION_KEY } from '../manager/OverlayManager';
 import {
   setOverlayEventHandler,
   setShowDropdownView,
+  setShowModalPopup,
   setShowToastView,
 } from '../redux/slice/commonSlice';
 import { removeDiaryThunk } from '../redux/slice/diarySlice';
@@ -32,6 +33,7 @@ const DiaryDetail = () => {
   const overlayEventHandler = useAppSelector(
     (state) => state.commonSlice.overlayEventHandler
   );
+  const showModalPopup = useAppSelector((state) => state.commonSlice.showModalPopup);
   const dispatch = useAppDispatch();
   const route = useRoute<RouteProp<DiaryDetailRouteParams, 'params'>>();
   const { openRealm, closeRealm } = useRealm();
@@ -115,6 +117,16 @@ const DiaryDetail = () => {
     } finally {
       closeRealm();
       dispatch(setOverlayEventHandler(null));
+      dispatch(
+        setShowModalPopup({
+          visibility: false,
+          title: showModalPopup?.title ?? '',
+          message: showModalPopup?.message ?? '',
+          confirmText: showModalPopup?.confirmText,
+          cancelText: showModalPopup?.cancelText,
+          confirmActionKey: showModalPopup?.confirmActionKey ?? '',
+        })
+      );
     }
   };
 
@@ -139,7 +151,7 @@ const DiaryDetail = () => {
           style={{ width: getScaleSize(137), height: getScaleSize(137) }}
         />
         <Text
-          className="font-pretendard font-medium text-center tracking-[-0.5px] mx-6 leading-[30px]"
+          className="font-pretendard font-medium text-start tracking-[-0.5px] mx-6 leading-[30px]"
           style={{ marginTop: getScaleSize(34), fontSize: getScaleSize(18) }}
         >
           {selectedDiary?.description}

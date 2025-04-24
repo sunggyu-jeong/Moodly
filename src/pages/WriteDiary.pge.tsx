@@ -4,7 +4,6 @@ import {
   Image,
   Keyboard,
   KeyboardAvoidingView,
-  ScrollView,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
@@ -25,7 +24,6 @@ import { isNotEmpty, navigate } from '../utils';
 
 const WriteDiary = () => {
   const textBoxRef = useRef<DiaryTextBoxHandle | null>(null);
-  const scrollViewRef = useRef<ScrollView>(null);
   const todayDiary = useAppSelector((state) => state.diarySlice.todayDiary);
   const dispatch = useAppDispatch();
   const { openRealm, closeRealm } = useRealm();
