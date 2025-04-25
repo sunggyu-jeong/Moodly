@@ -82,7 +82,7 @@ export function navigateFlow(flow: NavigationFlow) {
   switch (flow) {
     case NavigationFlow.DiaryDetailToEmotionWriteWithReturn:
       const rootState = navigationRef.getRootState();
-      const newRoutes = [...rootState.routes];
+      const newRoutes = [...rootState.routes].filter((el) => el.name !== 'DiaryStack');
 
       navigationRef.reset({
         index: newRoutes.length,

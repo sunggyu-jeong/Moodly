@@ -36,7 +36,7 @@ export function useRealm() {
 
   // Realm 닫기
   const closeRealm = useCallback(() => {
-    if (isNotEmpty(realmRef.current) && !realmRef.current!.isClosed) {
+    if (isNotEmpty(realmRef.current) && !realmRef.current.isClosed) {
       realmRef.current!.close();
       realmRef.current = null;
       setRealm(null);
