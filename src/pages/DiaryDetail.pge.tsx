@@ -104,6 +104,7 @@ const DiaryDetail = () => {
         goBack();
       } else {
         dismissModalToScreen();
+        goBack();
       }
       dispatch(setShowToastView({ visibility: true, message: '일기가 삭제되었어요!' }));
     } catch (error) {

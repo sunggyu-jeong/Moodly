@@ -1,7 +1,6 @@
 import Realm from 'realm';
 import { EmotionDiary, EmotionDiaryDTO } from '../../scheme';
 import { isNotEmpty } from '../../utils';
-import { ServiceError } from '../ServiceError';
 import { EmotionDiaryToDTO } from './EmotionDiaryMapper';
 
 export function selectDiaryCount(realm: Realm): number {
@@ -43,70 +42,56 @@ export function selectDiaryById(realm: Realm, emotionId: number): EmotionDiaryDT
   return isNotEmpty(raw) ? EmotionDiaryToDTO(raw) : null;
 }
 
-export function createDiary(realm: Realm, data: EmotionDiaryDTO): number | Error {
-  try {
-    const maxId = realm.objects('EmotionDiary').max('emotion_id');
-    const nextId = (typeof maxId === 'number' ? maxId : 0) + 1;
-    realm.write(() => {
-      const newDiary = realm.create<EmotionDiary>('EmotionDiary', {
-        emotion_id: nextId,
-        icon_id: data.iconId,
-        record_date: new Date(),
-        description: data.description,
-        created_at: new Date(),
-        updated_at: new Date(),
-      });
-      console.log('다이어리 생성 완료:', newDiary);
+export function createDiary(realm: Realm, data: EmotionDiaryDTO): number {
+  const maxId = realm.objects('EmotionDiary').max('emotion_id');
+  const nextId = (typeof maxId === 'number' ? maxId : 0) + 1;
+  realm.write(() => {
+    realm.create<EmotionDiary>('EmotionDiary', {
+      emotion_id: nextId,
+      icon_id: data.iconId,
+      record_date: new Date(),
+      description: data.description,
+      created_at: new Date(),
+      updated_at: new Date(),
     });
-    return nextId;
-  } catch (error) {
-    throw error instanceof ServiceError
-      ? error
-      : new ServiceError('다이어리 조회 중 오류가 발생했습니다.');
-  }
+  });
+  return nextId;
 }
 
 export function updateDiary(
   realm: Realm,
   emotionId: number,
   updates: Partial<EmotionDiaryDTO>
-): void | Error {
-  try {
-    realm.write(() => {
-      const target = realm.objectForPrimaryKey<EmotionDiary>('EmotionDiary', emotionId);
+): number {
+  realm.write(() => {
+    const target = realm.objectForPrimaryKey<EmotionDiary>('EmotionDiary', emotionId);
 
-      if (isNotEmpty(target)) {
-        const fieldMap: Record<string, string> = {
-          emotionId: 'emotion_id',
-          iconId: 'icon_id',
-          recordDate: 'record_date',
-          description: 'description',
-          createdAt: 'created_at',
-          updatedAt: 'updated_at',
-        };
-        Object.entries(updates).forEach(([key, value]) => {
-          const realmKey = fieldMap[key];
-          if (realmKey && value !== undefined) {
-            (target as any)[realmKey] = value;
-          }
-        });
-        target.updated_at = new Date();
-      }
-    });
-  } catch (error) {
-    throw new Error('감정기록을 수정하는 도중 오류가 발생했습니다.');
-  }
+    if (isNotEmpty(target)) {
+      const fieldMap: Record<string, string> = {
+        emotionId: 'emotion_id',
+        iconId: 'icon_id',
+        recordDate: 'record_date',
+        description: 'description',
+        createdAt: 'created_at',
+        updatedAt: 'updated_at',
+      };
+      Object.entries(updates).forEach(([key, value]) => {
+        const realmKey = fieldMap[key];
+        if (realmKey && value !== undefined) {
+          (target as any)[realmKey] = value;
+        }
+      });
+      target.updated_at = new Date();
+    }
+  });
+  return emotionId;
 }
 
 export function deleteDiary(realm: Realm, emotionId: number): void | Error {
-  try {
-    realm.write(() => {
-      const target = realm.objectForPrimaryKey<EmotionDiary>('EmotionDiary', emotionId);
-      if (isNotEmpty(target)) {
-        realm.delete(target);
-      }
-    });
-  } catch (error) {
-    throw new Error('감정기록을 삭제하는 도중 오류가 발생했습니다.');
-  }
+  realm.write(() => {
+    const target = realm.objectForPrimaryKey<EmotionDiary>('EmotionDiary', emotionId);
+    if (isNotEmpty(target)) {
+      realm.delete(target);
+    }
+  });
 }

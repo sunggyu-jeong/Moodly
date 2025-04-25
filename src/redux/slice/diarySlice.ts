@@ -38,18 +38,18 @@ const searchDiaryByMonthThunk = createServiceThunk<
   return selectDiaryByMonth(realm, recordDate);
 });
 
-const addDiaryThunk = createServiceThunk<void, { realm: Realm; data: EmotionDiaryDTO }>(
+const addDiaryThunk = createServiceThunk<number, { realm: Realm; data: EmotionDiaryDTO }>(
   'diary/addDiary',
   async ({ realm, data }) => {
-    createDiary(realm, data);
+    return createDiary(realm, data);
   }
 );
 
 const modifyDiaryThunk = createServiceThunk<
-  void,
+  number,
   { realm: Realm; emotionId: number; data: EmotionDiaryDTO }
 >('diary/modifyDiary', async ({ realm, emotionId, data }) => {
-  updateDiary(realm, emotionId, data);
+  return updateDiary(realm, emotionId, data);
 });
 
 const removeDiaryThunk = createServiceThunk<void, { realm: Realm; emotionId: number }>(
@@ -71,7 +71,7 @@ interface DiaryState {
   searchById: AsyncOperationState<EmotionDiaryDTO>;
   searchByMonth: AsyncOperationState<EmotionDiaryDTO[]>;
   addDiary: AsyncOperationState<number>;
-  modifyDiary: AsyncOperationState<void>;
+  modifyDiary: AsyncOperationState<number>;
   removeDiary: AsyncOperationState<void>;
   selectedDiary: EmotionDiaryDTO | null;
   selectedIcon: Emotions | null;
@@ -85,7 +85,7 @@ const initialState: DiaryState = {
   searchById: createInitialAsyncState<EmotionDiaryDTO>(),
   searchByMonth: createInitialAsyncState<EmotionDiaryDTO[]>(),
   addDiary: createInitialAsyncState<number>(),
-  modifyDiary: createInitialAsyncState<void>(),
+  modifyDiary: createInitialAsyncState<number>(),
   removeDiary: createInitialAsyncState<void>(),
   isDiaryExist: createInitialAsyncState<boolean>(),
   selectedDiary: null,
@@ -131,13 +131,13 @@ const diarySlice = createSlice({
       key: 'searchByMonth',
       defaultErrorMessage: '조회 요청이 실패했습니다. 잠시 후 다시 시도해주세요.',
     });
-    addAsyncThunkCase<void, DiaryState>({
+    addAsyncThunkCase<number, DiaryState>({
       builder,
       thunk: addDiaryThunk,
       key: 'addDiary',
       defaultErrorMessage: '등록 요청이 실패했습니다. 잠시 후 다시 시도해주세요.',
     });
-    addAsyncThunkCase<void, DiaryState>({
+    addAsyncThunkCase<number, DiaryState>({
       builder,
       thunk: modifyDiaryThunk,
       key: 'modifyDiary',
