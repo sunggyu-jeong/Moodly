@@ -20,30 +20,23 @@ const DropDownAnimation = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (showDropDownView?.visibility) {
-      Animated.timing(animationValue, {
-        toValue: 1,
-        duration: 200,
-        useNativeDriver: true,
-      }).start();
-    } else {
-      Animated.timing(animationValue, {
-        toValue: 0,
-        duration: 200,
-        useNativeDriver: true,
-      }).start(({ finished }) => {
-        if (finished) {
-          dispatch(
-            setShowDropdownView({
-              visibility: null,
-              dropdownList: null,
-              pos: { x: null, y: null },
-            })
-          );
-        }
-      });
-    }
-  }, [showDropDownView?.visibility]);
+    const toValue = showDropDownView?.visibility ? 1 : 0;
+    Animated.timing(animationValue, {
+      toValue,
+      duration: 200,
+      useNativeDriver: true,
+    }).start(({ finished }) => {
+      if (!showDropDownView?.visibility && finished) {
+        dispatch(
+          setShowDropdownView({
+            visibility: null,
+            dropdownList: null,
+            pos: { x: null, y: null },
+          })
+        );
+      }
+    });
+  }, [showDropDownView?.visibility, animationValue, dispatch]);
 
   return (
     <>

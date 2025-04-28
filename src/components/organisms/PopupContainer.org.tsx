@@ -4,13 +4,13 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setShowModalPopup } from '../../redux/slice/commonSlice';
 import DimmedView from '../atoms/DimmedView.atm';
 import PopupFooter from '../molecules/PopupFooter.mol';
-import PopupHeader from '../molecules/PopupHeader.mol';
+import PopupHeader from '../atoms/PopupHeader.atm';
 
 interface PopupContainerProps {
   title: string;
   message: string;
-  cancelText?: string;
-  confirmText?: string;
+  cancelText: string;
+  confirmText: string;
   onConfirm: () => void;
 }
 

@@ -1,4 +1,5 @@
 module.exports = {
+  arrowParens: 'avoid',
   trailingComma: 'es5',
   singleQuote: true,
   singleAttributePerLine: true,
@@ -12,4 +13,5 @@ module.exports = {
   htmlWhitespaceSensitivity: 'css',
   endOfLine: 'lf',
   embeddedLanguageFormatting: 'auto',
+  tabWidth: 2,
 };

@@ -15,25 +15,19 @@ interface SettingListProps {
 const SettingList = ({ items }: SettingListProps) => {
   return (
     <View className="flex-1">
-      {items.map((item, index) => {
-        const content = (
+      {items.map((item, index) => (
+        <TouchableOpacity
+          key={index}
+          onPress={item.onPress}
+          disabled={!item.onPress}
+          activeOpacity={item.onPress ? 0.7 : 1}
+        >
           <SettingItem
-            key={index}
             title={item.title}
             rightComponent={item.rightComponent}
           />
-        );
-        return item.onPress ? (
-          <TouchableOpacity
-            key={index}
-            onPress={item.onPress}
-          >
-            {content}
-          </TouchableOpacity>
-        ) : (
-          content
-        );
-      })}
+        </TouchableOpacity>
+      ))}
     </View>
   );
 };

@@ -1,3 +1,4 @@
+import React, { useCallback } from 'react';
 import { ImageSourcePropType } from 'react-native';
 import { useAppDispatch } from '../../hooks';
 import { MODAL_CONFIRM_ACTION_KEY } from '../../manager/OverlayManager';
@@ -16,20 +17,17 @@ export interface DropDownItemProps {
   eventIdentifier: keyof typeof DropDownEventIdentifier;
 }
 
-const DropDownItem = ({ ...props }: DropDownItemProps) => {
-  const dispatch = useAppDispatch();
-  const handle = () => {
-    dispatch(
-      setShowDropdownView({
-        visibility: null,
-        dropdownList: null,
-        pos: { x: null, y: null },
-      })
-    );
+const DropDownItem: React.FC<DropDownItemProps> = ({ text, source, eventIdentifier }) => {
+  const textColor =
+    eventIdentifier === DropDownEventIdentifier.DELETE_DIARY ? '#FF0000' : '#212123';
 
-    if (props.eventIdentifier === DropDownEventIdentifier.MODIFY_DIARY) {
+  const dispatch = useAppDispatch();
+
+  const handlers: Record<keyof typeof DropDownEventIdentifier, () => void> = {
+    [DropDownEventIdentifier.MODIFY_DIARY]: () => {
       navigateFlow(NavigationFlow.DiaryDetailToEmotionWriteWithReturn);
-    } else {
+    },
+    [DropDownEventIdentifier.DELETE_DIARY]: () => {
       dispatch(
         setShowModalPopup({
           visibility: true,
@@ -40,15 +38,27 @@ const DropDownItem = ({ ...props }: DropDownItemProps) => {
           confirmActionKey: MODAL_CONFIRM_ACTION_KEY.DELETE_DIARY,
         })
       );
-    }
+    },
   };
+
+  const handlePress = useCallback(() => {
+    dispatch(
+      setShowDropdownView({
+        visibility: null,
+        dropdownList: null,
+        pos: { x: null, y: null },
+      })
+    );
+    handlers[eventIdentifier]();
+    handlers[eventIdentifier];
+  }, [dispatch, eventIdentifier]);
 
   return (
     <SelectableItem
-      text={props.text}
-      source={props.source}
-      textColor={props.eventIdentifier === 'DELETE_DIARY' ? '#FF0000' : '#212123'}
-      onPress={handle}
+      text={text}
+      source={source}
+      textColor={textColor}
+      onPress={handlePress}
     />
   );
 };
