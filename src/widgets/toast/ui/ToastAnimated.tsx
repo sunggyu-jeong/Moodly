@@ -1,8 +1,7 @@
-// molecules/ToastAnimated.mol.tsx
+import { useToastAnimation } from '@/hooks/useToastAnimation';
 import { Animated, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useToastAnimation } from '../../hooks/useToastAnimation';
-import ToastBase from '../atoms/ToastView.atm';
+import ToastBase from './ToastBase';
 
 interface ToastAnimatedProps {
   visible: boolean;

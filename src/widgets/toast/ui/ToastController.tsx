@@ -1,7 +1,7 @@
+import { useAppSelector } from '@/hooks';
+import { setShowToastView } from '@/processes/overlay/model/overlaySlice';
 import { useDispatch } from 'react-redux';
-import { useAppSelector } from '../../hooks';
-import { setShowToastView } from '../../redux/slice/commonSlice';
-import ToastAnimated from '../molecules/ToastAnimated.mol';
+import ToastAnimated from './ToastAnimated';
 
 const ToastController = () => {
   const dispatch = useDispatch();

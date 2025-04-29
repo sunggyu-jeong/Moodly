@@ -1,10 +1,10 @@
+import { setShowModalPopup } from '@/processes/overlay/model/overlaySlice';
 import React, { useEffect, useRef } from 'react';
 import { Animated, Modal, View } from 'react-native';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setShowModalPopup } from '../../redux/slice/commonSlice';
-import DimmedView from '../atoms/DimmedView.atm';
-import PopupHeader from '../atoms/PopupHeader.atm';
-import PopupFooter from '../molecules/PopupFooter.mol';
+import DimmedView from '../../../components/atoms/DimmedView.atm';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import PopupFooter from './PopupFooter';
+import PopupHeader from './PopupHeader';
 
 interface PopupContainerProps {
   title: string;

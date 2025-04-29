@@ -14,7 +14,6 @@ import HeaderText from '../components/atoms/HeaderText.atm';
 import KeyboardAccessory from '../components/atoms/KeyboardAccessory.atm';
 import { NaviActionButtonProps } from '../components/atoms/NaviActionButton.atm';
 import NaviDismiss from '../components/molecules/NaviDismiss.mol';
-import NavigationBar from '../components/organisms/NavigationBar.org';
 import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '../hooks';
 import {
   addDiaryThunk,
@@ -22,6 +21,7 @@ import {
   setSelectedDiary,
 } from '../redux/slice/diarySlice';
 import { isNotEmpty, navigate } from '../utils';
+import NavigationBar from '../widgets/navigation-bar/ui/NavigationBar';
 
 const WriteDiary = () => {
   const textBoxRef = useRef<DiaryTextBoxHandle | null>(null);

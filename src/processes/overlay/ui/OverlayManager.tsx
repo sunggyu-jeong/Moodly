@@ -1,9 +1,9 @@
-import ToastAnimated from '@/components/molecules/ToastAnimated.mol';
-import PopupContainerOrga from '@/components/organisms/PopupContainer.org';
-import DropDownAnimation from '@/components/templates/DropDownAnimation.tem';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { setOverlayEventHandler } from '@/processes/overlay/model/overlaySlice';
 import { isNotEmpty } from '@/utils';
+import DropDownAnimation from '@/widgets/dropdown/animation/DropDownAnimation';
+import PopupContainerOrga from '@/widgets/popup/ui/PopupContainer';
+import ToastAnimated from '@/widgets/toast/ui/ToastAnimated';
 
 export const MODAL_CONFIRM_ACTION_KEY = {
   DELETE_DIARY: 'DELETE_DIARY',

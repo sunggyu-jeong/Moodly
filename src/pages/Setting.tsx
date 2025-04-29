@@ -1,9 +1,9 @@
 import { Image, Text, View } from 'react-native';
 import { IMAGES } from '../assets/images';
 import NaviTitleDisplay from '../components/atoms/NaviTitle.atm';
-import NavigationBar from '../components/organisms/NavigationBar.org';
 import SettingList from '../components/organisms/SettingList.org';
 import { getScaleSize } from '../hooks';
+import NavigationBar from '../widgets/navigation-bar/ui/NavigationBar';
 
 const Setting = () => {
   enum SETTING_EVENT_TYPE {

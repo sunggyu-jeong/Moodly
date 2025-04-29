@@ -4,14 +4,14 @@ import ActionButton from '../components/atoms/ActionButton.atm';
 import HeaderText from '../components/atoms/HeaderText.atm';
 import { NaviActionButtonProps } from '../components/atoms/NaviActionButton.atm';
 import NaviDismiss from '../components/molecules/NaviDismiss.mol';
-import EmotionList from '../components/organisms/EmotionList.org';
-import NavigationBar from '../components/organisms/NavigationBar.org';
 import SelectedEmotion from '../components/organisms/SelectedEmotion.org';
 import { ICON_DATA } from '../constant/Icons';
 import { getScaleSize, useAppDispatch, useAppSelector } from '../hooks';
 import { setSelectedIcon, setTodayDiary } from '../redux/slice/diarySlice';
 import { EmotionDiaryDTO } from '../scheme';
 import { isNotEmpty, navigate } from '../utils';
+import EmotionList from '../widgets/emotion/ui/EmotionList';
+import NavigationBar from '../widgets/navigation-bar/ui/NavigationBar';
 
 const SelectEmotion = () => {
   const dispatch = useAppDispatch();
@@ -56,7 +56,7 @@ const SelectEmotion = () => {
         <SelectedEmotion />
         <View className="flex-1" />
         <EmotionList emotionList={ICON_DATA} />
-        
+
         <View
           className="w-full"
           style={{ marginBottom: getScaleSize(57) }}

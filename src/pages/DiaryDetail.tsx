@@ -15,12 +15,12 @@ import {
   DropDownItemProps,
 } from '../components/molecules/DropDownItem.mol';
 import NaviDismiss from '../components/molecules/NaviDismiss.mol';
-import NavigationBar from '../components/organisms/NavigationBar.org';
 import { ICON_DATA } from '../constant/Icons';
 import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '../hooks';
 import { MODAL_CONFIRM_ACTION_KEY } from '../processes/overlay/ui/OverlayManager';
 import { removeDiaryThunk } from '../redux/slice/diarySlice';
 import { dismissModalToScreen, goBack, isNotEmpty } from '../utils';
+import NavigationBar from '../widgets/navigation-bar/ui/NavigationBar';
 
 type DiaryDetailRouteParams = {
   params: {

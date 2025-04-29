@@ -5,10 +5,10 @@ import { ScrollView } from 'react-native';
 import DiaryEmptyMent from '../components/atoms/DiaryEmptyMent.atm';
 import DiaryMonth from '../components/molecules/DiaryMonth.mol';
 import DiaryCardList from '../components/organisms/DiaryCardList.org';
-import NavigationBar from '../components/organisms/NavigationBar.org';
 import { useAppDispatch, useAppSelector, useRealm } from '../hooks';
 import { searchDiaryByMonthThunk, setSelectedMonth } from '../redux/slice/diarySlice';
 import { isEmpty, isNotEmpty } from '../utils';
+import NavigationBar from '../widgets/navigation-bar/ui/NavigationBar';
 
 const DiaryList = () => {
   const { openRealm, closeRealm } = useRealm();
