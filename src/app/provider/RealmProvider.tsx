@@ -1,8 +1,8 @@
-import { RealmContext } from "../context";
-import { EmotionDiary } from "../scheme";
-import { isNotEmpty } from "../utils"
-import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
-import Realm from "realm";
+import { RealmContext } from '@/context';
+import { EmotionDiary } from '@/scheme';
+import { isNotEmpty } from '@/utils';
+import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
+import Realm from 'realm';
 
 interface RealmProviderProps {
   children: ReactNode;
@@ -15,13 +15,13 @@ export const RealmProvider = ({ children }: RealmProviderProps) => {
   const openRealm = useCallback(async (): Promise<void> => {
     try {
       const realmInstance = await Realm.open({ schema: [EmotionDiary] });
-      console.log(">>>>>>>>>>> realm is located at: " + realm?.path)
+      console.log('>>>>>>>>>>> realm is located at: ' + realm?.path);
       realmRef.current = realmInstance;
       setRealm(realmInstance);
-    } catch(error) {
-      console.error("Realm을 여는 도중 오류가 발생했습니다.", error);
+    } catch (error) {
+      console.error('Realm을 여는 도중 오류가 발생했습니다.', error);
     }
-  }, [])
+  }, []);
 
   const closeRealm = useCallback((): void => {
     if (isNotEmpty(realmRef.current) && !realmRef.current.isClosed) {
@@ -29,18 +29,18 @@ export const RealmProvider = ({ children }: RealmProviderProps) => {
       realmRef.current = null;
       setRealm(null);
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     openRealm();
     return () => {
       closeRealm();
-    }
-  }, [openRealm, closeRealm])
+    };
+  }, [openRealm, closeRealm]);
 
   return (
     <RealmContext.Provider value={{ realm, openRealm, closeRealm }}>
       {children}
     </RealmContext.Provider>
-  )
-}
+  );
+};

@@ -1,12 +1,12 @@
+import { IMAGES } from '@/assets/images';
+import TabBarIcon from '@/components/atoms/TabBarIcon.atm';
+import { getScaleSize } from '@/hooks';
+import DiaryList from '@/pages/DiaryList';
+import Home from '@/pages/Home';
+import Setting from '@/pages/Setting';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { IMAGES } from '../assets/images';
-import TabBarIcon from '../components/atoms/TabBarIcon.atm';
-import { getScaleSize } from '../hooks';
-import DiaryList from '../pages/DiaryList';
-import Home from '../pages/Home';
-import Setting from '../pages/Setting';
 
 const Tab = createBottomTabNavigator();
 
