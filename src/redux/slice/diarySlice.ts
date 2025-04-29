@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import dayjs from 'dayjs';
 import Realm from 'realm';
-import { Emotions } from '../../components/molecules/EmotionIcon.mol';
+import { Emotions } from '../../components/molecules/EmotionIcon';
 import { AsyncOperationState, createInitialAsyncState } from '../../constant/ApiStatus';
 import { ICON_DATA } from '../../constant/Icons';
 import { EmotionDiaryDTO } from '../../scheme';

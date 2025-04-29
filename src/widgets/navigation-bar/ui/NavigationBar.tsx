@@ -2,8 +2,8 @@ import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import NaviActionButton, {
   NaviActionButtonProps,
-} from '../../../components/atoms/NaviActionButton.atm';
-import NaviBackButton from '../../../components/atoms/NaviBackButton.atm';
+} from '../../../components/atoms/NaviActionButton';
+import NaviBackButton from '../../../components/atoms/NaviBackButton';
 import { isNotEmpty } from '../../../utils';
 
 export interface NavigationBarConfig {

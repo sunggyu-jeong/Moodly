@@ -1,7 +1,7 @@
 import { setShowModalPopup } from '@/processes/overlay/model/overlaySlice';
 import React, { useEffect, useRef } from 'react';
 import { Animated, Modal, View } from 'react-native';
-import DimmedView from '../../../components/atoms/DimmedView.atm';
+import DimmedView from '../../../components/atoms/DimmedView';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import PopupFooter from './PopupFooter';
 import PopupHeader from './PopupHeader';
@@ -15,7 +15,7 @@ interface PopupContainerProps {
 }
 
 const PopupContainer = ({ ...props }: PopupContainerProps) => {
-  const showModalPopup = useAppSelector((state) => state.commonSlice.showModalPopup);
+  const showModalPopup = useAppSelector((state) => state.overlaySlice.showModalPopup);
   const dispatch = useAppDispatch();
 
   const translateY = useRef(new Animated.Value(30)).current;

@@ -1,5 +1,5 @@
 import DiaryDetail from '@/pages/DiaryDetail';
-import SelectEmotion from '@/pages/SelectEmotion.pge';
+import SelectEmotion from '@/pages/SelectEmotion';
 import WriteDiary from '@/pages/WriteDiary';
 import WriteDiaryComplete from '@/pages/WriteDiaryComplete';
 import OverlayManager from '@/processes/overlay/ui/OverlayManager';

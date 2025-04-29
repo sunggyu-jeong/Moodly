@@ -1,16 +1,16 @@
 import { useEffect } from 'react';
 import { View } from 'react-native';
-import ActionButton from '../components/atoms/ActionButton.atm';
-import HeaderText from '../components/atoms/HeaderText.atm';
-import { NaviActionButtonProps } from '../components/atoms/NaviActionButton.atm';
-import NaviDismiss from '../components/molecules/NaviDismiss.mol';
-import SelectedEmotion from '../components/organisms/SelectedEmotion.org';
+import ActionButton from '../components/atoms/ActionButton';
+import HeaderText from '../components/atoms/HeaderText';
+import { NaviActionButtonProps } from '../components/atoms/NaviActionButton';
+import NaviDismiss from '../components/molecules/NaviDismiss';
 import { ICON_DATA } from '../constant/Icons';
 import { getScaleSize, useAppDispatch, useAppSelector } from '../hooks';
 import { setSelectedIcon, setTodayDiary } from '../redux/slice/diarySlice';
 import { EmotionDiaryDTO } from '../scheme';
 import { isNotEmpty, navigate } from '../utils';
 import EmotionList from '../widgets/emotion/ui/EmotionList';
+import SelectedEmotion from '../widgets/emotion/ui/SelectedEmotion';
 import NavigationBar from '../widgets/navigation-bar/ui/NavigationBar';
 
 const SelectEmotion = () => {

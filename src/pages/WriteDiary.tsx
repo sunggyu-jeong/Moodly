@@ -9,11 +9,11 @@ import {
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { IMAGES } from '../assets/images';
-import DiaryTextBox, { DiaryTextBoxHandle } from '../components/atoms/DiaryTextBox.atm';
-import HeaderText from '../components/atoms/HeaderText.atm';
-import KeyboardAccessory from '../components/atoms/KeyboardAccessory.atm';
-import { NaviActionButtonProps } from '../components/atoms/NaviActionButton.atm';
-import NaviDismiss from '../components/molecules/NaviDismiss.mol';
+import DiaryTextBox, { DiaryTextBoxHandle } from '../components/atoms/DiaryTextBox';
+import HeaderText from '../components/atoms/HeaderText';
+import KeyboardAccessory from '../components/atoms/KeyboardAccessory';
+import { NaviActionButtonProps } from '../components/atoms/NaviActionButton';
+import NaviDismiss from '../components/molecules/NaviDismiss';
 import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '../hooks';
 import {
   addDiaryThunk,

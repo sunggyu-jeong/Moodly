@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
-import SettingItem from '../molecules/SettingItem.mol';
+import SettingItem from './SettingItem';
 
 interface SettingListItem {
   title: string;

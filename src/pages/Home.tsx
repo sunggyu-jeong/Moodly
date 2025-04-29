@@ -2,8 +2,8 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
 import { Image, Text, View } from 'react-native';
 import { IMAGES } from '../assets/images';
-import ActionButton from '../components/atoms/ActionButton.atm';
-import ToolTipView from '../components/atoms/ToolTipView.atm';
+import ActionButton from '../components/atoms/ActionButton';
+import ToolTipView from '../components/atoms/ToolTipView';
 import { ICON_DATA } from '../constant/Icons';
 import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '../hooks';
 import {

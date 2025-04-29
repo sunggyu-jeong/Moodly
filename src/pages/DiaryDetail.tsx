@@ -8,13 +8,13 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 import { useEffect, useRef } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { IMAGES } from '../assets/images';
-import { NaviActionButtonProps } from '../components/atoms/NaviActionButton.atm';
-import NaviMore from '../components/atoms/NaviMore.atm';
+import { NaviActionButtonProps } from '../components/atoms/NaviActionButton';
+import NaviMore from '../components/atoms/NaviMore';
 import {
   DropDownEventIdentifier,
   DropDownItemProps,
-} from '../components/molecules/DropDownItem.mol';
-import NaviDismiss from '../components/molecules/NaviDismiss.mol';
+} from '../components/molecules/DropDownItem';
+import NaviDismiss from '../components/molecules/NaviDismiss';
 import { ICON_DATA } from '../constant/Icons';
 import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '../hooks';
 import { MODAL_CONFIRM_ACTION_KEY } from '../processes/overlay/ui/OverlayManager';
@@ -31,9 +31,9 @@ type DiaryDetailRouteParams = {
 const DiaryDetail = () => {
   const selectedDiary = useAppSelector((state) => state.diarySlice.selectedDiary);
   const overlayEventHandler = useAppSelector(
-    (state) => state.commonSlice.overlayEventHandler
+    (state) => state.overlaySlice.overlayEventHandler
   );
-  const showModalPopup = useAppSelector((state) => state.commonSlice.showModalPopup);
+  const showModalPopup = useAppSelector((state) => state.overlaySlice.showModalPopup);
   const dispatch = useAppDispatch();
   const route = useRoute<RouteProp<DiaryDetailRouteParams, 'params'>>();
   const { openRealm, closeRealm } = useRealm();

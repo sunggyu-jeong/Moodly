@@ -1,5 +1,5 @@
+import { getScaleSize, useAppSelector } from '@/hooks';
 import { Image, Text, View } from 'react-native';
-import { getScaleSize, useAppSelector } from '../../hooks';
 
 const SelectedEmotion = () => {
   const selectedIcon = useAppSelector((state) => state.diarySlice.selectedIcon);

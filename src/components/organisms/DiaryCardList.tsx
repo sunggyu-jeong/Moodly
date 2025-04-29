@@ -3,8 +3,8 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setSelectedDiary } from '../../redux/slice/diarySlice';
 import { EmotionDiaryDTO } from '../../scheme';
 import { isNotEmpty, navigate } from '../../utils';
-import DiaryCardContent from '../atoms/DiaryCardContent.atm';
-import DiaryCardHeader from '../molecules/DiaryCardHeader.mol';
+import DiaryCardContent from '../atoms/DiaryCardContent';
+import DiaryCardHeader from '../molecules/DiaryCardHeader';
 
 const DiaryCardList = () => {
   const dispatch = useAppDispatch();

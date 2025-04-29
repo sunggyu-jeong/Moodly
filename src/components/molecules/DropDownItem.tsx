@@ -2,9 +2,12 @@ import React, { useCallback } from 'react';
 import { ImageSourcePropType } from 'react-native';
 import { useAppDispatch } from '../../hooks';
 import { MODAL_CONFIRM_ACTION_KEY } from '../../processes/overlay/ui/OverlayManager';
-import { setShowDropdownView, setShowModalPopup } from '../../redux/slice/commonSlice';
 import { navigateFlow, NavigationFlow } from '../../utils';
-import SelectableItem from '../atoms/SelectableItem.atm';
+import SelectableItem from '../atoms/SelectableItem';
+import {
+  setShowModalPopup,
+  setShowDropdownView,
+} from '../../processes/overlay/model/overlaySlice';
 
 export const DropDownEventIdentifier = {
   MODIFY_DIARY: 'MODIFY_DIARY',

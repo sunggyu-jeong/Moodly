@@ -1,5 +1,5 @@
 import { IMAGES } from '@/assets/images';
-import TabBarIcon from '@/components/atoms/TabBarIcon.atm';
+import TabBarIcon from '@/components/atoms/TabBarIcon';
 import { getScaleSize } from '@/hooks';
 import DiaryList from '@/pages/DiaryList';
 import Home from '@/pages/Home';

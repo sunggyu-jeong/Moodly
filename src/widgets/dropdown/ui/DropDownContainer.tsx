@@ -1,11 +1,11 @@
-import DropDownItem, { DropDownItemProps } from '@/components/molecules/DropDownItem.mol';
+import DropDownItem, { DropDownItemProps } from '@/components/molecules/DropDownItem';
 import { useAppSelector } from '@/hooks';
 import { isNotEmpty } from '@/utils';
 import React from 'react';
 import { View } from 'react-native';
 
 const DropDownContainer = () => {
-  const showDropDownView = useAppSelector((state) => state.commonSlice.showDropDownView);
+  const showDropDownView = useAppSelector((state) => state.overlaySlice.showDropDownView);
 
   return (
     <View className="justify-center w-[148px] rounded-xl bg-white shadow-[0px_10px_40px_0px_rgba(0,0,0,0.12)] z-[999]">

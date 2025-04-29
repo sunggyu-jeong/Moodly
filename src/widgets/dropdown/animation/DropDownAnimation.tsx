@@ -6,7 +6,7 @@ import DropDownContainer from '../ui/DropDownContainer';
 
 const DropDownAnimation = () => {
   const animationValue = useRef(new Animated.Value(0)).current;
-  const showDropDownView = useAppSelector((state) => state.commonSlice.showDropDownView);
+  const showDropDownView = useAppSelector((state) => state.overlaySlice.showDropDownView);
   const dispatch = useAppDispatch();
 
   const onClose = useCallback(() => {
