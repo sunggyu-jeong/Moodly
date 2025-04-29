@@ -1,6 +1,6 @@
-import DropDownItem, { DropDownItemProps } from '@/components/molecules/DropDownItem';
 import { useAppSelector } from '@/hooks';
 import { isNotEmpty } from '@/utils';
+import DropDownItem, { DropDownItemProps } from '@/widgets/dropdown/ui/DropDownItem';
 import React from 'react';
 import { View } from 'react-native';
 

@@ -3,7 +3,6 @@ import { View } from 'react-native';
 import ActionButton from '../components/atoms/ActionButton';
 import HeaderText from '../components/atoms/HeaderText';
 import { NaviActionButtonProps } from '../components/atoms/NaviActionButton';
-import NaviDismiss from '../components/molecules/NaviDismiss';
 import { ICON_DATA } from '../constant/Icons';
 import { getScaleSize, useAppDispatch, useAppSelector } from '../hooks';
 import { setSelectedIcon, setTodayDiary } from '../redux/slice/diarySlice';
@@ -11,6 +10,7 @@ import { EmotionDiaryDTO } from '../scheme';
 import { isNotEmpty, navigate } from '../utils';
 import EmotionList from '../widgets/emotion/ui/EmotionList';
 import SelectedEmotion from '../widgets/emotion/ui/SelectedEmotion';
+import NaviDismiss from '../widgets/navigation-bar/ui/NaviDismiss';
 import NavigationBar from '../widgets/navigation-bar/ui/NavigationBar';
 
 const SelectEmotion = () => {

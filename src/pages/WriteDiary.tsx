@@ -9,11 +9,9 @@ import {
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { IMAGES } from '../assets/images';
-import DiaryTextBox, { DiaryTextBoxHandle } from '../components/atoms/DiaryTextBox';
 import HeaderText from '../components/atoms/HeaderText';
 import KeyboardAccessory from '../components/atoms/KeyboardAccessory';
 import { NaviActionButtonProps } from '../components/atoms/NaviActionButton';
-import NaviDismiss from '../components/molecules/NaviDismiss';
 import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '../hooks';
 import {
   addDiaryThunk,
@@ -21,6 +19,8 @@ import {
   setSelectedDiary,
 } from '../redux/slice/diarySlice';
 import { isNotEmpty, navigate } from '../utils';
+import DiaryTextBox, { DiaryTextBoxHandle } from '../widgets/diary/DiaryTextBox';
+import NaviDismiss from '../widgets/navigation-bar/ui/NaviDismiss';
 import NavigationBar from '../widgets/navigation-bar/ui/NavigationBar';
 
 const WriteDiary = () => {

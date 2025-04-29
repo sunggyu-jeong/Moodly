@@ -1,7 +1,7 @@
+import { IMAGES } from '@/assets/images';
+import ArrowButton from '@/components/atoms/ArrowButton';
+import MonthlyLabel from '@/components/atoms/MonthlyLabel';
 import { View } from 'react-native';
-import { IMAGES } from '../../assets/images';
-import ArrowButton from '../atoms/ArrowButton';
-import MonthlyLabel from '../atoms/MonthlyLabel';
 
 interface DiaryMonthProps {
   monthLabel: string;

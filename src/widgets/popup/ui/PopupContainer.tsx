@@ -1,8 +1,8 @@
+import DimmedView from '@/components/atoms/DimmedView';
+import { useAppDispatch, useAppSelector } from '@/hooks';
 import { setShowModalPopup } from '@/processes/overlay/model/overlaySlice';
 import React, { useEffect, useRef } from 'react';
 import { Animated, Modal, View } from 'react-native';
-import DimmedView from '../../../components/atoms/DimmedView';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
 import PopupFooter from './PopupFooter';
 import PopupHeader from './PopupHeader';
 

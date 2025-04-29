@@ -1,7 +1,7 @@
+import { useAppDispatch, useAppSelector } from '@/hooks';
 import { setShowDropdownView } from '@/processes/overlay/model/overlaySlice';
 import { useCallback, useEffect, useRef } from 'react';
 import { Animated, StyleSheet, TouchableOpacity } from 'react-native';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
 import DropDownContainer from '../ui/DropDownContainer';
 
 const DropDownAnimation = () => {

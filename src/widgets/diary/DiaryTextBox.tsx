@@ -1,3 +1,4 @@
+import { getScaleSize } from '@/hooks';
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import {
   NativeSyntheticEvent,
@@ -6,7 +7,6 @@ import {
   TextInputFocusEventData,
   View,
 } from 'react-native';
-import { getScaleSize } from '../../hooks';
 export interface DiaryTextBoxHandle {
   getText: () => string;
 }

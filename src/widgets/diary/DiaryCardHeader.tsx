@@ -1,10 +1,10 @@
+import { IMAGES } from '@/assets/images';
+import Avatar from '@/components/atoms/Avatar';
+import { ICON_DATA } from '@/constant/Icons';
+import { getScaleSize } from '@/hooks';
+import { EmotionDiaryDTO } from '@/scheme';
 import dayjs from 'dayjs';
 import { Text, View } from 'react-native';
-import { IMAGES } from '../../assets/images';
-import { ICON_DATA } from '../../constant/Icons';
-import { getScaleSize } from '../../hooks';
-import { EmotionDiaryDTO } from '../../scheme';
-import Avatar from '../atoms/Avatar';
 
 const DiaryCardHeader = ({ iconId, recordDate }: EmotionDiaryDTO) => {
   const emotionSource = ICON_DATA.find((item) => item.id === iconId);

@@ -10,16 +10,16 @@ import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { IMAGES } from '../assets/images';
 import { NaviActionButtonProps } from '../components/atoms/NaviActionButton';
 import NaviMore from '../components/atoms/NaviMore';
-import {
-  DropDownEventIdentifier,
-  DropDownItemProps,
-} from '../components/molecules/DropDownItem';
-import NaviDismiss from '../components/molecules/NaviDismiss';
 import { ICON_DATA } from '../constant/Icons';
 import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '../hooks';
 import { MODAL_CONFIRM_ACTION_KEY } from '../processes/overlay/ui/OverlayManager';
 import { removeDiaryThunk } from '../redux/slice/diarySlice';
 import { dismissModalToScreen, goBack, isNotEmpty } from '../utils';
+import {
+  DropDownEventIdentifier,
+  DropDownItemProps,
+} from '../widgets/dropdown/ui/DropDownItem';
+import NaviDismiss from '../widgets/navigation-bar/ui/NaviDismiss';
 import NavigationBar from '../widgets/navigation-bar/ui/NavigationBar';
 
 type DiaryDetailRouteParams = {

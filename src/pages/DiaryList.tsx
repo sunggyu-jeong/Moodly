@@ -2,12 +2,12 @@ import { useFocusEffect } from '@react-navigation/native';
 import dayjs from 'dayjs';
 import { useCallback } from 'react';
 import { ScrollView } from 'react-native';
-import DiaryEmptyMent from '../components/atoms/DiaryEmptyMent';
 import DiaryMonth from '../components/molecules/DiaryMonth';
-import DiaryCardList from '../components/organisms/DiaryCardList';
 import { useAppDispatch, useAppSelector, useRealm } from '../hooks';
 import { searchDiaryByMonthThunk, setSelectedMonth } from '../redux/slice/diarySlice';
 import { isEmpty, isNotEmpty } from '../utils';
+import DiaryCardList from '../widgets/diary/DiaryCardList';
+import DiaryEmptyMent from '../widgets/diary/DiaryEmptyMent';
 import NavigationBar from '../widgets/navigation-bar/ui/NavigationBar';
 
 const DiaryList = () => {

@@ -1,13 +1,13 @@
+import SelectableItem from '@/components/atoms/SelectableItem';
+import { useAppDispatch } from '@/hooks';
+import {
+  setShowDropdownView,
+  setShowModalPopup,
+} from '@/processes/overlay/model/overlaySlice';
+import { MODAL_CONFIRM_ACTION_KEY } from '@/processes/overlay/ui/OverlayManager';
+import { navigateFlow, NavigationFlow } from '@/utils';
 import React, { useCallback } from 'react';
 import { ImageSourcePropType } from 'react-native';
-import { useAppDispatch } from '../../hooks';
-import { MODAL_CONFIRM_ACTION_KEY } from '../../processes/overlay/ui/OverlayManager';
-import { navigateFlow, NavigationFlow } from '../../utils';
-import SelectableItem from '../atoms/SelectableItem';
-import {
-  setShowModalPopup,
-  setShowDropdownView,
-} from '../../processes/overlay/model/overlaySlice';
 
 export const DropDownEventIdentifier = {
   MODIFY_DIARY: 'MODIFY_DIARY',
