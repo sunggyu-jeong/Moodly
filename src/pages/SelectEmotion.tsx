@@ -8,8 +8,8 @@ import { getScaleSize, useAppDispatch, useAppSelector } from '../hooks';
 import { setSelectedIcon, setTodayDiary } from '../redux/slice/diarySlice';
 import { EmotionDiaryDTO } from '../scheme';
 import { isNotEmpty, navigate } from '../utils';
-import EmotionList from '../widgets/emotion/ui/EmotionList';
-import SelectedEmotion from '../widgets/emotion/ui/SelectedEmotion';
+import EmotionList from '../features/emotion/ui/EmotionList';
+import SelectedEmotion from '../features/emotion/ui/SelectedEmotion';
 import NaviDismiss from '../widgets/navigation-bar/ui/NaviDismiss';
 import NavigationBar from '../widgets/navigation-bar/ui/NavigationBar';
 

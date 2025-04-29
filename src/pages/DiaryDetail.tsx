@@ -7,13 +7,13 @@ import {
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { useEffect, useRef } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { IMAGES } from '../assets/images';
 import { NaviActionButtonProps } from '../components/atoms/NaviActionButton';
 import NaviMore from '../components/atoms/NaviMore';
 import { ICON_DATA } from '../constant/Icons';
 import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '../hooks';
 import { MODAL_CONFIRM_ACTION_KEY } from '../processes/overlay/ui/OverlayManager';
 import { removeDiaryThunk } from '../redux/slice/diarySlice';
+import { IMAGES } from '../shared/assets/images';
 import { dismissModalToScreen, goBack, isNotEmpty } from '../utils';
 import {
   DropDownEventIdentifier,

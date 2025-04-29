@@ -1,8 +1,8 @@
-import { IMAGES } from '@/assets/images';
 import Avatar from '@/components/atoms/Avatar';
 import { ICON_DATA } from '@/constant/Icons';
 import { getScaleSize } from '@/hooks';
 import { EmotionDiaryDTO } from '@/scheme';
+import { IMAGES } from '@/shared/assets/images';
 import dayjs from 'dayjs';
 import { Text, View } from 'react-native';
 

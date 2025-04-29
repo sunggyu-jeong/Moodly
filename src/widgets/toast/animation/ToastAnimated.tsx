@@ -1,7 +1,7 @@
 import { useToastAnimation } from '@/hooks/useToastAnimation';
 import { Animated, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import ToastBase from './ToastBase';
+import ToastBase from '../ui/ToastBase';
 
 interface ToastAnimatedProps {
   visible: boolean;

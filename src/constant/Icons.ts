@@ -1,5 +1,5 @@
-import { IMAGES } from '../assets/images';
 import { Emotions } from '../components/molecules/EmotionIcon';
+import { IMAGES } from '../shared/assets/images';
 
 export const ICON_DATA: Emotions[] = [
   {

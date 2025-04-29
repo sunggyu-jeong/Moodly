@@ -3,11 +3,11 @@ import dayjs from 'dayjs';
 import { useCallback } from 'react';
 import { ScrollView } from 'react-native';
 import DiaryMonth from '../components/molecules/DiaryMonth';
+import DiaryCardList from '../features/diary/ui/DiaryCardList';
+import DiaryEmptyMent from '../features/diary/ui/DiaryEmptyMent';
 import { useAppDispatch, useAppSelector, useRealm } from '../hooks';
 import { searchDiaryByMonthThunk, setSelectedMonth } from '../redux/slice/diarySlice';
 import { isEmpty, isNotEmpty } from '../utils';
-import DiaryCardList from '../widgets/diary/ui/DiaryCardList';
-import DiaryEmptyMent from '../widgets/diary/ui/DiaryEmptyMent';
 import NavigationBar from '../widgets/navigation-bar/ui/NavigationBar';
 
 const DiaryList = () => {

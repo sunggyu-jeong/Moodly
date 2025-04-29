@@ -8,18 +8,18 @@ import {
   View,
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { IMAGES } from '../assets/images';
 import HeaderText from '../components/atoms/HeaderText';
 import KeyboardAccessory from '../components/atoms/KeyboardAccessory';
 import { NaviActionButtonProps } from '../components/atoms/NaviActionButton';
+import DiaryTextBox, { DiaryTextBoxHandle } from '../features/diary/ui/DiaryTextBox';
 import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '../hooks';
 import {
   addDiaryThunk,
   modifyDiaryThunk,
   setSelectedDiary,
 } from '../redux/slice/diarySlice';
+import { IMAGES } from '../shared/assets/images';
 import { isNotEmpty, navigate } from '../utils';
-import DiaryTextBox, { DiaryTextBoxHandle } from '../widgets/diary/ui/DiaryTextBox';
 import NaviDismiss from '../widgets/navigation-bar/ui/NaviDismiss';
 import NavigationBar from '../widgets/navigation-bar/ui/NavigationBar';
 

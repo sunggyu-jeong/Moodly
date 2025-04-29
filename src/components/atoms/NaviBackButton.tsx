@@ -1,5 +1,5 @@
 import { Image, TouchableOpacity } from 'react-native';
-import { IMAGES } from '../../assets/images';
+import { IMAGES } from '../../shared/assets/images';
 import { goBack } from '../../utils';
 
 const NaviBackButton = () => (

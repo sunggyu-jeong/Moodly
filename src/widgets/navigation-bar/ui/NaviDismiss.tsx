@@ -1,5 +1,5 @@
-import { IMAGES } from '@/assets/images';
 import IconButton from '@/components/atoms/IconButton';
+import { IMAGES } from '@/shared/assets/images';
 import { dismissModalToScreen } from '@/utils';
 
 const NaviDismiss = () => {

@@ -1,7 +1,6 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
 import { Image, Text, View } from 'react-native';
-import { IMAGES } from '../assets/images';
 import ActionButton from '../components/atoms/ActionButton';
 import ToolTipView from '../components/atoms/ToolTipView';
 import { ICON_DATA } from '../constant/Icons';
@@ -13,6 +12,7 @@ import {
   setSelectedIcon,
   setTodayDiary,
 } from '../redux/slice/diarySlice';
+import { IMAGES } from '../shared/assets/images';
 import { isNotEmpty, navigate } from '../utils';
 
 const Home = () => {

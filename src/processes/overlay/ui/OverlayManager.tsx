@@ -3,7 +3,7 @@ import { setOverlayEventHandler } from '@/processes/overlay/model/overlaySlice';
 import { isNotEmpty } from '@/utils';
 import DropDownAnimation from '@/widgets/dropdown/animation/DropDownAnimation';
 import PopupContainerOrga from '@/widgets/popup/ui/PopupContainer';
-import ToastAnimated from '@/widgets/toast/ui/ToastAnimated';
+import ToastAnimated from '@/widgets/toast/animation/ToastAnimated';
 
 export const MODAL_CONFIRM_ACTION_KEY = {
   DELETE_DIARY: 'DELETE_DIARY',

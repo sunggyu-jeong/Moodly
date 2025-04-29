@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Image, Text, View } from 'react-native';
-import { IMAGES } from '../assets/images';
 import { getScaleSize } from '../hooks';
+import { IMAGES } from '../shared/assets/images';
 import { resetTo } from '../utils';
 
 const Splash = () => {
