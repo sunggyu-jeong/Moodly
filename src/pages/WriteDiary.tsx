@@ -19,7 +19,7 @@ import {
   setSelectedDiary,
 } from '../redux/slice/diarySlice';
 import { isNotEmpty, navigate } from '../utils';
-import DiaryTextBox, { DiaryTextBoxHandle } from '../widgets/diary/DiaryTextBox';
+import DiaryTextBox, { DiaryTextBoxHandle } from '../widgets/diary/ui/DiaryTextBox';
 import NaviDismiss from '../widgets/navigation-bar/ui/NaviDismiss';
 import NavigationBar from '../widgets/navigation-bar/ui/NavigationBar';
 
