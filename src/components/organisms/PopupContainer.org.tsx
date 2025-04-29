@@ -3,8 +3,8 @@ import { Animated, Modal, View } from 'react-native';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setShowModalPopup } from '../../redux/slice/commonSlice';
 import DimmedView from '../atoms/DimmedView.atm';
-import PopupFooter from '../molecules/PopupFooter.mol';
 import PopupHeader from '../atoms/PopupHeader.atm';
+import PopupFooter from '../molecules/PopupFooter.mol';
 
 interface PopupContainerProps {
   title: string;

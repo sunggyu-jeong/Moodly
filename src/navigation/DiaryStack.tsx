@@ -1,9 +1,9 @@
+import DiaryDetail from '@/pages/DiaryDetail';
+import SelectEmotion from '@/pages/SelectEmotion.pge';
+import WriteDiary from '@/pages/WriteDiary';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import OverlayManager from '../manager/OverlayManager';
-import DiaryDetail from '../pages/DiaryDetail.pge';
-import SelectEmotion from '../pages/SelectEmotion.pge';
-import WriteDiary from '../pages/WriteDiary.pge';
-import WriteDiaryComplete from '../pages/WriteDiaryComplete.pge';
+import WriteDiaryComplete from '../pages/WriteDiaryComplete';
 
 export type DiaryStackParamList = {
   SelectEmotion: undefined;

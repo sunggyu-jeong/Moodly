@@ -1,3 +1,22 @@
 module.exports = {
-  presets: ['module:@react-native/babel-preset','nativewind/babel'],
+  presets: ['@react-native/babel-preset', 'nativewind/babel'],
+  plugins: [
+    [
+      'module-resolver',
+      {
+        root: ['./src'],
+        alias: {
+          '@': './src',
+          '@app': './src/app',
+          '@processes': './src/processes',
+          '@pages': './src/pages',
+          '@widgets': './src/widgets',
+          '@features': './src/features',
+          '@entities': './src/entities',
+          '@shared': './src/shared',
+          '@components': './src/components',
+        },
+      },
+    ],
+  ],
 };

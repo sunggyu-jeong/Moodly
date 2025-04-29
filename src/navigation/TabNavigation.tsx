@@ -4,9 +4,9 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { IMAGES } from '../assets/images';
 import TabBarIcon from '../components/atoms/TabBarIcon.atm';
 import { getScaleSize } from '../hooks';
-import DiaryList from '../pages/DiaryList.pge';
-import Home from '../pages/Home.pge';
-import Setting from '../pages/Setting.pge';
+import DiaryList from '../pages/DiaryList';
+import Home from '../pages/Home';
+import Setting from '../pages/Setting';
 
 const Tab = createBottomTabNavigator();
 

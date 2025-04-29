@@ -3,14 +3,16 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import 'react-native-get-random-values';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { enableScreens } from 'react-native-screens';
 import { Provider } from 'react-redux';
-import '../global.css';
-import OverlayManager from './manager/OverlayManager';
-import RootStack from './navigation/RootStack';
-import store from './redux/store';
-import { navigationRef } from './utils';
+import '../../global.css';
+import RootStack from '../navigation/RootStack';
+import store from '../redux/store';
+import { navigationRef } from '../utils';
 
 dayjs.locale('ko');
+
+enableScreens();
 
 export default function App() {
   return (
