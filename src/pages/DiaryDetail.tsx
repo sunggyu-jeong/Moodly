@@ -1,3 +1,9 @@
+import {
+  setOverlayEventHandler,
+  setShowDropdownView,
+  setShowModalPopup,
+  setShowToastView,
+} from '@/processes/overlay/model/overlaySlice';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { useEffect, useRef } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
@@ -12,13 +18,7 @@ import NaviDismiss from '../components/molecules/NaviDismiss.mol';
 import NavigationBar from '../components/organisms/NavigationBar.org';
 import { ICON_DATA } from '../constant/Icons';
 import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '../hooks';
-import { MODAL_CONFIRM_ACTION_KEY } from '../manager/OverlayManager';
-import {
-  setOverlayEventHandler,
-  setShowDropdownView,
-  setShowModalPopup,
-  setShowToastView,
-} from '../redux/slice/commonSlice';
+import { MODAL_CONFIRM_ACTION_KEY } from '../processes/overlay/ui/OverlayManager';
 import { removeDiaryThunk } from '../redux/slice/diarySlice';
 import { dismissModalToScreen, goBack, isNotEmpty } from '../utils';
 

@@ -1,6 +1,6 @@
-import OverlayManager from '@/manager/OverlayManager';
 import DiaryDetail from '@/pages/DiaryDetail';
 import Splash from '@/pages/Splash';
+import OverlayManager from '@/processes/overlay/ui/OverlayManager';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import DiaryStack, { DiaryStackParamList } from './DiaryStack';
 import TabNavigation from './TabNavigation';

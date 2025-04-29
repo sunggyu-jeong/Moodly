@@ -1,9 +1,9 @@
-import ToastAnimated from '../components/molecules/ToastAnimated.mol';
-import PopupContainerOrga from '../components/organisms/PopupContainer.org';
-import DropDownAnimation from '../components/templates/DropDownAnimation.tem';
-import { useAppDispatch, useAppSelector } from '../hooks';
-import { setOverlayEventHandler } from '../redux/slice/commonSlice';
-import { isNotEmpty } from '../utils';
+import ToastAnimated from '@/components/molecules/ToastAnimated.mol';
+import PopupContainerOrga from '@/components/organisms/PopupContainer.org';
+import DropDownAnimation from '@/components/templates/DropDownAnimation.tem';
+import { useAppDispatch, useAppSelector } from '@/hooks';
+import { setOverlayEventHandler } from '@/processes/overlay/model/overlaySlice';
+import { isNotEmpty } from '@/utils';
 
 export const MODAL_CONFIRM_ACTION_KEY = {
   DELETE_DIARY: 'DELETE_DIARY',
@@ -18,7 +18,11 @@ const OverlayManager = () => {
   return (
     <>
       {isNotEmpty(showToastView?.visibility) && (
-        <ToastAnimated text={showToastView?.message ?? ''} />
+        <ToastAnimated
+          visible={showToastView?.visibility}
+          text={showToastView?.message ?? ''}
+          onHide={() => {}}
+        />
       )}
 
       {isNotEmpty(showModalPopup?.visibility) && (

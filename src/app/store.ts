@@ -1,9 +1,9 @@
-import commonSlice from '@/redux/slice/commonSlice';
+import overlaySlice from '@/processes/overlay/model/overlaySlice';
 import diarySlice from '@/redux/slice/diarySlice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 const reducers = combineReducers({
-  commonSlice: commonSlice,
+  overlaySlice: overlaySlice,
   diarySlice: diarySlice,
 });
 
