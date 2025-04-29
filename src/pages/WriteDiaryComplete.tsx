@@ -1,8 +1,8 @@
+import { IMAGES } from '@/shared/assets/images';
+import { getScaleSize } from '@/shared/hooks';
+import { navigate } from '@/shared/lib';
 import { useEffect } from 'react';
 import { Image, Text, View } from 'react-native';
-import { getScaleSize } from '../hooks';
-import { IMAGES } from '../shared/assets/images';
-import { navigate } from '../utils';
 
 const WriteDiaryComplete = () => {
   useEffect(() => {

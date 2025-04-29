@@ -1,8 +1,8 @@
 import NaviActionButton, {
   NaviActionButtonProps,
-} from '@/components/atoms/NaviActionButton';
-import NaviBackButton from '@/components/atoms/NaviBackButton';
-import { isNotEmpty } from '@/utils';
+} from '@/shared/ui/elements/NaviActionButton';
+import { isNotEmpty } from '@shared/lib';
+import NaviBackButton from '@shared/ui/elements/NaviBackButton';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 

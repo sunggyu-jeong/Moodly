@@ -1,5 +1,5 @@
-import Typography from '@/components/atoms/Typography';
 import { IMAGES } from '@/shared/assets/images';
+import Typography from '@/shared/ui/elements/Typography';
 import { Image, TouchableOpacity, View } from 'react-native';
 
 export interface SettingItemProps {

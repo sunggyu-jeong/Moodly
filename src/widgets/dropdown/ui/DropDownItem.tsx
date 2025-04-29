@@ -1,11 +1,11 @@
-import SelectableItem from '@/components/atoms/SelectableItem';
-import { useAppDispatch } from '@/hooks';
 import {
   setShowDropdownView,
   setShowModalPopup,
 } from '@/processes/overlay/model/overlaySlice';
 import { MODAL_CONFIRM_ACTION_KEY } from '@/processes/overlay/ui/OverlayManager';
-import { navigateFlow, NavigationFlow } from '@/utils';
+import { useAppDispatch } from '@/shared/hooks';
+import { navigateFlow, NavigationFlow } from '@/shared/lib';
+import SelectableItem from '@/shared/ui/elements/SelectableItem';
 import React, { useCallback } from 'react';
 import { ImageSourcePropType } from 'react-native';
 

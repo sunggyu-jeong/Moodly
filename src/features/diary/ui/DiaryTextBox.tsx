@@ -1,4 +1,4 @@
-import { getScaleSize } from '@/hooks';
+import { getScaleSize } from '@/shared/hooks';
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import {
   NativeSyntheticEvent,

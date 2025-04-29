@@ -1,17 +1,17 @@
+import { EmotionDiaryDTO } from '@/entities/diary';
+import { setSelectedIcon, setTodayDiary } from '@/features/diary/model/diary.slice';
+import EmotionList from '@/features/emotion/ui/EmotionList';
+import SelectedEmotion from '@/features/emotion/ui/SelectedEmotion';
+import { ICON_DATA } from '@/shared/constants/Icons';
+import { getScaleSize, useAppDispatch, useAppSelector } from '@/shared/hooks';
+import { isNotEmpty, navigate } from '@/shared/lib';
+import ActionButton from '@/shared/ui/elements/ActionButton';
+import HeaderText from '@/shared/ui/elements/HeaderText';
+import { NaviActionButtonProps } from '@/shared/ui/elements/NaviActionButton';
+import NaviDismiss from '@/widgets/navigation-bar/ui/NaviDismiss';
+import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
 import { useEffect } from 'react';
 import { View } from 'react-native';
-import ActionButton from '../components/atoms/ActionButton';
-import HeaderText from '../components/atoms/HeaderText';
-import { NaviActionButtonProps } from '../components/atoms/NaviActionButton';
-import { ICON_DATA } from '../constant/Icons';
-import { getScaleSize, useAppDispatch, useAppSelector } from '../hooks';
-import { setSelectedIcon, setTodayDiary } from '../redux/slice/diarySlice';
-import { EmotionDiaryDTO } from '../scheme';
-import { isNotEmpty, navigate } from '../utils';
-import EmotionList from '../features/emotion/ui/EmotionList';
-import SelectedEmotion from '../features/emotion/ui/SelectedEmotion';
-import NaviDismiss from '../widgets/navigation-bar/ui/NaviDismiss';
-import NavigationBar from '../widgets/navigation-bar/ui/NavigationBar';
 
 const SelectEmotion = () => {
   const dispatch = useAppDispatch();

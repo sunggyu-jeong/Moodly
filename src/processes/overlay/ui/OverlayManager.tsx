@@ -1,6 +1,6 @@
-import { useAppDispatch, useAppSelector } from '@/hooks';
 import { setOverlayEventHandler } from '@/processes/overlay/model/overlaySlice';
-import { isNotEmpty } from '@/utils';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks';
+import { isNotEmpty } from '@/shared/lib';
 import DropDownAnimation from '@/widgets/dropdown/animation/DropDownAnimation';
 import PopupContainerOrga from '@/widgets/popup/ui/PopupContainer';
 import ToastAnimated from '@/widgets/toast/animation/ToastAnimated';

@@ -1,3 +1,17 @@
+import {
+  addDiaryThunk,
+  modifyDiaryThunk,
+  setSelectedDiary,
+} from '@/features/diary/model/diary.slice';
+import DiaryTextBox, { DiaryTextBoxHandle } from '@/features/diary/ui/DiaryTextBox';
+import { IMAGES } from '@/shared/assets/images';
+import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '@/shared/hooks';
+import { isNotEmpty, navigate } from '@/shared/lib';
+import HeaderText from '@/shared/ui/elements/HeaderText';
+import KeyboardAccessory from '@/shared/ui/elements/KeyboardAccessory';
+import { NaviActionButtonProps } from '@/shared/ui/elements/NaviActionButton';
+import NaviDismiss from '@/widgets/navigation-bar/ui/NaviDismiss';
+import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
 import { useEffect, useRef, useState } from 'react';
 import {
   Animated,
@@ -8,20 +22,6 @@ import {
   View,
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import HeaderText from '../components/atoms/HeaderText';
-import KeyboardAccessory from '../components/atoms/KeyboardAccessory';
-import { NaviActionButtonProps } from '../components/atoms/NaviActionButton';
-import DiaryTextBox, { DiaryTextBoxHandle } from '../features/diary/ui/DiaryTextBox';
-import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '../hooks';
-import {
-  addDiaryThunk,
-  modifyDiaryThunk,
-  setSelectedDiary,
-} from '../redux/slice/diarySlice';
-import { IMAGES } from '../shared/assets/images';
-import { isNotEmpty, navigate } from '../utils';
-import NaviDismiss from '../widgets/navigation-bar/ui/NaviDismiss';
-import NavigationBar from '../widgets/navigation-bar/ui/NavigationBar';
 
 const WriteDiary = () => {
   const textBoxRef = useRef<DiaryTextBoxHandle | null>(null);

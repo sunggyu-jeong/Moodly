@@ -1,19 +1,19 @@
-import { useFocusEffect } from '@react-navigation/native';
-import { useCallback } from 'react';
-import { Image, Text, View } from 'react-native';
-import ActionButton from '../components/atoms/ActionButton';
-import ToolTipView from '../components/atoms/ToolTipView';
-import { ICON_DATA } from '../constant/Icons';
-import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '../hooks';
 import {
   searchDiaryCountThunk,
   searchDiaryForDayThunk,
   setSelectedDiary,
   setSelectedIcon,
   setTodayDiary,
-} from '../redux/slice/diarySlice';
-import { IMAGES } from '../shared/assets/images';
-import { isNotEmpty, navigate } from '../utils';
+} from '@/features/diary/model/diary.slice';
+import { IMAGES } from '@/shared/assets/images';
+import { ICON_DATA } from '@/shared/constants/Icons';
+import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '@/shared/hooks';
+import { isNotEmpty, navigate } from '@/shared/lib';
+import ActionButton from '@/shared/ui/elements/ActionButton';
+import ToolTipView from '@/shared/ui/elements/ToolTipView';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
+import { Image, Text, View } from 'react-native';
 
 const Home = () => {
   const dispatch = useAppDispatch();

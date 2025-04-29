@@ -1,4 +1,4 @@
-import { getScaleSize, useAppSelector } from '@/hooks';
+import { getScaleSize, useAppSelector } from '@/shared/hooks';
 import { Image, Text, View } from 'react-native';
 
 const SelectedEmotion = () => {

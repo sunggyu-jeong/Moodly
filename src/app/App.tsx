@@ -1,4 +1,4 @@
-import { navigationRef } from '@/utils';
+import { navigationRef } from '@/shared/lib';
 import { NavigationContainer } from '@react-navigation/native';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';

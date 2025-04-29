@@ -1,8 +1,8 @@
+import { IMAGES } from '@/shared/assets/images';
+import { getScaleSize } from '@/shared/hooks';
+import { resetTo } from '@/shared/lib';
 import { useEffect } from 'react';
 import { Image, Text, View } from 'react-native';
-import { getScaleSize } from '../hooks';
-import { IMAGES } from '../shared/assets/images';
-import { resetTo } from '../utils';
 
 const Splash = () => {
   useEffect(() => {

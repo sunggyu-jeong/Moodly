@@ -1,5 +1,5 @@
-import PopupButton from '@/components/atoms/ModalButton';
-import { isNotEmpty } from '@/utils';
+import PopupButton from '@/shared/ui/elements/ModalButton';
+import { isNotEmpty } from '@shared/lib';
 import { View } from 'react-native';
 
 interface PopupFooterProps {

@@ -1,7 +1,7 @@
-import { useAppDispatch, useAppSelector } from '@/hooks';
-import { setSelectedDiary } from '@/redux/slice/diarySlice';
-import { EmotionDiaryDTO } from '@/scheme';
-import { isNotEmpty, navigate } from '@/utils';
+import { EmotionDiaryDTO } from '@/entities/diary';
+import { setSelectedDiary } from '@/features/diary/model/diary.slice';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks';
+import { isNotEmpty, navigate } from '@/shared/lib';
 import { TouchableOpacity, View } from 'react-native';
 import DiaryCardContent from './DiaryCardContent';
 import DiaryCardHeader from './DiaryCardHeader';

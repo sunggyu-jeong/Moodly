@@ -1,26 +1,26 @@
+import { removeDiaryThunk } from '@/features/diary/model/diary.slice';
 import {
   setOverlayEventHandler,
   setShowDropdownView,
   setShowModalPopup,
   setShowToastView,
 } from '@/processes/overlay/model/overlaySlice';
-import { RouteProp, useRoute } from '@react-navigation/native';
-import { useEffect, useRef } from 'react';
-import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { NaviActionButtonProps } from '../components/atoms/NaviActionButton';
-import NaviMore from '../components/atoms/NaviMore';
-import { ICON_DATA } from '../constant/Icons';
-import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '../hooks';
-import { MODAL_CONFIRM_ACTION_KEY } from '../processes/overlay/ui/OverlayManager';
-import { removeDiaryThunk } from '../redux/slice/diarySlice';
-import { IMAGES } from '../shared/assets/images';
-import { dismissModalToScreen, goBack, isNotEmpty } from '../utils';
+import { MODAL_CONFIRM_ACTION_KEY } from '@/processes/overlay/ui/OverlayManager';
+import { IMAGES } from '@/shared/assets/images';
+import { ICON_DATA } from '@/shared/constants/Icons';
+import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '@/shared/hooks';
+import { dismissModalToScreen, goBack, isNotEmpty } from '@/shared/lib';
+import { NaviActionButtonProps } from '@/shared/ui/elements/NaviActionButton';
+import NaviMore from '@/shared/ui/elements/NaviMore';
 import {
   DropDownEventIdentifier,
   DropDownItemProps,
-} from '../widgets/dropdown/ui/DropDownItem';
-import NaviDismiss from '../widgets/navigation-bar/ui/NaviDismiss';
-import NavigationBar from '../widgets/navigation-bar/ui/NavigationBar';
+} from '@/widgets/dropdown/ui/DropDownItem';
+import NaviDismiss from '@/widgets/navigation-bar/ui/NaviDismiss';
+import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { useEffect, useRef } from 'react';
+import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
 type DiaryDetailRouteParams = {
   params: {
