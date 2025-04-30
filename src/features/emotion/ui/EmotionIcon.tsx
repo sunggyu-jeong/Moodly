@@ -1,10 +1,12 @@
+import { ImageSourcePropType } from 'react-native';
+
 import { setSelectedIcon } from '@/features/diary/model/diary.slice';
 import { useAppDispatch } from '@/shared/hooks';
 import EmotionSymbol from '@/shared/ui/elements/EmotionSymbol';
 
 export interface Emotions {
   id: number;
-  icon: any;
+  icon: ImageSourcePropType;
   text: string;
   description: string;
 }

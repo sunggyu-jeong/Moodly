@@ -1,5 +1,6 @@
-import { getScaleSize } from '@/shared/hooks';
 import { Text, View } from 'react-native';
+
+import { getScaleSize } from '@/shared/hooks';
 
 const DiaryEmptyMent = () => {
   return (

@@ -1,7 +1,3 @@
-const reactNative = require('eslint-plugin-react-native');
-const prettier = require('eslint-plugin-prettier');
-const globals = require('globals');
-
 module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -14,12 +10,22 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  globals: globals.browser,
   settings: {
     react: { version: 'detect' },
+    'boundaries/elements': [
+      { type: 'app', pattern: 'src/app/**' },
+      { type: 'process', pattern: 'src/processes/**' },
+      { type: 'page', pattern: 'src/pages/**' },
+      { type: 'widget', pattern: 'src/widgets/**' },
+      { type: 'feature', pattern: 'src/features/**' },
+      { type: 'entity', pattern: 'src/entities/**' },
+      { type: 'shared', pattern: 'src/shared/**' },
+    ],
     'import/resolver': {
-      node: { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
-      typescript: {},
+      typescript: {
+        alwaysTryTypes: true,
+        project: './tsconfig.json',
+      },
     },
   },
   plugins: [
@@ -29,14 +35,16 @@ module.exports = {
     'import',
     'react-native',
     'prettier',
+    'boundaries',
   ],
   extends: [
-    '@feature-sliced',
+    'plugin:boundaries/recommended',
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
     'plugin:react-native/all',
     'plugin:prettier/recommended',
+    'plugin:boundaries/recommended',
   ],
   rules: {
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
@@ -53,8 +61,20 @@ module.exports = {
       'error',
       { allowShortCircuit: false, allowTernary: false, allowTaggedTemplates: false },
     ],
+    'react-native/no-raw-text': [
+      'error',
+      {
+        skip: [
+          'HeaderText',
+          'ActionButton',
+          'SelectedEmotion',
+          'NavigationBar',
+          'EmotionList',
+        ],
+      },
+    ],
     // FIXME: - 리팩토링 완료 후 삭제
-    'import/no-internal-modules': ['none'],
+    'import/no-internal-modules': ['off', { allow: ['**/src/**'] }],
     // FIXME: - 리팩토링 완료 후 삭제
     'import/order': [
       'error',
@@ -65,5 +85,6 @@ module.exports = {
         'newlines-between': 'always',
       },
     ],
+    'boundaries/no-unknown-files': 'error',
   },
 };

@@ -1,4 +1,3 @@
-import { getScaleSize } from '@/shared/hooks';
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import {
   NativeSyntheticEvent,
@@ -7,6 +6,9 @@ import {
   TextInputFocusEventData,
   View,
 } from 'react-native';
+
+import App from '@/app/App';
+import { getScaleSize } from '@/shared/hooks';
 export interface DiaryTextBoxHandle {
   getText: () => string;
 }
@@ -28,6 +30,7 @@ const DiaryTextBox = forwardRef<DiaryTextBoxHandle, DiaryTextBoxProps>(
     const [text, setText] = useState(initialText);
 
     useEffect(() => {
+      App();
       setText(initialText);
     }, [initialText]);
 

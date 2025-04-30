@@ -1,6 +1,8 @@
 import Realm from 'realm';
-import { EmotionDiary, EmotionDiaryDTO } from '../../../entities/diary';
-import { isNotEmpty } from '../../utils';
+
+import { EmotionDiary, EmotionDiaryDTO } from '@/entities/diary';
+import { isNotEmpty } from '@/shared/lib';
+
 import { EmotionDiaryToDTO } from './EmotionDiaryMapper';
 
 export function selectDiaryCount(realm: Realm): number {
@@ -78,7 +80,7 @@ export function updateDiary(
       Object.entries(updates).forEach(([key, value]) => {
         const realmKey = fieldMap[key];
         if (realmKey && value !== undefined) {
-          (target as any)[realmKey] = value;
+          (target as EmotionDiary & Record<string, unknown>)[realmKey] = value;
         }
       });
       target.updated_at = new Date();
