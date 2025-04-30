@@ -39,13 +39,12 @@ module.exports = {
     'boundaries',
   ],
   extends: [
-    'plugin:boundaries/recommended',
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
     'plugin:react-native/all',
-    'plugin:prettier/recommended',
     'plugin:boundaries/recommended',
+    'plugin:prettier/recommended',
   ],
   rules: {
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],

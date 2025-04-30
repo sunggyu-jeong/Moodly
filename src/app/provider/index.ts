@@ -1,1 +1,1 @@
-export * from "./RealmProvider"
+export * from './RealmProvider';

@@ -8,7 +8,6 @@ module.exports = {
   proseWrap: 'preserve',
   printWidth: 90,
   bracketSpacing: true,
-  arrowParens: 'always',
   useTabs: false,
   htmlWhitespaceSensitivity: 'css',
   endOfLine: 'lf',
