@@ -1,3 +1,8 @@
+import { useFocusEffect } from '@react-navigation/native';
+import dayjs from 'dayjs';
+import { useCallback } from 'react';
+import { ScrollView, StyleSheet } from 'react-native';
+
 import {
   searchDiaryByMonthThunk,
   setSelectedMonth,
@@ -8,10 +13,6 @@ import DiaryMonth from '@/features/diary/ui/DiaryMonth';
 import { useAppDispatch, useAppSelector, useRealm } from '@/shared/hooks';
 import { isEmpty, isNotEmpty } from '@/shared/lib';
 import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
-import { useFocusEffect } from '@react-navigation/native';
-import dayjs from 'dayjs';
-import { useCallback } from 'react';
-import { ScrollView } from 'react-native';
 
 const DiaryList = () => {
   const { openRealm, closeRealm } = useRealm();
@@ -29,13 +30,8 @@ const DiaryList = () => {
       )
     );
   };
-  useFocusEffect(
-    useCallback(() => {
-      initialize();
-    }, [selectedMonth])
-  );
 
-  const initialize = async () => {
+  const initialize = useCallback(async () => {
     const realm = await openRealm();
     if (isNotEmpty(realm)) {
       await dispatch(
@@ -43,7 +39,13 @@ const DiaryList = () => {
       );
       closeRealm();
     }
-  };
+  }, [openRealm, dispatch, selectedMonth, closeRealm]);
+
+  useFocusEffect(
+    useCallback(() => {
+      initialize();
+    }, [initialize])
+  );
 
   return (
     <>
@@ -71,7 +73,7 @@ const DiaryList = () => {
       {isNotEmpty(searchByMonth?.data) && (
         <ScrollView
           className="bg-white"
-          contentContainerStyle={{ paddingHorizontal: 24 }}
+          contentContainerStyle={styles.scrollViewContent}
         >
           <DiaryCardList />
         </ScrollView>
@@ -81,5 +83,11 @@ const DiaryList = () => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  scrollViewContent: {
+    paddingHorizontal: 24,
+  },
+});
 
 export default DiaryList;

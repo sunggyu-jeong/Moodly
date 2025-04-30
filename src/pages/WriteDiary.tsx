@@ -1,3 +1,15 @@
+import { useEffect, useRef, useState } from 'react';
+import {
+  Animated,
+  Image,
+  Keyboard,
+  KeyboardAvoidingView,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 import {
   addDiaryThunk,
   modifyDiaryThunk,
@@ -12,16 +24,6 @@ import KeyboardAccessory from '@/shared/ui/elements/KeyboardAccessory';
 import { NaviActionButtonProps } from '@/shared/ui/elements/NaviActionButton';
 import NaviDismiss from '@/widgets/navigation-bar/ui/NaviDismiss';
 import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
-import { useEffect, useRef, useState } from 'react';
-import {
-  Animated,
-  Image,
-  Keyboard,
-  KeyboardAvoidingView,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const WriteDiary = () => {
   const textBoxRef = useRef<DiaryTextBoxHandle | null>(null);
@@ -58,7 +60,7 @@ const WriteDiary = () => {
         setIsKeyboardVisible(null);
       }
     });
-  }, [isKeyboardVisible, keyboardHeight]);
+  }, [accessoryPosition, isKeyboardVisible, keyboardHeight]);
 
   const handleSave = async () => {
     const realm = await openRealm();
@@ -92,7 +94,7 @@ const WriteDiary = () => {
     <>
       <NavigationBar actionButtons={actionButtons} />
       <KeyboardAvoidingView
-        style={{ flex: 1, backgroundColor: 'white' }}
+        style={styles.container}
         behavior="padding"
         keyboardVerticalOffset={ACCESSORY_HEIGHT}
       >
@@ -104,14 +106,12 @@ const WriteDiary = () => {
         >
           <KeyboardAwareScrollView
             ref={scrollRef}
-            style={{ flex: 1 }}
-            contentContainerStyle={{
-              flexGrow: 1,
-              alignItems: 'center',
-              paddingHorizontal: getScaleSize(24),
-              paddingTop: getScaleSize(63),
-              paddingBottom: isKeyboardVisible ? ACCESSORY_HEIGHT : getScaleSize(32),
-            }}
+            style={styles.scroll}
+            contentContainerStyle={[
+              styles.contentContainer
+                ? styles.contentKeyboardVisible
+                : styles.contentKeyboardHidden,
+            ]}
             enableOnAndroid={true}
             extraScrollHeight={ACCESSORY_HEIGHT}
             keyboardOpeningTime={150}
@@ -123,12 +123,7 @@ const WriteDiary = () => {
             </HeaderText>
             <Image
               source={IMAGES.smile}
-              style={{
-                marginTop: getScaleSize(26),
-                marginBottom: getScaleSize(32),
-                width: getScaleSize(137),
-                height: getScaleSize(137),
-              }}
+              style={styles.emotionImage}
             />
             <DiaryTextBox
               ref={textBoxRef}
@@ -147,14 +142,7 @@ const WriteDiary = () => {
           </KeyboardAwareScrollView>
         </TouchableWithoutFeedback>
         {isNotEmpty(isKeyboardVisible) && (
-          <Animated.View
-            style={{
-              position: 'absolute',
-              left: 0,
-              right: 0,
-              bottom: accessoryPosition,
-            }}
-          >
+          <Animated.View style={[styles.accessory, { bottom: accessoryPosition }]}>
             <KeyboardAccessory onPress={handleSave} />
           </Animated.View>
         )}
@@ -162,5 +150,40 @@ const WriteDiary = () => {
     </>
   );
 };
+
+const BACKGROUND_COLOR = '#FFFFFF';
+
+const styles = StyleSheet.create({
+  accessory: {
+    left: 0,
+    position: 'absolute',
+    right: 0,
+  },
+  container: {
+    backgroundColor: BACKGROUND_COLOR,
+    flex: 1,
+  },
+  contentContainer: {
+    alignItems: 'center',
+    flexGrow: 1,
+    paddingHorizontal: getScaleSize(24),
+    paddingTop: getScaleSize(63),
+  },
+  contentKeyboardHidden: {
+    paddingBottom: getScaleSize(32),
+  },
+  contentKeyboardVisible: {
+    paddingBottom: getScaleSize(40),
+  },
+  emotionImage: {
+    height: getScaleSize(137),
+    marginBottom: getScaleSize(32),
+    marginTop: getScaleSize(26),
+    width: getScaleSize(137),
+  },
+  scroll: {
+    flex: 1,
+  },
+});
 
 export default WriteDiary;

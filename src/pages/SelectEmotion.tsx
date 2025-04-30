@@ -1,3 +1,6 @@
+import { useEffect } from 'react';
+import { View } from 'react-native';
+
 import { EmotionDiaryDTO } from '@/entities/diary';
 import { setSelectedIcon, setTodayDiary } from '@/features/diary/model/diary.slice';
 import EmotionList from '@/features/emotion/ui/EmotionList';
@@ -10,8 +13,6 @@ import HeaderText from '@/shared/ui/elements/HeaderText';
 import { NaviActionButtonProps } from '@/shared/ui/elements/NaviActionButton';
 import NaviDismiss from '@/widgets/navigation-bar/ui/NaviDismiss';
 import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
-import { useEffect } from 'react';
-import { View } from 'react-native';
 
 const SelectEmotion = () => {
   const dispatch = useAppDispatch();
@@ -41,7 +42,7 @@ const SelectEmotion = () => {
       };
       dispatch(setTodayDiary(emotion));
     }
-  }, [selectedDiary]);
+  }, [selectedDiary, dispatch]);
 
   return (
     <>

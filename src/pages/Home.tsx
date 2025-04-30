@@ -1,3 +1,7 @@
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
+import { Image, Text, View } from 'react-native';
+
 import {
   searchDiaryCountThunk,
   searchDiaryForDayThunk,
@@ -11,9 +15,6 @@ import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '@/shared
 import { isNotEmpty, navigate } from '@/shared/lib';
 import ActionButton from '@/shared/ui/elements/ActionButton';
 import ToolTipView from '@/shared/ui/elements/ToolTipView';
-import { useFocusEffect } from '@react-navigation/native';
-import { useCallback } from 'react';
-import { Image, Text, View } from 'react-native';
 
 const Home = () => {
   const dispatch = useAppDispatch();
@@ -21,14 +22,14 @@ const Home = () => {
   const diaryCount = useAppSelector((state) => state.diarySlice.diaryCount);
   const isDiaryExist = useAppSelector((state) => state.diarySlice.isDiaryExist);
 
-  const initialize = async () => {
+  const initialize = useCallback(async () => {
     const realm = await openRealm();
     if (isNotEmpty(realm)) {
       await dispatch(searchDiaryForDayThunk({ realm, recordDate: new Date() }));
       await dispatch(searchDiaryCountThunk({ realm }));
       closeRealm();
     }
-  };
+  }, [openRealm, dispatch, closeRealm]);
 
   useFocusEffect(
     useCallback(() => {
@@ -37,7 +38,7 @@ const Home = () => {
       dispatch(setSelectedDiary({}));
       dispatch(setTodayDiary(null));
       initialize();
-    }, [dispatch])
+    }, [dispatch, initialize])
   );
 
   return (

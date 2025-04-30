@@ -1,3 +1,14 @@
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { useEffect, useRef } from 'react';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+
 import { removeDiaryThunk } from '@/features/diary/model/diary.slice';
 import {
   setOverlayEventHandler,
@@ -18,9 +29,6 @@ import {
 } from '@/widgets/dropdown/ui/DropDownItem';
 import NaviDismiss from '@/widgets/navigation-bar/ui/NaviDismiss';
 import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
-import { RouteProp, useRoute } from '@react-navigation/native';
-import { useEffect, useRef } from 'react';
-import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
 type DiaryDetailRouteParams = {
   params: {
@@ -141,9 +149,7 @@ const DiaryDetail = () => {
 
       <ScrollView
         className="flex-1 bg-white"
-        contentContainerStyle={{
-          alignItems: 'center',
-        }}
+        contentContainerStyle={styles.contentContainer}
         keyboardShouldPersistTaps="handled"
       >
         <Image
@@ -161,5 +167,11 @@ const DiaryDetail = () => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  contentContainer: {
+    alignItems: 'center',
+  },
+});
 
 export default DiaryDetail;
