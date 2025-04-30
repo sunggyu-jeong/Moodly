@@ -2,19 +2,19 @@ import { Image, ImageSourcePropType, TouchableOpacity } from 'react-native';
 
 interface ArrowButtonAtomProps {
   source: ImageSourcePropType;
-  onPress: () => void;
   disabled?: boolean;
   style?: string;
+  onPress: () => void;
 }
 
-const ArrowButton = ({ ...props }: ArrowButtonAtomProps) => (
+const ArrowButton = ({ source, disabled, style, onPress }: ArrowButtonAtomProps) => (
   <TouchableOpacity
-    onPress={props.onPress}
-    disabled={props.disabled}
-    className={props.style}
+    onPress={onPress}
+    disabled={disabled}
+    className={style}
   >
     <Image
-      source={props.source}
+      source={source}
       className="w-[18px] h-[18px]"
     />
   </TouchableOpacity>

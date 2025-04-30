@@ -10,11 +10,9 @@ const DimmedView = ({ ...props }: DimmedViewProps) => {
     <TouchableOpacity
       onPress={props.onPress}
       activeOpacity={1}
-      style={{ flex: 1 }}
+      className="flex-1"
     >
-      <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.4)' }}>
-        {props.children}
-      </View>
+      <View className="flex-1, bg-black opacity-40">{props.children}</View>
     </TouchableOpacity>
   );
 };

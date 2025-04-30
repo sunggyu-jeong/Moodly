@@ -1,5 +1,6 @@
-import { getScaleSize } from '@/shared/hooks';
 import { Text, TextProps } from 'react-native';
+
+import { getScaleSize } from '@/shared/hooks';
 
 export type TypographyVariant = 'h1' | 'h2' | 'body' | 'caption';
 

@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ActionReducerMapBuilder, AsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+
 import { AsyncStatus } from '../constants/ApiStatus';
 
 interface AsyncThunkProps<T, S> {

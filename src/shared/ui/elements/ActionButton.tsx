@@ -1,29 +1,41 @@
-import { getScaleSize } from '@/shared/hooks';
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+
+import { getScaleSize } from '@/shared/hooks';
+
+import { ColorKeyEnum, getColor } from '../../constants/Colors';
 
 interface ActionButtonProps {
-  onPress: () => void;
   children: React.ReactNode;
   disabled?: boolean;
+  onPress: () => void;
 }
 
-const ActionButton = ({ ...props }: ActionButtonProps) => {
+const ActionButton = ({ children, disabled, onPress }: ActionButtonProps) => {
   return (
     <TouchableOpacity
-      onPress={props.onPress}
+      onPress={onPress}
       className="rounded-[42px] mx-[25px] h-[56px] justify-center items-center"
-      style={{ backgroundColor: props.disabled ? '#A8A8A8' : '#000000' }}
-      disabled={props.disabled}
+      style={disabled ? styles.buttonDisabled : styles.buttonEnabled}
+      disabled={disabled}
     >
       <Text
         className="text-pretendard font-semibold tracking-[-0.5px] text-white text-center"
         style={{ fontSize: getScaleSize(16) }}
       >
-        {props.children}
+        {children}
       </Text>
     </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  buttonDisabled: {
+    backgroundColor: getColor(ColorKeyEnum.Disabled),
+  },
+  buttonEnabled: {
+    backgroundColor: getColor(ColorKeyEnum.Primary),
+  },
+});
 
 export default ActionButton;

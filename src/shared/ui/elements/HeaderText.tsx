@@ -1,5 +1,6 @@
-import { getScaleSize } from '@/shared/hooks';
 import { Text, TextProps } from 'react-native';
+
+import { getScaleSize } from '@/shared/hooks';
 
 interface HeaderTextProps extends TextProps {
   children: React.ReactNode;

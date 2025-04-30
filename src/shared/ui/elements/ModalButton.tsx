@@ -6,18 +6,18 @@ interface ModalButtonProps {
   bgColor?: string;
   onPress: () => void;
 }
-const ModalButton = ({ ...button }: ModalButtonProps) => {
+const ModalButton = ({ text, textColor, bgColor, onPress }: ModalButtonProps) => {
   return (
     <TouchableOpacity
-      onPress={button.onPress}
+      onPress={onPress}
       className="flex-1 border-1 p-5 space-x-5 rounded-xl border border-[#E0E0E3]"
-      style={{ backgroundColor: button?.bgColor ?? 'white' }}
+      style={{ backgroundColor: bgColor ?? 'white' }}
     >
       <Text
         className="text-sm font-pretendard font-normal text-center tracking-[-0.5px] items-center"
-        style={{ color: button.textColor }}
+        style={{ color: textColor }}
       >
-        {button.text}
+        {text}
       </Text>
     </TouchableOpacity>
   );

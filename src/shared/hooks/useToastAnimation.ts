@@ -34,7 +34,7 @@ export function useToastAnimation(
       }, holdTime);
     }
     return () => clearTimeout(timer);
-  }, [visible]);
+  }, [visible, duration, holdTime, onFinish, translateY, opacity]);
 
   return {
     style: { transform: [{ translateY }], opacity },

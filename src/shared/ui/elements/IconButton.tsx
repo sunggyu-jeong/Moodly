@@ -5,11 +5,11 @@ interface IconButtonAtomProps {
   onPress: () => void;
 }
 
-const IconButton = ({ ...props }: IconButtonAtomProps) => {
+const IconButton = ({ icon, onPress }: IconButtonAtomProps) => {
   return (
-    <TouchableOpacity onPress={props.onPress}>
+    <TouchableOpacity onPress={onPress}>
       <Image
-        source={props.icon}
+        source={icon}
         className="float-right"
       />
     </TouchableOpacity>

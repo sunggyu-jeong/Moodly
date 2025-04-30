@@ -1,9 +1,11 @@
-import { RootStackParamList } from '@/app/navigation/RootStack';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   CommonActions,
   createNavigationContainerRef,
   StackActions,
 } from '@react-navigation/native';
+
+import { RootStackParamList } from '@/app/navigation/RootStack';
 
 export const navigationRef = createNavigationContainerRef<RootStackParamList>();
 
@@ -80,8 +82,9 @@ export function navigateFlow(flow: NavigationFlow) {
   if (!navigationRef.isReady()) return;
 
   switch (flow) {
-    case NavigationFlow.DiaryDetailToEmotionWriteWithReturn:
+    case NavigationFlow.DiaryDetailToEmotionWriteWithReturn: {
       const rootState = navigationRef.getRootState();
+      // 기존 DiaryStack 라우터가 존재 할 경우, 그 스텍을 지우고 새로 푸시한다
       const newRoutes = [...rootState.routes].filter((el) => el.name !== 'DiaryStack');
 
       navigationRef.reset({
@@ -98,6 +101,7 @@ export function navigateFlow(flow: NavigationFlow) {
         ],
       });
       break;
+    }
     default:
       break;
   }

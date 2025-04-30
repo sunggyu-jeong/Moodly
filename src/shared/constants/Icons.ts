@@ -1,4 +1,5 @@
 import { Emotions } from '@/features/emotion/ui/EmotionIcon';
+
 import { IMAGES } from '../assets/images';
 
 export const ICON_DATA: Emotions[] = [

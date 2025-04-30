@@ -17,7 +17,7 @@
 export function isEmpty<T>(value: T[] | null | undefined): value is [] | null | undefined;
 export function isEmpty(value: string | null | undefined): value is '' | null | undefined;
 export function isEmpty<T>(value: T | null | undefined): value is null | undefined;
-export function isEmpty(value: any): boolean {
+export function isEmpty(value: unknown): boolean {
   // 주어진 값이 null 또는 undefined인 경우
   if (value === null || value === undefined) return true;
   // 문자열의 경우, 공백을 제거한 값이 빈 문자열이면 true
@@ -40,7 +40,7 @@ export function isEmpty(value: any): boolean {
 export function isNotEmpty<T>(value: T[] | null | undefined): value is [T, ...T[]];
 export function isNotEmpty(value: string | null | undefined): value is string;
 export function isNotEmpty<T>(value: T | null | undefined): value is T;
-export function isNotEmpty(value: any): boolean {
+export function isNotEmpty(value: unknown): boolean {
   return !isEmpty(value);
 }
 

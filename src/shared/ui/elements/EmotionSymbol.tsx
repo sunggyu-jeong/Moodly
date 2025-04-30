@@ -1,17 +1,17 @@
-import { Image, Pressable, View } from 'react-native';
+import { Image, ImageSourcePropType, Pressable, View } from 'react-native';
 
 export interface EmotionSymbolProps {
-  icon: any;
+  icon: ImageSourcePropType;
   onPress: () => void;
 }
 
-const EmotionSymbol = ({ ...props }: EmotionSymbolProps) => (
+const EmotionSymbol = ({ icon, onPress }: EmotionSymbolProps) => (
   <View className="w-[20%] items-center justify-center h-[50px] aspect-square">
-    <Pressable onPress={props.onPress}>
+    <Pressable onPress={onPress}>
       <Image
-        source={props.icon}
+        source={icon}
         resizeMode="cover"
-        style={{ width: 56, height: 56, aspectRatio: 1 }}
+        className="w-14 h-14 aspect-1"
       />
     </Pressable>
   </View>

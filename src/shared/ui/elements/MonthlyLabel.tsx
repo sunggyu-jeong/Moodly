@@ -1,5 +1,6 @@
-import { getScaleSize } from '@/shared/hooks';
 import { Text } from 'react-native';
+
+import { getScaleSize } from '@/shared/hooks';
 
 interface MonthlyLabelProps {
   label: string;

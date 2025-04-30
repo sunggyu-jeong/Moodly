@@ -1,5 +1,6 @@
-import { getScaleSize } from '@/shared/hooks';
 import { Text, View, ViewProps } from 'react-native';
+
+import { getScaleSize } from '@/shared/hooks';
 
 interface ToolTipViewProps extends ViewProps {
   text: string;

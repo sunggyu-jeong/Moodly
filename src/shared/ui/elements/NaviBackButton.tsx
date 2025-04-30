@@ -1,4 +1,5 @@
 import { Image, TouchableOpacity } from 'react-native';
+
 import { IMAGES } from '../../assets/images';
 import { goBack } from '../../lib';
 
