@@ -1,8 +1,9 @@
+import React from 'react';
+import { View } from 'react-native';
+
 import { useAppSelector } from '@/shared/hooks';
 import { isNotEmpty } from '@/shared/lib';
 import DropDownItem, { DropDownItemProps } from '@/widgets/dropdown/ui/DropDownItem';
-import React from 'react';
-import { View } from 'react-native';
 
 const DropDownContainer = () => {
   const showDropDownView = useAppSelector((state) => state.overlaySlice.showDropDownView);

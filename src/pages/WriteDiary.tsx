@@ -107,11 +107,7 @@ const WriteDiary = () => {
           <KeyboardAwareScrollView
             ref={scrollRef}
             style={styles.scroll}
-            contentContainerStyle={[
-              styles.contentContainer
-                ? styles.contentKeyboardVisible
-                : styles.contentKeyboardHidden,
-            ]}
+            contentContainerStyle={[styles.contentContainer]}
             enableOnAndroid={true}
             extraScrollHeight={ACCESSORY_HEIGHT}
             keyboardOpeningTime={150}
@@ -166,14 +162,10 @@ const styles = StyleSheet.create({
   contentContainer: {
     alignItems: 'center',
     flexGrow: 1,
+    justifyContent: 'center',
+    paddingBottom: getScaleSize(32),
     paddingHorizontal: getScaleSize(24),
     paddingTop: getScaleSize(63),
-  },
-  contentKeyboardHidden: {
-    paddingBottom: getScaleSize(32),
-  },
-  contentKeyboardVisible: {
-    paddingBottom: getScaleSize(40),
   },
   emotionImage: {
     height: getScaleSize(137),

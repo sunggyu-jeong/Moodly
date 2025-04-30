@@ -1,7 +1,9 @@
+import { useCallback, useEffect, useRef } from 'react';
+import { Animated, TouchableOpacity } from 'react-native';
+
 import { setShowDropdownView } from '@/processes/overlay/model/overlaySlice';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks';
-import { useCallback, useEffect, useRef } from 'react';
-import { Animated, StyleSheet, TouchableOpacity } from 'react-native';
+
 import DropDownContainer from '../ui/DropDownContainer';
 
 const DropDownAnimation = () => {
@@ -17,7 +19,12 @@ const DropDownAnimation = () => {
         pos: { x: showDropDownView?.pos?.x ?? 0, y: showDropDownView?.pos?.y ?? 0 },
       })
     );
-  }, [dispatch]);
+  }, [
+    dispatch,
+    showDropDownView?.dropdownList,
+    showDropDownView?.pos?.x,
+    showDropDownView?.pos?.y,
+  ]);
 
   useEffect(() => {
     const toValue = showDropDownView?.visibility ? 1 : 0;
@@ -41,25 +48,28 @@ const DropDownAnimation = () => {
   return (
     <>
       <TouchableOpacity
-        style={[StyleSheet.absoluteFill, { zIndex: 998 }]}
+        className="absolute inset-0 z-[998]"
         onPress={onClose}
       />
       <Animated.View
-        style={{
-          position: 'absolute',
-          zIndex: 998,
-          top: showDropDownView?.pos?.y ?? 0,
-          left: (showDropDownView?.pos?.x ?? 0) - 120,
-          opacity: animationValue,
-          transform: [
-            {
-              translateY: animationValue.interpolate({
-                inputRange: [0, 1],
-                outputRange: [-10, 0],
-              }),
-            },
-          ],
-        }}
+        className="absolute z-[998]"
+        style={[
+          {
+            top: showDropDownView?.pos?.y ?? 0,
+            left: (showDropDownView?.pos?.x ?? 0) - 120,
+          },
+          {
+            opacity: animationValue,
+            transform: [
+              {
+                translateY: animationValue.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [-10, 0],
+                }),
+              },
+            ],
+          },
+        ]}
       >
         <DropDownContainer />
       </Animated.View>

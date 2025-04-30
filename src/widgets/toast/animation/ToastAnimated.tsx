@@ -1,6 +1,8 @@
-import { useToastAnimation } from '@/shared/hooks/useToastAnimation';
-import { Animated, View } from 'react-native';
+import { Animated, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import { useToastAnimation } from '@/shared/hooks/useToastAnimation';
+
 import ToastBase from '../ui/ToastBase';
 
 interface ToastAnimatedProps {
@@ -18,7 +20,7 @@ const ToastAnimated = ({ visible, text, onHide }: ToastAnimatedProps) => {
   return (
     <Animated.View
       className="absolute inset-x-0 top-0 z-[999] transform"
-      style={[style, { marginTop: insets.top, height: 40 }]}
+      style={[style, { marginTop: insets.top }, styles.toastHeight]}
     >
       <View className="mx-5 items-center h-full">
         <ToastBase text={text} />
@@ -26,5 +28,11 @@ const ToastAnimated = ({ visible, text, onHide }: ToastAnimatedProps) => {
     </Animated.View>
   );
 };
+
+const styles = StyleSheet.create({
+  toastHeight: {
+    height: 40,
+  },
+});
 
 export default ToastAnimated;

@@ -3,7 +3,8 @@ import { useAppDispatch, useAppSelector } from '@/shared/hooks';
 import { isNotEmpty } from '@/shared/lib';
 import DropDownAnimation from '@/widgets/dropdown/animation/DropDownAnimation';
 import PopupContainerOrga from '@/widgets/popup/ui/PopupContainer';
-import ToastAnimated from '@/widgets/toast/animation/ToastAnimated';
+
+import ToastController from '../../../widgets/toast/ui/ToastController';
 
 export const MODAL_CONFIRM_ACTION_KEY = {
   DELETE_DIARY: 'DELETE_DIARY',
@@ -17,13 +18,7 @@ const OverlayManager = () => {
 
   return (
     <>
-      {isNotEmpty(showToastView?.visibility) && (
-        <ToastAnimated
-          visible={showToastView?.visibility}
-          text={showToastView?.message ?? ''}
-          onHide={() => {}}
-        />
-      )}
+      {isNotEmpty(showToastView?.visibility) && <ToastController />}
 
       {isNotEmpty(showModalPopup?.visibility) && (
         <PopupContainerOrga

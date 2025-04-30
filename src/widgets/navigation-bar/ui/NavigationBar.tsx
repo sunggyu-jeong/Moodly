@@ -1,10 +1,12 @@
+import { View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import { isNotEmpty } from '@shared/lib';
+import NaviBackButton from '@shared/ui/elements/NaviBackButton';
+
 import NaviActionButton, {
   NaviActionButtonProps,
 } from '@/shared/ui/elements/NaviActionButton';
-import { isNotEmpty } from '@shared/lib';
-import NaviBackButton from '@shared/ui/elements/NaviBackButton';
-import { View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export interface NavigationBarConfig {
   showBackButton?: boolean;

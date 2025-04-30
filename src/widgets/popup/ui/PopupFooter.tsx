@@ -1,6 +1,8 @@
-import PopupButton from '@/shared/ui/elements/ModalButton';
-import { isNotEmpty } from '@shared/lib';
 import { View } from 'react-native';
+
+import { isNotEmpty } from '@shared/lib';
+
+import PopupButton from '@/shared/ui/elements/ModalButton';
 
 interface PopupFooterProps {
   onCancel: () => void;

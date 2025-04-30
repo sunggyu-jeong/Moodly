@@ -1,6 +1,8 @@
+import { useDispatch } from 'react-redux';
+
 import { setShowToastView } from '@/processes/overlay/model/overlaySlice';
 import { useAppSelector } from '@/shared/hooks';
-import { useDispatch } from 'react-redux';
+
 import ToastAnimated from '../animation/ToastAnimated';
 
 const ToastController = () => {

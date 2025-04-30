@@ -12,7 +12,7 @@ const DimmedView = ({ ...props }: DimmedViewProps) => {
       activeOpacity={1}
       className="flex-1"
     >
-      <View className="flex-1, bg-black opacity-40">{props.children}</View>
+      <View className="flex-1 bg-black/40">{props.children}</View>
     </TouchableOpacity>
   );
 };
