@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
-import { Image, Text, View } from 'react-native';
+import { Image, View } from 'react-native';
 
-import { getScaleSize } from '@/shared/hooks';
 import { resetTo } from '@/shared/lib';
+
+import { MAIN_ICONS } from '../shared/assets/images/main';
 
 const Splash = () => {
   useEffect(() => {
@@ -12,26 +13,8 @@ const Splash = () => {
   }, []);
 
   return (
-    <View className="bg-white flex-1 justify-center items-center">
-      <Image
-        style={{
-          width: getScaleSize(132),
-          height: getScaleSize(132),
-          marginBottom: getScaleSize(33),
-        }}
-      />
-      <Text
-        className="text-pretendard font-bold tracking-[-0.5px] text-center"
-        style={{ marginBottom: getScaleSize(35), fontSize: getScaleSize(53) }}
-      >
-        Moodly
-      </Text>
-      <Text
-        className="text-[#606060] font-pretendard font-medium tracking-[-0.5px] text-center align-middle leading-[32px]"
-        style={{ fontSize: getScaleSize(21) }}
-      >
-        귀여운 감정 친구들과 함께{'\n'} 하루를 기록해봐요
-      </Text>
+    <View className="bg-primary-300 flex-1 justify-center items-center">
+      <Image source={MAIN_ICONS.logo} />
     </View>
   );
 };
