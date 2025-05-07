@@ -11,9 +11,9 @@ export const IMAGES = {
   monthLeft: require('./month-left.png'),
   monthRight: require('./month-right.png'),
   more: require('./more.png'),
-  xmark: require('./xmark.png'), 
-  backup: require('./backup.png'), 
-  feedbackChat: require('./feedback-chat.png'), 
-  iconDelete: require('./icon-delete.png'), 
-  iconModify: require('./icon-modify.png'), 
-}
+  xmark: require('./xmark.png'),
+  backup: require('./backup.png'),
+  feedbackChat: require('./feedback-chat.png'),
+  iconDelete: require('./icon-delete.png'),
+  iconModify: require('./icon-modify.png'),
+};
