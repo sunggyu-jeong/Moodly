@@ -1,18 +1,11 @@
-import { Text } from 'react-native';
-
-import { getScaleSize } from '@/shared/hooks';
+import { H3 } from '../typography/H3';
 
 interface NaviTitleDisplayProps {
   title: string;
 }
 
 const NaviTitleDisplay = ({ title }: NaviTitleDisplayProps) => (
-  <Text
-    className="font-bold text-black tracking-[-0.5px] text-center"
-    style={{ fontSize: getScaleSize(18) }}
-  >
-    {title}
-  </Text>
+  <H3 weight="semibold">{title}</H3>
 );
 
 export default NaviTitleDisplay;

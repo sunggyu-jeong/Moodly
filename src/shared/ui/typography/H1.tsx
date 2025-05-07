@@ -1,6 +1,6 @@
 import { Text, TextProps } from 'react-native';
 
-type Props = TextProps & { weight?: 'regular' | 'semibold' };
+type Props = TextProps & { weight: 'regular' | 'semibold' };
 
 export function H1({ children, weight, style, ...rest }: Props) {
   const className = `text-h1 font-${weight}`;

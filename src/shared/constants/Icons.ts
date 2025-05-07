@@ -5,6 +5,7 @@ import { EMOTION_ICONS } from '../assets/images/emotion';
 export interface EmotionIconData {
   id: number;
   iconBig: ImageSourcePropType;
+  iconBigShadow: ImageSourcePropType;
   iconSelected: ImageSourcePropType;
   iconUnSelected: ImageSourcePropType;
   text: string;
@@ -15,6 +16,7 @@ export const ICON_DATA: EmotionIconData[] = [
   {
     id: 1,
     iconBig: EMOTION_ICONS.joyBig,
+    iconBigShadow: EMOTION_ICONS.joyBigShadow,
     iconSelected: EMOTION_ICONS.joySmallSelected,
     iconUnSelected: EMOTION_ICONS.joySmallUnSelected,
     text: '기쁨',
@@ -23,6 +25,7 @@ export const ICON_DATA: EmotionIconData[] = [
   {
     id: 2,
     iconBig: EMOTION_ICONS.calmBig,
+    iconBigShadow: EMOTION_ICONS.calmBigShadow,
     iconSelected: EMOTION_ICONS.calmSmallSelected,
     iconUnSelected: EMOTION_ICONS.calmSmallUnSelected,
     text: '평온',
@@ -31,6 +34,7 @@ export const ICON_DATA: EmotionIconData[] = [
   {
     id: 3,
     iconBig: EMOTION_ICONS.anxietyBig,
+    iconBigShadow: EMOTION_ICONS.anxietyBigShadow,
     iconSelected: EMOTION_ICONS.anxietySmallSelected,
     iconUnSelected: EMOTION_ICONS.anxietySmallUnSelected,
     text: '불안',
@@ -39,6 +43,7 @@ export const ICON_DATA: EmotionIconData[] = [
   {
     id: 4,
     iconBig: EMOTION_ICONS.sadBig,
+    iconBigShadow: EMOTION_ICONS.sadBigShadow,
     iconSelected: EMOTION_ICONS.sadSmallSelected,
     iconUnSelected: EMOTION_ICONS.sadSmallUnSelected,
     text: '슬픔',
@@ -47,6 +52,7 @@ export const ICON_DATA: EmotionIconData[] = [
   {
     id: 5,
     iconBig: EMOTION_ICONS.angryBig,
+    iconBigShadow: EMOTION_ICONS.angryBigShadow,
     iconSelected: EMOTION_ICONS.angrySmallSelected,
     iconUnSelected: EMOTION_ICONS.angrySmallUnSelected,
     text: '화남',

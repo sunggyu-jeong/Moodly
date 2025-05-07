@@ -1,28 +1,37 @@
-import { Image, Text, View } from 'react-native';
+import { View } from 'react-native';
 
-import { getScaleSize, useAppSelector } from '@/shared/hooks';
+import { EMOTION_ICONS } from '@shared/assets/images/emotion';
+import { getScaleSize, useAppSelector } from '@shared/hooks';
+import AnimatedZoomImage from '@shared/ui/elements/AnimatedZoomImage';
+
+import { gray } from '../../../shared/styles/colors';
+import { Body1 } from '../../../shared/ui/typography/Body1';
+import { H1 } from '../../../shared/ui/typography/H1';
 
 const SelectedEmotion = () => {
-  const selectedIcon = useAppSelector((state) => state.diarySlice.selectedIcon);
+  const selectedIcon = useAppSelector(state => state.diarySlice.selectedIcon);
 
   return (
-    <View style={{ marginTop: getScaleSize(66) }}>
-      <Image
-        source={selectedIcon?.icon}
-        style={{ width: getScaleSize(140), height: getScaleSize(140) }}
+    <View
+      className="items-center"
+      style={{ marginTop: getScaleSize(66) }}
+    >
+      <AnimatedZoomImage
+        source={selectedIcon?.iconBigShadow || EMOTION_ICONS.joyBigShadow}
+        size={getScaleSize(196)}
       />
-      <Text
-        className="font-bold text-center tracking-[-0.5px]"
-        style={{ fontSize: getScaleSize(24), marginTop: getScaleSize(62.5) }}
+      <H1
+        weight="semibold"
+        style={{ color: gray[600], marginTop: getScaleSize(34) }}
       >
         {selectedIcon?.text}
-      </Text>
-      <Text
-        className="font-medium text-center"
-        style={{ fontSize: getScaleSize(16), marginTop: getScaleSize(16) }}
+      </H1>
+      <Body1
+        weight="regular"
+        style={{ color: gray[400], marginTop: getScaleSize(5) }}
       >
         {selectedIcon?.description}
-      </Text>
+      </Body1>
     </View>
   );
 };

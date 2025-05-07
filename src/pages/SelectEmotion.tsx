@@ -9,21 +9,22 @@ import { ICON_DATA } from '@/shared/constants/Icons';
 import { getScaleSize, useAppDispatch, useAppSelector } from '@/shared/hooks';
 import { isNotEmpty, navigate } from '@/shared/lib';
 import ActionButton from '@/shared/ui/elements/ActionButton';
-import HeaderText from '@/shared/ui/elements/HeaderText';
 import { NaviActionButtonProps } from '@/shared/ui/elements/NaviActionButton';
 import NaviDismiss from '@/widgets/navigation-bar/ui/NaviDismiss';
 import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
 
+import { H2 } from '../shared/ui/typography/H2';
+
 const SelectEmotion = () => {
   const dispatch = useAppDispatch();
-  const selectedEmotion = useAppSelector((state) => state.diarySlice.selectedIcon);
+  const selectedEmotion = useAppSelector(state => state.diarySlice.selectedIcon);
   const actionButtons: NaviActionButtonProps[] = [
     {
       item: <NaviDismiss />,
       disabled: false,
     },
   ];
-  const selectedDiary = useAppSelector((state) => state.diarySlice.selectedDiary);
+  const selectedDiary = useAppSelector(state => state.diarySlice.selectedDiary);
 
   const handleSelectEmotion = () => {
     const emotion: EmotionDiaryDTO = {
@@ -36,7 +37,7 @@ const SelectEmotion = () => {
   useEffect(() => {
     // 수정일 때 사용
     if (isNotEmpty(selectedDiary)) {
-      dispatch(setSelectedIcon(ICON_DATA.find((el) => el.id === selectedDiary.iconId)));
+      dispatch(setSelectedIcon(ICON_DATA.find(el => el.id === selectedDiary.iconId)));
       const emotion: EmotionDiaryDTO = {
         iconId: selectedDiary?.iconId,
       };
@@ -50,16 +51,19 @@ const SelectEmotion = () => {
         showBackButton={false}
         actionButtons={actionButtons}
       />
-      <View className="bg-white items-center flex-1">
-        <HeaderText style={{ marginTop: getScaleSize(64) }}>
-          오늘 너의 마음과 가장 닮은 친구를 골라줘
-        </HeaderText>
+      <View className="bg-common-white items-center flex-1">
+        <H2
+          weight="semibold"
+          style={{ marginTop: getScaleSize(28) }}
+        >
+          오늘 느낀 감정을 선택해주세요
+        </H2>
         <SelectedEmotion />
         <View className="flex-1" />
         <EmotionList emotionList={ICON_DATA} />
 
         <View
-          className="w-full"
+          className="w-full px-5"
           style={{ marginBottom: getScaleSize(57) }}
         >
           <ActionButton onPress={handleSelectEmotion}>선택 완료</ActionButton>

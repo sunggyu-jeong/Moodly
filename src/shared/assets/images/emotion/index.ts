@@ -5,6 +5,12 @@ export const EMOTION_ICONS = {
   angryBig: require('./big/angry-big.png'),
   anxietyBig: require('./big/anxiety-big.png'),
 
+  joyBigShadow: require('./big/joy-big-shadow.png'),
+  calmBigShadow: require('./big/calm-big-shadow.png'),
+  sadBigShadow: require('./big/sad-big-shadow.png'),
+  angryBigShadow: require('./big/angry-big-shadow.png'),
+  anxietyBigShadow: require('./big/anxiety-big-shadow.png'),
+
   joySmallSelected: require('./small/selected/joy-small-selected.png'),
   calmSmallSelected: require('./small/selected/calm-small-selected.png'),
   sadSmallSelected: require('./small/selected/sad-small-selected.png'),
