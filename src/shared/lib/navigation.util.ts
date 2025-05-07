@@ -85,7 +85,7 @@ export function navigateFlow(flow: NavigationFlow) {
     case NavigationFlow.DiaryDetailToEmotionWriteWithReturn: {
       const rootState = navigationRef.getRootState();
       // 기존 DiaryStack 라우터가 존재 할 경우, 그 스텍을 지우고 새로 푸시한다
-      const newRoutes = [...rootState.routes].filter((el) => el.name !== 'DiaryStack');
+      const newRoutes = [...rootState.routes].filter(el => el.name !== 'DiaryStack');
 
       navigationRef.reset({
         index: newRoutes.length,

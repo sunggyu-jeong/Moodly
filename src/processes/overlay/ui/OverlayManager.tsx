@@ -11,9 +11,9 @@ export const MODAL_CONFIRM_ACTION_KEY = {
 } as const;
 
 const OverlayManager = () => {
-  const showToastView = useAppSelector((state) => state.overlaySlice.showToastView);
-  const showModalPopup = useAppSelector((state) => state.overlaySlice.showModalPopup);
-  const showDropDownView = useAppSelector((state) => state.overlaySlice.showDropDownView);
+  const showToastView = useAppSelector(state => state.overlaySlice.showToastView);
+  const showModalPopup = useAppSelector(state => state.overlaySlice.showModalPopup);
+  const showDropDownView = useAppSelector(state => state.overlaySlice.showDropDownView);
   const dispatch = useAppDispatch();
 
   return (

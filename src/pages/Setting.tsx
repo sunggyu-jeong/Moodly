@@ -1,4 +1,4 @@
-import { Image, Text, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 
 import SettingList from '@/features/setting/ui/SettingList';
 import { COMMON_ICONS } from '@/shared/assets/images/common';
@@ -6,6 +6,8 @@ import { getScaleSize } from '@/shared/hooks';
 import { gray } from '@/shared/styles/colors';
 import NaviTitleDisplay from '@/shared/ui/elements/NaviTitle';
 import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
+
+import { Label } from '../shared/ui/typography/Label';
 
 const Setting = () => {
   enum SETTING_EVENT_TYPE {
@@ -56,12 +58,23 @@ const Setting = () => {
         style={{ paddingTop: getScaleSize(45) }}
       >
         <SettingList items={SETTING_LIST_ITEM} />
-        <Text className="text-center items-center mb-5 font-pretendard font-light text-base">
+        <Label
+          weight="regular"
+          style={styles.versionLabel}
+        >
           앱 버전 : 1.0.0
-        </Text>
+        </Label>
       </View>
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  versionLabel: {
+    color: gray[400],
+    marginBottom: getScaleSize(13),
+    textAlign: 'center',
+  },
+});
 
 export default Setting;

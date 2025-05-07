@@ -6,10 +6,10 @@ import { isNotEmpty } from '@/shared/lib';
 import DropDownItem, { DropDownItemProps } from '@/widgets/dropdown/ui/DropDownItem';
 
 const DropDownContainer = () => {
-  const showDropDownView = useAppSelector((state) => state.overlaySlice.showDropDownView);
+  const showDropDownView = useAppSelector(state => state.overlaySlice.showDropDownView);
 
   return (
-    <View className="justify-center w-[148px] rounded-xl bg-white shadow-[0px_10px_40px_0px_rgba(0,0,0,0.12)] z-[999]">
+    <View className="justify-center w-[148px] rounded-xl bg-common-white shadow-[0px_10px_40px_0px_rgba(0,0,0,0.12)] z-[999]">
       {isNotEmpty(showDropDownView?.dropdownList) &&
         showDropDownView.dropdownList.map((item: DropDownItemProps, idx: number) => (
           <React.Fragment key={idx}>

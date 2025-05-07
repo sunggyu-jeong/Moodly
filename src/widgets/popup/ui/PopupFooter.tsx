@@ -4,6 +4,8 @@ import { isNotEmpty } from '@shared/lib';
 
 import PopupButton from '@/shared/ui/elements/ModalButton';
 
+import { gray, primary } from '../../../shared/styles/colors';
+
 interface PopupFooterProps {
   onCancel: () => void;
   onConfirm: () => void;
@@ -18,11 +20,12 @@ const PopupFooter = ({
   confirmText,
 }: PopupFooterProps) => {
   return (
-    <View className="h-[80px] justify-center items-center flex-row mx-9 gap-[10px]">
+    <View className="h-[80px] justify-center items-center flex-row mx-9 gap-2 mt-4 mb-4">
       {isNotEmpty(cancelText) && (
         <PopupButton
           text={cancelText}
-          textColor="#212123"
+          textColor={gray[900]}
+          bgColor={gray[100]}
           onPress={onCancel}
         />
       )}
@@ -30,7 +33,7 @@ const PopupFooter = ({
         <PopupButton
           text={confirmText}
           textColor="white"
-          bgColor="#212123"
+          bgColor={primary[300]}
           onPress={onConfirm}
         />
       )}

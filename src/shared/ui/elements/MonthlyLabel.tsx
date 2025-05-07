@@ -1,18 +1,17 @@
-import { Text } from 'react-native';
-
-import { getScaleSize } from '@/shared/hooks';
+import { gray } from '../../styles/colors';
+import { H3 } from '../typography/H3';
 
 interface MonthlyLabelProps {
   label: string;
 }
 
 const MonthlyLabel = ({ label }: MonthlyLabelProps) => (
-  <Text
-    className="font-semibold tracking-[-0.5px]"
-    style={{ fontSize: getScaleSize(18) }}
+  <H3
+    weight="semibold"
+    style={{ color: gray[600] }}
   >
     {label}
-  </Text>
+  </H3>
 );
 
 export default MonthlyLabel;

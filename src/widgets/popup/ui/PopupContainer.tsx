@@ -17,44 +17,41 @@ interface PopupContainerProps {
 }
 
 const PopupContainer = ({ ...props }: PopupContainerProps) => {
-  const showModalPopup = useAppSelector((state) => state.overlaySlice.showModalPopup);
+  const showModalPopup = useAppSelector(state => state.overlaySlice.showModalPopup);
   const dispatch = useAppDispatch();
 
   const translateY = useRef(new Animated.Value(30)).current;
   const opacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    if (showModalPopup?.visibility) {
-      Animated.parallel([
-        Animated.timing(translateY, {
-          toValue: 0,
-          duration: 150,
-          useNativeDriver: true,
-        }),
-        Animated.timing(opacity, { toValue: 1, duration: 150, useNativeDriver: true }),
-      ]).start();
-    } else {
-      Animated.parallel([
-        Animated.timing(translateY, {
-          toValue: 30,
-          duration: 150,
-          useNativeDriver: true,
-        }),
-        Animated.timing(opacity, { toValue: 0, duration: 150, useNativeDriver: true }),
-      ]).start(({ finished }) => {
-        if (finished) {
-          dispatch(
-            setShowModalPopup({
-              visibility: null,
-              title: '',
-              message: '',
-              confirmActionKey: '',
-            })
-          );
-        }
-      });
-    }
-  }, [showModalPopup]);
+    const isVisible = Boolean(showModalPopup?.visibility);
+    const toValueY = isVisible ? 0 : 30;
+    const toValueOpacity = isVisible ? 1 : 0;
+
+    Animated.parallel([
+      Animated.timing(translateY, {
+        toValue: toValueY,
+        duration: 150,
+        useNativeDriver: true,
+      }),
+      Animated.timing(opacity, {
+        toValue: toValueOpacity,
+        duration: 150,
+        useNativeDriver: true,
+      }),
+    ]).start(({ finished }) => {
+      if (finished && !isVisible) {
+        dispatch(
+          setShowModalPopup({
+            visibility: null,
+            title: '',
+            message: '',
+            confirmActionKey: '',
+          })
+        );
+      }
+    });
+  }, [showModalPopup?.visibility, dispatch, opacity, translateY]);
 
   const handleCloseModal = () => {
     dispatch(
@@ -81,7 +78,7 @@ const PopupContainer = ({ ...props }: PopupContainerProps) => {
           style={{ transform: [{ translateY }], opacity: opacity }}
           className="flex-1 justify-center p-10"
         >
-          <View className="w-full h-[177px] bg-white rounded-xl items-center">
+          <View className="w-full bg-common-white rounded-xl items-center">
             <PopupHeader
               title={props.title}
               message={props.message}

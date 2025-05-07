@@ -38,9 +38,9 @@ const DropDownItem: React.FC<DropDownItemProps> = ({ text, source, eventIdentifi
             setShowModalPopup({
               visibility: true,
               title: '일기를 삭제할까요?',
-              message: '삭제한 일기는 복구가 어려워요.',
+              message: '삭제된 일기는 복구가 어려워요',
               cancelText: '취소',
-              confirmText: '확인',
+              confirmText: '삭제',
               confirmActionKey: MODAL_CONFIRM_ACTION_KEY.DELETE_DIARY,
             })
           );

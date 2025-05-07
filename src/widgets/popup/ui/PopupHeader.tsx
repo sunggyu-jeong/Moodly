@@ -1,4 +1,8 @@
-import { Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+
+import { gray } from '../../../shared/styles/colors';
+import { Body2 } from '../../../shared/ui/typography/Body2';
+import { H2 } from '../../../shared/ui/typography/H2';
 
 interface PopupHeaderProps {
   title: string;
@@ -7,14 +11,30 @@ interface PopupHeaderProps {
 const PopupHeader = ({ title, message }: PopupHeaderProps) => {
   return (
     <View className="mt-10">
-      <Text className="font-pretendard font-bold text-xl tracking-[-0.5px] color-black">
+      <H2
+        weight="semibold"
+        style={styles.popupTitle}
+      >
         {title}
-      </Text>
-      <Text className="mt-2 font-pretendard font-normal text-sm tracking-[-0.5px] color-[#9E9EA1]">
+      </H2>
+      <Body2
+        weight="regular"
+        style={styles.popupContent}
+      >
         {message}
-      </Text>
+      </Body2>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  popupContent: {
+    color: gray[400],
+    marginTop: 9,
+  },
+  popupTitle: {
+    color: gray[600],
+  },
+});
 
 export default PopupHeader;

@@ -1,4 +1,6 @@
-import { Text, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
+
+import { Label } from '../typography/Label';
 
 interface ModalButtonProps {
   text: string;
@@ -10,15 +12,16 @@ const ModalButton = ({ text, textColor, bgColor, onPress }: ModalButtonProps) =>
   return (
     <TouchableOpacity
       onPress={onPress}
-      className="flex-1 border-1 p-5 space-x-5 rounded-xl border border-[#E0E0E3]"
+      className="flex-1 p-5 space-x-5 rounded-xl"
       style={{ backgroundColor: bgColor ?? 'white' }}
     >
-      <Text
-        className="text-sm font-pretendard font-normal text-center tracking-[-0.5px] items-center"
+      <Label
+        weight="semibold"
         style={{ color: textColor }}
+        className="text-center"
       >
         {text}
-      </Text>
+      </Label>
     </TouchableOpacity>
   );
 };

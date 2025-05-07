@@ -1,6 +1,7 @@
 export const common = {
   red: '#FF0000',
   white: '#FFFFFF',
+  black: '#000000',
 } as const;
 
 export const primary = {
@@ -18,6 +19,7 @@ export const gray = {
   400: '#8C92AF',
   500: '#595F7A',
   600: '#1A1F3C',
+  900: '#212123',
 } as const;
 
 export default { common, primary, gray };

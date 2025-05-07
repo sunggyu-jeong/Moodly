@@ -1,4 +1,12 @@
-import { Image, ImageSourcePropType, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Image,
+  ImageSourcePropType,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+
+import { Label } from '../typography/Label';
 
 const SelectableItem = ({
   text,
@@ -13,18 +21,24 @@ const SelectableItem = ({
 }) => (
   <TouchableOpacity onPress={onPress}>
     <View className="h-[48px] flex-row items-center justify-between">
-      <Text
-        className="ml-[14px] text-sm"
-        style={{ color: textColor }}
+      <Label
+        weight="semibold"
+        style={[styles.label, { color: textColor }]}
       >
         {text}
-      </Text>
+      </Label>
       <Image
-        className="mr-3 w-6 h-6"
+        className="mr-4 w-6 h-6"
         source={source}
       />
     </View>
   </TouchableOpacity>
 );
+
+const styles = StyleSheet.create({
+  label: {
+    marginLeft: 16,
+  },
+});
 
 export default SelectableItem;
