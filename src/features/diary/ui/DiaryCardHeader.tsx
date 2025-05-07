@@ -8,7 +8,7 @@ import { getScaleSize } from '@/shared/hooks';
 import Avatar from '@/shared/ui/elements/Avatar';
 
 const DiaryCardHeader = ({ iconId, recordDate }: EmotionDiaryDTO) => {
-  const emotionSource = ICON_DATA.find((item) => item.id === iconId);
+  const emotionSource = ICON_DATA.find(item => item.id === iconId);
 
   return (
     <View className="flex-row mb-[18px] items-center">

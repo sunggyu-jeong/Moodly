@@ -7,7 +7,6 @@ import {
   View,
 } from 'react-native';
 
-import App from '@/app/App';
 import { getScaleSize } from '@/shared/hooks';
 export interface DiaryTextBoxHandle {
   getText: () => string;
@@ -30,7 +29,6 @@ const DiaryTextBox = forwardRef<DiaryTextBoxHandle, DiaryTextBoxProps>(
     const [text, setText] = useState(initialText);
 
     useEffect(() => {
-      App();
       setText(initialText);
     }, [initialText]);
 
@@ -55,14 +53,14 @@ const DiaryTextBox = forwardRef<DiaryTextBoxHandle, DiaryTextBoxProps>(
           maxLength={500}
           multiline
           textAlignVertical="top"
-          onChangeText={(value) => setText(value)}
-          onContentSizeChange={(e) => {
+          onChangeText={value => setText(value)}
+          onContentSizeChange={e => {
             if (onContentSizeChange) onContentSizeChange(e);
           }}
-          onFocus={(e) => {
+          onFocus={e => {
             if (onFocus) onFocus(e);
           }}
-          onBlur={(e) => {
+          onBlur={e => {
             if (onBlur) onBlur(e);
           }}
         />

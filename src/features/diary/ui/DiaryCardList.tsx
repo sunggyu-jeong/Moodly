@@ -10,7 +10,7 @@ import DiaryCardHeader from './DiaryCardHeader';
 
 const DiaryCardList = () => {
   const dispatch = useAppDispatch();
-  const searchByMonth = useAppSelector((state) => state.diarySlice.searchByMonth);
+  const searchByMonth = useAppSelector(state => state.diarySlice.searchByMonth);
 
   const handleDiaryDetail = (item: EmotionDiaryDTO) => {
     dispatch(setSelectedDiary(item));
