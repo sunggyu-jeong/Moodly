@@ -5,7 +5,7 @@ interface TabbarIconProps {
 }
 const TabBarIcon = ({ source }: TabbarIconProps) => {
   return (
-    <View className="flex-1 justify-end">
+    <View>
       <Image
         source={source}
         className="w-8 h-8"

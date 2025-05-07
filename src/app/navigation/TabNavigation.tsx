@@ -15,7 +15,7 @@ const TabNavigation = () => {
   const insets = useSafeAreaInsets();
 
   return (
-    <View className="flex-1 bg-white">
+    <View className="flex-1">
       <Tab.Navigator
         screenOptions={{
           headerShown: false,
@@ -24,6 +24,9 @@ const TabNavigation = () => {
             height: getScaleSize(49) + insets.bottom,
             paddingBottom: 0,
             backgroundColor: 'white',
+          },
+          tabBarItemStyle: {
+            marginTop: 4,
           },
         }}
       >
