@@ -1,5 +1,6 @@
 export const common = {
   red: '#FF0000',
+  white: '#FFFFFF',
 } as const;
 
 export const primary = {

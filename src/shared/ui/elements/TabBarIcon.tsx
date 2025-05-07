@@ -8,7 +8,7 @@ const TabBarIcon = ({ source }: TabbarIconProps) => {
     <View className="flex-1 justify-end">
       <Image
         source={source}
-        className="w-6 h-6"
+        className="w-8 h-8"
       />
     </View>
   );

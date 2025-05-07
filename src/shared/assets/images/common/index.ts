@@ -9,6 +9,8 @@ export const COMMON_ICONS = {
   iconPrevTight: require('./icon-prev-tight.png'),
   iconPrev: require('./icon-prev.png'),
   iconWrite: require('./icon-write.png'),
+  iconWriteCircle: require('./icon-write-circle.png'),
+  iconNextGray: require('./icon-next-gray.png'),
 } as const;
 
 export type CommonIconKey = keyof typeof COMMON_ICONS;

@@ -1,8 +1,16 @@
 import { Text, TextProps } from 'react-native';
 
-type Props = TextProps & { weight?: 'regular' | 'semiBold' };
+type Props = TextProps & { weight: 'regular' | 'semibold' };
 
-export function Label({ children, weight }: Props) {
+export function Label({ children, weight, style, ...rest }: Props) {
   const className = `text-label font-${weight}`;
-  return <Text className={className}>{children}</Text>;
+  return (
+    <Text
+      className={className}
+      style={style}
+      {...rest}
+    >
+      {children}
+    </Text>
+  );
 }

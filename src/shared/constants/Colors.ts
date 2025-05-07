@@ -1,18 +1,18 @@
 export enum ColorKeyEnum {
-  /** Primary color: #000000 */
+  /** Primary color: #5168DB */
   Primary = 'primary',
-  /** Disabled color: #A8A8A8 */
+  /** Disabled color: #C6C9D7 */
   Disabled = 'disabled',
-  /** Background color: #FFFFFF */
-  Background = 'background',
+  /** White color: #FFFFFF */
+  White = 'background',
   /** Accent color: #FF5722 */
   Accent = 'accent',
 }
 
 export const COLORS: Record<ColorKeyEnum, string> = {
-  [ColorKeyEnum.Primary]: '#000000',
-  [ColorKeyEnum.Disabled]: '#A8A8A8',
-  [ColorKeyEnum.Background]: '#FFFFFF',
+  [ColorKeyEnum.Primary]: '#5168DB',
+  [ColorKeyEnum.Disabled]: '#C6C9D7',
+  [ColorKeyEnum.White]: '#FFFFFF',
   [ColorKeyEnum.Accent]: '#FF5722',
 } as const;
 
