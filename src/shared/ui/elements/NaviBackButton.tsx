@@ -1,6 +1,6 @@
 import { Image, TouchableOpacity } from 'react-native';
 
-import { IMAGES } from '../../assets/images';
+import { COMMON_ICONS } from '../../assets/images/common';
 import { goBack } from '../../lib';
 
 const NaviBackButton = () => (
@@ -9,7 +9,7 @@ const NaviBackButton = () => (
     className="w-7"
   >
     <Image
-      source={IMAGES.back}
+      source={COMMON_ICONS.iconPrevTight}
       accessibilityLabel="backbutton"
     />
   </TouchableOpacity>

@@ -32,7 +32,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['tailwind.config.js', 'postcss.config.js'],
+      files: ['tailwind.config.js', 'postcss.config.js', 'global.d.ts'],
       parserOptions: { project: null },
     },
   ],

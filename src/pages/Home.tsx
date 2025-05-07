@@ -9,7 +9,7 @@ import {
   setSelectedIcon,
   setTodayDiary,
 } from '@/features/diary/model/diary.slice';
-import { IMAGES } from '@/shared/assets/images';
+import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { ICON_DATA } from '@/shared/constants/Icons';
 import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '@/shared/hooks';
 import { isNotEmpty, navigate } from '@/shared/lib';
@@ -19,8 +19,8 @@ import ToolTipView from '@/shared/ui/elements/ToolTipView';
 const Home = () => {
   const dispatch = useAppDispatch();
   const { openRealm, closeRealm } = useRealm();
-  const diaryCount = useAppSelector((state) => state.diarySlice.diaryCount);
-  const isDiaryExist = useAppSelector((state) => state.diarySlice.isDiaryExist);
+  const diaryCount = useAppSelector(state => state.diarySlice.diaryCount);
+  const isDiaryExist = useAppSelector(state => state.diarySlice.isDiaryExist);
 
   const initialize = useCallback(async () => {
     const realm = await openRealm();
@@ -52,12 +52,12 @@ const Home = () => {
             style={{ marginBottom: getScaleSize(38) }}
             text={
               isDiaryExist.data
-                ? '일기를 소중히 저장했어!'
-                : '오늘 하루 어땠어? 이야기를 들려줘!'
+                ? '일기를 저장했어요\n오늘 하루도 수고했어요'
+                : '오늘 하루 어땠나요?\n일기를 작성해볼까요?'
             }
           />
           <Image
-            source={IMAGES.smile}
+            source={MAIN_ICONS.avatarShadow}
             className="aspect-square"
             style={{ width: getScaleSize(160), height: getScaleSize(160) }}
           />

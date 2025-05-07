@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { Text, View } from 'react-native';
 
 import { EmotionDiaryDTO } from '@/entities/diary';
-import { IMAGES } from '@/shared/assets/images';
+import { EMOTION_ICONS } from '@/shared/assets/images/emotion';
 import { ICON_DATA } from '@/shared/constants/Icons';
 import { getScaleSize } from '@/shared/hooks';
 import Avatar from '@/shared/ui/elements/Avatar';
@@ -12,7 +12,7 @@ const DiaryCardHeader = ({ iconId, recordDate }: EmotionDiaryDTO) => {
 
   return (
     <View className="flex-row mb-[18px] items-center">
-      <Avatar source={emotionSource?.icon || IMAGES.smile} />
+      <Avatar source={emotionSource?.icon || EMOTION_ICONS.joyBig} />
       <View className="flex flex-col">
         <Text
           className="font-semibold tracking-[-0.5px] text-black/50 mb-2"

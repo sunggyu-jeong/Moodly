@@ -1,7 +1,7 @@
 import { Image, Text, View } from 'react-native';
 
 import SettingList from '@/features/setting/ui/SettingList';
-import { IMAGES } from '@/shared/assets/images';
+import { COMMON_ICONS } from '@/shared/assets/images/common';
 import { getScaleSize } from '@/shared/hooks';
 import NaviTitleDisplay from '@/shared/ui/elements/NaviTitle';
 import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
@@ -15,12 +15,12 @@ const Setting = () => {
   const SETTING_LIST_ITEM = [
     {
       title: '백업',
-      rightComponent: <Image source={IMAGES.backup} />,
+      rightComponent: <Image source={COMMON_ICONS.iconBackup} />,
       onPress: () => handlePress(SETTING_EVENT_TYPE.BACKUP),
     },
     {
       title: '피드백 보내기',
-      rightComponent: <Image source={IMAGES.feedbackChat} />,
+      rightComponent: <Image source={COMMON_ICONS.iconFeedback} />,
       onPress: () => handlePress(SETTING_EVENT_TYPE.BUG_REPORT),
     },
   ];

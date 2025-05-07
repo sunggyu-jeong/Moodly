@@ -1,6 +1,7 @@
-import { IMAGES } from '@/shared/assets/images';
-import Typography from '@/shared/ui/elements/Typography';
 import { Image, TouchableOpacity, View } from 'react-native';
+
+import { COMMON_ICONS } from '@/shared/assets/images/common';
+import { Body1 } from '@/shared/ui/typography/Body1';
 
 export interface SettingItemProps {
   title: string;
@@ -18,9 +19,9 @@ const SettingItem = ({ ...props }: SettingItemProps) => {
     >
       <View className="flex-row items-center">
         {props.rightComponent && <View className="mr-4">{props.rightComponent}</View>}
-        <Typography variant="body">{props.title}</Typography>
+        <Body1>{props.title}</Body1>
       </View>
-      <Image source={IMAGES.right} />
+      <Image source={COMMON_ICONS.iconNext} />
     </Container>
   );
 };

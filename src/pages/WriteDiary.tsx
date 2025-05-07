@@ -16,7 +16,6 @@ import {
   setSelectedDiary,
 } from '@/features/diary/model/diary.slice';
 import DiaryTextBox, { DiaryTextBoxHandle } from '@/features/diary/ui/DiaryTextBox';
-import { IMAGES } from '@/shared/assets/images';
 import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '@/shared/hooks';
 import { isNotEmpty, navigate } from '@/shared/lib';
 import HeaderText from '@/shared/ui/elements/HeaderText';
@@ -27,10 +26,10 @@ import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
 
 const WriteDiary = () => {
   const textBoxRef = useRef<DiaryTextBoxHandle | null>(null);
-  const todayDiary = useAppSelector((state) => state.diarySlice.todayDiary);
+  const todayDiary = useAppSelector(state => state.diarySlice.todayDiary);
   const dispatch = useAppDispatch();
   const { openRealm, closeRealm } = useRealm();
-  const selectedDiary = useAppSelector((state) => state.diarySlice.selectedDiary);
+  const selectedDiary = useAppSelector(state => state.diarySlice.selectedDiary);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState<boolean | null>(null);
   const [keyboardHeight, setKeyboardHeight] = useState(450);
   const ACCESSORY_HEIGHT = getScaleSize(40);
@@ -44,7 +43,7 @@ const WriteDiary = () => {
   ];
 
   useEffect(() => {
-    const sub = Keyboard.addListener('keyboardWillShow', (e) => {
+    const sub = Keyboard.addListener('keyboardWillShow', e => {
       setKeyboardHeight(e.endCoordinates.height);
       sub.remove();
     });
@@ -117,19 +116,16 @@ const WriteDiary = () => {
             <HeaderText style={{ marginTop: getScaleSize(63) }}>
               어떤 일이 있었는지 말해줄래?
             </HeaderText>
-            <Image
-              source={IMAGES.smile}
-              style={styles.emotionImage}
-            />
+            <Image style={styles.emotionImage} />
             <DiaryTextBox
               ref={textBoxRef}
               initialText={isNotEmpty(selectedDiary) ? selectedDiary.description : ''}
-              onFocus={(e) => {
+              onFocus={e => {
                 setIsKeyboardVisible(true);
                 scrollRef.current?.scrollToFocusedInput(e.target, ACCESSORY_HEIGHT / 4);
               }}
               onBlur={() => setIsKeyboardVisible(false)}
-              onContentSizeChange={(e) => {
+              onContentSizeChange={e => {
                 scrollRef.current?.scrollToFocusedInput(e.target, ACCESSORY_HEIGHT / 4);
               }}
             />

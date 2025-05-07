@@ -1,36 +1,36 @@
 import { Emotions } from '@/features/emotion/ui/EmotionIcon';
 
-import { IMAGES } from '../assets/images';
+import { EMOTION_ICONS } from '../assets/images/emotion';
 
 export const ICON_DATA: Emotions[] = [
   {
     id: 1,
-    icon: IMAGES.smile,
-    text: '행복',
-    description: '테스트1',
+    icon: EMOTION_ICONS.joyBig,
+    text: '기쁨',
+    description: '좋은 일이 일어날 것 같아!',
   },
   {
     id: 2,
-    icon: IMAGES.smile,
-    text: '슬픔',
-    description: '테스트2',
+    icon: EMOTION_ICONS.calmBig,
+    text: '평온',
+    description: '마음이 고요해.',
   },
   {
     id: 3,
-    icon: IMAGES.smile,
+    icon: EMOTION_ICONS.anxietyBig,
     text: '불안',
-    description: '테스트3',
+    description: '나, 잘하고 있는 걸까...?',
   },
   {
     id: 4,
-    icon: IMAGES.smile,
-    text: '아무생각없음',
-    description: '테스트3',
+    icon: EMOTION_ICONS.sadBig,
+    text: '슬픔',
+    description: '그낭 눈물이 나..ㅠ',
   },
   {
     id: 5,
-    icon: IMAGES.smile,
-    text: '신남',
-    description: '테스트3',
+    icon: EMOTION_ICONS.angryBig,
+    text: '화남',
+    description: '화가난다 화가나!!',
   },
 ];

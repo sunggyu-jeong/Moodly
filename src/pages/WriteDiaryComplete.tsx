@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Image, Text, View } from 'react-native';
 
-import { IMAGES } from '@/shared/assets/images';
+import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { getScaleSize } from '@/shared/hooks';
 import { navigate } from '@/shared/lib';
 
@@ -15,7 +15,7 @@ const WriteDiaryComplete = () => {
   return (
     <View className="flex-1 bg-white items-center">
       <Image
-        source={IMAGES.smile}
+        source={MAIN_ICONS.avatarComplete}
         className="w-[144px] h-[144px]"
         style={{ marginTop: getScaleSize(262) }}
       />
@@ -23,13 +23,13 @@ const WriteDiaryComplete = () => {
         className="font-pretendard font-semibold tracking-[-0.5px]"
         style={{ marginTop: getScaleSize(42), fontSize: getScaleSize(22) }}
       >
-        솔직한 너의 마음을 알려줘서 고마워
+        일기 작성 완료
       </Text>
       <Text
         className="font-pretendard font-normal text-[#00000080] tracking-[-0.5px]"
         style={{ marginTop: getScaleSize(13), fontSize: getScaleSize(16) }}
       >
-        넌 충분히 괜찮은 사람이야
+        솔직한 마음을 들려줘서 고마워요
       </Text>
     </View>
   );

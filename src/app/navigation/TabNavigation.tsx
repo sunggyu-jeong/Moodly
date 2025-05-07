@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import DiaryList from '@/pages/DiaryList';
 import Home from '@/pages/Home';
 import Setting from '@/pages/Setting';
-import { IMAGES } from '@/shared/assets/images';
+import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { getScaleSize } from '@/shared/hooks';
 import TabBarIcon from '@/shared/ui/elements/TabBarIcon';
 
@@ -32,7 +32,9 @@ const TabNavigation = () => {
           component={Home}
           options={{
             tabBarIcon: ({ focused }) => (
-              <TabBarIcon source={focused ? IMAGES.homeActive : IMAGES.homeInactive} />
+              <TabBarIcon
+                source={focused ? MAIN_ICONS.homeActive : MAIN_ICONS.homeInactive}
+              />
             ),
           }}
         />
@@ -42,7 +44,7 @@ const TabNavigation = () => {
           options={{
             tabBarIcon: ({ focused }) => (
               <TabBarIcon
-                source={focused ? IMAGES.bookOpenActive : IMAGES.bookOpenInactive}
+                source={focused ? MAIN_ICONS.listActive : MAIN_ICONS.listInactive}
               />
             ),
           }}
@@ -53,7 +55,7 @@ const TabNavigation = () => {
           options={{
             tabBarIcon: ({ focused }) => (
               <TabBarIcon
-                source={focused ? IMAGES.settingsActive : IMAGES.settingsInactive}
+                source={focused ? MAIN_ICONS.settingsActive : MAIN_ICONS.settingsInactive}
               />
             ),
           }}

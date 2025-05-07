@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { Image, Text, View } from 'react-native';
 
-import { IMAGES } from '@/shared/assets/images';
 import { getScaleSize } from '@/shared/hooks';
 import { resetTo } from '@/shared/lib';
 
@@ -15,7 +14,6 @@ const Splash = () => {
   return (
     <View className="bg-white flex-1 justify-center items-center">
       <Image
-        source={IMAGES.smile}
         style={{
           width: getScaleSize(132),
           height: getScaleSize(132),

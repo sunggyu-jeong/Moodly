@@ -1,4 +1,4 @@
-import { IMAGES } from '@/shared/assets/images';
+import { COMMON_ICONS } from '@/shared/assets/images/common';
 import { dismissModalToScreen } from '@/shared/lib';
 import IconButton from '@/shared/ui/elements/IconButton';
 
@@ -9,7 +9,7 @@ const NaviDismiss = () => {
 
   return (
     <IconButton
-      icon={IMAGES.xmark}
+      icon={COMMON_ICONS.iconClose}
       onPress={handleDismiss}
     />
   );

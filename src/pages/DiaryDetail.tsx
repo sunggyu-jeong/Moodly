@@ -17,7 +17,7 @@ import {
   setShowToastView,
 } from '@/processes/overlay/model/overlaySlice';
 import { MODAL_CONFIRM_ACTION_KEY } from '@/processes/overlay/ui/OverlayManager';
-import { IMAGES } from '@/shared/assets/images';
+import { COMMON_ICONS } from '@/shared/assets/images/common';
 import { ICON_DATA } from '@/shared/constants/Icons';
 import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '@/shared/hooks';
 import { dismissModalToScreen, goBack, isNotEmpty } from '@/shared/lib';
@@ -37,11 +37,11 @@ type DiaryDetailRouteParams = {
 };
 
 const DiaryDetail = () => {
-  const selectedDiary = useAppSelector((state) => state.diarySlice.selectedDiary);
+  const selectedDiary = useAppSelector(state => state.diarySlice.selectedDiary);
   const overlayEventHandler = useAppSelector(
-    (state) => state.overlaySlice.overlayEventHandler
+    state => state.overlaySlice.overlayEventHandler
   );
-  const showModalPopup = useAppSelector((state) => state.overlaySlice.showModalPopup);
+  const showModalPopup = useAppSelector(state => state.overlaySlice.showModalPopup);
   const dispatch = useAppDispatch();
   const route = useRoute<RouteProp<DiaryDetailRouteParams, 'params'>>();
   const { openRealm, closeRealm } = useRealm();
@@ -71,15 +71,16 @@ const DiaryDetail = () => {
   const props: DropDownItemProps[] = [
     {
       text: '수정하기',
-      source: IMAGES.iconModify,
+      source: COMMON_ICONS.iconEdit,
       eventIdentifier: DropDownEventIdentifier.MODIFY_DIARY,
     },
     {
       text: '삭제하기',
-      source: IMAGES.iconDelete,
+      source: COMMON_ICONS.iconDelete,
       eventIdentifier: DropDownEventIdentifier.DELETE_DIARY,
     },
   ];
+
   useEffect(() => {
     if (
       isNotEmpty(overlayEventHandler) &&
@@ -153,7 +154,7 @@ const DiaryDetail = () => {
         keyboardShouldPersistTaps="handled"
       >
         <Image
-          source={ICON_DATA.find((item) => item.id === selectedDiary?.iconId)?.icon}
+          source={ICON_DATA.find(item => item.id === selectedDiary?.iconId)?.icon}
           className="mt-[37px]"
           style={{ width: getScaleSize(137), height: getScaleSize(137) }}
         />
