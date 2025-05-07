@@ -1,13 +1,6 @@
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { useEffect, useRef } from 'react';
-import {
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { removeDiaryThunk } from '@/features/diary/model/diary.slice';
 import {
@@ -23,6 +16,7 @@ import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '@/shared
 import { dismissModalToScreen, goBack, isNotEmpty } from '@/shared/lib';
 import { NaviActionButtonProps } from '@/shared/ui/elements/NaviActionButton';
 import NaviMore from '@/shared/ui/elements/NaviMore';
+import { Body1 } from '@/shared/ui/typography/Body1';
 import {
   DropDownEventIdentifier,
   DropDownItemProps,
@@ -149,21 +143,20 @@ const DiaryDetail = () => {
       />
 
       <ScrollView
-        className="flex-1 bg-white"
+        className="flex-1 bg-common-white"
         contentContainerStyle={styles.contentContainer}
         keyboardShouldPersistTaps="handled"
       >
         <Image
-          source={ICON_DATA.find(item => item.id === selectedDiary?.iconId)?.icon}
-          className="mt-[37px]"
-          style={{ width: getScaleSize(137), height: getScaleSize(137) }}
+          source={ICON_DATA.find(item => item.id === selectedDiary?.iconId)?.iconBig}
+          style={styles.emotionImage}
         />
-        <Text
-          className="font-pretendard font-medium text-start tracking-[-0.5px] px-6 leading-[30px] w-full"
-          style={{ marginTop: getScaleSize(34), fontSize: getScaleSize(18) }}
+        <Body1
+          weight="regular"
+          style={styles.diaryText}
         >
           {selectedDiary?.description}
-        </Text>
+        </Body1>
       </ScrollView>
     </>
   );
@@ -171,7 +164,18 @@ const DiaryDetail = () => {
 
 const styles = StyleSheet.create({
   contentContainer: {
-    alignItems: 'center',
+    alignItems: 'flex-start',
+    padding: 20,
+  },
+  diaryText: {
+    marginTop: 20,
+    textAlign: 'left',
+    width: '100%',
+  },
+  emotionImage: {
+    alignSelf: 'center',
+    height: getScaleSize(190),
+    width: getScaleSize(190),
   },
 });
 

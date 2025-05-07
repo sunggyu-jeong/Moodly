@@ -64,7 +64,7 @@ const SelectEmotion = () => {
 
         <View
           className="w-full px-5"
-          style={{ marginBottom: getScaleSize(57) }}
+          style={{ marginBottom: getScaleSize(88) }}
         >
           <ActionButton onPress={handleSelectEmotion}>선택 완료</ActionButton>
         </View>
