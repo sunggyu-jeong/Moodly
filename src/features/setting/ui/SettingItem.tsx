@@ -1,6 +1,7 @@
 import { Image, TouchableOpacity, View } from 'react-native';
 
 import { COMMON_ICONS } from '@/shared/assets/images/common';
+import { gray } from '@/shared/styles/colors';
 import { Body1 } from '@/shared/ui/typography/Body1';
 
 export interface SettingItemProps {
@@ -19,9 +20,14 @@ const SettingItem = ({ ...props }: SettingItemProps) => {
     >
       <View className="flex-row items-center">
         {props.rightComponent && <View className="mr-4">{props.rightComponent}</View>}
-        <Body1>{props.title}</Body1>
+        <Body1
+          weight="regular"
+          style={{ color: gray[600] }}
+        >
+          {props.title}
+        </Body1>
       </View>
-      <Image source={COMMON_ICONS.iconNext} />
+      <Image source={COMMON_ICONS.iconNextGray} />
     </Container>
   );
 };

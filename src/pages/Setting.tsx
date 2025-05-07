@@ -3,6 +3,7 @@ import { Image, Text, View } from 'react-native';
 import SettingList from '@/features/setting/ui/SettingList';
 import { COMMON_ICONS } from '@/shared/assets/images/common';
 import { getScaleSize } from '@/shared/hooks';
+import { gray } from '@/shared/styles/colors';
 import NaviTitleDisplay from '@/shared/ui/elements/NaviTitle';
 import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
 
@@ -14,13 +15,23 @@ const Setting = () => {
 
   const SETTING_LIST_ITEM = [
     {
-      title: '백업',
-      rightComponent: <Image source={COMMON_ICONS.iconBackup} />,
+      title: '백업 및 복원',
+      rightComponent: (
+        <Image
+          source={COMMON_ICONS.iconBackup}
+          style={{ tintColor: gray[400] }}
+        />
+      ),
       onPress: () => handlePress(SETTING_EVENT_TYPE.BACKUP),
     },
     {
-      title: '피드백 보내기',
-      rightComponent: <Image source={COMMON_ICONS.iconFeedback} />,
+      title: '의견 보내기',
+      rightComponent: (
+        <Image
+          source={COMMON_ICONS.iconFeedback}
+          style={{ tintColor: gray[400] }}
+        />
+      ),
       onPress: () => handlePress(SETTING_EVENT_TYPE.BUG_REPORT),
     },
   ];
@@ -36,12 +47,13 @@ const Setting = () => {
   return (
     <>
       <NavigationBar
+        backgroundColor={gray[100]}
         showBackButton={false}
         centerComponent={<NaviTitleDisplay title="설정" />}
       />
       <View
-        className="bg-white flex-1"
-        style={{ paddingTop: getScaleSize(80) }}
+        className="bg-gray-100 flex-1 justify-between px-4 rounded-xl"
+        style={{ paddingTop: getScaleSize(45) }}
       >
         <SettingList items={SETTING_LIST_ITEM} />
         <Text className="text-center items-center mb-5 font-pretendard font-light text-base">
