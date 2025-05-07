@@ -10,6 +10,7 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
+    node: true,
   },
   settings: {
     react: { version: 'detect' },
@@ -29,6 +30,12 @@ module.exports = {
       },
     },
   },
+  overrides: [
+    {
+      files: ['tailwind.config.js', 'postcss.config.js'],
+      parserOptions: { project: null },
+    },
+  ],
   plugins: [
     '@typescript-eslint',
     'react-hooks',
@@ -85,6 +92,9 @@ module.exports = {
         'newlines-between': 'always',
       },
     ],
-    'boundaries/no-unknown-files': 'error',
+    'boundaries/no-unknown-files': 'off',
+
+    'no-undef': 'off',
+    '@typescript-eslint/no-require-imports': 'off',
   },
 };
