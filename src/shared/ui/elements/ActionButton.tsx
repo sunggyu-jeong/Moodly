@@ -14,7 +14,7 @@ const ActionButton = ({ children, disabled, onPress }: ActionButtonProps) => {
   return (
     <TouchableOpacity
       onPress={onPress}
-      className="rounded-xl mx-[25px] h-[56px] justify-center items-center"
+      className="rounded-xl mx-[25px] h-[56px] justify-center items-center w-full"
       style={disabled ? styles.buttonDisabled : styles.buttonEnabled}
       disabled={disabled}
     >

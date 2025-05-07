@@ -1,4 +1,5 @@
-import { Text } from 'react-native';
+import { gray } from '../../../shared/styles/colors';
+import { Body2 } from '../../../shared/ui/typography/Body2';
 
 export interface DiaryCardContentProps {
   content: string;
@@ -6,9 +7,12 @@ export interface DiaryCardContentProps {
 
 const DiaryCardContent = ({ content }: DiaryCardContentProps) => {
   return (
-    <Text className="font-pretendard font-medium tracking-[-0.5px] text-black/70 leading-6">
+    <Body2
+      weight="regular"
+      style={{ color: gray[600] }}
+    >
       {content}
-    </Text>
+    </Body2>
   );
 };
 

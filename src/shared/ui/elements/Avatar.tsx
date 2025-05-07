@@ -10,8 +10,8 @@ const Avatar = ({ source }: AvatarAtomProps) => {
   return (
     <Image
       source={source}
-      style={{ width: getScaleSize(48), height: getScaleSize(48) }}
-      className="mr-[10px]"
+      style={{ width: getScaleSize(40), height: getScaleSize(40) }}
+      className="mr-[15px]"
     />
   );
 };

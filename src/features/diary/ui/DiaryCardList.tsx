@@ -29,7 +29,7 @@ const DiaryCardList = () => {
           >
             <View
               key={index}
-              className="bg-[#F0F0F0] p-4 mb-4 rounded-[9px]"
+              className="bg-common-white py-5 px-[18px] mb-4 rounded-[15px]"
             >
               {isNotEmpty(searchByMonth?.data) && (
                 <DiaryCardHeader

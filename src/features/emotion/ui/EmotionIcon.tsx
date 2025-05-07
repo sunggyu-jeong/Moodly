@@ -1,17 +1,9 @@
-import { ImageSourcePropType } from 'react-native';
-
 import { setSelectedIcon } from '@/features/diary/model/diary.slice';
+import { EmotionIconData } from '@/shared/constants';
 import { useAppDispatch } from '@/shared/hooks';
 import EmotionSymbol from '@/shared/ui/elements/EmotionSymbol';
 
-export interface Emotions {
-  id: number;
-  icon: ImageSourcePropType;
-  text: string;
-  description: string;
-}
-
-const EmotionIcon = ({ emotion }: { emotion: Emotions }) => {
+const EmotionIcon = ({ emotion }: { emotion: EmotionIconData }) => {
   const dispatch = useAppDispatch();
 
   const handleSelectEmotion = () => {
@@ -20,7 +12,7 @@ const EmotionIcon = ({ emotion }: { emotion: Emotions }) => {
 
   return (
     <EmotionSymbol
-      icon={emotion.icon}
+      icon={emotion.iconBig}
       onPress={handleSelectEmotion}
     />
   );

@@ -1,34 +1,43 @@
 import dayjs from 'dayjs';
-import { Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { EmotionDiaryDTO } from '@/entities/diary';
 import { EMOTION_ICONS } from '@/shared/assets/images/emotion';
 import { ICON_DATA } from '@/shared/constants/Icons';
-import { getScaleSize } from '@/shared/hooks';
+import { gray } from '@/shared/styles/colors';
 import Avatar from '@/shared/ui/elements/Avatar';
+import { Caption } from '@/shared/ui/typography/Caption';
+import { Label } from '@/shared/ui/typography/Label';
 
 const DiaryCardHeader = ({ iconId, recordDate }: EmotionDiaryDTO) => {
   const emotionSource = ICON_DATA.find(item => item.id === iconId);
 
   return (
-    <View className="flex-row mb-[18px] items-center">
-      <Avatar source={emotionSource?.icon || EMOTION_ICONS.joyBig} />
-      <View className="flex flex-col">
-        <Text
-          className="font-semibold tracking-[-0.5px] text-black/50 mb-2"
-          style={{ fontSize: getScaleSize(14) }}
+    <View className="flex-row mb-[15px] items-center">
+      <Avatar source={emotionSource?.iconSelected || EMOTION_ICONS.joySmallSelected} />
+      <View className="flex flex-col justify-between">
+        <Caption
+          weight="semibold"
+          style={styles.captionStyle}
         >
-          {dayjs(recordDate).format('MM월 DD일')}
-        </Text>
-        <Text
-          className="font-semibold tracking-[-0.5px]"
-          style={{ fontSize: getScaleSize(16) }}
+          {dayjs(recordDate).format('M월 D일')}
+        </Caption>
+        <Label
+          weight="semibold"
+          style={{ color: gray[600] }}
         >
           {emotionSource?.text}
-        </Text>
+        </Label>
       </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  captionStyle: {
+    color: gray[400],
+    marginBottom: 4,
+  },
+});
 
 export default DiaryCardHeader;

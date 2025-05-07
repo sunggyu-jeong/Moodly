@@ -13,6 +13,7 @@ export interface NavigationBarConfig {
   leftComponents?: NaviActionButtonProps[] | null;
   centerComponent?: React.ReactNode;
   actionButtons?: NaviActionButtonProps[];
+  backgroundColor?: string;
 }
 
 const NavigationBar = ({
@@ -20,19 +21,15 @@ const NavigationBar = ({
   centerComponent,
   actionButtons,
   leftComponents,
+  backgroundColor = 'white',
 }: NavigationBarConfig) => {
   const hasLeftCenter = showBackButton || isNotEmpty(centerComponent);
   const insets = useSafeAreaInsets();
 
   return (
-    <View
-      className="bg-white"
-      style={{ paddingTop: insets.top }}
-    >
+    <View style={{ paddingTop: insets.top, backgroundColor }}>
       <View
-        className={`flex-row items-center h-[40px] px-[10px] bg-white ${
-          hasLeftCenter ? 'justify-between' : 'justify-end'
-        }`}
+        className={`flex-row items-center h-[40px] px-[10px] ${hasLeftCenter ? 'justify-between' : 'justify-end'}`}
       >
         {showBackButton && (
           <View className="ml-3">

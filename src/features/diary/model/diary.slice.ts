@@ -7,11 +7,10 @@ import {
   AsyncOperationState,
   createInitialAsyncState,
 } from '@/shared/constants/ApiStatus';
-import { ICON_DATA } from '@/shared/constants/Icons';
+import { EmotionIconData, ICON_DATA } from '@/shared/constants/Icons';
 import { addAsyncThunkCase } from '@/shared/lib';
 import { createServiceThunk } from '@/shared/services/ServiceThunk';
 
-import { Emotions } from '../../emotion/ui/EmotionIcon';
 import {
   createDiary,
   deleteDiary,
@@ -79,7 +78,7 @@ interface DiaryState {
   modifyDiary: AsyncOperationState<number>;
   removeDiary: AsyncOperationState<void>;
   selectedDiary: EmotionDiaryDTO | null;
-  selectedIcon: Emotions | null;
+  selectedIcon: EmotionIconData | null;
   todayDiary: EmotionDiaryDTO | null;
   selectedMonth: string;
   isDiaryExist: AsyncOperationState<boolean>;
@@ -116,7 +115,7 @@ const diarySlice = createSlice({
       state.selectedDiary = action.payload;
     },
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     addAsyncThunkCase<number, DiaryState>({
       builder,
       thunk: searchDiaryCountThunk,

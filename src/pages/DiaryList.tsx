@@ -14,10 +14,12 @@ import { useAppDispatch, useAppSelector, useRealm } from '@/shared/hooks';
 import { isEmpty, isNotEmpty } from '@/shared/lib';
 import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
 
+import colors from '../shared/styles/colors';
+
 const DiaryList = () => {
   const { openRealm, closeRealm } = useRealm();
-  const selectedMonth = useAppSelector((state) => state.diarySlice.selectedMonth);
-  const searchByMonth = useAppSelector((state) => state.diarySlice.searchByMonth);
+  const selectedMonth = useAppSelector(state => state.diarySlice.selectedMonth);
+  const searchByMonth = useAppSelector(state => state.diarySlice.searchByMonth);
   const currentMonth = dayjs();
   const dispatch = useAppDispatch();
 
@@ -50,6 +52,7 @@ const DiaryList = () => {
   return (
     <>
       <NavigationBar
+        backgroundColor={colors.gray[100]}
         showBackButton={false}
         centerComponent={
           <DiaryMonth
@@ -72,7 +75,7 @@ const DiaryList = () => {
       />
       {isNotEmpty(searchByMonth?.data) && (
         <ScrollView
-          className="bg-white"
+          className="bg-gray-100"
           contentContainerStyle={styles.scrollViewContent}
         >
           <DiaryCardList />
