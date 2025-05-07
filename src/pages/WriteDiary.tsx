@@ -18,11 +18,13 @@ import {
 import DiaryTextBox, { DiaryTextBoxHandle } from '@/features/diary/ui/DiaryTextBox';
 import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '@/shared/hooks';
 import { isNotEmpty, navigate } from '@/shared/lib';
-import HeaderText from '@/shared/ui/elements/HeaderText';
 import KeyboardAccessory from '@/shared/ui/elements/KeyboardAccessory';
 import { NaviActionButtonProps } from '@/shared/ui/elements/NaviActionButton';
 import NaviDismiss from '@/widgets/navigation-bar/ui/NaviDismiss';
 import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
+
+import { ICON_DATA } from '../shared/constants';
+import { H2 } from '../shared/ui/typography/H2';
 
 const WriteDiary = () => {
   const textBoxRef = useRef<DiaryTextBoxHandle | null>(null);
@@ -47,6 +49,7 @@ const WriteDiary = () => {
       setKeyboardHeight(e.endCoordinates.height);
       sub.remove();
     });
+    console.log('>>>>>>>>>>>>>>>>>>>>', selectedDiary);
   }, []);
 
   useEffect(() => {
@@ -113,10 +116,11 @@ const WriteDiary = () => {
             enableResetScrollToCoords={false}
             keyboardShouldPersistTaps="handled"
           >
-            <HeaderText style={{ marginTop: getScaleSize(63) }}>
-              어떤 일이 있었는지 말해줄래?
-            </HeaderText>
-            <Image style={styles.emotionImage} />
+            <H2 weight="semibold">왜 이 감정을 느꼈나요?</H2>
+            <Image
+              style={styles.emotionImage}
+              source={ICON_DATA.find(el => el.id === todayDiary?.iconId)?.iconBig}
+            />
             <DiaryTextBox
               ref={textBoxRef}
               initialText={isNotEmpty(selectedDiary) ? selectedDiary.description : ''}
@@ -161,13 +165,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingBottom: getScaleSize(32),
     paddingHorizontal: getScaleSize(24),
-    paddingTop: getScaleSize(63),
+    paddingTop: getScaleSize(28),
   },
   emotionImage: {
-    height: getScaleSize(137),
+    height: getScaleSize(190),
     marginBottom: getScaleSize(32),
-    marginTop: getScaleSize(26),
-    width: getScaleSize(137),
+    marginTop: getScaleSize(9),
+    width: getScaleSize(190),
   },
   scroll: {
     flex: 1,
