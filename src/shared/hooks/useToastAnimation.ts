@@ -1,6 +1,11 @@
 // hooks/useToastAnimation.ts
-import { useEffect, useRef, useState } from 'react';
-import { Animated } from 'react-native';
+import { useEffect, useState } from 'react';
+import {
+  runOnJS,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
 export function useToastAnimation(
   visible: boolean,
@@ -8,36 +13,37 @@ export function useToastAnimation(
   holdTime = 1500,
   onFinish?: () => void
 ) {
-  const translateY = useRef(new Animated.Value(-40)).current;
-  const opacity = useRef(new Animated.Value(0)).current;
+  const translateY = useSharedValue(-40);
+  const opacity = useSharedValue(0);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    let timer: number;
+    let timeout: number;
     if (visible) {
       setIsMounted(true);
-      Animated.parallel([
-        Animated.timing(translateY, { toValue: 0, duration, useNativeDriver: true }),
-        Animated.timing(opacity, { toValue: 1, duration, useNativeDriver: true }),
-      ]).start();
+      translateY.value = withTiming(0, { duration });
+      opacity.value = withTiming(1, { duration });
 
-      timer = setTimeout(() => {
-        Animated.parallel([
-          Animated.timing(translateY, { toValue: -40, duration, useNativeDriver: true }),
-          Animated.timing(opacity, { toValue: 0, duration, useNativeDriver: true }),
-        ]).start(({ finished }) => {
+      timeout = setTimeout(() => {
+        translateY.value = withTiming(-40, { duration }, finished => {
           if (finished) {
-            setIsMounted(false);
-            onFinish?.();
+            runOnJS(setIsMounted)(false);
+            if (onFinish) runOnJS(onFinish)();
           }
         });
+        opacity.value = withTiming(0, { duration });
       }, holdTime);
     }
-    return () => clearTimeout(timer);
+    return () => clearTimeout(timeout);
   }, [visible, duration, holdTime, onFinish, translateY, opacity]);
 
+  const style = useAnimatedStyle(() => ({
+    transform: [{ translateY: translateY.value }],
+    opacity: opacity.value,
+  }));
+
   return {
-    style: { transform: [{ translateY }], opacity },
+    style,
     isMounted,
   };
 }

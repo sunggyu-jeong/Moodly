@@ -40,7 +40,7 @@ const RootStack = () => {
         <Stack.Screen
           name="DiaryStack"
           component={DiaryStack}
-          options={{ presentation: 'fullScreenModal' }}
+          options={{ presentation: 'fullScreenModal', animation: 'slide_from_bottom' }}
         />
         <Stack.Screen
           name="DiaryDetail"
