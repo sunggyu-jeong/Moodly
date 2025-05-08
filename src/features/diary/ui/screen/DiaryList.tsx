@@ -3,18 +3,19 @@ import dayjs from 'dayjs';
 import { useCallback } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 
+import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar';
+
 import {
   searchDiaryByMonthThunk,
   setSelectedMonth,
 } from '@/features/diary/model/diary.slice';
-import DiaryCardList from '@/features/diary/ui/DiaryCardList';
-import DiaryEmptyMent from '@/features/diary/ui/DiaryEmptyMent';
-import DiaryMonth from '@/features/diary/ui/DiaryMonth';
 import { useAppDispatch, useAppSelector, useRealm } from '@/shared/hooks';
 import { isEmpty, isNotEmpty } from '@/shared/lib';
-import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
+import colors from '@/shared/styles/colors';
 
-import colors from '../shared/styles/colors';
+import DiaryCardList from '../components/DiaryCardList';
+import DiaryEmptyMent from '../components/DiaryEmptyMent';
+import DiaryMonth from '../components/DiaryMonth';
 
 const DiaryList = () => {
   const { openRealm, closeRealm } = useRealm();

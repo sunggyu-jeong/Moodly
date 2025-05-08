@@ -15,16 +15,16 @@ import {
   modifyDiaryThunk,
   setSelectedDiary,
 } from '@/features/diary/model/diary.slice';
-import DiaryTextBox, { DiaryTextBoxHandle } from '@/features/diary/ui/DiaryTextBox';
+import { ICON_DATA } from '@/shared/constants';
 import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '@/shared/hooks';
 import { isNotEmpty, navigate } from '@/shared/lib';
 import KeyboardAccessory from '@/shared/ui/elements/KeyboardAccessory';
 import { NaviActionButtonProps } from '@/shared/ui/elements/NaviActionButton';
+import { H2 } from '@/shared/ui/typography/H2';
 import NaviDismiss from '@/widgets/navigation-bar/ui/NaviDismiss';
 import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
 
-import { ICON_DATA } from '../shared/constants';
-import { H2 } from '../shared/ui/typography/H2';
+import DiaryTextBox, { DiaryTextBoxHandle } from '../components/DiaryTextBox';
 
 const WriteDiary = () => {
   const textBoxRef = useRef<DiaryTextBoxHandle | null>(null);

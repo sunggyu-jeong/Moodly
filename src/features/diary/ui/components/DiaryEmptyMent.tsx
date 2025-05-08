@@ -1,8 +1,8 @@
 import { Image, StyleSheet, View } from 'react-native';
 
-import { MAIN_ICONS } from '../../../shared/assets/images/main';
-import colors from '../../../shared/styles/colors';
-import { Body1 } from '../../../shared/ui/typography/Body1';
+import { MAIN_ICONS } from '@/shared/assets/images/main';
+import colors from '@/shared/styles/colors';
+import { Body1 } from '@/shared/ui/typography/Body1';
 
 const DiaryEmptyMent = () => {
   return (

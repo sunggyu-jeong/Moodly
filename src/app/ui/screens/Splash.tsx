@@ -1,9 +1,8 @@
 import { useEffect } from 'react';
 import { Image, View } from 'react-native';
 
+import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { resetTo } from '@/shared/lib';
-
-import { MAIN_ICONS } from '../shared/assets/images/main';
 
 const Splash = () => {
   useEffect(() => {

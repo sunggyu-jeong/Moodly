@@ -34,7 +34,7 @@ export function selectDiaryByMonth(realm: Realm, recordDate: Date): EmotionDiary
   const raw = realm
     .objects<EmotionDiary>('EmotionDiary')
     .filtered('record_date >= $0 AND record_date < $1', startDate, endDate)
-    .map((el) => EmotionDiaryToDTO(el));
+    .map(el => EmotionDiaryToDTO(el));
 
   return [...raw];
 }

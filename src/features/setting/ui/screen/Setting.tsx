@@ -1,13 +1,13 @@
 import { Image, StyleSheet, View } from 'react-native';
 
-import SettingList from '@/features/setting/ui/SettingList';
 import { COMMON_ICONS } from '@/shared/assets/images/common';
 import { getScaleSize } from '@/shared/hooks';
 import { gray } from '@/shared/styles/colors';
 import NaviTitleDisplay from '@/shared/ui/elements/NaviTitle';
+import { Label } from '@/shared/ui/typography/Label';
 import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
 
-import { Label } from '../shared/ui/typography/Label';
+import SettingList from '../components/SettingList';
 
 const Setting = () => {
   enum SETTING_EVENT_TYPE {

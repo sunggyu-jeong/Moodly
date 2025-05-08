@@ -2,9 +2,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import DiaryList from '@/pages/DiaryList';
-import Home from '@/pages/Home';
-import Setting from '@/pages/Setting';
+import DiaryList from '@/features/diary/ui/screen/DiaryList';
+import Home from '@/features/home/ui/screen/Home';
+import Setting from '@/features/setting/ui/screen/Setting';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { getScaleSize } from '@/shared/hooks';
 import TabBarIcon from '@/shared/ui/elements/TabBarIcon';

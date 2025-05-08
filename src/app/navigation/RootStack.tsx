@@ -1,8 +1,9 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import DiaryDetail from '@/pages/DiaryDetail';
-import Splash from '@/pages/Splash';
+import DiaryDetail from '@/features/diary/ui/screen/DiaryDetail';
 import OverlayManager from '@/processes/overlay/ui/OverlayManager';
+
+import Splash from '../ui/screens/Splash';
 
 import DiaryStack, { DiaryStackParamList } from './DiaryStack';
 import TabNavigation from './TabNavigation';

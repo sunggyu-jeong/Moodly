@@ -1,9 +1,9 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import DiaryDetail from '@/pages/DiaryDetail';
-import SelectEmotion from '@/pages/SelectEmotion';
-import WriteDiary from '@/pages/WriteDiary';
-import WriteDiaryComplete from '@/pages/WriteDiaryComplete';
+import DiaryDetail from '@/features/diary/ui/screen/DiaryDetail';
+import SelectEmotion from '@/features/diary/ui/screen/SelectEmotion';
+import WriteDiary from '@/features/diary/ui/screen/WriteDiary';
+import WriteDiaryComplete from '@/features/diary/ui/screen/WriteDiaryComplete';
 import OverlayManager from '@/processes/overlay/ui/OverlayManager';
 
 export type DiaryStackParamList = {
