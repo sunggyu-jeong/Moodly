@@ -1,6 +1,7 @@
 export const common = {
   red: '#FF0000',
   white: '#FFFFFF',
+  transparent: 'transparent',
   black: '#000000',
 } as const;
 

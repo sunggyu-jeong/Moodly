@@ -1,7 +1,10 @@
+// src/screens/WriteDiary.tsx
 import { useCallback, useMemo, useRef } from 'react';
 import {
   Image,
   Keyboard,
+  KeyboardAvoidingView,
+  Platform,
   ScrollView,
   StyleSheet,
   TouchableWithoutFeedback,
@@ -24,59 +27,61 @@ import { H2 } from '@/shared/ui/typography/H2';
 import NaviDismiss from '@/widgets/navigation-bar/ui/NaviDismiss';
 import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
 
+import { useCursorAwareScroll } from '../../hooks/useCursorAwareScroll';
 import { useKeyboardAccessoryAnimation } from '../../hooks/useKeyboardAccessoryAnimation';
 import DiaryTextBox, { DiaryTextBoxHandle } from '../components/DiaryTextBox';
 
 const WriteDiary = () => {
-  const textBoxRef = useRef<DiaryTextBoxHandle | null>(null);
-  const todayDiary = useAppSelector(state => state.diarySlice.todayDiary);
   const dispatch = useAppDispatch();
-  const { openRealm, closeRealm } = useRealm();
+  const todayDiary = useAppSelector(state => state.diarySlice.todayDiary);
   const selectedDiary = useAppSelector(state => state.diarySlice.selectedDiary);
+  const { openRealm, closeRealm } = useRealm();
   const actionButtons = useMemo<NaviActionButtonProps[]>(
     () => [{ item: <NaviDismiss />, disabled: false }],
     []
   );
   const accessoryAnimatedStyle = useKeyboardAccessoryAnimation();
+  const {
+    scrollRef,
+    onFocus: handleInputFocus,
+    onSelectionChange,
+    onContentSizeChange,
+  } = useCursorAwareScroll({
+    accessoryHeight: getScaleSize(40),
+    multiplier: 1.19,
+    scrollConfig: { duration: 200 },
+  });
+  const textBoxRef = useRef<DiaryTextBoxHandle | null>(null);
 
   const handleSave = useCallback(async () => {
     const realm = await openRealm();
     const text = textBoxRef.current?.getText();
-
-    // 텍스트 및 Realm 체크
     if (!isNotEmpty(text) || !isNotEmpty(realm)) return;
 
     const diary = { ...todayDiary, description: text };
-
-    // 수정 또는 추가 Thunk 결정
     const thunk = isNotEmpty(selectedDiary)
-      ? modifyDiaryThunk({
-          realm,
-          emotionId: selectedDiary?.emotionId ?? -1,
-          data: diary,
-        })
+      ? modifyDiaryThunk({ realm, emotionId: selectedDiary.emotionId ?? -1, data: diary })
       : addDiaryThunk({ realm, data: diary });
 
-    // 실행 및 결과 처리
     const result = await dispatch(thunk);
-    const emotionId = result.payload as number | undefined;
-    diary.emotionId = emotionId;
-
+    diary.emotionId = result.payload as number;
     await closeRealm();
     dispatch(setSelectedDiary(diary));
     navigate('DiaryStack', { screen: 'Complete' });
-  }, [openRealm, closeRealm, dispatch, textBoxRef, todayDiary, selectedDiary]);
+  }, [openRealm, closeRealm, dispatch, todayDiary, selectedDiary]);
 
   return (
     <>
       <NavigationBar actionButtons={actionButtons} />
-      <View style={styles.container}>
-        <TouchableWithoutFeedback
-          onPress={() => {
-            Keyboard.dismiss();
-          }}
-        >
+      <KeyboardAvoidingView
+        style={styles.keyboardAvoiding}
+        className="bg-transparent"
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        keyboardVerticalOffset={getScaleSize(40)}
+      >
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           <ScrollView
+            ref={scrollRef}
             style={styles.scroll}
             contentContainerStyle={styles.contentContainer}
             keyboardShouldPersistTaps="handled"
@@ -86,21 +91,23 @@ const WriteDiary = () => {
               style={styles.emotionImage}
               source={ICON_DATA.find(el => el.id === todayDiary?.iconId)?.iconBig}
             />
+
             <DiaryTextBox
               ref={textBoxRef}
               initialText={isNotEmpty(selectedDiary) ? selectedDiary.description : ''}
-              onFocus={e => {
-                // Removed scrollRef usage
-              }}
+              onFocus={handleInputFocus(textBoxRef)}
+              onSelectionChange={onSelectionChange}
+              onContentSizeChange={onContentSizeChange}
             />
 
             <View className="flex-1" />
           </ScrollView>
         </TouchableWithoutFeedback>
+
         <Animated.View style={[styles.accessory, accessoryAnimatedStyle]}>
           <KeyboardAccessory onPress={handleSave} />
         </Animated.View>
-      </View>
+      </KeyboardAvoidingView>
     </>
   );
 };
@@ -111,14 +118,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
   },
-  container: {
-    backgroundColor: colors.common.white,
-    flex: 1,
-  },
   contentContainer: {
     alignItems: 'center',
     flexGrow: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     paddingBottom: getScaleSize(32),
     paddingHorizontal: getScaleSize(24),
     paddingTop: getScaleSize(28),
@@ -129,7 +132,11 @@ const styles = StyleSheet.create({
     marginTop: getScaleSize(9),
     width: getScaleSize(190),
   },
+  keyboardAvoiding: {
+    flex: 1,
+  },
   scroll: {
+    backgroundColor: colors.common.white,
     flex: 1,
   },
 });
