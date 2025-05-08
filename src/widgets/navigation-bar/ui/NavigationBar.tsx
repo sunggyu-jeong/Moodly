@@ -1,3 +1,4 @@
+import React from 'react';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -70,4 +71,4 @@ const NavigationBar = ({
   );
 };
 
-export default NavigationBar;
+export default React.memo(NavigationBar);

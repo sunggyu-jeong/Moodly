@@ -1,14 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import {
-  Animated,
   Image,
   Keyboard,
-  KeyboardAvoidingView,
+  ScrollView,
   StyleSheet,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import Animated from 'react-native-reanimated';
 
 import {
   addDiaryThunk,
@@ -18,12 +17,14 @@ import {
 import { ICON_DATA } from '@/shared/constants';
 import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '@/shared/hooks';
 import { isNotEmpty, navigate } from '@/shared/lib';
+import colors from '@/shared/styles/colors';
 import KeyboardAccessory from '@/shared/ui/elements/KeyboardAccessory';
 import { NaviActionButtonProps } from '@/shared/ui/elements/NaviActionButton';
 import { H2 } from '@/shared/ui/typography/H2';
 import NaviDismiss from '@/widgets/navigation-bar/ui/NaviDismiss';
 import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
 
+import { useKeyboardAccessoryAnimation } from '../../hooks/useKeyboardAccessoryAnimation';
 import DiaryTextBox, { DiaryTextBoxHandle } from '../components/DiaryTextBox';
 
 const WriteDiary = () => {
@@ -32,39 +33,13 @@ const WriteDiary = () => {
   const dispatch = useAppDispatch();
   const { openRealm, closeRealm } = useRealm();
   const selectedDiary = useAppSelector(state => state.diarySlice.selectedDiary);
-  const [isKeyboardVisible, setIsKeyboardVisible] = useState<boolean | null>(null);
-  const [keyboardHeight, setKeyboardHeight] = useState(450);
-  const ACCESSORY_HEIGHT = getScaleSize(40);
-  const accessoryPosition = useRef(new Animated.Value(-ACCESSORY_HEIGHT)).current;
-  const scrollRef = useRef<KeyboardAwareScrollView>(null);
-  const actionButtons: NaviActionButtonProps[] = [
-    {
-      item: <NaviDismiss />,
-      disabled: false,
-    },
-  ];
+  const actionButtons = useMemo<NaviActionButtonProps[]>(
+    () => [{ item: <NaviDismiss />, disabled: false }],
+    []
+  );
+  const accessoryAnimatedStyle = useKeyboardAccessoryAnimation();
 
-  useEffect(() => {
-    const sub = Keyboard.addListener('keyboardWillShow', e => {
-      setKeyboardHeight(e.endCoordinates.height);
-      sub.remove();
-    });
-    console.log('>>>>>>>>>>>>>>>>>>>>', selectedDiary);
-  }, []);
-
-  useEffect(() => {
-    Animated.timing(accessoryPosition, {
-      toValue: isKeyboardVisible ? keyboardHeight : 0,
-      duration: 250,
-      useNativeDriver: false,
-    }).start(({ finished }) => {
-      if (finished && isKeyboardVisible === false) {
-        setIsKeyboardVisible(null);
-      }
-    });
-  }, [accessoryPosition, isKeyboardVisible, keyboardHeight]);
-
-  const handleSave = async () => {
+  const handleSave = useCallback(async () => {
     const realm = await openRealm();
     const text = textBoxRef.current?.getText();
 
@@ -90,30 +65,20 @@ const WriteDiary = () => {
     await closeRealm();
     dispatch(setSelectedDiary(diary));
     navigate('DiaryStack', { screen: 'Complete' });
-  };
+  }, [openRealm, closeRealm, dispatch, textBoxRef, todayDiary, selectedDiary]);
 
   return (
     <>
       <NavigationBar actionButtons={actionButtons} />
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior="padding"
-        keyboardVerticalOffset={ACCESSORY_HEIGHT}
-      >
+      <View style={styles.container}>
         <TouchableWithoutFeedback
           onPress={() => {
             Keyboard.dismiss();
-            setIsKeyboardVisible(false);
           }}
         >
-          <KeyboardAwareScrollView
-            ref={scrollRef}
+          <ScrollView
             style={styles.scroll}
-            contentContainerStyle={[styles.contentContainer]}
-            enableOnAndroid={true}
-            extraScrollHeight={ACCESSORY_HEIGHT}
-            keyboardOpeningTime={150}
-            enableResetScrollToCoords={false}
+            contentContainerStyle={styles.contentContainer}
             keyboardShouldPersistTaps="handled"
           >
             <H2 weight="semibold">왜 이 감정을 느꼈나요?</H2>
@@ -125,29 +90,20 @@ const WriteDiary = () => {
               ref={textBoxRef}
               initialText={isNotEmpty(selectedDiary) ? selectedDiary.description : ''}
               onFocus={e => {
-                setIsKeyboardVisible(true);
-                scrollRef.current?.scrollToFocusedInput(e.target, ACCESSORY_HEIGHT / 4);
-              }}
-              onBlur={() => setIsKeyboardVisible(false)}
-              onContentSizeChange={e => {
-                scrollRef.current?.scrollToFocusedInput(e.target, ACCESSORY_HEIGHT / 4);
+                // Removed scrollRef usage
               }}
             />
 
             <View className="flex-1" />
-          </KeyboardAwareScrollView>
+          </ScrollView>
         </TouchableWithoutFeedback>
-        {isNotEmpty(isKeyboardVisible) && (
-          <Animated.View style={[styles.accessory, { bottom: accessoryPosition }]}>
-            <KeyboardAccessory onPress={handleSave} />
-          </Animated.View>
-        )}
-      </KeyboardAvoidingView>
+        <Animated.View style={[styles.accessory, accessoryAnimatedStyle]}>
+          <KeyboardAccessory onPress={handleSave} />
+        </Animated.View>
+      </View>
     </>
   );
 };
-
-const BACKGROUND_COLOR = '#FFFFFF';
 
 const styles = StyleSheet.create({
   accessory: {
@@ -156,7 +112,7 @@ const styles = StyleSheet.create({
     right: 0,
   },
   container: {
-    backgroundColor: BACKGROUND_COLOR,
+    backgroundColor: colors.common.white,
     flex: 1,
   },
   contentContainer: {
