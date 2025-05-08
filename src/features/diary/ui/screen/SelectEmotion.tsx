@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 
 import { EmotionDiaryDTO } from '@/entities/diary';
 import { setSelectedIcon, setTodayDiary } from '@/features/diary/model/diary.slice';
@@ -50,7 +50,7 @@ const SelectEmotion = () => {
         showBackButton={false}
         actionButtons={actionButtons}
       />
-      <View className="bg-common-white items-center flex-1">
+      <SafeAreaView className="bg-common-white items-center flex-1 justify-between">
         <H2
           weight="semibold"
           style={{ marginTop: getScaleSize(28) }}
@@ -58,16 +58,15 @@ const SelectEmotion = () => {
           오늘 느낀 감정을 선택해주세요
         </H2>
         <SelectedEmotion />
-        <View className="flex-1" />
         <EmotionList emotionList={ICON_DATA} />
 
         <View
           className="w-full px-5"
-          style={{ marginBottom: getScaleSize(88) }}
+          style={{ marginBottom: getScaleSize(54) }}
         >
           <ActionButton onPress={handleSelectEmotion}>선택 완료</ActionButton>
         </View>
-      </View>
+      </SafeAreaView>
     </>
   );
 };

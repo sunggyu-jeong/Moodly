@@ -1,6 +1,8 @@
+/* eslint-disable */
 import { NavigationContainer } from '@react-navigation/native';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
+import { Profiler, ProfilerOnRenderCallback } from 'react';
 import 'react-native-get-random-values';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
@@ -16,14 +18,32 @@ dayjs.locale('ko');
 
 enableScreens();
 
+export const onRenderCallback: ProfilerOnRenderCallback = (
+  id: string,
+  phase: 'mount' | 'update' | 'nested-update',
+  actualDuration: number,
+  baseDuration: number,
+  startTime: number,
+  commitTime: number
+) => {
+  console.log(
+    `onRenderCallback: ${id}, phase: ${phase}, actualDuration: ${actualDuration}, baseDuration: ${baseDuration}, startTime: ${startTime}, commitTime: ${commitTime}`
+  );
+};
+
 export default function App() {
   return (
-    <Provider store={store}>
-      <SafeAreaProvider>
-        <NavigationContainer ref={navigationRef}>
-          <RootStack />
-        </NavigationContainer>
-      </SafeAreaProvider>
-    </Provider>
+    <Profiler
+      id="AppRoot"
+      onRender={onRenderCallback}
+    >
+      <Provider store={store}>
+        <SafeAreaProvider>
+          <NavigationContainer ref={navigationRef}>
+            <RootStack />
+          </NavigationContainer>
+        </SafeAreaProvider>
+      </Provider>
+    </Profiler>
   );
 }
