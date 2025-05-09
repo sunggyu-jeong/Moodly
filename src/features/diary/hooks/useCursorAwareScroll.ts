@@ -23,6 +23,7 @@ interface Measurable {
       pageY: number
     ) => void
   ) => void;
+  getText?: () => string;
 }
 
 interface UseCursorAwareScrollOptions {
@@ -82,9 +83,21 @@ export function useCursorAwareScroll({
     if (!input || kbHeight === 0) return;
 
     input.measure((_x, _y, _w, h, _px, py) => {
+      const text = input.getText?.() ?? '';
+      const cursorIndex = selectionRef.current.start;
+      const textLength = text.length || 1; // 0으로 나누는 걸 방지
+
+      // 1) 인덱스 비율 계산
+      const ratio = cursorIndex / textLength;
+
+      // 2) 상대 Y 위치 계산
+      const relativeCursorY = ratio * contentHeightRef.current;
+
+      // 3) 화면 절대 Y 좌표
+      const absoluteCursorY = py + relativeCursorY;
+
+      console.log('>>>> 게산식', ratio, relativeCursorY, absoluteCursorY);
       const windowH = Dimensions.get('window').height;
-      // '커서 끝' 위치를 좀 더 정확히 가져오려면
-      // multiline일 땐 contentHeightRef.current와 selection 위치 조합 가능
       const targetY =
         py - (windowH - kbHeight - accessoryHeight) + (scrollConfig.duration ? 0 : 8);
 
@@ -104,7 +117,6 @@ export function useCursorAwareScroll({
   const onSelectionChange = (
     e: NativeSyntheticEvent<TextInputSelectionChangeEventData>
   ) => {
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>', e.nativeEvent.selection);
     selectionRef.current = e.nativeEvent.selection;
   };
 
@@ -112,7 +124,6 @@ export function useCursorAwareScroll({
   const onContentSizeChange = (
     e: NativeSyntheticEvent<TextInputContentSizeChangeEventData>
   ) => {
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>', e.nativeEvent.contentSize.height);
     contentHeightRef.current = e.nativeEvent.contentSize.height;
   };
 

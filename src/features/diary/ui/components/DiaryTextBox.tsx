@@ -9,7 +9,8 @@ import {
   View,
 } from 'react-native';
 
-import { getScaleSize } from '@/shared/hooks';
+import { getScaleSize, useAppSelector } from '@/shared/hooks';
+import { isNotEmpty } from '@/shared/lib';
 
 export interface DiaryTextBoxHandle {
   getText: () => string;
@@ -27,7 +28,6 @@ export interface DiaryTextBoxHandle {
 }
 
 interface DiaryTextBoxProps {
-  initialText?: string;
   onFocus?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
   onBlur?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
   onContentSizeChange?: (
@@ -40,16 +40,14 @@ interface DiaryTextBoxProps {
 }
 
 const DiaryTextBox = forwardRef<DiaryTextBoxHandle, DiaryTextBoxProps>(
-  (
-    { initialText = '', onFocus, onBlur, onContentSizeChange, onSelectionChange },
-    ref
-  ) => {
-    const [text, setText] = useState(initialText);
+  ({ onFocus, onBlur, onContentSizeChange, onSelectionChange }, ref) => {
+    const [text, setText] = useState('');
+    const selectedDiary = useAppSelector(state => state.diarySlice.selectedDiary);
     const inputRef = useRef<TextInput>(null);
 
     useEffect(() => {
-      setText(initialText);
-    }, [initialText]);
+      setText(isNotEmpty(selectedDiary) ? (selectedDiary?.description ?? '') : '');
+    }, [selectedDiary]);
 
     useImperativeHandle(ref, () => ({
       getText: () => text,
