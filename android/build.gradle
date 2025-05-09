@@ -18,4 +18,22 @@ buildscript {
     }
 }
 
+android {
+    signingConfigs {
+        release {
+            storeFile file("keystores/moodly.jks")
+            storePassword project.properties["MOODLY_STORE_PASSWORD"]
+            keyAlias "myKeyAlias"
+            keyPassword project.properties["MOODLY_STORE_PASSWORD"]
+        }
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+    }
+}
+
 apply plugin: "com.facebook.react.rootproject"

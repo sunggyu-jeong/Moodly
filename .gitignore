@@ -183,6 +183,7 @@ captures/
 .cxx/
 *.apk
 output.json
+/android/gradle.properties
 
 # IntelliJ
 *.iml
