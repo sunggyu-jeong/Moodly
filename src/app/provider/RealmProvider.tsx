@@ -22,7 +22,7 @@ export const RealmProvider = ({ children }: RealmProviderProps) => {
     } catch (error) {
       console.error('Realm을 여는 도중 오류가 발생했습니다.', error);
     }
-  }, []);
+  }, [realm?.path]);
 
   const closeRealm = useCallback((): void => {
     if (isNotEmpty(realmRef.current) && !realmRef.current.isClosed) {

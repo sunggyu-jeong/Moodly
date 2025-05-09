@@ -11,6 +11,7 @@ import { Provider } from 'react-redux';
 import { navigationRef } from '@/shared/lib';
 import '../../global.css';
 
+import { KeyboardProvider } from 'react-native-keyboard-controller';
 import RootStack from './navigation/RootStack';
 import store from './store';
 
@@ -18,6 +19,7 @@ dayjs.locale('ko');
 
 enableScreens();
 
+//TEST: - 랜더링 테스트 로그 코드
 export const onRenderCallback: ProfilerOnRenderCallback = (
   id: string,
   phase: 'mount' | 'update' | 'nested-update',
@@ -38,11 +40,13 @@ export default function App() {
       onRender={onRenderCallback}
     >
       <Provider store={store}>
-        <SafeAreaProvider>
-          <NavigationContainer ref={navigationRef}>
-            <RootStack />
-          </NavigationContainer>
-        </SafeAreaProvider>
+        <KeyboardProvider>
+          <SafeAreaProvider>
+            <NavigationContainer ref={navigationRef}>
+              <RootStack />
+            </NavigationContainer>
+          </SafeAreaProvider>
+        </KeyboardProvider>
       </Provider>
     </Profiler>
   );

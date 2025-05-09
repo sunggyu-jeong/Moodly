@@ -23,7 +23,8 @@ const TabNavigation = () => {
           tabBarStyle: {
             height: getScaleSize(49) + insets.bottom,
             paddingBottom: 0,
-            backgroundColor: 'white',
+            backgroundColor: '#ffffff',
+            elevation: 0,
           },
           tabBarItemStyle: {
             marginTop: 4,
