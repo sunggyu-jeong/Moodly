@@ -6,6 +6,7 @@ import {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { getScaleSize } from '../../../shared/hooks';
 
@@ -14,6 +15,7 @@ export function useKeyboardAccessoryAnimation(
   height: number = getScaleSize(40)
 ) {
   const position = useSharedValue(-height);
+  const insets = useSafeAreaInsets();
 
   const mapKeyboardEasing = (type: string) => {
     switch (type) {
@@ -35,7 +37,10 @@ export function useKeyboardAccessoryAnimation(
     const showSub = Keyboard.addListener(
       showEvent,
       ({ duration = 250, easing: easingType, endCoordinates }) => {
-        position.value = withTiming(endCoordinates.height, {
+        const rawHeight = endCoordinates.height;
+        const adjustedHeight =
+          Platform.OS === 'android' ? rawHeight + insets.bottom : rawHeight;
+        position.value = withTiming(adjustedHeight, {
           duration: duration * multiplier,
           easing: mapKeyboardEasing(easingType),
         });
