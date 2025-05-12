@@ -3,9 +3,12 @@ import {
   CommonActions,
   createNavigationContainerRef,
   StackActions,
+  TabActions,
 } from '@react-navigation/native';
 
 import { RootStackParamList } from '@/app/navigation/RootStack';
+
+import { BottomTabParamList } from '../../app/navigation/TabNavigation';
 
 export const navigationRef = createNavigationContainerRef<RootStackParamList>();
 
@@ -104,5 +107,11 @@ export function navigateFlow(flow: NavigationFlow) {
     }
     default:
       break;
+  }
+}
+
+export function jumpToTab<RouteName extends keyof BottomTabParamList>(screen: RouteName) {
+  if (navigationRef.isReady()) {
+    navigationRef.dispatch(TabActions.jumpTo(screen as any));
   }
 }

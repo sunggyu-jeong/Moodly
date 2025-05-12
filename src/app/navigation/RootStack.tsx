@@ -11,6 +11,7 @@ import TabNavigation from './TabNavigation';
 export type RootStackParamList = {
   Splash: undefined;
   Main: undefined;
+  DiaryList: undefined;
   DiaryStack:
     | {
         screen?: keyof DiaryStackParamList;

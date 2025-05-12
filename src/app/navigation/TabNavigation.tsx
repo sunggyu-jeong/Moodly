@@ -9,7 +9,13 @@ import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { getScaleSize } from '@/shared/hooks';
 import TabBarIcon from '@/shared/ui/elements/TabBarIcon';
 
-const Tab = createBottomTabNavigator();
+export type BottomTabParamList = {
+  홈: undefined;
+  일기목록: undefined;
+  설정: undefined;
+};
+
+const Tab = createBottomTabNavigator<BottomTabParamList>();
 
 const TabNavigation = () => {
   const insets = useSafeAreaInsets();
@@ -36,9 +42,7 @@ const TabNavigation = () => {
           component={Home}
           options={{
             tabBarIcon: ({ focused }) => (
-              <TabBarIcon
-                source={focused ? MAIN_ICONS.homeActive : MAIN_ICONS.homeInactive}
-              />
+              <TabBarIcon source={focused ? MAIN_ICONS.homeActive : MAIN_ICONS.homeInactive} />
             ),
           }}
         />
@@ -47,9 +51,7 @@ const TabNavigation = () => {
           component={DiaryList}
           options={{
             tabBarIcon: ({ focused }) => (
-              <TabBarIcon
-                source={focused ? MAIN_ICONS.listActive : MAIN_ICONS.listInactive}
-              />
+              <TabBarIcon source={focused ? MAIN_ICONS.listActive : MAIN_ICONS.listInactive} />
             ),
           }}
         />

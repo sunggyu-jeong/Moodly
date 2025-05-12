@@ -44,9 +44,7 @@ const leftComponents = [{ item: <NaviDismiss />, disabled: false }];
 
 const DiaryDetail = () => {
   const selectedDiary = useAppSelector(state => state.diarySlice.selectedDiary);
-  const overlayEventHandler = useAppSelector(
-    state => state.overlaySlice.overlayEventHandler
-  );
+  const overlayEventHandler = useAppSelector(state => state.overlaySlice.overlayEventHandler);
   const showModalPopup = useAppSelector(state => state.overlaySlice.showModalPopup);
   const dispatch = useAppDispatch();
   const route = useRoute<RouteProp<DiaryDetailRouteParams, 'params'>>();
@@ -118,14 +116,7 @@ const DiaryDetail = () => {
         })
       );
     }
-  }, [
-    openRealm,
-    selectedDiary,
-    dispatch,
-    route.params.origin,
-    closeRealm,
-    showModalPopup,
-  ]);
+  }, [openRealm, selectedDiary, dispatch, route.params.origin, closeRealm, showModalPopup]);
 
   useEffect(() => {
     if (
