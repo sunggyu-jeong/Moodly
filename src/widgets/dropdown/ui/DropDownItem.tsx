@@ -1,14 +1,13 @@
 import React, { useCallback } from 'react';
 import { ImageSourcePropType } from 'react-native';
 
-import {
-  setShowDropdownView,
-  setShowModalPopup,
-} from '@/processes/overlay/model/overlaySlice';
+import { setShowDropdownView, setShowModalPopup } from '@/processes/overlay/model/overlaySlice';
 import { MODAL_CONFIRM_ACTION_KEY } from '@/processes/overlay/ui/OverlayManager';
 import { useAppDispatch } from '@/shared/hooks';
 import { navigateFlow, NavigationFlow } from '@/shared/lib';
 import SelectableItem from '@/shared/ui/elements/SelectableItem';
+
+import { setModifyMode } from '../../../features/diary/model/diary.slice';
 
 export const DropDownEventIdentifier = {
   MODIFY_DIARY: 'MODIFY_DIARY',
@@ -31,6 +30,7 @@ const DropDownItem: React.FC<DropDownItemProps> = ({ text, source, eventIdentifi
     () =>
       ({
         [DropDownEventIdentifier.MODIFY_DIARY]: () => {
+          dispatch(setModifyMode(true));
           navigateFlow(NavigationFlow.DiaryDetailToEmotionWriteWithReturn);
         },
         [DropDownEventIdentifier.DELETE_DIARY]: () => {

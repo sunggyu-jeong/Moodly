@@ -13,7 +13,7 @@ import { BottomTabParamList } from '../../app/navigation/TabNavigation';
 export const navigationRef = createNavigationContainerRef<RootStackParamList>();
 
 export enum NavigationFlow {
-  DiaryDetailToWriteDiaryWithEmotionStack,
+  DiaryDetailToCompleteModify,
   DiaryDetailToEmotionWriteWithReturn,
 }
 
@@ -87,8 +87,8 @@ export function navigateFlow(flow: NavigationFlow) {
   switch (flow) {
     case NavigationFlow.DiaryDetailToEmotionWriteWithReturn: {
       const rootState = navigationRef.getRootState();
-      // 기존 DiaryStack 라우터가 존재 할 경우, 그 스텍을 지우고 새로 푸시한다
-      const newRoutes = [...rootState.routes].filter(el => el.name !== 'DiaryStack');
+
+      const newRoutes = [...rootState.routes];
 
       navigationRef.reset({
         index: newRoutes.length,
@@ -99,6 +99,27 @@ export function navigateFlow(flow: NavigationFlow) {
             state: {
               index: 1,
               routes: [{ name: 'SelectEmotion' }, { name: 'WriteDiary' }],
+            },
+          } as any,
+        ],
+      });
+      break;
+    }
+    case NavigationFlow.DiaryDetailToCompleteModify: {
+      if (!navigationRef.isReady()) return;
+
+      const rootState = navigationRef.getRootState();
+      const newRoutes = [...rootState.routes].filter(el => el.name !== 'DiaryStack');
+
+      navigationRef.reset({
+        index: newRoutes.length,
+        routes: [
+          ...newRoutes,
+          {
+            name: 'DiaryStack',
+            state: {
+              index: 0,
+              routes: [{ name: 'DiaryDetail', params: { origin: 'DiaryStack' } }],
             },
           } as any,
         ],

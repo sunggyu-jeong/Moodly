@@ -5,10 +5,7 @@ import { ScrollView, StyleSheet } from 'react-native';
 
 import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar';
 
-import {
-  searchDiaryByMonthThunk,
-  setSelectedMonth,
-} from '@/features/diary/model/diary.slice';
+import { searchDiaryByMonthThunk, setSelectedMonth } from '@/features/diary/model/diary.slice';
 import { useAppDispatch, useAppSelector, useRealm } from '@/shared/hooks';
 import { isEmpty, isNotEmpty } from '@/shared/lib';
 import colors from '@/shared/styles/colors';
@@ -37,9 +34,7 @@ const DiaryList = () => {
   const initialize = useCallback(async () => {
     const realm = await openRealm();
     if (isNotEmpty(realm)) {
-      await dispatch(
-        searchDiaryByMonthThunk({ realm, recordDate: new Date(selectedMonth) })
-      );
+      await dispatch(searchDiaryByMonthThunk({ realm, recordDate: new Date(selectedMonth) }));
       closeRealm();
     }
   }, [openRealm, dispatch, selectedMonth, closeRealm]);
@@ -64,9 +59,7 @@ const DiaryList = () => {
             onPressRight={() => {
               handleChangeMonth('right');
             }}
-            rightDisabled={
-              currentMonth.isSame(dayjs(selectedMonth), 'month') ? true : false
-            }
+            rightDisabled={currentMonth.isSame(dayjs(selectedMonth), 'month') ? true : false}
           />
         }
       />

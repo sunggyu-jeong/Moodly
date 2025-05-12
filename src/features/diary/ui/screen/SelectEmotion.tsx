@@ -18,6 +18,7 @@ const actionButtons = [{ item: <NaviDismiss />, disabled: false }];
 const SelectEmotion = () => {
   const dispatch = useAppDispatch();
   const selectedEmotion = useAppSelector(state => state.diarySlice.selectedIcon);
+  const isModifyMode = useAppSelector(state => state.diarySlice.isModifyMode);
   const selectedDiary = useAppSelector(state => state.diarySlice.selectedDiary);
 
   const handleSelectEmotion = () => {
@@ -30,14 +31,14 @@ const SelectEmotion = () => {
 
   useEffect(() => {
     // 수정일 때 사용
-    if (isNotEmpty(selectedDiary)) {
+    if (isModifyMode && isNotEmpty(selectedDiary)) {
       dispatch(setSelectedIcon(ICON_DATA.find(el => el.id === selectedDiary.iconId)));
       const emotion: EmotionDiaryDTO = {
         iconId: selectedDiary?.iconId,
       };
       dispatch(setTodayDiary(emotion));
     }
-  }, [selectedDiary, dispatch]);
+  }, [selectedDiary, dispatch, isModifyMode]);
 
   return (
     <>

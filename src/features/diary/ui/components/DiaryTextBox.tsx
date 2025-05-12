@@ -30,13 +30,9 @@ export interface DiaryTextBoxHandle {
 interface DiaryTextBoxProps {
   onFocus?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
   onBlur?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
-  onContentSizeChange?: (
-    e: NativeSyntheticEvent<TextInputContentSizeChangeEventData>
-  ) => void;
+  onContentSizeChange?: (e: NativeSyntheticEvent<TextInputContentSizeChangeEventData>) => void;
   /** 커서 이동 시 호출 */
-  onSelectionChange?: (
-    e: NativeSyntheticEvent<TextInputSelectionChangeEventData>
-  ) => void;
+  onSelectionChange?: (e: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => void;
 }
 
 const DiaryTextBox = forwardRef<DiaryTextBoxHandle, DiaryTextBoxProps>(

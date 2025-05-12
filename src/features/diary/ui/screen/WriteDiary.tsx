@@ -1,12 +1,6 @@
 // src/screens/WriteDiary.tsx
 import { useRef } from 'react';
-import {
-  Image,
-  Keyboard,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
+import { Image, Keyboard, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import { KeyboardStickyView, useKeyboardState } from 'react-native-keyboard-controller';
 
 import KeyboardAwareProvider from '@/app/provider/KeyboardAwareProvider';

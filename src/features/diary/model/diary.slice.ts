@@ -3,10 +3,7 @@ import dayjs from 'dayjs';
 import Realm from 'realm';
 
 import { EmotionDiaryDTO } from '@/entities/diary';
-import {
-  AsyncOperationState,
-  createInitialAsyncState,
-} from '@/shared/constants/ApiStatus';
+import { AsyncOperationState, createInitialAsyncState } from '@/shared/constants/ApiStatus';
 import { EmotionIconData, ICON_DATA } from '@/shared/constants/Icons';
 import { addAsyncThunkCase } from '@/shared/lib';
 import { createServiceThunk } from '@/shared/services/ServiceThunk';
@@ -63,12 +60,12 @@ const removeDiaryThunk = createServiceThunk<void, { realm: Realm; emotionId: num
   }
 );
 
-const searchDiaryForDayThunk = createServiceThunk<
-  boolean,
-  { realm: Realm; recordDate: Date }
->('diary/isDiaryExist', async ({ realm, recordDate }) => {
-  return hasDiaryForDay(realm, recordDate);
-});
+const searchDiaryForDayThunk = createServiceThunk<boolean, { realm: Realm; recordDate: Date }>(
+  'diary/isDiaryExist',
+  async ({ realm, recordDate }) => {
+    return hasDiaryForDay(realm, recordDate);
+  }
+);
 
 interface DiaryState {
   diaryCount: AsyncOperationState<number>;
@@ -82,6 +79,7 @@ interface DiaryState {
   todayDiary: EmotionDiaryDTO | null;
   selectedMonth: string;
   isDiaryExist: AsyncOperationState<boolean>;
+  isModifyMode: boolean;
 }
 
 const initialState: DiaryState = {
@@ -96,6 +94,7 @@ const initialState: DiaryState = {
   selectedIcon: ICON_DATA[0],
   todayDiary: null,
   selectedMonth: dayjs().toISOString(),
+  isModifyMode: false,
 };
 
 const diarySlice = createSlice({
@@ -114,14 +113,16 @@ const diarySlice = createSlice({
     setSelectedDiary: (state, action) => {
       state.selectedDiary = action.payload;
     },
+    setModifyMode: (state, action) => {
+      state.isModifyMode = action.payload;
+    },
   },
   extraReducers: builder => {
     addAsyncThunkCase<number, DiaryState>({
       builder,
       thunk: searchDiaryCountThunk,
       key: 'diaryCount',
-      defaultErrorMessage:
-        '검색어 갯수 조회 요청이 실패했습니다. 잠시 후 다시 시도해주세요',
+      defaultErrorMessage: '검색어 갯수 조회 요청이 실패했습니다. 잠시 후 다시 시도해주세요',
     });
     addAsyncThunkCase<EmotionDiaryDTO | null, DiaryState>({
       builder,
@@ -172,7 +173,7 @@ export {
   searchDiaryForDayThunk,
 };
 
-export const { setSelectedIcon, setTodayDiary, setSelectedMonth, setSelectedDiary } =
+export const { setSelectedIcon, setTodayDiary, setSelectedMonth, setSelectedDiary, setModifyMode } =
   diarySlice.actions;
 
 export default diarySlice.reducer;
