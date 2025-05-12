@@ -3,8 +3,7 @@ import { useAppDispatch, useAppSelector } from '@/shared/hooks';
 import { isNotEmpty } from '@/shared/lib';
 import DropDownAnimation from '@/widgets/dropdown/animation/DropDownAnimation';
 import PopupContainerOrga from '@/widgets/popup/ui/PopupContainer';
-
-import ToastController from '../../../widgets/toast/ui/ToastController';
+import ToastController from '@/widgets/toast/ui/ToastController';
 
 export const MODAL_CONFIRM_ACTION_KEY = {
   DELETE_DIARY: 'DELETE_DIARY',
@@ -27,9 +26,7 @@ const OverlayManager = () => {
           cancelText={showModalPopup?.cancelText ?? ''}
           confirmText={showModalPopup?.confirmText ?? ''}
           onConfirm={() => {
-            if (
-              showModalPopup?.confirmActionKey === MODAL_CONFIRM_ACTION_KEY.DELETE_DIARY
-            ) {
+            if (showModalPopup?.confirmActionKey === MODAL_CONFIRM_ACTION_KEY.DELETE_DIARY) {
               dispatch(setOverlayEventHandler(MODAL_CONFIRM_ACTION_KEY.DELETE_DIARY));
             }
           }}

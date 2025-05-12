@@ -13,9 +13,7 @@ const EmotionIcon = ({ emotion }: { emotion: EmotionIconData }) => {
 
   return (
     <EmotionSymbol
-      icon={
-        selectedEmotion?.id === emotion.id ? emotion.iconSelected : emotion.iconUnSelected
-      }
+      icon={selectedEmotion?.id === emotion.id ? emotion.iconSelected : emotion.iconUnSelected}
       onPress={handleSelectEmotion}
     />
   );

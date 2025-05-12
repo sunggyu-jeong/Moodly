@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { DropDownItemProps } from '../../../widgets/dropdown/ui/DropDownItem';
+
+import { DropDownItemProps } from '@/widgets/dropdown/ui/DropDownItem';
 
 interface DropdownViewPayload {
   visibility?: boolean | null;
@@ -54,11 +55,7 @@ const overlaySlice = createSlice({
   },
 });
 
-export const {
-  setShowModalPopup,
-  setShowDropdownView,
-  setShowToastView,
-  setOverlayEventHandler,
-} = overlaySlice.actions;
+export const { setShowModalPopup, setShowDropdownView, setShowToastView, setOverlayEventHandler } =
+  overlaySlice.actions;
 
 export default overlaySlice.reducer;

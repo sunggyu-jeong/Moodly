@@ -1,7 +1,9 @@
+import { useCallback, useMemo } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
 import { COMMON_ICONS } from '@/shared/assets/images/common';
 import { getScaleSize } from '@/shared/hooks';
+import { useOpenKakao } from '@/shared/hooks/useOpenChat';
 import { gray } from '@/shared/styles/colors';
 import NaviTitleDisplay from '@/shared/ui/elements/NaviTitle';
 import { Label } from '@/shared/ui/typography/Label';
@@ -9,42 +11,49 @@ import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
 
 import SettingList from '../components/SettingList';
 
+enum SETTING_EVENT_TYPE {
+  BACKUP = 'backup',
+  BUG_REPORT = 'bug_report',
+}
+
 const Setting = () => {
-  enum SETTING_EVENT_TYPE {
-    BACKUP = 'backup',
-    BUG_REPORT = 'bug_report',
-  }
-
-  const SETTING_LIST_ITEM = [
-    {
-      title: '백업 및 복원',
-      rightComponent: (
-        <Image
-          source={COMMON_ICONS.iconBackup}
-          style={{ tintColor: gray[400] }}
-        />
-      ),
-      onPress: () => handlePress(SETTING_EVENT_TYPE.BACKUP),
+  const { openChat } = useOpenKakao();
+  const handlePress = useCallback(
+    (identifier: SETTING_EVENT_TYPE) => {
+      if (identifier === SETTING_EVENT_TYPE.BACKUP) {
+        console.log('백업하기');
+      } else if (identifier === SETTING_EVENT_TYPE.BUG_REPORT) {
+        openChat('https://open.kakao.com/o/gqNkyO0g');
+      }
     },
-    {
-      title: '의견 보내기',
-      rightComponent: (
-        <Image
-          source={COMMON_ICONS.iconFeedback}
-          style={{ tintColor: gray[400] }}
-        />
-      ),
-      onPress: () => handlePress(SETTING_EVENT_TYPE.BUG_REPORT),
-    },
-  ];
+    [openChat]
+  );
 
-  const handlePress = (identifier: SETTING_EVENT_TYPE) => {
-    if (identifier === SETTING_EVENT_TYPE.BACKUP) {
-      console.log('백업하기');
-    } else if (identifier === SETTING_EVENT_TYPE.BUG_REPORT) {
-      console.log('버그 제보하기');
-    }
-  };
+  const SETTING_LIST_ITEM = useMemo(
+    () => [
+      {
+        title: '백업 및 복원',
+        rightComponent: (
+          <Image
+            source={COMMON_ICONS.iconBackup}
+            style={{ tintColor: gray[400] }}
+          />
+        ),
+        onPress: () => handlePress(SETTING_EVENT_TYPE.BACKUP),
+      },
+      {
+        title: '의견 보내기',
+        rightComponent: (
+          <Image
+            source={COMMON_ICONS.iconFeedback}
+            style={{ tintColor: gray[400] }}
+          />
+        ),
+        onPress: () => handlePress(SETTING_EVENT_TYPE.BUG_REPORT),
+      },
+    ],
+    [handlePress]
+  );
 
   return (
     <>

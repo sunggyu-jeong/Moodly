@@ -10,9 +10,7 @@ const ratio = screenWidth / BASE_WIDTH;
 
 // 비율에 따른 가중치 계산
 const factor =
-  ratio < 1
-    ? 1 + (1 - ratio) * (MIN_SCALE - 1)
-    : 1 + Math.min(ratio - 1, 1) * (MAX_SCALE - 1);
+  ratio < 1 ? 1 + (1 - ratio) * (MIN_SCALE - 1) : 1 + Math.min(ratio - 1, 1) * (MAX_SCALE - 1);
 
 // 최종 곱셈값
 const multiplier = 1 + (ratio - 1) * factor;
