@@ -1,13 +1,12 @@
 import React, { useCallback } from 'react';
 import { ImageSourcePropType } from 'react-native';
 
+import { setModifyMode } from '@/features/diary/model/diary.slice';
+import { MODAL_CONFIRM_ACTION_KEY } from '@/processes/key';
 import { setShowDropdownView, setShowModalPopup } from '@/processes/overlay/model/overlaySlice';
-import { MODAL_CONFIRM_ACTION_KEY } from '@/processes/overlay/ui/OverlayManager';
 import { useAppDispatch } from '@/shared/hooks';
 import { navigateFlow, NavigationFlow } from '@/shared/lib';
 import SelectableItem from '@/shared/ui/elements/SelectableItem';
-
-import { setModifyMode } from '../../../features/diary/model/diary.slice';
 
 export const DropDownEventIdentifier = {
   MODIFY_DIARY: 'MODIFY_DIARY',
@@ -20,7 +19,7 @@ export interface DropDownItemProps {
   eventIdentifier: keyof typeof DropDownEventIdentifier;
 }
 
-const DropDownItem: React.FC<DropDownItemProps> = ({ text, source, eventIdentifier }) => {
+const DropDownItem = ({ text, source, eventIdentifier }: DropDownItemProps) => {
   const textColor =
     eventIdentifier === DropDownEventIdentifier.DELETE_DIARY ? '#FF0000' : '#212123';
 

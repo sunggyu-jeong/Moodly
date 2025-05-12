@@ -5,9 +5,7 @@ import DropDownAnimation from '@/widgets/dropdown/animation/DropDownAnimation';
 import PopupContainerOrga from '@/widgets/popup/ui/PopupContainer';
 import ToastController from '@/widgets/toast/ui/ToastController';
 
-export const MODAL_CONFIRM_ACTION_KEY = {
-  DELETE_DIARY: 'DELETE_DIARY',
-} as const;
+import { MODAL_CONFIRM_ACTION_KEY } from '../../key';
 
 const OverlayManager = () => {
   const showToastView = useAppSelector(state => state.overlaySlice.showToastView);

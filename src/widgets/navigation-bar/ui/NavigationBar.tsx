@@ -5,9 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { isNotEmpty } from '@shared/lib';
 import NaviBackButton from '@shared/ui/elements/NaviBackButton';
 
-import NaviActionButton, {
-  NaviActionButtonProps,
-} from '@/shared/ui/elements/NaviActionButton';
+import NaviActionButton, { NaviActionButtonProps } from '@/shared/ui/elements/NaviActionButton';
 
 export interface NavigationBarConfig {
   showBackButton?: boolean;
@@ -50,9 +48,7 @@ const NavigationBar = ({
         )}
         <View className="flex-1" />
 
-        {centerComponent && (
-          <View className="items-center flex-1">{centerComponent}</View>
-        )}
+        {centerComponent && <View className="items-center flex-1">{centerComponent}</View>}
 
         <View className="flex-1" />
 
