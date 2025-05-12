@@ -9,20 +9,15 @@ import { ICON_DATA } from '@/shared/constants/Icons';
 import { getScaleSize, useAppDispatch, useAppSelector } from '@/shared/hooks';
 import { isNotEmpty, navigate } from '@/shared/lib';
 import ActionButton from '@/shared/ui/elements/ActionButton';
-import { NaviActionButtonProps } from '@/shared/ui/elements/NaviActionButton';
 import { H2 } from '@/shared/ui/typography/H2';
 import NaviDismiss from '@/widgets/navigation-bar/ui/NaviDismiss';
 import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
 
+const actionButtons = [{ item: <NaviDismiss />, disabled: false }];
+
 const SelectEmotion = () => {
   const dispatch = useAppDispatch();
   const selectedEmotion = useAppSelector(state => state.diarySlice.selectedIcon);
-  const actionButtons: NaviActionButtonProps[] = [
-    {
-      item: <NaviDismiss />,
-      disabled: false,
-    },
-  ];
   const selectedDiary = useAppSelector(state => state.diarySlice.selectedDiary);
 
   const handleSelectEmotion = () => {

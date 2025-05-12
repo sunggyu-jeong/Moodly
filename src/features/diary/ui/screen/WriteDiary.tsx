@@ -1,5 +1,5 @@
 // src/screens/WriteDiary.tsx
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useRef } from 'react';
 import {
   Image,
   Keyboard,
@@ -13,7 +13,6 @@ import KeyboardAwareProvider from '@/app/provider/KeyboardAwareProvider';
 import { ICON_DATA } from '@/shared/constants';
 import { getScaleSize, useAppSelector } from '@/shared/hooks';
 import KeyboardAccessory from '@/shared/ui/elements/KeyboardAccessory';
-import { NaviActionButtonProps } from '@/shared/ui/elements/NaviActionButton';
 import { H2 } from '@/shared/ui/typography/H2';
 import NaviDismiss from '@/widgets/navigation-bar/ui/NaviDismiss';
 import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
@@ -21,13 +20,10 @@ import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
 import { useDiarySave } from '../../hooks/useDiarySave';
 import DiaryTextBox, { DiaryTextBoxHandle } from '../components/DiaryTextBox';
 
+const actionButtons = [{ item: <NaviDismiss />, disabled: false }];
+
 const WriteDiary = () => {
-  const actionButtons = useMemo<NaviActionButtonProps[]>(
-    () => [{ item: <NaviDismiss />, disabled: false }],
-    []
-  );
   const textBoxRef = useRef<DiaryTextBoxHandle | null>(null);
-  const [showKeyboard, setShowKeyboard] = useState(false);
   const todayDiary = useAppSelector(state => state.diarySlice.todayDiary);
   const save = useDiarySave(textBoxRef);
   const { isVisible } = useKeyboardState();

@@ -57,11 +57,7 @@ const DiaryList = () => {
         showBackButton={false}
         centerComponent={
           <DiaryMonth
-            monthLabel={
-              dayjs(selectedMonth).month() + 1 < 10
-                ? dayjs(selectedMonth).format('M월')
-                : dayjs(selectedMonth).format('MM월')
-            }
+            monthLabel={dayjs(selectedMonth).format('M월')}
             onPressLeft={() => {
               handleChangeMonth('left');
             }}

@@ -6,7 +6,7 @@ module.exports = {
   semi: true,
   quoteProps: 'as-needed',
   proseWrap: 'preserve',
-  printWidth: 90,
+  printWidth: 100,
   bracketSpacing: true,
   useTabs: false,
   htmlWhitespaceSensitivity: 'css',

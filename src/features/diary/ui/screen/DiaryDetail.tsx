@@ -1,5 +1,5 @@
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { removeDiaryThunk } from '@/features/diary/model/diary.slice';
@@ -17,10 +17,7 @@ import { dismissModalToScreen, goBack, isNotEmpty } from '@/shared/lib';
 import { NaviActionButtonProps } from '@/shared/ui/elements/NaviActionButton';
 import NaviMore from '@/shared/ui/elements/NaviMore';
 import { Body1 } from '@/shared/ui/typography/Body1';
-import {
-  DropDownEventIdentifier,
-  DropDownItemProps,
-} from '@/widgets/dropdown/ui/DropDownItem';
+import { DropDownEventIdentifier } from '@/widgets/dropdown/ui/DropDownItem';
 import NaviDismiss from '@/widgets/navigation-bar/ui/NaviDismiss';
 import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
 
@@ -29,6 +26,21 @@ type DiaryDetailRouteParams = {
     origin: string;
   };
 };
+
+const props = [
+  {
+    text: '수정하기',
+    source: COMMON_ICONS.iconEdit,
+    eventIdentifier: DropDownEventIdentifier.MODIFY_DIARY,
+  },
+  {
+    text: '삭제하기',
+    source: COMMON_ICONS.iconDelete,
+    eventIdentifier: DropDownEventIdentifier.DELETE_DIARY,
+  },
+];
+
+const leftComponents = [{ item: <NaviDismiss />, disabled: false }];
 
 const DiaryDetail = () => {
   const selectedDiary = useAppSelector(state => state.diarySlice.selectedDiary);
@@ -41,50 +53,7 @@ const DiaryDetail = () => {
   const { openRealm, closeRealm } = useRealm();
   const dropdownButtonRef = useRef<View>(null);
 
-  const leftComponents: NaviActionButtonProps[] = [
-    {
-      item: <NaviDismiss />,
-      disabled: false,
-    },
-  ];
-
-  const actionButtons: NaviActionButtonProps[] = [
-    {
-      item: (
-        <TouchableOpacity
-          ref={dropdownButtonRef}
-          onPress={openDropdown}
-        >
-          <NaviMore />
-        </TouchableOpacity>
-      ),
-      disabled: false,
-    },
-  ];
-
-  const props: DropDownItemProps[] = [
-    {
-      text: '수정하기',
-      source: COMMON_ICONS.iconEdit,
-      eventIdentifier: DropDownEventIdentifier.MODIFY_DIARY,
-    },
-    {
-      text: '삭제하기',
-      source: COMMON_ICONS.iconDelete,
-      eventIdentifier: DropDownEventIdentifier.DELETE_DIARY,
-    },
-  ];
-
-  useEffect(() => {
-    if (
-      isNotEmpty(overlayEventHandler) &&
-      overlayEventHandler === MODAL_CONFIRM_ACTION_KEY.DELETE_DIARY
-    ) {
-      handleRemoveDiary();
-    }
-  }, [overlayEventHandler]);
-
-  function openDropdown() {
+  const openDropdown = useCallback(() => {
     dropdownButtonRef.current?.measureInWindow((x, y, width, height) => {
       dispatch(
         setShowDropdownView({
@@ -94,9 +63,26 @@ const DiaryDetail = () => {
         })
       );
     });
-  }
+  }, [dropdownButtonRef, dispatch]);
 
-  const handleRemoveDiary = async () => {
+  const actionButtons: NaviActionButtonProps[] = useMemo(
+    () => [
+      {
+        item: (
+          <TouchableOpacity
+            ref={dropdownButtonRef}
+            onPress={openDropdown}
+          >
+            <NaviMore />
+          </TouchableOpacity>
+        ),
+        disabled: false,
+      },
+    ],
+    [openDropdown]
+  );
+
+  const handleRemoveDiary = useCallback(async () => {
     try {
       const realm = await openRealm();
       if (!isNotEmpty(realm) || !isNotEmpty(selectedDiary?.emotionId)) {
@@ -132,7 +118,23 @@ const DiaryDetail = () => {
         })
       );
     }
-  };
+  }, [
+    openRealm,
+    selectedDiary,
+    dispatch,
+    route.params.origin,
+    closeRealm,
+    showModalPopup,
+  ]);
+
+  useEffect(() => {
+    if (
+      isNotEmpty(overlayEventHandler) &&
+      overlayEventHandler === MODAL_CONFIRM_ACTION_KEY.DELETE_DIARY
+    ) {
+      handleRemoveDiary();
+    }
+  }, [overlayEventHandler, handleRemoveDiary]);
 
   return (
     <>
