@@ -1,10 +1,11 @@
 import React from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { isNotEmpty } from '@shared/lib';
 import NaviBackButton from '@shared/ui/elements/NaviBackButton';
 
+import { getScaleSize } from '@/shared/hooks';
 import NaviActionButton, { NaviActionButtonProps } from '@/shared/ui/elements/NaviActionButton';
 
 export interface NavigationBarConfig {
@@ -29,6 +30,7 @@ const NavigationBar = ({
     <View style={{ paddingTop: insets.top, backgroundColor }}>
       <View
         className={`flex-row items-center h-[40px] px-[10px] ${hasLeftCenter ? 'justify-between' : 'justify-end'}`}
+        style={styles.container}
       >
         {showBackButton && (
           <View className="ml-3">
@@ -67,4 +69,9 @@ const NavigationBar = ({
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    height: getScaleSize(56),
+  },
+});
 export default React.memo(NavigationBar);

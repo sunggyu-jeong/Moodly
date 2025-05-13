@@ -2,6 +2,7 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import {
   NativeSyntheticEvent,
+  StyleSheet,
   TextInput,
   TextInputContentSizeChangeEventData,
   TextInputFocusEventData,
@@ -9,7 +10,7 @@ import {
   View,
 } from 'react-native';
 
-import { useAppSelector, useScale } from '@/shared/hooks';
+import { getScaleSize, useAppSelector } from '@/shared/hooks';
 import { isNotEmpty } from '@/shared/lib';
 
 export interface DiaryTextBoxHandle {
@@ -40,7 +41,6 @@ const DiaryTextBox = forwardRef<DiaryTextBoxHandle, DiaryTextBoxProps>(
     const [text, setText] = useState('');
     const selectedDiary = useAppSelector(state => state.diarySlice.selectedDiary);
     const inputRef = useRef<TextInput>(null);
-    const { getScaleSize } = useScale();
 
     useEffect(() => {
       setText(isNotEmpty(selectedDiary) ? (selectedDiary?.description ?? '') : '');
@@ -58,12 +58,9 @@ const DiaryTextBox = forwardRef<DiaryTextBoxHandle, DiaryTextBoxProps>(
       <View className="w-full flex-1 relative">
         <TextInput
           ref={inputRef}
-          className="flex-1 bg-transparent rounded-[20px] text-pretendard text-h1 pb-40 leading-6 font-regular"
-          style={{
-            fontSize: getScaleSize(15),
-            minHeight: getScaleSize(150),
-          }}
-          placeholder="왜 그 감정을 느꼈는지 알려줘"
+          className="bg-transparent rounded-[20px] text-pretendard text-h1 pb-40 leading-6 font-regular mt-5 pt-5"
+          style={styles.textStyle}
+          placeholder="그 감정을 느낀 순간의 생각을 적어보세요"
           value={text}
           maxLength={500}
           multiline
@@ -78,5 +75,12 @@ const DiaryTextBox = forwardRef<DiaryTextBoxHandle, DiaryTextBoxProps>(
     );
   }
 );
+
+const styles = StyleSheet.create({
+  textStyle = {
+    fontSize: getScaleSize(15),
+    minHeight: getScaleSize(150),
+  },
+});
 
 export default DiaryTextBox;

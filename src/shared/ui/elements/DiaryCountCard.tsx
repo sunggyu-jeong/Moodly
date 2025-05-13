@@ -1,7 +1,7 @@
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { COMMON_ICONS } from '@/shared/assets/images/common';
-import { useAppSelector } from '@/shared/hooks';
+import { useAppSelector, useScale } from '@/shared/hooks';
 import { H2 } from '@/shared/ui/typography/H2';
 import { Label } from '@/shared/ui/typography/Label';
 
@@ -13,6 +13,7 @@ interface Props {
 
 const DiaryCountCard = ({ onPress }: Props) => {
   const diaryCount = useAppSelector(state => state.diarySlice.diaryCount);
+  const { getScaleSize } = useScale();
 
   return (
     <View className="bg-common-white w-full mb-4 rounded-xl">
@@ -21,7 +22,10 @@ const DiaryCountCard = ({ onPress }: Props) => {
         className="flex-row justify-between items-center w-full px-4 py-2"
       >
         <View className="flex-row items-center">
-          <Image source={COMMON_ICONS.iconWriteCircle} />
+          <Image
+            source={COMMON_ICONS.iconWriteCircle}
+            style={{ width: getScaleSize(36), height: getScaleSize(36) }}
+          />
           <Label
             weight="regular"
             style={[styles.labelStyle, { color: colors.gray[500] }]}
@@ -36,7 +40,10 @@ const DiaryCountCard = ({ onPress }: Props) => {
           >
             {diaryCount.data ?? 0}
           </H2>
-          <Image source={COMMON_ICONS.iconNextGray} />
+          <Image
+            source={COMMON_ICONS.iconNextGray}
+            style={{ width: getScaleSize(10), height: getScaleSize(24) }}
+          />
         </View>
       </TouchableOpacity>
     </View>

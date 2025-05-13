@@ -1,4 +1,6 @@
-import { Image, ImageSourcePropType, Pressable, View } from 'react-native';
+import { Image, ImageSourcePropType, Pressable, StyleSheet, View } from 'react-native';
+
+import { getScaleSize } from '../../hooks';
 
 export interface EmotionSymbolProps {
   icon: ImageSourcePropType;
@@ -11,10 +13,17 @@ const EmotionSymbol = ({ icon, onPress }: EmotionSymbolProps) => (
       <Image
         source={icon}
         resizeMode="cover"
-        className="w-14 h-14 aspect-1"
+        style={styles.image}
       />
     </Pressable>
   </View>
 );
+
+const styles = StyleSheet.create({
+  image: {
+    height: getScaleSize(56),
+    width: getScaleSize(56),
+  },
+});
 
 export default EmotionSymbol;

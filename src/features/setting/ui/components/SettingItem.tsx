@@ -1,6 +1,7 @@
-import { Image, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { COMMON_ICONS } from '@/shared/assets/images/common';
+import { getScaleSize } from '@/shared/hooks';
 import { gray } from '@/shared/styles/colors';
 import { Body1 } from '@/shared/ui/typography/Body1';
 
@@ -27,9 +28,19 @@ const SettingItem = ({ ...props }: SettingItemProps) => {
           {props.title}
         </Body1>
       </View>
-      <Image source={COMMON_ICONS.iconNextGray} />
+      <Image
+        source={COMMON_ICONS.iconNextGray}
+        style={styles.image}
+      />
     </Container>
   );
 };
+
+const styles = StyleSheet.create({
+  image: {
+    height: getScaleSize(24),
+    width: getScaleSize(10),
+  },
+});
 
 export default SettingItem;

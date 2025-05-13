@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
 import { ColorKeyEnum, getColor } from '../../constants/Colors';
+import { getScaleSize } from '../../hooks';
 import { Body2 } from '../typography/Body2';
 
 interface ActionButtonProps {
@@ -31,9 +32,11 @@ const ActionButton = ({ children, disabled, onPress }: ActionButtonProps) => {
 const styles = StyleSheet.create({
   buttonDisabled: {
     backgroundColor: getColor(ColorKeyEnum.Disabled),
+    height: getScaleSize(56),
   },
   buttonEnabled: {
     backgroundColor: getColor(ColorKeyEnum.Primary),
+    height: getScaleSize(56),
   },
   text: {
     color: getColor(ColorKeyEnum.White),

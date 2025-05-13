@@ -1,4 +1,6 @@
-import { Image, ImageSourcePropType, View } from 'react-native';
+import { Image, ImageSourcePropType, StyleSheet, View } from 'react-native';
+
+import { getScaleSize } from '../../hooks';
 
 interface TabbarIconProps {
   source: ImageSourcePropType;
@@ -8,10 +10,17 @@ const TabBarIcon = ({ source }: TabbarIconProps) => {
     <View>
       <Image
         source={source}
-        className="w-8 h-8"
+        style={styles.icon}
       />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  icon: {
+    height: getScaleSize(32),
+    width: getScaleSize(32),
+  },
+});
 
 export default TabBarIcon;

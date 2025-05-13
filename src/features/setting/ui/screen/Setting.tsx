@@ -3,7 +3,7 @@ import { useCallback, useMemo } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
 import { COMMON_ICONS } from '@/shared/assets/images/common';
-import { getScaleSize, useScale } from '@/shared/hooks';
+import { getScaleSize } from '@/shared/hooks';
 import { useOpenKakao } from '@/shared/hooks/useOpenChat';
 import { gray } from '@/shared/styles/colors';
 import NaviTitleDisplay from '@/shared/ui/elements/NaviTitle';
@@ -19,7 +19,6 @@ enum SETTING_EVENT_TYPE {
 
 const Setting = () => {
   const { openChat } = useOpenKakao();
-  const { getScaleSize } = useScale();
   const handlePress = useCallback(
     (identifier: SETTING_EVENT_TYPE) => {
       if (identifier === SETTING_EVENT_TYPE.BACKUP) {
@@ -38,7 +37,7 @@ const Setting = () => {
         rightComponent: (
           <Image
             source={COMMON_ICONS.iconBackup}
-            style={{ tintColor: gray[400] }}
+            style={[styles.iconStyle, { tintColor: gray[400] }]}
           />
         ),
         onPress: () => handlePress(SETTING_EVENT_TYPE.BACKUP),
@@ -48,7 +47,7 @@ const Setting = () => {
         rightComponent: (
           <Image
             source={COMMON_ICONS.iconFeedback}
-            style={{ tintColor: gray[400] }}
+            style={[styles.iconStyle, { tintColor: gray[400] }]}
           />
         ),
         onPress: () => handlePress(SETTING_EVENT_TYPE.BUG_REPORT),
@@ -81,6 +80,10 @@ const Setting = () => {
 };
 
 const styles = StyleSheet.create({
+  iconStyle: {
+    height: getScaleSize(24),
+    width: getScaleSize(24),
+  },
   versionLabel: {
     color: gray[400],
     marginBottom: getScaleSize(13),

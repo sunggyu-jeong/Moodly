@@ -6,7 +6,7 @@ import { setSelectedIcon, setTodayDiary } from '@/features/diary/model/diary.sli
 import EmotionList from '@/features/emotion/ui/EmotionList';
 import SelectedEmotion from '@/features/emotion/ui/SelectedEmotion';
 import { ICON_DATA } from '@/shared/constants/Icons';
-import { getScaleSize, useAppDispatch, useAppSelector, useScale } from '@/shared/hooks';
+import { useAppDispatch, useAppSelector, useScale } from '@/shared/hooks';
 import { isNotEmpty, navigate } from '@/shared/lib';
 import ActionButton from '@/shared/ui/elements/ActionButton';
 import { H2 } from '@/shared/ui/typography/H2';
