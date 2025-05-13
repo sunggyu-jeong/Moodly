@@ -37,7 +37,7 @@ const Setting = () => {
         rightComponent: (
           <Image
             source={COMMON_ICONS.iconBackup}
-            style={[styles.iconStyle, { tintColor: gray[400] }]}
+            style={styles.iconStyle}
           />
         ),
         onPress: () => handlePress(SETTING_EVENT_TYPE.BACKUP),
@@ -47,7 +47,7 @@ const Setting = () => {
         rightComponent: (
           <Image
             source={COMMON_ICONS.iconFeedback}
-            style={[styles.iconStyle, { tintColor: gray[400] }]}
+            style={styles.iconStyle}
           />
         ),
         onPress: () => handlePress(SETTING_EVENT_TYPE.BUG_REPORT),
@@ -65,7 +65,7 @@ const Setting = () => {
       />
       <View
         className="bg-gray-100 flex-1 justify-between px-4 rounded-xl"
-        style={{ paddingTop: getScaleSize(45) }}
+        style={styles.contentStyle}
       >
         <SettingList items={SETTING_LIST_ITEM} />
         <Label
@@ -80,8 +80,12 @@ const Setting = () => {
 };
 
 const styles = StyleSheet.create({
+  contentStyle: {
+    paddingTop: getScaleSize(45),
+  },
   iconStyle: {
     height: getScaleSize(24),
+    tintColor: gray[400],
     width: getScaleSize(24),
   },
   versionLabel: {

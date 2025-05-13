@@ -23,7 +23,7 @@ const SettingItem = ({ ...props }: SettingItemProps) => {
         {props.rightComponent && <View className="mr-4">{props.rightComponent}</View>}
         <Body1
           weight="regular"
-          style={{ color: gray[600] }}
+          style={styles.mentStyle}
         >
           {props.title}
         </Body1>
@@ -40,6 +40,9 @@ const styles = StyleSheet.create({
   image: {
     height: getScaleSize(24),
     width: getScaleSize(10),
+  },
+  mentStyle: {
+    color: gray[600],
   },
 });
 

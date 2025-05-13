@@ -1,7 +1,7 @@
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { EMOTION_ICONS } from '@shared/assets/images/emotion';
-import { useAppSelector, useScale } from '@shared/hooks';
+import { getScaleSize, useAppSelector, useScale } from '@shared/hooks';
 import AnimatedZoomImage from '@shared/ui/elements/AnimatedZoomImage';
 
 import { gray } from '@/shared/styles/colors';
@@ -15,7 +15,7 @@ const SelectedEmotion = () => {
   return (
     <View
       className="items-center"
-      style={{ marginTop: getScaleSize(66) }}
+      style={styles.contentStyle}
     >
       <AnimatedZoomImage
         source={selectedIcon?.iconBigShadow || EMOTION_ICONS.joyBigShadow}
@@ -23,18 +23,32 @@ const SelectedEmotion = () => {
       />
       <H1
         weight="semibold"
-        style={{ color: gray[600], marginTop: getScaleSize(34) }}
+        style={styles.h1Style}
       >
         {selectedIcon?.text}
       </H1>
       <Body1
         weight="regular"
-        style={{ color: gray[400], marginTop: getScaleSize(5) }}
+        style={styles.bodyStyle}
       >
         {selectedIcon?.description}
       </Body1>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  bodyStyle: {
+    color: gray[400],
+    marginTop: getScaleSize(5),
+  },
+  contentStyle: {
+    marginTop: getScaleSize(66),
+  },
+  h1Style: {
+    color: gray[600],
+    marginTop: getScaleSize(34),
+  },
+});
 
 export default SelectedEmotion;

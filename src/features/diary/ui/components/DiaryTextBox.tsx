@@ -77,7 +77,7 @@ const DiaryTextBox = forwardRef<DiaryTextBoxHandle, DiaryTextBoxProps>(
 );
 
 const styles = StyleSheet.create({
-  textStyle = {
+  textStyle: {
     fontSize: getScaleSize(15),
     minHeight: getScaleSize(150),
   },

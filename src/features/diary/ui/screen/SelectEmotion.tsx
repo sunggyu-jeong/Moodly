@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 
 import { EmotionDiaryDTO } from '@/entities/diary';
 import { setSelectedIcon, setTodayDiary } from '@/features/diary/model/diary.slice';
 import EmotionList from '@/features/emotion/ui/EmotionList';
 import SelectedEmotion from '@/features/emotion/ui/SelectedEmotion';
 import { ICON_DATA } from '@/shared/constants/Icons';
-import { useAppDispatch, useAppSelector, useScale } from '@/shared/hooks';
+import { getScaleSize, useAppDispatch, useAppSelector } from '@/shared/hooks';
 import { isNotEmpty, navigate } from '@/shared/lib';
 import ActionButton from '@/shared/ui/elements/ActionButton';
 import { H2 } from '@/shared/ui/typography/H2';
@@ -20,7 +20,6 @@ const SelectEmotion = () => {
   const selectedEmotion = useAppSelector(state => state.diarySlice.selectedIcon);
   const isModifyMode = useAppSelector(state => state.diarySlice.isModifyMode);
   const selectedDiary = useAppSelector(state => state.diarySlice.selectedDiary);
-  const { getScaleSize } = useScale();
 
   const handleSelectEmotion = () => {
     const emotion: EmotionDiaryDTO = {
@@ -50,7 +49,7 @@ const SelectEmotion = () => {
       <SafeAreaView className="bg-common-white items-center flex-1 justify-between">
         <H2
           weight="semibold"
-          style={{ marginTop: getScaleSize(28) }}
+          style={styles.textStyle}
         >
           오늘 느낀 감정을 선택해주세요
         </H2>
@@ -59,7 +58,7 @@ const SelectEmotion = () => {
 
         <View
           className="w-full px-5"
-          style={{ marginBottom: getScaleSize(54) }}
+          style={styles.buttonStyle}
         >
           <ActionButton onPress={handleSelectEmotion}>선택 완료</ActionButton>
         </View>
@@ -67,5 +66,14 @@ const SelectEmotion = () => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  buttonStyle: {
+    marginBottom: getScaleSize(54),
+  },
+  textStyle: {
+    marginTop: getScaleSize(28),
+  },
+});
 
 export default SelectEmotion;

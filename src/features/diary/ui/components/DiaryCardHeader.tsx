@@ -24,7 +24,7 @@ const DiaryCardHeader = ({ iconId, recordDate }: EmotionDiaryDTO) => {
         </Caption>
         <Label
           weight="semibold"
-          style={{ color: gray[600] }}
+          style={styles.labelStyle}
         >
           {emotionSource?.text}
         </Label>
@@ -37,6 +37,9 @@ const styles = StyleSheet.create({
   captionStyle: {
     color: gray[400],
     marginBottom: 4,
+  },
+  labelStyle: {
+    color: gray[600],
   },
 });
 
