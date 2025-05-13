@@ -1,12 +1,13 @@
 import { Image, ImageSourcePropType } from 'react-native';
 
-import { getScaleSize } from '@/shared/hooks';
+import { useScale } from '@/shared/hooks';
 
 export interface AvatarAtomProps {
   source: ImageSourcePropType;
 }
 
 const Avatar = ({ source }: AvatarAtomProps) => {
+  const { getScaleSize } = useScale();
   return (
     <Image
       source={source}

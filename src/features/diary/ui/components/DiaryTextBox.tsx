@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 
-import { getScaleSize, useAppSelector } from '@/shared/hooks';
+import { useAppSelector, useScale } from '@/shared/hooks';
 import { isNotEmpty } from '@/shared/lib';
 
 export interface DiaryTextBoxHandle {
@@ -40,6 +40,7 @@ const DiaryTextBox = forwardRef<DiaryTextBoxHandle, DiaryTextBoxProps>(
     const [text, setText] = useState('');
     const selectedDiary = useAppSelector(state => state.diarySlice.selectedDiary);
     const inputRef = useRef<TextInput>(null);
+    const { getScaleSize } = useScale();
 
     useEffect(() => {
       setText(isNotEmpty(selectedDiary) ? (selectedDiary?.description ?? '') : '');

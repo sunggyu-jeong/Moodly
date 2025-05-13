@@ -2,7 +2,7 @@ import { Image, View } from 'react-native';
 
 import { useInitializeDiary } from '@/features/diary/hooks/useInitializeDiary';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
-import { getScaleSize, useAppSelector } from '@/shared/hooks';
+import { useAppSelector, useScale } from '@/shared/hooks';
 import { jumpToTab, navigate } from '@/shared/lib';
 import ActionButton from '@/shared/ui/elements/ActionButton';
 import DiaryCountCard from '@/shared/ui/elements/DiaryCountCard';
@@ -11,6 +11,7 @@ import { H2 } from '@/shared/ui/typography/H2';
 const Home = () => {
   useInitializeDiary();
   const isDiaryExist = useAppSelector(state => state.diarySlice.isDiaryExist);
+  const { getScaleSize } = useScale();
 
   return (
     <View className="bg-gray-100 flex-1 mx-5 justify-center items-center">

@@ -3,7 +3,7 @@ import { useCallback, useMemo } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
 import { COMMON_ICONS } from '@/shared/assets/images/common';
-import { getScaleSize } from '@/shared/hooks';
+import { getScaleSize, useScale } from '@/shared/hooks';
 import { useOpenKakao } from '@/shared/hooks/useOpenChat';
 import { gray } from '@/shared/styles/colors';
 import NaviTitleDisplay from '@/shared/ui/elements/NaviTitle';
@@ -19,6 +19,7 @@ enum SETTING_EVENT_TYPE {
 
 const Setting = () => {
   const { openChat } = useOpenKakao();
+  const { getScaleSize } = useScale();
   const handlePress = useCallback(
     (identifier: SETTING_EVENT_TYPE) => {
       if (identifier === SETTING_EVENT_TYPE.BACKUP) {

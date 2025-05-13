@@ -6,7 +6,7 @@ import DiaryList from '@/features/diary/ui/screen/DiaryList';
 import Home from '@/features/home/ui/screen/Home';
 import Setting from '@/features/setting/ui/screen/Setting';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
-import { getScaleSize } from '@/shared/hooks';
+import { useScale } from '@/shared/hooks';
 import TabBarIcon from '@/shared/ui/elements/TabBarIcon';
 
 export type BottomTabParamList = {
@@ -19,6 +19,7 @@ const Tab = createBottomTabNavigator<BottomTabParamList>();
 
 const TabNavigation = () => {
   const insets = useSafeAreaInsets();
+  const { getScaleSize } = useScale();
 
   return (
     <View className="flex-1">

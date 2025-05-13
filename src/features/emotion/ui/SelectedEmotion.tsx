@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 
 import { EMOTION_ICONS } from '@shared/assets/images/emotion';
-import { getScaleSize, useAppSelector } from '@shared/hooks';
+import { useAppSelector, useScale } from '@shared/hooks';
 import AnimatedZoomImage from '@shared/ui/elements/AnimatedZoomImage';
 
 import { gray } from '@/shared/styles/colors';
@@ -10,6 +10,7 @@ import { H1 } from '@/shared/ui/typography/H1';
 
 const SelectedEmotion = () => {
   const selectedIcon = useAppSelector(state => state.diarySlice.selectedIcon);
+  const { getScaleSize } = useScale();
 
   return (
     <View

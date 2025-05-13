@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Animated, ImageSourcePropType } from 'react-native';
 
-import { getScaleSize } from '@shared/hooks';
+import { useScale } from '../../hooks';
 
 interface AnimatedZoomImageProps {
   source: ImageSourcePropType;
@@ -10,6 +10,7 @@ interface AnimatedZoomImageProps {
 
 const AnimatedZoomImage = ({ source, size }: AnimatedZoomImageProps) => {
   const scale = useRef(new Animated.Value(0.8)).current;
+  const { getScaleSize } = useScale();
 
   useEffect(() => {
     scale.setValue(0.8);

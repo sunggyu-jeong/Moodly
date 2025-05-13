@@ -12,7 +12,7 @@ import {
 } from '@/processes/overlay/model/overlaySlice';
 import { COMMON_ICONS } from '@/shared/assets/images/common';
 import { ICON_DATA } from '@/shared/constants/Icons';
-import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '@/shared/hooks';
+import { getScaleSize, useAppDispatch, useAppSelector, useRealm, useScale } from '@/shared/hooks';
 import { dismissModalToScreen, goBack, isNotEmpty } from '@/shared/lib';
 import { NaviActionButtonProps } from '@/shared/ui/elements/NaviActionButton';
 import NaviMore from '@/shared/ui/elements/NaviMore';
@@ -50,6 +50,7 @@ const DiaryDetail = () => {
   const route = useRoute<RouteProp<DiaryDetailRouteParams, 'params'>>();
   const { openRealm, closeRealm } = useRealm();
   const dropdownButtonRef = useRef<View>(null);
+  const { getScaleSize } = useScale();
 
   const openDropdown = useCallback(() => {
     dropdownButtonRef.current?.measureInWindow((x, y, width, height) => {

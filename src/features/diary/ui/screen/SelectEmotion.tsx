@@ -6,7 +6,7 @@ import { setSelectedIcon, setTodayDiary } from '@/features/diary/model/diary.sli
 import EmotionList from '@/features/emotion/ui/EmotionList';
 import SelectedEmotion from '@/features/emotion/ui/SelectedEmotion';
 import { ICON_DATA } from '@/shared/constants/Icons';
-import { getScaleSize, useAppDispatch, useAppSelector } from '@/shared/hooks';
+import { getScaleSize, useAppDispatch, useAppSelector, useScale } from '@/shared/hooks';
 import { isNotEmpty, navigate } from '@/shared/lib';
 import ActionButton from '@/shared/ui/elements/ActionButton';
 import { H2 } from '@/shared/ui/typography/H2';
@@ -20,6 +20,7 @@ const SelectEmotion = () => {
   const selectedEmotion = useAppSelector(state => state.diarySlice.selectedIcon);
   const isModifyMode = useAppSelector(state => state.diarySlice.isModifyMode);
   const selectedDiary = useAppSelector(state => state.diarySlice.selectedDiary);
+  const { getScaleSize } = useScale();
 
   const handleSelectEmotion = () => {
     const emotion: EmotionDiaryDTO = {

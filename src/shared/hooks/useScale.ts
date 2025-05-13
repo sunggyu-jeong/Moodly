@@ -1,25 +1,48 @@
+import { useCallback, useMemo } from 'react';
 import { Dimensions } from 'react-native';
 
-const { width: screenWidth } = Dimensions.get('window');
 const BASE_WIDTH = 414;
 const MIN_SCALE = 2; // 작은 화면에서 최대 2배
 const MAX_SCALE = 1.2; // 큰 화면에서 최대 1.2배
 
-// 화면 비율 계산
-const ratio = screenWidth / BASE_WIDTH;
+/**
+ * 컴포넌트 내부에서 사용하는 스케일링 사이즈 설정
+ *
+ * @returns - (메모이제이션) 스케일링된 사이즈 반환
+ */
+export function useScale() {
+  const { width: screenWidth } = Dimensions.get('window');
 
-// 비율에 따른 가중치 계산
-const factor =
-  ratio < 1 ? 1 + (1 - ratio) * (MIN_SCALE - 1) : 1 + Math.min(ratio - 1, 1) * (MAX_SCALE - 1);
+  const multiplier = useMemo(() => {
+    const rawRatio = screenWidth / BASE_WIDTH;
+    const ratio = rawRatio < 1 ? rawRatio : Math.min(rawRatio, MAX_SCALE);
+    const factor =
+      ratio < 1 ? 1 + (1 - ratio) * (MIN_SCALE - 1) : 1 + Math.min(ratio - 1, 1) * (MAX_SCALE - 1);
+    return 1 + (ratio - 1) * factor;
+  }, [screenWidth]);
 
-// 최종 곱셈값
-const multiplier = 1 + (ratio - 1) * factor;
+  const getScaleSize = useCallback(
+    (size: number): number => {
+      return Math.round(size * Math.max(multiplier, MAX_SCALE));
+    },
+    [multiplier]
+  );
+
+  return { getScaleSize };
+}
 
 /**
- * 주어진 크기를 동적 화면 비율에 맞춰 스케일합니다.
- * @param size 원본 크기(px)
- * @returns 스케일된 정수 크기(px)
+ * 컴포넌트 외부에서 사용하는 순수함수형 스케일링 사이즈 설정
+ *
+ * @param size - 스케일링할 사이즈
+ * @returns - 스케일링된 사이즈 반환
  */
 export function getScaleSize(size: number): number {
-  return Math.round(size * multiplier);
+  const { width: screenWidth } = Dimensions.get('window');
+  const rawRatio = screenWidth / BASE_WIDTH;
+  const ratio = rawRatio < 1 ? rawRatio : Math.min(rawRatio, MAX_SCALE);
+  const factor =
+    ratio < 1 ? 1 + (1 - ratio) * (MIN_SCALE - 1) : 1 + Math.min(ratio - 1, 1) * (MAX_SCALE - 1);
+  const multiplier = 1 + (ratio - 1) * factor;
+  return Math.round(size * Math.max(multiplier, MAX_SCALE));
 }
