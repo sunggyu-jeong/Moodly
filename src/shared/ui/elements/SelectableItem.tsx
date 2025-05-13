@@ -1,10 +1,4 @@
-import {
-  Image,
-  ImageSourcePropType,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Image, ImageSourcePropType, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { Label } from '../typography/Label';
 

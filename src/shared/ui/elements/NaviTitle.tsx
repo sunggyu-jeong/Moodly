@@ -4,8 +4,6 @@ interface NaviTitleDisplayProps {
   title: string;
 }
 
-const NaviTitleDisplay = ({ title }: NaviTitleDisplayProps) => (
-  <H3 weight="semibold">{title}</H3>
-);
+const NaviTitleDisplay = ({ title }: NaviTitleDisplayProps) => <H3 weight="semibold">{title}</H3>;
 
 export default NaviTitleDisplay;

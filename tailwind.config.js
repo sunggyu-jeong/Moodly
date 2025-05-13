@@ -60,7 +60,7 @@ module.exports = {
       },
       fontWeight: {
         regular: typography.body1.weight.regular,
-        semibold: typography.body1.weight.semiBold,
+        semibold: typography.body1.weight.semibold,
       },
     },
     colors: {
