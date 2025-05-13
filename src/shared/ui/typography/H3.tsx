@@ -1,13 +1,16 @@
 import { Text, TextProps } from 'react-native';
 
-type Props = TextProps & { weight: 'regular' | 'semibold' };
+import { getScaleSize } from '../../hooks';
 
-export function H3({ children, weight, style, ...rest }: Props) {
+type Props = TextProps & { weight: 'regular' | 'semibold'; size?: number };
+
+export function H3({ children, weight, size, style, ...rest }: Props) {
   const className = `text-h3 font-${weight}`;
+  const fontSizeValue = getScaleSize(size ?? 18);
   return (
     <Text
       className={className}
-      style={style}
+      style={[{ fontSize: fontSizeValue }, style]}
       {...rest}
     >
       {children}

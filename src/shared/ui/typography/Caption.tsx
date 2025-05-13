@@ -1,13 +1,17 @@
 import { Text, TextProps } from 'react-native';
 
-type Props = TextProps & { weight: 'regular' | 'semibold' };
+import { useScale } from '../../hooks';
 
-export function Caption({ children, weight, style, ...rest }: Props) {
+type Props = TextProps & { weight: 'regular' | 'semibold'; size?: number };
+
+export function Caption({ children, weight, size, style, ...rest }: Props) {
+  const { getScaleSize } = useScale();
+  const fontSizeValue = getScaleSize(size ?? 12);
   const className = `text-caption font-${weight}`;
   return (
     <Text
       className={className}
-      style={style}
+      style={[{ fontSize: fontSizeValue }, style]}
       {...rest}
     >
       {children}

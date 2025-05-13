@@ -1,13 +1,17 @@
 import { Text, TextProps } from 'react-native';
 
-type Props = TextProps & { weight: 'regular' | 'semibold' };
+import { useScale } from '../../hooks';
 
-export function Body2({ children, weight = 'regular', style, ...rest }: Props) {
+type Props = TextProps & { weight: 'regular' | 'semibold'; size?: number };
+
+export function Body2({ children, weight = 'regular', style, size, ...rest }: Props) {
+  const { getScaleSize } = useScale();
+  const fontSizeValue = getScaleSize(size ?? 15);
   const className = `text-body2 font-${weight}`;
   return (
     <Text
       className={className}
-      style={style}
+      style={[{ fontSize: fontSizeValue }, style]}
       {...rest}
     >
       {children}
