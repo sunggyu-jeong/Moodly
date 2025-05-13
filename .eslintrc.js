@@ -37,6 +37,8 @@ module.exports = {
         'postcss.config.js',
         'global.d.ts',
         'babel.config.js',
+        'index.js',
+        'metro.config.js',
       ],
       parserOptions: { project: null },
     },
@@ -60,10 +62,7 @@ module.exports = {
   ],
   rules: {
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-    '@typescript-eslint/no-unused-vars': [
-      'warn',
-      { args: 'none', ignoreRestSiblings: true },
-    ],
+    '@typescript-eslint/no-unused-vars': ['warn', { args: 'none', ignoreRestSiblings: true }],
     'import/no-unused-modules': ['warn', { unusedExports: true, missingExports: false }],
     'no-unused-expressions': [
       'error',

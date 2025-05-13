@@ -18,9 +18,10 @@
       "@features/*": ["src/features/*"],
       "@entities/*": ["src/entities/*"],
       "@shared/*": ["src/shared/*"],
-      "@components/*": ["src/components/*"]
+      "@components/*": ["src/components/*"],
+      "@env": ["node_modules/react-native-dotenv"]
     }
   },
-  "include": ["src/**/*", "nativewind-env.d.ts"],
+  "include": ["src/**/*", "nativewind-env.d.ts", "./.env.d.ts"],
   "exclude": ["node_modules", "build"]
 }

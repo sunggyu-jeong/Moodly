@@ -1,3 +1,4 @@
+import { KAKAO_OPEN_CHAT_LINK } from '@env';
 import { useCallback, useMemo } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
@@ -23,7 +24,7 @@ const Setting = () => {
       if (identifier === SETTING_EVENT_TYPE.BACKUP) {
         console.log('백업하기');
       } else if (identifier === SETTING_EVENT_TYPE.BUG_REPORT) {
-        openChat('https://open.kakao.com/o/gqNkyO0g');
+        openChat(KAKAO_OPEN_CHAT_LINK);
       }
     },
     [openChat]
