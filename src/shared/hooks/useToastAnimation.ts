@@ -1,11 +1,6 @@
 // hooks/useToastAnimation.ts
 import { useEffect, useState } from 'react';
-import {
-  runOnJS,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
+import { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 export function useToastAnimation(
   visible: boolean,

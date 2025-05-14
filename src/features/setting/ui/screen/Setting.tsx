@@ -32,16 +32,17 @@ const Setting = () => {
 
   const SETTING_LIST_ITEM = useMemo(
     () => [
-      {
-        title: '백업 및 복원',
-        rightComponent: (
-          <Image
-            source={COMMON_ICONS.iconBackup}
-            style={styles.iconStyle}
-          />
-        ),
-        onPress: () => handlePress(SETTING_EVENT_TYPE.BACKUP),
-      },
+      // MVP SPEC OUT
+      // {
+      //   title: '백업 및 복원',
+      //   rightComponent: (
+      //     <Image
+      //       source={COMMON_ICONS.iconBackup}
+      //       style={styles.iconStyle}
+      //     />
+      //   ),
+      //   onPress: () => handlePress(SETTING_EVENT_TYPE.BACKUP),
+      // },
       {
         title: '의견 보내기',
         rightComponent: (

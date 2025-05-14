@@ -1,4 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Platform } from 'react-native';
 
 import DiaryDetail from '@/features/diary/ui/screen/DiaryDetail';
 import OverlayManager from '@/processes/overlay/ui/OverlayManager';
@@ -28,7 +29,7 @@ const RootStack = () => {
     <>
       <OverlayManager />
       <Stack.Navigator
-        initialRouteName="Splash"
+        initialRouteName={Platform.OS === 'ios' ? 'Main' : 'Splash'}
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen
