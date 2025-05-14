@@ -1,16 +1,26 @@
 // src/screens/WriteDiary.tsx
 import { useRef } from 'react';
-import { Image, Keyboard, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
-import { KeyboardStickyView, useKeyboardState } from 'react-native-keyboard-controller';
+import {
+  Image,
+  Keyboard,
+  ScrollView,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
+import { KeyboardToolbar, useKeyboardState } from 'react-native-keyboard-controller';
 
-import KeyboardAwareProvider from '@/app/provider/KeyboardAwareProvider';
 import { ICON_DATA } from '@/shared/constants';
 import { getScaleSize, useAppSelector } from '@/shared/hooks';
-import KeyboardAccessory from '@/shared/ui/elements/KeyboardAccessory';
+import {
+  KeyboardAccessoryButton,
+  KeyboardAccessoryTheme,
+} from '@/shared/ui/elements/KeyboardAccessory';
 import { H2 } from '@/shared/ui/typography/H2';
 import NaviDismiss from '@/widgets/navigation-bar/ui/NaviDismiss';
 import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
 
+import { common } from '../../../../shared/styles/colors';
 import { useDiarySave } from '../../hooks/useDiarySave';
 import DiaryTextBox, { DiaryTextBoxHandle } from '../components/DiaryTextBox';
 
@@ -25,28 +35,31 @@ const WriteDiary = () => {
   return (
     <>
       <NavigationBar actionButtons={actionButtons} />
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <View className="items-center justify-center bg-common-white">
-          <H2 weight="semibold">왜 이 감정을 느꼈나요?</H2>
-          <Image
-            style={styles.emotionImage}
-            source={ICON_DATA.find(el => el.id === todayDiary?.iconId)?.iconBig}
-          />
-        </View>
-      </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <KeyboardAwareProvider style={styles.keyboardAvoiding}>
-          <DiaryTextBox ref={textBoxRef} />
-
+      <ScrollView style={styles.keyboardAvoiding}>
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+          <View className="items-center justify-center bg-common-white">
+            <H2 weight="semibold">왜 이 감정을 느꼈나요?</H2>
+            <Image
+              style={styles.emotionImage}
+              source={ICON_DATA.find(el => el.id === todayDiary?.iconId)?.iconBig}
+            />
+          </View>
+        </TouchableWithoutFeedback>
+        <DiaryTextBox ref={textBoxRef} />
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           <View className="flex-1" />
-        </KeyboardAwareProvider>
-      </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>
+      </ScrollView>
 
-      {isVisible && (
-        <KeyboardStickyView>
-          <KeyboardAccessory onPress={save} />
-        </KeyboardStickyView>
-      )}
+      <KeyboardToolbar
+        className="h-52"
+        button={KeyboardAccessoryButton}
+        theme={KeyboardAccessoryTheme}
+        showArrows={false}
+      />
+      {/* <KeyboardStickyView>
+        <KeyboardAccessory onPress={save} />
+      </KeyboardStickyView> */}
     </>
   );
 };
@@ -59,6 +72,7 @@ const styles = StyleSheet.create({
     width: getScaleSize(190),
   },
   keyboardAvoiding: {
+    backgroundColor: common.white,
     flex: 1,
     paddingHorizontal: getScaleSize(20),
   },

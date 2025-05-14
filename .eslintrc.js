@@ -91,18 +91,7 @@ module.exports = {
         ],
       },
     ],
-    // FIXME: - 리팩토링 완료 후 삭제
-    'import/no-internal-modules': ['off', { allow: ['**/src/**'] }],
-    // FIXME: - 리팩토링 완료 후 삭제
-    'import/order': [
-      'error',
-      {
-        groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
-        pathGroups: [{ pattern: '@/**', group: 'internal', position: 'after' }],
-        pathGroupsExcludedImportTypes: ['builtin'],
-        'newlines-between': 'always',
-      },
-    ],
+    'react-refresh/only-export-components': 'off',
     'boundaries/no-unknown-files': 'off',
 
     'no-undef': 'off',

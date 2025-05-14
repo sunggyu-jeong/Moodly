@@ -1,32 +1,36 @@
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+import {
+  DefaultKeyboardToolbarTheme,
+  KeyboardToolbarProps,
+} from 'react-native-keyboard-controller';
 
-import { gray } from '../../styles/colors';
-import { H3 } from '../typography/H3';
+import { common, gray } from '@/shared/styles/colors';
+import { H3 } from '@/shared/ui/typography/H3';
 
-interface KeyboardAccessoryProps {
-  onPress: () => void;
-}
+import { getScaleSize } from '../../hooks';
 
-const KeyboardAccessory = ({ onPress }: KeyboardAccessoryProps) => {
-  return (
-    <View className="w-full h-10 bg-common-white justify-center items-end border-t-[0.5px] border-t-[#E9E9E9] ">
-      <TouchableWithoutFeedback onPress={onPress}>
-        <H3
-          weight="semibold"
-          style={styles.text}
-        >
-          저장
-        </H3>
-      </TouchableWithoutFeedback>
-    </View>
-  );
+export const KeyboardAccessoryButton: KeyboardToolbarProps['button'] = ({ onPress }) => (
+  <TouchableWithoutFeedback onPress={onPress}>
+    <H3
+      weight="semibold"
+      style={accessoryStyles.text}
+    >
+      저장
+    </H3>
+  </TouchableWithoutFeedback>
+);
+
+export const KeyboardAccessoryTheme: KeyboardToolbarProps['theme'] = {
+  ...DefaultKeyboardToolbarTheme,
+  light: {
+    ...DefaultKeyboardToolbarTheme.light,
+    background: common.white,
+  },
 };
 
-const styles = StyleSheet.create({
+const accessoryStyles = StyleSheet.create({
   text: {
     color: gray[600],
-    marginRight: 20,
+    marginRight: getScaleSize(20),
   },
 });
-
-export default KeyboardAccessory;
