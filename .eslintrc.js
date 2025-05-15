@@ -39,6 +39,7 @@ module.exports = {
         'babel.config.js',
         'index.js',
         'metro.config.js',
+        'react-native-textinput-extensions.d.ts',
       ],
       parserOptions: { project: null },
     },

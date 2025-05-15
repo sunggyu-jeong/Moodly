@@ -22,6 +22,11 @@
       "@env": ["node_modules/react-native-dotenv"]
     }
   },
-  "include": ["src/**/*", "nativewind-env.d.ts", "./.env.d.ts"],
+  "include": [
+    "src/**/*",
+    "nativewind-env.d.ts",
+    "./.env.d.ts",
+    "react-native-textinput-extensions.d.ts"
+  ],
   "exclude": ["node_modules", "build"]
 }
