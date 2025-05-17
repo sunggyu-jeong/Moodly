@@ -16,6 +16,11 @@ class AppDelegate: RCTAppDelegate {
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 
+  override func application(_ application: UIApplication,
+                   supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+    return .portrait
+  }
+
   override func sourceURL(for bridge: RCTBridge) -> URL? {
     self.bundleURL()
   }
