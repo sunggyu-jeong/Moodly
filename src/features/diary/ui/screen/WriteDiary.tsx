@@ -42,7 +42,7 @@ const WriteDiary = () => {
       <KeyboardAvoidingView
         className="flex-1 bg-common-white"
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        keyboardVerticalOffset={50}
+        keyboardVerticalOffset={40}
       >
         <ScrollView
           ref={scrollRef}

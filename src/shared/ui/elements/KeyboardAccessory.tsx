@@ -10,7 +10,7 @@ interface keyboardAccessoryButtonProps {
 }
 
 export const KeyboardAccessoryButton = ({ onPress }: keyboardAccessoryButtonProps) => (
-  <View className="flex-1 h-10 justify-center border-t-[0.5px] border-t-[#E9E9E9] bg-gray-300">
+  <View className="flex-1 h-10 justify-center border-t-[0.5px] border-t-[#C6C9D7]">
     <TouchableWithoutFeedback onPress={onPress}>
       <H3
         weight="semibold"
@@ -25,6 +25,7 @@ export const KeyboardAccessoryButton = ({ onPress }: keyboardAccessoryButtonProp
 const accessoryStyles = StyleSheet.create({
   text: {
     color: gray[600],
+    fontWeight: '600',
     marginRight: getScaleSize(20),
     textAlign: 'right',
   },
