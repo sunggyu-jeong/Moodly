@@ -62,6 +62,7 @@ const WriteDiary = () => {
 
           <View className="flex-1">
             <TextInput
+              className="min-h-32 pb-10"
               multiline
               value={text}
               onChangeText={setText}
