@@ -1,5 +1,5 @@
 // src/screens/WriteDiary.tsx
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Image,
   KeyboardAvoidingView,
@@ -9,44 +9,48 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { KeyboardToolbar, useKeyboardState } from 'react-native-keyboard-controller';
+import InputAccessoryView from 'react-native-input-accessory-view';
 
 import { ICON_DATA } from '@/shared/constants';
 import { getScaleSize, useAppSelector } from '@/shared/hooks';
-import {
-  KeyboardAccessoryButton,
-  KeyboardAccessoryTheme,
-} from '@/shared/ui/elements/KeyboardAccessory';
 import { H2 } from '@/shared/ui/typography/H2';
 import NaviDismiss from '@/widgets/navigation-bar/ui/NaviDismiss';
 import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
 
-import { useCursorAwareScroll } from '../../../../shared/hooks/useCursorAwareScroll';
-import { common } from '../../../../shared/styles/colors';
+import { isNotEmpty } from '@/shared/lib';
+import { common } from '@/shared/styles/colors';
+import { KeyboardAccessoryButton } from '@/shared/ui/elements/KeyboardAccessory';
 import { useDiarySave } from '../../hooks/useDiarySave';
-import { DiaryTextBoxHandle } from '../components/DiaryTextBox';
 
 const actionButtons = [{ item: <NaviDismiss />, disabled: false }];
 
 const WriteDiary = () => {
-  const textBoxRef = useRef<DiaryTextBoxHandle | null>(null);
   const todayDiary = useAppSelector(state => state.diarySlice.todayDiary);
-  const save = useDiarySave(textBoxRef);
-  const { isVisible } = useKeyboardState();
+  const selectedDiary = useAppSelector(state => state.diarySlice.selectedDiary);
   const scrollRef = useRef<ScrollView>(null);
-  const { inputRef, onTextLayout, onSelectionChange } = useCursorAwareScroll(scrollRef);
+
   const [text, setText] = useState('');
+  const save = useDiarySave(text);
+
+  useEffect(() => {
+    setText(isNotEmpty(selectedDiary) ? (selectedDiary?.description ?? '') : '');
+  }, [selectedDiary]);
+
   return (
     <>
       <NavigationBar actionButtons={actionButtons} />
       <KeyboardAvoidingView
-        className="flex-1"
+        className="flex-1 bg-common-white"
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        keyboardVerticalOffset={50}
       >
         <ScrollView
           ref={scrollRef}
           style={styles.keyboardAvoiding}
           keyboardShouldPersistTaps="handled"
+          onScroll={({ nativeEvent }) => {
+            console.log('[ScrollView] contentOffset.y =', nativeEvent.contentOffset.y);
+          }}
         >
           <View className="items-center justify-center bg-common-white">
             <H2 weight="semibold">왜 이 감정을 느꼈나요?</H2>
@@ -58,29 +62,21 @@ const WriteDiary = () => {
 
           <View className="flex-1">
             <TextInput
-              ref={inputRef}
               multiline
               value={text}
               onChangeText={setText}
-              onTextLayout={onTextLayout}
-              onSelectionChange={onSelectionChange}
-              scrollEnabled={false} /* TextInput 내부 스크롤 OFF */
-              // style={styles.textInput}
+              scrollEnabled={false}
               placeholder="그 감정을 느낀 순간의 생각을 적어보세요"
             />
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
 
-      <KeyboardToolbar
-        className="h-52"
-        button={KeyboardAccessoryButton}
-        theme={KeyboardAccessoryTheme}
-        showArrows={false}
+      <InputAccessoryView
+        spaceHeight={40}
+        extraHeight={0}
+        renderView={() => <KeyboardAccessoryButton onPress={save} />}
       />
-      {/* <KeyboardStickyView>
-        <KeyboardAccessory onPress={save} />
-      </KeyboardStickyView> */}
     </>
   );
 };

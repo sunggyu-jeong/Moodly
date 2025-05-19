@@ -35,19 +35,14 @@ export const onRenderCallback: ProfilerOnRenderCallback = (
 
 export default function App() {
   return (
-    <Profiler
-      id="AppRoot"
-      onRender={onRenderCallback}
-    >
-      <Provider store={store}>
-        <KeyboardProvider>
-          <SafeAreaProvider>
-            <NavigationContainer ref={navigationRef}>
-              <RootStack />
-            </NavigationContainer>
-          </SafeAreaProvider>
-        </KeyboardProvider>
-      </Provider>
-    </Profiler>
+    <Provider store={store}>
+      <KeyboardProvider>
+        <SafeAreaProvider>
+          <NavigationContainer ref={navigationRef}>
+            <RootStack />
+          </NavigationContainer>
+        </SafeAreaProvider>
+      </KeyboardProvider>
+    </Provider>
   );
 }
