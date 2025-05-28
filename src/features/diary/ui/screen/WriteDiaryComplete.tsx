@@ -3,7 +3,7 @@ import { Image, StyleSheet, View } from 'react-native';
 
 import { setShowToastView } from '@/processes/overlay/model/overlaySlice';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
-import { getScaleSize, useAppDispatch, useAppSelector, useScale } from '@/shared/hooks';
+import { getScaleSize, useAppDispatch, useAppSelector } from '@/shared/hooks';
 import { dismissModalToScreen, navigate } from '@/shared/lib';
 import { gray } from '@/shared/styles/colors';
 import { Body2 } from '@/shared/ui/typography/Body2';
@@ -15,7 +15,6 @@ const WriteDiaryComplete = () => {
   const isModifyMode = useAppSelector(state => state.diarySlice.isModifyMode);
   const dispatch = useAppDispatch();
   const initialModifyMode = useRef(isModifyMode);
-  const { getScaleSize } = useScale();
 
   useEffect(() => {
     if (initialModifyMode.current) {
