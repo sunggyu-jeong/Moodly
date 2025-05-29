@@ -4,9 +4,8 @@ import { useAppDispatch, useAppSelector, useRealm } from '@/shared/hooks';
 import { isNotEmpty, navigate } from '@/shared/lib';
 
 import { addDiaryThunk, modifyDiaryThunk, setSelectedDiary } from '../model/diary.slice';
-import type { DiaryTextBoxHandle } from '../ui/components/DiaryTextBox';
 
-export function useDiarySave(textBoxRef: React.RefObject<DiaryTextBoxHandle | null>) {
+export function useDiarySave(text: string) {
   const dispatch = useAppDispatch();
   const todayDiary = useAppSelector(state => state.diarySlice.todayDiary);
   const selectedDiary = useAppSelector(state => state.diarySlice.selectedDiary);
@@ -14,7 +13,6 @@ export function useDiarySave(textBoxRef: React.RefObject<DiaryTextBoxHandle | nu
 
   const save = async () => {
     const realm = await openRealm();
-    const text = textBoxRef.current?.getText();
     if (!isNotEmpty(text) || !isNotEmpty(realm)) return;
 
     const diary = { ...todayDiary, description: text };
