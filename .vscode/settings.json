@@ -10,12 +10,7 @@
   // ===== Git Settings =====
   "git.autofetch": true,
   // ===== ESLint Validation =====
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact"
-  ],
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
   // ===== Default Formatter =====
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "prettier.requireConfig": true,
@@ -68,7 +63,7 @@
   "files.exclude": {
     "**/.git": true,
     "**/.DS_Store": true,
-    "**/node_modules": true,
+    "**/node_modules": true
   },
   "search.exclude": {
     "**/node_modules": true,
@@ -91,5 +86,6 @@
   "editor.codeActionsOnSave": {
     "source.organizeImports": "explicit",
     "source.fixAll.eslint": "explicit"
-  }
+  },
+  "java.configuration.updateBuildConfiguration": "automatic"
 }
