@@ -2,7 +2,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
-import { Profiler, ProfilerOnRenderCallback } from 'react';
+import { ProfilerOnRenderCallback } from 'react';
 import 'react-native-get-random-values';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
