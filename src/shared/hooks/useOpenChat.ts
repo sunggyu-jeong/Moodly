@@ -19,7 +19,7 @@ export function useOpenKakao(): useOpenChat {
           dispatch(
             setShowToastView({
               visibility: true,
-              message: '카카오톡이 설치되어 있지 않거나, 해당 링크를 열 수 없습니다.',
+              message: '해당 링크를 열 수 없습니다.',
             })
           );
           return;
