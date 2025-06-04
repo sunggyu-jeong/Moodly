@@ -10,10 +10,16 @@ import { H2 } from '@/shared/ui/typography/H2';
 
 const Home = () => {
   useInitializeDiary();
-  const isDiaryExist = useAppSelector(state => state.diarySlice.isDiaryExist);
+  const { data: hasDiary } = useAppSelector(state => state.diarySlice.isDiaryExist);
+
+  const titleText = hasDiary
+    ? '일기를 저장했어요\n오늘 하루도 수고했어요'
+    : '오늘 하루 어땠나요\n일기를 작성해볼까요?';
+
+  const buttonText = hasDiary ? '작성 완료' : '작성하러 가기';
 
   return (
-    <View className="bg-gray-100 flex-1 mx-5 justify-center items-center">
+    <View className="bg-gray-100 flex-1 px-5 justify-center items-center">
       <DiaryCountCard
         onPress={() => {
           jumpToTab('일기목록');
@@ -25,9 +31,7 @@ const Home = () => {
           weight="semibold"
           style={styles.mentStyle}
         >
-          {isDiaryExist.data
-            ? '일기를 저장했어요\n오늘 하루도 수고했어요'
-            : '오늘 하루 어땠나요\n일기를 작성해볼까요?'}
+          {titleText}
         </H2>
 
         <Image
@@ -38,9 +42,9 @@ const Home = () => {
 
         <ActionButton
           onPress={() => navigate('DiaryStack')}
-          disabled={isDiaryExist.data}
+          disabled={hasDiary}
         >
-          {isDiaryExist.data ? '작성 완료' : '작성하러 가기'}
+          {buttonText}
         </ActionButton>
       </View>
     </View>
