@@ -1,6 +1,6 @@
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
-import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Image, Platform, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { removeDiaryThunk } from '@/features/diary/model/diary.slice';
 import { MODAL_CONFIRM_ACTION_KEY } from '@/processes/key';
@@ -56,7 +56,7 @@ const DiaryDetail = () => {
         setShowDropdownView({
           visibility: true,
           dropdownList: props,
-          pos: { x, y: y + height + 5 },
+          pos: { x, y: y + height + 5 + Platform.OS === 'ios' ? 0 : 70 },
         })
       );
     });
@@ -86,6 +86,7 @@ const DiaryDetail = () => {
         throw new Error('선택된 일기가 없거나 Realm을 열 수 없습니다.');
       }
       await dispatch(removeDiaryThunk({ realm, emotionId: selectedDiary.emotionId }));
+      await closeRealm();
       if (route.params.origin === 'RootStack') {
         goBack();
       } else {
