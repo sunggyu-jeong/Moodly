@@ -1,4 +1,4 @@
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, StatusBar, StyleSheet, View } from 'react-native';
 
 import { useInitializeDiary } from '@/features/diary/hooks/useInitializeDiary';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
@@ -19,35 +19,41 @@ const Home = () => {
   const buttonText = hasDiary ? '작성 완료' : '작성하러 가기';
 
   return (
-    <View className="bg-gray-100 flex-1 px-5 justify-center items-center">
-      <DiaryCountCard
-        onPress={() => {
-          jumpToTab('일기목록');
-        }}
+    <>
+      <StatusBar
+        translucent
+        barStyle="light-content"
       />
-
-      <View className="bg-common-white w-full justify-center items-center rounded-xl px-5 py-6">
-        <H2
-          weight="semibold"
-          style={styles.mentStyle}
-        >
-          {titleText}
-        </H2>
-
-        <Image
-          source={MAIN_ICONS.avatarShadow}
-          className="aspect-square"
-          style={styles.imageStyle}
+      <View className="bg-gray-100 flex-1 px-5 justify-center items-center">
+        <DiaryCountCard
+          onPress={() => {
+            jumpToTab('일기목록');
+          }}
         />
 
-        <ActionButton
-          onPress={() => navigate('DiaryStack')}
-          disabled={hasDiary}
-        >
-          {buttonText}
-        </ActionButton>
+        <View className="bg-common-white w-full justify-center items-center rounded-xl px-5 py-6">
+          <H2
+            weight="semibold"
+            style={styles.mentStyle}
+          >
+            {titleText}
+          </H2>
+
+          <Image
+            source={MAIN_ICONS.avatarShadow}
+            className="aspect-square"
+            style={styles.imageStyle}
+          />
+
+          <ActionButton
+            onPress={() => navigate('DiaryStack')}
+            disabled={hasDiary}
+          >
+            {buttonText}
+          </ActionButton>
+        </View>
       </View>
-    </View>
+    </>
   );
 };
 
