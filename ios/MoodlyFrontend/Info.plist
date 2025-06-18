@@ -66,5 +66,11 @@
 	<string>Light</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+  <key>UIBackgroundModes</key>
+  <array>
+    <string>remote-notification</string>
+  </array>
+  <key>NSPushNotificationUsageDescription</key>
+  <string>알림을 보내기 위해 권한이 필요합니다.</string>
 </dict>
 </plist>
