@@ -16,7 +16,7 @@ const Progress = ({ value, className }: ProgressProps) => {
     >
       <View
         style={{ width: `${value}%` }}
-        className="h-full bg-white rounded-full"
+        className="h-full bg-common-white rounded-full"
       />
     </View>
   );

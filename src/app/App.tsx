@@ -16,12 +16,13 @@ import { Provider } from 'react-redux';
 import { navigationRef } from '@/shared/lib';
 import '../../global.css';
 
+import { HOT_UPDATER_SUPABASE_URL } from '@env';
 import { HotUpdater, getUpdateSource } from '@hot-updater/react-native';
 import { getApp } from '@react-native-firebase/app';
-import { PermissionsAndroid, Platform, Text, View } from 'react-native';
+import { PermissionsAndroid, Platform } from 'react-native';
 import RootStack from './navigation/RootStack';
 import store from './store';
-import { HOT_UPDATER_SUPABASE_URL } from '@env';
+import Splash from './ui/screens/Splash';
 
 dayjs.locale('ko');
 
@@ -113,26 +114,12 @@ export default HotUpdater.wrap({
   source: getUpdateSource(`${HOT_UPDATER_SUPABASE_URL}/functions/v1/update-server`, {
     updateStrategy: 'fingerprint',
   }),
-  fallbackComponent: ({ progress, status }) => (
-    <View
-      style={{
-        flex: 1,
-        padding: 20,
-        borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      }}
-    >
-
-      <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>
-        {status === 'UPDATING' ? 'Updating...' : 'Checking for Update...'}
-      </Text>
-      {progress > 0 ? (
-        <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>
-          {Math.round(progress * 100)}%
-        </Text>
-      ) : null}
-    </View>
-  ),
+  fallbackComponent: ({ progress, status }) => {
+    return (
+      <Splash
+        progress={progress}
+        status={status}
+      />
+    );
+  },
 })(App);
