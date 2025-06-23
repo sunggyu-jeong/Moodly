@@ -12,7 +12,7 @@ const UpdateScreen = () => {
       <View>
         <UpdateContent
           progress={progress}
-          step={step}
+          status={step}
         />
         <LoadingDots />
       </View>
