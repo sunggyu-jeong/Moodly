@@ -16,10 +16,12 @@ import { Provider } from 'react-redux';
 import { navigationRef } from '@/shared/lib';
 import '../../global.css';
 
+import { HotUpdater, getUpdateSource } from '@hot-updater/react-native';
 import { getApp } from '@react-native-firebase/app';
-import { PermissionsAndroid, Platform } from 'react-native';
+import { PermissionsAndroid, Platform, Text, View } from 'react-native';
 import RootStack from './navigation/RootStack';
 import store from './store';
+import { HOT_UPDATER_SUPABASE_URL } from '@env';
 
 dayjs.locale('ko');
 
@@ -57,7 +59,8 @@ async function requestNotificationPermission(): Promise<boolean> {
   }
   return true;
 }
-export default function App() {
+
+function App() {
   useEffect(() => {
     let unsubscribeTokenRefresh: (() => void) | undefined;
 
@@ -105,3 +108,31 @@ export default function App() {
     </Provider>
   );
 }
+
+export default HotUpdater.wrap({
+  source: getUpdateSource(`${HOT_UPDATER_SUPABASE_URL}/functions/v1/update-server`, {
+    updateStrategy: 'fingerprint',
+  }),
+  fallbackComponent: ({ progress, status }) => (
+    <View
+      style={{
+        flex: 1,
+        padding: 20,
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      }}
+    >
+
+      <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>
+        {status === 'UPDATING' ? 'Updating...' : 'Checking for Update...'}
+      </Text>
+      {progress > 0 ? (
+        <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>
+          {Math.round(progress * 100)}%
+        </Text>
+      ) : null}
+    </View>
+  ),
+})(App);
