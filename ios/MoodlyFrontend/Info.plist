@@ -73,6 +73,6 @@
 		<key>NSPushNotificationUsageDescription</key>
 		<string>알림을 보내기 위해 권한이 필요합니다.</string>
 		<key>HOT_UPDATER_FINGERPRINT_HASH</key>
-		<string>b1c2d359a2975536bced6d7265b3931c9fcdac69</string>
+		<string>a36ab0468c58f424d96140ebb2cc3b32e8d72dfa</string>
 	</dict>
 </plist>
