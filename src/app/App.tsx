@@ -19,7 +19,9 @@ import '../../global.css';
 import { HOT_UPDATER_SUPABASE_URL } from '@env';
 import { HotUpdater, getUpdateSource } from '@hot-updater/react-native';
 import { getApp } from '@react-native-firebase/app';
+import React from 'react';
 import { PermissionsAndroid, Platform } from 'react-native';
+import { UpdateProgressProps } from '../processes/update/useUpdateProgress';
 import RootStack from './navigation/RootStack';
 import store from './store';
 import Splash from './ui/screens/Splash';
@@ -110,16 +112,18 @@ function App() {
   );
 }
 
+const FallbackComponent = React.memo(({ status, progress }: UpdateProgressProps) => {
+  return (
+    <Splash
+      status={status}
+      progress={progress * 100}
+    />
+  );
+});
+
 export default HotUpdater.wrap({
   source: getUpdateSource(`${HOT_UPDATER_SUPABASE_URL}/functions/v1/update-server`, {
     updateStrategy: 'fingerprint',
   }),
-  fallbackComponent: ({ progress, status }) => {
-    return (
-      <Splash
-        progress={progress}
-        status={status}
-      />
-    );
-  },
+  fallbackComponent: FallbackComponent,
 })(App);
