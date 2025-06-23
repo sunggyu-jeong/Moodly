@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
-import { setShowToastView } from '@/processes/overlay/model/overlaySlice';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { getScaleSize, useAppDispatch, useAppSelector } from '@/shared/hooks';
 import { dismissModalToScreen, navigate } from '@/shared/lib';
@@ -9,6 +8,7 @@ import { gray } from '@/shared/styles/colors';
 import { Body2 } from '@/shared/ui/typography/Body2';
 import { H2 } from '@/shared/ui/typography/H2';
 
+import { setShowToastView } from '../../../overlay/model/overlay-slice';
 import { setModifyMode } from '../../model/diary.slice';
 
 const WriteDiaryComplete = () => {

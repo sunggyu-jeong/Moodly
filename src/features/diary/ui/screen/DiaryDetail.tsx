@@ -4,12 +4,13 @@ import { Image, Platform, ScrollView, StyleSheet, TouchableOpacity, View } from 
 
 import { removeDiaryThunk } from '@/features/diary/model/diary.slice';
 import { MODAL_CONFIRM_ACTION_KEY } from '@/processes/key';
+
 import {
   setOverlayEventHandler,
   setShowDropdownView,
   setShowModalPopup,
   setShowToastView,
-} from '@/processes/overlay/model/overlaySlice';
+} from '@/overlay/model/overlay-slice';
 import { COMMON_ICONS } from '@/shared/assets/images/common';
 import { ICON_DATA } from '@/shared/constants/Icons';
 import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '@/shared/hooks';
