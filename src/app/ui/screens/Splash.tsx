@@ -5,14 +5,16 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import UpdateContent from '@/features/updateProgress/ui/components/UpdateContent';
 import { UpdateProgressProps } from '@/processes/update/useUpdateProgress';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
+import { resetTo } from '@/shared/lib';
 
 const Splash = ({ status, progress }: UpdateProgressProps) => {
   useEffect(() => {
-    console.log('>>>>>>>>>>>>>>>>', status);
-    // setTimeout(() => {
-    //   resetTo('Main');
-    // }, 2000);
-  }, []);
+    if (status === 'UPDATE_PROCESS_COMPLETED') {
+      setTimeout(() => {
+        resetTo('Main');
+      }, 2000);
+    }
+  }, [status]);
 
   return (
     <>
