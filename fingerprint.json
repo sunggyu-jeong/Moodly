@@ -1,0 +1,258 @@
+{
+  "ios": {
+    "sources": [
+      {
+        "type": "file",
+        "filePath": ".gitignore",
+        "reasons": [
+          "bareGitIgnore"
+        ],
+        "hash": "f7c0610039c9834d466c088131b85263da1546c1"
+      },
+      {
+        "type": "dir",
+        "filePath": "ios",
+        "reasons": [
+          "bareNativeDir"
+        ],
+        "hash": "a242d25c0abc7304aa7244caa6169c20aad3f6b6"
+      },
+      {
+        "type": "dir",
+        "filePath": "node_modules/@hot-updater/react-native",
+        "reasons": [
+          "rncoreAutolinking"
+        ],
+        "hash": "2b71408b4e8d445484ae7029fba7e0cfbd4f23d3"
+      },
+      {
+        "type": "dir",
+        "filePath": "node_modules/@react-native-async-storage/async-storage",
+        "reasons": [
+          "rncoreAutolinking"
+        ],
+        "hash": "c8abbd95b5a4de71497e32dc315b03711023ee53"
+      },
+      {
+        "type": "dir",
+        "filePath": "node_modules/@react-native-firebase/app",
+        "reasons": [
+          "rncoreAutolinking"
+        ],
+        "hash": "e22551d7272bdf90f01daa2ee29c7f4eef7fce95"
+      },
+      {
+        "type": "dir",
+        "filePath": "node_modules/@react-native-firebase/messaging",
+        "reasons": [
+          "rncoreAutolinking"
+        ],
+        "hash": "5adc7b0d8eefd1bcf02d041c5dd0f2e5efccc0a0"
+      },
+      {
+        "type": "dir",
+        "filePath": "node_modules/react-native-get-random-values",
+        "reasons": [
+          "rncoreAutolinking"
+        ],
+        "hash": "7f6629c03f2f9b3d8e0b95552273b1f28ddb14a1"
+      },
+      {
+        "type": "dir",
+        "filePath": "node_modules/react-native-keyboard-controller",
+        "reasons": [
+          "rncoreAutolinking"
+        ],
+        "hash": "0303ce058c025945a2d4353ee5bec0f5517bb95d"
+      },
+      {
+        "type": "dir",
+        "filePath": "node_modules/react-native-reanimated",
+        "reasons": [
+          "rncoreAutolinking"
+        ],
+        "hash": "920ecdb5f86d747f760527fd442ea385dac75976"
+      },
+      {
+        "type": "dir",
+        "filePath": "node_modules/react-native-safe-area-context",
+        "reasons": [
+          "rncoreAutolinking"
+        ],
+        "hash": "6b3029d482d0de26ab89ec08902563ff336b590e"
+      },
+      {
+        "type": "dir",
+        "filePath": "node_modules/react-native-screens",
+        "reasons": [
+          "rncoreAutolinking"
+        ],
+        "hash": "3cc5c7d1266b02fa0fd8d0d01e94198de567c25d"
+      },
+      {
+        "type": "dir",
+        "filePath": "node_modules/realm",
+        "reasons": [
+          "rncoreAutolinking"
+        ],
+        "hash": "723b7d00a904b4ee51aad29edde5d4faede35b8d"
+      },
+      {
+        "type": "contents",
+        "id": "package:react-native",
+        "contents": "{\"name\":\"react-native\",\"version\":\"0.79.1\",\"description\":\"A framework for building native apps using React\",\"license\":\"MIT\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/facebook/react-native.git\",\"directory\":\"packages/react-native\"},\"homepage\":\"https://reactnative.dev/\",\"keywords\":[\"react\",\"react-native\",\"android\",\"ios\",\"mobile\",\"cross-platform\",\"app-framework\",\"mobile-development\"],\"bugs\":\"https://github.com/facebook/react-native/issues\",\"engines\":{\"node\":\">=18\"},\"bin\":{\"react-native\":\"cli.js\"},\"types\":\"types\",\"jest-junit\":{\"outputDirectory\":\"reports/junit\",\"outputName\":\"js-test-results.xml\"},\"files\":[\"android\",\"build.gradle.kts\",\"cli.js\",\"flow\",\"gradle.properties\",\"gradle/libs.versions.toml\",\"index.js\",\"interface.js\",\"jest-preset.js\",\"jest\",\"Libraries\",\"LICENSE\",\"React-Core.podspec\",\"react-native.config.js\",\"React.podspec\",\"React\",\"!React/Fabric/RCTThirdPartyFabricComponentsProvider.*\",\"ReactAndroid\",\"ReactApple\",\"ReactCommon\",\"README.md\",\"rn-get-polyfills.js\",\"scripts/compose-source-maps.js\",\"scripts/find-node-for-xcode.sh\",\"scripts/bundle.js\",\"scripts/generate-codegen-artifacts.js\",\"scripts/generate-provider-cli.js\",\"scripts/generate-specs-cli.js\",\"scripts/codegen\",\"!scripts/codegen/__tests__\",\"!scripts/codegen/__test_fixtures__\",\"scripts/hermes/hermes-utils.js\",\"scripts/hermes/prepare-hermes-for-build.js\",\"scripts/ios-configure-glog.sh\",\"scripts/xcode/ccache-clang++.sh\",\"scripts/xcode/ccache-clang.sh\",\"scripts/xcode/ccache.conf\",\"scripts/xcode/with-environment.sh\",\"scripts/native_modules.rb\",\"scripts/node-binary.sh\",\"scripts/packager.sh\",\"scripts/packager-reporter.js\",\"scripts/react_native_pods_utils/script_phases.rb\",\"scripts/react_native_pods_utils/script_phases.sh\",\"scripts/react_native_pods.rb\",\"scripts/cocoapods\",\"!scripts/cocoapods/__tests__\",\"scripts/react-native-xcode.sh\",\"sdks/.hermesversion\",\"sdks/hermes-engine\",\"sdks/hermesc\",\"settings.gradle.kts\",\"src\",\"template.config.js\",\"template\",\"!template/node_modules\",\"!template/package-lock.json\",\"!template/yarn.lock\",\"third-party-podspecs\",\"types\"],\"scripts\":{\"prepack\":\"node ./scripts/prepack.js\",\"featureflags\":\"node ./scripts/featureflags/index.js\"},\"peerDependencies\":{\"@types/react\":\"^19.0.0\",\"react\":\"^19.0.0\"},\"peerDependenciesMeta\":{\"@types/react\":{\"optional\":true}},\"dependencies\":{\"@jest/create-cache-key-function\":\"^29.7.0\",\"@react-native/assets-registry\":\"0.79.1\",\"@react-native/codegen\":\"0.79.1\",\"@react-native/community-cli-plugin\":\"0.79.1\",\"@react-native/gradle-plugin\":\"0.79.1\",\"@react-native/js-polyfills\":\"0.79.1\",\"@react-native/normalize-colors\":\"0.79.1\",\"@react-native/virtualized-lists\":\"0.79.1\",\"abort-controller\":\"^3.0.0\",\"anser\":\"^1.4.9\",\"ansi-regex\":\"^5.0.0\",\"babel-jest\":\"^29.7.0\",\"babel-plugin-syntax-hermes-parser\":\"0.25.1\",\"base64-js\":\"^1.5.1\",\"chalk\":\"^4.0.0\",\"commander\":\"^12.0.0\",\"event-target-shim\":\"^5.0.1\",\"flow-enums-runtime\":\"^0.0.6\",\"glob\":\"^7.1.1\",\"invariant\":\"^2.2.4\",\"jest-environment-node\":\"^29.7.0\",\"memoize-one\":\"^5.0.0\",\"metro-runtime\":\"^0.82.0\",\"metro-source-map\":\"^0.82.0\",\"nullthrows\":\"^1.1.1\",\"pretty-format\":\"^29.7.0\",\"promise\":\"^8.3.0\",\"react-devtools-core\":\"^6.1.1\",\"react-refresh\":\"^0.14.0\",\"regenerator-runtime\":\"^0.13.2\",\"scheduler\":\"0.25.0\",\"semver\":\"^7.1.3\",\"stacktrace-parser\":\"^0.1.10\",\"whatwg-fetch\":\"^3.0.0\",\"ws\":\"^6.2.3\",\"yargs\":\"^17.6.2\"},\"codegenConfig\":{\"libraries\":[{\"name\":\"FBReactNativeSpec\",\"type\":\"modules\",\"ios\":{},\"android\":{},\"jsSrcsDir\":\"src\"},{\"name\":\"rncore\",\"type\":\"components\",\"ios\":{},\"android\":{},\"jsSrcsDir\":\"src\"}]}}",
+        "reasons": [
+          "package:react-native"
+        ],
+        "hash": "1e65b827b5b3c6923165660cbb5ae24ec951fe00"
+      },
+      {
+        "type": "contents",
+        "id": "packageJson:scripts",
+        "contents": "{\"android\":\"react-native run-android\",\"ios\":\"react-native run-ios\",\"lint\":\"eslint .\",\"start\":\"react-native start\",\"test\":\"jest\",\"ios:sim\":\"react-native run-ios --simulator 'iPhone 11'\"}",
+        "reasons": [
+          "packageJson:scripts"
+        ],
+        "hash": "6aa7e4375112b80f954ae8e595df706a8db704c9"
+      },
+      {
+        "type": "contents",
+        "id": "rncoreAutolinkingConfig",
+        "contents": "{\"@hot-updater/react-native\":{\"root\":\"node_modules/@hot-updater/react-native\",\"name\":\"@hot-updater/react-native\",\"platforms\":{\"ios\":{\"podspecPath\":\"node_modules/@hot-updater/react-native/HotUpdater.podspec\",\"version\":\"0.19.7\",\"configurations\":[],\"scriptPhases\":[]},\"android\":{\"sourceDir\":\"node_modules/@hot-updater/react-native/android\",\"packageImportPath\":\"import com.hotupdater.HotUpdaterPackage;\",\"packageInstance\":\"new HotUpdaterPackage()\",\"buildTypes\":[],\"libraryName\":\"HotUpdaterSpec\",\"componentDescriptors\":[],\"cmakeListsPath\":\"node_modules/@hot-updater/react-native/android/build/generated/source/codegen/jni/CMakeLists.txt\",\"cxxModuleCMakeListsModuleName\":null,\"cxxModuleCMakeListsPath\":null,\"cxxModuleHeaderName\":null,\"isPureCxxDependency\":false}}},\"@react-native-async-storage/async-storage\":{\"root\":\"node_modules/@react-native-async-storage/async-storage\",\"name\":\"@react-native-async-storage/async-storage\",\"platforms\":{\"ios\":{\"podspecPath\":\"node_modules/@react-native-async-storage/async-storage/RNCAsyncStorage.podspec\",\"version\":\"2.2.0\",\"configurations\":[],\"scriptPhases\":[]},\"android\":{\"sourceDir\":\"node_modules/@react-native-async-storage/async-storage/android\",\"packageImportPath\":\"import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;\",\"packageInstance\":\"new AsyncStoragePackage()\",\"buildTypes\":[],\"libraryName\":\"rnasyncstorage\",\"componentDescriptors\":[],\"cmakeListsPath\":\"node_modules/@react-native-async-storage/async-storage/android/build/generated/source/codegen/jni/CMakeLists.txt\",\"cxxModuleCMakeListsModuleName\":null,\"cxxModuleCMakeListsPath\":null,\"cxxModuleHeaderName\":null,\"isPureCxxDependency\":false}}},\"@react-native-firebase/app\":{\"root\":\"node_modules/@react-native-firebase/app\",\"name\":\"@react-native-firebase/app\",\"platforms\":{\"ios\":{\"podspecPath\":\"node_modules/@react-native-firebase/app/RNFBApp.podspec\",\"version\":\"22.2.1\",\"configurations\":[],\"scriptPhases\":[{\"name\":\"[RNFB] Core Configuration\",\"path\":\"./ios_config.sh\",\"execution_position\":\"after_compile\",\"input_files\":[\"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)\"]}]},\"android\":{\"sourceDir\":\"node_modules/@react-native-firebase/app/android\",\"packageImportPath\":\"import io.invertase.firebase.app.ReactNativeFirebaseAppPackage;\",\"packageInstance\":\"new ReactNativeFirebaseAppPackage()\",\"buildTypes\":[],\"componentDescriptors\":[],\"cmakeListsPath\":\"node_modules/@react-native-firebase/app/android/build/generated/source/codegen/jni/CMakeLists.txt\",\"cxxModuleCMakeListsModuleName\":null,\"cxxModuleCMakeListsPath\":null,\"cxxModuleHeaderName\":null,\"isPureCxxDependency\":false}}},\"@react-native-firebase/messaging\":{\"root\":\"node_modules/@react-native-firebase/messaging\",\"name\":\"@react-native-firebase/messaging\",\"platforms\":{\"ios\":{\"podspecPath\":\"node_modules/@react-native-firebase/messaging/RNFBMessaging.podspec\",\"version\":\"22.2.1\",\"configurations\":[],\"scriptPhases\":[]},\"android\":{\"sourceDir\":\"node_modules/@react-native-firebase/messaging/android\",\"packageImportPath\":\"import io.invertase.firebase.messaging.ReactNativeFirebaseMessagingPackage;\",\"packageInstance\":\"new ReactNativeFirebaseMessagingPackage()\",\"buildTypes\":[],\"componentDescriptors\":[],\"cmakeListsPath\":\"node_modules/@react-native-firebase/messaging/android/build/generated/source/codegen/jni/CMakeLists.txt\",\"cxxModuleCMakeListsModuleName\":null,\"cxxModuleCMakeListsPath\":null,\"cxxModuleHeaderName\":null,\"isPureCxxDependency\":false}}},\"react-native-get-random-values\":{\"root\":\"node_modules/react-native-get-random-values\",\"name\":\"react-native-get-random-values\",\"platforms\":{\"ios\":{\"podspecPath\":\"node_modules/react-native-get-random-values/react-native-get-random-values.podspec\",\"version\":\"1.11.0\",\"configurations\":[],\"scriptPhases\":[]},\"android\":{\"sourceDir\":\"node_modules/react-native-get-random-values/android\",\"packageImportPath\":\"import org.linusu.RNGetRandomValuesPackage;\",\"packageInstance\":\"new RNGetRandomValuesPackage()\",\"buildTypes\":[],\"componentDescriptors\":[],\"cmakeListsPath\":\"node_modules/react-native-get-random-values/android/build/generated/source/codegen/jni/CMakeLists.txt\",\"cxxModuleCMakeListsModuleName\":null,\"cxxModuleCMakeListsPath\":null,\"cxxModuleHeaderName\":null,\"isPureCxxDependency\":false}}},\"react-native-keyboard-controller\":{\"root\":\"node_modules/react-native-keyboard-controller\",\"name\":\"react-native-keyboard-controller\",\"platforms\":{\"ios\":{\"podspecPath\":\"node_modules/react-native-keyboard-controller/react-native-keyboard-controller.podspec\",\"version\":\"1.17.5\",\"configurations\":[],\"scriptPhases\":[]},\"android\":{\"sourceDir\":\"node_modules/react-native-keyboard-controller/android\",\"packageImportPath\":\"import com.reactnativekeyboardcontroller.KeyboardControllerPackage;\",\"packageInstance\":\"new KeyboardControllerPackage()\",\"buildTypes\":[],\"libraryName\":\"reactnativekeyboardcontroller\",\"componentDescriptors\":[\"KeyboardControllerViewComponentDescriptor\",\"KeyboardGestureAreaComponentDescriptor\",\"OverKeyboardViewComponentDescriptor\"],\"cmakeListsPath\":\"node_modules/react-native-keyboard-controller/android/src/main/jni/CMakeLists.txt\",\"cxxModuleCMakeListsModuleName\":null,\"cxxModuleCMakeListsPath\":null,\"cxxModuleHeaderName\":null,\"isPureCxxDependency\":false}}},\"react-native-reanimated\":{\"root\":\"node_modules/react-native-reanimated\",\"name\":\"react-native-reanimated\",\"platforms\":{\"ios\":{\"podspecPath\":\"node_modules/react-native-reanimated/RNReanimated.podspec\",\"version\":\"3.18.0\",\"configurations\":[],\"scriptPhases\":[]},\"android\":{\"sourceDir\":\"node_modules/react-native-reanimated/android\",\"packageImportPath\":\"import com.swmansion.reanimated.ReanimatedPackage;\",\"packageInstance\":\"new ReanimatedPackage()\",\"buildTypes\":[],\"libraryName\":\"rnreanimated\",\"componentDescriptors\":[],\"cmakeListsPath\":\"node_modules/react-native-reanimated/android/build/generated/source/codegen/jni/CMakeLists.txt\",\"cxxModuleCMakeListsModuleName\":null,\"cxxModuleCMakeListsPath\":null,\"cxxModuleHeaderName\":null,\"isPureCxxDependency\":false}}},\"react-native-safe-area-context\":{\"root\":\"node_modules/react-native-safe-area-context\",\"name\":\"react-native-safe-area-context\",\"platforms\":{\"ios\":{\"podspecPath\":\"node_modules/react-native-safe-area-context/react-native-safe-area-context.podspec\",\"version\":\"5.5.0\",\"configurations\":[],\"scriptPhases\":[]},\"android\":{\"sourceDir\":\"node_modules/react-native-safe-area-context/android\",\"packageImportPath\":\"import com.th3rdwave.safeareacontext.SafeAreaContextPackage;\",\"packageInstance\":\"new SafeAreaContextPackage()\",\"buildTypes\":[],\"libraryName\":\"safeareacontext\",\"componentDescriptors\":[\"RNCSafeAreaProviderComponentDescriptor\",\"RNCSafeAreaViewComponentDescriptor\"],\"cmakeListsPath\":\"node_modules/react-native-safe-area-context/android/src/main/jni/CMakeLists.txt\",\"cxxModuleCMakeListsModuleName\":null,\"cxxModuleCMakeListsPath\":null,\"cxxModuleHeaderName\":null,\"isPureCxxDependency\":false}}},\"react-native-screens\":{\"root\":\"node_modules/react-native-screens\",\"name\":\"react-native-screens\",\"platforms\":{\"ios\":{\"podspecPath\":\"node_modules/react-native-screens/RNScreens.podspec\",\"version\":\"4.11.1\",\"configurations\":[],\"scriptPhases\":[]},\"android\":{\"sourceDir\":\"node_modules/react-native-screens/android\",\"packageImportPath\":\"import com.swmansion.rnscreens.RNScreensPackage;\",\"packageInstance\":\"new RNScreensPackage()\",\"buildTypes\":[],\"libraryName\":\"rnscreens\",\"componentDescriptors\":[\"RNSFullWindowOverlayComponentDescriptor\",\"RNSScreenContainerComponentDescriptor\",\"RNSScreenNavigationContainerComponentDescriptor\",\"RNSScreenStackHeaderConfigComponentDescriptor\",\"RNSScreenStackHeaderSubviewComponentDescriptor\",\"RNSScreenStackComponentDescriptor\",\"RNSSearchBarComponentDescriptor\",\"RNSScreenComponentDescriptor\",\"RNSScreenFooterComponentDescriptor\",\"RNSScreenContentWrapperComponentDescriptor\",\"RNSModalScreenComponentDescriptor\"],\"cmakeListsPath\":\"node_modules/react-native-screens/android/src/main/jni/CMakeLists.txt\",\"cxxModuleCMakeListsModuleName\":null,\"cxxModuleCMakeListsPath\":null,\"cxxModuleHeaderName\":null,\"isPureCxxDependency\":false}}},\"realm\":{\"root\":\"node_modules/realm\",\"name\":\"realm\",\"platforms\":{\"ios\":{\"podspecPath\":\"node_modules/realm/RealmJS.podspec\",\"version\":\"20.1.0\",\"configurations\":[],\"scriptPhases\":[]},\"android\":{\"sourceDir\":\"node_modules/realm/binding/android\",\"packageImportPath\":\"import io.realm.react.RealmReactPackage;\",\"packageInstance\":\"new RealmReactPackage()\",\"buildTypes\":[],\"componentDescriptors\":[],\"cmakeListsPath\":\"node_modules/realm/binding/android/build/generated/source/codegen/jni/CMakeLists.txt\",\"cxxModuleCMakeListsModuleName\":null,\"cxxModuleCMakeListsPath\":null,\"cxxModuleHeaderName\":null,\"isPureCxxDependency\":false}}}}",
+        "reasons": [
+          "rncoreAutolinking"
+        ],
+        "hash": "ac937b4d156ab8ed63cfabb057830f276244e801"
+      }
+    ],
+    "hash": "f31e5718e787ff35891a94b70ffcf7c64b63a117"
+  },
+  "android": {
+    "sources": [
+      {
+        "type": "file",
+        "filePath": ".gitignore",
+        "reasons": [
+          "bareGitIgnore"
+        ],
+        "hash": "f7c0610039c9834d466c088131b85263da1546c1"
+      },
+      {
+        "type": "dir",
+        "filePath": "android",
+        "reasons": [
+          "bareNativeDir"
+        ],
+        "hash": "e821e1b4dc6d5a5e3dba5133f3e48498c24de97f"
+      },
+      {
+        "type": "dir",
+        "filePath": "node_modules/@hot-updater/react-native",
+        "reasons": [
+          "rncoreAutolinking"
+        ],
+        "hash": "2b71408b4e8d445484ae7029fba7e0cfbd4f23d3"
+      },
+      {
+        "type": "dir",
+        "filePath": "node_modules/@react-native-async-storage/async-storage",
+        "reasons": [
+          "rncoreAutolinking"
+        ],
+        "hash": "c8abbd95b5a4de71497e32dc315b03711023ee53"
+      },
+      {
+        "type": "dir",
+        "filePath": "node_modules/@react-native-firebase/app",
+        "reasons": [
+          "rncoreAutolinking"
+        ],
+        "hash": "e22551d7272bdf90f01daa2ee29c7f4eef7fce95"
+      },
+      {
+        "type": "dir",
+        "filePath": "node_modules/@react-native-firebase/messaging",
+        "reasons": [
+          "rncoreAutolinking"
+        ],
+        "hash": "5adc7b0d8eefd1bcf02d041c5dd0f2e5efccc0a0"
+      },
+      {
+        "type": "dir",
+        "filePath": "node_modules/react-native-get-random-values",
+        "reasons": [
+          "rncoreAutolinking"
+        ],
+        "hash": "7f6629c03f2f9b3d8e0b95552273b1f28ddb14a1"
+      },
+      {
+        "type": "dir",
+        "filePath": "node_modules/react-native-keyboard-controller",
+        "reasons": [
+          "rncoreAutolinking"
+        ],
+        "hash": "0303ce058c025945a2d4353ee5bec0f5517bb95d"
+      },
+      {
+        "type": "dir",
+        "filePath": "node_modules/react-native-reanimated",
+        "reasons": [
+          "rncoreAutolinking"
+        ],
+        "hash": "920ecdb5f86d747f760527fd442ea385dac75976"
+      },
+      {
+        "type": "dir",
+        "filePath": "node_modules/react-native-safe-area-context",
+        "reasons": [
+          "rncoreAutolinking"
+        ],
+        "hash": "6b3029d482d0de26ab89ec08902563ff336b590e"
+      },
+      {
+        "type": "dir",
+        "filePath": "node_modules/react-native-screens",
+        "reasons": [
+          "rncoreAutolinking"
+        ],
+        "hash": "3cc5c7d1266b02fa0fd8d0d01e94198de567c25d"
+      },
+      {
+        "type": "dir",
+        "filePath": "node_modules/realm",
+        "reasons": [
+          "rncoreAutolinking"
+        ],
+        "hash": "723b7d00a904b4ee51aad29edde5d4faede35b8d"
+      },
+      {
+        "type": "contents",
+        "id": "package:react-native",
+        "contents": "{\"name\":\"react-native\",\"version\":\"0.79.1\",\"description\":\"A framework for building native apps using React\",\"license\":\"MIT\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/facebook/react-native.git\",\"directory\":\"packages/react-native\"},\"homepage\":\"https://reactnative.dev/\",\"keywords\":[\"react\",\"react-native\",\"android\",\"ios\",\"mobile\",\"cross-platform\",\"app-framework\",\"mobile-development\"],\"bugs\":\"https://github.com/facebook/react-native/issues\",\"engines\":{\"node\":\">=18\"},\"bin\":{\"react-native\":\"cli.js\"},\"types\":\"types\",\"jest-junit\":{\"outputDirectory\":\"reports/junit\",\"outputName\":\"js-test-results.xml\"},\"files\":[\"android\",\"build.gradle.kts\",\"cli.js\",\"flow\",\"gradle.properties\",\"gradle/libs.versions.toml\",\"index.js\",\"interface.js\",\"jest-preset.js\",\"jest\",\"Libraries\",\"LICENSE\",\"React-Core.podspec\",\"react-native.config.js\",\"React.podspec\",\"React\",\"!React/Fabric/RCTThirdPartyFabricComponentsProvider.*\",\"ReactAndroid\",\"ReactApple\",\"ReactCommon\",\"README.md\",\"rn-get-polyfills.js\",\"scripts/compose-source-maps.js\",\"scripts/find-node-for-xcode.sh\",\"scripts/bundle.js\",\"scripts/generate-codegen-artifacts.js\",\"scripts/generate-provider-cli.js\",\"scripts/generate-specs-cli.js\",\"scripts/codegen\",\"!scripts/codegen/__tests__\",\"!scripts/codegen/__test_fixtures__\",\"scripts/hermes/hermes-utils.js\",\"scripts/hermes/prepare-hermes-for-build.js\",\"scripts/ios-configure-glog.sh\",\"scripts/xcode/ccache-clang++.sh\",\"scripts/xcode/ccache-clang.sh\",\"scripts/xcode/ccache.conf\",\"scripts/xcode/with-environment.sh\",\"scripts/native_modules.rb\",\"scripts/node-binary.sh\",\"scripts/packager.sh\",\"scripts/packager-reporter.js\",\"scripts/react_native_pods_utils/script_phases.rb\",\"scripts/react_native_pods_utils/script_phases.sh\",\"scripts/react_native_pods.rb\",\"scripts/cocoapods\",\"!scripts/cocoapods/__tests__\",\"scripts/react-native-xcode.sh\",\"sdks/.hermesversion\",\"sdks/hermes-engine\",\"sdks/hermesc\",\"settings.gradle.kts\",\"src\",\"template.config.js\",\"template\",\"!template/node_modules\",\"!template/package-lock.json\",\"!template/yarn.lock\",\"third-party-podspecs\",\"types\"],\"scripts\":{\"prepack\":\"node ./scripts/prepack.js\",\"featureflags\":\"node ./scripts/featureflags/index.js\"},\"peerDependencies\":{\"@types/react\":\"^19.0.0\",\"react\":\"^19.0.0\"},\"peerDependenciesMeta\":{\"@types/react\":{\"optional\":true}},\"dependencies\":{\"@jest/create-cache-key-function\":\"^29.7.0\",\"@react-native/assets-registry\":\"0.79.1\",\"@react-native/codegen\":\"0.79.1\",\"@react-native/community-cli-plugin\":\"0.79.1\",\"@react-native/gradle-plugin\":\"0.79.1\",\"@react-native/js-polyfills\":\"0.79.1\",\"@react-native/normalize-colors\":\"0.79.1\",\"@react-native/virtualized-lists\":\"0.79.1\",\"abort-controller\":\"^3.0.0\",\"anser\":\"^1.4.9\",\"ansi-regex\":\"^5.0.0\",\"babel-jest\":\"^29.7.0\",\"babel-plugin-syntax-hermes-parser\":\"0.25.1\",\"base64-js\":\"^1.5.1\",\"chalk\":\"^4.0.0\",\"commander\":\"^12.0.0\",\"event-target-shim\":\"^5.0.1\",\"flow-enums-runtime\":\"^0.0.6\",\"glob\":\"^7.1.1\",\"invariant\":\"^2.2.4\",\"jest-environment-node\":\"^29.7.0\",\"memoize-one\":\"^5.0.0\",\"metro-runtime\":\"^0.82.0\",\"metro-source-map\":\"^0.82.0\",\"nullthrows\":\"^1.1.1\",\"pretty-format\":\"^29.7.0\",\"promise\":\"^8.3.0\",\"react-devtools-core\":\"^6.1.1\",\"react-refresh\":\"^0.14.0\",\"regenerator-runtime\":\"^0.13.2\",\"scheduler\":\"0.25.0\",\"semver\":\"^7.1.3\",\"stacktrace-parser\":\"^0.1.10\",\"whatwg-fetch\":\"^3.0.0\",\"ws\":\"^6.2.3\",\"yargs\":\"^17.6.2\"},\"codegenConfig\":{\"libraries\":[{\"name\":\"FBReactNativeSpec\",\"type\":\"modules\",\"ios\":{},\"android\":{},\"jsSrcsDir\":\"src\"},{\"name\":\"rncore\",\"type\":\"components\",\"ios\":{},\"android\":{},\"jsSrcsDir\":\"src\"}]}}",
+        "reasons": [
+          "package:react-native"
+        ],
+        "hash": "1e65b827b5b3c6923165660cbb5ae24ec951fe00"
+      },
+      {
+        "type": "contents",
+        "id": "packageJson:scripts",
+        "contents": "{\"android\":\"react-native run-android\",\"ios\":\"react-native run-ios\",\"lint\":\"eslint .\",\"start\":\"react-native start\",\"test\":\"jest\",\"ios:sim\":\"react-native run-ios --simulator 'iPhone 11'\"}",
+        "reasons": [
+          "packageJson:scripts"
+        ],
+        "hash": "6aa7e4375112b80f954ae8e595df706a8db704c9"
+      },
+      {
+        "type": "contents",
+        "id": "rncoreAutolinkingConfig",
+        "contents": "{\"@hot-updater/react-native\":{\"root\":\"node_modules/@hot-updater/react-native\",\"name\":\"@hot-updater/react-native\",\"platforms\":{\"ios\":{\"podspecPath\":\"node_modules/@hot-updater/react-native/HotUpdater.podspec\",\"version\":\"0.19.7\",\"configurations\":[],\"scriptPhases\":[]},\"android\":{\"sourceDir\":\"node_modules/@hot-updater/react-native/android\",\"packageImportPath\":\"import com.hotupdater.HotUpdaterPackage;\",\"packageInstance\":\"new HotUpdaterPackage()\",\"buildTypes\":[],\"libraryName\":\"HotUpdaterSpec\",\"componentDescriptors\":[],\"cmakeListsPath\":\"node_modules/@hot-updater/react-native/android/build/generated/source/codegen/jni/CMakeLists.txt\",\"cxxModuleCMakeListsModuleName\":null,\"cxxModuleCMakeListsPath\":null,\"cxxModuleHeaderName\":null,\"isPureCxxDependency\":false}}},\"@react-native-async-storage/async-storage\":{\"root\":\"node_modules/@react-native-async-storage/async-storage\",\"name\":\"@react-native-async-storage/async-storage\",\"platforms\":{\"ios\":{\"podspecPath\":\"node_modules/@react-native-async-storage/async-storage/RNCAsyncStorage.podspec\",\"version\":\"2.2.0\",\"configurations\":[],\"scriptPhases\":[]},\"android\":{\"sourceDir\":\"node_modules/@react-native-async-storage/async-storage/android\",\"packageImportPath\":\"import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;\",\"packageInstance\":\"new AsyncStoragePackage()\",\"buildTypes\":[],\"libraryName\":\"rnasyncstorage\",\"componentDescriptors\":[],\"cmakeListsPath\":\"node_modules/@react-native-async-storage/async-storage/android/build/generated/source/codegen/jni/CMakeLists.txt\",\"cxxModuleCMakeListsModuleName\":null,\"cxxModuleCMakeListsPath\":null,\"cxxModuleHeaderName\":null,\"isPureCxxDependency\":false}}},\"@react-native-firebase/app\":{\"root\":\"node_modules/@react-native-firebase/app\",\"name\":\"@react-native-firebase/app\",\"platforms\":{\"ios\":{\"podspecPath\":\"node_modules/@react-native-firebase/app/RNFBApp.podspec\",\"version\":\"22.2.1\",\"configurations\":[],\"scriptPhases\":[{\"name\":\"[RNFB] Core Configuration\",\"path\":\"./ios_config.sh\",\"execution_position\":\"after_compile\",\"input_files\":[\"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)\"]}]},\"android\":{\"sourceDir\":\"node_modules/@react-native-firebase/app/android\",\"packageImportPath\":\"import io.invertase.firebase.app.ReactNativeFirebaseAppPackage;\",\"packageInstance\":\"new ReactNativeFirebaseAppPackage()\",\"buildTypes\":[],\"componentDescriptors\":[],\"cmakeListsPath\":\"node_modules/@react-native-firebase/app/android/build/generated/source/codegen/jni/CMakeLists.txt\",\"cxxModuleCMakeListsModuleName\":null,\"cxxModuleCMakeListsPath\":null,\"cxxModuleHeaderName\":null,\"isPureCxxDependency\":false}}},\"@react-native-firebase/messaging\":{\"root\":\"node_modules/@react-native-firebase/messaging\",\"name\":\"@react-native-firebase/messaging\",\"platforms\":{\"ios\":{\"podspecPath\":\"node_modules/@react-native-firebase/messaging/RNFBMessaging.podspec\",\"version\":\"22.2.1\",\"configurations\":[],\"scriptPhases\":[]},\"android\":{\"sourceDir\":\"node_modules/@react-native-firebase/messaging/android\",\"packageImportPath\":\"import io.invertase.firebase.messaging.ReactNativeFirebaseMessagingPackage;\",\"packageInstance\":\"new ReactNativeFirebaseMessagingPackage()\",\"buildTypes\":[],\"componentDescriptors\":[],\"cmakeListsPath\":\"node_modules/@react-native-firebase/messaging/android/build/generated/source/codegen/jni/CMakeLists.txt\",\"cxxModuleCMakeListsModuleName\":null,\"cxxModuleCMakeListsPath\":null,\"cxxModuleHeaderName\":null,\"isPureCxxDependency\":false}}},\"react-native-get-random-values\":{\"root\":\"node_modules/react-native-get-random-values\",\"name\":\"react-native-get-random-values\",\"platforms\":{\"ios\":{\"podspecPath\":\"node_modules/react-native-get-random-values/react-native-get-random-values.podspec\",\"version\":\"1.11.0\",\"configurations\":[],\"scriptPhases\":[]},\"android\":{\"sourceDir\":\"node_modules/react-native-get-random-values/android\",\"packageImportPath\":\"import org.linusu.RNGetRandomValuesPackage;\",\"packageInstance\":\"new RNGetRandomValuesPackage()\",\"buildTypes\":[],\"componentDescriptors\":[],\"cmakeListsPath\":\"node_modules/react-native-get-random-values/android/build/generated/source/codegen/jni/CMakeLists.txt\",\"cxxModuleCMakeListsModuleName\":null,\"cxxModuleCMakeListsPath\":null,\"cxxModuleHeaderName\":null,\"isPureCxxDependency\":false}}},\"react-native-keyboard-controller\":{\"root\":\"node_modules/react-native-keyboard-controller\",\"name\":\"react-native-keyboard-controller\",\"platforms\":{\"ios\":{\"podspecPath\":\"node_modules/react-native-keyboard-controller/react-native-keyboard-controller.podspec\",\"version\":\"1.17.5\",\"configurations\":[],\"scriptPhases\":[]},\"android\":{\"sourceDir\":\"node_modules/react-native-keyboard-controller/android\",\"packageImportPath\":\"import com.reactnativekeyboardcontroller.KeyboardControllerPackage;\",\"packageInstance\":\"new KeyboardControllerPackage()\",\"buildTypes\":[],\"libraryName\":\"reactnativekeyboardcontroller\",\"componentDescriptors\":[\"KeyboardControllerViewComponentDescriptor\",\"KeyboardGestureAreaComponentDescriptor\",\"OverKeyboardViewComponentDescriptor\"],\"cmakeListsPath\":\"node_modules/react-native-keyboard-controller/android/src/main/jni/CMakeLists.txt\",\"cxxModuleCMakeListsModuleName\":null,\"cxxModuleCMakeListsPath\":null,\"cxxModuleHeaderName\":null,\"isPureCxxDependency\":false}}},\"react-native-reanimated\":{\"root\":\"node_modules/react-native-reanimated\",\"name\":\"react-native-reanimated\",\"platforms\":{\"ios\":{\"podspecPath\":\"node_modules/react-native-reanimated/RNReanimated.podspec\",\"version\":\"3.18.0\",\"configurations\":[],\"scriptPhases\":[]},\"android\":{\"sourceDir\":\"node_modules/react-native-reanimated/android\",\"packageImportPath\":\"import com.swmansion.reanimated.ReanimatedPackage;\",\"packageInstance\":\"new ReanimatedPackage()\",\"buildTypes\":[],\"libraryName\":\"rnreanimated\",\"componentDescriptors\":[],\"cmakeListsPath\":\"node_modules/react-native-reanimated/android/build/generated/source/codegen/jni/CMakeLists.txt\",\"cxxModuleCMakeListsModuleName\":null,\"cxxModuleCMakeListsPath\":null,\"cxxModuleHeaderName\":null,\"isPureCxxDependency\":false}}},\"react-native-safe-area-context\":{\"root\":\"node_modules/react-native-safe-area-context\",\"name\":\"react-native-safe-area-context\",\"platforms\":{\"ios\":{\"podspecPath\":\"node_modules/react-native-safe-area-context/react-native-safe-area-context.podspec\",\"version\":\"5.5.0\",\"configurations\":[],\"scriptPhases\":[]},\"android\":{\"sourceDir\":\"node_modules/react-native-safe-area-context/android\",\"packageImportPath\":\"import com.th3rdwave.safeareacontext.SafeAreaContextPackage;\",\"packageInstance\":\"new SafeAreaContextPackage()\",\"buildTypes\":[],\"libraryName\":\"safeareacontext\",\"componentDescriptors\":[\"RNCSafeAreaProviderComponentDescriptor\",\"RNCSafeAreaViewComponentDescriptor\"],\"cmakeListsPath\":\"node_modules/react-native-safe-area-context/android/src/main/jni/CMakeLists.txt\",\"cxxModuleCMakeListsModuleName\":null,\"cxxModuleCMakeListsPath\":null,\"cxxModuleHeaderName\":null,\"isPureCxxDependency\":false}}},\"react-native-screens\":{\"root\":\"node_modules/react-native-screens\",\"name\":\"react-native-screens\",\"platforms\":{\"ios\":{\"podspecPath\":\"node_modules/react-native-screens/RNScreens.podspec\",\"version\":\"4.11.1\",\"configurations\":[],\"scriptPhases\":[]},\"android\":{\"sourceDir\":\"node_modules/react-native-screens/android\",\"packageImportPath\":\"import com.swmansion.rnscreens.RNScreensPackage;\",\"packageInstance\":\"new RNScreensPackage()\",\"buildTypes\":[],\"libraryName\":\"rnscreens\",\"componentDescriptors\":[\"RNSFullWindowOverlayComponentDescriptor\",\"RNSScreenContainerComponentDescriptor\",\"RNSScreenNavigationContainerComponentDescriptor\",\"RNSScreenStackHeaderConfigComponentDescriptor\",\"RNSScreenStackHeaderSubviewComponentDescriptor\",\"RNSScreenStackComponentDescriptor\",\"RNSSearchBarComponentDescriptor\",\"RNSScreenComponentDescriptor\",\"RNSScreenFooterComponentDescriptor\",\"RNSScreenContentWrapperComponentDescriptor\",\"RNSModalScreenComponentDescriptor\"],\"cmakeListsPath\":\"node_modules/react-native-screens/android/src/main/jni/CMakeLists.txt\",\"cxxModuleCMakeListsModuleName\":null,\"cxxModuleCMakeListsPath\":null,\"cxxModuleHeaderName\":null,\"isPureCxxDependency\":false}}},\"realm\":{\"root\":\"node_modules/realm\",\"name\":\"realm\",\"platforms\":{\"ios\":{\"podspecPath\":\"node_modules/realm/RealmJS.podspec\",\"version\":\"20.1.0\",\"configurations\":[],\"scriptPhases\":[]},\"android\":{\"sourceDir\":\"node_modules/realm/binding/android\",\"packageImportPath\":\"import io.realm.react.RealmReactPackage;\",\"packageInstance\":\"new RealmReactPackage()\",\"buildTypes\":[],\"componentDescriptors\":[],\"cmakeListsPath\":\"node_modules/realm/binding/android/build/generated/source/codegen/jni/CMakeLists.txt\",\"cxxModuleCMakeListsModuleName\":null,\"cxxModuleCMakeListsPath\":null,\"cxxModuleHeaderName\":null,\"isPureCxxDependency\":false}}}}",
+        "reasons": [
+          "rncoreAutolinking"
+        ],
+        "hash": "ac937b4d156ab8ed63cfabb057830f276244e801"
+      }
+    ],
+    "hash": "d55cfb2b6c55f737dc333ca5a5aed396d10a71ea"
+  }
+}

@@ -257,6 +257,3 @@ gradle-app.setting
 
 # ios Library
 ios/Pods
-
-# Hot Updater
-fingerprint.json
