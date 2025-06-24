@@ -8,6 +8,13 @@ module.exports = {
   theme: {
     extend: {
       fontSize: {
+        title: [
+          typography.title.size,
+          {
+            lineHeight: typography.title.lineHeight,
+            letterSpacing: typography.title.letterSpacing,
+          },
+        ],
         h1: [
           typography.h1.size,
           {

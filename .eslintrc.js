@@ -89,6 +89,7 @@ module.exports = {
           'Body2',
           'Caption',
           'Label',
+          'Title',
         ],
       },
     ],
