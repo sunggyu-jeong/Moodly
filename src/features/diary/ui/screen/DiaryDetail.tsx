@@ -20,7 +20,7 @@ import {
   setShowDropdownView,
   setShowModalPopup,
   setShowToastView,
-} from '../../../overlay/model/overlay-slice';
+} from '../../../overlay/model/overlay.slice';
 
 type DiaryDetailRouteParams = {
   params: {

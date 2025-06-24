@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { ImageSourcePropType } from 'react-native';
 
 import { setModifyMode } from '@/features/diary/model/diary.slice';
-import { setShowDropdownView, setShowModalPopup } from '@/features/overlay/model/overlay-slice';
+import { setShowDropdownView, setShowModalPopup } from '@/features/overlay/model/overlay.slice';
 import { MODAL_CONFIRM_ACTION_KEY } from '@/processes/key';
 import { useAppDispatch } from '@/shared/hooks';
 import { navigateFlow, NavigationFlow } from '@/shared/lib';

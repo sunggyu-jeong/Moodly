@@ -2,7 +2,7 @@ import { shallowEqual } from 'react-redux';
 
 import { useAppDispatch, useAppSelector } from '@/shared/hooks';
 
-import { setShowToastView } from '@/features/overlay/model/overlay-slice';
+import { setShowToastView } from '@/features/overlay/model/overlay.slice';
 import ToastAnimated from '../animation/ToastAnimated';
 
 const ToastController = () => {

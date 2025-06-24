@@ -3,7 +3,7 @@ import { Animated, TouchableOpacity } from 'react-native';
 
 import { useAppDispatch, useAppSelector } from '@/shared/hooks';
 
-import { setShowDropdownView } from '@/features/overlay/model/overlay-slice';
+import { setShowDropdownView } from '@/features/overlay/model/overlay.slice';
 import DropDownContainer from '../ui/DropDownContainer';
 
 const DropDownAnimation = () => {

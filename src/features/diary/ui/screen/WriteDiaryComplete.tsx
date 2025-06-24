@@ -8,7 +8,7 @@ import { gray } from '@/shared/styles/colors';
 import { Body2 } from '@/shared/ui/typography/Body2';
 import { H2 } from '@/shared/ui/typography/H2';
 
-import { setShowToastView } from '../../../overlay/model/overlay-slice';
+import { setShowToastView } from '../../../overlay/model/overlay.slice';
 import { setModifyMode } from '../../model/diary.slice';
 
 const WriteDiaryComplete = () => {
