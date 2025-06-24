@@ -5,7 +5,10 @@ import OverlayManager from '@/processes/overlay/ui/OverlayManager';
 
 import Splash from '../ui/screens/Splash';
 
-import Login from '../../features/auth/ui/screen/Login';
+import { useSupabaseAuth } from '@/features/auth/hooks/useSupabaseAuth';
+import Login from '@/features/auth/ui/screen/Login';
+import { useAppSelector } from '@/shared/hooks';
+import { useEffect } from 'react';
 import DiaryStack, { DiaryStackParamList } from './DiaryStack';
 import TabNavigation from './TabNavigation';
 
@@ -25,6 +28,12 @@ export type RootStackParamList = {
 const Stack = createNativeStackNavigator();
 
 const RootStack = () => {
+  useSupabaseAuth();
+  const userInfo = useAppSelector(state => state.authSlice.userInfo);
+
+  useEffect(() => {
+    console.log('>>>>>>>>>>>>>>>>>>>>', userInfo);
+  }, [userInfo]);
   return (
     <>
       <OverlayManager />

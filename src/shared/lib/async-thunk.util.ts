@@ -23,7 +23,7 @@ interface AsyncThunkProps<T, S> {
  * @param defaultErrorMessage - rejected 케이스의 기본 에러 메시지 (선택 사항)
  */
 export function addAsyncThunkCase<T, S>({ ...props }: AsyncThunkProps<T, S>) {
-  props.builder.addCase(props.thunk.pending, (state) => {
+  props.builder.addCase(props.thunk.pending, state => {
     (state as any)[props.key].status = AsyncStatus.Pending;
     (state as any)[props.key].error = null;
   });

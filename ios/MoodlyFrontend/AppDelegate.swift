@@ -4,6 +4,7 @@ import React_RCTAppDelegate
 import ReactAppDependencyProvider
 import Firebase
 import HotUpdater
+import GoogleSignIn
 
 @main
 class AppDelegate: RCTAppDelegate {
@@ -34,5 +35,13 @@ class AppDelegate: RCTAppDelegate {
     #else
         HotUpdater.bundleURL()
     #endif
+  }
+  
+  override func application(
+    _ app: UIApplication,
+    open url: URL,
+    options: [UIApplication.OpenURLOptionsKey : Any] = [:]
+  ) -> Bool {
+    return GIDSignIn.sharedInstance.handle(url)
   }
 }

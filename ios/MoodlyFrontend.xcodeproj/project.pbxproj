@@ -10,7 +10,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		14B16777D660FD6E731758E1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 		41B5839A42BE1023077520A1 /* Pods_MoodlyFrontend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22E567354EB0CE7C66C0798 /* Pods_MoodlyFrontend.framework */; };
-		5704B3D52E027B5100948E2C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5704B3D42E027B5100948E2C /* GoogleService-Info.plist */; };
+		57E6D1722E0A6BD00082CB88 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57E6D1712E0A6BD00082CB88 /* GoogleService-Info.plist */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -21,8 +21,8 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = MoodlyFrontend/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = MoodlyFrontend/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		36B1AB251844A602A39E7029 /* Pods-MoodlyFrontend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoodlyFrontend.debug.xcconfig"; path = "Target Support Files/Pods-MoodlyFrontend/Pods-MoodlyFrontend.debug.xcconfig"; sourceTree = "<group>"; };
-		5704B3D42E027B5100948E2C /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5704B3D62E0282E000948E2C /* MoodlyFrontend.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = MoodlyFrontend.entitlements; path = MoodlyFrontend/MoodlyFrontend.entitlements; sourceTree = "<group>"; };
+		57E6D1712E0A6BD00082CB88 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = MoodlyFrontend/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = MoodlyFrontend/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B22E567354EB0CE7C66C0798 /* Pods_MoodlyFrontend.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoodlyFrontend.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -51,7 +51,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
-				5704B3D42E027B5100948E2C /* GoogleService-Info.plist */,
+				57E6D1712E0A6BD00082CB88 /* GoogleService-Info.plist */,
 			);
 			name = MoodlyFrontend;
 			sourceTree = "<group>";
@@ -165,7 +165,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
-				5704B3D52E027B5100948E2C /* GoogleService-Info.plist in Resources */,
+				57E6D1722E0A6BD00082CB88 /* GoogleService-Info.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				14B16777D660FD6E731758E1 /* PrivacyInfo.xcprivacy in Resources */,
 			);
@@ -430,10 +430,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -518,10 +515,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
