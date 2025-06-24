@@ -15,7 +15,7 @@ jobs:
 
     steps:
       # 1) 원격 레포지토리 데이터 내려받기
-      - uses: action/checkout@v4
+      - uses: action/checkout@v3
 
       # 2) Node.js 환경 설정 + yarn 캐시
       - uses: actions/setup-node@v4
