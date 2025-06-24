@@ -257,3 +257,6 @@ gradle-app.setting
 
 # ios Library
 ios/Pods
+
+# Key
+.p8

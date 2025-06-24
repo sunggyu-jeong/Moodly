@@ -19,6 +19,7 @@ target 'MoodlyFrontend' do
 
   pod 'FirebaseAuth'
   pod 'FirebaseFirestore'
+  pod 'GTMSessionFetcher/Core', '~> 3.4'
 
   use_react_native!(
     :path => config[:reactNativePath],
@@ -31,7 +32,7 @@ target 'MoodlyFrontend' do
     react_native_post_install(
       installer,
       config[:reactNativePath],
-      :mac_catalyst_enabled => false
+      :mac_catalyst_enabled => false,
       :ccache_enabled => true
     )
   end
