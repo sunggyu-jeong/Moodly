@@ -259,4 +259,4 @@ gradle-app.setting
 ios/Pods
 
 # Key
-.p8
+*.p8
