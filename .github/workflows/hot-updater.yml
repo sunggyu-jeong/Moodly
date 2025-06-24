@@ -1,0 +1,47 @@
+name: Moodly HotUpdater CI/CD
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy-ota:
+    runs-on: ubuntu-latest
+
+    env:
+      HOT_UPDATER_SUPABASE_URL: ${{ secrets.HOT_UPDATER_SUPABASE_URL }}
+      HOT_UPDATER_SUPABASE_ANON_KEY: ${{ secrets.HOT_UPDATER_SUPABASE_ANON_KEY }}
+      HOT_UPDATER_SUPABASE_BUCKET_NAME: ${{ secrets.HOT_UPDATER_SUPABASE_BUCKET_NAME }}
+
+    steps:
+      # 1) 원격 레포지토리 데이터 내려받기
+      - uses: action/checkout@v4
+
+      # 2) Node.js 환경 설정 + yarn 캐시
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'yarn'
+
+      # 3) Yarn 의존성 설치
+      - run: yarn install --frozen-lockfile
+
+      # 4) fingerprint 비교
+      - name: Check fingerprint
+        id: fp
+        run: |
+          set +e
+          yarn hot-updater fingerprint > fp.log
+          echo "EXIT=$?" >> $GITHUB_OUTPUT
+          set -e
+
+      # 5) fingerprint가 다를 경우, 신규 fingerprint 업로드
+      - name: Create new fingerprint
+        if: steps.fp.outputs.EXIT != '0'
+        run: yarn hot-updater fingerprint create
+
+      # 6) Android·iOS 번들 빌드 & Supabase 업로드
+      - name: Deploy bundles
+        run: |
+          yarn hot-updater deploy -p android
+          yarn hot-updater deploy -p ios
