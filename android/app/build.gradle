@@ -118,6 +118,7 @@ android {
 
 dependencies {
     implementation("com.facebook.react:react-android")
+    implementation 'com.google.android.gms:play-services-auth:20.4.1'
 
     def hermesEnabled = project.ext.react.get("enableHermes")
     if (hermesEnabled.toBoolean()) {
