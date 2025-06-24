@@ -1,16 +1,17 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Platform } from 'react-native';
 
 import DiaryDetail from '@/features/diary/ui/screen/DiaryDetail';
 import OverlayManager from '@/processes/overlay/ui/OverlayManager';
 
 import Splash from '../ui/screens/Splash';
 
+import Login from '@/features/auth/ui/screen/Login';
 import DiaryStack, { DiaryStackParamList } from './DiaryStack';
 import TabNavigation from './TabNavigation';
 
 export type RootStackParamList = {
   Splash: undefined;
+  Login: undefined;
   Main: undefined;
   DiaryList: undefined;
   DiaryStack:
@@ -25,16 +26,26 @@ export type RootStackParamList = {
 const Stack = createNativeStackNavigator();
 
 const RootStack = () => {
+  // useSupabaseAuth();
   return (
     <>
       <OverlayManager />
       <Stack.Navigator
-        initialRouteName={Platform.OS === 'ios' ? 'Main' : 'Splash'}
+        initialRouteName={'Splash'}
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen
           name="Splash"
-          component={Splash}
+          component={() => (
+            <Splash
+              status="UPDATE_PROCESS_COMPLETED"
+              progress={100}
+            />
+          )}
+        />
+        <Stack.Screen
+          name="Login"
+          component={Login}
         />
         <Stack.Screen
           name="Main"

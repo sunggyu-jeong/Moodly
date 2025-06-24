@@ -1,4 +1,9 @@
 export const typography = {
+  title: {
+    lineHeight: '1.8',
+    letterSpacing: '-0.012em',
+    weight: { semibold: '700', regular: '400' },
+  },
   h1: {
     lineHeight: '1.4',
     letterSpacing: '-0.012em',

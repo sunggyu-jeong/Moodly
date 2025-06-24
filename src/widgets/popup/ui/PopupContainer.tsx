@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { Animated, Modal, View } from 'react-native';
 
-import { setShowModalPopup } from '@/processes/overlay/model/overlaySlice';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks';
 import DimmedView from '@/shared/ui/elements/DimmedView';
 
+import { setShowModalPopup } from '@/features/overlay/model/overlay.slice';
 import PopupFooter from './PopupFooter';
 import PopupHeader from './PopupHeader';
 
