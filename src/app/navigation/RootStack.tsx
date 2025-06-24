@@ -5,6 +5,7 @@ import OverlayManager from '@/processes/overlay/ui/OverlayManager';
 
 import Splash from '../ui/screens/Splash';
 
+import Login from '../../features/auth/ui/screen/Login';
 import DiaryStack, { DiaryStackParamList } from './DiaryStack';
 import TabNavigation from './TabNavigation';
 
@@ -28,9 +29,13 @@ const RootStack = () => {
     <>
       <OverlayManager />
       <Stack.Navigator
-        initialRouteName={'Splash'}
+        initialRouteName={'Login'}
         screenOptions={{ headerShown: false }}
       >
+        <Stack.Screen
+          name="Login"
+          component={() => <Login />}
+        />
         <Stack.Screen
           name="Splash"
           component={() => (
