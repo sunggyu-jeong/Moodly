@@ -3,6 +3,7 @@ import { AsyncOperationState, createInitialAsyncState } from '@/shared/constants
 import { addAsyncThunkCase } from '@/shared/lib';
 import { supabase } from '@/shared/lib/supabase.util';
 import { GOOGLE_WEB_CLIENT_ID } from '@env';
+import appleAuth from '@invertase/react-native-apple-authentication';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { AuthError, User } from '@supabase/supabase-js';
@@ -23,6 +24,41 @@ const signInGoogleThunk = createAsyncThunk<ApiResponse<User>, void, { rejectValu
         return rejectWithValue(error);
       }
       return { session: data.session, data: data.session?.user ?? null, error: null };
+    } catch (err) {
+      return rejectWithValue(err as AuthError);
+    }
+  }
+);
+
+const signInAppleThunk = createAsyncThunk<ApiResponse<User>, void, { rejectValue: AuthError }>(
+  'auth/signInApple',
+  async (_, { rejectWithValue }) => {
+    try {
+      const appleResponse = await appleAuth.performRequest({
+        requestedOperation: appleAuth.Operation.LOGIN,
+        requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+      });
+
+      const { identityToken, nonce } = appleResponse;
+      if (!identityToken) {
+        throw new Error('Apple 로그인에 실패했습니다: identityToken이 없습니다.');
+      }
+
+      const { data, error } = await supabase.auth.signInWithIdToken({
+        provider: 'apple',
+        token: identityToken,
+        nonce,
+      });
+
+      if (error) {
+        return rejectWithValue(error);
+      }
+
+      return {
+        session: data.session,
+        data: data.session?.user ?? null,
+        error: null,
+      };
     } catch (err) {
       return rejectWithValue(err as AuthError);
     }
@@ -73,6 +109,12 @@ const authSlice = createSlice({
       key: 'userInfo',
       defaultErrorMessage: '로그인에 실패했습니다. 다시 시도해주세요.',
     });
+    addAsyncThunkCase<ApiResponse<User>, AuthState>({
+      builder,
+      thunk: signInAppleThunk,
+      key: 'userInfo',
+      defaultErrorMessage: '로그인에 실패했습니다. 다시 시도해주세요.',
+    });
 
     addAsyncThunkCase<ApiResponse<User>, AuthState>({
       builder,
@@ -83,7 +125,7 @@ const authSlice = createSlice({
   },
 });
 
-export { initializeSessionThunk, signInGoogleThunk };
+export { initializeSessionThunk, signInAppleThunk, signInGoogleThunk };
 export const { resetAuthState, setAuthState } = authSlice.actions;
 
 export default authSlice.reducer;

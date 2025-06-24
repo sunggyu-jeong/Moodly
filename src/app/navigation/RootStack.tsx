@@ -43,7 +43,7 @@ const RootStack = () => {
       >
         <Stack.Screen
           name="Login"
-          component={() => <Login />}
+          component={Login}
         />
         <Stack.Screen
           name="Splash"

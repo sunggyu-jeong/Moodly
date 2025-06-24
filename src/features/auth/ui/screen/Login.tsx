@@ -6,16 +6,20 @@ import { primary } from '@/shared/styles/colors';
 import { H3 } from '@/shared/ui/typography/H3';
 import { Title } from '@/shared/ui/typography/Title';
 import { useEffect } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
-import { signInGoogleThunk } from '../../model/auth.slice';
-import SocialLoginButton from '../components/SocialLoginButton';
+import { Image, Platform, StyleSheet, View } from 'react-native';
 import { setShowToastView } from '../../../overlay/model/overlay.slice';
+import { signInAppleThunk, signInGoogleThunk } from '../../model/auth.slice';
+import SocialLoginButton from '../components/SocialLoginButton';
 
 const Login = () => {
   const dispatch = useAppDispatch();
   const userInfo = useAppSelector(state => state.authSlice.userInfo);
   const handleLogin = (provider: AuthProvider) => {
-    dispatch(signInGoogleThunk());
+    if (provider === AUTH_PROVIDERS.APPLE) {
+      dispatch(signInAppleThunk());
+    } else if (provider === AUTH_PROVIDERS.GOOGLE) {
+      dispatch(signInGoogleThunk());
+    }
   };
 
   useEffect(() => {
@@ -54,10 +58,12 @@ const Login = () => {
         </H3>
       </View>
       <View className="absolute bottom-11 w-full gap-3">
-        <SocialLoginButton
-          provider={AUTH_PROVIDERS.APPLE}
-          onPress={handleLogin}
-        />
+        {Platform.OS === 'ios' && (
+          <SocialLoginButton
+            provider={AUTH_PROVIDERS.APPLE}
+            onPress={handleLogin}
+          />
+        )}
         <SocialLoginButton
           provider={AUTH_PROVIDERS.GOOGLE}
           onPress={handleLogin}
