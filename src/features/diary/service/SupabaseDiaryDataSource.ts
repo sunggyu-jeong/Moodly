@@ -13,22 +13,22 @@ export const supabaseDiaryDataSource: DiaryDataSource = {
   searchCount: async () => {
     return countSupabase();
   },
-  searchById: async (_, emotionId) => {
+  searchById: async emotionId => {
     return selectByIdSupabase(emotionId);
   },
-  searchByMonth: async (_, recordDate) => {
+  searchByMonth: async recordDate => {
     return selectByMonthSupabase(recordDate);
   },
-  add: async (_, data) => {
+  add: async data => {
     return createSupabase(data);
   },
-  modify: async (_, emotionId, data) => {
+  modify: async (emotionId, data) => {
     return updateSupabase(emotionId, data);
   },
-  remove: async (_, emotionId) => {
+  remove: async emotionId => {
     return deleteSupabase(emotionId);
   },
-  isExist: async (_, recordDate) => {
+  isExist: async recordDate => {
     return hasDiaryForDaySupabase(recordDate);
   },
 };

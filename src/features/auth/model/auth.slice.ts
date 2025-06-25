@@ -6,7 +6,7 @@ import { GOOGLE_WEB_CLIENT_ID } from '@env';
 import appleAuth from '@invertase/react-native-apple-authentication';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { AuthError, User } from '@supabase/supabase-js';
+import { AuthError, Session, User } from '@supabase/supabase-js';
 
 const signInGoogleThunk = createAsyncThunk<ApiResponse<User>, void, { rejectValue: AuthError }>(
   'auth/signInGoogle',
@@ -72,6 +72,7 @@ const initializeSessionThunk = createAsyncThunk<
 >('auth/initializeSession', async (_, { rejectWithValue }) => {
   try {
     const { data, error } = await supabase.auth.getSession();
+    console.log(data, error);
     if (error) {
       return rejectWithValue(error);
     }
@@ -81,13 +82,24 @@ const initializeSessionThunk = createAsyncThunk<
   }
 });
 
+interface AuthSessionData {
+  session: Session | null;
+  data: User | null;
+  error: string | null;
+}
 interface AuthState {
-  userInfo: AsyncOperationState<User>;
+  userInfo: AsyncOperationState<AuthSessionData>;
   isLogin: boolean;
 }
 
+const initialAuthSessionData: AuthSessionData = {
+  session: null,
+  data: null,
+  error: null,
+};
+
 const initialState: AuthState = {
-  userInfo: createInitialAsyncState<User>(),
+  userInfo: createInitialAsyncState<AuthSessionData>(initialAuthSessionData),
   isLogin: false,
 };
 
@@ -96,7 +108,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     resetAuthState: state => {
-      state.userInfo = createInitialAsyncState<User>();
+      state.userInfo = createInitialAsyncState<AuthSessionData>(initialAuthSessionData);
     },
     setAuthState: (state, action) => {
       state.userInfo.status = action.payload.status;
