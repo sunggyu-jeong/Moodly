@@ -5,12 +5,12 @@ import { isNotEmpty } from '@/shared/lib';
 
 import { EmotionDiaryToDTO } from './EmotionDiaryMapper';
 
-export function selectDiaryCount(realm: Realm): number {
+export function selectDiaryCountRealm(realm: Realm): number {
   const results = realm.objects<EmotionDiary>('EmotionDiary').length;
   return results;
 }
 
-export function hasDiaryForDay(realm: Realm, recordDate: Date): boolean {
+export function hasDiaryForDayRealm(realm: Realm, recordDate: Date): boolean {
   const year = recordDate.getFullYear();
   const month = recordDate.getMonth();
   const day = recordDate.getDate();
@@ -21,10 +21,10 @@ export function hasDiaryForDay(realm: Realm, recordDate: Date): boolean {
   const results = realm
     .objects<EmotionDiary>('EmotionDiary')
     .filtered('record_date >= $0 AND record_date < $1', startOfDay, endOfDay);
-  return [...results].length > 0;
+  return results.length > 0;
 }
 
-export function selectDiaryByMonth(realm: Realm, recordDate: Date): EmotionDiaryDTO[] {
+export function selectDiaryByMonthRealm(realm: Realm, recordDate: Date): EmotionDiaryDTO[] {
   const year = recordDate.getFullYear();
   const month = recordDate.getMonth();
 
@@ -39,12 +39,12 @@ export function selectDiaryByMonth(realm: Realm, recordDate: Date): EmotionDiary
   return [...raw];
 }
 
-export function selectDiaryById(realm: Realm, emotionId: number): EmotionDiaryDTO | null {
+export function selectDiaryByIdRealm(realm: Realm, emotionId: number): EmotionDiaryDTO | null {
   const raw = realm.objectForPrimaryKey<EmotionDiary>('EmotionDiary', emotionId);
   return isNotEmpty(raw) ? EmotionDiaryToDTO(raw) : null;
 }
 
-export function createDiary(realm: Realm, data: EmotionDiaryDTO): number {
+export function createDiaryRealm(realm: Realm, data: EmotionDiaryDTO): number {
   const maxId = realm.objects('EmotionDiary').max('emotion_id');
   const nextId = (typeof maxId === 'number' ? maxId : 0) + 1;
   realm.write(() => {
@@ -60,7 +60,7 @@ export function createDiary(realm: Realm, data: EmotionDiaryDTO): number {
   return nextId;
 }
 
-export function updateDiary(
+export function updateDiaryRealm(
   realm: Realm,
   emotionId: number,
   updates: Partial<EmotionDiaryDTO>
@@ -89,7 +89,7 @@ export function updateDiary(
   return emotionId;
 }
 
-export function deleteDiary(realm: Realm, emotionId: number): void | Error {
+export function deleteDiaryRealm(realm: Realm, emotionId: number): void | Error {
   realm.write(() => {
     const target = realm.objectForPrimaryKey<EmotionDiary>('EmotionDiary', emotionId);
     if (isNotEmpty(target)) {
