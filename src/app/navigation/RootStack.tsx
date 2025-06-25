@@ -34,15 +34,14 @@ const RootStack = () => {
         initialRouteName={'Splash'}
         screenOptions={{ headerShown: false }}
       >
-        <Stack.Screen
-          name="Splash"
-          component={() => (
+        <Stack.Screen name="Splash">
+          {() => (
             <Splash
               status="UPDATE_PROCESS_COMPLETED"
               progress={100}
             />
           )}
-        />
+        </Stack.Screen>
         <Stack.Screen
           name="Login"
           component={Login}
