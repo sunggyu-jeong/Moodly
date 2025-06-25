@@ -25,11 +25,7 @@ export function isEmpty(value: unknown): boolean {
   // 배열인 경우, 길이가 0이면 true
   if (Array.isArray(value) && value.length === 0) return true;
   // 객체인 경우, (배열 제외) 키가 하나도 없으면 true
-  if (
-    typeof value === 'object' &&
-    !Array.isArray(value) &&
-    Object.keys(value).length === 0
-  )
+  if (typeof value === 'object' && !Array.isArray(value) && Object.keys(value).length === 0)
     return true;
   // 숫자인 경우, NaN이면 true
   if (typeof value === 'number' && Number.isNaN(value)) return true;
@@ -87,7 +83,10 @@ export const defaultToZero = <T>(value: T): T | 0 => defaultTo(value, 0);
  * @param {keyof T} key - 키
  * @returns {T[keyof T]} - 키에 해당하는 값
  */
-export const rawValue = <T extends Record<string, string>>(
-  obj: T,
-  key: keyof T
-): T[keyof T] => obj[key];
+export const rawValue = <T extends Record<string, string>>(obj: T, key: keyof T): T[keyof T] =>
+  obj[key];
+
+export function allValuesNull<T>(obj: T) {
+  if (!obj || typeof obj !== 'object') return false;
+  return Object.values(obj).every(v => v == null);
+}
