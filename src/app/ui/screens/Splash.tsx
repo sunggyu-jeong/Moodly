@@ -2,31 +2,39 @@ import { useEffect } from 'react';
 import { Image, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { useSupabaseAuth } from '@/features/auth/hooks/useSupabaseAuth';
 import UpdateContent from '@/features/updateProgress/ui/components/UpdateContent';
 import { UpdateProgressProps } from '@/processes/update/useUpdateProgress';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
-import { useAppSelector } from '@/shared/hooks';
-import { isEmpty, navigate, resetTo } from '@/shared/lib';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks';
+import { isEmpty, isNotEmpty, navigate, resetTo } from '@/shared/lib';
+import { initializeSessionThunk } from '../../../features/auth/model/auth.slice';
 
 const Splash = ({ status, progress }: UpdateProgressProps) => {
-  useSupabaseAuth();
   const userInfo = useAppSelector(state => state.authSlice.userInfo);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (status === 'UPDATE_PROCESS_COMPLETED') {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         handleAuthFlow();
       }, 2000);
+
+      return () => {
+        clearTimeout(timer);
+      };
     }
   }, [status]);
 
-  const handleAuthFlow = () => {
-    if (userInfo.status === 'succeeded' && userInfo.data) {
+  useEffect(() => {
+    if (userInfo.status === 'succeeded' && isNotEmpty(userInfo.data)) {
       resetTo('Main');
-    } else if (isEmpty(userInfo.data)) {
+    } else if (userInfo.status === 'failed' && isEmpty(userInfo.data)) {
       navigate('Login');
     }
+  }, [userInfo.status, userInfo.data]);
+
+  const handleAuthFlow = async () => {
+    await dispatch(initializeSessionThunk());
   };
 
   return (
