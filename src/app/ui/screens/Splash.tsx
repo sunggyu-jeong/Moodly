@@ -47,7 +47,7 @@ const Splash = ({ status, progress }: UpdateProgressProps) => {
         barStyle="light-content"
       />
       <SafeAreaView className="bg-primary-300 flex-1 justify-center items-center">
-        <Image source={MAIN_ICONS.logo} />
+        <Image source={MAIN_ICONS.avatar} />
         <UpdateContent
           progress={progress}
           status={status}
