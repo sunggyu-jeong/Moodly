@@ -7,7 +7,7 @@ import UpdateContent from '@/features/updateProgress/ui/components/UpdateContent
 import { UpdateProgressProps } from '@/processes/update/useUpdateProgress';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks';
-import { allValuesNull, navigate, resetTo } from '@/shared/lib';
+import { allValuesNull, resetTo } from '@/shared/lib';
 
 const Splash = ({ status, progress }: UpdateProgressProps) => {
   const userInfo = useAppSelector(state => state.authSlice.userInfo);
@@ -31,7 +31,7 @@ const Splash = ({ status, progress }: UpdateProgressProps) => {
       if (!allValuesNull(userInfo.data)) {
         resetTo('Main');
       } else if (allValuesNull(userInfo.data)) {
-        navigate('Login');
+        resetTo('Login');
       }
     }
   }, [userInfo.status, userInfo.data]);
@@ -47,7 +47,7 @@ const Splash = ({ status, progress }: UpdateProgressProps) => {
         barStyle="light-content"
       />
       <SafeAreaView className="bg-primary-300 flex-1 justify-center items-center">
-        <Image source={MAIN_ICONS.logo} />
+        <Image source={MAIN_ICONS.avatar} />
         <UpdateContent
           progress={progress}
           status={status}
