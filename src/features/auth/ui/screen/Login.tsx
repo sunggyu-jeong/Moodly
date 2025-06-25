@@ -2,7 +2,7 @@ import { AUTH_PROVIDERS, AuthProvider } from '@/entities/auth/types';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { AsyncStatus } from '@/shared/constants';
 import { getScaleSize, useAppDispatch, useAppSelector } from '@/shared/hooks';
-import { resetTo } from '@/shared/lib';
+import { allValuesNull, resetTo } from '@/shared/lib';
 import { primary } from '@/shared/styles/colors';
 import { H3 } from '@/shared/ui/typography/H3';
 import { Title } from '@/shared/ui/typography/Title';
@@ -24,7 +24,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (userInfo.status === AsyncStatus.Succeeded && userInfo.data) {
+    if (userInfo.status === AsyncStatus.Succeeded && !allValuesNull(userInfo.data)) {
       resetTo('Main');
     } else if (userInfo.status === AsyncStatus.Failed) {
       dispatch(
