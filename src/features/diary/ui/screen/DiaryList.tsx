@@ -31,7 +31,6 @@ const DiaryList = () => {
           .toISOString()
       )
     );
-    initialize();
   };
 
   const initialize = useCallback(async () => {
@@ -46,7 +45,7 @@ const DiaryList = () => {
     if (!isLogin) {
       closeRealm();
     }
-  }, [selectedMonth]);
+  }, [selectedMonth, openRealm, closeRealm, dispatch, isLogin]);
 
   useFocusEffect(
     useCallback(() => {
