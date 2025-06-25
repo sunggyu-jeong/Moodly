@@ -2,8 +2,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
 
 import { ICON_DATA } from '@/shared/constants';
-import { useAppDispatch, useRealm } from '@/shared/hooks';
-import { isNotEmpty } from '@/shared/lib';
+import { useAppDispatch, useAppSelector, useRealm } from '@/shared/hooks';
 
 import {
   searchDiaryCountThunk,
@@ -16,15 +15,24 @@ import {
 export function useInitializeDiary() {
   const dispatch = useAppDispatch();
   const { openRealm, closeRealm } = useRealm();
+  const isLogin = useAppSelector(state => state.authSlice.isLogin);
 
   const initialize = useCallback(async () => {
-    const realm = await openRealm();
-    if (isNotEmpty(realm)) {
-      await dispatch(searchDiaryForDayThunk({ realm, recordDate: new Date() }));
-      await dispatch(searchDiaryCountThunk({ realm }));
+    let realm: Realm | undefined;
+    if (!isLogin) {
+      realm = await openRealm();
+    }
+    await dispatch(searchDiaryForDayThunk({ realm, recordDate: new Date(), isLogin }));
+    await dispatch(
+      searchDiaryCountThunk({
+        realm: isLogin ? realm : undefined,
+        isLogin,
+      })
+    );
+    if (!isLogin) {
       closeRealm();
     }
-  }, [openRealm, dispatch, closeRealm]);
+  }, [openRealm, dispatch, closeRealm, isLogin]);
 
   useFocusEffect(
     useCallback(() => {

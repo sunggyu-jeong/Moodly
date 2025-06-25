@@ -22,6 +22,8 @@ import {
   setShowToastView,
 } from '../../../overlay/model/overlay.slice';
 
+import type Realm from 'realm';
+
 type DiaryDetailRouteParams = {
   params: {
     origin: string;
@@ -47,6 +49,7 @@ const DiaryDetail = () => {
   const selectedDiary = useAppSelector(state => state.diarySlice.selectedDiary);
   const overlayEventHandler = useAppSelector(state => state.overlaySlice.overlayEventHandler);
   const showModalPopup = useAppSelector(state => state.overlaySlice.showModalPopup);
+  const isLogin = useAppSelector(state => state.authSlice.isLogin);
   const dispatch = useAppDispatch();
   const route = useRoute<RouteProp<DiaryDetailRouteParams, 'params'>>();
   const { openRealm, closeRealm } = useRealm();
@@ -82,11 +85,14 @@ const DiaryDetail = () => {
 
   const handleRemoveDiary = useCallback(async () => {
     try {
-      const realm = await openRealm();
-      if (!isNotEmpty(realm) || !isNotEmpty(selectedDiary?.emotionId)) {
-        throw new Error('선택된 일기가 없거나 Realm을 열 수 없습니다.');
+      let realm: Realm | undefined;
+      if (!isLogin) {
+        realm = await openRealm();
       }
-      await dispatch(removeDiaryThunk({ realm, emotionId: selectedDiary.emotionId }));
+      if (!isNotEmpty(selectedDiary?.emotionId)) {
+        throw new Error('선택된 일기가 없습니다.');
+      }
+      await dispatch(removeDiaryThunk({ realm, emotionId: selectedDiary.emotionId, isLogin }));
       await closeRealm();
       if (route.params.origin === 'RootStack') {
         goBack();
@@ -104,7 +110,9 @@ const DiaryDetail = () => {
         })
       );
     } finally {
-      closeRealm();
+      if (!isLogin) {
+        closeRealm();
+      }
       dispatch(setOverlayEventHandler(null));
       dispatch(
         setShowModalPopup({
@@ -117,7 +125,15 @@ const DiaryDetail = () => {
         })
       );
     }
-  }, [openRealm, selectedDiary, dispatch, route.params.origin, closeRealm, showModalPopup]);
+  }, [
+    openRealm,
+    selectedDiary,
+    dispatch,
+    route.params.origin,
+    closeRealm,
+    showModalPopup,
+    isLogin,
+  ]);
 
   useEffect(() => {
     if (

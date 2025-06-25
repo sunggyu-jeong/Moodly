@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector, useRealm } from '@/shared/hooks';
 import { isEmpty, isNotEmpty } from '@/shared/lib';
 import colors from '@/shared/styles/colors';
 
+import type Realm from 'realm';
 import DiaryCardList from '../components/DiaryCardList';
 import DiaryEmptyMent from '../components/DiaryEmptyMent';
 import DiaryMonth from '../components/DiaryMonth';
@@ -18,6 +19,7 @@ const DiaryList = () => {
   const { openRealm, closeRealm } = useRealm();
   const selectedMonth = useAppSelector(state => state.diarySlice.selectedMonth);
   const searchByMonth = useAppSelector(state => state.diarySlice.searchByMonth);
+  const isLogin = useAppSelector(state => state.authSlice.isLogin);
   const currentMonth = dayjs();
   const dispatch = useAppDispatch();
 
@@ -32,12 +34,18 @@ const DiaryList = () => {
   };
 
   const initialize = useCallback(async () => {
-    const realm = await openRealm();
-    if (isNotEmpty(realm)) {
-      await dispatch(searchDiaryByMonthThunk({ realm, recordDate: new Date(selectedMonth) }));
+    let realm: Realm | undefined;
+    if (!isLogin) {
+      realm = await openRealm();
+    }
+
+    await dispatch(
+      searchDiaryByMonthThunk({ realm, recordDate: new Date(selectedMonth), isLogin })
+    );
+    if (!isLogin) {
       closeRealm();
     }
-  }, [openRealm, dispatch, selectedMonth, closeRealm]);
+  }, [selectedMonth, openRealm, closeRealm, dispatch, isLogin]);
 
   useFocusEffect(
     useCallback(() => {

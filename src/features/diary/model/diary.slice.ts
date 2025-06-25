@@ -2,70 +2,85 @@ import { createSlice } from '@reduxjs/toolkit';
 import dayjs from 'dayjs';
 import Realm from 'realm';
 
+import store from '@/app/store';
 import { EmotionDiaryDTO } from '@/entities/diary';
 import { AsyncOperationState, createInitialAsyncState } from '@/shared/constants/ApiStatus';
 import { EmotionIconData, ICON_DATA } from '@/shared/constants/Icons';
 import { addAsyncThunkCase } from '@/shared/lib';
 import { createServiceThunk } from '@/shared/services/ServiceThunk';
+import { DiaryDataSource } from '../service/DiaryDataSource';
+import { createDiaryDataSource, DataSourceType } from '../service/DiaryDataSourceFactory';
 
-import {
-  createDiary,
-  deleteDiary,
-  hasDiaryForDay,
-  selectDiaryById,
-  selectDiaryByMonth,
-  selectDiaryCount,
-  updateDiary,
-} from '../service';
-
-const searchDiaryCountThunk = createServiceThunk<number, { realm: Realm }>(
-  'diary/searchDiaryCount',
-  async ({ realm }) => {
-    return selectDiaryCount(realm);
+interface DataSourceOutPutType {
+  ds: DiaryDataSource;
+  isLogin: boolean;
+}
+function chooseDataSource(): DataSourceOutPutType {
+  const isLogin = store.getState().authSlice.isLogin;
+  let identifier: DataSourceType;
+  if (isLogin) {
+    identifier = DataSourceType.SUPABASE;
+  } else {
+    identifier = DataSourceType.REALM;
   }
-);
+  return { ds: createDiaryDataSource(identifier), isLogin: isLogin };
+}
+
+const searchDiaryCountThunk = createServiceThunk<
+  number,
+  { realm: Realm | undefined; isLogin: boolean }
+>('diary/searchDiaryCount', async ({ realm }) => {
+  const { ds } = chooseDataSource();
+  return ds.searchCount(realm);
+});
 
 const searchDiaryByIdThunk = createServiceThunk<
   EmotionDiaryDTO | null,
-  { realm: Realm; emotionId: number }
->('diary/searchDiaryById', async ({ realm, emotionId }) => {
-  return selectDiaryById(realm, emotionId);
+  { realm: Realm | undefined; emotionId: number; isLogin: boolean }
+>('diary/searchDiaryById', async ({ realm, emotionId, isLogin }) => {
+  const { ds } = chooseDataSource();
+  return ds.searchById(emotionId, realm);
 });
 
 const searchDiaryByMonthThunk = createServiceThunk<
   EmotionDiaryDTO[],
-  { realm: Realm; recordDate: Date }
->('diary/searchDiaryByMonth', async ({ realm, recordDate }) => {
-  return selectDiaryByMonth(realm, recordDate);
+  { realm: Realm | undefined; recordDate: Date; isLogin: boolean }
+>('diary/searchDiaryByMonth', async ({ realm, recordDate, isLogin }) => {
+  const { ds } = chooseDataSource();
+  return ds.searchByMonth(recordDate, realm);
 });
 
-const addDiaryThunk = createServiceThunk<number, { realm: Realm; data: EmotionDiaryDTO }>(
-  'diary/addDiary',
-  async ({ realm, data }) => {
-    return createDiary(realm, data);
-  }
-);
+const addDiaryThunk = createServiceThunk<
+  number,
+  { realm: Realm | undefined; data: EmotionDiaryDTO; isLogin: boolean }
+>('diary/addDiary', async ({ realm, data, isLogin }) => {
+  const { ds } = chooseDataSource();
+  return ds.add(data, realm);
+});
 
 const modifyDiaryThunk = createServiceThunk<
   number,
-  { realm: Realm; emotionId: number; data: EmotionDiaryDTO }
->('diary/modifyDiary', async ({ realm, emotionId, data }) => {
-  return updateDiary(realm, emotionId, data);
+  { realm: Realm | undefined; emotionId: number; data: EmotionDiaryDTO; isLogin: boolean }
+>('diary/modifyDiary', async ({ realm, emotionId, data, isLogin }) => {
+  const { ds } = chooseDataSource();
+  return ds.modify(emotionId, data, realm);
 });
 
-const removeDiaryThunk = createServiceThunk<void, { realm: Realm; emotionId: number }>(
-  'diary/removeDiary',
-  async ({ realm, emotionId }) => {
-    deleteDiary(realm, emotionId);
-  }
-);
+const removeDiaryThunk = createServiceThunk<
+  void,
+  { realm: Realm | undefined; emotionId: number; isLogin: boolean }
+>('diary/removeDiary', async ({ realm, emotionId, isLogin }) => {
+  const { ds } = chooseDataSource();
+  return ds.remove(emotionId, realm);
+});
 
-const searchDiaryForDayThunk = createServiceThunk<boolean, { realm: Realm; recordDate: Date }>(
-  'diary/isDiaryExist',
-  async ({ realm, recordDate }) => {
-    return hasDiaryForDay(realm, recordDate);
-  }
-);
+const searchDiaryForDayThunk = createServiceThunk<
+  boolean,
+  { realm: Realm | undefined; recordDate: Date; isLogin: boolean }
+>('diary/isDiaryExist', async ({ realm, recordDate, isLogin }) => {
+  const { ds } = chooseDataSource();
+  return ds.isExist(recordDate, realm);
+});
 
 interface DiaryState {
   diaryCount: AsyncOperationState<number>;
