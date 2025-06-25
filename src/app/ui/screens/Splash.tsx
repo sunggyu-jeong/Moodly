@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import { Image, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { initializeSessionThunk } from '@/features/auth/model/auth.slice';
 import UpdateContent from '@/features/updateProgress/ui/components/UpdateContent';
 import { UpdateProgressProps } from '@/processes/update/useUpdateProgress';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks';
-import { isEmpty, isNotEmpty, navigate, resetTo } from '@/shared/lib';
-import { initializeSessionThunk } from '../../../features/auth/model/auth.slice';
+import { allValuesNull, navigate, resetTo } from '@/shared/lib';
 
 const Splash = ({ status, progress }: UpdateProgressProps) => {
   const userInfo = useAppSelector(state => state.authSlice.userInfo);
@@ -26,10 +26,13 @@ const Splash = ({ status, progress }: UpdateProgressProps) => {
   }, [status]);
 
   useEffect(() => {
-    if (userInfo.status === 'succeeded' && isNotEmpty(userInfo.data)) {
-      resetTo('Main');
-    } else if (userInfo.status === 'failed' && isEmpty(userInfo.data)) {
-      navigate('Login');
+    console.log('>>>>>', userInfo.status, userInfo.data, allValuesNull(userInfo.data));
+    if (userInfo.status === 'succeeded') {
+      if (!allValuesNull(userInfo.data)) {
+        resetTo('Main');
+      } else if (allValuesNull(userInfo.data)) {
+        navigate('Login');
+      }
     }
   }, [userInfo.status, userInfo.data]);
 
