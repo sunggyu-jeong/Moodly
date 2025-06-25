@@ -83,10 +83,12 @@ const initializeSessionThunk = createAsyncThunk<
 
 interface AuthState {
   userInfo: AsyncOperationState<User>;
+  isLogin: boolean;
 }
 
 const initialState: AuthState = {
   userInfo: createInitialAsyncState<User>(),
+  isLogin: false,
 };
 
 const authSlice = createSlice({
@@ -100,6 +102,9 @@ const authSlice = createSlice({
       state.userInfo.status = action.payload.status;
       state.userInfo.data = action.payload.data;
       state.userInfo.error = action.payload.error;
+    },
+    setIsLogin: (state, action) => {
+      state.isLogin = action.payload;
     },
   },
   extraReducers: builder => {
@@ -126,6 +131,6 @@ const authSlice = createSlice({
 });
 
 export { initializeSessionThunk, signInAppleThunk, signInGoogleThunk };
-export const { resetAuthState, setAuthState } = authSlice.actions;
+export const { resetAuthState, setAuthState, setIsLogin } = authSlice.actions;
 
 export default authSlice.reducer;
