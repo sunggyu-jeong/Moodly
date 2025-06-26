@@ -2,8 +2,8 @@
 import store from '@/app/store';
 import { EmotionDiaryDTO, EmotionDiarySupabase, mapSupabaseToDTO } from '@/entities/diary';
 import { isEmpty } from '@/shared/lib';
-import { HOT_UPDATER_SUPABASE_ANON_KEY, HOT_UPDATER_SUPABASE_URL } from '@env';
-import { createClient, PostgrestError } from '@supabase/supabase-js';
+import { supabase } from '@/shared/lib/supabase.util';
+import { PostgrestError } from '@supabase/supabase-js';
 
 /** Supabase 스키마 정의 */
 interface Database {
@@ -20,9 +20,6 @@ interface Database {
     Enums: object;
   };
 }
-
-// Supabase 초기화
-const supabase = createClient<Database>(HOT_UPDATER_SUPABASE_URL!, HOT_UPDATER_SUPABASE_ANON_KEY!);
 
 export async function countSupabase(): Promise<number> {
   const userInfo = store.getState().authSlice.userInfo;

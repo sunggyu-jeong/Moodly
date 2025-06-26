@@ -14,13 +14,29 @@ export const supabase = createClient(HOT_UPDATER_SUPABASE_URL, HOT_UPDATER_SUPAB
   },
   global: {
     fetch: async (input, init) => {
-      const res = await fetch(input, init);
-      if (res.status === 401 || res.status === 403) {
-        store.dispatch(resetAuthState());
-        resetTo('Login');
-        throw new Error('인증이 만료되었습니다. 다시 로그인하세요.');
+      const maxAttempts = 3;
+      let lastError: Error | null = null;
+      for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+        try {
+          const res = await fetch(input, init);
+          if (res.status === 401 || res.status === 403) {
+            store.dispatch(resetAuthState());
+            resetTo('Login');
+            throw new Error('인증이 만료되었습니다. 다시 로그인하세요.');
+          }
+          return res;
+        } catch (e: unknown) {
+          console.log('>>>>', e);
+          lastError = e instanceof Error ? e : new Error(String(e));
+          if (attempt === maxAttempts) {
+            const message = e instanceof Error ? e.message : String(e);
+            throw new Error(`네트워크 요청에 실패했습니다: ${message}`);
+          }
+          // 재시도 전 1초 대기
+          await new Promise(resolve => setTimeout(resolve, 1000));
+        }
       }
-      return res;
+      throw lastError ?? new Error('Unknown fetch error');
     },
   },
 });
