@@ -14,6 +14,7 @@ import '../../global.css';
 import { HOT_UPDATER_SUPABASE_URL } from '@env';
 import { HotUpdater, getUpdateSource } from '@hot-updater/react-native';
 import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import { useInitializeApp } from '../features/global/hooks/useInitializeApp';
 import { UpdateProgressProps } from '../processes/update/useUpdateProgress';
 import RootStack from './navigation/RootStack';
@@ -41,15 +42,17 @@ export const onRenderCallback: ProfilerOnRenderCallback = (
 function App() {
   useInitializeApp();
   return (
-    <Provider store={store}>
-      {/* <RealmProvider> */}
-      <SafeAreaProvider>
-        <NavigationContainer ref={navigationRef}>
-          <RootStack />
-        </NavigationContainer>
-      </SafeAreaProvider>
-      {/* </RealmProvider> */}
-    </Provider>
+    <View style={styles.appContainer}>
+      <Provider store={store}>
+        {/* <RealmProvider> */}
+        <SafeAreaProvider>
+          <NavigationContainer ref={navigationRef}>
+            <RootStack />
+          </NavigationContainer>
+        </SafeAreaProvider>
+        {/* </RealmProvider> */}
+      </Provider>
+    </View>
   );
 }
 
@@ -60,6 +63,13 @@ const FallbackComponent = React.memo(({ status, progress }: UpdateProgressProps)
       progress={progress * 100}
     />
   );
+});
+
+const styles = StyleSheet.create({
+  appContainer: {
+    flex: 1,
+    backgroundColor: '#5168DB',
+  },
 });
 
 export default HotUpdater.wrap({

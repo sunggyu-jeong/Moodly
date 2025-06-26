@@ -3,12 +3,12 @@ import { Image, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { initializeSessionThunk } from '@/features/auth/model/auth.slice';
+import { setShowToastView } from '@/features/overlay/model/overlay.slice';
 import UpdateContent from '@/features/updateProgress/ui/components/UpdateContent';
 import { UpdateProgressProps } from '@/processes/update/useUpdateProgress';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks';
 import { allValuesNull, resetTo } from '@/shared/lib';
-import { setShowToastView } from '../../../features/overlay/model/overlay.slice';
 
 const Splash = ({ status, progress }: UpdateProgressProps) => {
   const userInfo = useAppSelector(state => state.authSlice.userInfo);

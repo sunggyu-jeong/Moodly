@@ -68,7 +68,7 @@ export async function selectByMonthSupabase(recordDate: Date): Promise<EmotionDi
     .gte('record_date', start.toISOString())
     .eq('user_id', id)
     .lt('record_date', end.toISOString())
-    .order('record_date', { ascending: true });
+    .order('record_date', { ascending: false });
   if (error) throw error;
   return data.map(mapSupabaseToDTO) ?? [];
 }
