@@ -26,7 +26,8 @@
     "src/**/*",
     "nativewind-env.d.ts",
     "./.env.d.ts",
-    "react-native-textinput-extensions.d.ts"
+    "react-native-textinput-extensions.d.ts",
+    "hot-updater.config.ts"
   ],
   "exclude": ["node_modules", "build"]
 }
