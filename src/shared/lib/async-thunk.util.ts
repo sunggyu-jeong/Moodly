@@ -40,13 +40,23 @@ export function addAsyncThunkCase<T, S>({ ...props }: AsyncThunkProps<T, S>) {
   props.builder.addCase(props.thunk.rejected, (state, action) => {
     (state as any)[props.key].status = AsyncStatus.Failed;
     // payload가 Error 객체면 message 사용, 아니면 기본 에러 메시지
-    const raw = action.payload ?? props.defaultErrorMessage;
-    const message =
-      typeof raw === 'string'
-        ? raw
-        : raw && typeof (raw as any).message === 'string'
-          ? (raw as any).message
-          : String(raw);
+    const raw = action.payload;
+    let message: string;
+
+    if (typeof raw === 'string') {
+      message = raw;
+    } else if (raw && typeof (raw as any).message === 'string') {
+      message = (raw as any).message;
+    } else if (
+      raw &&
+      (raw as any).response &&
+      (raw as any).response.failed &&
+      typeof (raw as any).response.failed.message === 'string'
+    ) {
+      message = (raw as any).response.failed.message;
+    } else {
+      message = props?.defaultErrorMessage ?? '알 수 없는 오류가 발생했습니다.';
+    }
     (state as any)[props.key].error = message;
   });
 }

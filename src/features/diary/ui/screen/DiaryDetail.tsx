@@ -106,7 +106,7 @@ const DiaryDetail = () => {
       dispatch(
         setShowToastView({
           visibility: true,
-          message: '일기를 삭제하는 도중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
+          message: error as string,
         })
       );
     } finally {

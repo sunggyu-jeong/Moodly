@@ -26,7 +26,6 @@ const Splash = ({ status, progress }: UpdateProgressProps) => {
   }, [status]);
 
   useEffect(() => {
-    console.log('>>>>>', userInfo.status, userInfo.data, allValuesNull(userInfo.data));
     if (userInfo.status === 'succeeded') {
       if (!allValuesNull(userInfo.data)) {
         resetTo('Main');
