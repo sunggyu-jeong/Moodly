@@ -35,18 +35,20 @@ export const onRenderCallback: ProfilerOnRenderCallback = (
 ) => {
   console.log(
     `onRenderCallback: ${id}, phase: ${phase}, actualDuration: ${actualDuration}, baseDuration: ${baseDuration}, startTime: ${startTime}, commitTime: ${commitTime}`
-  )
+  );
 };
 
 function App() {
   useInitializeApp();
   return (
     <Provider store={store}>
+      {/* <RealmProvider> */}
       <SafeAreaProvider>
         <NavigationContainer ref={navigationRef}>
           <RootStack />
         </NavigationContainer>
       </SafeAreaProvider>
+      {/* </RealmProvider> */}
     </Provider>
   );
 }

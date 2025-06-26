@@ -92,8 +92,9 @@ const DiaryDetail = () => {
       if (!isNotEmpty(selectedDiary?.emotionId)) {
         throw new Error('선택된 일기가 없습니다.');
       }
-      await dispatch(removeDiaryThunk({ realm, emotionId: selectedDiary.emotionId, isLogin }));
-      await closeRealm();
+      await dispatch(
+        removeDiaryThunk({ realm, emotionId: selectedDiary.emotionId, isLogin })
+      ).unwrap();
       if (route.params.origin === 'RootStack') {
         goBack();
       } else {

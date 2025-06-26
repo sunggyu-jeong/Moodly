@@ -4,6 +4,7 @@ import { useCallback } from 'react';
 import { ICON_DATA } from '@/shared/constants';
 import { useAppDispatch, useAppSelector, useRealm } from '@/shared/hooks';
 
+import { setShowToastView } from '../../overlay/model/overlay.slice';
 import {
   searchDiaryCountThunk,
   searchDiaryForDayThunk,
@@ -18,19 +19,24 @@ export function useInitializeDiary() {
   const isLogin = useAppSelector(state => state.authSlice.isLogin);
 
   const initialize = useCallback(async () => {
-    let realm: Realm | undefined;
-    if (!isLogin) {
-      realm = await openRealm();
-    }
-    await dispatch(searchDiaryForDayThunk({ realm, recordDate: new Date(), isLogin }));
-    await dispatch(
-      searchDiaryCountThunk({
-        realm: isLogin ? realm : undefined,
-        isLogin,
-      })
-    );
-    if (!isLogin) {
-      closeRealm();
+    try {
+      let realm: Realm | undefined;
+      if (!isLogin) {
+        realm = await openRealm();
+      }
+      await dispatch(searchDiaryForDayThunk({ realm, recordDate: new Date(), isLogin })).unwrap();
+      await dispatch(
+        searchDiaryCountThunk({
+          realm: realm,
+          isLogin,
+        })
+      ).unwrap();
+    } catch (e) {
+      dispatch(setShowToastView({ visibility: true, message: e as string }));
+    } finally {
+      if (!isLogin) {
+        closeRealm();
+      }
     }
   }, [openRealm, dispatch, closeRealm, isLogin]);
 

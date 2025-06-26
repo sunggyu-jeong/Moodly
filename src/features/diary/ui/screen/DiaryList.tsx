@@ -11,6 +11,7 @@ import { isEmpty, isNotEmpty } from '@/shared/lib';
 import colors from '@/shared/styles/colors';
 
 import type Realm from 'realm';
+import { setShowToastView } from '../../../overlay/model/overlay.slice';
 import DiaryCardList from '../components/DiaryCardList';
 import DiaryEmptyMent from '../components/DiaryEmptyMent';
 import DiaryMonth from '../components/DiaryMonth';
@@ -34,16 +35,21 @@ const DiaryList = () => {
   };
 
   const initialize = useCallback(async () => {
-    let realm: Realm | undefined;
-    if (!isLogin) {
-      realm = await openRealm();
-    }
+    try {
+      let realm: Realm | undefined;
+      if (!isLogin) {
+        realm = await openRealm();
+      }
 
-    await dispatch(
-      searchDiaryByMonthThunk({ realm, recordDate: new Date(selectedMonth), isLogin })
-    );
-    if (!isLogin) {
-      closeRealm();
+      await dispatch(
+        searchDiaryByMonthThunk({ realm, recordDate: new Date(selectedMonth), isLogin })
+      ).unwrap();
+    } catch (error) {
+      setShowToastView({ visibility: true, message: error as string });
+    } finally {
+      if (!isLogin) {
+        closeRealm();
+      }
     }
   }, [selectedMonth, openRealm, closeRealm, dispatch, isLogin]);
 

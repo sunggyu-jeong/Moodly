@@ -8,6 +8,7 @@ import { UpdateProgressProps } from '@/processes/update/useUpdateProgress';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks';
 import { allValuesNull, resetTo } from '@/shared/lib';
+import { setShowToastView } from '../../../features/overlay/model/overlay.slice';
 
 const Splash = ({ status, progress }: UpdateProgressProps) => {
   const userInfo = useAppSelector(state => state.authSlice.userInfo);
@@ -36,7 +37,11 @@ const Splash = ({ status, progress }: UpdateProgressProps) => {
   }, [userInfo.status, userInfo.data]);
 
   const handleAuthFlow = async () => {
-    await dispatch(initializeSessionThunk());
+    try {
+      await dispatch(initializeSessionThunk()).unwrap();
+    } catch (e) {
+      setShowToastView({ visibility: true, message: e as string });
+    }
   };
 
   return (
