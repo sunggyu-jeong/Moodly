@@ -22,7 +22,7 @@ const Home = () => {
     <>
       <StatusBar
         translucent
-        barStyle="light-content"
+        barStyle="dark-content"
       />
       <View className="bg-gray-100 flex-1 px-5 justify-center items-center">
         <DiaryCountCard

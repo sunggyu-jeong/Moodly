@@ -5,6 +5,8 @@ import { createClient } from '@supabase/supabase-js';
 import { resetAuthState } from '../../features/auth/model/auth.slice';
 import { resetTo } from './navigation.util';
 
+const nativeFetch = globalThis.fetch.bind(globalThis);
+
 export const supabase = createClient(HOT_UPDATER_SUPABASE_URL, HOT_UPDATER_SUPABASE_ANON_KEY, {
   auth: {
     storage: AsyncStorage,
@@ -13,12 +15,14 @@ export const supabase = createClient(HOT_UPDATER_SUPABASE_URL, HOT_UPDATER_SUPAB
     detectSessionInUrl: false,
   },
   global: {
-    fetch: async (input, init) => {
+    fetch: async (input: string | URL | Request, init?: RequestInit) => {
       const maxAttempts = 3;
       let lastError: Error | null = null;
+
       for (let attempt = 1; attempt <= maxAttempts; attempt++) {
         try {
-          const res = await fetch(input, init);
+          const res = await nativeFetch(input, init);
+
           if (res.status === 401 || res.status === 403) {
             store.dispatch(resetAuthState());
             resetTo('Login');
@@ -26,17 +30,16 @@ export const supabase = createClient(HOT_UPDATER_SUPABASE_URL, HOT_UPDATER_SUPAB
           }
           return res;
         } catch (e: unknown) {
-          console.log('>>>>', e);
           lastError = e instanceof Error ? e : new Error(String(e));
+
           if (attempt === maxAttempts) {
-            const message = e instanceof Error ? e.message : String(e);
-            throw new Error(`네트워크 요청에 실패했습니다: ${message}`);
+            throw new Error(`네트워크 요청에 실패했습니다: ${lastError.message}`);
           }
           // 재시도 전 1초 대기
-          await new Promise(resolve => setTimeout(resolve, 1000));
+          await new Promise(r => setTimeout(r, 1000));
         }
       }
-      throw lastError ?? new Error('Unknown fetch error');
+      throw lastError!;
     },
   },
 });
