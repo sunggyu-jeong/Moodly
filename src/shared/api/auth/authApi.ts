@@ -1,7 +1,13 @@
 import { ApiResponse } from '@/entities/common/response';
 import { User } from '@supabase/supabase-js';
 import { baseApi, wrapQueryFn } from '../base';
-import { fetchSession, getAppleToken, getGoogleToken, signInWithIdToken } from './authHelpers';
+import {
+  fetchSession,
+  getAppleToken,
+  getGoogleToken,
+  signInWithIdToken,
+  signOut,
+} from './authHelpers';
 
 export const authApi = baseApi.injectEndpoints({
   overrideExisting: false,
@@ -25,8 +31,18 @@ export const authApi = baseApi.injectEndpoints({
       },
       providesTags: ['EmotionDiary'],
     }),
+    signOut: builder.mutation<ApiResponse<string>, void>({
+      async queryFn(_arg, _api, _extraOptions, _baseQuery) {
+        return wrapQueryFn(async () => signOut());
+      },
+      invalidatesTags: ['EmotionDiary'],
+    }),
   }),
 });
 
-export const { useSignInGoogleMutation, useSignInAppleMutation, useInitializeSessionQuery } =
-  authApi;
+export const {
+  useSignInGoogleMutation,
+  useSignInAppleMutation,
+  useInitializeSessionQuery,
+  useSignOutMutation,
+} = authApi;
