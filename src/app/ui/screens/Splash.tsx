@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { initializeSessionThunk } from '@/features/auth/model/auth.slice';
 import { setShowToastView } from '@/features/overlay/model/overlay.slice';
-import UpdateContent from '@/features/updateProgress/ui/components/UpdateContent';
+import UpdateContent from '@features/updateProgress/ui/UpdateContent.tsx';
 import { UpdateProgressProps } from '@/processes/update/useUpdateProgress';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks';

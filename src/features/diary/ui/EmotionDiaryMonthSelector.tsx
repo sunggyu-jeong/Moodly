@@ -1,8 +1,8 @@
 import { View } from 'react-native';
 
-import { COMMON_ICONS } from '@/shared/assets/images/common';
-import ArrowButton from '@/shared/ui/elements/ArrowButton';
-import MonthlyLabel from '@/shared/ui/elements/MonthlyLabel';
+import { COMMON_ICONS } from '@shared/assets/images/common';
+import ArrowButton from '@shared/ui/elements/ArrowButton.tsx';
+import MonthlyLabel from '@shared/ui/elements/MonthlyLabel.tsx';
 
 interface DiaryMonthProps {
   monthLabel: string;
@@ -11,7 +11,7 @@ interface DiaryMonthProps {
   rightDisabled: boolean;
 }
 
-const DiaryMonth = ({ ...props }: DiaryMonthProps) => (
+const EmotionDiaryMonthSelector = ({ ...props }: DiaryMonthProps) => (
   <View className="flex-row items-center justify-center">
     <ArrowButton
       source={COMMON_ICONS.iconPrev}
@@ -28,4 +28,4 @@ const DiaryMonth = ({ ...props }: DiaryMonthProps) => (
   </View>
 );
 
-export default DiaryMonth;
+export default EmotionDiaryMonthSelector;

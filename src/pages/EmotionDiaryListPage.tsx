@@ -3,20 +3,20 @@ import dayjs from 'dayjs';
 import { useCallback } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 
-import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar';
+import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar.tsx';
 
-import { searchDiaryByMonthThunk, setSelectedMonth } from '@/features/diary/model/diary.slice';
-import { useAppDispatch, useAppSelector, useRealm } from '@/shared/hooks';
-import { isEmpty, isNotEmpty } from '@/shared/lib';
-import colors from '@/shared/styles/colors';
+import { searchDiaryByMonthThunk, setSelectedMonth } from '@features/diary/model/diary.slice.ts';
+import { useAppDispatch, useAppSelector, useRealm } from '@shared/hooks';
+import { isEmpty, isNotEmpty } from '@shared/lib';
+import colors from '@shared/styles/colors.ts';
 
 import type Realm from 'realm';
-import { setShowToastView } from '../../../overlay/model/overlay.slice';
-import DiaryCardList from '../components/DiaryCardList';
-import DiaryEmptyMent from '../components/DiaryEmptyMent';
-import DiaryMonth from '../components/DiaryMonth';
+import { setShowToastView } from '@features/overlay/model/overlay.slice.ts';
+import EmotionDiaryCardList from '@features/diary/ui/EmotionDiaryCardList.tsx';
+import EmotionDiaryEmptyMessage from '@features/diary/ui/EmotionDiaryEmptyMessage.tsx';
+import EmotionDiaryMonthSelector from '@features/diary/ui/EmotionDiaryMonthSelector.tsx';
 
-const DiaryList = () => {
+const EmotionDiaryListPage = () => {
   const { openRealm, closeRealm } = useRealm();
   const selectedMonth = useAppSelector(state => state.diarySlice.selectedMonth);
   const searchByMonth = useAppSelector(state => state.diarySlice.searchByMonth);
@@ -65,7 +65,7 @@ const DiaryList = () => {
         backgroundColor={colors.gray[100]}
         showBackButton={false}
         centerComponent={
-          <DiaryMonth
+          <EmotionDiaryMonthSelector
             monthLabel={dayjs(selectedMonth).format('M월')}
             onPressLeft={() => {
               handleChangeMonth('left');
@@ -82,11 +82,11 @@ const DiaryList = () => {
           className="bg-gray-100"
           contentContainerStyle={styles.scrollViewContent}
         >
-          <DiaryCardList />
+          <EmotionDiaryCardList />
         </ScrollView>
       )}
 
-      {isEmpty(searchByMonth?.data) && <DiaryEmptyMent />}
+      {isEmpty(searchByMonth?.data) && <EmotionDiaryEmptyMessage />}
     </>
   );
 };
@@ -97,4 +97,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DiaryList;
+export default EmotionDiaryListPage;

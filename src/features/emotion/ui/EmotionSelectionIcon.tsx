@@ -3,7 +3,7 @@ import { EmotionIconData } from '@/shared/constants';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks';
 import EmotionSymbol from '@/shared/ui/elements/EmotionSymbol';
 
-const EmotionIcon = ({ emotion }: { emotion: EmotionIconData }) => {
+const EmotionSelectionIcon = ({ emotion }: { emotion: EmotionIconData }) => {
   const dispatch = useAppDispatch();
   const selectedEmotion = useAppSelector(state => state.diarySlice.selectedIcon);
 
@@ -19,4 +19,4 @@ const EmotionIcon = ({ emotion }: { emotion: EmotionIconData }) => {
   );
 };
 
-export default EmotionIcon;
+export default EmotionSelectionIcon;

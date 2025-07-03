@@ -1,11 +1,11 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import DiaryDetail from '@/features/diary/ui/screen/DiaryDetail';
+import EmotionDiaryDetailPage from '@pages/EmotionDiaryDetailPage.tsx';
 import OverlayManager from '@/processes/overlay/ui/OverlayManager';
 
 import Splash from '../ui/screens/Splash';
 
-import Login from '@/features/auth/ui/screen/Login';
+import Login from '@pages/LoginPage.tsx';
 import DiaryStack, { DiaryStackParamList } from './DiaryStack';
 import TabNavigation from './TabNavigation';
 
@@ -20,7 +20,7 @@ export type RootStackParamList = {
         params?: DiaryStackParamList[keyof DiaryStackParamList];
       }
     | undefined;
-  DiaryDetail: { origin: string };
+  EmotionDetailPage: { origin: string };
 };
 
 const Stack = createNativeStackNavigator();
@@ -57,7 +57,7 @@ const RootStack = () => {
         />
         <Stack.Screen
           name="DiaryDetail"
-          component={DiaryDetail}
+          component={EmotionDiaryDetailPage}
         />
       </Stack.Navigator>
     </>

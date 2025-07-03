@@ -1,17 +1,17 @@
 import { useEffect, useRef } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
-import { MAIN_ICONS } from '@/shared/assets/images/main';
-import { getScaleSize, useAppDispatch, useAppSelector } from '@/shared/hooks';
-import { dismissModalToScreen, navigate } from '@/shared/lib';
-import { gray } from '@/shared/styles/colors';
-import { Body2 } from '@/shared/ui/typography/Body2';
-import { H2 } from '@/shared/ui/typography/H2';
+import { MAIN_ICONS } from '@shared/assets/images/main';
+import { getScaleSize, useAppDispatch, useAppSelector } from '@shared/hooks';
+import { dismissModalToScreen, navigate } from '@shared/lib';
+import { gray } from '@shared/styles/colors.ts';
+import { Body2 } from '@shared/ui/typography/Body2.tsx';
+import { H2 } from '@shared/ui/typography/H2.tsx';
 
-import { setShowToastView } from '../../../overlay/model/overlay.slice';
-import { setModifyMode } from '../../model/diary.slice';
+import { setShowToastView } from '@features/overlay/model/overlay.slice.ts';
+import { setModifyMode } from '@features/diary/model/diary.slice.ts';
 
-const WriteDiaryComplete = () => {
+const EmotionDiaryCompletePage = () => {
   const isModifyMode = useAppSelector(state => state.diarySlice.isModifyMode);
   const dispatch = useAppDispatch();
   const initialModifyMode = useRef(isModifyMode);
@@ -70,4 +70,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default WriteDiaryComplete;
+export default EmotionDiaryCompletePage;

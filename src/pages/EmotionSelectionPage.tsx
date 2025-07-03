@@ -1,21 +1,21 @@
 import { useEffect } from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 
-import { EmotionDiaryDTO } from '@/entities/diary';
-import { setSelectedIcon, setTodayDiary } from '@/features/diary/model/diary.slice';
-import EmotionList from '@/features/emotion/ui/EmotionList';
-import SelectedEmotion from '@/features/emotion/ui/SelectedEmotion';
-import { ICON_DATA } from '@/shared/constants/Icons';
-import { getScaleSize, useAppDispatch, useAppSelector } from '@/shared/hooks';
-import { isNotEmpty, navigate } from '@/shared/lib';
-import ActionButton from '@/shared/ui/elements/ActionButton';
-import { H2 } from '@/shared/ui/typography/H2';
-import NaviDismiss from '@/widgets/navigation-bar/ui/NaviDismiss';
-import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
+import { EmotionDiaryDTO } from '@entities/diary';
+import { setSelectedIcon, setTodayDiary } from '@features/diary/model/diary.slice.ts';
+import EmotionSelectionList from '@features/emotion/ui/EmotionSelectionList.tsx';
+import EmotionDisplaySelected from '@features/emotion/ui/EmotionDisplaySelected.tsx';
+import { ICON_DATA } from '@shared/constants/Icons.ts';
+import { getScaleSize, useAppDispatch, useAppSelector } from '@shared/hooks';
+import { isNotEmpty, navigate } from '@shared/lib';
+import ActionButton from '@shared/ui/elements/ActionButton.tsx';
+import { H2 } from '@shared/ui/typography/H2.tsx';
+import NaviDismiss from '@widgets/navigation-bar/ui/NaviDismiss.tsx';
+import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar.tsx';
 
 const actionButtons = [{ item: <NaviDismiss />, disabled: false }];
 
-const SelectEmotion = () => {
+const EmotionSelectionPage = () => {
   const dispatch = useAppDispatch();
   const selectedEmotion = useAppSelector(state => state.diarySlice.selectedIcon);
   const isModifyMode = useAppSelector(state => state.diarySlice.isModifyMode);
@@ -53,8 +53,8 @@ const SelectEmotion = () => {
         >
           오늘 느낀 감정을 선택해주세요
         </H2>
-        <SelectedEmotion />
-        <EmotionList emotionList={ICON_DATA} />
+        <EmotionDisplaySelected />
+        <EmotionSelectionList emotionList={ICON_DATA} />
 
         <View
           className="w-full px-5"
@@ -76,4 +76,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SelectEmotion;
+export default EmotionSelectionPage;

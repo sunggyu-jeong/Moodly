@@ -1,6 +1,6 @@
-import { AUTH_PROVIDER_CONFIG } from '@/entities/auth/config';
-import { AuthProvider } from '@/entities/auth/types';
-import { Body1 } from '@/shared/ui/typography/Body1';
+import { AUTH_PROVIDER_CONFIG } from '@entities/auth/config.ts';
+import { AuthProvider } from '@entities/auth/types.ts';
+import { Body1 } from '@shared/ui/typography/Body1.tsx';
 import { Image, TouchableOpacity, View } from 'react-native';
 
 type SocialLoginButtonProps = {

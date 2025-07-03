@@ -1,14 +1,14 @@
-import { AUTH_PROVIDERS, AuthProvider } from '@/entities/auth/types';
-import { useSignInAppleMutation, useSignInGoogleMutation } from '@/shared/api/auth/authApi';
-import { MAIN_ICONS } from '@/shared/assets/images/main';
-import { getScaleSize, useAppDispatch } from '@/shared/hooks';
-import { isNotEmpty, resetTo } from '@/shared/lib';
-import { primary } from '@/shared/styles/colors';
-import { H3 } from '@/shared/ui/typography/H3';
-import { Title } from '@/shared/ui/typography/Title';
+import { AUTH_PROVIDERS, AuthProvider } from '@entities/auth/types.ts';
+import { useSignInAppleMutation, useSignInGoogleMutation } from '@shared/api/auth/authApi.ts';
+import { MAIN_ICONS } from '@shared/assets/images/main';
+import { getScaleSize, useAppDispatch } from '@shared/hooks';
+import { isNotEmpty, resetTo } from '@shared/lib';
+import { primary } from '@shared/styles/colors.ts';
+import { H3 } from '@shared/ui/typography/H3.tsx';
+import { Title } from '@shared/ui/typography/Title.tsx';
 import { useEffect } from 'react';
 import { Image, Platform, StyleSheet, View } from 'react-native';
-import SocialLoginButton from '../components/SocialLoginButton';
+import SocialLoginButton from '@features/auth/ui/SocialLoginButton.tsx';
 
 const Login = () => {
   const [signInGoogle, { data: googleData, isLoading: isGoogleLoading }] =
