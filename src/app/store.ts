@@ -5,6 +5,7 @@ import diarySlice from '@/features/diary/model/diary.slice';
 import overlaySlice from '@/features/overlay/model/overlay.slice';
 import progressSlice from '@/features/updateProgress/model/progress.slice';
 import { baseApi } from '@/shared/api/base';
+import { listenerMiddleware } from './middleware/ListenerMiddleware';
 
 const reducers = combineReducers({
   // RTK Query의 API 인스턴스 리듀서
@@ -15,7 +16,7 @@ const reducers = combineReducers({
   diarySlice,
   progressSlice,
   authSlice,
-})
+});
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof reducers>;
@@ -27,10 +28,10 @@ const rootReducer = (state: RootState | undefined, action: RootAction): RootStat
   }
   return reducers(state, action);
 };
-
 export const store = configureStore({
   reducer: rootReducer,
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(baseApi.middleware),
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware().concat(baseApi.middleware).concat(listenerMiddleware.middleware),
 });
 
 export default store;

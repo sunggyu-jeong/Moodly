@@ -63,13 +63,15 @@ export async function wrapQueryFn<T>(
 ): Promise<QueryReturnValue<ApiResponse<T>, FetchBaseQueryError, FetchBaseQueryMeta>> {
   const result = await fn();
   if (result.error) {
+    const { code, message } = result.error;
     return {
       error: {
-        status: typeof result?.error?.code === 'number' ? result.error.code : 400,
-        data: result.error,
+        status: typeof code === 'number' ? code : 400,
+        data: { code, message },
       },
     };
   }
+
   return { data: result };
 }
 

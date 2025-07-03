@@ -93,3 +93,15 @@ export async function fetchSession(): Promise<ApiResponse<User>> {
     return { error: baseFormatError(err as AuthError) };
   }
 }
+
+export async function signOut(): Promise<ApiResponse<string>> {
+  try {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      return { error: baseFormatError(error) };
+    }
+    return { data: 'success' };
+  } catch (err) {
+    return { error: baseFormatError(err as AuthError) };
+  }
+}

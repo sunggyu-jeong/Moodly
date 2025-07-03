@@ -1,6 +1,5 @@
 import { AUTH_PROVIDERS, AuthProvider } from '@/entities/auth/types';
 import { useSignInAppleMutation, useSignInGoogleMutation } from '@/shared/api/auth/authApi';
-import { extractErrorMessage } from '@/shared/api/base';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { getScaleSize, useAppDispatch } from '@/shared/hooks';
 import { isNotEmpty, resetTo } from '@/shared/lib';
@@ -9,14 +8,12 @@ import { H3 } from '@/shared/ui/typography/H3';
 import { Title } from '@/shared/ui/typography/Title';
 import { useEffect } from 'react';
 import { Image, Platform, StyleSheet, View } from 'react-native';
-import { setShowToastView } from '../../../overlay/model/overlay.slice';
 import SocialLoginButton from '../components/SocialLoginButton';
 
 const Login = () => {
-  const [signInGoogle, { data: googleData, isLoading: isGoogleLoading, error: googleError }] =
+  const [signInGoogle, { data: googleData, isLoading: isGoogleLoading }] =
     useSignInGoogleMutation();
-  const [signInApple, { data: appleData, isLoading: isAppleLoading, error: appleError }] =
-    useSignInAppleMutation();
+  const [signInApple, { data: appleData, isLoading: isAppleLoading }] = useSignInAppleMutation();
   const dispatch = useAppDispatch();
   const handleLogin = async (provider: AuthProvider) => {
     if (provider === AUTH_PROVIDERS.APPLE) {
@@ -31,26 +28,8 @@ const Login = () => {
 
     if (isNotEmpty(googleData) || isNotEmpty(appleData)) {
       resetTo('Main');
-    } else if (isNotEmpty(googleError) || isNotEmpty(appleError)) {
-      const errorMessage =
-        extractErrorMessage(googleError) ??
-        extractErrorMessage(appleError) ??
-        '로그인 요청이 실패했습니다.';
-      dispatch(
-        setShowToastView({
-          message: errorMessage,
-          visibility: true,
-        })
-      );
-    } else {
-      dispatch(
-        setShowToastView({
-          message: '알 수 없는 에러가 발생했습니다. 잠시 후 다시 시도해주세요.',
-          visibility: true,
-        })
-      );
     }
-  }, [googleData, appleData, googleError, appleError, isAppleLoading, isGoogleLoading, dispatch]);
+  }, [googleData, appleData, isAppleLoading, isGoogleLoading, dispatch]);
 
   return (
     <View className="flex-1 bg-gray-100 justify-center items-center">
