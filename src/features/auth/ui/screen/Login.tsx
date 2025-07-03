@@ -1,40 +1,35 @@
 import { AUTH_PROVIDERS, AuthProvider } from '@/entities/auth/types';
+import { useSignInAppleMutation, useSignInGoogleMutation } from '@/shared/api/auth/authApi';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
-import { AsyncStatus } from '@/shared/constants';
-import { getScaleSize, useAppDispatch, useAppSelector } from '@/shared/hooks';
-import { allValuesNull, resetTo } from '@/shared/lib';
+import { getScaleSize, useAppDispatch } from '@/shared/hooks';
+import { isNotEmpty, resetTo } from '@/shared/lib';
 import { primary } from '@/shared/styles/colors';
 import { H3 } from '@/shared/ui/typography/H3';
 import { Title } from '@/shared/ui/typography/Title';
 import { useEffect } from 'react';
 import { Image, Platform, StyleSheet, View } from 'react-native';
-import { setShowToastView } from '../../../overlay/model/overlay.slice';
-import { signInAppleThunk, signInGoogleThunk } from '../../model/auth.slice';
 import SocialLoginButton from '../components/SocialLoginButton';
 
 const Login = () => {
+  const [signInGoogle, { data: googleData, isLoading: isGoogleLoading }] =
+    useSignInGoogleMutation();
+  const [signInApple, { data: appleData, isLoading: isAppleLoading }] = useSignInAppleMutation();
   const dispatch = useAppDispatch();
-  const userInfo = useAppSelector(state => state.authSlice.userInfo);
-  const handleLogin = (provider: AuthProvider) => {
+  const handleLogin = async (provider: AuthProvider) => {
     if (provider === AUTH_PROVIDERS.APPLE) {
-      dispatch(signInAppleThunk());
+      await signInApple();
     } else if (provider === AUTH_PROVIDERS.GOOGLE) {
-      dispatch(signInGoogleThunk());
+      await signInGoogle();
     }
   };
 
   useEffect(() => {
-    if (userInfo.status === AsyncStatus.Succeeded && !allValuesNull(userInfo.data)) {
+    if (isGoogleLoading || isAppleLoading) return;
+
+    if (isNotEmpty(googleData) || isNotEmpty(appleData)) {
       resetTo('Main');
-    } else if (userInfo.status === AsyncStatus.Failed) {
-      dispatch(
-        setShowToastView({
-          visibility: true,
-          message: '로그인 요청이 실패했습니다. 다시 시도해주세요.',
-        })
-      );
     }
-  }, [userInfo, dispatch]);
+  }, [googleData, appleData, isAppleLoading, isGoogleLoading, dispatch]);
 
   return (
     <View className="flex-1 bg-gray-100 justify-center items-center">
@@ -60,11 +55,13 @@ const Login = () => {
       <View className="absolute bottom-11 w-full gap-3">
         {Platform.OS === 'ios' && (
           <SocialLoginButton
+            disabled={isAppleLoading || isGoogleLoading}
             provider={AUTH_PROVIDERS.APPLE}
             onPress={handleLogin}
           />
         )}
         <SocialLoginButton
+          disabled={isAppleLoading || isGoogleLoading}
           provider={AUTH_PROVIDERS.GOOGLE}
           onPress={handleLogin}
         />

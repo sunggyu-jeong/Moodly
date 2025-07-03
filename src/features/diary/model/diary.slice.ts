@@ -15,6 +15,7 @@ interface DataSourceOutPutType {
   ds: DiaryDataSource;
   isLogin: boolean;
 }
+
 function chooseDataSource(): DataSourceOutPutType {
   const isLogin = store.getState().authSlice.isLogin;
   let identifier: DataSourceType;
@@ -137,13 +138,13 @@ const diarySlice = createSlice({
       builder,
       thunk: searchDiaryCountThunk,
       key: 'diaryCount',
-      defaultErrorMessage: '검색어 갯수 조회 요청이 실패했습니다. 잠시 후 다시 시도해주세요',
+      defaultErrorMessage: '조회 요청이 실패했습니다. 잠시 후 다시 시도해주세요.',
     });
     addAsyncThunkCase<EmotionDiaryDTO | null, DiaryState>({
       builder,
       thunk: searchDiaryByIdThunk,
       key: 'searchById',
-      defaultErrorMessage: '조회 요청이 실패했습니다. 잠시 후 다시 시도해주세요',
+      defaultErrorMessage: '조회 요청이 실패했습니다. 잠시 후 다시 시도해주세요.',
     });
     addAsyncThunkCase<EmotionDiaryDTO[], DiaryState>({
       builder,
@@ -173,7 +174,7 @@ const diarySlice = createSlice({
       builder,
       thunk: searchDiaryForDayThunk,
       key: 'isDiaryExist',
-      defaultErrorMessage: '조회 실패했습니다. 잠시 후 다시 시도해주세요.',
+      defaultErrorMessage: '조회 요청이 실패했습니다. 잠시 후 다시 시도해주세요.',
     });
   },
 });

@@ -1,15 +1,18 @@
 import { KAKAO_OPEN_CHAT_LINK } from '@env';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
 import { COMMON_ICONS } from '@/shared/assets/images/common';
-import { getScaleSize } from '@/shared/hooks';
+import { getScaleSize, useAppDispatch } from '@/shared/hooks';
 import { useOpenKakao } from '@/shared/hooks/useOpenChat';
 import { gray } from '@/shared/styles/colors';
 import NaviTitleDisplay from '@/shared/ui/elements/NaviTitle';
 import { Label } from '@/shared/ui/typography/Label';
 import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
 
+import { useSignOutMutation } from '@/shared/api/auth/authApi';
+import { isNotEmpty, resetTo } from '@/shared/lib';
+import { setShowToastView } from '../../../overlay/model/overlay.slice';
 import SettingList from '../components/SettingList';
 
 enum SETTING_EVENT_TYPE {
@@ -19,10 +22,12 @@ enum SETTING_EVENT_TYPE {
 
 const Setting = () => {
   const { openChat } = useOpenKakao();
+  const [signOut, { data, isLoading }] = useSignOutMutation();
+  const dispatch = useAppDispatch();
   const handlePress = useCallback(
     (identifier: SETTING_EVENT_TYPE) => {
       if (identifier === SETTING_EVENT_TYPE.BACKUP) {
-        console.log('백업하기');
+        signOut();
       } else if (identifier === SETTING_EVENT_TYPE.BUG_REPORT) {
         openChat(KAKAO_OPEN_CHAT_LINK);
       }
@@ -30,19 +35,23 @@ const Setting = () => {
     [openChat]
   );
 
+  useEffect(() => {
+    if (isLoading) return;
+
+    if (isNotEmpty(data) && data.data === 'success') {
+      dispatch(
+        setShowToastView({
+          visibility: true,
+          message: '로그아웃 요청이 완료되었습니다.',
+        })
+      );
+      resetTo('Login');
+    }
+  }, [isLoading, data, dispatch]);
+
   const SETTING_LIST_ITEM = useMemo(
     () => [
       // MVP SPEC OUT
-      // {
-      //   title: '백업 및 복원',
-      //   rightComponent: (
-      //     <Image
-      //       source={COMMON_ICONS.iconBackup}
-      //       style={styles.iconStyle}
-      //     />
-      //   ),
-      //   onPress: () => handlePress(SETTING_EVENT_TYPE.BACKUP),
-      // },
       {
         title: '의견 보내기',
         rightComponent: (
@@ -52,6 +61,16 @@ const Setting = () => {
           />
         ),
         onPress: () => handlePress(SETTING_EVENT_TYPE.BUG_REPORT),
+      },
+      {
+        title: '로그아웃',
+        rightComponent: (
+          <Image
+            source={COMMON_ICONS.iconBackup}
+            style={styles.iconStyle}
+          />
+        ),
+        onPress: () => handlePress(SETTING_EVENT_TYPE.BACKUP),
       },
     ],
     [handlePress]

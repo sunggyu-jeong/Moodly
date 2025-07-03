@@ -1,6 +1,7 @@
 module.exports = {
   presets: ['@react-native/babel-preset', 'nativewind/babel'],
   plugins: [
+    'react-native-reanimated/plugin',
     'hot-updater/babel-plugin',
     [
       'module-resolver',
@@ -16,6 +17,8 @@ module.exports = {
           '@entities': './src/entities',
           '@shared': './src/shared',
           '@components': './src/components',
+          'moti/skeleton': 'moti/skeleton/react-native-linear-gradient',
+          'expo-linear-gradient': 'react-native-linear-gradient',
         },
       },
     ],
