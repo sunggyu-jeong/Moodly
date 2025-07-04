@@ -1,7 +1,7 @@
-import { ApiResponse } from '@/entities/common/response';
-import { AsyncOperationState, createInitialAsyncState } from '@/shared/constants';
-import { addAsyncThunkCase } from '@/shared/lib';
-import { supabase } from '@/shared/lib/supabase.util';
+import { ApiResponse } from '@entities/common/response';
+import { AsyncOperationState, createInitialAsyncState } from '@shared/constants';
+import { addAsyncThunkCase } from '@shared/lib';
+import { supabase } from '@shared/lib/supabase.util';
 import { GOOGLE_WEB_CLIENT_ID } from '@env';
 import appleAuth from '@invertase/react-native-apple-authentication';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';

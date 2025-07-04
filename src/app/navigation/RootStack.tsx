@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import EmotionDiaryDetailPage from '@pages/EmotionDiaryDetailPage.tsx';
-import OverlayManager from '@/processes/overlay/ui/OverlayManager';
+import OverlayManager from '@processes/overlay/ui/OverlayManager';
 
 import Splash from '../ui/screens/Splash';
 

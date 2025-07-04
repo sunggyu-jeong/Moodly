@@ -1,7 +1,7 @@
 /* eslint-disable react-native/split-platform-components */
-import { useAppDispatch } from '@/shared/hooks';
-import { isNotEmpty } from '@/shared/lib';
-import { supabase } from '@/shared/lib/supabase.util';
+import { useAppDispatch } from '@shared/hooks';
+import { isNotEmpty } from '@shared/lib';
+import { supabase } from '@shared/lib/supabase.util';
 import { getApp } from '@react-native-firebase/app';
 import messaging, {
   AuthorizationStatus,

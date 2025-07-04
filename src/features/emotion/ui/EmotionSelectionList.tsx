@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 
 import EmotionSelectionIcon from '@features/emotion/ui/EmotionSelectionIcon.tsx';
-import { EmotionIconData } from '@/shared/constants';
+import { EmotionIconData } from '@shared/constants';
 
 interface EmotionListProps {
   emotionList: EmotionIconData[];

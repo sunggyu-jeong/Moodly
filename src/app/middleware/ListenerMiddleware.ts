@@ -1,9 +1,9 @@
-import { setShowToastView } from '@/features/overlay/model/overlay.slice';
+import { setShowToastView } from '@processes/overlay/model/overlay.slice';
 import { createListenerMiddleware, SerializedError } from '@reduxjs/toolkit';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
-import { parseApiError } from '@/shared/api/parseApiError';
-import { ERROR_MESSAGE_MAP } from '@/shared/config/errorCodes';
+import { parseApiError } from '@shared/api/parseApiError';
+import { ERROR_MESSAGE_MAP } from '@shared/config/errorCodes';
 import { isRejectedWithValue } from '@reduxjs/toolkit';
 
 export const listenerMiddleware = createListenerMiddleware();

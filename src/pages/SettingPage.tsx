@@ -10,10 +10,10 @@ import NaviTitleDisplay from '@shared/ui/elements/NaviTitle.tsx';
 import { Label } from '@shared/ui/typography/Label.tsx';
 import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar.tsx';
 
+import { setShowToastView } from '@processes/overlay/model/overlay.slice';
+import SettingList from '@features/setting/ui/SettingList.tsx';
 import { useSignOutMutation } from '@shared/api/auth/authApi.ts';
 import { isNotEmpty, resetTo } from '@shared/lib';
-import { setShowToastView } from '@features/overlay/model/overlay.slice.ts';
-import SettingList from '@features/setting/ui/SettingList.tsx';
 
 enum SETTING_EVENT_TYPE {
   BACKUP = 'backup',

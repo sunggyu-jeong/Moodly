@@ -1,8 +1,8 @@
 // src/services/EmotionDiaryService.ts
-import store from '@/app/store';
-import { EmotionDiaryDTO, EmotionDiarySupabase, mapSupabaseToDTO } from '@/entities/diary';
-import { isEmpty } from '@/shared/lib';
-import { supabase } from '@/shared/lib/supabase.util';
+import store from '@app/store';
+import { EmotionDiaryDTO, EmotionDiarySupabase, mapSupabaseToDTO } from '@entities/diary';
+import { isEmpty } from '@shared/lib';
+import { supabase } from '@shared/lib/supabase.util';
 import { PostgrestError } from '@supabase/supabase-js';
 
 /** Supabase 스키마 정의 */

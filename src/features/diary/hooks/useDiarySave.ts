@@ -1,9 +1,9 @@
 // useDiarySave.ts
 
-import { useAppDispatch, useAppSelector, useRealm } from '@/shared/hooks';
-import { isNotEmpty, navigate } from '@/shared/lib';
+import { useAppDispatch, useAppSelector, useRealm } from '@shared/hooks';
+import { isNotEmpty, navigate } from '@shared/lib';
 
-import { setShowToastView } from '../../overlay/model/overlay.slice';
+import { setShowToastView } from '@processes/overlay/model/overlay.slice';
 import { addDiaryThunk, modifyDiaryThunk, setSelectedDiary } from '../model/diary.slice';
 
 export function useDiarySave(text: string) {

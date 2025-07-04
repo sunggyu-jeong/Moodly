@@ -1,7 +1,7 @@
 import Realm from 'realm';
 
-import { EmotionDiary, EmotionDiaryDTO } from '@/entities/diary';
-import { isNotEmpty } from '@/shared/lib';
+import { EmotionDiary, EmotionDiaryDTO } from '@entities/diary';
+import { isNotEmpty } from '@shared/lib';
 
 import { EmotionDiaryToDTO } from './EmotionDiaryMapper';
 

@@ -4,7 +4,7 @@ import EmotionDiaryDetailPage from '@pages/EmotionDiaryDetailPage.tsx';
 import EmotionSelectionPage from '@pages/EmotionSelectionPage.tsx';
 import EmotionDiaryWritePage from '@pages/EmotionDiaryWritePage.tsx';
 import EmotionDiaryCompletePage from '@pages/EmotionDiaryCompletePage.tsx';
-import OverlayManager from '@/processes/overlay/ui/OverlayManager';
+import OverlayManager from '@processes/overlay/ui/OverlayManager';
 
 export type DiaryStackParamList = {
   EmotionSelectionPage: undefined;

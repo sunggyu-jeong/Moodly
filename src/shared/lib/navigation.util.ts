@@ -6,7 +6,7 @@ import {
   TabActions,
 } from '@react-navigation/native';
 
-import { RootStackParamList } from '@/app/navigation/RootStack';
+import { RootStackParamList } from '@app/navigation/RootStack';
 
 import { BottomTabParamList } from '../../app/navigation/TabNavigation';
 

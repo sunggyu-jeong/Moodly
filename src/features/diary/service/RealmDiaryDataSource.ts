@@ -1,4 +1,4 @@
-import { isEmpty } from '@/shared/lib';
+import { isEmpty } from '@shared/lib';
 import { DiaryDataSource } from './DiaryDataSource';
 import {
   createDiaryRealm,

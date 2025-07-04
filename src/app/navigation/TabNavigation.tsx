@@ -5,14 +5,14 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import EmotionDiaryListPage from '@pages/EmotionDiaryListPage.tsx';
 import HomePage from '@pages/HomePage.tsx';
 import SettingPage from '@pages/SettingPage.tsx';
-import { MAIN_ICONS } from '@/shared/assets/images/main';
-import { useScale } from '@/shared/hooks';
-import TabBarIcon from '@/shared/ui/elements/TabBarIcon';
+import { MAIN_ICONS } from '@shared/assets/images/main';
+import { useScale } from '@shared/hooks';
+import TabBarIcon from '@shared/ui/elements/TabBarIcon';
 
 export type BottomTabParamList = {
-  홈: undefined;
-  일기목록: undefined;
-  설정: undefined;
+  Home: undefined;
+  DiaryList: undefined;
+  Settings: undefined;
 };
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
@@ -39,7 +39,7 @@ const TabNavigation = () => {
         }}
       >
         <Tab.Screen
-          name="홈"
+          name="Home"
           component={HomePage}
           options={{
             tabBarIcon: ({ focused }) => (
@@ -48,7 +48,7 @@ const TabNavigation = () => {
           }}
         />
         <Tab.Screen
-          name="일기목록"
+          name="DiaryList"
           component={EmotionDiaryListPage}
           options={{
             tabBarIcon: ({ focused }) => (
@@ -57,7 +57,7 @@ const TabNavigation = () => {
           }}
         />
         <Tab.Screen
-          name="설정"
+          name="Settings"
           component={SettingPage}
           options={{
             tabBarIcon: ({ focused }) => (

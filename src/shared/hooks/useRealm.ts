@@ -1,7 +1,7 @@
 import { useCallback, useRef } from 'react';
 import Realm from 'realm';
 
-import { EmotionDiary } from '@/entities/diary';
+import { EmotionDiary } from '@entities/diary';
 
 import { isNotEmpty } from '../lib';
 

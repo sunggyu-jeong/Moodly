@@ -8,7 +8,7 @@ import { gray } from '@shared/styles/colors.ts';
 import { Body2 } from '@shared/ui/typography/Body2.tsx';
 import { H2 } from '@shared/ui/typography/H2.tsx';
 
-import { setShowToastView } from '@features/overlay/model/overlay.slice.ts';
+import { setShowToastView } from '@processes/overlay/model/overlay.slice';
 import { setModifyMode } from '@features/diary/model/diary.slice.ts';
 
 const EmotionDiaryCompletePage = () => {

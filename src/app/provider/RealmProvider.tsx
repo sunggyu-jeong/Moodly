@@ -1,9 +1,9 @@
 import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import Realm from 'realm';
 
-import { EmotionDiary } from '@/entities/diary';
-import { RealmContext } from '@/shared/context';
-import { isNotEmpty } from '@/shared/lib';
+import { EmotionDiary } from '@entities/diary';
+import { RealmContext } from '@shared/context';
+import { isNotEmpty } from '@shared/lib';
 
 interface RealmProviderProps {
   children: ReactNode;

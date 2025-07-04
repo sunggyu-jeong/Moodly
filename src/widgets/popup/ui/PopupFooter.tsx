@@ -2,8 +2,8 @@ import { View } from 'react-native';
 
 import { isNotEmpty } from '@shared/lib';
 
-import { gray, primary } from '@/shared/styles/colors';
-import PopupButton from '@/shared/ui/elements/ModalButton';
+import { gray, primary } from '@shared/styles/colors';
+import PopupButton from '@shared/ui/elements/ModalButton';
 
 interface PopupFooterProps {
   onCancel: () => void;

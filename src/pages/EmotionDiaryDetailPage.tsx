@@ -5,6 +5,12 @@ import { Image, Platform, ScrollView, StyleSheet, TouchableOpacity, View } from 
 import { removeDiaryThunk } from '@features/diary/model/diary.slice.ts';
 import { MODAL_CONFIRM_ACTION_KEY } from '@processes/key';
 
+import {
+  setOverlayEventHandler,
+  setShowDropdownView,
+  setShowModalPopup,
+  setShowToastView,
+} from '@processes/overlay/model/overlay.slice';
 import { COMMON_ICONS } from '@shared/assets/images/common';
 import { ICON_DATA } from '@shared/constants/Icons.ts';
 import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '@shared/hooks';
@@ -15,12 +21,6 @@ import { Body1 } from '@shared/ui/typography/Body1.tsx';
 import { DropDownEventIdentifier } from '@widgets/dropdown/ui/DropDownItem.tsx';
 import NaviDismiss from '@widgets/navigation-bar/ui/NaviDismiss.tsx';
 import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar.tsx';
-import {
-  setOverlayEventHandler,
-  setShowDropdownView,
-  setShowModalPopup,
-  setShowToastView,
-} from '@features/overlay/model/overlay.slice.ts';
 
 import type Realm from 'realm';
 

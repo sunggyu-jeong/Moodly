@@ -1,9 +1,9 @@
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
-import { COMMON_ICONS } from '@/shared/assets/images/common';
-import { useAppSelector, useScale } from '@/shared/hooks';
-import { H2 } from '@/shared/ui/typography/H2';
-import { Label } from '@/shared/ui/typography/Label';
+import { COMMON_ICONS } from '@shared/assets/images/common';
+import { useAppSelector, useScale } from '@shared/hooks';
+import { H2 } from '@shared/ui/typography/H2';
+import { Label } from '@shared/ui/typography/Label';
 
 import colors from '../../styles/colors';
 
