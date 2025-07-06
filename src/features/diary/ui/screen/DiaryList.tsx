@@ -1,6 +1,6 @@
 import { useFocusEffect } from '@react-navigation/native';
 import dayjs from 'dayjs';
-import { useCallback } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 
 import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar';
@@ -15,6 +15,9 @@ import { setShowToastView } from '../../../overlay/model/overlay.slice';
 import DiaryCardList from '../components/DiaryCardList';
 import DiaryEmptyMent from '../components/DiaryEmptyMent';
 import DiaryMonth from '../components/DiaryMonth';
+import DiarySkeleton from '../components/skeleton/DiaryCardSkeleton';
+
+const SKELETON_MIN_DURATION_MS = 700;
 
 const DiaryList = () => {
   const { openRealm, closeRealm } = useRealm();
@@ -23,6 +26,9 @@ const DiaryList = () => {
   const isLogin = useAppSelector(state => state.authSlice.isLogin);
   const currentMonth = dayjs();
   const dispatch = useAppDispatch();
+  const [skeletonVisible, setSkeletonVisible] = useState(false);
+  const startTimeRef = useRef<number | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleChangeMonth = (direction: 'left' | 'right') => {
     dispatch(
@@ -35,6 +41,8 @@ const DiaryList = () => {
   };
 
   const initialize = useCallback(async () => {
+    startTimeRef.current = Date.now();
+    setSkeletonVisible(true);
     try {
       let realm: Realm | undefined;
       if (!isLogin) {
@@ -49,6 +57,17 @@ const DiaryList = () => {
     } finally {
       if (!isLogin) {
         closeRealm();
+      }
+      const now = Date.now();
+      const elapsed = startTimeRef.current ? now - startTimeRef.current : SKELETON_MIN_DURATION_MS;
+      const remaining = SKELETON_MIN_DURATION_MS - elapsed;
+
+      if (remaining <= 0) {
+        setSkeletonVisible(false);
+      } else {
+        timeoutRef.current = setTimeout(() => {
+          setSkeletonVisible(false);
+        }, remaining);
       }
     }
   }, [selectedMonth, openRealm, closeRealm, dispatch, isLogin]);
@@ -82,7 +101,8 @@ const DiaryList = () => {
           className="bg-gray-100"
           contentContainerStyle={styles.scrollViewContent}
         >
-          <DiaryCardList />
+          {skeletonVisible && <DiarySkeleton />}
+          {!skeletonVisible && <DiaryCardList />}
         </ScrollView>
       )}
 
