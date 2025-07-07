@@ -26,7 +26,6 @@ export type RootStackParamList = {
 const Stack = createNativeStackNavigator();
 
 const RootStack = () => {
-  // useSupabaseAuth();
   return (
     <>
       <OverlayManager />

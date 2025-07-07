@@ -1,11 +1,11 @@
 import { ApiResponse } from '@entities/common/response';
-import { AsyncOperationState, createInitialAsyncState } from '@shared/constants';
-import { addAsyncThunkCase } from '@shared/lib';
-import { supabase } from '@shared/lib/supabase.util';
 import { GOOGLE_WEB_CLIENT_ID } from '@env';
 import appleAuth from '@invertase/react-native-apple-authentication';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { AsyncOperationState, createInitialAsyncState } from '@shared/constants';
+import { addAsyncThunkCase } from '@shared/lib';
+import { supabase } from '@shared/lib/supabase.util';
 import { AuthError, Session, User } from '@supabase/supabase-js';
 
 const signInGoogleThunk = createAsyncThunk<ApiResponse<User>, void, { rejectValue: AuthError }>(

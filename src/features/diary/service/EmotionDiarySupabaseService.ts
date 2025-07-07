@@ -34,7 +34,7 @@ export async function countSupabase(): Promise<number> {
   return count ?? 0;
 }
 
-export async function hasDiaryForDaySupabase(recordDate: Date): Promise<boolean> {
+export async function hasDiaryForDaySupabase(): Promise<boolean> {
   const userInfo = store.getState().authSlice.userInfo;
   if (isEmpty(userInfo.data?.data?.id)) throw new Error('인증이 유효하지 않습니다.');
   const id = userInfo.data?.data?.id as string;
