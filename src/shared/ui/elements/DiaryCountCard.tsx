@@ -42,7 +42,7 @@ const DiaryCountCard = ({ onPress }: Props) => {
           </H2>
           <Image
             source={COMMON_ICONS.iconNextGray}
-            style={{ width: getScaleSize(10), height: getScaleSize(24) }}
+            style={{ width: getScaleSize(24), height: getScaleSize(24) }}
           />
         </View>
       </TouchableOpacity>
