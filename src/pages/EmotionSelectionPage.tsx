@@ -3,8 +3,8 @@ import { SafeAreaView, StyleSheet, View } from 'react-native';
 
 import { EmotionDiaryDTO } from '@entities/diary';
 import { setSelectedIcon, setTodayDiary } from '@features/diary/model/diary.slice.ts';
-import EmotionSelectionList from '@features/emotion/ui/EmotionSelectionList.tsx';
 import EmotionDisplaySelected from '@features/emotion/ui/EmotionDisplaySelected.tsx';
+import EmotionSelectionList from '@features/emotion/ui/EmotionSelectionList.tsx';
 import { ICON_DATA } from '@shared/constants/Icons.ts';
 import { getScaleSize, useAppDispatch, useAppSelector } from '@shared/hooks';
 import { isNotEmpty, navigate } from '@shared/lib';
@@ -26,7 +26,7 @@ const EmotionSelectionPage = () => {
       iconId: selectedEmotion?.id,
     };
     dispatch(setTodayDiary(emotion));
-    navigate('DiaryStack', { screen: 'WriteDiary' });
+    navigate('DiaryStack', { screen: 'EmotionDiaryWritePage' });
   };
 
   useEffect(() => {

@@ -27,7 +27,7 @@ const HomePage = () => {
       <View className="bg-gray-100 flex-1 px-5 justify-center items-center">
         <DiaryCountCard
           onPress={() => {
-            jumpToTab('일기목록');
+            jumpToTab('DiaryList');
           }}
         />
 

@@ -20,7 +20,7 @@ export type RootStackParamList = {
         params?: DiaryStackParamList[keyof DiaryStackParamList];
       }
     | undefined;
-  EmotionDetailPage: { origin: string };
+  EmotionDiaryDetailPage: { origin: string };
 };
 
 const Stack = createNativeStackNavigator();
@@ -56,7 +56,7 @@ const RootStack = () => {
           options={{ presentation: 'fullScreenModal', animation: 'slide_from_bottom' }}
         />
         <Stack.Screen
-          name="DiaryDetail"
+          name="EmotionDiaryDetailPage"
           component={EmotionDiaryDetailPage}
         />
       </Stack.Navigator>

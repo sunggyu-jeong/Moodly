@@ -1,9 +1,9 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import EmotionDiaryDetailPage from '@pages/EmotionDiaryDetailPage.tsx';
-import EmotionSelectionPage from '@pages/EmotionSelectionPage.tsx';
-import EmotionDiaryWritePage from '@pages/EmotionDiaryWritePage.tsx';
 import EmotionDiaryCompletePage from '@pages/EmotionDiaryCompletePage.tsx';
+import EmotionDiaryDetailPage from '@pages/EmotionDiaryDetailPage.tsx';
+import EmotionDiaryWritePage from '@pages/EmotionDiaryWritePage.tsx';
+import EmotionSelectionPage from '@pages/EmotionSelectionPage.tsx';
 import OverlayManager from '@processes/overlay/ui/OverlayManager';
 
 export type DiaryStackParamList = {
@@ -24,11 +24,11 @@ const DiaryStack = () => {
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen
-          name="SelectEmotion"
+          name="EmotionSelectionPage"
           component={EmotionSelectionPage}
         />
         <Stack.Screen
-          name="WriteDiary"
+          name="EmotionDiaryWritePage"
           component={EmotionDiaryWritePage}
         />
         <Stack.Screen
@@ -36,7 +36,7 @@ const DiaryStack = () => {
           component={EmotionDiaryCompletePage}
         />
         <Stack.Screen
-          name="DiaryDetail"
+          name="EmotionDetailPage"
           component={EmotionDiaryDetailPage}
           initialParams={{ origin: 'DiaryStack' }}
           options={{
