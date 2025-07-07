@@ -260,3 +260,5 @@ ios/Pods
 
 # Key
 *.p8
+
+/supabase
