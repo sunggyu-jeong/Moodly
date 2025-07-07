@@ -1,13 +1,13 @@
 /* eslint-disable react-native/split-platform-components */
-import { useAppDispatch } from '@shared/hooks';
-import { isNotEmpty } from '@shared/lib';
-import { supabase } from '@shared/lib/supabase.util';
 import { getApp } from '@react-native-firebase/app';
 import messaging, {
   AuthorizationStatus,
   getMessaging,
   requestPermission,
 } from '@react-native-firebase/messaging';
+import { useAppDispatch } from '@shared/hooks';
+import { isNotEmpty } from '@shared/lib';
+import { supabase } from '@shared/lib/supabase.util';
 import { useEffect } from 'react';
 import { PermissionsAndroid, Platform } from 'react-native';
 import { setAuthState, setIsLogin } from '../../auth/model/auth.slice';
