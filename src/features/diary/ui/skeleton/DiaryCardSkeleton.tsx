@@ -2,13 +2,10 @@ import { MotiView } from 'moti';
 import { Skeleton } from 'moti/skeleton';
 import { View } from 'react-native';
 
-interface test {
-  loading: boolean;
-}
-const DiarySkeleton = ({ loading }: test) => {
+const DiarySkeleton = () => {
   const mode = 'light';
   return (
-    <Skeleton.Group show={loading}>
+    <Skeleton.Group show={true}>
       {Array.from({ length: 3 }).map((_, idx) => (
         <MotiView
           transition={{
