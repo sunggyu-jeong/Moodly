@@ -29,6 +29,6 @@ export const supabaseDiaryDataSource: DiaryDataSource = {
     return deleteSupabase(emotionId);
   },
   isExist: async recordDate => {
-    return hasDiaryForDaySupabase(recordDate);
+    return hasDiaryForDaySupabase();
   },
 };

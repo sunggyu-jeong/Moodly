@@ -1,4 +1,4 @@
-import { EmotionDiaryDTO } from '@/entities/diary';
+import { EmotionDiaryDTO } from '@entities/diary';
 import type Realm from 'realm';
 
 export interface DiaryDataSource {

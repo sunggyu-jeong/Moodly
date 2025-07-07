@@ -8,7 +8,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
 import { Provider } from 'react-redux';
 
-import { navigationRef } from '@/shared/lib';
+import { navigationRef } from '@shared/lib';
 import '../../global.css';
 
 import { HOT_UPDATER_SUPABASE_URL } from '@env';

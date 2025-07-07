@@ -2,25 +2,25 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { Image, Platform, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 
-import { removeDiaryThunk } from '@/features/diary/model/diary.slice';
-import { MODAL_CONFIRM_ACTION_KEY } from '@/processes/key';
+import { removeDiaryThunk } from '@features/diary/model/diary.slice.ts';
+import { MODAL_CONFIRM_ACTION_KEY } from '@processes/key';
 
-import { COMMON_ICONS } from '@/shared/assets/images/common';
-import { ICON_DATA } from '@/shared/constants/Icons';
-import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '@/shared/hooks';
-import { dismissModalToScreen, goBack, isNotEmpty } from '@/shared/lib';
-import { NaviActionButtonProps } from '@/shared/ui/elements/NaviActionButton';
-import NaviMore from '@/shared/ui/elements/NaviMore';
-import { Body1 } from '@/shared/ui/typography/Body1';
-import { DropDownEventIdentifier } from '@/widgets/dropdown/ui/DropDownItem';
-import NaviDismiss from '@/widgets/navigation-bar/ui/NaviDismiss';
-import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
 import {
   setOverlayEventHandler,
   setShowDropdownView,
   setShowModalPopup,
   setShowToastView,
-} from '../../../overlay/model/overlay.slice';
+} from '@processes/overlay/model/overlay.slice';
+import { COMMON_ICONS } from '@shared/assets/images/common';
+import { ICON_DATA } from '@shared/constants/Icons.ts';
+import { getScaleSize, useAppDispatch, useAppSelector, useRealm } from '@shared/hooks';
+import { dismissModalToScreen, goBack, isNotEmpty } from '@shared/lib';
+import { NaviActionButtonProps } from '@shared/ui/elements/NaviActionButton.tsx';
+import NaviMore from '@shared/ui/elements/NaviMore.tsx';
+import { Body1 } from '@shared/ui/typography/Body1.tsx';
+import { DropDownEventIdentifier } from '@widgets/dropdown/ui/DropDownItem.tsx';
+import NaviDismiss from '@widgets/navigation-bar/ui/NaviDismiss.tsx';
+import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar.tsx';
 
 import type Realm from 'realm';
 
@@ -45,7 +45,7 @@ const props = [
 
 const leftComponents = [{ item: <NaviDismiss />, disabled: false }];
 
-const DiaryDetail = () => {
+const EmotionDiaryDetailPage = () => {
   const selectedDiary = useAppSelector(state => state.diarySlice.selectedDiary);
   const overlayEventHandler = useAppSelector(state => state.overlaySlice.overlayEventHandler);
   const showModalPopup = useAppSelector(state => state.overlaySlice.showModalPopup);
@@ -190,4 +190,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DiaryDetail;
+export default EmotionDiaryDetailPage;

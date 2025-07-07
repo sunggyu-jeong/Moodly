@@ -1,4 +1,4 @@
-// src/screens/WriteDiary.tsx
+// src/screens/EmotionDiaryWritePage.tsx
 import { useEffect, useRef, useState } from 'react';
 import {
   Image,
@@ -11,20 +11,20 @@ import {
 } from 'react-native';
 import InputAccessoryView from 'react-native-input-accessory-view';
 
-import { ICON_DATA } from '@/shared/constants';
-import { getScaleSize, useAppSelector } from '@/shared/hooks';
-import { H2 } from '@/shared/ui/typography/H2';
-import NaviDismiss from '@/widgets/navigation-bar/ui/NaviDismiss';
-import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
+import { ICON_DATA } from '@shared/constants';
+import { getScaleSize, useAppSelector } from '@shared/hooks';
+import { H2 } from '@shared/ui/typography/H2.tsx';
+import NaviDismiss from '@widgets/navigation-bar/ui/NaviDismiss.tsx';
+import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar.tsx';
 
-import { isNotEmpty } from '@/shared/lib';
-import { common } from '@/shared/styles/colors';
-import { KeyboardAccessoryButton } from '@/shared/ui/elements/KeyboardAccessory';
-import { useDiarySave } from '../../hooks/useDiarySave';
+import { isNotEmpty } from '@shared/lib';
+import { common } from '@shared/styles/colors.ts';
+import { KeyboardAccessoryButton } from '@shared/ui/elements/KeyboardAccessory.tsx';
+import { useDiarySave } from '@features/diary/hooks/useDiarySave.ts';
 
 const actionButtons = [{ item: <NaviDismiss />, disabled: false }];
 
-const WriteDiary = () => {
+const EmotionDiaryWritePage = () => {
   const todayDiary = useAppSelector(state => state.diarySlice.todayDiary);
   const selectedDiary = useAppSelector(state => state.diarySlice.selectedDiary);
   const scrollRef = useRef<ScrollView>(null);
@@ -96,4 +96,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default WriteDiary;
+export default EmotionDiaryWritePage;

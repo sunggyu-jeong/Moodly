@@ -1,9 +1,9 @@
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
-import { COMMON_ICONS } from '@/shared/assets/images/common';
-import { getScaleSize } from '@/shared/hooks';
-import { gray } from '@/shared/styles/colors';
-import { Body1 } from '@/shared/ui/typography/Body1';
+import { COMMON_ICONS } from '@shared/assets/images/common';
+import { getScaleSize } from '@shared/hooks';
+import { gray } from '@shared/styles/colors.ts';
+import { Body1 } from '@shared/ui/typography/Body1.tsx';
 
 export interface SettingItemProps {
   title: string;

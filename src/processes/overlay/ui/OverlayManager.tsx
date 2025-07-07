@@ -1,10 +1,10 @@
-import { useAppDispatch, useAppSelector } from '@/shared/hooks';
-import { isNotEmpty } from '@/shared/lib';
-import DropDownAnimation from '@/widgets/dropdown/animation/DropDownAnimation';
-import PopupContainerOrga from '@/widgets/popup/ui/PopupContainer';
-import ToastController from '@/widgets/toast/ui/ToastController';
+import { useAppDispatch, useAppSelector } from '@shared/hooks';
+import { isNotEmpty } from '@shared/lib';
+import DropDownAnimation from '@widgets/dropdown/animation/DropDownAnimation';
+import PopupContainerOrga from '@widgets/popup/ui/PopupContainer';
+import ToastController from '@widgets/toast/ui/ToastController';
 
-import { setOverlayEventHandler } from '@/features/overlay/model/overlay.slice';
+import { setOverlayEventHandler } from '@processes/overlay/model/overlay.slice';
 import { MODAL_CONFIRM_ACTION_KEY } from '../../key';
 
 const OverlayManager = () => {

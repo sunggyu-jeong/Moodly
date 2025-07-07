@@ -1,4 +1,4 @@
-import { ApiResponse } from '@/entities/common/response';
+import { ApiResponse } from '@entities/common/response';
 import { appleAuth } from '@invertase/react-native-apple-authentication';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { AuthError, User } from '@supabase/supabase-js';

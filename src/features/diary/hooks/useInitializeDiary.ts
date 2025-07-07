@@ -1,10 +1,10 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
 
-import { ICON_DATA } from '@/shared/constants';
-import { useAppDispatch, useAppSelector, useRealm } from '@/shared/hooks';
+import { ICON_DATA } from '@shared/constants';
+import { useAppDispatch, useAppSelector, useRealm } from '@shared/hooks';
 
-import { setShowToastView } from '../../overlay/model/overlay.slice';
+import { setShowToastView } from '@processes/overlay/model/overlay.slice';
 import {
   searchDiaryCountThunk,
   searchDiaryForDayThunk,

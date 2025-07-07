@@ -1,14 +1,14 @@
 import { Image, StatusBar, StyleSheet, View } from 'react-native';
 
-import { useInitializeDiary } from '@/features/diary/hooks/useInitializeDiary';
-import { MAIN_ICONS } from '@/shared/assets/images/main';
-import { getScaleSize, useAppSelector } from '@/shared/hooks';
-import { jumpToTab, navigate } from '@/shared/lib';
-import ActionButton from '@/shared/ui/elements/ActionButton';
-import DiaryCountCard from '@/shared/ui/elements/DiaryCountCard';
-import { H2 } from '@/shared/ui/typography/H2';
+import { useInitializeDiary } from '@features/diary/hooks/useInitializeDiary.ts';
+import { MAIN_ICONS } from '@shared/assets/images/main';
+import { getScaleSize, useAppSelector } from '@shared/hooks';
+import { jumpToTab, navigate } from '@shared/lib';
+import ActionButton from '@shared/ui/elements/ActionButton.tsx';
+import DiaryCountCard from '@shared/ui/elements/DiaryCountCard.tsx';
+import { H2 } from '@shared/ui/typography/H2.tsx';
 
-const Home = () => {
+const HomePage = () => {
   useInitializeDiary();
   const { data: hasDiary } = useAppSelector(state => state.diarySlice.isDiaryExist);
 
@@ -27,7 +27,7 @@ const Home = () => {
       <View className="bg-gray-100 flex-1 px-5 justify-center items-center">
         <DiaryCountCard
           onPress={() => {
-            jumpToTab('일기목록');
+            jumpToTab('DiaryList');
           }}
         />
 
@@ -69,4 +69,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default HomePage;

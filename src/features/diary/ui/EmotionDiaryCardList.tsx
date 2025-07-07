@@ -1,20 +1,20 @@
 import { TouchableOpacity, View } from 'react-native';
 
-import { EmotionDiaryDTO } from '@/entities/diary';
-import { setSelectedDiary } from '@/features/diary/model/diary.slice';
-import { useAppDispatch, useAppSelector } from '@/shared/hooks';
-import { isNotEmpty, navigate } from '@/shared/lib';
+import { EmotionDiaryDTO } from '@entities/diary';
+import { setSelectedDiary } from '@features/diary/model/diary.slice.ts';
+import { useAppDispatch, useAppSelector } from '@shared/hooks';
+import { isNotEmpty, navigate } from '@shared/lib';
 
-import DiaryCardContent from './DiaryCardContent';
-import DiaryCardHeader from './DiaryCardHeader';
+import EmotionDiaryCardContent from './EmotionDiaryCardContent.tsx';
+import EmotionDiaryCardHeader from './EmotionDiaryCardHeader.tsx';
 
-const DiaryCardList = () => {
+const EmotionDiaryCardList = () => {
   const dispatch = useAppDispatch();
   const searchByMonth = useAppSelector(state => state.diarySlice.searchByMonth);
 
   const handleDiaryDetail = (item: EmotionDiaryDTO) => {
     dispatch(setSelectedDiary(item));
-    navigate('DiaryDetail', { origin: 'RootStack' });
+    navigate('EmotionDiaryDetailPage', { origin: 'RootStack' });
   };
 
   return (
@@ -32,12 +32,12 @@ const DiaryCardList = () => {
               className="bg-common-white py-5 px-[18px] mb-4 rounded-[15px]"
             >
               {isNotEmpty(searchByMonth?.data) && (
-                <DiaryCardHeader
+                <EmotionDiaryCardHeader
                   iconId={entry.iconId}
                   recordDate={entry.recordDate}
                 />
               )}
-              <DiaryCardContent content={entry.description ?? ''} />
+              <EmotionDiaryCardContent content={entry.description ?? ''} />
             </View>
           </TouchableOpacity>
         ))}
@@ -46,4 +46,4 @@ const DiaryCardList = () => {
   );
 };
 
-export default DiaryCardList;
+export default EmotionDiaryCardList;

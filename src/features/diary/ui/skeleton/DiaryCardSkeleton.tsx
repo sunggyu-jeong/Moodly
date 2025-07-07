@@ -2,13 +2,10 @@ import { MotiView } from 'moti';
 import { Skeleton } from 'moti/skeleton';
 import { View } from 'react-native';
 
-interface test {
-  loading: boolean;
-}
-const DiarySkeleton = ({ loading }: test) => {
+const DiarySkeleton = () => {
   const mode = 'light';
   return (
-    <Skeleton.Group show={loading}>
+    <Skeleton.Group show={true}>
       {Array.from({ length: 3 }).map((_, idx) => (
         <MotiView
           transition={{
@@ -16,7 +13,7 @@ const DiarySkeleton = ({ loading }: test) => {
           }}
           animate={{ backgroundColor: '#ffffff' }}
           key={idx}
-          className="bg-gray-200 py-5 px-[18px] mb-4 rounded-[15px] w-full"
+          className="bg-gray-300 py-5 px-[18px] mb-4 rounded-[15px] w-full"
         >
           {/* 아바타 자리 (원형) */}
           <View className="mb-3">

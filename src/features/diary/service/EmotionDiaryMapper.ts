@@ -1,4 +1,4 @@
-import { EmotionDiary, EmotionDiaryDTO } from '@/entities/diary/EmotionDiary.scheme';
+import { EmotionDiary, EmotionDiaryDTO } from '@entities/diary/EmotionDiary.scheme';
 
 export function EmotionDiaryToDTO(diary: EmotionDiary): EmotionDiaryDTO {
   return {

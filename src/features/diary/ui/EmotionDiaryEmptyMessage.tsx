@@ -1,11 +1,11 @@
 import { Image, StyleSheet, View } from 'react-native';
 
-import { MAIN_ICONS } from '@/shared/assets/images/main';
-import { getScaleSize } from '@/shared/hooks';
-import colors from '@/shared/styles/colors';
-import { Body1 } from '@/shared/ui/typography/Body1';
+import { MAIN_ICONS } from '@shared/assets/images/main';
+import { getScaleSize } from '@shared/hooks';
+import colors from '@shared/styles/colors.ts';
+import { Body1 } from '@shared/ui/typography/Body1.tsx';
 
-const DiaryEmptyMent = () => {
+const EmotionDiaryEmptyMessage = () => {
   return (
     <View className="flex-1 bg-gray-100 justify-center items-center">
       <Image
@@ -33,4 +33,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DiaryEmptyMent;
+export default EmotionDiaryEmptyMessage;

@@ -1,16 +1,16 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import DiaryDetail from '@/features/diary/ui/screen/DiaryDetail';
-import SelectEmotion from '@/features/diary/ui/screen/SelectEmotion';
-import WriteDiary from '@/features/diary/ui/screen/WriteDiary';
-import WriteDiaryComplete from '@/features/diary/ui/screen/WriteDiaryComplete';
-import OverlayManager from '@/processes/overlay/ui/OverlayManager';
+import EmotionDiaryCompletePage from '@pages/EmotionDiaryCompletePage.tsx';
+import EmotionDiaryDetailPage from '@pages/EmotionDiaryDetailPage.tsx';
+import EmotionDiaryWritePage from '@pages/EmotionDiaryWritePage.tsx';
+import EmotionSelectionPage from '@pages/EmotionSelectionPage.tsx';
+import OverlayManager from '@processes/overlay/ui/OverlayManager';
 
 export type DiaryStackParamList = {
-  SelectEmotion: undefined;
-  WriteDiary: undefined;
+  EmotionSelectionPage: undefined;
+  EmotionDiaryWritePage: undefined;
   Complete: undefined;
-  DiaryDetail: { origin: string };
+  EmotionDetailPage: { origin: string };
 };
 
 const Stack = createNativeStackNavigator<DiaryStackParamList>();
@@ -20,24 +20,24 @@ const DiaryStack = () => {
     <>
       <OverlayManager />
       <Stack.Navigator
-        initialRouteName="SelectEmotion"
+        initialRouteName="EmotionSelectionPage"
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen
-          name="SelectEmotion"
-          component={SelectEmotion}
+          name="EmotionSelectionPage"
+          component={EmotionSelectionPage}
         />
         <Stack.Screen
-          name="WriteDiary"
-          component={WriteDiary}
+          name="EmotionDiaryWritePage"
+          component={EmotionDiaryWritePage}
         />
         <Stack.Screen
           name="Complete"
-          component={WriteDiaryComplete}
+          component={EmotionDiaryCompletePage}
         />
         <Stack.Screen
-          name="DiaryDetail"
-          component={DiaryDetail}
+          name="EmotionDetailPage"
+          component={EmotionDiaryDetailPage}
           initialParams={{ origin: 'DiaryStack' }}
           options={{
             gestureEnabled: false,

@@ -1,4 +1,4 @@
-import { ApiResponse } from '@/entities/common/response';
+import { ApiResponse } from '@entities/common/response';
 import { User } from '@supabase/supabase-js';
 import { baseApi, wrapQueryFn } from '../base';
 import {

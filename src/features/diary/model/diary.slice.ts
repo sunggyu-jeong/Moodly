@@ -2,12 +2,12 @@ import { createSlice } from '@reduxjs/toolkit';
 import dayjs from 'dayjs';
 import Realm from 'realm';
 
-import store from '@/app/store';
-import { EmotionDiaryDTO } from '@/entities/diary';
-import { AsyncOperationState, createInitialAsyncState } from '@/shared/constants/ApiStatus';
-import { EmotionIconData, ICON_DATA } from '@/shared/constants/Icons';
-import { addAsyncThunkCase } from '@/shared/lib';
-import { createServiceThunk } from '@/shared/services/ServiceThunk';
+import store from '@app/store';
+import { EmotionDiaryDTO } from '@entities/diary';
+import { AsyncOperationState, createInitialAsyncState } from '@shared/constants/ApiStatus';
+import { EmotionIconData, ICON_DATA } from '@shared/constants/Icons';
+import { addAsyncThunkCase } from '@shared/lib';
+import { createServiceThunk } from '@shared/services/ServiceThunk';
 import { DiaryDataSource } from '../service/DiaryDataSource';
 import { createDiaryDataSource, DataSourceType } from '../service/DiaryDataSourceFactory';
 
