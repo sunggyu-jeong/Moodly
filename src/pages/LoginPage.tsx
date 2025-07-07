@@ -1,4 +1,5 @@
 import { AUTH_PROVIDERS, AuthProvider } from '@entities/auth/types.ts';
+import SocialLoginButton from '@features/auth/ui/SocialLoginButton.tsx';
 import { useSignInAppleMutation, useSignInGoogleMutation } from '@shared/api/auth/authApi.ts';
 import { MAIN_ICONS } from '@shared/assets/images/main';
 import { getScaleSize, useAppDispatch } from '@shared/hooks';
@@ -8,7 +9,7 @@ import { H3 } from '@shared/ui/typography/H3.tsx';
 import { Title } from '@shared/ui/typography/Title.tsx';
 import { useEffect } from 'react';
 import { Image, Platform, StyleSheet, View } from 'react-native';
-import SocialLoginButton from '@features/auth/ui/SocialLoginButton.tsx';
+import { setAuthState } from '../features/auth/model/auth.slice';
 
 const Login = () => {
   const [signInGoogle, { data: googleData, isLoading: isGoogleLoading }] =
@@ -27,9 +28,20 @@ const Login = () => {
     if (isGoogleLoading || isAppleLoading) return;
 
     if (isNotEmpty(googleData) || isNotEmpty(appleData)) {
-      resetTo('Main');
+      moveOnMain();
     }
   }, [googleData, appleData, isAppleLoading, isGoogleLoading, dispatch]);
+
+  const moveOnMain = () => {
+    setAuthState({
+      session: googleData?.session || appleData?.session,
+      data: {
+        data: googleData || appleData,
+      },
+      error: null,
+    });
+    resetTo('Main');
+  };
 
   return (
     <View className="flex-1 bg-gray-100 justify-center items-center">
