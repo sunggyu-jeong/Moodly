@@ -1,15 +1,15 @@
-import Realm from 'realm';
-
 import { EmotionDiary, EmotionDiaryDTO } from '@entities/diary';
 import { isNotEmpty } from '@shared/lib';
 
 import { ApiResponse } from '@entities/common/response';
 import { EmotionDiaryToDTO } from '@features/diary/service/EmotionDiaryMapper';
 import { ApiCode } from '../../config/errorCodes';
+import { getRealm } from '../../lib/realm-client.util';
 import { baseFormatError } from '../base';
 
-export async function getDiaryCount(realm: Realm): Promise<ApiResponse<number>> {
+export async function getDiaryCount(): Promise<ApiResponse<number>> {
   try {
+    const realm = getRealm();
     const count = realm.objects<EmotionDiary>('EmotionDiary').length;
     return { data: count };
   } catch (err) {
@@ -17,8 +17,9 @@ export async function getDiaryCount(realm: Realm): Promise<ApiResponse<number>> 
   }
 }
 
-export async function hasDiaryForDay(realm: Realm): Promise<ApiResponse<boolean>> {
+export async function hasDiaryForDay(): Promise<ApiResponse<boolean>> {
   try {
+    const realm = getRealm();
     const today = new Date().toISOString().slice(0, 10);
     const results = realm
       .objects<EmotionDiary>('EmotionDiary')
@@ -29,11 +30,9 @@ export async function hasDiaryForDay(realm: Realm): Promise<ApiResponse<boolean>
   }
 }
 
-export async function selectByMonth(
-  realm: Realm,
-  recordDate: Date
-): Promise<ApiResponse<EmotionDiaryDTO[]>> {
+export async function selectByMonth(recordDate: Date): Promise<ApiResponse<EmotionDiaryDTO[]>> {
   try {
+    const realm = getRealm();
     const year = recordDate.getFullYear();
     const month = recordDate.getMonth();
     const startDate = new Date(year, month, 1, 0, 0, 0);
@@ -50,11 +49,9 @@ export async function selectByMonth(
   }
 }
 
-export async function selectById(
-  realm: Realm,
-  emotionId: number
-): Promise<ApiResponse<EmotionDiaryDTO>> {
+export async function selectById(emotionId: number): Promise<ApiResponse<EmotionDiaryDTO>> {
   try {
+    const realm = getRealm();
     const raw = realm.objectForPrimaryKey<EmotionDiary>('EmotionDiary', emotionId);
     return {
       data: isNotEmpty(raw) ? EmotionDiaryToDTO(raw) : null,
@@ -64,11 +61,9 @@ export async function selectById(
   }
 }
 
-export async function createDiary(
-  realm: Realm,
-  data: EmotionDiaryDTO
-): Promise<ApiResponse<number>> {
+export async function createDiary(data: EmotionDiaryDTO): Promise<ApiResponse<number>> {
   try {
+    const realm = getRealm();
     const maxId = realm.objects('EmotionDiary').max('emotion_id');
     const nextId = (typeof maxId === 'number' ? maxId : 0) + 1;
 
@@ -90,11 +85,11 @@ export async function createDiary(
 }
 
 export async function updateDiary(
-  realm: Realm,
   emotionId: number,
   updates: Partial<EmotionDiaryDTO>
 ): Promise<ApiResponse<number>> {
   try {
+    const realm = getRealm();
     const target = realm.objectForPrimaryKey<EmotionDiary>('EmotionDiary', emotionId);
     if (!isNotEmpty(target)) {
       throw new Error('수정할 일기를 찾을 수 없습니다.');
@@ -124,8 +119,9 @@ export async function updateDiary(
   }
 }
 
-export async function deleteDiary(realm: Realm, emotionId: number): Promise<ApiResponse<string>> {
+export async function deleteDiary(emotionId: number): Promise<ApiResponse<string>> {
   try {
+    const realm = getRealm();
     const target = realm.objectForPrimaryKey<EmotionDiary>('EmotionDiary', emotionId);
     if (!isNotEmpty(target)) {
       throw new Error('삭제할 일기를 찾을 수 없습니다.');

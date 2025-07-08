@@ -1,5 +1,4 @@
 import { ApiResponse } from '@entities/common/response';
-import Realm from 'realm';
 import { EmotionDiaryDTO, EmotionDiarySupabase } from '../../../entities/diary';
 import { baseApi, useBackend, wrapQueryFn } from '../base';
 
@@ -25,48 +24,45 @@ import {
 export const diaryApi = baseApi.injectEndpoints({
   overrideExisting: false,
   endpoints: builder => ({
-    getDiaryCount: builder.query<ApiResponse<number>, { realm: Realm }>({
-      async queryFn({ realm }, _api, _extraOptions, _baseQuery) {
+    getDiaryCount: builder.query<ApiResponse<number>, void>({
+      async queryFn(_arg, _api, _extraOptions, _baseQuery) {
         return wrapQueryFn(() =>
           useBackend(
-            () => getDiaryCountRealm(realm),
+            () => getDiaryCountRealm(),
             () => getDiaryCountSB()
           )
         );
       },
       providesTags: ['EmotionDiary'],
     }),
-    hasDiaryForDay: builder.query<ApiResponse<boolean>, { realm: Realm }>({
-      async queryFn({ realm }, _api, _extraOptions, _baseQuery) {
+    hasDiaryForDay: builder.query<ApiResponse<boolean>, void>({
+      async queryFn(_arg, _api, _extraOptions, _baseQuery) {
         return wrapQueryFn(() =>
           useBackend(
-            () => hasDiaryForDayRealm(realm),
+            () => hasDiaryForDayRealm(),
             () => hasDiaryForDaySB()
           )
         );
       },
       providesTags: ['EmotionDiary'],
     }),
-    selectByMonth: builder.query<
-      ApiResponse<EmotionDiaryDTO[]>,
-      { realm: Realm; recordDate: Date }
-    >({
-      async queryFn({ realm, recordDate }, _api, _extraOptions, _baseQuery) {
+    selectByMonth: builder.query<ApiResponse<EmotionDiaryDTO[]>, Date>({
+      async queryFn(_arg, _api, _extraOptions, _baseQuery) {
         return wrapQueryFn(() =>
           useBackend(
-            () => selectByMonthRealm(realm, recordDate),
-            () => selectByMonthSB(recordDate)
+            () => selectByMonthRealm(_arg),
+            () => selectByMonthSB(_arg)
           )
         );
       },
       providesTags: ['EmotionDiary'],
     }),
-    selectById: builder.query<ApiResponse<EmotionDiaryDTO>, { realm: Realm; emotionId: number }>({
-      async queryFn({ realm, emotionId }, _api, _extraOptions, _baseQuery) {
+    selectById: builder.query<ApiResponse<EmotionDiaryDTO>, number>({
+      async queryFn(_arg, _api, _extraOptions, _baseQuery) {
         return wrapQueryFn(() =>
           useBackend(
-            () => selectByIdRealm(realm, emotionId),
-            () => selectByIdSB(emotionId)
+            () => selectByIdRealm(_arg),
+            () => selectByIdSB(_arg)
           )
         );
       },
@@ -74,13 +70,13 @@ export const diaryApi = baseApi.injectEndpoints({
     }),
     createDiary: builder.mutation<
       ApiResponse<number>,
-      { realm: Realm; diary: Omit<EmotionDiaryDTO, 'emotionId' | 'createdAt' | 'updatedAt'> }
+      Omit<EmotionDiaryDTO, 'emotionId' | 'createdAt' | 'updatedAt'>
     >({
-      async queryFn({ realm, diary }, _api, _extraOptions, _baseQuery) {
+      async queryFn(_arg, _api, _extraOptions, _baseQuery) {
         return wrapQueryFn(() =>
           useBackend(
-            () => createDiaryRealm(realm, diary),
-            () => createDiarySB(diary)
+            () => createDiaryRealm(_arg),
+            () => createDiarySB(_arg)
           )
         );
       },
@@ -89,27 +85,26 @@ export const diaryApi = baseApi.injectEndpoints({
     updateDiary: builder.mutation<
       ApiResponse<number>,
       {
-        realm: Realm;
         emotionId: number;
         updates: Partial<Omit<EmotionDiarySupabase, 'emotion_id'>>;
       }
     >({
-      async queryFn({ realm, emotionId, updates }, _api, _extraOptions, _baseQuery) {
+      async queryFn({ emotionId, updates }, _api, _extraOptions, _baseQuery) {
         return wrapQueryFn(() =>
           useBackend(
-            () => updateDiaryRealm(realm, emotionId, updates),
+            () => updateDiaryRealm(emotionId, updates),
             () => updateDiarySB(emotionId, updates)
           )
         );
       },
       invalidatesTags: ['EmotionDiary'],
     }),
-    deleteDiary: builder.mutation<ApiResponse<string>, { realm: Realm; emotionId: number }>({
-      async queryFn({ realm, emotionId }, _api, _extraOptions, _baseQuery) {
+    deleteDiary: builder.mutation<ApiResponse<string>, number>({
+      async queryFn(_arg, _api, _extraOptions, _baseQuery) {
         return wrapQueryFn(() =>
           useBackend(
-            () => deleteDiaryRealm(realm, emotionId),
-            () => deleteDiarySB(emotionId)
+            () => deleteDiaryRealm(_arg),
+            () => deleteDiarySB(_arg)
           )
         );
       },

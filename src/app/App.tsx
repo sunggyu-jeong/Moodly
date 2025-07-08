@@ -44,13 +44,11 @@ function App() {
   return (
     <View style={styles.appContainer}>
       <Provider store={store}>
-        {/* <RealmProvider> */}
         <SafeAreaProvider>
           <NavigationContainer ref={navigationRef}>
             <RootStack />
           </NavigationContainer>
         </SafeAreaProvider>
-        {/* </RealmProvider> */}
       </Provider>
     </View>
   );
