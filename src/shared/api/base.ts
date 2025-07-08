@@ -9,6 +9,8 @@ import {
 } from '@reduxjs/toolkit/query/react';
 import { AuthError } from '@supabase/supabase-js';
 import { ApiResponse } from '../../entities/common/response';
+import { isEmpty } from '../lib';
+import { supabase } from '../lib/supabase.util';
 
 /**
  * 공통 API 인스턴스를 생성합니다.
@@ -108,4 +110,20 @@ export function extractErrorMessage(
   }
 
   return undefined;
+}
+
+/**
+ * 로그인 상태에 따라 저장소 호출을 분기 처리합니다.
+ *
+ * @template T
+ * @param realmCall  Realm 기반 로직을 수행하는 함수. 로그인되지 않았을 때 실행됩니다.
+ * @param sbCall     Supabase 기반 로직을 수행하는 함수. 로그인되어 있을 때 실행됩니다.
+ * @returns          Realm 또는 Supabase 호출 결과를 담은 Promise<T>
+ */
+export async function useBackend<T>(
+  realmCall: () => Promise<T>,
+  sbCall: () => Promise<T>
+): Promise<T> {
+  const { data } = await supabase.auth.getSession();
+  return isEmpty(data) ? realmCall() : sbCall();
 }

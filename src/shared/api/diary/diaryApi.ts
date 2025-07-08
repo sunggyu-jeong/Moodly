@@ -1,9 +1,7 @@
 import { ApiResponse } from '@entities/common/response';
 import Realm from 'realm';
 import { EmotionDiaryDTO, EmotionDiarySupabase } from '../../../entities/diary';
-import { isEmpty } from '../../lib';
-import { supabase } from '../../lib/supabase.util';
-import { baseApi, wrapQueryFn } from '../base';
+import { baseApi, useBackend, wrapQueryFn } from '../base';
 
 import {
   createDiary as createDiaryRealm,
@@ -29,63 +27,66 @@ export const diaryApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     getDiaryCount: builder.query<ApiResponse<number>, { realm: Realm }>({
       async queryFn({ realm }, _api, _extraOptions, _baseQuery) {
-        const response = await supabase.auth.getSession();
-        if (isEmpty(response.data)) {
-          return wrapQueryFn(() => getDiaryCountRealm(realm));
-        } else {
-          return wrapQueryFn(() => getDiaryCountSB());
-        }
+        return wrapQueryFn(() =>
+          useBackend(
+            () => getDiaryCountRealm(realm),
+            () => getDiaryCountSB()
+          )
+        );
       },
       providesTags: ['EmotionDiary'],
     }),
     hasDiaryForDay: builder.query<ApiResponse<boolean>, { realm: Realm }>({
       async queryFn({ realm }, _api, _extraOptions, _baseQuery) {
-        const response = await supabase.auth.getSession();
-        if (isEmpty(response.data)) {
-          return wrapQueryFn(() => hasDiaryForDayRealm(realm));
-        } else {
-          return wrapQueryFn(() => hasDiaryForDaySB());
-        }
+        return wrapQueryFn(() =>
+          useBackend(
+            () => hasDiaryForDayRealm(realm),
+            () => hasDiaryForDaySB()
+          )
+        );
       },
       providesTags: ['EmotionDiary'],
     }),
-    selectByMonth: builder.query<ApiResponse<EmotionDiaryDTO[]>, { realm: Realm; month: Date }>({
-      async queryFn({ realm, month }, _api, _extraOptions, _baseQuery) {
-        const response = await supabase.auth.getSession();
-        if (isEmpty(response.data)) {
-          return wrapQueryFn(() => selectByMonthRealm(realm, month));
-        } else {
-          return wrapQueryFn(() => selectByMonthSB(month));
-        }
+    selectByMonth: builder.query<
+      ApiResponse<EmotionDiaryDTO[]>,
+      { realm: Realm; recordDate: Date }
+    >({
+      async queryFn({ realm, recordDate }, _api, _extraOptions, _baseQuery) {
+        return wrapQueryFn(() =>
+          useBackend(
+            () => selectByMonthRealm(realm, recordDate),
+            () => selectByMonthSB(recordDate)
+          )
+        );
       },
       providesTags: ['EmotionDiary'],
     }),
     selectById: builder.query<ApiResponse<EmotionDiaryDTO>, { realm: Realm; emotionId: number }>({
       async queryFn({ realm, emotionId }, _api, _extraOptions, _baseQuery) {
-        const response = await supabase.auth.getSession();
-        if (isEmpty(response.data)) {
-          return wrapQueryFn(() => selectByIdRealm(realm, emotionId));
-        } else {
-          return wrapQueryFn(() => selectByIdSB(emotionId));
-        }
+        return wrapQueryFn(() =>
+          useBackend(
+            () => selectByIdRealm(realm, emotionId),
+            () => selectByIdSB(emotionId)
+          )
+        );
       },
       providesTags: ['EmotionDiary'],
     }),
-    createDiary: builder.query<
+    createDiary: builder.mutation<
       ApiResponse<number>,
       { realm: Realm; diary: Omit<EmotionDiaryDTO, 'emotionId' | 'createdAt' | 'updatedAt'> }
     >({
       async queryFn({ realm, diary }, _api, _extraOptions, _baseQuery) {
-        const response = await supabase.auth.getSession();
-        if (isEmpty(response.data)) {
-          return wrapQueryFn(() => createDiaryRealm(realm, diary));
-        } else {
-          return wrapQueryFn(() => createDiarySB(diary));
-        }
+        return wrapQueryFn(() =>
+          useBackend(
+            () => createDiaryRealm(realm, diary),
+            () => createDiarySB(diary)
+          )
+        );
       },
-      providesTags: ['EmotionDiary'],
+      invalidatesTags: ['EmotionDiary'],
     }),
-    updateDiary: builder.query<
+    updateDiary: builder.mutation<
       ApiResponse<number>,
       {
         realm: Realm;
@@ -94,25 +95,25 @@ export const diaryApi = baseApi.injectEndpoints({
       }
     >({
       async queryFn({ realm, emotionId, updates }, _api, _extraOptions, _baseQuery) {
-        const response = await supabase.auth.getSession();
-        if (isEmpty(response.data)) {
-          return wrapQueryFn(() => updateDiaryRealm(realm, emotionId, updates));
-        } else {
-          return wrapQueryFn(() => updateDiarySB(emotionId, updates));
-        }
+        return wrapQueryFn(() =>
+          useBackend(
+            () => updateDiaryRealm(realm, emotionId, updates),
+            () => updateDiarySB(emotionId, updates)
+          )
+        );
       },
-      providesTags: ['EmotionDiary'],
+      invalidatesTags: ['EmotionDiary'],
     }),
-    deleteDiary: builder.query<ApiResponse<string>, { realm: Realm; emotionId: number }>({
+    deleteDiary: builder.mutation<ApiResponse<string>, { realm: Realm; emotionId: number }>({
       async queryFn({ realm, emotionId }, _api, _extraOptions, _baseQuery) {
-        const response = await supabase.auth.getSession();
-        if (isEmpty(response.data)) {
-          return wrapQueryFn(() => deleteDiaryRealm(realm, emotionId));
-        } else {
-          return wrapQueryFn(() => deleteDiarySB(emotionId));
-        }
+        return wrapQueryFn(() =>
+          useBackend(
+            () => deleteDiaryRealm(realm, emotionId),
+            () => deleteDiarySB(emotionId)
+          )
+        );
       },
-      providesTags: ['EmotionDiary'],
+      invalidatesTags: ['EmotionDiary'],
     }),
   }),
 });
@@ -122,7 +123,7 @@ export const {
   useHasDiaryForDayQuery,
   useSelectByMonthQuery,
   useSelectByIdQuery,
-  useLazyCreateDiaryQuery,
-  useLazyUpdateDiaryQuery,
-  useLazyDeleteDiaryQuery,
+  useCreateDiaryMutation,
+  useUpdateDiaryMutation,
+  useDeleteDiaryMutation,
 } = diaryApi;
