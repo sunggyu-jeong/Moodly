@@ -1,8 +1,8 @@
-import { store } from '@app/store';
+import store from '@app/store';
 import { HOT_UPDATER_SUPABASE_ANON_KEY, HOT_UPDATER_SUPABASE_URL } from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createClient } from '@supabase/supabase-js';
-import { resetAuthState } from '../../features/auth/model/auth.slice';
+import { authApi } from '../api/auth/authApi';
 import { resetTo } from './navigation.util';
 
 const nativeFetch = globalThis.fetch.bind(globalThis);
@@ -24,7 +24,7 @@ export const supabase = createClient(HOT_UPDATER_SUPABASE_URL, HOT_UPDATER_SUPAB
           const res = await nativeFetch(input, init);
 
           if (res.status === 401 || res.status === 403) {
-            store.dispatch(resetAuthState());
+            store.dispatch(authApi.util.resetApiState());
             resetTo('Login');
             throw new Error('인증이 만료되었습니다. 다시 로그인하세요.');
           }

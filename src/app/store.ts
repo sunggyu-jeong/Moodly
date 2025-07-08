@@ -1,6 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
-import authSlice from '@features/auth/model/auth.slice';
 import diarySlice from '@features/diary/model/diary.slice';
 import progressSlice from '@features/updateProgress/model/progress.slice';
 import overlaySlice from '@processes/overlay/model/overlay.slice';
@@ -15,7 +14,6 @@ const reducers = combineReducers({
   overlaySlice,
   diarySlice,
   progressSlice,
-  authSlice,
 });
 
 export type AppDispatch = typeof store.dispatch;

@@ -10,7 +10,6 @@ import { isNotEmpty } from '@shared/lib';
 import { supabase } from '@shared/lib/supabase.util';
 import { useEffect } from 'react';
 import { PermissionsAndroid, Platform } from 'react-native';
-import { setAuthState, setIsLogin } from '../../auth/model/auth.slice';
 export function useInitializeApp() {
   const dispatch = useAppDispatch();
 

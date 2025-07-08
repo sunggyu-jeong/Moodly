@@ -14,7 +14,6 @@ import SettingList from '@features/setting/ui/SettingList.tsx';
 import { setShowToastView } from '@processes/overlay/model/overlay.slice';
 import { useSignOutMutation } from '@shared/api/auth/authApi.ts';
 import { isNotEmpty, resetTo } from '@shared/lib';
-import { resetAuthState } from '../features/auth/model/auth.slice';
 
 enum SETTING_EVENT_TYPE {
   BACKUP = 'backup',
@@ -40,7 +39,6 @@ const SettingPage = () => {
     if (isLoading) return;
 
     if (isNotEmpty(data) && data.data === 'success') {
-      dispatch(resetAuthState());
       dispatch(
         setShowToastView({
           visibility: true,
