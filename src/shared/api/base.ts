@@ -18,7 +18,7 @@ import { ApiResponse } from '../../entities/common/response';
  */
 export const baseApi = createApi({
   reducerPath: 'api',
-  tagTypes: ['EmotionDiary'],
+  tagTypes: ['EmotionDiary', 'Auth'],
   baseQuery: fetchBaseQuery({
     baseUrl: HOT_UPDATER_SUPABASE_URL,
   }),

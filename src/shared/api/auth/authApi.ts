@@ -7,7 +7,7 @@ import {
   getGoogleToken,
   signInWithIdToken,
   signOut,
-} from './authHelpers';
+} from './authService';
 
 export const authApi = baseApi.injectEndpoints({
   overrideExisting: false,
@@ -16,26 +16,26 @@ export const authApi = baseApi.injectEndpoints({
       async queryFn(_arg, _api, _extraOptions, _baseQuery) {
         return wrapQueryFn(() => signInWithIdToken('google', getGoogleToken));
       },
-      invalidatesTags: ['EmotionDiary'],
+      invalidatesTags: ['Auth'],
     }),
 
     signInApple: builder.mutation<ApiResponse<User>, void>({
       async queryFn(_arg, _api, _extraOptions, _baseQuery) {
         return wrapQueryFn(async () => signInWithIdToken('apple', getAppleToken));
       },
-      invalidatesTags: ['EmotionDiary'],
+      invalidatesTags: ['Auth'],
     }),
     initializeSession: builder.query<ApiResponse<User>, void>({
       async queryFn() {
         return wrapQueryFn(async () => fetchSession());
       },
-      providesTags: ['EmotionDiary'],
+      providesTags: ['Auth'],
     }),
     signOut: builder.mutation<ApiResponse<string>, void>({
       async queryFn(_arg, _api, _extraOptions, _baseQuery) {
         return wrapQueryFn(async () => signOut());
       },
-      invalidatesTags: ['EmotionDiary'],
+      invalidatesTags: ['Auth'],
     }),
   }),
 });
@@ -43,6 +43,6 @@ export const authApi = baseApi.injectEndpoints({
 export const {
   useSignInGoogleMutation,
   useSignInAppleMutation,
-  useInitializeSessionQuery,
+  useLazyInitializeSessionQuery,
   useSignOutMutation,
 } = authApi;

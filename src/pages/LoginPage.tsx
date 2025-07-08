@@ -9,7 +9,6 @@ import { H3 } from '@shared/ui/typography/H3.tsx';
 import { Title } from '@shared/ui/typography/Title.tsx';
 import { useEffect } from 'react';
 import { Image, Platform, StyleSheet, View } from 'react-native';
-import { setAuthState } from '../features/auth/model/auth.slice';
 
 const Login = () => {
   const [signInGoogle, { data: googleData, isLoading: isGoogleLoading }] =
@@ -28,20 +27,9 @@ const Login = () => {
     if (isGoogleLoading || isAppleLoading) return;
 
     if (isNotEmpty(googleData) || isNotEmpty(appleData)) {
-      moveOnMain();
+      resetTo('Main');
     }
   }, [googleData, appleData, isAppleLoading, isGoogleLoading, dispatch]);
-
-  const moveOnMain = () => {
-    setAuthState({
-      session: googleData?.session || appleData?.session,
-      data: {
-        data: googleData || appleData,
-      },
-      error: null,
-    });
-    resetTo('Main');
-  };
 
   return (
     <View className="flex-1 bg-gray-100 justify-center items-center">
