@@ -2,6 +2,7 @@ import { ApiResponse } from '@entities/common/response';
 import { appleAuth } from '@invertase/react-native-apple-authentication';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { AuthError, User } from '@supabase/supabase-js';
+import { ApiCode } from '../../config/errorCodes';
 import { supabase } from '../../lib/supabase.util';
 import { baseFormatError } from '../base';
 
@@ -100,7 +101,7 @@ export async function signOut(): Promise<ApiResponse<string>> {
     if (error) {
       return { error: baseFormatError(error) };
     }
-    return { data: 'success' };
+    return { data: ApiCode.SUCCESS };
   } catch (err) {
     return { error: baseFormatError(err as AuthError) };
   }
