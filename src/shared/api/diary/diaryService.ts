@@ -1,0 +1,162 @@
+import { AuthError } from '@supabase/supabase-js';
+import { EmotionDiaryDTO, EmotionDiarySupabase, mapSupabaseToDTO } from '../../../entities/diary';
+import { isEmpty, isNotEmpty } from '../../lib';
+import { supabase } from '../../lib/supabase.util';
+import { baseFormatError } from '../base';
+
+interface Database {
+  public: {
+    Tables: {
+      moodly_diary: {
+        Row: EmotionDiarySupabase;
+        Insert: Omit<EmotionDiarySupabase, 'emotion_id'>;
+        Update: Partial<Omit<EmotionDiarySupabase, 'emotion_id'>>;
+      };
+    };
+    Views: object;
+    Functions: object;
+    Enums: object;
+  };
+}
+
+export async function getDiaryCount() {
+  try {
+    const response = await supabase.auth.getUser();
+    const { count, error } = await supabase
+      .from('moodly_diary')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', response.data.user?.id);
+    if (error) throw error;
+    return { data: count ?? 0 };
+  } catch (err) {
+    return { error: baseFormatError(err as AuthError) };
+  }
+}
+
+export async function hasDiaryForDay() {
+  try {
+    const response = await supabase.auth.getUser();
+    const today = new Date();
+    const yyyyMMdd = today.toISOString().slice(0, 10);
+
+    const { count, error } = await supabase
+      .from('moodly_diary')
+      .select('*', { count: 'exact', head: true })
+      .eq('record_date', yyyyMMdd)
+      .eq('user_id', response.data.user?.id);
+
+    if (error) throw error;
+    return { data: (count ?? 0) > 0 };
+  } catch (err) {
+    return { error: baseFormatError(err as AuthError) };
+  }
+}
+
+export async function selectByMonth(recordDate: Date) {
+  try {
+    const response = await supabase.auth.getUser();
+    const year = recordDate.getFullYear();
+    const month = recordDate.getMonth();
+    const start = new Date(year, month, 1, 0, 0, 0);
+    const end = new Date(year, month + 1, 1, 0, 0, 0);
+
+    const { data, error } = await supabase
+      .from('moodly_diary')
+      .select('*')
+      .gte('record_date', start.toISOString())
+      .eq('user_id', response.data.user?.id)
+      .lt('record_date', end.toISOString())
+      .order('record_date', { ascending: false });
+    if (error) throw error;
+    return { data: data.map(mapSupabaseToDTO) ?? [] };
+  } catch (err) {
+    return { error: baseFormatError(err as AuthError) };
+  }
+}
+
+export async function selectById(emotionId: number) {
+  try {
+    const response = await supabase.auth.getUser();
+    const { data, error } = await supabase
+      .from('moodly_diary')
+      .select('*')
+      .eq('emotion_id', emotionId)
+      .eq('user_id', response.data.user?.id)
+      .single();
+    if (error) throw error;
+    return { data: mapSupabaseToDTO(data) ?? null };
+  } catch (err) {
+    return { error: baseFormatError(err as AuthError) };
+  }
+}
+
+export async function createDiary(
+  dto: Omit<EmotionDiaryDTO, 'emotionId' | 'createdAt' | 'updatedAt'>
+) {
+  try {
+    const response = await supabase.auth.getUser();
+    if (isEmpty(response.data.user?.id)) throw new Error('사용자 정보가 없습니다.');
+    const now = new Date().toISOString();
+    const payload: Database['public']['Tables']['moodly_diary']['Insert'] = {
+      icon_id: dto.iconId!,
+      record_date: now!,
+      description: dto.description || '',
+      created_at: now,
+      updated_at: now,
+      user_id: response.data.user!.id,
+    };
+
+    const { data, error } = await supabase
+      .from('moodly_diary')
+      .insert(payload)
+      .select('emotion_id')
+      .single();
+    if (error) throw error;
+    return { data: data.emotion_id };
+  } catch (err) {
+    return { error: baseFormatError(err as AuthError) };
+  }
+}
+
+export async function updateDiary(
+  emotionId: number,
+  updates: Partial<Omit<EmotionDiarySupabase, 'emotionId'>>
+) {
+  try {
+    const response = await supabase.auth.getUser();
+    const now = new Date().toISOString();
+    const payload: Database['public']['Tables']['moodly_diary']['Update'] = {
+      updated_at: now,
+      ...(isNotEmpty(updates.icon_id) && { icon_id: updates.icon_id }),
+      ...(isNotEmpty(updates.record_date) && { record_date: updates.record_date }),
+      ...(isNotEmpty(updates.description) && { description: updates.description }),
+    };
+
+    const { data: updated, error } = await supabase
+      .from('moodly_diary')
+      .update(payload)
+      .eq('emotion_id', emotionId)
+      .eq('user_id', response.data.user?.id)
+      .select('emotion_id')
+      .single();
+    if (error) throw error;
+    return { data: updated.emotion_id };
+  } catch (err) {
+    return { error: baseFormatError(err as AuthError) };
+  }
+}
+
+export async function deleteDiary(emotionId: number) {
+  try {
+    const response = await supabase.auth.getUser();
+    const { error } = await supabase
+      .from('moodly_diary')
+      .delete()
+      .eq('emotion_id', emotionId)
+      .eq('user_id', response.data.user?.id);
+    if (error) throw error;
+    return { data: 'sucesss' };
+  } catch (err) {
+    return { error: baseFormatError(err as AuthError) };
+  }
+}
