@@ -1,7 +1,7 @@
 import { ApiResponse } from '@entities/common/response';
 import { appleAuth } from '@invertase/react-native-apple-authentication';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { AuthError, User } from '@supabase/supabase-js';
+import { AuthError, Session, User } from '@supabase/supabase-js';
 import { ApiCode } from '../../config/errorCodes';
 import { supabase } from '../../lib/supabase.util';
 import { baseFormatError } from '../base';
@@ -95,6 +95,13 @@ export async function fetchSession(): Promise<ApiResponse<User>> {
   }
 }
 
+/**
+ * 사용자 로그아웃 요청을 수행합니다.
+ * - Supabase Auth 세션을 무효화하고, 로컬 저장소에 보관된 인증 정보를 삭제합니다.
+ *
+ * @returns 성공 시 data에 ApiCode.SUCCESS를 담아 반환하며,
+ *          실패 시 error에 형식화된 오류 정보를 담아 반환합니다.
+ */
 export async function signOut(): Promise<ApiResponse<string>> {
   try {
     const { error } = await supabase.auth.signOut();
@@ -102,6 +109,24 @@ export async function signOut(): Promise<ApiResponse<string>> {
       return { error: baseFormatError(error) };
     }
     return { data: ApiCode.SUCCESS };
+  } catch (err) {
+    return { error: baseFormatError(err as AuthError) };
+  }
+}
+
+/**
+ * 현재 인증 세션 정보를 조회합니다.
+ * - 로컬 스토리지(또는 AsyncStorage)에서 저장된 세션을 가져오며,
+ *   유효한 세션이 존재하지 않으면 null을 반환합니다.
+ *
+ * @returns 성공 시 data에 Session 객체를 담아 반환하며,
+ *          오류 발생 시 error에 형식화된 오류 정보를 담아 반환합니다.
+ */
+export async function getAuthToken(): Promise<ApiResponse<Session>> {
+  try {
+    const { data, error } = await supabase.auth.getSession();
+    if (error) return { error };
+    return { data: data.session };
   } catch (err) {
     return { error: baseFormatError(err as AuthError) };
   }

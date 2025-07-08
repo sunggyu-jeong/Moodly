@@ -1,9 +1,10 @@
 import { ApiResponse } from '@entities/common/response';
-import { User } from '@supabase/supabase-js';
+import { Session, User } from '@supabase/supabase-js';
 import { baseApi, wrapQueryFn } from '../base';
 import {
   fetchSession,
   getAppleToken,
+  getAuthToken,
   getGoogleToken,
   signInWithIdToken,
   signOut,
@@ -37,6 +38,12 @@ export const authApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ['Auth'],
     }),
+    authToken: builder.query<ApiResponse<Session | null>, void>({
+      async queryFn(_arg, _api, _extraOptions, _baseQuery) {
+        return wrapQueryFn(async () => getAuthToken());
+      },
+      providesTags: ['Auth'],
+    }),
   }),
 });
 
@@ -45,4 +52,5 @@ export const {
   useSignInAppleMutation,
   useLazyInitializeSessionQuery,
   useSignOutMutation,
+  useAuthTokenQuery,
 } = authApi;
