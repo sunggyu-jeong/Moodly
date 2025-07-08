@@ -17,7 +17,7 @@ export const realmDiaryDataSource: DiaryDataSource = {
     }
     return selectDiaryCountRealm(realm);
   },
-  searchById: async (realm, emotionId) => {
+  searchById: async (emotionId, realm) => {
     if (isEmpty(realm)) {
       throw new Error('searchById: realm is required');
     }
@@ -26,7 +26,7 @@ export const realmDiaryDataSource: DiaryDataSource = {
     }
     return selectDiaryByIdRealm(realm, emotionId);
   },
-  searchByMonth: async (realm, recordDate) => {
+  searchByMonth: async (recordDate, realm) => {
     if (isEmpty(realm)) {
       throw new Error('searchByMonth: realm is required');
     }
@@ -35,7 +35,7 @@ export const realmDiaryDataSource: DiaryDataSource = {
     }
     return selectDiaryByMonthRealm(realm, recordDate);
   },
-  add: async (realm, data) => {
+  add: async (data, realm) => {
     if (isEmpty(realm)) {
       throw new Error('add: realm is required');
     }
@@ -44,7 +44,7 @@ export const realmDiaryDataSource: DiaryDataSource = {
     }
     return createDiaryRealm(realm, data);
   },
-  modify: async (realm, emotionId, data) => {
+  modify: async (emotionId, data, realm) => {
     if (isEmpty(realm)) {
       throw new Error('modify: realm is required');
     }
@@ -56,7 +56,7 @@ export const realmDiaryDataSource: DiaryDataSource = {
     }
     return updateDiaryRealm(realm, emotionId, data);
   },
-  remove: async (realm, emotionId) => {
+  remove: async (emotionId, realm) => {
     if (isEmpty(realm)) {
       throw new Error('remove: realm is required');
     }
@@ -65,7 +65,7 @@ export const realmDiaryDataSource: DiaryDataSource = {
     }
     await deleteDiaryRealm(realm, emotionId);
   },
-  isExist: async (realm, recordDate) => {
+  isExist: async (recordDate, realm) => {
     if (isEmpty(realm)) {
       throw new Error('isExist: realm is required');
     }
