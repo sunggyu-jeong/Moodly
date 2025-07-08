@@ -1,6 +1,6 @@
 import { AuthError } from '@supabase/supabase-js';
 import { EmotionDiaryDTO, EmotionDiarySupabase, mapSupabaseToDTO } from '../../../entities/diary';
-import { isEmpty, isNotEmpty } from '../../lib';
+import { isNotEmpty } from '../../lib';
 import { supabase } from '../../lib/supabase.util';
 import { baseFormatError } from '../base';
 
@@ -21,11 +21,11 @@ interface Database {
 
 export async function getDiaryCount() {
   try {
-    const response = await supabase.auth.getUser();
+    const response = await supabase.auth.getSession();
     const { count, error } = await supabase
       .from('moodly_diary')
       .select('*', { count: 'exact', head: true })
-      .eq('user_id', response.data.user?.id);
+      .eq('user_id', response.data.session?.user.id);
     if (error) throw error;
     return { data: count ?? 0 };
   } catch (err) {
@@ -35,7 +35,7 @@ export async function getDiaryCount() {
 
 export async function hasDiaryForDay() {
   try {
-    const response = await supabase.auth.getUser();
+    const response = await supabase.auth.getSession();
     const today = new Date();
     const yyyyMMdd = today.toISOString().slice(0, 10);
 
@@ -43,7 +43,7 @@ export async function hasDiaryForDay() {
       .from('moodly_diary')
       .select('*', { count: 'exact', head: true })
       .eq('record_date', yyyyMMdd)
-      .eq('user_id', response.data.user?.id);
+      .eq('user_id', response.data.session?.user.id);
 
     if (error) throw error;
     return { data: (count ?? 0) > 0 };
@@ -54,7 +54,7 @@ export async function hasDiaryForDay() {
 
 export async function selectByMonth(recordDate: Date) {
   try {
-    const response = await supabase.auth.getUser();
+    const response = await supabase.auth.getSession();
     const year = recordDate.getFullYear();
     const month = recordDate.getMonth();
     const start = new Date(year, month, 1, 0, 0, 0);
@@ -64,7 +64,7 @@ export async function selectByMonth(recordDate: Date) {
       .from('moodly_diary')
       .select('*')
       .gte('record_date', start.toISOString())
-      .eq('user_id', response.data.user?.id)
+      .eq('user_id', response.data.session?.user.id)
       .lt('record_date', end.toISOString())
       .order('record_date', { ascending: false });
     if (error) throw error;
@@ -76,12 +76,12 @@ export async function selectByMonth(recordDate: Date) {
 
 export async function selectById(emotionId: number) {
   try {
-    const response = await supabase.auth.getUser();
+    const response = await supabase.auth.getSession();
     const { data, error } = await supabase
       .from('moodly_diary')
       .select('*')
       .eq('emotion_id', emotionId)
-      .eq('user_id', response.data.user?.id)
+      .eq('user_id', response.data.session?.user.id)
       .single();
     if (error) throw error;
     return { data: mapSupabaseToDTO(data) ?? null };
@@ -94,8 +94,7 @@ export async function createDiary(
   dto: Omit<EmotionDiaryDTO, 'emotionId' | 'createdAt' | 'updatedAt'>
 ) {
   try {
-    const response = await supabase.auth.getUser();
-    if (isEmpty(response.data.user?.id)) throw new Error('사용자 정보가 없습니다.');
+    const response = await supabase.auth.getSession();
     const now = new Date().toISOString();
     const payload: Database['public']['Tables']['moodly_diary']['Insert'] = {
       icon_id: dto.iconId!,
@@ -103,7 +102,7 @@ export async function createDiary(
       description: dto.description || '',
       created_at: now,
       updated_at: now,
-      user_id: response.data.user!.id,
+      user_id: response.data.session?.user.id || '',
     };
 
     const { data, error } = await supabase
@@ -123,7 +122,7 @@ export async function updateDiary(
   updates: Partial<Omit<EmotionDiarySupabase, 'emotionId'>>
 ) {
   try {
-    const response = await supabase.auth.getUser();
+    const response = await supabase.auth.getSession();
     const now = new Date().toISOString();
     const payload: Database['public']['Tables']['moodly_diary']['Update'] = {
       updated_at: now,
@@ -136,7 +135,7 @@ export async function updateDiary(
       .from('moodly_diary')
       .update(payload)
       .eq('emotion_id', emotionId)
-      .eq('user_id', response.data.user?.id)
+      .eq('user_id', response.data.session?.user.id)
       .select('emotion_id')
       .single();
     if (error) throw error;
@@ -148,12 +147,12 @@ export async function updateDiary(
 
 export async function deleteDiary(emotionId: number) {
   try {
-    const response = await supabase.auth.getUser();
+    const response = await supabase.auth.getSession();
     const { error } = await supabase
       .from('moodly_diary')
       .delete()
       .eq('emotion_id', emotionId)
-      .eq('user_id', response.data.user?.id);
+      .eq('user_id', response.data.session?.user.id);
     if (error) throw error;
     return { data: 'sucesss' };
   } catch (err) {
