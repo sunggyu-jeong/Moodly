@@ -29,11 +29,11 @@ const HomePage = () => {
     }, [dispatch])
   );
 
-  const titleText = hasDiary?.data
+  const titleText = hasDiary
     ? '일기를 저장했어요\n오늘 하루도 수고했어요'
     : '오늘 하루 어땠나요\n일기를 작성해볼까요?';
 
-  const buttonText = hasDiary?.data ? '작성 완료' : '작성하러 가기';
+  const buttonText = hasDiary ? '작성 완료' : '작성하러 가기';
 
   return (
     <>
@@ -43,7 +43,7 @@ const HomePage = () => {
       />
       <View className="bg-gray-100 flex-1 px-5 justify-center items-center">
         <DiaryCountCard
-          count={diaryCount?.data ?? 0}
+          count={diaryCount ?? 0}
           onPress={() => {
             jumpToTab('DiaryList');
           }}
@@ -65,7 +65,7 @@ const HomePage = () => {
 
           <ActionButton
             onPress={() => navigate('DiaryStack')}
-            disabled={hasDiary?.data ?? false}
+            disabled={hasDiary ?? false}
           >
             {buttonText}
           </ActionButton>
