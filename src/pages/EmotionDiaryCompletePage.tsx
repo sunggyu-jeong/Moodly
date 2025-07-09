@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
 import { MAIN_ICONS } from '@shared/assets/images/main';
@@ -14,24 +14,23 @@ import { setShowToastView } from '@processes/overlay/model/overlay.slice';
 const EmotionDiaryCompletePage = () => {
   const isModifyMode = useAppSelector(state => state.diarySlice.isModifyMode);
   const dispatch = useAppDispatch();
-  const initialModifyMode = useRef(isModifyMode);
 
   useEffect(() => {
-    if (initialModifyMode.current) {
+    if (isModifyMode) {
       dispatch(setShowToastView({ visibility: true, message: '일기가 수정되었어요.' }));
     }
 
     const timer = setTimeout(() => {
-      if (initialModifyMode.current) {
+      if (isModifyMode) {
         dismissModalToScreen();
         dispatch(setModifyMode(false));
       } else {
-        navigate('DiaryStack', { screen: 'Complete', params: { origin: 'DiaryStack' } });
+        navigate('DiaryStack', { screen: 'EmotionDetailPage', params: { origin: 'DiaryStack' } });
       }
     }, 2000);
 
     return () => clearTimeout(timer);
-  }, [dispatch]);
+  }, [dispatch, isModifyMode]);
 
   return (
     <View className="flex-1 bg-common-white items-center justify-center">

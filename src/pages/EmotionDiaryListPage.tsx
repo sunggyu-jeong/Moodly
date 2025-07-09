@@ -1,6 +1,5 @@
-import { useFocusEffect } from '@react-navigation/native';
 import dayjs from 'dayjs';
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar.tsx';
@@ -28,7 +27,7 @@ const EmotionDiaryListPage = () => {
     }),
     [selectedMonth]
   );
-  const { data, isFetching, refetch } = useSelectByMonthQuery(month);
+  const { data, isFetching } = useSelectByMonthQuery(month);
   const showSkeleton = useDelay(isFetching);
 
   const handleChangeMonth = (direction: 'left' | 'right') => {
@@ -40,12 +39,6 @@ const EmotionDiaryListPage = () => {
       )
     );
   };
-
-  useFocusEffect(
-    useCallback(() => {
-      refetch();
-    }, [refetch])
-  );
 
   return (
     <>
@@ -71,7 +64,7 @@ const EmotionDiaryListPage = () => {
       <ScrollView
         className="bg-gray-100"
         contentContainerStyle={[styles.scrollViewContent]}
-        scrollEnabled={!showSkeleton}
+        scrollEnabled={!showSkeleton && isNotEmpty(data)}
       >
         {(showSkeleton || showSkeleton === null) && <DiarySkeleton />}
         {!showSkeleton && isNotEmpty(data) && <EmotionDiaryCardList data={data} />}
