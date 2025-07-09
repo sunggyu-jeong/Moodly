@@ -8,7 +8,7 @@ import {
 
 import { RootStackParamList } from '@app/navigation/RootStack';
 
-import { BottomTabParamList } from '../../app/navigation/TabNavigation';
+import { BottomTabParamList } from '@app/navigation/TabNavigation';
 
 export const navigationRef = createNavigationContainerRef<RootStackParamList>();
 

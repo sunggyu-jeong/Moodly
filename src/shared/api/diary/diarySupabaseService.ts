@@ -104,7 +104,6 @@ export async function createDiary(
       updated_at: now,
       user_id: response.data.session?.user.id || '',
     };
-
     const { data, error } = await supabase
       .from('moodly_diary')
       .insert(payload)

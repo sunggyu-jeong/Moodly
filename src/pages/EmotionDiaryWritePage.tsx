@@ -55,7 +55,7 @@ const EmotionDiaryWritePage = () => {
             <Image
               style={styles.emotionImage}
               source={ICON_DATA.find(el => el.id === todayDiary?.iconId)?.iconBig}
-            />ㅣ
+            />
           </View>
 
           <View className="flex-1">
