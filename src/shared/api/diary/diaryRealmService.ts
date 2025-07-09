@@ -3,7 +3,8 @@ import { isNotEmpty } from '@shared/lib';
 
 import { ApiResponse } from '@entities/common/response';
 import { EmotionDiaryToDTO } from '@features/diary/service/EmotionDiaryMapper';
-import { ApiCode } from '../../config/errorCodes';
+import dayjs from 'dayjs';
+import { ApiCode, HttpStatus } from '../../config/errorCodes';
 import { getRealm } from '../../lib/realm-client.util';
 import { baseFormatError } from '../base';
 
@@ -13,7 +14,7 @@ export async function getDiaryCount(): Promise<ApiResponse<number>> {
     const count = realm.objects<EmotionDiary>('EmotionDiary').length;
     return { data: count };
   } catch (err) {
-    return { error: baseFormatError(err as Error) };
+    throw baseFormatError(err as Error);
   }
 }
 
@@ -26,38 +27,37 @@ export async function hasDiaryForDay(): Promise<ApiResponse<boolean>> {
       .filtered('record_date == $0', today);
     return { data: results.length > 0 };
   } catch (err) {
-    return { error: baseFormatError(err as Error) };
+    throw baseFormatError(err as Error);
   }
 }
 
-export async function selectByMonth(recordDate: Date): Promise<ApiResponse<EmotionDiaryDTO[]>> {
+export async function selectByMonth(
+  startDate: string,
+  endDate: string
+): Promise<ApiResponse<EmotionDiaryDTO[]>> {
   try {
     const realm = getRealm();
-    const year = recordDate.getFullYear();
-    const month = recordDate.getMonth();
-    const startDate = new Date(year, month, 1, 0, 0, 0);
-    const endDate = new Date(year, month + 1, 1, 0, 0, 0);
+    const start = dayjs(startDate).toDate();
+    const end = dayjs(endDate).toDate();
 
     const raw = realm
       .objects<EmotionDiary>('EmotionDiary')
-      .filtered('record_date >= $0 AND record_date < $1', startDate, endDate)
+      .filtered('record_date >= $0 AND record_date < $1', start, end)
       .map(el => EmotionDiaryToDTO(el));
 
     return { data: [...raw] };
   } catch (err) {
-    return { error: baseFormatError(err as Error) };
+    throw baseFormatError(err as Error);
   }
 }
 
-export async function selectById(emotionId: number): Promise<ApiResponse<EmotionDiaryDTO>> {
+export async function selectById(emotionId: number): Promise<ApiResponse<EmotionDiaryDTO | null>> {
   try {
     const realm = getRealm();
     const raw = realm.objectForPrimaryKey<EmotionDiary>('EmotionDiary', emotionId);
-    return {
-      data: isNotEmpty(raw) ? EmotionDiaryToDTO(raw) : null,
-    };
+    return { data: isNotEmpty(raw) ? EmotionDiaryToDTO(raw) : null };
   } catch (err) {
-    return { error: baseFormatError(err as Error) };
+    throw baseFormatError(err as Error);
   }
 }
 
@@ -80,7 +80,7 @@ export async function createDiary(data: EmotionDiaryDTO): Promise<ApiResponse<nu
 
     return { data: nextId };
   } catch (err) {
-    return { error: baseFormatError(err as Error) };
+    throw baseFormatError(err as Error);
   }
 }
 
@@ -92,7 +92,10 @@ export async function updateDiary(
     const realm = getRealm();
     const target = realm.objectForPrimaryKey<EmotionDiary>('EmotionDiary', emotionId);
     if (!isNotEmpty(target)) {
-      throw new Error('수정할 일기를 찾을 수 없습니다.');
+      const authErr = baseFormatError(new Error('수정하려는 일기를 찾을 수 없어요.'));
+      authErr.status = HttpStatus.NOT_FOUND;
+      authErr.code = ApiCode.NOT_FOUND;
+      throw authErr;
     }
 
     realm.write(() => {
@@ -115,7 +118,7 @@ export async function updateDiary(
 
     return { data: emotionId };
   } catch (err) {
-    return { error: baseFormatError(err as Error) };
+    throw baseFormatError(err as Error);
   }
 }
 
@@ -124,7 +127,10 @@ export async function deleteDiary(emotionId: number): Promise<ApiResponse<string
     const realm = getRealm();
     const target = realm.objectForPrimaryKey<EmotionDiary>('EmotionDiary', emotionId);
     if (!isNotEmpty(target)) {
-      throw new Error('삭제할 일기를 찾을 수 없습니다.');
+      const authErr = baseFormatError(new Error('삭제하려는 일기를 찾을 수 없어요.'));
+      authErr.status = HttpStatus.NOT_FOUND;
+      authErr.code = ApiCode.NOT_FOUND;
+      throw authErr;
     }
 
     realm.write(() => {
@@ -133,6 +139,6 @@ export async function deleteDiary(emotionId: number): Promise<ApiResponse<string
 
     return { data: ApiCode.SUCCESS };
   } catch (err) {
-    return { error: baseFormatError(err as Error) };
+    throw baseFormatError(err as Error);
   }
 }

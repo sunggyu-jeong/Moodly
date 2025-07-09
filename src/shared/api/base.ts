@@ -9,6 +9,7 @@ import {
 } from '@reduxjs/toolkit/query/react';
 import { AuthError } from '@supabase/supabase-js';
 import { ApiResponse } from '../../entities/common/response';
+import { ApiCode } from '../config/errorCodes';
 import { isEmpty } from '../lib';
 import { supabase } from '../lib/supabase.util';
 
@@ -62,19 +63,31 @@ export const baseFormatError = (err: Partial<AuthError> | Error) => {
  */
 export async function wrapQueryFn<T>(
   fn: () => Promise<ApiResponse<T>>
-): Promise<QueryReturnValue<ApiResponse<T>, FetchBaseQueryError, FetchBaseQueryMeta>> {
-  const result = await fn();
-  if (result.error) {
-    const { code, message } = result.error;
+): Promise<QueryReturnValue<T, FetchBaseQueryError, FetchBaseQueryMeta>> {
+  try {
+    const result = await fn();
+    if (result.error) {
+      const { code, message } = result.error;
+      return {
+        error: {
+          status: typeof code === 'number' ? code : 400,
+          data: { code, message },
+        },
+      };
+    }
+    return { data: result.data! };
+  } catch (rawErr) {
+    const authErr = baseFormatError(rawErr as Error);
     return {
       error: {
-        status: typeof code === 'number' ? code : 400,
-        data: { code, message },
+        status: typeof authErr.status === 'number' ? authErr.status : 500,
+        data: {
+          code: authErr.code ?? ApiCode.UNKNOWN,
+          message: authErr.message,
+        },
       },
     };
   }
-
-  return { data: result };
 }
 
 /**

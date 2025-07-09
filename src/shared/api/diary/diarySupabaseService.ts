@@ -1,5 +1,7 @@
+import { ApiResponse } from '@entities/common/response';
+import { EmotionDiaryDTO, EmotionDiarySupabase, mapSupabaseToDTO } from '@entities/diary';
 import { AuthError } from '@supabase/supabase-js';
-import { EmotionDiaryDTO, EmotionDiarySupabase, mapSupabaseToDTO } from '../../../entities/diary';
+import { ApiCode } from '../../config/errorCodes';
 import { isNotEmpty } from '../../lib';
 import { supabase } from '../../lib/supabase.util';
 import { baseFormatError } from '../base';
@@ -19,7 +21,7 @@ interface Database {
   };
 }
 
-export async function getDiaryCount() {
+export async function getDiaryCount(): Promise<ApiResponse<number>> {
   try {
     const response = await supabase.auth.getSession();
     const { count, error } = await supabase
@@ -29,11 +31,11 @@ export async function getDiaryCount() {
     if (error) throw error;
     return { data: count ?? 0 };
   } catch (err) {
-    return { error: baseFormatError(err as AuthError) };
+    throw baseFormatError(err as AuthError);
   }
 }
 
-export async function hasDiaryForDay() {
+export async function hasDiaryForDay(): Promise<ApiResponse<boolean>> {
   try {
     const response = await supabase.auth.getSession();
     const today = new Date();
@@ -48,33 +50,31 @@ export async function hasDiaryForDay() {
     if (error) throw error;
     return { data: (count ?? 0) > 0 };
   } catch (err) {
-    return { error: baseFormatError(err as AuthError) };
+    throw baseFormatError(err as AuthError);
   }
 }
 
-export async function selectByMonth(recordDate: Date) {
+export async function selectByMonth(
+  startDate: string,
+  endDate: string
+): Promise<ApiResponse<EmotionDiaryDTO[]>> {
   try {
     const response = await supabase.auth.getSession();
-    const year = recordDate.getFullYear();
-    const month = recordDate.getMonth();
-    const start = new Date(year, month, 1, 0, 0, 0);
-    const end = new Date(year, month + 1, 1, 0, 0, 0);
-
     const { data, error } = await supabase
       .from('moodly_diary')
       .select('*')
-      .gte('record_date', start.toISOString())
+      .gte('record_date', startDate)
       .eq('user_id', response.data.session?.user.id)
-      .lt('record_date', end.toISOString())
+      .lt('record_date', endDate)
       .order('record_date', { ascending: false });
     if (error) throw error;
     return { data: data.map(mapSupabaseToDTO) ?? [] };
   } catch (err) {
-    return { error: baseFormatError(err as AuthError) };
+    throw baseFormatError(err as AuthError);
   }
 }
 
-export async function selectById(emotionId: number) {
+export async function selectById(emotionId: number): Promise<ApiResponse<EmotionDiaryDTO>> {
   try {
     const response = await supabase.auth.getSession();
     const { data, error } = await supabase
@@ -86,13 +86,13 @@ export async function selectById(emotionId: number) {
     if (error) throw error;
     return { data: mapSupabaseToDTO(data) ?? null };
   } catch (err) {
-    return { error: baseFormatError(err as AuthError) };
+    throw baseFormatError(err as AuthError);
   }
 }
 
 export async function createDiary(
   dto: Omit<EmotionDiaryDTO, 'emotionId' | 'createdAt' | 'updatedAt'>
-) {
+): Promise<ApiResponse<number>> {
   try {
     const response = await supabase.auth.getSession();
     const now = new Date().toISOString();
@@ -113,14 +113,14 @@ export async function createDiary(
     if (error) throw error;
     return { data: data.emotion_id };
   } catch (err) {
-    return { error: baseFormatError(err as AuthError) };
+    throw baseFormatError(err as AuthError);
   }
 }
 
 export async function updateDiary(
   emotionId: number,
   updates: Partial<Omit<EmotionDiarySupabase, 'emotionId'>>
-) {
+): Promise<ApiResponse<number>> {
   try {
     const response = await supabase.auth.getSession();
     const now = new Date().toISOString();
@@ -141,11 +141,11 @@ export async function updateDiary(
     if (error) throw error;
     return { data: updated.emotion_id };
   } catch (err) {
-    return { error: baseFormatError(err as AuthError) };
+    throw baseFormatError(err as AuthError);
   }
 }
 
-export async function deleteDiary(emotionId: number) {
+export async function deleteDiary(emotionId: number): Promise<ApiResponse<string>> {
   try {
     const response = await supabase.auth.getSession();
     const { error } = await supabase
@@ -154,8 +154,8 @@ export async function deleteDiary(emotionId: number) {
       .eq('emotion_id', emotionId)
       .eq('user_id', response.data.session?.user.id);
     if (error) throw error;
-    return { data: 'sucesss' };
+    return { data: ApiCode.SUCCESS };
   } catch (err) {
-    return { error: baseFormatError(err as AuthError) };
+    throw baseFormatError(err as AuthError);
   }
 }

@@ -2,7 +2,7 @@ import { ApiResponse } from '@entities/common/response';
 import { appleAuth } from '@invertase/react-native-apple-authentication';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { AuthError, Session, User } from '@supabase/supabase-js';
-import { ApiCode } from '../../config/errorCodes';
+import { ApiCode, HttpStatus } from '../../config/errorCodes';
 import { supabase } from '../../lib/supabase.util';
 import { baseFormatError } from '../base';
 
@@ -27,9 +27,7 @@ export async function signInWithIdToken(
       token,
       ...(nonce ? { nonce } : {}),
     });
-    if (error) {
-      return { error: baseFormatError(error) };
-    }
+    if (error) throw error;
     return {
       session: data.session!,
       data: data.session!.user,
@@ -68,7 +66,11 @@ export async function getAppleToken() {
     requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
   });
   if (!resp.identityToken) {
-    throw new Error('Apple 로그인 실패: identityToken 누락');
+    const authErr = baseFormatError(new Error('Apple 로그인 요청이 실패했어요.'));
+    console.log('>>>>>>>>Apple 로그인 실패: identityToken 누락');
+    authErr.status = HttpStatus.NOT_FOUND;
+    authErr.code = ApiCode.NOT_FOUND;
+    throw authErr;
   }
   return { token: resp.identityToken, nonce: resp.nonce };
 }
@@ -91,7 +93,7 @@ export async function fetchSession(): Promise<ApiResponse<User>> {
       data: data.session!.user,
     };
   } catch (err) {
-    return { error: baseFormatError(err as AuthError) };
+    throw baseFormatError(err as Error);
   }
 }
 
@@ -105,12 +107,10 @@ export async function fetchSession(): Promise<ApiResponse<User>> {
 export async function signOut(): Promise<ApiResponse<string>> {
   try {
     const { error } = await supabase.auth.signOut();
-    if (error) {
-      return { error: baseFormatError(error) };
-    }
+    if (error) throw error;
     return { data: ApiCode.SUCCESS };
   } catch (err) {
-    return { error: baseFormatError(err as AuthError) };
+    throw baseFormatError(err as Error);
   }
 }
 
@@ -125,9 +125,9 @@ export async function signOut(): Promise<ApiResponse<string>> {
 export async function getAuthToken(): Promise<ApiResponse<Session>> {
   try {
     const { data, error } = await supabase.auth.getSession();
-    if (error) return { error };
+    if (error) throw error;
     return { data: data.session };
   } catch (err) {
-    return { error: baseFormatError(err as AuthError) };
+    throw baseFormatError(err as Error);
   }
 }

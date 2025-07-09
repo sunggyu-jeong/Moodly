@@ -1,5 +1,4 @@
-import { ApiResponse } from '@entities/common/response';
-import { EmotionDiaryDTO, EmotionDiarySupabase } from '../../../entities/diary';
+import { EmotionDiaryDTO, EmotionDiarySupabase } from '@entities/diary';
 import { baseApi, useBackend, wrapQueryFn } from '../base';
 
 import {
@@ -25,7 +24,7 @@ import {
 export const diaryApi = baseApi.injectEndpoints({
   overrideExisting: true,
   endpoints: builder => ({
-    getDiaryCount: builder.query<ApiResponse<number>, void>({
+    getDiaryCount: builder.query<number, void>({
       async queryFn(_arg, _api, _extraOptions, _baseQuery) {
         return wrapQueryFn(() =>
           useBackend(
@@ -36,7 +35,7 @@ export const diaryApi = baseApi.injectEndpoints({
       },
       providesTags: ['EmotionDiary'],
     }),
-    hasDiaryForDay: builder.query<ApiResponse<boolean>, void>({
+    hasDiaryForDay: builder.query<boolean, void>({
       async queryFn(_arg, _api, _extraOptions, _baseQuery) {
         return wrapQueryFn(() =>
           useBackend(
@@ -47,18 +46,18 @@ export const diaryApi = baseApi.injectEndpoints({
       },
       providesTags: ['EmotionDiary'],
     }),
-    selectByMonth: builder.query<ApiResponse<EmotionDiaryDTO[]>, Date>({
-      async queryFn(_arg, _api, _extraOptions, _baseQuery) {
+    selectByMonth: builder.query<EmotionDiaryDTO[], { start: string; end: string }>({
+      async queryFn({ start, end }, _api, _extraOptions, _baseQuery) {
         return wrapQueryFn(() =>
           useBackend(
-            () => selectByMonthRealm(_arg),
-            () => selectByMonthSB(_arg)
+            () => selectByMonthRealm(start, end),
+            () => selectByMonthSB(start, end)
           )
         );
       },
       providesTags: ['EmotionDiary'],
     }),
-    selectById: builder.query<ApiResponse<EmotionDiaryDTO>, number>({
+    selectById: builder.query<EmotionDiaryDTO | null, number>({
       async queryFn(_arg, _api, _extraOptions, _baseQuery) {
         return wrapQueryFn(() =>
           useBackend(
@@ -70,7 +69,7 @@ export const diaryApi = baseApi.injectEndpoints({
       providesTags: ['EmotionDiary'],
     }),
     createDiary: builder.mutation<
-      ApiResponse<number>,
+      number,
       Omit<EmotionDiaryDTO, 'emotionId' | 'createdAt' | 'updatedAt'>
     >({
       async queryFn(_arg, _api, _extraOptions, _baseQuery) {
@@ -84,7 +83,7 @@ export const diaryApi = baseApi.injectEndpoints({
       invalidatesTags: ['EmotionDiary'],
     }),
     updateDiary: builder.mutation<
-      ApiResponse<number>,
+      number,
       {
         emotionId: number;
         updates: Partial<Omit<EmotionDiarySupabase, 'emotion_id'>>;
@@ -100,7 +99,7 @@ export const diaryApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ['EmotionDiary'],
     }),
-    deleteDiary: builder.mutation<ApiResponse<string>, number>({
+    deleteDiary: builder.mutation<string, number>({
       async queryFn(_arg, _api, _extraOptions, _baseQuery) {
         return wrapQueryFn(() =>
           useBackend(

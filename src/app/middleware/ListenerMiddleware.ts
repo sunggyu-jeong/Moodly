@@ -16,9 +16,9 @@ listenerMiddleware.startListening({
       console.warn('listenerMiddleware: 예상치 못한 payload:', payload);
       return;
     }
-
+    const errDetail = payload as { status: number; data: { code: string; message: string } };
     const code = parseApiError(payload as FetchBaseQueryError);
-    const message = ERROR_MESSAGE_MAP[code];
+    const message = errDetail.data?.message || ERROR_MESSAGE_MAP[code];
 
     listenerApi.dispatch(
       setShowToastView({

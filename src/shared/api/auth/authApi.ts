@@ -1,10 +1,8 @@
-import { ApiResponse } from '@entities/common/response';
-import { Session, User } from '@supabase/supabase-js';
+import { User } from '@supabase/supabase-js';
 import { baseApi, wrapQueryFn } from '../base';
 import {
   fetchSession,
   getAppleToken,
-  getAuthToken,
   getGoogleToken,
   signInWithIdToken,
   signOut,
@@ -13,26 +11,26 @@ import {
 export const authApi = baseApi.injectEndpoints({
   overrideExisting: false,
   endpoints: builder => ({
-    signInGoogle: builder.mutation<ApiResponse<User>, void>({
+    signInGoogle: builder.mutation<User, void>({
       async queryFn(_arg, _api, _extraOptions, _baseQuery) {
         return wrapQueryFn(() => signInWithIdToken('google', getGoogleToken));
       },
       invalidatesTags: ['Auth'],
     }),
 
-    signInApple: builder.mutation<ApiResponse<User>, void>({
+    signInApple: builder.mutation<User, void>({
       async queryFn(_arg, _api, _extraOptions, _baseQuery) {
         return wrapQueryFn(async () => signInWithIdToken('apple', getAppleToken));
       },
       invalidatesTags: ['Auth'],
     }),
-    initializeSession: builder.query<ApiResponse<User>, void>({
+    initializeSession: builder.query<User, void>({
       async queryFn() {
         return wrapQueryFn(async () => fetchSession());
       },
       providesTags: ['Auth'],
     }),
-    signOut: builder.mutation<ApiResponse<string>, void>({
+    signOut: builder.mutation<string, void>({
       async queryFn(_arg, _api, _extraOptions, _baseQuery) {
         return wrapQueryFn(async () => signOut());
       },
