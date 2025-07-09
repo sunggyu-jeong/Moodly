@@ -2,15 +2,18 @@ import { TouchableOpacity, View } from 'react-native';
 
 import { EmotionDiaryDTO } from '@entities/diary';
 import { setSelectedDiary } from '@features/diary/model/diary.slice.ts';
-import { useAppDispatch, useAppSelector } from '@shared/hooks';
-import { isNotEmpty, navigate } from '@shared/lib';
+import { useAppDispatch } from '@shared/hooks';
+import { navigate } from '@shared/lib';
 
 import EmotionDiaryCardContent from './EmotionDiaryCardContent.tsx';
 import EmotionDiaryCardHeader from './EmotionDiaryCardHeader.tsx';
 
-const EmotionDiaryCardList = () => {
+interface EmotionDiaryCardListProps {
+  data: EmotionDiaryDTO[];
+}
+
+const EmotionDiaryCardList = ({ data }: EmotionDiaryCardListProps) => {
   const dispatch = useAppDispatch();
-  const searchByMonth = useAppSelector(state => state.diarySlice.searchByMonth);
 
   const handleDiaryDetail = (item: EmotionDiaryDTO) => {
     dispatch(setSelectedDiary(item));
@@ -20,7 +23,7 @@ const EmotionDiaryCardList = () => {
   return (
     <>
       <View className="flex-1 justify-start items-stretch w-full mt-[19px]">
-        {searchByMonth?.data?.map((entry, index) => (
+        {data?.map((entry, index) => (
           <TouchableOpacity
             onPress={() => {
               handleDiaryDetail(entry);
@@ -31,12 +34,10 @@ const EmotionDiaryCardList = () => {
               key={index}
               className="bg-common-white py-5 px-[18px] mb-4 rounded-[15px]"
             >
-              {isNotEmpty(searchByMonth?.data) && (
-                <EmotionDiaryCardHeader
-                  iconId={entry.iconId}
-                  recordDate={entry.recordDate}
-                />
-              )}
+              <EmotionDiaryCardHeader
+                iconId={entry.iconId}
+                recordDate={entry.recordDate}
+              />
               <EmotionDiaryCardContent content={entry.description ?? ''} />
             </View>
           </TouchableOpacity>

@@ -8,6 +8,7 @@ interface DiaryMonthProps {
   monthLabel: string;
   onPressLeft: () => void;
   onPressRight: () => void;
+  leftDisabled: boolean;
   rightDisabled: boolean;
 }
 
@@ -17,6 +18,7 @@ const EmotionDiaryMonthSelector = ({ ...props }: DiaryMonthProps) => (
       source={COMMON_ICONS.iconPrev}
       onPress={props.onPressLeft}
       style="mr-[18px]"
+      disabled={props.leftDisabled}
     />
     <MonthlyLabel label={props.monthLabel} />
     <ArrowButton

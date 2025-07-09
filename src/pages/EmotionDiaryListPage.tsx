@@ -1,33 +1,34 @@
 import { useFocusEffect } from '@react-navigation/native';
 import dayjs from 'dayjs';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 
 import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar.tsx';
 
-import { searchDiaryByMonthThunk, setSelectedMonth } from '@features/diary/model/diary.slice.ts';
-import { useAppDispatch, useAppSelector, useRealm } from '@shared/hooks';
-import { isEmpty, isNotEmpty } from '@shared/lib';
+import { setSelectedMonth } from '@features/diary/model/diary.slice.ts';
+import { useAppDispatch, useAppSelector } from '@shared/hooks';
+import { isEmpty } from '@shared/lib';
 import colors from '@shared/styles/colors.ts';
 
-import EmotionDiaryCardList from '@features/diary/ui/EmotionDiaryCardList.tsx';
 import EmotionDiaryEmptyMessage from '@features/diary/ui/EmotionDiaryEmptyMessage.tsx';
 import EmotionDiaryMonthSelector from '@features/diary/ui/EmotionDiaryMonthSelector.tsx';
-import { setShowToastView } from '@processes/overlay/model/overlay.slice';
-import type Realm from 'realm';
-
-const SKELETON_MIN_DURATION_MS = 700;
+import DiarySkeleton from '@features/diary/ui/skeleton/DiaryCardSkeleton';
+import { useSelectByMonthQuery } from '@shared/api/diary/diaryApi';
+import useDelay from '@shared/hooks/useDelay';
 
 const EmotionDiaryListPage = () => {
-  const { openRealm, closeRealm } = useRealm();
   const selectedMonth = useAppSelector(state => state.diarySlice.selectedMonth);
-  const searchByMonth = useAppSelector(state => state.diarySlice.searchByMonth);
-  const isLogin = useAppSelector(state => state.authSlice.isLogin);
   const currentMonth = dayjs();
   const dispatch = useAppDispatch();
-  const [skeletonVisible, setSkeletonVisible] = useState(false);
-  const startTimeRef = useRef<number | null>(null);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const month = useMemo(
+    () => ({
+      start: dayjs(selectedMonth).startOf('month').toISOString(),
+      end: dayjs(selectedMonth).add(1, 'month').startOf('month').toISOString(),
+    }),
+    [selectedMonth]
+  );
+  const { data, isLoading, refetch } = useSelectByMonthQuery(month);
+  const showSkeleton = useDelay(isLoading);
 
   const handleChangeMonth = (direction: 'left' | 'right') => {
     dispatch(
@@ -39,42 +40,11 @@ const EmotionDiaryListPage = () => {
     );
   };
 
-  const initialize = useCallback(async () => {
-    startTimeRef.current = Date.now();
-    setSkeletonVisible(true);
-    try {
-      let realm: Realm | undefined;
-      if (!isLogin) {
-        realm = await openRealm();
-      }
-
-      await dispatch(
-        searchDiaryByMonthThunk({ realm, recordDate: new Date(selectedMonth), isLogin })
-      ).unwrap();
-    } catch (error) {
-      setShowToastView({ visibility: true, message: error as string });
-    } finally {
-      if (!isLogin) {
-        closeRealm();
-      }
-      const now = Date.now();
-      const elapsed = startTimeRef.current ? now - startTimeRef.current : SKELETON_MIN_DURATION_MS;
-      const remaining = SKELETON_MIN_DURATION_MS - elapsed;
-
-      if (remaining <= 0) {
-        setSkeletonVisible(false);
-      } else {
-        timeoutRef.current = setTimeout(() => {
-          setSkeletonVisible(false);
-        }, remaining);
-      }
-    }
-  }, [selectedMonth, openRealm, closeRealm, dispatch, isLogin]);
 
   useFocusEffect(
     useCallback(() => {
-      initialize();
-    }, [initialize])
+      refetch();
+    }, [refetch])
   );
 
   return (
@@ -91,21 +61,23 @@ const EmotionDiaryListPage = () => {
             onPressRight={() => {
               handleChangeMonth('right');
             }}
-            rightDisabled={currentMonth.isSame(dayjs(selectedMonth), 'month') ? true : false}
+            leftDisabled={showSkeleton || false}
+            rightDisabled={
+              showSkeleton || currentMonth.isSame(dayjs(selectedMonth), 'month') ? true : false
+            }
           />
         }
       />
-      {isNotEmpty(searchByMonth?.data) && (
-        <ScrollView
-          className="bg-gray-100"
-          contentContainerStyle={styles.scrollViewContent}
-        >
-          {skeletonVisible && <DiarySkeleton />}
-          {!skeletonVisible && <EmotionDiaryCardList />}
-        </ScrollView>
-      )}
+      <ScrollView
+        className="bg-gray-100"
+        contentContainerStyle={styles.scrollViewContent}
+        scrollEnabled={!showSkeleton}
+      >
+        {(showSkeleton || showSkeleton === null) && <DiarySkeleton />}
+        {/* {!showSkeleton && <EmotionDiaryCardList />} */}
+      </ScrollView>
 
-      {isEmpty(searchByMonth?.data) && <EmotionDiaryEmptyMessage />}
+      {isEmpty(data) && showSkeleton !== null && !showSkeleton && <EmotionDiaryEmptyMessage />}
     </>
   );
 };
