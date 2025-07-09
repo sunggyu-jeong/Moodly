@@ -29,6 +29,7 @@ export function isEmpty(value: unknown): boolean {
     return true;
   // 숫자인 경우, NaN이면 true
   if (typeof value === 'number' && Number.isNaN(value)) return true;
+  if (allValuesNull(value as Record<string, unknown>)) return true;
   // 그 외의 경우 값이 있다고 판단
   return false;
 }
@@ -86,7 +87,7 @@ export const defaultToZero = <T>(value: T): T | 0 => defaultTo(value, 0);
 export const rawValue = <T extends Record<string, string>>(obj: T, key: keyof T): T[keyof T] =>
   obj[key];
 
-export function allValuesNull<T>(obj: T) {
+function allValuesNull<T>(obj: T) {
   if (!obj || typeof obj !== 'object') return false;
   return Object.values(obj).every(v => v == null);
 }
