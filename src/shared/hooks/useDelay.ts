@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { isNotEmpty } from '../lib';
 
 const SKELETON_MIN_DURATION_MS = 700;
@@ -8,22 +8,35 @@ export default function useDelay(
   delay: number = SKELETON_MIN_DURATION_MS
 ): boolean | null {
   const [delayedValue, setDelayedValue] = useState<boolean | null>(null);
+  const startTimeRef = useRef<number>(0);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    let timeoutId: ReturnType<typeof setTimeout>;
-
-    if (isNotEmpty(value)) {
-      timeoutId = setTimeout(() => {
-        setDelayedValue(true);
-      }, delay);
-    } else {
-      setDelayedValue(false);
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
     }
 
+    if (value) {
+      setDelayedValue(true);
+      startTimeRef.current = Date.now();
+    } else if (isNotEmpty(delayedValue)) {
+      const elapsed = Date.now() - startTimeRef.current;
+      const remaining = delay - elapsed;
+      if (remaining <= 0) {
+        setDelayedValue(false);
+      } else {
+        timeoutRef.current = setTimeout(() => {
+          setDelayedValue(false);
+        }, remaining);
+      }
+    }
     return () => {
-      clearTimeout(timeoutId);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
     };
-  }, [delay, value]);
+  }, [value, delay]);
 
   return delayedValue;
 }
