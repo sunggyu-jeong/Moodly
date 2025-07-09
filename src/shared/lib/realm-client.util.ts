@@ -6,23 +6,32 @@ let _realm: Realm | null = null;
 /**
  * 열린 Realm 인스턴스를 반환합니다.
  */
-export async function initRealm(): Promise<Realm> {
-  const _realm = await Realm.open({
-    schema: [EmotionDiary],
-    schemaVersion: 2,
-    onMigration: (oldRealm: Realm, newRealm: Realm) => {
-      if (oldRealm.schemaVersion < 2) {
-        const oldDiaryObjects = oldRealm.objects('EmotionDiary');
-        const newDiaryObjects = newRealm.objects('EmotionDiary');
-        for (let i = 0; i < oldDiaryObjects.length; i++) {
-          if ('id' in oldDiaryObjects[i]) {
-            delete newDiaryObjects[i].id;
+export async function initRealm() {
+  try {
+    _realm = await Realm.open({
+      schema: [EmotionDiary],
+      schemaVersion: 3,
+      onMigration: (oldRealm: Realm, newRealm: Realm) => {
+        if (oldRealm.schemaVersion < 2) {
+          const oldDiaryObjects = oldRealm.objects('EmotionDiary');
+          const newDiaryObjects = newRealm.objects('EmotionDiary');
+          for (let i = 0; i < oldDiaryObjects.length; i++) {
+            if ('id' in oldDiaryObjects[i]) {
+              delete newDiaryObjects[i].id;
+            }
           }
         }
-      }
-    },
-  });
-  return _realm;
+        if (oldRealm.schemaVersion < 3) {
+          const newDiaryObjects = newRealm.objects('EmotionDiary');
+          newDiaryObjects.forEach(obj => {
+            delete obj.userId;
+          });
+        }
+      },
+    });
+  } catch (err) {
+    console.log('Realm 초기화 중 오류가 발생했습니다.', err);
+  }
 }
 
 /**
