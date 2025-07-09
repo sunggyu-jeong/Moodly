@@ -1,20 +1,19 @@
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { COMMON_ICONS } from '@shared/assets/images/common';
-import { useAppSelector, useScale } from '@shared/hooks';
+import { useScale } from '@shared/hooks';
 import { H2 } from '@shared/ui/typography/H2';
 import { Label } from '@shared/ui/typography/Label';
 
 import colors from '../../styles/colors';
 
 interface Props {
+  count: number;
   onPress: () => void;
 }
 
-const DiaryCountCard = ({ onPress }: Props) => {
-  const diaryCount = useAppSelector(state => state.diarySlice.diaryCount);
+const DiaryCountCard = ({ count, onPress }: Props) => {
   const { getScaleSize } = useScale();
-
   return (
     <View className="bg-common-white w-full mb-4 rounded-xl">
       <TouchableOpacity
@@ -38,7 +37,7 @@ const DiaryCountCard = ({ onPress }: Props) => {
             weight="semibold"
             style={styles.h2MarginRight}
           >
-            {diaryCount.data ?? 0}
+            {count}
           </H2>
           <Image
             source={COMMON_ICONS.iconNextGray}
