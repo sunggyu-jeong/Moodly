@@ -7,7 +7,7 @@ import { Body1 } from '@shared/ui/typography/Body1.tsx';
 
 const EmotionDiaryEmptyMessage = () => {
   return (
-    <View className="flex-1 bg-gray-100 justify-center items-center">
+    <View className="items-center">
       <Image
         source={MAIN_ICONS.avatarEmpty}
         style={styles.imageStyle}

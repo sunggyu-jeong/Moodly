@@ -9,7 +9,7 @@ import EmotionDiaryCardContent from './EmotionDiaryCardContent.tsx';
 import EmotionDiaryCardHeader from './EmotionDiaryCardHeader.tsx';
 
 interface EmotionDiaryCardListProps {
-  data: EmotionDiaryDTO[];
+  data: EmotionDiaryDTO[] | undefined;
 }
 
 const EmotionDiaryCardList = ({ data }: EmotionDiaryCardListProps) => {

@@ -1,13 +1,13 @@
 import { useFocusEffect } from '@react-navigation/native';
 import dayjs from 'dayjs';
-import { useCallback, useEffect, useMemo } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { useCallback, useMemo } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
 
 import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar.tsx';
 
 import { setSelectedMonth } from '@features/diary/model/diary.slice.ts';
 import { useAppDispatch, useAppSelector } from '@shared/hooks';
-import { isEmpty } from '@shared/lib';
+import { isEmpty, isNotEmpty } from '@shared/lib';
 import colors from '@shared/styles/colors.ts';
 
 import EmotionDiaryEmptyMessage from '@features/diary/ui/EmotionDiaryEmptyMessage.tsx';
@@ -15,6 +15,7 @@ import EmotionDiaryMonthSelector from '@features/diary/ui/EmotionDiaryMonthSelec
 import DiarySkeleton from '@features/diary/ui/skeleton/DiaryCardSkeleton';
 import { useSelectByMonthQuery } from '@shared/api/diary/diaryApi';
 import useDelay from '@shared/hooks/useDelay';
+import EmotionDiaryCardList from '../features/diary/ui/EmotionDiaryCardList';
 
 const EmotionDiaryListPage = () => {
   const selectedMonth = useAppSelector(state => state.diarySlice.selectedMonth);
@@ -27,8 +28,8 @@ const EmotionDiaryListPage = () => {
     }),
     [selectedMonth]
   );
-  const { data, isLoading, refetch } = useSelectByMonthQuery(month);
-  const showSkeleton = useDelay(isLoading);
+  const { data, isFetching, refetch } = useSelectByMonthQuery(month);
+  const showSkeleton = useDelay(isFetching);
 
   const handleChangeMonth = (direction: 'left' | 'right') => {
     dispatch(
@@ -39,7 +40,6 @@ const EmotionDiaryListPage = () => {
       )
     );
   };
-
 
   useFocusEffect(
     useCallback(() => {
@@ -70,20 +70,29 @@ const EmotionDiaryListPage = () => {
       />
       <ScrollView
         className="bg-gray-100"
-        contentContainerStyle={styles.scrollViewContent}
+        contentContainerStyle={[styles.scrollViewContent]}
         scrollEnabled={!showSkeleton}
       >
         {(showSkeleton || showSkeleton === null) && <DiarySkeleton />}
-        {/* {!showSkeleton && <EmotionDiaryCardList />} */}
+        {!showSkeleton && isNotEmpty(data) && <EmotionDiaryCardList data={data} />}
+        {isEmpty(data) && showSkeleton !== null && !showSkeleton && (
+          <View style={styles.emptyContainer}>
+            <EmotionDiaryEmptyMessage />
+          </View>
+        )}
       </ScrollView>
-
-      {isEmpty(data) && showSkeleton !== null && !showSkeleton && <EmotionDiaryEmptyMessage />}
     </>
   );
 };
 
 const styles = StyleSheet.create({
+  emptyContainer: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+  },
   scrollViewContent: {
+    flexGrow: 1,
     paddingHorizontal: 24,
   },
 });
