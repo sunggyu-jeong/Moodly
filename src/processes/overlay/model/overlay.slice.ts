@@ -52,10 +52,18 @@ const overlaySlice = createSlice({
     setOverlayEventHandler: (state, action: PayloadAction<string | null>) => {
       state.overlayEventHandler = action.payload;
     },
+    resetModalPopup: state => {
+      state.showModalPopup = initialState.showModalPopup;
+    },
   },
 });
 
-export const { setShowModalPopup, setShowDropdownView, setShowToastView, setOverlayEventHandler } =
-  overlaySlice.actions;
+export const {
+  setShowModalPopup,
+  setShowDropdownView,
+  setShowToastView,
+  setOverlayEventHandler,
+  resetModalPopup,
+} = overlaySlice.actions;
 
 export default overlaySlice.reducer;

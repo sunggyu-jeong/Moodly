@@ -19,8 +19,7 @@ import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar.tsx';
 
 import { isNotEmpty } from '@shared/lib';
 import { common } from '@shared/styles/colors.ts';
-import { KeyboardAccessoryButton } from '@shared/ui/elements/KeyboardAccessory.tsx';
-import { useDiarySave } from '@features/diary/hooks/useDiarySave.ts';
+import { DiarySaveButton } from '../features/diary/ui/EmotionDiarySaveButton';
 
 const actionButtons = [{ item: <NaviDismiss />, disabled: false }];
 
@@ -30,7 +29,6 @@ const EmotionDiaryWritePage = () => {
   const scrollRef = useRef<ScrollView>(null);
 
   const [text, setText] = useState('');
-  const save = useDiarySave(text);
 
   useEffect(() => {
     setText(isNotEmpty(selectedDiary) ? (selectedDiary?.description ?? '') : '');
@@ -57,7 +55,7 @@ const EmotionDiaryWritePage = () => {
             <Image
               style={styles.emotionImage}
               source={ICON_DATA.find(el => el.id === todayDiary?.iconId)?.iconBig}
-            />
+            />ㅣ
           </View>
 
           <View className="flex-1">
@@ -76,7 +74,7 @@ const EmotionDiaryWritePage = () => {
       <InputAccessoryView
         spaceHeight={40}
         extraHeight={0}
-        renderView={() => <KeyboardAccessoryButton onPress={save} />}
+        renderView={() => DiarySaveButton(text)}
       />
     </>
   );
