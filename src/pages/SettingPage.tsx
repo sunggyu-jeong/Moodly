@@ -14,6 +14,7 @@ import SettingList from '@features/setting/ui/SettingList.tsx';
 import { setShowToastView } from '@processes/overlay/model/overlay.slice';
 import { useSignOutMutation } from '@shared/api/auth/authApi.ts';
 import { isNotEmpty, resetTo } from '@shared/lib';
+import { ApiCode } from '../shared/config/errorCodes';
 
 enum SETTING_EVENT_TYPE {
   BACKUP = 'backup',
@@ -38,7 +39,7 @@ const SettingPage = () => {
   useEffect(() => {
     if (isLoading) return;
 
-    if (isNotEmpty(data) && data.data === 'success') {
+    if (isNotEmpty(data) && data === ApiCode.SUCCESS) {
       dispatch(
         setShowToastView({
           visibility: true,
