@@ -9,6 +9,10 @@ export enum ApiCode {
   UNKNOWN = 'UNKNOWN',
 }
 
+export enum AppCode {
+  NOT_LOGIN = 'S1001',
+}
+
 export const ERROR_MESSAGE_MAP: Record<ApiCode, string> = {
   [ApiCode.SUCCESS]: '요청이 성공적으로 처리되었습니다.',
   [ApiCode.BAD_REQUEST]: '요청이 잘못되었어요.',
