@@ -19,6 +19,7 @@ import { ApiCode } from '../shared/config/errorCodes';
 enum SETTING_EVENT_TYPE {
   BACKUP = 'backup',
   BUG_REPORT = 'bug_report',
+  LOGIN_TEST = 'logn_test',
 }
 
 const SettingPage = () => {
@@ -31,6 +32,8 @@ const SettingPage = () => {
         signOut();
       } else if (identifier === SETTING_EVENT_TYPE.BUG_REPORT) {
         openChat(KAKAO_OPEN_CHAT_LINK);
+      } else if (identifier === SETTING_EVENT_TYPE.LOGIN_TEST) {
+        resetTo('Login');
       }
     },
     [openChat]
@@ -72,6 +75,16 @@ const SettingPage = () => {
           />
         ),
         onPress: () => handlePress(SETTING_EVENT_TYPE.BACKUP),
+      },
+      {
+        title: '로그인테스트용',
+        rightComponent: (
+          <Image
+            source={COMMON_ICONS.iconBackup}
+            style={styles.iconStyle}
+          />
+        ),
+        onPress: () => handlePress(SETTING_EVENT_TYPE.LOGIN_TEST),
       },
     ],
     [handlePress]

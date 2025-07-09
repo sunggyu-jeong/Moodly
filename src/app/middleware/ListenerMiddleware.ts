@@ -10,7 +10,7 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { isRejectedWithValue } from '@reduxjs/toolkit';
 import { parseApiError } from '@shared/api/parseApiError';
 import { AppCode, ERROR_MESSAGE_MAP } from '@shared/config/errorCodes';
-import { navigate } from '@shared/lib';
+import { resetTo } from '@shared/lib';
 
 const appCodeHandlers: Record<
   AppCode,
@@ -20,7 +20,7 @@ const appCodeHandlers: Record<
   ) => void
 > = {
   [AppCode.NOT_LOGIN]: _errDetail => {
-    navigate('Main');
+    resetTo('Main');
   },
 };
 
