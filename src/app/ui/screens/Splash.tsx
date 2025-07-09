@@ -3,7 +3,6 @@ import { Image, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import UpdateContent from '@features/updateProgress/ui/UpdateContent.tsx';
-import { setShowToastView } from '@processes/overlay/model/overlay.slice';
 import { UpdateProgressProps } from '@processes/update/useUpdateProgress';
 import { useLazyInitializeSessionQuery } from '@shared/api/auth/authApi';
 import { MAIN_ICONS } from '@shared/assets/images/main';
@@ -14,15 +13,11 @@ const Splash = ({ status, progress }: UpdateProgressProps) => {
   const [initSession, { data, isLoading }] = useLazyInitializeSessionQuery();
 
   const handleAuthFlow = useCallback(async () => {
-    try {
-      await initRealm();
-      await initSession();
-    } catch (e) {
-      setShowToastView({ visibility: true, message: e as string });
-    }
+    await initSession();
   }, [initSession]);
 
   useEffect(() => {
+    initRealm();
     if (status === 'UPDATE_PROCESS_COMPLETED') {
       const timer = setTimeout(() => {
         handleAuthFlow();

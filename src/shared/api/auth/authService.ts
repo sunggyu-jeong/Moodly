@@ -2,7 +2,8 @@ import { ApiResponse } from '@entities/common/response';
 import { appleAuth } from '@invertase/react-native-apple-authentication';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { AuthError, Session, User } from '@supabase/supabase-js';
-import { ApiCode, HttpStatus } from '../../config/errorCodes';
+import { ApiCode, AppCode, HttpStatus } from '../../config/errorCodes';
+import { isEmpty } from '../../lib';
 import { supabase } from '../../lib/supabase.util';
 import { baseFormatError } from '../base';
 
@@ -83,18 +84,17 @@ export async function getAppleToken() {
  *           그렇지 않으면 AuthError를 포함한 ApiResponse
  */
 export async function fetchSession(): Promise<ApiResponse<User>> {
-  try {
-    const { data, error } = await supabase.auth.getSession();
-    if (error) {
-      return { error: baseFormatError(error) };
-    }
-    return {
-      session: data.session!,
-      data: data.session!.user,
-    };
-  } catch (err) {
-    throw baseFormatError(err as Error);
+  const { data, error } = await supabase.auth.getSession();
+  if (error) {
+    return { error: baseFormatError(error) };
   }
+  if (isEmpty(data.session)) {
+    throw baseFormatError(new Error('로그인이 필요합니다.'), AppCode.NOT_LOGIN);
+  }
+  return {
+    session: data.session,
+    data: data.session?.user,
+  };
 }
 
 /**

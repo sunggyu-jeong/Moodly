@@ -33,8 +33,6 @@ export interface EmotionDiarySupabase {
 export class EmotionDiary extends Realm.Object<EmotionDiary> {
   // 감정기록 고유번호(PK)
   emotion_id!: number;
-  // 유저ID(supabase)
-  user_id!: string;
   // 아이콘 ID
   icon_id!: number;
   // 감정 기록일
@@ -52,7 +50,6 @@ export class EmotionDiary extends Realm.Object<EmotionDiary> {
     properties: {
       emotion_id: 'int',
       icon_id: 'int',
-      userId: 'string',
       record_date: 'date',
       description: 'string',
       created_at: 'date',

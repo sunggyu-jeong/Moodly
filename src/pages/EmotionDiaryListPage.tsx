@@ -9,12 +9,12 @@ import { useAppDispatch, useAppSelector } from '@shared/hooks';
 import { isEmpty, isNotEmpty } from '@shared/lib';
 import colors from '@shared/styles/colors.ts';
 
+import EmotionDiaryCardList from '@features/diary/ui/EmotionDiaryCardList';
 import EmotionDiaryEmptyMessage from '@features/diary/ui/EmotionDiaryEmptyMessage.tsx';
 import EmotionDiaryMonthSelector from '@features/diary/ui/EmotionDiaryMonthSelector.tsx';
 import DiarySkeleton from '@features/diary/ui/skeleton/DiaryCardSkeleton';
 import { useSelectByMonthQuery } from '@shared/api/diary/diaryApi';
 import useDelay from '@shared/hooks/useDelay';
-import EmotionDiaryCardList from '../features/diary/ui/EmotionDiaryCardList';
 
 const EmotionDiaryListPage = () => {
   const selectedMonth = useAppSelector(state => state.diarySlice.selectedMonth);

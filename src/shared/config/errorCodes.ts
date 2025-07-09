@@ -10,6 +10,7 @@ export enum ApiCode {
 }
 
 export enum AppCode {
+  //로그인 하지 않은 사용자
   NOT_LOGIN = 'S1001',
 }
 

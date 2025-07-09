@@ -21,10 +21,13 @@ export async function getDiaryCount(): Promise<ApiResponse<number>> {
 export async function hasDiaryForDay(): Promise<ApiResponse<boolean>> {
   try {
     const realm = getRealm();
-    const today = new Date().toISOString().slice(0, 10);
+    const start = new Date();
+    start.setHours(0, 0, 0, 0);
+    const end = new Date();
+    end.setHours(23, 59, 59, 999);
     const results = realm
       .objects<EmotionDiary>('EmotionDiary')
-      .filtered('record_date == $0', today);
+      .filtered('record_date >= $0 && record_date <= $1', start, end);
     return { data: results.length > 0 };
   } catch (err) {
     throw baseFormatError(err as Error);

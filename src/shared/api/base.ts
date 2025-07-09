@@ -7,10 +7,10 @@ import {
   FetchBaseQueryMeta,
   QueryReturnValue,
 } from '@reduxjs/toolkit/query/react';
+import { ApiCode } from '@shared/config/errorCodes';
 import { AuthError } from '@supabase/supabase-js';
 import { ApiResponse } from '../../entities/common/response';
-import { ApiCode } from '../config/errorCodes';
-import { isEmpty } from '../lib';
+import { isEmpty, isNotEmpty } from '../lib';
 import { supabase } from '../lib/supabase.util';
 
 /**
@@ -33,7 +33,7 @@ export const baseApi = createApi({
  * @param err Partial<AuthError> 또는 일반 Error 객체
  * @returns AuthError 인스턴스 (status, code, message 포함)
  */
-export const baseFormatError = (err: Partial<AuthError> | Error) => {
+export const baseFormatError = (err: Partial<AuthError> | Error, code: string | null = null) => {
   // 이미 AuthError라면 그대로 사용
   if ('__isAuthError' in err && err.__isAuthError) {
     return err as unknown as AuthError;
@@ -48,7 +48,10 @@ export const baseFormatError = (err: Partial<AuthError> | Error) => {
   // Error 인스턴스 생성
   const authErr = new Error(message) as AuthError;
   authErr.status = status;
-  authErr.code = 'AUTH_ERROR';
+
+  if (isNotEmpty(code)) {
+    authErr.code = code;
+  }
 
   return authErr;
 };
@@ -77,7 +80,7 @@ export async function wrapQueryFn<T>(
     }
     return { data: result.data! };
   } catch (rawErr) {
-    const authErr = baseFormatError(rawErr as Error);
+    const authErr = rawErr as AuthError;
     return {
       error: {
         status: typeof authErr.status === 'number' ? authErr.status : 500,
