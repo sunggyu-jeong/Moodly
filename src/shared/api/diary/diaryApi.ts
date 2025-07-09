@@ -21,8 +21,9 @@ import {
   selectByMonth as selectByMonthSB,
   updateDiary as updateDiarySB,
 } from './diarySupabaseService';
+
 export const diaryApi = baseApi.injectEndpoints({
-  overrideExisting: false,
+  overrideExisting: true,
   endpoints: builder => ({
     getDiaryCount: builder.query<ApiResponse<number>, void>({
       async queryFn(_arg, _api, _extraOptions, _baseQuery) {
