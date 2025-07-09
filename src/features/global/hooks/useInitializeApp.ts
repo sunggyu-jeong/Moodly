@@ -6,29 +6,13 @@ import messaging, {
   requestPermission,
 } from '@react-native-firebase/messaging';
 import { useAppDispatch } from '@shared/hooks';
-import { isNotEmpty } from '@shared/lib';
-import { supabase } from '@shared/lib/supabase.util';
 import { useEffect } from 'react';
 import { PermissionsAndroid, Platform } from 'react-native';
 export function useInitializeApp() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    // 1) Supabase 인증 상태 구독
-    const {
-      data: { subscription: authSub },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      dispatch(
-        setAuthState({
-          session,
-          data: session?.user ?? null,
-          error: null,
-        })
-      );
-      dispatch(setIsLogin(isNotEmpty(session?.user)));
-    });
-
-    // 2) FCM 초기화 및 토큰 갱신 리스너 등록
+    // 1) FCM 초기화 및 토큰 갱신 리스너 등록
     let unsubscribeFCM: (() => void) | undefined;
 
     (async () => {
@@ -47,9 +31,8 @@ export function useInitializeApp() {
       }
     })();
 
-    // 3) 언마운트 시 구독 해제
+    // 2) 언마운트 시 구독 해제
     return () => {
-      authSub.unsubscribe();
       unsubscribeFCM?.();
     };
   }, [dispatch]);
