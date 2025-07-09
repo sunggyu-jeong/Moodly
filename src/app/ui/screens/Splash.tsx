@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Image, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -8,9 +8,19 @@ import { UpdateProgressProps } from '@processes/update/useUpdateProgress';
 import { useLazyInitializeSessionQuery } from '@shared/api/auth/authApi';
 import { MAIN_ICONS } from '@shared/assets/images/main';
 import { isNotEmpty, resetTo } from '@shared/lib';
+import { initRealm } from '@shared/lib/realm-client.util';
 
 const Splash = ({ status, progress }: UpdateProgressProps) => {
   const [initSession, { data, isLoading }] = useLazyInitializeSessionQuery();
+
+  const handleAuthFlow = useCallback(async () => {
+    try {
+      await initRealm();
+      await initSession();
+    } catch (e) {
+      setShowToastView({ visibility: true, message: e as string });
+    }
+  }, [initSession]);
 
   useEffect(() => {
     if (status === 'UPDATE_PROCESS_COMPLETED') {
@@ -22,7 +32,7 @@ const Splash = ({ status, progress }: UpdateProgressProps) => {
         clearTimeout(timer);
       };
     }
-  }, [status]);
+  }, [status, handleAuthFlow]);
 
   useEffect(() => {
     if (isLoading) return;
@@ -30,14 +40,6 @@ const Splash = ({ status, progress }: UpdateProgressProps) => {
       resetTo('Main');
     }
   }, [data, isLoading]);
-
-  const handleAuthFlow = async () => {
-    try {
-      await initSession();
-    } catch (e) {
-      setShowToastView({ visibility: true, message: e as string });
-    }
-  };
 
   return (
     <>

@@ -1,22 +1,39 @@
 import { Image, StatusBar, StyleSheet, View } from 'react-native';
 
-import { useInitializeDiary } from '@features/diary/hooks/useInitializeDiary.ts';
+import {
+  setSelectedDiary,
+  setSelectedIcon,
+  setTodayDiary,
+} from '@features/diary/model/diary.slice';
+import { useFocusEffect } from '@react-navigation/native';
+import { useGetDiaryCountQuery, useHasDiaryForDayQuery } from '@shared/api/diary/diaryApi';
 import { MAIN_ICONS } from '@shared/assets/images/main';
-import { getScaleSize, useAppSelector } from '@shared/hooks';
+import { ICON_DATA } from '@shared/constants';
+import { getScaleSize, useAppDispatch } from '@shared/hooks';
 import { jumpToTab, navigate } from '@shared/lib';
 import ActionButton from '@shared/ui/elements/ActionButton.tsx';
 import DiaryCountCard from '@shared/ui/elements/DiaryCountCard.tsx';
 import { H2 } from '@shared/ui/typography/H2.tsx';
+import { useCallback } from 'react';
 
 const HomePage = () => {
-  useInitializeDiary();
-  const { data: hasDiary } = useAppSelector(state => state.diarySlice.isDiaryExist);
+  const dispatch = useAppDispatch();
+  const { data: hasDiary } = useHasDiaryForDayQuery();
+  const { data: diaryCount } = useGetDiaryCountQuery();
 
-  const titleText = hasDiary
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(setSelectedIcon(ICON_DATA[0]));
+      dispatch(setSelectedDiary({}));
+      dispatch(setTodayDiary(null));
+    }, [dispatch])
+  );
+
+  const titleText = hasDiary?.data
     ? '일기를 저장했어요\n오늘 하루도 수고했어요'
     : '오늘 하루 어땠나요\n일기를 작성해볼까요?';
 
-  const buttonText = hasDiary ? '작성 완료' : '작성하러 가기';
+  const buttonText = hasDiary?.data ? '작성 완료' : '작성하러 가기';
 
   return (
     <>
@@ -26,6 +43,7 @@ const HomePage = () => {
       />
       <View className="bg-gray-100 flex-1 px-5 justify-center items-center">
         <DiaryCountCard
+          count={diaryCount?.data ?? 0}
           onPress={() => {
             jumpToTab('DiaryList');
           }}
@@ -47,7 +65,7 @@ const HomePage = () => {
 
           <ActionButton
             onPress={() => navigate('DiaryStack')}
-            disabled={hasDiary}
+            disabled={hasDiary?.data ?? false}
           >
             {buttonText}
           </ActionButton>
