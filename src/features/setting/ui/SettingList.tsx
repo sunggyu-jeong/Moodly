@@ -4,8 +4,9 @@ import { TouchableOpacity, View } from 'react-native';
 import SettingItem from './SettingItem.tsx';
 
 interface SettingListItem {
-  title: string;
-  rightComponent: React.ReactNode;
+  title?: string;
+  leftComponent?: React.ReactNode;
+  rightComponent?: React.ReactNode;
   onPress?: () => void;
 }
 
@@ -15,21 +16,23 @@ interface SettingListProps {
 
 const SettingList = ({ items }: SettingListProps) => {
   return (
-    <View className="bg-common-white rounded-xl">
+    <View className="flex-1 gap-3">
       {items.map((item, index) => (
-        <React.Fragment key={index}>
-          <TouchableOpacity
-            onPress={item.onPress}
-            disabled={!item.onPress}
-            activeOpacity={item.onPress ? 0.7 : 1}
-          >
-            <SettingItem
-              title={item.title}
-              rightComponent={item.rightComponent}
-            />
-          </TouchableOpacity>
-          {index !== items.length - 1 && <View className="h-[1px] bg-gray-200" />}
-        </React.Fragment>
+        <View className="bg-common-white rounded-xl">
+          <React.Fragment key={index}>
+            <TouchableOpacity
+              onPress={item.onPress}
+              disabled={!item.onPress}
+              activeOpacity={item.onPress ? 0.7 : 1}
+            >
+              <SettingItem
+                title={item.title}
+                leftComponent={item.leftComponent}
+                rightComponent={item.rightComponent}
+              />
+            </TouchableOpacity>
+          </React.Fragment>
+        </View>
       ))}
     </View>
   );

@@ -1,5 +1,5 @@
 import { KAKAO_OPEN_CHAT_LINK } from '@env';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
 import { COMMON_ICONS } from '@shared/assets/images/common';
@@ -15,6 +15,9 @@ import { setShowToastView } from '@processes/overlay/model/overlay.slice';
 import { useSignOutMutation } from '@shared/api/auth/authApi.ts';
 import { isNotEmpty, resetTo } from '@shared/lib';
 import { ApiCode } from '../shared/config/errorCodes';
+import ActionButton from '../shared/ui/elements/ActionButton';
+import Toggle from '../shared/ui/elements/Toggle';
+import { Body1 } from '../shared/ui/typography/Body1';
 
 enum SETTING_EVENT_TYPE {
   BACKUP = 'backup',
@@ -26,6 +29,7 @@ const SettingPage = () => {
   const { openChat } = useOpenKakao();
   const [signOut, { data, isLoading }] = useSignOutMutation();
   const dispatch = useAppDispatch();
+  const [isOn, setIsOn] = useState(false);
   const handlePress = useCallback(
     (identifier: SETTING_EVENT_TYPE) => {
       if (identifier === SETTING_EVENT_TYPE.BACKUP) {
@@ -55,36 +59,57 @@ const SettingPage = () => {
 
   const SETTING_LIST_ITEM = useMemo(
     () => [
-      // MVP SPEC OUT
+      {
+        title: '',
+        leftComponent: (
+          <View className="flex gap-4">
+            <View className="gap-2">
+              <Body1 weight="semibold">게스트</Body1>
+              <Label weight="regular">기록한 내용을 저장하려면 로그인이 필요해요.</Label>
+            </View>
+            <ActionButton onPress={() => {}}>로그인 하기</ActionButton>
+          </View>
+        ),
+      },
+      {
+        leftComponent: (
+          <View className="flex gap-2">
+            <Body1 weight="semibold">성규</Body1>
+            <Label weight="regular">moodlydeveloper@gmail.com</Label>
+          </View>
+        ),
+      },
+      {
+        title: '계정관리',
+        rightComponent: (
+          <Image
+            source={COMMON_ICONS.iconNextGray}
+            className="w-6 h-6"
+          />
+        ),
+        // onPress: () => handlePress(SETTING_EVENT_TYPE.BACKUP),
+      },
+      {
+        title: '알림설정',
+        rightComponent: (
+          <Toggle
+            onToggle={() => {
+              setIsOn(true);
+            }}
+            isOn={isOn}
+          />
+        ),
+        // onPress: () => handlePress(SETTING_EVENT_TYPE.LOGIN_TEST),
+      },
       {
         title: '의견 보내기',
         rightComponent: (
           <Image
-            source={COMMON_ICONS.iconFeedback}
-            style={styles.iconStyle}
+            source={COMMON_ICONS.iconNextGray}
+            className="w-6 h-6"
           />
         ),
         onPress: () => handlePress(SETTING_EVENT_TYPE.BUG_REPORT),
-      },
-      {
-        title: '로그아웃',
-        rightComponent: (
-          <Image
-            source={COMMON_ICONS.iconBackup}
-            style={styles.iconStyle}
-          />
-        ),
-        onPress: () => handlePress(SETTING_EVENT_TYPE.BACKUP),
-      },
-      {
-        title: '로그인테스트용',
-        rightComponent: (
-          <Image
-            source={COMMON_ICONS.iconBackup}
-            style={styles.iconStyle}
-          />
-        ),
-        onPress: () => handlePress(SETTING_EVENT_TYPE.LOGIN_TEST),
       },
     ],
     [handlePress]
@@ -116,11 +141,6 @@ const SettingPage = () => {
 const styles = StyleSheet.create({
   contentStyle: {
     paddingTop: getScaleSize(45),
-  },
-  iconStyle: {
-    height: getScaleSize(24),
-    tintColor: gray[400],
-    width: getScaleSize(24),
   },
   versionLabel: {
     color: gray[400],
