@@ -33,7 +33,7 @@ jobs:
           set +e
           yarn hot-updater fingerprint > fp.log
           echo "EXIT=$?" >> $GITHUB_OUTPUT
-          set -e
+          exit 0
 
       # 5) fingerprint가 다를 경우, 신규 fingerprint 업로드
       - name: Create new fingerprint

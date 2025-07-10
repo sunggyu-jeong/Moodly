@@ -14,4 +14,7 @@ export default defineConfig({
     supabaseUrl: process.env.HOT_UPDATER_SUPABASE_URL!,
     supabaseAnonKey: process.env.HOT_UPDATER_SUPABASE_ANON_KEY!,
   }),
+  fingerprint: {
+    ignorePaths: ['node_modules/**'],
+  },
 });
