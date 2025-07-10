@@ -262,3 +262,6 @@ ios/Pods
 *.p8
 
 /supabase
+
+# hot-updater
+.hot-updater/output
