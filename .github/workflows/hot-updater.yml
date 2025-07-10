@@ -13,58 +13,60 @@ jobs:
       HOT_UPDATER_SUPABASE_ANON_KEY: ${{ secrets.HOT_UPDATER_SUPABASE_ANON_KEY }}
       HOT_UPDATER_SUPABASE_BUCKET_NAME: ${{ secrets.HOT_UPDATER_SUPABASE_BUCKET_NAME }}
 
-    permissions:
-      contents: write # fingerprint.json 자동 커밋용
-
     steps:
-      # 1) 체크아웃
+      # 1) 원격 레포지토리 데이터 내려받기
       - uses: actions/checkout@v4
-        with: { fetch-depth: 0 }
 
-      # 2) Node + Yarn
+      # 2) Node.js 환경 설정 + yarn 캐시
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'yarn'
 
-      # 3) 의존성 설치
+      # 3) Yarn 의존성 설치
       - run: yarn install --frozen-lockfile
 
-      # 4) 현재 fingerprint 검증
+      # 4) fingerprint 비교
       - name: Check fingerprint
         id: fp
         run: |
-          yarn hot-updater fingerprint                     # exit code: 0 = OK, 1 = mismatch
-          echo "status=$?" >> $GITHUB_OUTPUT
+          set +e
+          yarn hot-updater fingerprint > fp.log
+          echo "EXIT=$?" >> $GITHUB_OUTPUT
+          set -e
 
-      # 5) fingerprint 불일치면 새로 생성 → 파일 커밋 & 푸시
-      - name: Create & commit new fingerprint
-        if: steps.fp.outputs.status == '1'
+      # 5) fingerprint가 다를 경우, 신규 fingerprint 업로드
+      - name: Create new fingerprint
+        if: steps.fp.outputs.EXIT != '0'
+        run: yarn hot-updater fingerprint create
+
+      # 6) 커밋 메세지 가져오기
+      - name: 최신 커밋 메시지 가져오기
+        id: get_msg
         run: |
-          echo "⚠️  Fingerprint mismatch --> 재생성"
-          yarn hot-updater fingerprint create --write-to-file
-          git config user.name  "github-actions"
-          git config user.email "actions@github.com"
-          git add fingerprint.json
-          git commit -m "chore: update fingerprint [ci skip]"
-          git push
+          echo "msg=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
 
-      # 6) 최신 커밋 메시지 읽기
-      - id: msg
-        run: echo "MSG=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
-
-      # 7) [hot-update] 태그 없으면 종료
-      - name: Hot-update 태그 체크
-        if: ${{ !contains(steps.msg.outputs.MSG, '[hot-update]') }}
-        run: echo "Hot-update 태그 없음 → 작업 종료." && exit 0
-
-      # 8) [force] 태그 확인
-      - id: flag
+      # 7) [hot-update], [force] 명령어 설정
+      - name: Deploy bundles
         run: |
-          [[ "${{ steps.msg.outputs.MSG }}" == *"[force]"* ]] && echo "FLAG=-f" >> $GITHUB_OUTPUT
+          COMMIT_MSG="${{ steps.get_msg.outputs.msg }}"
+          echo "커밋 메시지: $COMMIT_MSG"
 
-      # 9) Android OTA 배포
-      - run: yarn hot-updater deploy -p android ${{ steps.flag.outputs.FLAG }}
+          # 1) [hot-update] 태그가 없으면 스킵
+          if [[ "$COMMIT_MSG" != *"[hot-update]"* ]]; then
+            echo "Hot update 스킵"
+            exit 0
+          fi
 
-      # 10) iOS OTA 배포 (Fingerprint 전략이면 -t 불필요)
-      - run: yarn hot-updater deploy -p ios -c production ${{ steps.flag.outputs.FLAG }}
+          # 2) [force] 태그가 있으면 -f 옵션 추가
+          if [[ "$COMMIT_MSG" == *"[force]"* ]]; then
+            echo "강제 업데이트(-f) 모드"
+            FLAG="-f"
+          else
+            echo "일반 업데이트 모드"
+            FLAG=""
+          fi
+
+          # 3) 실제 배포
+          yarn hot-updater deploy -p android $FLAG
+          yarn hot-updater deploy -p ios -t '1.0.x' $FLAG
