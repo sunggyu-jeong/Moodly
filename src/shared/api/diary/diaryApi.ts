@@ -1,5 +1,5 @@
 import { EmotionDiaryDTO, EmotionDiarySupabase } from '@entities/diary';
-import { baseApi, useBackend, wrapQueryFn } from '../base';
+import { baseApi, fetchWithAuth, wrapQueryFn } from '../base';
 
 import {
   createDiary as createDiaryRealm,
@@ -27,7 +27,7 @@ export const diaryApi = baseApi.injectEndpoints({
     getDiaryCount: builder.query<number, void>({
       async queryFn(_arg, _api, _extraOptions, _baseQuery) {
         return wrapQueryFn(() =>
-          useBackend(
+          fetchWithAuth(
             () => getDiaryCountRealm(),
             () => getDiaryCountSB()
           )
@@ -38,7 +38,7 @@ export const diaryApi = baseApi.injectEndpoints({
     hasDiaryForDay: builder.query<boolean, void>({
       async queryFn(_arg, _api, _extraOptions, _baseQuery) {
         return wrapQueryFn(() =>
-          useBackend(
+          fetchWithAuth(
             () => hasDiaryForDayRealm(),
             () => hasDiaryForDaySB()
           )
@@ -49,7 +49,7 @@ export const diaryApi = baseApi.injectEndpoints({
     selectByMonth: builder.query<EmotionDiaryDTO[], { start: string; end: string }>({
       async queryFn({ start, end }, _api, _extraOptions, _baseQuery) {
         return wrapQueryFn(() =>
-          useBackend(
+          fetchWithAuth(
             () => selectByMonthRealm(start, end),
             () => selectByMonthSB(start, end)
           )
@@ -60,7 +60,7 @@ export const diaryApi = baseApi.injectEndpoints({
     selectById: builder.query<EmotionDiaryDTO | null, number>({
       async queryFn(_arg, _api, _extraOptions, _baseQuery) {
         return wrapQueryFn(() =>
-          useBackend(
+          fetchWithAuth(
             () => selectByIdRealm(_arg),
             () => selectByIdSB(_arg)
           )
@@ -74,7 +74,7 @@ export const diaryApi = baseApi.injectEndpoints({
     >({
       async queryFn(_arg, _api, _extraOptions, _baseQuery) {
         return wrapQueryFn(() =>
-          useBackend(
+          fetchWithAuth(
             () => createDiaryRealm(_arg),
             () => createDiarySB(_arg)
           )
@@ -91,7 +91,7 @@ export const diaryApi = baseApi.injectEndpoints({
     >({
       async queryFn({ emotionId, updates }, _api, _extraOptions, _baseQuery) {
         return wrapQueryFn(() =>
-          useBackend(
+          fetchWithAuth(
             () => updateDiaryRealm(emotionId, updates),
             () => updateDiarySB(emotionId, updates)
           )
@@ -102,7 +102,7 @@ export const diaryApi = baseApi.injectEndpoints({
     deleteDiary: builder.mutation<string, number>({
       async queryFn(_arg, _api, _extraOptions, _baseQuery) {
         return wrapQueryFn(() =>
-          useBackend(
+          fetchWithAuth(
             () => deleteDiaryRealm(_arg),
             () => deleteDiarySB(_arg)
           )

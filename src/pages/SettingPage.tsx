@@ -1,23 +1,22 @@
-import { KAKAO_OPEN_CHAT_LINK } from '@env';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, View } from 'react-native';
+import { version } from '../../package.json';
 
-import { COMMON_ICONS } from '@shared/assets/images/common';
-import { getScaleSize, useAppDispatch } from '@shared/hooks';
-import { useOpenKakao } from '@shared/hooks/useOpenChat.ts';
-import { gray } from '@shared/styles/colors.ts';
-import NaviTitleDisplay from '@shared/ui/elements/NaviTitle.tsx';
-import { Label } from '@shared/ui/typography/Label.tsx';
-import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar.tsx';
-
+import { KAKAO_OPEN_CHAT_LINK } from '@env';
+import { useLogout } from '@features/auth/hooks/useLogout';
 import SettingList from '@features/setting/ui/SettingList.tsx';
-import { setShowToastView } from '@processes/overlay/model/overlay.slice';
-import { useSignOutMutation } from '@shared/api/auth/authApi.ts';
-import { isNotEmpty, resetTo } from '@shared/lib';
-import { ApiCode } from '../shared/config/errorCodes';
-import ActionButton from '../shared/ui/elements/ActionButton';
-import Toggle from '../shared/ui/elements/Toggle';
-import { Body1 } from '../shared/ui/typography/Body1';
+import { COMMON_ICONS } from '@shared/assets/images/common';
+import { useOpenKakao } from '@shared/hooks/useOpenChat.ts';
+import { resetTo } from '@shared/lib';
+import { supabase } from '@shared/lib/supabase.util';
+import { gray } from '@shared/styles/colors.ts';
+import ActionButton from '@shared/ui/elements/ActionButton';
+import NaviTitleDisplay from '@shared/ui/elements/NaviTitle.tsx';
+import Toggle from '@shared/ui/elements/Toggle';
+import { Body1 } from '@shared/ui/typography/Body1';
+import { Label } from '@shared/ui/typography/Label.tsx';
+import { Session } from '@supabase/supabase-js';
+import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar.tsx';
 
 enum SETTING_EVENT_TYPE {
   BACKUP = 'backup',
@@ -25,11 +24,31 @@ enum SETTING_EVENT_TYPE {
   LOGIN_TEST = 'logn_test',
 }
 
+const TEXTS = {
+  pageTitle: '설정',
+  guestTitle: '게스트',
+  guestLabel: '기록한 내용을 저장하려면 로그인이 필요해요.',
+  loginButton: '로그인 하기',
+  accountManagement: '계정관리',
+  notificationSettings: '알림설정',
+  feedback: '의견 보내기',
+  appVersionPrefix: '앱 버전 : ',
+};
+
 const SettingPage = () => {
   const { openChat } = useOpenKakao();
-  const [signOut, { data, isLoading }] = useSignOutMutation();
-  const dispatch = useAppDispatch();
+  const { signOut } = useLogout();
   const [isOn, setIsOn] = useState(false);
+  const [userInfo, setUserInfo] = useState<Session | null>(null);
+
+  useEffect(() => {
+    const fetchSession = async () => {
+      const { data } = await supabase.auth.getSession();
+      setUserInfo(data.session);
+    };
+    fetchSession();
+  }, []);
+
   const handlePress = useCallback(
     (identifier: SETTING_EVENT_TYPE) => {
       if (identifier === SETTING_EVENT_TYPE.BACKUP) {
@@ -40,113 +59,97 @@ const SettingPage = () => {
         resetTo('Login');
       }
     },
-    [openChat]
+    [openChat, signOut]
   );
 
-  useEffect(() => {
-    if (isLoading) return;
-
-    if (isNotEmpty(data) && data === ApiCode.SUCCESS) {
-      dispatch(
-        setShowToastView({
-          visibility: true,
-          message: '로그아웃 요청이 완료되었습니다.',
-        })
-      );
-      resetTo('Login');
-    }
-  }, [isLoading, data, dispatch]);
-
-  const SETTING_LIST_ITEM = useMemo(
-    () => [
-      {
+  const headerItem = useMemo(() => {
+    if (!userInfo) {
+      return {
+        key: 'guest-header',
         title: '',
         leftComponent: (
-          <View className="flex gap-4">
-            <View className="gap-2">
-              <Body1 weight="semibold">게스트</Body1>
-              <Label weight="regular">기록한 내용을 저장하려면 로그인이 필요해요.</Label>
+          <View className="flex flex-col justify-between gap-4">
+            <View className="mr-3 gap-2">
+              <Body1 weight="semibold">{TEXTS.guestTitle}</Body1>
+              <Label weight="regular">{TEXTS.guestLabel}</Label>
             </View>
-            <ActionButton onPress={() => {}}>로그인 하기</ActionButton>
+            <ActionButton onPress={() => resetTo('Login')}>{TEXTS.loginButton}</ActionButton>
           </View>
         ),
-      },
+      };
+    }
+    return {
+      key: 'user-header',
+      title: '',
+      leftComponent: (
+        <View className="flex-col">
+          <Body1 weight="semibold">{userInfo.user.user_metadata.full_name}</Body1>
+          <Label weight="regular">{userInfo.user.email}</Label>
+        </View>
+      ),
+    };
+  }, [userInfo]);
+
+  const settingListItems = useMemo(
+    () => [
       {
-        leftComponent: (
-          <View className="flex gap-2">
-            <Body1 weight="semibold">성규</Body1>
-            <Label weight="regular">moodlydeveloper@gmail.com</Label>
-          </View>
-        ),
-      },
-      {
-        title: '계정관리',
+        key: 'account-management',
+        title: TEXTS.accountManagement,
         rightComponent: (
           <Image
             source={COMMON_ICONS.iconNextGray}
             className="w-6 h-6"
+            accessibilityLabel="계정관리 이동"
           />
         ),
-        // onPress: () => handlePress(SETTING_EVENT_TYPE.BACKUP),
+        onPress: () => handlePress(SETTING_EVENT_TYPE.BACKUP),
       },
       {
-        title: '알림설정',
+        key: 'notification-settings',
+        title: TEXTS.notificationSettings,
         rightComponent: (
           <Toggle
-            onToggle={() => {
-              setIsOn(true);
-            }}
+            onToggle={() => setIsOn(prev => !prev)}
             isOn={isOn}
           />
         ),
-        // onPress: () => handlePress(SETTING_EVENT_TYPE.LOGIN_TEST),
       },
       {
-        title: '의견 보내기',
+        key: 'feedback',
+        title: TEXTS.feedback,
         rightComponent: (
           <Image
             source={COMMON_ICONS.iconNextGray}
             className="w-6 h-6"
+            accessibilityLabel="의견 보내기"
           />
         ),
         onPress: () => handlePress(SETTING_EVENT_TYPE.BUG_REPORT),
       },
     ],
-    [handlePress]
+    [handlePress, isOn]
   );
+
+  const items = [headerItem, ...settingListItems];
 
   return (
     <>
       <NavigationBar
         backgroundColor={gray[100]}
         showBackButton={false}
-        centerComponent={<NaviTitleDisplay title="설정" />}
+        centerComponent={<NaviTitleDisplay title={TEXTS.pageTitle} />}
       />
-      <View
-        className="bg-gray-100 flex-1 justify-between px-4 rounded-xl"
-        style={styles.contentStyle}
-      >
-        <SettingList items={SETTING_LIST_ITEM} />
+      <View className="bg-gray-100 flex-1 justify-between px-4 rounded-xl pt-[45px]">
+        <SettingList items={items} />
         <Label
           weight="regular"
-          style={styles.versionLabel}
+          className="text-gray-400 mb-[13px] text-center"
         >
-          앱 버전 : 1.0.0
+          {TEXTS.appVersionPrefix + version}
         </Label>
       </View>
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  contentStyle: {
-    paddingTop: getScaleSize(45),
-  },
-  versionLabel: {
-    color: gray[400],
-    marginBottom: getScaleSize(13),
-    textAlign: 'center',
-  },
-});
 
 export default SettingPage;

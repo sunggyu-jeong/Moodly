@@ -1,20 +1,20 @@
 import dayjs from 'dayjs';
-import { useMemo } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { useEffect, useMemo } from 'react';
+import { FlatList, StyleSheet, View } from 'react-native';
 
 import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar.tsx';
 
 import { setSelectedMonth } from '@features/diary/model/diary.slice.ts';
 import { useAppDispatch, useAppSelector } from '@shared/hooks';
-import { isEmpty, isNotEmpty } from '@shared/lib';
 import colors from '@shared/styles/colors.ts';
 
-import EmotionDiaryCardList from '@features/diary/ui/EmotionDiaryCardList';
 import EmotionDiaryEmptyMessage from '@features/diary/ui/EmotionDiaryEmptyMessage.tsx';
 import EmotionDiaryMonthSelector from '@features/diary/ui/EmotionDiaryMonthSelector.tsx';
 import DiarySkeleton from '@features/diary/ui/skeleton/DiaryCardSkeleton';
 import { useSelectByMonthQuery } from '@shared/api/diary/diaryApi';
 import useDelay from '@shared/hooks/useDelay';
+import EmotionDiaryCardList from '../features/diary/ui/EmotionDiaryCardList';
+import { isEmpty, isNotEmpty } from '../shared/lib';
 
 const EmotionDiaryListPage = () => {
   const selectedMonth = useAppSelector(state => state.diarySlice.selectedMonth);
@@ -61,19 +61,27 @@ const EmotionDiaryListPage = () => {
           />
         }
       />
-      <ScrollView
+      <FlatList
         className="bg-gray-100"
-        contentContainerStyle={[styles.scrollViewContent]}
+        data={showSkeleton ? [] : data}
+        keyExtractor={(item, index) => item.emotionId?.toString() ?? index.toString()}
+        contentContainerStyle={[styles.scrollViewContent, isEmpty(data) && styles.emptyContainer]}
+        // 데이터 페칭 중일 때 스켈레톤 화면 표출
+        ListHeaderComponent={() => {
+          return showSkeleton || showSkeleton === null ? <DiarySkeleton /> : null;
+        }}
+        // 빈 상태: 스켈레톤이 끝나고 데이터가 없을 때
+        ListEmptyComponent={() =>
+          !showSkeleton && (
+            <View style={styles.emptyContainer}>
+              <EmotionDiaryEmptyMessage />
+            </View>
+          )
+        }
+        renderItem={({ item }) => <EmotionDiaryCardList data={item} />}
+        // 스크롤 잠금: 페칭 중일 때나 데이터가 없을 때
         scrollEnabled={!showSkeleton && isNotEmpty(data)}
-      >
-        {(showSkeleton || showSkeleton === null) && <DiarySkeleton />}
-        {!showSkeleton && isNotEmpty(data) && <EmotionDiaryCardList data={data} />}
-        {isEmpty(data) && showSkeleton !== null && !showSkeleton && (
-          <View style={styles.emptyContainer}>
-            <EmotionDiaryEmptyMessage />
-          </View>
-        )}
-      </ScrollView>
+      />
     </>
   );
 };

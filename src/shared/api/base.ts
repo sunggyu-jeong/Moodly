@@ -1,12 +1,6 @@
 import { HOT_UPDATER_SUPABASE_URL } from '@env';
 import { SerializedError } from '@reduxjs/toolkit';
-import {
-  createApi,
-  fetchBaseQuery,
-  FetchBaseQueryError,
-  FetchBaseQueryMeta,
-  QueryReturnValue,
-} from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 import { ApiCode } from '@shared/config/errorCodes';
 import { AuthError } from '@supabase/supabase-js';
 import { ApiResponse } from '../../entities/common/response';
@@ -58,6 +52,7 @@ export const baseFormatError = (err: Partial<AuthError> | Error, code: string | 
 
 /**
  * QueryFn을 감싸 RTK Query가 요구하는 반환값 구조로 변환합니다.
+ *
  * @template T API 호출 결과 데이터 타입
  * @param fn ApiResponse<T>를 반환하는 비동기 함수
  * @returns QueryReturnValue<ApiResponse<T>, FetchBaseQueryError, FetchBaseQueryMeta>
@@ -66,7 +61,7 @@ export const baseFormatError = (err: Partial<AuthError> | Error, code: string | 
  */
 export async function wrapQueryFn<T>(
   fn: () => Promise<ApiResponse<T>>
-): Promise<QueryReturnValue<T, FetchBaseQueryError, FetchBaseQueryMeta>> {
+): Promise<{ data: T } | { error: FetchBaseQueryError }> {
   try {
     const result = await fn();
     if (result.error) {
@@ -136,7 +131,7 @@ export function extractErrorMessage(
  * @param sbCall     Supabase 기반 로직을 수행하는 함수. 로그인되어 있을 때 실행됩니다.
  * @returns          Realm 또는 Supabase 호출 결과를 담은 Promise<T>
  */
-export async function useBackend<T>(
+export async function fetchWithAuth<T>(
   realmCall: () => Promise<T>,
   sbCall: () => Promise<T>
 ): Promise<T> {

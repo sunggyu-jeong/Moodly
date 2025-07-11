@@ -18,8 +18,11 @@ const SettingList = ({ items }: SettingListProps) => {
   return (
     <View className="flex-1 gap-3">
       {items.map((item, index) => (
-        <View className="bg-common-white rounded-xl">
-          <React.Fragment key={index}>
+        <View
+          className="bg-common-white rounded-xl"
+          key={index}
+        >
+          <View key={index}>
             <TouchableOpacity
               onPress={item.onPress}
               disabled={!item.onPress}
@@ -31,7 +34,7 @@ const SettingList = ({ items }: SettingListProps) => {
                 rightComponent={item.rightComponent}
               />
             </TouchableOpacity>
-          </React.Fragment>
+          </View>
         </View>
       ))}
     </View>
