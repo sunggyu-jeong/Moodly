@@ -16,11 +16,10 @@ export default function useDelay(
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
     }
-
     if (value) {
       setDelayedValue(true);
       startTimeRef.current = Date.now();
-    } else if (isNotEmpty(delayedValue)) {
+    } else if (isNotEmpty(value)) {
       const elapsed = Date.now() - startTimeRef.current;
       const remaining = delay - elapsed;
       if (remaining <= 0) {
