@@ -3,13 +3,13 @@ import { TouchableOpacity, View } from 'react-native';
 import { EmotionDiaryDTO } from '@entities/diary';
 import { setSelectedDiary } from '@features/diary/model/diary.slice.ts';
 import { useAppDispatch } from '@shared/hooks';
-import { navigate } from '@shared/lib';
+import { isEmpty, navigate } from '@shared/lib';
 
 import EmotionDiaryCardContent from './EmotionDiaryCardContent.tsx';
 import EmotionDiaryCardHeader from './EmotionDiaryCardHeader.tsx';
 
 interface EmotionDiaryCardListProps {
-  data: EmotionDiaryDTO[] | undefined;
+  data: EmotionDiaryDTO | undefined;
 }
 
 const EmotionDiaryCardList = ({ data }: EmotionDiaryCardListProps) => {
@@ -20,28 +20,28 @@ const EmotionDiaryCardList = ({ data }: EmotionDiaryCardListProps) => {
     navigate('EmotionDiaryDetailPage', { origin: 'RootStack' });
   };
 
+  if (isEmpty(data)) return;
+
   return (
     <>
       <View className="flex-1 justify-start items-stretch w-full mt-[19px]">
-        {data?.map((entry, index) => (
-          <TouchableOpacity
-            onPress={() => {
-              handleDiaryDetail(entry);
-            }}
-            key={index}
+        <TouchableOpacity
+          onPress={() => {
+            handleDiaryDetail(data);
+          }}
+          key={data.emotionId}
+        >
+          <View
+            key={data.emotionId}
+            className="bg-common-white py-5 px-[18px] mb-4 rounded-[15px]"
           >
-            <View
-              key={index}
-              className="bg-common-white py-5 px-[18px] mb-4 rounded-[15px]"
-            >
-              <EmotionDiaryCardHeader
-                iconId={entry.iconId}
-                recordDate={entry.recordDate}
-              />
-              <EmotionDiaryCardContent content={entry.description ?? ''} />
-            </View>
-          </TouchableOpacity>
-        ))}
+            <EmotionDiaryCardHeader
+              iconId={data.iconId}
+              recordDate={data.recordDate}
+            />
+            <EmotionDiaryCardContent content={data.description ?? ''} />
+          </View>
+        </TouchableOpacity>
       </View>
     </>
   );
