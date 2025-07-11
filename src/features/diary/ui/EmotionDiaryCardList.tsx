@@ -24,7 +24,7 @@ const EmotionDiaryCardList = ({ data }: EmotionDiaryCardListProps) => {
 
   return (
     <>
-      <View className="flex-1 justify-start items-stretch w-full mt-[19px]">
+      <View className="flex-1 justify-start items-stretch w-full">
         <TouchableOpacity
           onPress={() => {
             handleDiaryDetail(data);

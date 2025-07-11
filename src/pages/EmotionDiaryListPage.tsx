@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 
 import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar.tsx';
@@ -14,6 +14,7 @@ import DiarySkeleton from '@features/diary/ui/skeleton/DiaryCardSkeleton';
 import { useSelectByMonthQuery } from '@shared/api/diary/diaryApi';
 import useDelay from '@shared/hooks/useDelay';
 import EmotionDiaryCardList from '../features/diary/ui/EmotionDiaryCardList';
+import { isEmpty, isNotEmpty } from '../shared/lib';
 
 const EmotionDiaryListPage = () => {
   const selectedMonth = useAppSelector(state => state.diarySlice.selectedMonth);
@@ -62,16 +63,13 @@ const EmotionDiaryListPage = () => {
       />
       <FlatList
         className="bg-gray-100"
-        data={data}
+        data={showSkeleton ? [] : data}
         keyExtractor={(item, index) => item.emotionId?.toString() ?? index.toString()}
-        contentContainerStyle={[
-          styles.scrollViewContent,
-          data?.length === 0 && styles.emptyContainer,
-        ]}
+        contentContainerStyle={[styles.scrollViewContent, isEmpty(data) && styles.emptyContainer]}
         // 데이터 페칭 중일 때 스켈레톤 화면 표출
-        ListHeaderComponent={() =>
-          showSkeleton || showSkeleton === null ? <DiarySkeleton /> : null
-        }
+        ListHeaderComponent={() => {
+          return showSkeleton || showSkeleton === null ? <DiarySkeleton /> : null;
+        }}
         // 빈 상태: 스켈레톤이 끝나고 데이터가 없을 때
         ListEmptyComponent={() =>
           !showSkeleton && (
@@ -82,7 +80,7 @@ const EmotionDiaryListPage = () => {
         }
         renderItem={({ item }) => <EmotionDiaryCardList data={item} />}
         // 스크롤 잠금: 페칭 중일 때나 데이터가 없을 때
-        scrollEnabled={!showSkeleton && (data?.length ?? 0) > 0}
+        scrollEnabled={!showSkeleton && isNotEmpty(data)}
       />
     </>
   );
