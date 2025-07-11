@@ -14,19 +14,35 @@ jobs:
       HOT_UPDATER_SUPABASE_BUCKET_NAME: ${{ secrets.HOT_UPDATER_SUPABASE_BUCKET_NAME }}
 
     steps:
-      # 1) 원격 레포지토리 데이터 내려받기
+      # 1) 커밋 메세지 가져오기
+      - name: 최신 커밋 메시지 가져오기
+        id: get_msg
+        run: |
+          echo "msg=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
+
+      # 2) 커밋 키워드 유무 확인
+      - name: Check commit message for keyword
+        run: |
+          COMMIT_MSG="${{ steps.get_msg.outputs.msg }}"
+          echo "Commit message: >>${COMMIT_MSG}<<"
+          if [[ "$COMMIT_MSG" != *"[hot-update]"* ]]; then
+            echo "::error ::커밋 메시지에 [hot-update] 가 없습니다. 워크플로우를 중단합니다."
+            exit 1
+          fi
+
+      # 3) 원격 레포지토리 데이터 내려받기
       - uses: actions/checkout@v4
 
-      # 2) Node.js 환경 설정 + yarn 캐시
+      # 4) Node.js 환경 설정 + yarn 캐시
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'yarn'
 
-      # 3) Yarn 의존성 설치
+      # 5) Yarn 의존성 설치
       - run: yarn install --frozen-lockfile
 
-      # 4) fingerprint 비교
+      # 6) fingerprint 비교
       - name: Check fingerprint
         id: fp
         run: |
@@ -35,18 +51,12 @@ jobs:
           echo "EXIT=$?" >> $GITHUB_OUTPUT
           exit 0
 
-      # 5) fingerprint가 다를 경우, 신규 fingerprint 업로드
+      # 7) fingerprint가 다를 경우, 신규 fingerprint 업로드
       - name: Create new fingerprint
         if: steps.fp.outputs.EXIT != '0'
         run: yarn hot-updater fingerprint create
 
-      # 6) 커밋 메세지 가져오기
-      - name: 최신 커밋 메시지 가져오기
-        id: get_msg
-        run: |
-          echo "msg=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
-
-      # 7) [hot-update], [force] 명령어 설정
+      # 8) [hot-update], [force] 명령어 설정
       - name: Deploy bundles
         run: |
           COMMIT_MSG="${{ steps.get_msg.outputs.msg }}"
