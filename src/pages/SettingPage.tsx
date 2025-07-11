@@ -68,8 +68,8 @@ const SettingPage = () => {
         key: 'guest-header',
         title: '',
         leftComponent: (
-          <View className="flex-row items-center justify-between">
-            <View className="flex-col mr-3">
+          <View className="flex flex-col justify-between gap-4">
+            <View className="mr-3 gap-2">
               <Body1 weight="semibold">{TEXTS.guestTitle}</Body1>
               <Label weight="regular">{TEXTS.guestLabel}</Label>
             </View>
