@@ -27,7 +27,7 @@ const EmotionDiaryCompletePage = () => {
       } else {
         navigate('DiaryStack', { screen: 'EmotionDetailPage', params: { origin: 'DiaryStack' } });
       }
-    }, 2000);
+    }, 1500);
 
     return () => clearTimeout(timer);
   }, [dispatch, isModifyMode]);
