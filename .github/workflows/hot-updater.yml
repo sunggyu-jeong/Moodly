@@ -6,6 +6,7 @@ on:
 
 jobs:
   deploy-ota:
+    if: contains(github.event.head_commit.message, '[hot-update]')
     runs-on: ubuntu-latest
 
     env:
@@ -19,16 +20,6 @@ jobs:
         id: get_msg
         run: |
           echo "msg=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
-
-      # 2) 커밋 키워드 유무 확인
-      - name: Check commit message for keyword
-        run: |
-          COMMIT_MSG="${{ steps.get_msg.outputs.msg }}"
-          echo "Commit message: >>${COMMIT_MSG}<<"
-          if [[ "$COMMIT_MSG" != *"[hot-update]"* ]]; then
-            echo "::error ::커밋 메시지에 [hot-update] 가 없습니다. 워크플로우를 중단합니다."
-            exit 1
-          fi
 
       # 3) 원격 레포지토리 데이터 내려받기
       - uses: actions/checkout@v4
