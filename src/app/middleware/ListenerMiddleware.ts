@@ -39,6 +39,7 @@ listenerMiddleware.startListening({
     const handler = appCodeHandlers[appCode];
     if (handler) {
       handler(errDetail, listenerApi);
+      return;
     }
     const apiCode = parseApiError(payload as FetchBaseQueryError);
 
