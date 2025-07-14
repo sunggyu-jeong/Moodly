@@ -11,7 +11,7 @@ interface Props {
   onSkip: () => void;
 }
 
-const NotificationPermissionPrompt = ({ onAllow, onSkip }: Props) => (
+const NotificationPermissionUI = ({ onAllow, onSkip }: Props) => (
   <View className="flex-1 h-full">
     <View className="flex-1 items-center justify-center pb-20">
       <Image
@@ -53,4 +53,4 @@ const styles = StyleSheet.create({
   title: { lineHeight: 40, textAlign: 'center' },
 });
 
-export default NotificationPermissionPrompt;
+export default NotificationPermissionUI;
