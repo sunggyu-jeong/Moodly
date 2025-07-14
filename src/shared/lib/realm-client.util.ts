@@ -1,5 +1,6 @@
+import { UserMeta } from '@entities/auth/User.scheme';
+import { EmotionDiary } from '@entities/diary';
 import Realm from 'realm';
-import { EmotionDiary } from '../../entities/diary';
 
 let _realm: Realm | null = null;
 
@@ -9,7 +10,7 @@ let _realm: Realm | null = null;
 export async function initRealm() {
   try {
     _realm = await Realm.open({
-      schema: [EmotionDiary],
+      schema: [EmotionDiary, UserMeta],
       schemaVersion: 3,
       onMigration: (oldRealm: Realm, newRealm: Realm) => {
         if (oldRealm.schemaVersion < 2) {
