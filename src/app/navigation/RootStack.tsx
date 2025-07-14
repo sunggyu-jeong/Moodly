@@ -6,6 +6,7 @@ import OverlayManager from '@processes/overlay/ui/OverlayManager';
 import Splash from '../ui/screens/Splash';
 
 import Login from '@pages/LoginPage.tsx';
+import NotificationPermissionPage from '@pages/NotificationPermissionPage';
 import { NavigatorScreenParams } from '@react-navigation/native';
 import DiaryStack, { DiaryStackParamList } from './DiaryStack';
 import TabNavigation, { BottomTabParamList } from './TabNavigation';
@@ -13,6 +14,7 @@ import TabNavigation, { BottomTabParamList } from './TabNavigation';
 export type RootStackParamList = {
   Splash: undefined;
   Login: undefined;
+  NotificationPermissionPage: undefined;
   Main: NavigatorScreenParams<BottomTabParamList>;
   DiaryList: undefined;
   DiaryStack: NavigatorScreenParams<DiaryStackParamList>;
@@ -37,6 +39,10 @@ const RootStack = () => {
             />
           )}
         </Stack.Screen>
+        <Stack.Screen
+          name="NotificationPermissionPage"
+          component={NotificationPermissionPage}
+        />
         <Stack.Screen
           name="Login"
           component={Login}
