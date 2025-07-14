@@ -1,6 +1,5 @@
 import { KAKAO_OPEN_CHAT_LINK } from '@env';
-import { useLogout } from '@features/auth/hooks/useLogout';
-import { SETTING_EVENT_TYPE, TEXTS } from '@features/setting/types';
+import { COMMON_ICONS } from '@shared/assets/images/common';
 import { useOpenKakao } from '@shared/hooks/useOpenChat';
 import { navigate, resetTo } from '@shared/lib';
 import { supabase } from '@shared/lib/supabase.util';
@@ -11,10 +10,11 @@ import { Label } from '@shared/ui/typography/Label';
 import { Session } from '@supabase/supabase-js';
 import { useCallback, useEffect, useState, version } from 'react';
 import { Image, View } from 'react-native';
-import { COMMON_ICONS } from '../../shared/assets/images/common';
-import SettingPageUi from './SettingPage.ui';
+import { useLogout } from '../features/auth/hooks/useLogout';
+import { SETTING_EVENT_TYPE, TEXTS } from '../features/setting/types';
+import SettingRoot from '../features/setting/ui/SettingRoot';
 
-const SettingPageContainer = () => {
+const SettingPage = () => {
   const { openChat } = useOpenKakao();
   const { signOut } = useLogout();
   const [isOn, setIsOn] = useState(false);
@@ -104,7 +104,7 @@ const SettingPageContainer = () => {
   ];
 
   return (
-    <SettingPageUi
+    <SettingRoot
       headerItem={headerItem}
       settingItems={settingListItems}
       version={version}
@@ -112,4 +112,4 @@ const SettingPageContainer = () => {
   );
 };
 
-export default SettingPageContainer;
+export default SettingPage;

@@ -1,12 +1,11 @@
-// src/features/setting/page/SettingPage.ui.tsx
-import { HeaderItem, SettingItemProps, TEXTS } from '@features/setting/types';
-import SettingList from '@features/setting/ui/SettingList';
+import { gray } from '@shared/styles/colors';
+import NaviTitleDisplay from '@shared/ui/elements/NaviTitle';
 import { Label } from '@shared/ui/typography/Label';
+import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar';
 import React from 'react';
-import { gray } from '../../shared/styles/colors';
-import NaviTitleDisplay from '../../shared/ui/elements/NaviTitle';
-import NavigationBar from '../../widgets/navigation-bar/ui/NavigationBar';
 import { View } from 'react-native';
+import { HeaderItem, SettingItemProps, TEXTS } from '../types';
+import SettingList from './SettingList';
 
 interface Props {
   headerItem: HeaderItem;
@@ -14,7 +13,7 @@ interface Props {
   version: string;
 }
 
-const SettingPageUI = ({ headerItem, settingItems, version }: Props) => (
+const SettingRoot = ({ headerItem, settingItems, version }: Props) => (
   <>
     <NavigationBar
       backgroundColor={gray[100]}
@@ -33,4 +32,4 @@ const SettingPageUI = ({ headerItem, settingItems, version }: Props) => (
   </>
 );
 
-export default React.memo(SettingPageUI);
+export default React.memo(SettingRoot);
