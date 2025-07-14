@@ -1,5 +1,5 @@
 import ManageAccountPage from '@pages/ManageAccountPage';
-import SettingPage from '@pages/SettingPage';
+import SettingPageContainer from '@pages/Setting';
 import OverlayManager from '@processes/overlay/ui/OverlayManager';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -20,7 +20,7 @@ const SettingStack = () => {
       >
         <Stack.Screen
           name="Setting"
-          component={SettingPage}
+          component={SettingPageContainer}
         />
         <Stack.Screen
           name="ManageAccount"
