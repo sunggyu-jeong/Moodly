@@ -7,8 +7,9 @@ import { isNotEmpty, resetTo } from '@shared/lib';
 import { primary } from '@shared/styles/colors.ts';
 import { H3 } from '@shared/ui/typography/H3.tsx';
 import { Title } from '@shared/ui/typography/Title.tsx';
-import { useEffect } from 'react';
-import { Image, Platform, StyleSheet, View } from 'react-native';
+import { useEffect, useMemo } from 'react';
+import { Image, Platform, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Body1 } from '../shared/ui/typography/Body1';
 
 const Login = () => {
   const [signInGoogle, { data: googleData, isLoading: isGoogleLoading }] =
@@ -23,6 +24,7 @@ const Login = () => {
     }
   };
 
+  const scaleSize = useMemo(() => getScaleSize(214), []);
   useEffect(() => {
     if (isGoogleLoading || isAppleLoading) return;
 
@@ -31,9 +33,16 @@ const Login = () => {
     }
   }, [googleData, appleData, isAppleLoading, isGoogleLoading, dispatch]);
 
+  const handleGuestMode = () => {
+    resetTo('Main');
+  };
+
   return (
-    <View className="flex-1 bg-gray-100 justify-center items-center">
-      <View className="flex justify-center items-center">
+    <View className="flex-1 bg-gray-100 items-center">
+      <View
+        className="flex items-center"
+        style={{ marginTop: scaleSize }}
+      >
         <Image
           source={MAIN_ICONS.avatar}
           className="aspect-square"
@@ -52,7 +61,7 @@ const Login = () => {
           마음을 돌보는 첫걸음
         </H3>
       </View>
-      <View className="absolute bottom-11 w-full gap-3">
+      <View className="absolute bottom-12 w-full gap-3 items-center">
         {Platform.OS === 'ios' && (
           <SocialLoginButton
             disabled={isAppleLoading || isGoogleLoading}
@@ -65,6 +74,14 @@ const Login = () => {
           provider={AUTH_PROVIDERS.GOOGLE}
           onPress={handleLogin}
         />
+        <TouchableOpacity>
+          <Body1
+            weight="regular"
+            onPress={handleGuestMode}
+          >
+            게스트로 시작하기
+          </Body1>
+        </TouchableOpacity>
       </View>
     </View>
   );
