@@ -7,7 +7,7 @@ import { useLogout } from '@features/auth/hooks/useLogout';
 import SettingList from '@features/setting/ui/SettingList.tsx';
 import { COMMON_ICONS } from '@shared/assets/images/common';
 import { useOpenKakao } from '@shared/hooks/useOpenChat.ts';
-import { resetTo } from '@shared/lib';
+import { navigate, resetTo } from '@shared/lib';
 import { supabase } from '@shared/lib/supabase.util';
 import { gray } from '@shared/styles/colors.ts';
 import ActionButton from '@shared/ui/elements/ActionButton';
@@ -19,7 +19,7 @@ import { Session } from '@supabase/supabase-js';
 import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar.tsx';
 
 enum SETTING_EVENT_TYPE {
-  BACKUP = 'backup',
+  MANAGE_ACCOUNT = 'manage_account',
   BUG_REPORT = 'bug_report',
   LOGIN_TEST = 'logn_test',
 }
@@ -51,8 +51,8 @@ const SettingPage = () => {
 
   const handlePress = useCallback(
     (identifier: SETTING_EVENT_TYPE) => {
-      if (identifier === SETTING_EVENT_TYPE.BACKUP) {
-        signOut();
+      if (identifier === SETTING_EVENT_TYPE.MANAGE_ACCOUNT) {
+        navigate('Main', { screen: 'Setting', params: { screen: 'ManageAccount' } });
       } else if (identifier === SETTING_EVENT_TYPE.BUG_REPORT) {
         openChat(KAKAO_OPEN_CHAT_LINK);
       } else if (identifier === SETTING_EVENT_TYPE.LOGIN_TEST) {
@@ -68,7 +68,7 @@ const SettingPage = () => {
         key: 'guest-header',
         title: '',
         leftComponent: (
-          <View className="flex-row items-center justify-between">
+          <View className="flex justify-between gap-4">
             <View className="flex-col mr-3">
               <Body1 weight="semibold">{TEXTS.guestTitle}</Body1>
               <Label weight="regular">{TEXTS.guestLabel}</Label>
@@ -102,7 +102,7 @@ const SettingPage = () => {
             accessibilityLabel="계정관리 이동"
           />
         ),
-        onPress: () => handlePress(SETTING_EVENT_TYPE.BACKUP),
+        onPress: () => handlePress(SETTING_EVENT_TYPE.MANAGE_ACCOUNT),
       },
       {
         key: 'notification-settings',
