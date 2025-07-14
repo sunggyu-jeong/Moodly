@@ -6,20 +6,16 @@ import OverlayManager from '@processes/overlay/ui/OverlayManager';
 import Splash from '../ui/screens/Splash';
 
 import Login from '@pages/LoginPage.tsx';
+import { NavigatorScreenParams } from '@react-navigation/native';
 import DiaryStack, { DiaryStackParamList } from './DiaryStack';
-import TabNavigation from './TabNavigation';
+import TabNavigation, { BottomTabParamList } from './TabNavigation';
 
 export type RootStackParamList = {
   Splash: undefined;
   Login: undefined;
-  Main: undefined;
+  Main: NavigatorScreenParams<BottomTabParamList>;
   DiaryList: undefined;
-  DiaryStack:
-    | {
-        screen?: keyof DiaryStackParamList;
-        params?: DiaryStackParamList[keyof DiaryStackParamList];
-      }
-    | undefined;
+  DiaryStack: NavigatorScreenParams<DiaryStackParamList>;
   EmotionDiaryDetailPage: { origin: string };
 };
 
