@@ -22,7 +22,7 @@ const NotificationPermissionPage = () => {
       };
       setFirstLoadStatus(dto);
     };
-  }, []);
+  }, [setFirstLoadStatus]);
 
   return (
     <NotificationPermissionPrompt

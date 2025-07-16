@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 
 import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar.tsx';
@@ -91,10 +91,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
+    paddingTop: 0,
   },
   scrollViewContent: {
     flexGrow: 1,
     paddingHorizontal: 24,
+    paddingTop: 20,
   },
 });
 
