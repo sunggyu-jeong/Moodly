@@ -15,6 +15,7 @@ import { HOT_UPDATER_SUPABASE_URL } from '@env';
 import { HotUpdater, getUpdateSource } from '@hot-updater/react-native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { UpdateProgressProps } from '../processes/update/useUpdateProgress';
 import RootStack from './navigation/RootStack';
 import store from './store';
@@ -40,15 +41,17 @@ export const onRenderCallback: ProfilerOnRenderCallback = (
 
 function App() {
   return (
-    <View style={styles.appContainer}>
-      <Provider store={store}>
-        <SafeAreaProvider>
-          <NavigationContainer ref={navigationRef}>
-            <RootStack />
-          </NavigationContainer>
-        </SafeAreaProvider>
-      </Provider>
-    </View>
+    <GestureHandlerRootView style={styles.container}>
+      <View style={styles.appContainer}>
+        <Provider store={store}>
+          <SafeAreaProvider>
+            <NavigationContainer ref={navigationRef}>
+              <RootStack />
+            </NavigationContainer>
+          </SafeAreaProvider>
+        </Provider>
+      </View>
+    </GestureHandlerRootView>
   );
 }
 
@@ -65,6 +68,10 @@ const styles = StyleSheet.create({
   appContainer: {
     flex: 1,
     backgroundColor: '#5168DB',
+  },
+  container: {
+    flex: 1,
+    backgroundColor: 'grey',
   },
 });
 
