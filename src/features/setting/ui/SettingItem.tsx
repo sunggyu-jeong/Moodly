@@ -2,15 +2,9 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { gray } from '@shared/styles/colors.ts';
 import { Body1 } from '@shared/ui/typography/Body1.tsx';
+import { SettingItemProps } from '../types';
 
-export interface SettingItemProps {
-  title?: string;
-  leftComponent?: React.ReactNode;
-  rightComponent?: React.ReactNode;
-  onPress?: () => void;
-}
-
-const SettingItem = ({ ...props }: SettingItemProps) => {
+const SettingItem = ({ titleStyle, ...props }: SettingItemProps) => {
   const Container = props.onPress ? TouchableOpacity : View;
 
   return (
@@ -23,7 +17,7 @@ const SettingItem = ({ ...props }: SettingItemProps) => {
         {props.title && (
           <Body1
             weight="regular"
-            style={styles.mentStyle}
+            style={[styles.mentStyle, titleStyle]}
           >
             {props.title}
           </Body1>

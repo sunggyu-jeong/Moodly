@@ -4,15 +4,16 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import EmotionDiaryListPage from '@pages/EmotionDiaryListPage.tsx';
 import HomePage from '@pages/HomePage.tsx';
-import SettingPage from '@pages/SettingPage.tsx';
+import { NavigatorScreenParams } from '@react-navigation/native';
 import { MAIN_ICONS } from '@shared/assets/images/main';
 import { useScale } from '@shared/hooks';
 import TabBarIcon from '@shared/ui/elements/TabBarIcon';
+import SettingStack, { SettingStackParamList } from './SettingStack';
 
 export type BottomTabParamList = {
   Home: undefined;
   DiaryList: undefined;
-  Settings: undefined;
+  Setting: NavigatorScreenParams<SettingStackParamList>;
 };
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
@@ -57,8 +58,8 @@ const TabNavigation = () => {
           }}
         />
         <Tab.Screen
-          name="Settings"
-          component={SettingPage}
+          name="Setting"
+          component={SettingStack}
           options={{
             tabBarIcon: ({ focused }) => (
               <TabBarIcon

@@ -1,9 +1,11 @@
+import { UserMeta, UserMetaDTO } from '@entities/auth/User.scheme';
 import { ApiResponse } from '@entities/common/response';
 import { appleAuth } from '@invertase/react-native-apple-authentication';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { AuthError, Session, User } from '@supabase/supabase-js';
 import { ApiCode, AppCode, HttpStatus } from '../../config/errorCodes';
 import { isEmpty } from '../../lib';
+import { getRealm } from '../../lib/realm-client.util';
 import { supabase } from '../../lib/supabase.util';
 import { baseFormatError } from '../base';
 
@@ -129,6 +131,33 @@ export async function getAuthToken(): Promise<ApiResponse<Session>> {
     const { data, error } = await supabase.auth.getSession();
     if (error) throw error;
     return { data: data.session };
+  } catch (err) {
+    throw baseFormatError(err as Error);
+  }
+}
+
+export async function getFirstLoadStatus(): Promise<ApiResponse<boolean>> {
+  try {
+    const realm = getRealm();
+    const meta = realm.objects<UserMeta>('UserMeta')[0];
+    const isFirstLoad = meta?.is_first_load ?? true;
+    return { data: isFirstLoad };
+  } catch (err) {
+    throw baseFormatError(err as Error);
+  }
+}
+
+export async function setFirstLoadStatus(params: UserMetaDTO): Promise<ApiResponse<boolean>> {
+  try {
+    const realm = getRealm();
+    realm.write(() => {
+      realm.create<UserMeta>('UserMeta', {
+        user_id: params.userId,
+        is_first_load: params.isFirstLoad,
+        created_at: params.createdAt,
+      });
+    });
+    return { data: true };
   } catch (err) {
     throw baseFormatError(err as Error);
   }

@@ -13,7 +13,7 @@ export function useToastAnimation(
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    let timeout: number;
+    let timeout: NodeJS.Timeout;
     if (visible) {
       setIsMounted(true);
       translateY.value = withTiming(0, { duration });
