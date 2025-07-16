@@ -1,17 +1,10 @@
-import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
 
+import { SettingItemProps } from '../types.ts';
 import SettingItem from './SettingItem.tsx';
 
-interface SettingListItem {
-  title?: string;
-  leftComponent?: React.ReactNode;
-  rightComponent?: React.ReactNode;
-  onPress?: () => void;
-}
-
 interface SettingListProps {
-  items: SettingListItem[];
+  items: SettingItemProps[];
 }
 
 const SettingList = ({ items }: SettingListProps) => {
@@ -32,6 +25,7 @@ const SettingList = ({ items }: SettingListProps) => {
                 title={item.title}
                 leftComponent={item.leftComponent}
                 rightComponent={item.rightComponent}
+                titleStyle={item.titleStyle}
               />
             </TouchableOpacity>
           </View>

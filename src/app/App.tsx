@@ -15,7 +15,6 @@ import { HOT_UPDATER_SUPABASE_URL } from '@env';
 import { HotUpdater, getUpdateSource } from '@hot-updater/react-native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useInitializeApp } from '../features/global/hooks/useInitializeApp';
 import { UpdateProgressProps } from '../processes/update/useUpdateProgress';
 import RootStack from './navigation/RootStack';
 import store from './store';
@@ -40,7 +39,6 @@ export const onRenderCallback: ProfilerOnRenderCallback = (
 };
 
 function App() {
-  useInitializeApp();
   return (
     <View style={styles.appContainer}>
       <Provider store={store}>

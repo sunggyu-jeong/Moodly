@@ -20,7 +20,7 @@ const appCodeHandlers: Record<
   ) => void
 > = {
   [AppCode.NOT_LOGIN]: _errDetail => {
-    resetTo('Main');
+    resetTo('Login');
   },
 };
 

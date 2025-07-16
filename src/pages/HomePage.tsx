@@ -64,7 +64,7 @@ const HomePage = () => {
           />
 
           <ActionButton
-            onPress={() => navigate('DiaryStack')}
+            onPress={() => navigate('DiaryStack', { screen: 'EmotionSelectionPage' })}
             disabled={hasDiary ?? false}
           >
             {buttonText}
