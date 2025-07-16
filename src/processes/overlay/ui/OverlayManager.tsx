@@ -4,7 +4,10 @@ import DropDownAnimation from '@widgets/dropdown/animation/DropDownAnimation';
 import PopupContainerOrga from '@widgets/popup/ui/PopupContainer';
 import ToastController from '@widgets/toast/ui/ToastController';
 
-import { setOverlayEventHandler } from '@processes/overlay/model/overlay.slice';
+import {
+  setOverlayEventHandler,
+  setRequestWithDrawal,
+} from '@processes/overlay/model/overlay.slice';
 import { MODAL_CONFIRM_ACTION_KEY } from '../../key';
 
 const OverlayManager = () => {
@@ -26,6 +29,8 @@ const OverlayManager = () => {
           onConfirm={() => {
             if (showModalPopup?.confirmActionKey === MODAL_CONFIRM_ACTION_KEY.DELETE_DIARY) {
               dispatch(setOverlayEventHandler(MODAL_CONFIRM_ACTION_KEY.DELETE_DIARY));
+            } else if (showModalPopup?.confirmActionKey === MODAL_CONFIRM_ACTION_KEY.WITHDRAWAL) {
+              dispatch(setRequestWithDrawal(true));
             }
           }}
         />

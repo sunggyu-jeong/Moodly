@@ -27,6 +27,7 @@ interface OverlayState {
   showDropDownView?: DropdownViewPayload;
   showToastView?: ToastViewPayload;
   overlayEventHandler: string | null;
+  requestWithDrawal: boolean | null;
 }
 
 const initialState: OverlayState = {
@@ -34,6 +35,7 @@ const initialState: OverlayState = {
   showDropDownView: { visibility: false, dropdownList: null, pos: { x: null, y: null } },
   showToastView: { visibility: null, message: '' },
   overlayEventHandler: null,
+  requestWithDrawal: null,
 };
 
 const overlaySlice = createSlice({
@@ -55,6 +57,9 @@ const overlaySlice = createSlice({
     resetModalPopup: state => {
       state.showModalPopup = initialState.showModalPopup;
     },
+    setRequestWithDrawal: (state, action: PayloadAction<boolean | null>) => {
+      state.requestWithDrawal = action.payload;
+    },
   },
 });
 
@@ -64,6 +69,7 @@ export const {
   setShowToastView,
   setOverlayEventHandler,
   resetModalPopup,
+  setRequestWithDrawal,
 } = overlaySlice.actions;
 
 export default overlaySlice.reducer;

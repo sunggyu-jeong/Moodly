@@ -2,7 +2,7 @@ import { getScaleSize } from '@shared/hooks';
 import { useBottomSheet } from '@shared/hooks/useBottomSheet';
 import { gray } from '@shared/styles/colors';
 import BottomSheetWrapper from '@shared/ui/elements/BottomSheetWrapper';
-import SocialLoginGroup from '@shared/ui/elements/SocialLoginGroup';
+import SocialLoginGroup, { SOCIAL_LOGIN_ENTRANCE } from '@shared/ui/elements/SocialLoginGroup';
 import { Body2 } from '@shared/ui/typography/Body2';
 import { H2 } from '@shared/ui/typography/H2';
 import { forwardRef, useImperativeHandle } from 'react';
@@ -40,7 +40,7 @@ export const SocialLoginSheet = forwardRef<SocialLoginSheetHandle>((_, ref) => {
             가입을 통해 기록을 소중히 보관하세요!
           </Body2>
         </View>
-        <SocialLoginGroup />
+        <SocialLoginGroup entrance={SOCIAL_LOGIN_ENTRANCE.SETTING} />
       </View>
     </BottomSheetWrapper>
   );
