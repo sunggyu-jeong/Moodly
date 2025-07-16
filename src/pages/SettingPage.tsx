@@ -1,24 +1,26 @@
 import { KAKAO_OPEN_CHAT_LINK } from '@env';
+import { useLogout } from '@features/auth/hooks/useLogout';
+import { SETTING_EVENT_TYPE, TEXTS } from '@features/setting/types';
+import SettingRoot from '@features/setting/ui/SettingRoot';
+import { SocialLoginSheet, SocialLoginSheetHandle } from '@features/setting/ui/SocialLoginSheet';
 import { COMMON_ICONS } from '@shared/assets/images/common';
 import { useOpenKakao } from '@shared/hooks/useOpenChat';
-import { navigate, resetTo } from '@shared/lib';
+import { navigate } from '@shared/lib';
 import { supabase } from '@shared/lib/supabase.util';
 import ActionButton from '@shared/ui/elements/ActionButton';
 import Toggle from '@shared/ui/elements/Toggle';
 import { Body1 } from '@shared/ui/typography/Body1';
 import { Label } from '@shared/ui/typography/Label';
 import { Session } from '@supabase/supabase-js';
-import { useCallback, useEffect, useState, version } from 'react';
+import { useCallback, useEffect, useRef, useState, version } from 'react';
 import { Image, View } from 'react-native';
-import { useLogout } from '../features/auth/hooks/useLogout';
-import { SETTING_EVENT_TYPE, TEXTS } from '../features/setting/types';
-import SettingRoot from '../features/setting/ui/SettingRoot';
 
 const SettingPage = () => {
   const { openChat } = useOpenKakao();
   const { signOut } = useLogout();
   const [isOn, setIsOn] = useState(false);
   const [userInfo, setUserInfo] = useState<Session | null>(null);
+  const socialSheetRef = useRef<SocialLoginSheetHandle>(null);
 
   useEffect(() => {
     async function fetchSession() {
@@ -66,7 +68,9 @@ const SettingPage = () => {
               <Body1 weight="semibold">{TEXTS.guestTitle}</Body1>
               <Label weight="regular">{TEXTS.guestLabel}</Label>
             </View>
-            <ActionButton onPress={() => resetTo('Login')}>{TEXTS.loginButton}</ActionButton>
+            <ActionButton onPress={() => socialSheetRef.current?.expand()}>
+              {TEXTS.loginButton}
+            </ActionButton>
           </View>
         ),
       };
@@ -104,11 +108,14 @@ const SettingPage = () => {
   ];
 
   return (
-    <SettingRoot
-      headerItem={headerItem}
-      settingItems={settingListItems}
-      version={version}
-    />
+    <>
+      <SettingRoot
+        headerItem={headerItem}
+        settingItems={settingListItems}
+        version={version}
+      />
+      <SocialLoginSheet ref={socialSheetRef} />
+    </>
   );
 };
 

@@ -1,33 +1,22 @@
-import { AUTH_PROVIDERS, AuthProvider } from '@entities/auth/types.ts';
-import SocialLoginButton from '@features/auth/ui/SocialLoginButton.tsx';
-import {
-  useGetFirstLoadStatusQuery,
-  useSignInAppleMutation,
-  useSignInGoogleMutation,
-} from '@shared/api/auth/authApi.ts';
+import { useGetFirstLoadStatusQuery } from '@shared/api/auth/authApi.ts';
 import { MAIN_ICONS } from '@shared/assets/images/main';
 import { getScaleSize } from '@shared/hooks';
 import { isNotEmpty, resetTo } from '@shared/lib';
 import { primary } from '@shared/styles/colors.ts';
+import SocialLoginGroup from '@shared/ui/elements/SocialLoginGroup';
 import { H3 } from '@shared/ui/typography/H3.tsx';
 import { Title } from '@shared/ui/typography/Title.tsx';
 import { useCallback, useEffect, useMemo } from 'react';
-import { Image, Platform, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
+import { useSocialLogin } from '../features/auth/hooks/useSocialLogin';
 import { Body1 } from '../shared/ui/typography/Body1';
 
 const Login = () => {
-  const [signInGoogle, { data: googleData, isLoading: isGoogleLoading }] =
-    useSignInGoogleMutation();
-  const [signInApple, { data: appleData, isLoading: isAppleLoading }] = useSignInAppleMutation();
-  const { data: isFirstLoad, isLoading: isFirstLoadLoading } = useGetFirstLoadStatusQuery();
   const scaleSize = useMemo(() => getScaleSize(214), []);
-  const handleLogin = async (provider: AuthProvider) => {
-    if (provider === AUTH_PROVIDERS.APPLE) {
-      await signInApple();
-    } else if (provider === AUTH_PROVIDERS.GOOGLE) {
-      await signInGoogle();
-    }
-  };
+  const { data: isFirstLoad, isLoading: isFirstLoadLoading } = useGetFirstLoadStatusQuery();
+
+  const { data: loginResult, isLoading: isLoginLoading } = useSocialLogin();
+
   const navigateInitialRoute = useCallback(() => {
     if (isFirstLoad) {
       resetTo('NotificationPermissionPage');
@@ -37,20 +26,11 @@ const Login = () => {
   }, [isFirstLoad]);
 
   useEffect(() => {
-    if (isFirstLoadLoading || isGoogleLoading || isAppleLoading) return;
-
-    if (isNotEmpty(googleData) || isNotEmpty(appleData)) {
+    if (isFirstLoadLoading || isLoginLoading) return;
+    if (isNotEmpty(loginResult)) {
       navigateInitialRoute();
     }
-  }, [
-    googleData,
-    appleData,
-    isAppleLoading,
-    isGoogleLoading,
-    isFirstLoad,
-    isFirstLoadLoading,
-    navigateInitialRoute,
-  ]);
+  }, [isFirstLoadLoading, isLoginLoading, navigateInitialRoute, loginResult]);
 
   return (
     <View className="flex-1 bg-gray-100 items-center">
@@ -77,26 +57,13 @@ const Login = () => {
         </H3>
       </View>
       <View className="absolute bottom-12 w-full gap-3 items-center">
-        {Platform.OS === 'ios' && (
-          <SocialLoginButton
-            disabled={isAppleLoading || isGoogleLoading}
-            provider={AUTH_PROVIDERS.APPLE}
-            onPress={handleLogin}
-          />
-        )}
-        <SocialLoginButton
-          disabled={isAppleLoading || isGoogleLoading}
-          provider={AUTH_PROVIDERS.GOOGLE}
-          onPress={handleLogin}
-        />
-        <TouchableOpacity>
-          <Body1
-            weight="regular"
-            onPress={navigateInitialRoute}
-          >
-            게스트로 시작하기
-          </Body1>
-        </TouchableOpacity>
+        <SocialLoginGroup />
+        <Body1
+          weight="regular"
+          onPress={() => resetTo('Main')}
+        >
+          게스트로 시작하기
+        </Body1>
       </View>
     </View>
   );
