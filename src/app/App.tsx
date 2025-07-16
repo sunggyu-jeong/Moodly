@@ -24,6 +24,9 @@ import Splash from './ui/screens/Splash';
 dayjs.locale('ko');
 
 enableScreens();
+if (typeof globalThis.structuredClone !== 'function') {
+  globalThis.structuredClone = obj => JSON.parse(JSON.stringify(obj));
+}
 
 //TEST: - 랜더링 테스트 로그 코드
 export const onRenderCallback: ProfilerOnRenderCallback = (
