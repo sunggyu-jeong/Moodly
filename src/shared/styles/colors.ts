@@ -3,6 +3,7 @@ export const common = {
   white: '#FFFFFF',
   transparent: 'transparent',
   black: '#000000',
+  overlay: 'rgba(0,0,0,0.4)',
 } as const;
 
 export const primary = {

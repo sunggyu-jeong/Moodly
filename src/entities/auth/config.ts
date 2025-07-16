@@ -7,6 +7,7 @@ type ProviderConfig = {
   backgroundColor: string;
   textColor: string;
   Icon: ImageSourcePropType;
+  borderColor?: string;
 };
 
 export const AUTH_PROVIDER_CONFIG: Record<AuthProvider, ProviderConfig> = {
@@ -15,6 +16,7 @@ export const AUTH_PROVIDER_CONFIG: Record<AuthProvider, ProviderConfig> = {
     backgroundColor: 'bg-common-white',
     textColor: 'text-black',
     Icon: AUTH_ICONS.google,
+    borderColor: '#EEEEF1',
   },
   [AUTH_PROVIDERS.APPLE]: {
     label: '애플로 시작하기',
