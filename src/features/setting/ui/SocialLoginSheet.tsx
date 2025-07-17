@@ -11,6 +11,7 @@ import { View } from 'react-native';
 export interface SocialLoginSheetHandle {
   expand: () => void;
   collapse: () => void;
+  close: () => void;
 }
 
 export const SocialLoginSheet = forwardRef<SocialLoginSheetHandle>((_, ref) => {
@@ -19,6 +20,7 @@ export const SocialLoginSheet = forwardRef<SocialLoginSheetHandle>((_, ref) => {
   useImperativeHandle(ref, () => ({
     expand: () => sheetRef.current?.expand(),
     collapse: () => sheetRef.current?.collapse?.(),
+    close: () => sheetRef.current?.close?.(),
   }));
 
   return (

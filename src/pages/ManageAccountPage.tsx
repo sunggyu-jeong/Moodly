@@ -1,14 +1,17 @@
-import { useCallback, useEffect, useMemo, version } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { View } from 'react-native';
+import { version } from '../../package.json';
 import { useLogout } from '../features/auth/hooks/useLogout';
 import { SETTING_EVENT_TYPE } from '../features/setting/types';
 import SettingList from '../features/setting/ui/SettingList';
 import { MODAL_CONFIRM_ACTION_KEY } from '../processes/key';
 import {
+  resetModalPopup,
   setRequestWithDrawal,
   setShowModalPopup,
   setShowToastView,
 } from '../processes/overlay/model/overlay.slice';
+import { baseApi } from '../shared/api/base';
 import { useAppDispatch, useAppSelector } from '../shared/hooks';
 import { isEmpty, resetTo } from '../shared/lib';
 import { supabase } from '../shared/lib/supabase.util';
@@ -40,6 +43,7 @@ const ManageAccountPage = () => {
       await res.json();
       if (res.ok) {
         await supabase.auth.signOut();
+        dispatch(baseApi.util.resetApiState());
         dispatch(
           setShowToastView({ visibility: true, message: '회원 탈퇴 요청이 완료되었습니다.' })
         );
@@ -51,6 +55,8 @@ const ManageAccountPage = () => {
       }
     } catch (err) {
       console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', err);
+    } finally {
+      dispatch(resetModalPopup());
     }
   }
 
