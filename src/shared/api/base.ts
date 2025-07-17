@@ -1,9 +1,9 @@
+import { ApiResponse } from '@entities/common/response';
 import { HOT_UPDATER_SUPABASE_URL } from '@env';
 import { SerializedError } from '@reduxjs/toolkit';
 import { createApi, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 import { ApiCode } from '@shared/config/errorCodes';
 import { AuthError } from '@supabase/supabase-js';
-import { ApiResponse } from '../../entities/common/response';
 import { isEmpty, isNotEmpty } from '../lib';
 import { supabase } from '../lib/supabase.util';
 

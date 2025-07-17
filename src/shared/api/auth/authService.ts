@@ -36,7 +36,6 @@ export async function signInWithIdToken(
       data: data.session!.user,
     };
   } catch (err) {
-    console.log('24128947129041289412>>', err);
     return { error: baseFormatError(err as AuthError) };
   }
 }
