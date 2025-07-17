@@ -4,7 +4,7 @@ import SocialLoginButton from '@features/auth/ui/SocialLoginButton';
 import { setShowToastView } from '@processes/overlay/model/overlay.slice';
 import { useCallback, useEffect } from 'react';
 import { Platform, View } from 'react-native';
-import { useGetFirstLoadStatusQuery } from '../../api/auth/authApi';
+import { useFetchFirstLaunchFlagQuery } from '../../api/auth/authApi';
 import { useAppDispatch } from '../../hooks';
 import { isNotEmpty, resetTo } from '../../lib';
 
@@ -19,7 +19,7 @@ interface SocialLoginGroupProps {
 
 const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
   const { handleLogin, data, isLoading } = useSocialLogin();
-  const { data: isFirstLoad } = useGetFirstLoadStatusQuery(undefined, {
+  const { data: isFirstLoad } = useFetchFirstLaunchFlagQuery(undefined, {
     skip: entrance !== SOCIAL_LOGIN_ENTRANCE.LOGIN,
   });
 

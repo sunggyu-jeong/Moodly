@@ -2,11 +2,11 @@ import { UserMetaDTO } from '@entities/auth/User.scheme';
 import { User } from '@supabase/supabase-js';
 import { baseApi, wrapQueryFn } from '../base';
 import {
+  fetchFirstLaunchFlag,
   fetchSession,
   getAppleToken,
-  getFirstLoadStatus,
   getGoogleToken,
-  setFirstLoadStatus,
+  saveFirstLaunchFlag,
   signInWithIdToken,
   signOut,
 } from './authService';
@@ -38,15 +38,15 @@ export const authApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ['Auth'],
     }),
-    getFirstLoadStatus: builder.query<boolean, void>({
+    fetchFirstLaunchFlag: builder.query<boolean, void>({
       async queryFn() {
-        return wrapQueryFn(async () => getFirstLoadStatus());
+        return wrapQueryFn(async () => fetchFirstLaunchFlag());
       },
       providesTags: ['Auth'],
     }),
-    setFirstLoadStatus: builder.mutation<boolean, UserMetaDTO>({
+    saveFirstLaunchFlag: builder.mutation<boolean, UserMetaDTO>({
       async queryFn(_arg, _api, _extraOptions, _baseQuery) {
-        return wrapQueryFn(async () => setFirstLoadStatus(_arg));
+        return wrapQueryFn(async () => saveFirstLaunchFlag(_arg));
       },
       invalidatesTags: ['Auth'],
     }),
@@ -57,7 +57,7 @@ export const {
   useSignInGoogleMutation,
   useSignInAppleMutation,
   useLazyInitializeSessionQuery,
-  useGetFirstLoadStatusQuery,
-  useSetFirstLoadStatusMutation,
+  useFetchFirstLaunchFlagQuery,
+  useSaveFirstLaunchFlagMutation,
   useSignOutMutation,
 } = authApi;
