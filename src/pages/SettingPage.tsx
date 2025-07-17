@@ -3,6 +3,7 @@ import { useLogout } from '@features/auth/hooks/useLogout';
 import { SETTING_EVENT_TYPE, TEXTS } from '@features/setting/types';
 import SettingRoot from '@features/setting/ui/SettingRoot';
 import { SocialLoginSheet, SocialLoginSheetHandle } from '@features/setting/ui/SocialLoginSheet';
+import { useFocusEffect } from '@react-navigation/native';
 import { COMMON_ICONS } from '@shared/assets/images/common';
 import { useOpenKakao } from '@shared/hooks/useOpenChat';
 import { navigate } from '@shared/lib';
@@ -29,6 +30,14 @@ const SettingPage = () => {
     }
     fetchSession();
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        socialSheetRef.current?.collapse();
+      };
+    }, [])
+  );
 
   const handlePress = useCallback(
     (type: SETTING_EVENT_TYPE) => {

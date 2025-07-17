@@ -27,7 +27,7 @@ export const SocialLoginSheet = forwardRef<SocialLoginSheetHandle>((_, ref) => {
       snapPoints={snapPoints}
       onChange={handleSheetChanges}
     >
-      <View className="flex-1 items-center mt-[43px]">
+      <View className="absolute w-full items-center mt-[43px]">
         <View
           className="gap-2"
           style={{ marginBottom: getScaleSize(55) }}

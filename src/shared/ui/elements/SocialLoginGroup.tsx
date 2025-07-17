@@ -41,10 +41,10 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
         dispatch(setShowToastView({ visibility: true, message: '로그인이 완료됐어요!' }));
       }
     }
-  }, [data, isLoading]);
+  }, [data, isLoading, dispatch, navigateInitialRoute, entrance]);
 
   return (
-    <View className="flex flex-col justify-center mt-3 gap-3 w-full">
+    <View className="w-full px-6 gap-3">
       {Platform.OS === 'ios' && (
         <SocialLoginButton
           disabled={isLoading}
