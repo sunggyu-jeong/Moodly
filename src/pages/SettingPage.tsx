@@ -3,17 +3,20 @@ import { useLogout } from '@features/auth/hooks/useLogout';
 import { SETTING_EVENT_TYPE, TEXTS } from '@features/setting/types';
 import SettingRoot from '@features/setting/ui/SettingRoot';
 import { SocialLoginSheet, SocialLoginSheetHandle } from '@features/setting/ui/SocialLoginSheet';
+import { useFocusEffect } from '@react-navigation/native';
 import { COMMON_ICONS } from '@shared/assets/images/common';
 import { useOpenKakao } from '@shared/hooks/useOpenChat';
-import { navigate } from '@shared/lib';
-import { supabase } from '@shared/lib/supabase.util';
+import { isEmpty, isNotEmpty, navigate } from '@shared/lib';
 import ActionButton from '@shared/ui/elements/ActionButton';
 import Toggle from '@shared/ui/elements/Toggle';
 import { Body1 } from '@shared/ui/typography/Body1';
 import { Label } from '@shared/ui/typography/Label';
 import { Session } from '@supabase/supabase-js';
-import { useCallback, useEffect, useRef, useState, version } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Image, View } from 'react-native';
+import { version } from '../../package.json';
+import { useAppDispatch, useAppSelector } from '../shared/hooks';
+import { supabase } from '../shared/lib/supabase.util';
 
 const SettingPage = () => {
   const { openChat } = useOpenKakao();
@@ -21,14 +24,31 @@ const SettingPage = () => {
   const [isOn, setIsOn] = useState(false);
   const [userInfo, setUserInfo] = useState<Session | null>(null);
   const socialSheetRef = useRef<SocialLoginSheetHandle>(null);
+  const loginStatus = useAppSelector(state => state.settingSlice.loginStatus);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    async function fetchSession() {
-      const { data } = await supabase.auth.getSession();
-      setUserInfo(data.session);
-    }
-    fetchSession();
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      if (session) setUserInfo(session);
+    });
+    return () => subscription.unsubscribe();
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        socialSheetRef.current?.close();
+      };
+    }, [])
+  );
+
+  useEffect(() => {
+    if (loginStatus === 'REQUEST') {
+      socialSheetRef.current?.close();
+    }
+  }, [loginStatus, dispatch]);
 
   const handlePress = useCallback(
     (type: SETTING_EVENT_TYPE) => {
@@ -52,7 +72,7 @@ const SettingPage = () => {
     [openChat, signOut]
   );
 
-  const headerItem = userInfo
+  const headerItem = isNotEmpty(userInfo)
     ? {
         leftComponent: (
           <View className="flex-col">
@@ -114,7 +134,7 @@ const SettingPage = () => {
         settingItems={settingListItems}
         version={version}
       />
-      <SocialLoginSheet ref={socialSheetRef} />
+      {isEmpty(userInfo) && <SocialLoginSheet ref={socialSheetRef} />}
     </>
   );
 };

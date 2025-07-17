@@ -1,36 +1,16 @@
-import { useGetFirstLoadStatusQuery } from '@shared/api/auth/authApi.ts';
 import { MAIN_ICONS } from '@shared/assets/images/main';
 import { getScaleSize } from '@shared/hooks';
-import { isNotEmpty, resetTo } from '@shared/lib';
+import { resetTo } from '@shared/lib';
 import { primary } from '@shared/styles/colors.ts';
-import SocialLoginGroup from '@shared/ui/elements/SocialLoginGroup';
+import SocialLoginGroup, { SOCIAL_LOGIN_ENTRANCE } from '@shared/ui/elements/SocialLoginGroup';
 import { H3 } from '@shared/ui/typography/H3.tsx';
 import { Title } from '@shared/ui/typography/Title.tsx';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
-import { useSocialLogin } from '../features/auth/hooks/useSocialLogin';
 import { Body1 } from '../shared/ui/typography/Body1';
 
 const Login = () => {
   const scaleSize = useMemo(() => getScaleSize(214), []);
-  const { data: isFirstLoad, isLoading: isFirstLoadLoading } = useGetFirstLoadStatusQuery();
-
-  const { data: loginResult, isLoading: isLoginLoading } = useSocialLogin();
-
-  const navigateInitialRoute = useCallback(() => {
-    if (isFirstLoad) {
-      resetTo('NotificationPermissionPage');
-    } else {
-      resetTo('Main');
-    }
-  }, [isFirstLoad]);
-
-  useEffect(() => {
-    if (isFirstLoadLoading || isLoginLoading) return;
-    if (isNotEmpty(loginResult)) {
-      navigateInitialRoute();
-    }
-  }, [isFirstLoadLoading, isLoginLoading, navigateInitialRoute, loginResult]);
 
   return (
     <View className="flex-1 bg-gray-100 items-center">
@@ -57,7 +37,7 @@ const Login = () => {
         </H3>
       </View>
       <View className="absolute bottom-12 w-full gap-3 items-center">
-        <SocialLoginGroup />
+        <SocialLoginGroup entrance={SOCIAL_LOGIN_ENTRANCE.LOGIN} />
         <Body1
           weight="regular"
           onPress={() => resetTo('Main')}

@@ -89,7 +89,6 @@ const EmotionDiaryListPage = () => {
 const styles = StyleSheet.create({
   emptyContainer: {
     alignItems: 'center',
-    flex: 1,
     justifyContent: 'center',
     paddingTop: 0,
   },

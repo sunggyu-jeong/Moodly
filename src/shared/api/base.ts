@@ -1,9 +1,8 @@
+import { ApiResponse } from '@entities/common/response';
 import { HOT_UPDATER_SUPABASE_URL } from '@env';
-import { SerializedError } from '@reduxjs/toolkit';
 import { createApi, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 import { ApiCode } from '@shared/config/errorCodes';
 import { AuthError } from '@supabase/supabase-js';
-import { ApiResponse } from '../../entities/common/response';
 import { isEmpty, isNotEmpty } from '../lib';
 import { supabase } from '../lib/supabase.util';
 
@@ -86,41 +85,6 @@ export async function wrapQueryFn<T>(
       },
     };
   }
-}
-
-/**
- * 에러 객체에서 사용자에게 보여줄 메시지를 추출합니다.
- *
- * @param err  RTK Query 훅이 반환한 FetchBaseQueryError 또는 SerializedError 객체 (또는 undefined)
- * @returns     추출된 에러 메시지 문자열, 없으면 undefined
- */
-export function extractErrorMessage(
-  err?: FetchBaseQueryError | SerializedError
-): string | undefined {
-  if (!err) return undefined;
-
-  // SerializedError 타입인 경우
-  if ('message' in err && err.message) {
-    return err.message;
-  }
-
-  // FetchBaseQueryError 타입인 경우
-  if ('error' in err && typeof err.error === 'string') {
-    return err.error;
-  }
-
-  // HTTP 에러 응답 본문(data)에 메시지가 문자열로 담겨있을 때
-  if ('data' in err) {
-    const d = err.data;
-    if (typeof d === 'string') return d;
-    try {
-      return JSON.stringify(d);
-    } catch {
-      return String(d);
-    }
-  }
-
-  return undefined;
 }
 
 /**

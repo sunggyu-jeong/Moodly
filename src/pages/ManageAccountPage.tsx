@@ -1,25 +1,90 @@
-import { useCallback, useMemo, version } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { View } from 'react-native';
+import { version } from '../../package.json';
 import { useLogout } from '../features/auth/hooks/useLogout';
+import { SETTING_EVENT_TYPE } from '../features/setting/types';
 import SettingList from '../features/setting/ui/SettingList';
+import { MODAL_CONFIRM_ACTION_KEY } from '../processes/key';
+import {
+  resetModalPopup,
+  setRequestWithDrawal,
+  setShowModalPopup,
+  setShowToastView,
+} from '../processes/overlay/model/overlay.slice';
+import { baseApi } from '../shared/api/base';
+import { useAppDispatch, useAppSelector } from '../shared/hooks';
+import { isEmpty, resetTo } from '../shared/lib';
+import { supabase } from '../shared/lib/supabase.util';
 import { common, gray } from '../shared/styles/colors';
 import NaviTitleDisplay from '../shared/ui/elements/NaviTitle';
 import { Label } from '../shared/ui/typography/Label';
 import NavigationBar from '../widgets/navigation-bar/ui/NavigationBar';
-import { SETTING_EVENT_TYPE } from '../features/setting/types';
 
 const ManageAccountPage = () => {
+  const requestWithDrawal = useAppSelector(state => state.overlaySlice.requestWithDrawal);
   const { signOut } = useLogout();
+  const dispatch = useAppDispatch();
+
+  async function handleAccountDeletion() {
+    try {
+      const user = await supabase.auth.getUser();
+      const session = await supabase.auth.getSession();
+      if (!user.data.user) return;
+
+      const res = await fetch(`${process.env.HOT_UPDATER_SUPABASE_URL}/functions/v1/smart-api`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${session.data.session?.access_token}`,
+        },
+        body: JSON.stringify({ userId: user.data.user.id }),
+      });
+
+      await res.json();
+      if (res.ok) {
+        await supabase.auth.signOut();
+        dispatch(baseApi.util.resetApiState());
+        dispatch(
+          setShowToastView({ visibility: true, message: '회원 탈퇴 요청이 완료되었습니다.' })
+        );
+        dispatch(setRequestWithDrawal(null));
+
+        resetTo('Login');
+      } else {
+        dispatch(setShowToastView({ visibility: true, message: '회원 탈퇴 요청이 실패했습니다.' }));
+      }
+    } catch (err) {
+      console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', err);
+    } finally {
+      dispatch(resetModalPopup());
+    }
+  }
+
   const handlePress = useCallback(
     (identifier: SETTING_EVENT_TYPE) => {
       if (identifier === SETTING_EVENT_TYPE.LOG_OUT) {
         signOut();
       } else if (identifier === SETTING_EVENT_TYPE.DELETE_ACCOUNT) {
-        console.log('계정삭제');
+        dispatch(setRequestWithDrawal(null));
+        dispatch(
+          setShowModalPopup({
+            visibility: true,
+            title: '계정 삭제',
+            message: '계정을 삭제하게되면 데이터가 전부 사라져요',
+            cancelText: '취소',
+            confirmText: '삭제',
+            confirmActionKey: MODAL_CONFIRM_ACTION_KEY.WITHDRAWAL,
+          })
+        );
       }
     },
-    [signOut]
+    [signOut, dispatch]
   );
+
+  useEffect(() => {
+    if (isEmpty(requestWithDrawal)) return;
+    handleAccountDeletion();
+  }, [requestWithDrawal]);
 
   const settingListItems = useMemo(
     () => [
@@ -32,6 +97,7 @@ const ManageAccountPage = () => {
         key: 'delete-account',
         title: '계정 삭제',
         titleStyle: { color: common.red },
+        onPress: () => handlePress(SETTING_EVENT_TYPE.DELETE_ACCOUNT),
       },
     ],
     [handlePress]

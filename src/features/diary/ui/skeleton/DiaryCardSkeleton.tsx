@@ -1,11 +1,11 @@
 import { MotiView } from 'moti';
 import { Skeleton } from 'moti/skeleton';
-import { View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 
 const DiarySkeleton = () => {
   const mode = 'light';
   return (
-    <View className="mt-3">
+    <SafeAreaView className="flex-1">
       <Skeleton.Group show={true}>
         {Array.from({ length: 4 }).map((_, idx) => (
           <MotiView
@@ -62,7 +62,7 @@ const DiarySkeleton = () => {
           </MotiView>
         ))}
       </Skeleton.Group>
-    </View>
+    </SafeAreaView>
   );
 };
 

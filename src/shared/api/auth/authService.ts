@@ -120,7 +120,7 @@ export async function signOut(): Promise<ApiResponse<string>> {
 
 /**
  * 현재 인증 세션 정보를 조회합니다.
- * - 로컬 스토리지(또는 AsyncStorage)에서 저장된 세션을 가져오며,
+ * - Supabase에 저장된 세션을 가져오며,
  *   유효한 세션이 존재하지 않으면 null을 반환합니다.
  *
  * @returns 성공 시 data에 Session 객체를 담아 반환하며,
@@ -136,7 +136,15 @@ export async function getAuthToken(): Promise<ApiResponse<Session>> {
   }
 }
 
-export async function getFirstLoadStatus(): Promise<ApiResponse<boolean>> {
+/**
+ * 사용자가 첫번째로 앱을 가동시켰는지를 확인합니다.
+ * - 로컬 스토리지(Realm)에서 저장된 세션을 가져오며,
+ *   유효한 세션이 존재하지 않으면 false를반환합니다.
+ *
+ * @returns 성공 시 data에 첫번째 가동여부를 boolean으로 반환하며
+ *          오류 발생 시 error에 형식화된 오류 정보를 담아 반환합니다.
+ */
+export async function fetchFirstLaunchFlag(): Promise<ApiResponse<boolean>> {
   try {
     const realm = getRealm();
     const meta = realm.objects<UserMeta>('UserMeta')[0];
@@ -147,7 +155,13 @@ export async function getFirstLoadStatus(): Promise<ApiResponse<boolean>> {
   }
 }
 
-export async function setFirstLoadStatus(params: UserMetaDTO): Promise<ApiResponse<boolean>> {
+/**
+ * 사용자가 첫번째로 앱을 가동시켰는지를 스토리지에 저장합니다.
+ *
+ * @returns 성공 시 data에 저장여부를 true로 반환하며
+ *          오류 발생 시 error에 형식화된 오류 정보를 담아 반환합니다.
+ */
+export async function saveFirstLaunchFlag(params: UserMetaDTO): Promise<ApiResponse<boolean>> {
   try {
     const realm = getRealm();
     realm.write(() => {

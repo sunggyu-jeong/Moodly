@@ -1,9 +1,11 @@
 import { setShowToastView } from '@processes/overlay/model/overlay.slice';
 import { useSignOutMutation } from '@shared/api/auth/authApi';
+import { baseApi } from '@shared/api/base';
 import { ApiCode } from '@shared/config/errorCodes';
 import { useAppDispatch } from '@shared/hooks';
 import { isNotEmpty, resetTo } from '@shared/lib';
 import { useEffect } from 'react';
+import { setRequestLogin } from '../../setting/model/setting.slice';
 
 export function useLogout() {
   const [signOut, { data, isLoading }] = useSignOutMutation();
@@ -13,6 +15,9 @@ export function useLogout() {
     if (isLoading) return;
 
     if (isNotEmpty(data) && data === ApiCode.SUCCESS) {
+      dispatch(baseApi.util.invalidateTags(['EmotionDiary']));
+      dispatch(baseApi.util.invalidateTags(['Auth']));
+      dispatch(setRequestLogin('FINISH'));
       dispatch(
         setShowToastView({
           visibility: true,

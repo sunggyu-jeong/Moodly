@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import diarySlice from '@features/diary/model/diary.slice';
+import settingSlice from '@features/setting/model/setting.slice';
 import progressSlice from '@features/updateProgress/model/progress.slice';
 import overlaySlice from '@processes/overlay/model/overlay.slice';
 import { baseApi } from '@shared/api/base';
@@ -14,6 +15,7 @@ const reducers = combineReducers({
   overlaySlice,
   diarySlice,
   progressSlice,
+  settingSlice,
 });
 
 export type AppDispatch = typeof store.dispatch;
