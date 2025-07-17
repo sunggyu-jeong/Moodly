@@ -2,7 +2,7 @@ import { AUTH_PROVIDERS, AuthProvider } from '@entities/auth/types';
 import { useSignInAppleMutation, useSignInGoogleMutation } from '@shared/api/auth/authApi';
 import { baseApi } from '@shared/api/base';
 import { useAppDispatch } from '@shared/hooks';
-import { useEffect } from 'react';
+import { useDiaryMigration } from '../../diary/hooks/useDiaryMigration';
 import { setRequestLogin } from '../../setting/model/setting.slice';
 
 export function useSocialLogin() {
@@ -10,6 +10,7 @@ export function useSocialLogin() {
     useSignInGoogleMutation();
   const [signInApple, { data: appleData, isLoading: isAppleLoading }] = useSignInAppleMutation();
   const dispatch = useAppDispatch();
+  const { migrate } = useDiaryMigration();
 
   const handleLogin = async (provider: AuthProvider) => {
     dispatch(setRequestLogin('REQUEST'));
@@ -20,11 +21,8 @@ export function useSocialLogin() {
     }
     dispatch(baseApi.util.invalidateTags(['EmotionDiary']));
     dispatch(baseApi.util.invalidateTags(['Auth']));
+    await migrate();
   };
-
-  useEffect(() => {
-    console.log('>>>>>>>>', isGoogleLoading, googleData);
-  }, [isGoogleLoading, googleData]);
 
   return {
     handleLogin,
