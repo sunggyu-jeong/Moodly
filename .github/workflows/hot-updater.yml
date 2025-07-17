@@ -15,14 +15,14 @@ jobs:
       HOT_UPDATER_SUPABASE_BUCKET_NAME: ${{ secrets.HOT_UPDATER_SUPABASE_BUCKET_NAME }}
 
     steps:
-      # 1) 커밋 메세지 가져오기
+      # 1) 원격 레포지토리 데이터 내려받기
+      - uses: actions/checkout@v4
+
+      # 2) 커밋 메세지 가져오기
       - name: 최신 커밋 메시지 가져오기
         id: get_msg
         run: |
           echo "msg=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
-
-      # 3) 원격 레포지토리 데이터 내려받기
-      - uses: actions/checkout@v4
 
       # 4) Node.js 환경 설정 + yarn 캐시
       - uses: actions/setup-node@v4
