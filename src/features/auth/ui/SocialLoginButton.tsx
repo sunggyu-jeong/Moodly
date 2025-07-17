@@ -26,6 +26,7 @@ const SocialLoginButton = ({ disabled, provider, onPress }: SocialLoginButtonPro
         <Image
           className="w-6 h-6"
           source={Icon}
+          resizeMode="contain"
         />
         <Body1
           weight="regular"
