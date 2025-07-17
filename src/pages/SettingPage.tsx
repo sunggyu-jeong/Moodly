@@ -30,7 +30,7 @@ const SettingPage = () => {
   useEffect(() => {
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
+    } = supabase.auth.onAuthStateChange((_, session) => {
       if (session) setUserInfo(session);
     });
     return () => subscription.unsubscribe();
