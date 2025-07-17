@@ -22,7 +22,11 @@ export const supabase = createClient(HOT_UPDATER_SUPABASE_URL, HOT_UPDATER_SUPAB
       for (let attempt = 1; attempt <= maxAttempts; attempt++) {
         try {
           const res = await nativeFetch(input, init);
-
+          const errorCode = res.headers.get('x-sb-error-code');
+          if (res.status === 403 && errorCode === 'user_not_found') {
+            console.log('삭제된 유저');
+            return res;
+          }
           if (res.status === 401 || res.status === 403) {
             store.dispatch(authApi.util.resetApiState());
             resetTo('Login');
