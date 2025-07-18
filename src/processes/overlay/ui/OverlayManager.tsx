@@ -5,9 +5,11 @@ import PopupContainerOrga from '@widgets/popup/ui/PopupContainer';
 import ToastController from '@widgets/toast/ui/ToastController';
 
 import {
+  resetModalPopup,
   setOverlayEventHandler,
   setRequestWithDrawal,
 } from '@processes/overlay/model/overlay.slice';
+import { openSettings } from 'react-native-permissions';
 import { MODAL_CONFIRM_ACTION_KEY } from '../../key';
 
 const OverlayManager = () => {
@@ -31,6 +33,11 @@ const OverlayManager = () => {
               dispatch(setOverlayEventHandler(MODAL_CONFIRM_ACTION_KEY.DELETE_DIARY));
             } else if (showModalPopup?.confirmActionKey === MODAL_CONFIRM_ACTION_KEY.WITHDRAWAL) {
               dispatch(setRequestWithDrawal(true));
+            } else if (
+              showModalPopup?.confirmActionKey === MODAL_CONFIRM_ACTION_KEY.PERMISSION_CHANGE
+            ) {
+              openSettings();
+              dispatch(resetModalPopup());
             }
           }}
         />

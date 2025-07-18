@@ -36,7 +36,6 @@ export function useNotificationPermission() {
 
   const checkPermission = async () => {
     const { status: initStatus } = await checkNotifications();
-    console.log('>>@41244124', initStatus);
     setStatus(initStatus);
   };
 
