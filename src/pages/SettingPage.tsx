@@ -3,10 +3,15 @@ import { useLogout } from '@features/auth/hooks/useLogout';
 import { SETTING_EVENT_TYPE, TEXTS } from '@features/setting/types';
 import SettingRoot from '@features/setting/ui/SettingRoot';
 import { SocialLoginSheet, SocialLoginSheetHandle } from '@features/setting/ui/SocialLoginSheet';
+import { MODAL_CONFIRM_ACTION_KEY } from '@processes/key';
+import { setShowModalPopup } from '@processes/overlay/model/overlay.slice';
 import { useFocusEffect } from '@react-navigation/native';
 import { COMMON_ICONS } from '@shared/assets/images/common';
+import { useAppDispatch, useAppSelector } from '@shared/hooks';
+import { useNotificationPermission } from '@shared/hooks/useNotificationPermission';
 import { useOpenKakao } from '@shared/hooks/useOpenChat';
 import { isEmpty, isNotEmpty, navigate } from '@shared/lib';
+import { supabase } from '@shared/lib/supabase.util';
 import ActionButton from '@shared/ui/elements/ActionButton';
 import Toggle from '@shared/ui/elements/Toggle';
 import { Body1 } from '@shared/ui/typography/Body1';
@@ -15,17 +20,15 @@ import { Session } from '@supabase/supabase-js';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Image, View } from 'react-native';
 import { version } from '../../package.json';
-import { useAppDispatch, useAppSelector } from '../shared/hooks';
-import { supabase } from '../shared/lib/supabase.util';
 
 const SettingPage = () => {
   const { openChat } = useOpenKakao();
   const { signOut } = useLogout();
-  const [isOn, setIsOn] = useState(false);
   const [userInfo, setUserInfo] = useState<Session | null>(null);
   const socialSheetRef = useRef<SocialLoginSheetHandle>(null);
   const loginStatus = useAppSelector(state => state.settingSlice.loginStatus);
   const dispatch = useAppDispatch();
+  const { status } = useNotificationPermission();
 
   useEffect(() => {
     const {
@@ -106,11 +109,21 @@ const SettingPage = () => {
       : []),
     {
       title: TEXTS.notificationSettings,
-      onPress: () => setIsOn(prev => !prev),
       rightComponent: (
         <Toggle
-          isOn={isOn}
-          onToggle={() => setIsOn(p => !p)}
+          isOn={status === 'granted'}
+          onToggle={() =>
+            dispatch(
+              setShowModalPopup({
+                visibility: true,
+                title: '알림 변경',
+                message: '설정창으로 이동하셔서 변경 필요 합니다.',
+                cancelText: '나중에 하기',
+                confirmText: '설정하기',
+                confirmActionKey: MODAL_CONFIRM_ACTION_KEY.PERMISSION_CHANGE,
+              })
+            )
+          }
         />
       ),
     },

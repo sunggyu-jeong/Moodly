@@ -14,6 +14,12 @@ linkage = ENV['USE_FRAMEWORKS'] || 'static'
 Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
 use_frameworks! :linkage => linkage.to_sym
 
+require_relative '../node_modules/react-native-permissions/scripts/setup'
+
+setup_permissions([
+  'Notifications',
+])
+
 target 'MoodlyFrontend' do
   config = use_native_modules!
 

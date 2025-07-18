@@ -13,9 +13,12 @@ export interface SocialLoginSheetHandle {
   collapse: () => void;
   close: () => void;
 }
+const MIN_HEIGHT = 300;
 
 export const SocialLoginSheet = forwardRef<SocialLoginSheetHandle>((_, ref) => {
-  const { sheetRef, snapPoints, handleSheetChanges } = useBottomSheet({ snapPoints: ['41%'] });
+  const { sheetRef, snapPoints, handleSheetChanges } = useBottomSheet({
+    snapPoints: [MIN_HEIGHT, '41%'],
+  });
 
   useImperativeHandle(ref, () => ({
     expand: () => sheetRef.current?.expand(),

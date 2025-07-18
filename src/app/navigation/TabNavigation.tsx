@@ -13,7 +13,7 @@ import SettingStack, { SettingStackParamList } from './SettingStack';
 export type BottomTabParamList = {
   Home: undefined;
   DiaryList: undefined;
-  Setting: NavigatorScreenParams<SettingStackParamList>;
+  SettingStack: NavigatorScreenParams<SettingStackParamList>;
 };
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
@@ -58,7 +58,7 @@ const TabNavigation = () => {
           }}
         />
         <Tab.Screen
-          name="Setting"
+          name="SettingStack"
           component={SettingStack}
           options={{
             tabBarIcon: ({ focused }) => (
