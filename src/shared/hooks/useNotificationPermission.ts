@@ -7,12 +7,38 @@ import messaging, {
 } from '@react-native-firebase/messaging';
 import { useAppDispatch } from '@shared/hooks';
 import { resetTo } from '@shared/lib';
-import { useEffect, useRef } from 'react';
-import { PermissionsAndroid, Platform } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { AppState, PermissionsAndroid, Platform } from 'react-native';
+import { checkNotifications, PermissionStatus } from 'react-native-permissions';
 
 export function useNotificationPermission() {
   const dispatch = useAppDispatch();
+  const [status, setStatus] = useState<PermissionStatus>('unavailable');
+  const appState = useRef(AppState.currentState);
   const unsubscribeRef = useRef<(() => void) | null>(null);
+
+  useEffect(() => {
+    checkPermission();
+  }, []);
+
+  useEffect(() => {
+    const sub = AppState.addEventListener('change', async nextState => {
+      if (appState.current.match(/inactive|background/) && nextState === 'active') {
+        const { status: newStatus } = await checkNotifications();
+        if (newStatus !== status) {
+          setStatus(newStatus);
+        }
+      }
+      appState.current = nextState;
+    });
+    return () => sub.remove();
+  }, [status]);
+
+  const checkPermission = async () => {
+    const { status: initStatus } = await checkNotifications();
+    console.log('>>@41244124', initStatus);
+    setStatus(initStatus);
+  };
 
   const requestNotification = async () => {
     try {
@@ -61,5 +87,6 @@ export function useNotificationPermission() {
     }
     return true;
   }
-  return { requestNotification, skipPermission };
+
+  return { status, requestNotification, skipPermission };
 }
