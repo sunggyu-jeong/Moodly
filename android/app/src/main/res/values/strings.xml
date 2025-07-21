@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">MoodlyFrontend</string>
-    <string name="hot_updater_fingerprint_hash" moduleConfig="true">920aa87b02b1553833b5072c86edd3c9e9b9c4ba</string>
+    <string name="hot_updater_fingerprint_hash" moduleConfig="true">22c65c26574ea290c733648e1c9eabd0a9055890</string>
 </resources>
