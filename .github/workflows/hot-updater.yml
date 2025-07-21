@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: write
+  
 jobs:
   deploy-ota:
     if: contains(github.event.head_commit.message, '[hot-update]')
@@ -44,8 +47,21 @@ jobs:
 
       # 7) fingerprint가 다를 경우, 신규 fingerprint 업로드
       - name: Create new fingerprint
-        if: steps.fp.outputs.EXIT != '0'
-        run: yarn hot-updater fingerprint create
+        if: ${{ steps.fp.outputs.EXIT != '0' }}
+
+        run: |
+          yarn hot-updater fingerprint create
+
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "feat. fingerprint 프로젝트 동기화"
+            git push
+          else
+            echo "변경 사항 없음 — 커밋 생략"
+          fi
 
       # 8) [hot-update], [force] 명령어 설정
       - name: Deploy bundles
