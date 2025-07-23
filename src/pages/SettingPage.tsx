@@ -116,8 +116,8 @@ const SettingPage = () => {
             dispatch(
               setShowModalPopup({
                 visibility: true,
-                title: '알림 변경',
-                message: '설정창으로 이동하셔서 변경 필요 합니다.',
+                title: '알림 설정 변경',
+                message: '알림을 변경하려면 설정 앱으로 이동해 주세요',
                 cancelText: '나중에 하기',
                 confirmText: '설정하기',
                 confirmActionKey: MODAL_CONFIRM_ACTION_KEY.PERMISSION_CHANGE,
