@@ -1,5 +1,6 @@
 export const MAIN_ICONS = {
   logo: require('./splash/logo.png'),
+  permission: require('./splash/permission.png'),
 
   avatar: require('./avatar/avatar.png'),
   avatarShadow: require('./avatar/avatar-shadow.png'),

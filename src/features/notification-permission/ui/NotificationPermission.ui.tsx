@@ -12,11 +12,12 @@ interface Props {
 }
 
 const NotificationPermissionUI = ({ onAllow, onSkip }: Props) => (
-  <View className="flex-1 h-full">
+  <View className="flex-1 h-full bg-common-white">
     <View className="flex-1 items-center justify-center pb-20">
       <Image
-        source={MAIN_ICONS.avatar}
-        className="w-[138px] h-[138px] aspect-square"
+        source={MAIN_ICONS.permission}
+        className="w-[297px] h-[257px] mb-11"
+        resizeMode="contain"
       />
       <View className="items-center gap-4">
         <Title
