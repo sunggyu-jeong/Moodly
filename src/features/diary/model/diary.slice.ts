@@ -1,38 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 
 import { EmotionDiaryDTO } from '@entities/diary';
-import { AsyncOperationState, createInitialAsyncState } from '@shared/constants/ApiStatus';
 import { EmotionIconData, ICON_DATA } from '@shared/constants/Icons';
 
 interface DiaryState {
-  diaryCount: AsyncOperationState<number>;
-  searchById: AsyncOperationState<EmotionDiaryDTO>;
-  searchByMonth: AsyncOperationState<EmotionDiaryDTO[]>;
-  addDiary: AsyncOperationState<number>;
-  modifyDiary: AsyncOperationState<number>;
-  removeDiary: AsyncOperationState<void>;
   selectedDiary: EmotionDiaryDTO | null;
   selectedIcon: EmotionIconData | null;
   todayDiary: EmotionDiaryDTO | null;
   selectedMonth: string;
-  isDiaryExist: AsyncOperationState<boolean>;
   isModifyMode: boolean;
+  selectedDay: string;
 }
 
 const initialState: DiaryState = {
-  diaryCount: createInitialAsyncState<number>(),
-  searchById: createInitialAsyncState<EmotionDiaryDTO>(),
-  searchByMonth: createInitialAsyncState<EmotionDiaryDTO[]>(),
-  addDiary: createInitialAsyncState<number>(),
-  modifyDiary: createInitialAsyncState<number>(),
-  removeDiary: createInitialAsyncState<void>(),
-  isDiaryExist: createInitialAsyncState<boolean>(),
   selectedDiary: null,
   selectedIcon: ICON_DATA[0],
   todayDiary: null,
   selectedMonth: dayjs().toISOString(),
   isModifyMode: false,
+  selectedDay: dayjs().toISOString(),
 };
 
 const diarySlice = createSlice({
@@ -54,10 +41,19 @@ const diarySlice = createSlice({
     setModifyMode: (state, action) => {
       state.isModifyMode = action.payload;
     },
+    setSelectedDay: (state, action) => {
+      state.selectedDay = action.payload;
+    },
   },
 });
 
-export const { setSelectedIcon, setTodayDiary, setSelectedMonth, setSelectedDiary, setModifyMode } =
-  diarySlice.actions;
+export const {
+  setSelectedIcon,
+  setTodayDiary,
+  setSelectedMonth,
+  setSelectedDiary,
+  setModifyMode,
+  setSelectedDay,
+} = diarySlice.actions;
 
 export default diarySlice.reducer;
