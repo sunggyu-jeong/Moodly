@@ -118,15 +118,15 @@ export async function createDiary(
 
 export async function updateDiary(
   emotionId: number,
-  updates: Partial<Omit<EmotionDiarySupabase, 'emotionId'>>
+  updates: Partial<Omit<EmotionDiaryDTO, 'emotionId'>>
 ): Promise<ApiResponse<number>> {
   try {
     const response = await supabase.auth.getSession();
     const now = new Date().toISOString();
     const payload: Database['public']['Tables']['moodly_diary']['Update'] = {
       updated_at: now,
-      ...(isNotEmpty(updates.icon_id) && { icon_id: updates.icon_id }),
-      ...(isNotEmpty(updates.record_date) && { record_date: updates.record_date }),
+      ...(isNotEmpty(updates.iconId) && { icon_id: updates.iconId }),
+      ...(isNotEmpty(updates.recordDate) && { record_date: updates.recordDate }),
       ...(isNotEmpty(updates.description) && { description: updates.description }),
     };
 
