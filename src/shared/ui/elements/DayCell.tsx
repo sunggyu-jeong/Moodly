@@ -13,7 +13,7 @@ interface DayCellProps {
 
 const DayCell = ({ date, isSelected, isFuture, iconSource, onPress }: DayCellProps) => {
   return (
-    <View className="items-center bg-common-white w-full h-full p-1">
+    <View className="items-center bg-common-transparent w-full h-full p-1">
       {isFuture ? (
         <View className="w-11 h-11 bg-gray-200 rounded-full" />
       ) : (
