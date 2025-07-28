@@ -17,6 +17,7 @@ export function DiarySaveButton(text: string) {
         description: text,
         emotionId: result,
       };
+      console.log('>2141241412412412', diary);
       dispatch(setSelectedDiary(diary));
       navigate('DiaryStack', { screen: 'Complete' });
     }

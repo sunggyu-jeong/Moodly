@@ -1,7 +1,7 @@
 import { COMMON_ICONS } from '@shared/assets/images/common';
 import { ICON_DATA } from '@shared/constants';
 import { useAppDispatch, useAppSelector } from '@shared/hooks';
-import { navigate } from '@shared/lib';
+import { isEmpty, navigate } from '@shared/lib';
 import DayCell from '@shared/ui/elements/DayCell';
 import dayjs, { Dayjs } from 'dayjs';
 import React, { useCallback, useMemo } from 'react';
@@ -9,7 +9,7 @@ import { setSelectedDay } from '../../diary/model/diary.slice';
 
 interface SelectableDayCellProps {
   date: Dayjs;
-  iconId?: number;
+  iconId?: number | null;
 }
 
 const SelectableDayCell = ({ date, iconId }: SelectableDayCellProps) => {
@@ -20,7 +20,7 @@ const SelectableDayCell = ({ date, iconId }: SelectableDayCellProps) => {
   const isSelected = date.isSame(selectedDay, 'day');
 
   const iconSource = useMemo(() => {
-    if (!iconId) return COMMON_ICONS.iconAddDiary;
+    if (isEmpty(iconId)) return COMMON_ICONS.iconAddDiary;
     const found = ICON_DATA.find(i => i.id === iconId);
     return found?.iconSelected ?? null;
   }, [iconId]);

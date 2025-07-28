@@ -74,7 +74,10 @@ const EmotionDiaryListPage = () => {
             {!showSkeleton && (
               <View className="relative mb-8">
                 <WeekdayHeader />
-                <CalendarBar monthlyDates={generateMonthGrid(dayjs(selectedMonth).month())} />
+                <CalendarBar
+                  monthlyDates={generateMonthGrid(dayjs(selectedMonth).month())}
+                  entries={data}
+                />
                 <View className="w-full left-0 right-0 h-1 bg-gray-200 mt-8" />
               </View>
             )}
