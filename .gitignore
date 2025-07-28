@@ -265,3 +265,7 @@ ios/Pods
 
 # hot-updater
 .hot-updater/output
+
+ios/vendor
+
+vendor/bundle
