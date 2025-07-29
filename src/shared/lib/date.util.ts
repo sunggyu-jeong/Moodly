@@ -1,9 +1,12 @@
-import dayjs, { Dayjs } from 'dayjs';
+import { Dayjs } from 'dayjs';
 
-export const generateMonthGrid = (monthIndex: number): (Dayjs | null)[][] => {
-  const year = 2025;
-  const daysInMonth = dayjs().year(year).month(monthIndex).daysInMonth();
-  const firstDayOfMonth = dayjs().year(year).month(monthIndex).date(1);
+interface GenerateMonthGridProps {
+  targetDate: Dayjs;
+}
+
+export const generateMonthGrid = ({ targetDate }: GenerateMonthGridProps): (Dayjs | null)[][] => {
+  const daysInMonth = targetDate.daysInMonth();
+  const firstDayOfMonth = targetDate.date(1);
   const firstDayWeekday = firstDayOfMonth.day();
 
   const weeks: (Dayjs | null)[][] = [];
@@ -12,7 +15,7 @@ export const generateMonthGrid = (monthIndex: number): (Dayjs | null)[][] => {
   let day = 1;
 
   for (let i = firstDayWeekday; i < 7; i++) {
-    currentWeek[i] = dayjs().year(year).month(monthIndex).date(day);
+    currentWeek[i] = targetDate.date(day);
     day++;
   }
 
@@ -21,7 +24,7 @@ export const generateMonthGrid = (monthIndex: number): (Dayjs | null)[][] => {
   while (day <= daysInMonth) {
     currentWeek = new Array(7).fill(null);
     for (let i = 0; i < 7 && day <= daysInMonth; i++) {
-      currentWeek[i] = dayjs().year(year).month(monthIndex).date(day);
+      currentWeek[i] = targetDate.date(day);
       day++;
     }
     weeks.push(currentWeek);

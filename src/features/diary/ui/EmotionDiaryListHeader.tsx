@@ -48,7 +48,7 @@ const EmotionDiaryListHeader = ({
         >
           <WeekdayHeader />
           <CalendarBar
-            monthlyDates={generateMonthGrid(dayjs(selectedMonth).month())}
+            monthlyDates={generateMonthGrid({ targetDate: dayjs(selectedMonth) })}
             entries={monthData}
           />
           <View className="w-full left-0 right-0 h-1 bg-gray-200 mt-8" />
