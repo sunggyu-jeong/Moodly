@@ -47,6 +47,12 @@ const diarySlice = createSlice({
     setSelectedDay: (state, action) => {
       state.selectedDay = action.payload;
     },
+    resetDiary: state => {
+      state.isModifyMode = false;
+      state.selectedIcon = ICON_DATA[0];
+      state.selectedDiary = null;
+      state.currentDiary = null;
+    },
   },
 });
 
@@ -57,6 +63,7 @@ export const {
   setSelectedDiary,
   setModifyMode,
   setSelectedDay,
+  resetDiary,
 } = diarySlice.actions;
 
 export default diarySlice.reducer;

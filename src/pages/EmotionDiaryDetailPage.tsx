@@ -85,12 +85,10 @@ const EmotionDiaryDetailPage = () => {
     try {
       if (isNotEmpty(selectedDiary?.emotionId)) {
         await deleteDiary(selectedDiary.emotionId);
-        if (route.params.origin === 'RootStack') {
-          goBack();
-        } else {
+        if (route.params.origin !== 'RootStack') {
           dismissModalToScreen();
-          goBack();
         }
+        goBack();
         dispatch(setShowToastView({ visibility: true, message: '일기가 삭제되었어요!' }));
       }
     } catch (error) {
