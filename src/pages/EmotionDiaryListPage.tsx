@@ -1,54 +1,67 @@
-import { setSelectedMonth } from '@features/diary/model/diary.slice.ts';
-import EmotionDiaryEmptyMessage from '@features/diary/ui/EmotionDiaryEmptyMessage.tsx';
+import { DiaryPageMode, DiaryPageModeType } from '@entities/calendar/diary.type';
+import { resetDiary, setSelectedMonth } from '@features/diary/model/diary.slice.ts';
+import EmotionDiaryCardList from '@features/diary/ui/EmotionDiaryCardList';
+import EmotionDiaryListEmpty from '@features/diary/ui/EmotionDiaryListEmpty';
+import EmotionDiaryListHeader from '@features/diary/ui/EmotionDiaryListHeader';
 import EmotionDiaryMonthSelector from '@features/diary/ui/EmotionDiaryMonthSelector.tsx';
-import DiarySkeleton from '@features/diary/ui/skeleton/DiaryCardSkeleton';
-import { useSelectByMonthQuery } from '@shared/api/diary/diaryApi';
+import { useFocusEffect } from '@react-navigation/native';
+import { useSelectByDayQuery, useSelectByMonthQuery } from '@shared/api/diary/diaryApi';
 import { useAppDispatch, useAppSelector } from '@shared/hooks';
 import useDelay from '@shared/hooks/useDelay';
+import { isEmpty, isNotEmpty } from '@shared/lib';
 import colors from '@shared/styles/colors.ts';
 import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar.tsx';
 import dayjs from 'dayjs';
-import { AnimatePresence, MotiView } from 'moti';
-import { useMemo, useState } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
-import { Layout } from 'react-native-reanimated';
-import CalendarBar from '../features/calendar/ui/CalendarBar';
-import EmotionDiaryCardList from '../features/diary/ui/EmotionDiaryCardList';
-import { isEmpty, isNotEmpty } from '../shared/lib';
-import { generateMonthGrid } from '../shared/lib/date.util';
-import WeekdayHeader from '../shared/ui/elements/WeekdayHeader';
-
-const DiaryPageMode = {
-  listMode: 'LISTMODE',
-  calendarMode: 'CALENDARMODE',
-} as const;
-
-type DiaryPageModeType = (typeof DiaryPageMode)[keyof typeof DiaryPageMode];
+import { useCallback, useMemo, useState } from 'react';
+import { FlatList, StyleSheet } from 'react-native';
 
 const EmotionDiaryListPage = () => {
   const [diaryMode, setDiaryMode] = useState<DiaryPageModeType>(DiaryPageMode.calendarMode);
   const selectedMonth = useAppSelector(state => state.diarySlice.selectedMonth);
+  const selectedDayStr = useAppSelector(state => state.diarySlice.selectedDay);
   const currentMonth = dayjs();
+  const isCalendarMode = diaryMode === DiaryPageMode.calendarMode;
   const dispatch = useAppDispatch();
-  const month = useMemo(
+  const monthRange = useMemo(
     () => ({
       start: dayjs(selectedMonth).startOf('month').toISOString(),
       end: dayjs(selectedMonth).add(1, 'month').startOf('month').toISOString(),
     }),
     [selectedMonth]
   );
-  const { data, isFetching } = useSelectByMonthQuery(month);
-  const showSkeleton = useDelay(isFetching);
+  const { data: monthData, isFetching: isMonthFetching } = useSelectByMonthQuery(monthRange);
+  const { data: dayData, isFetching: isDayFetching } = useSelectByDayQuery(selectedDayStr, {
+    skip: !isCalendarMode,
+  });
+  const data = isCalendarMode ? dayData : monthData;
+  const isFetching = isCalendarMode ? isDayFetching : isMonthFetching;
+  const isDelayElapsed = useDelay(isFetching);
+  const showSkeleton = !isCalendarMode && isDelayElapsed;
 
-  const handleChangeMonth = (direction: 'left' | 'right') => {
-    dispatch(
-      setSelectedMonth(
-        dayjs(selectedMonth)
-          .add(direction === 'left' ? -1 : 1, 'month')
-          .toISOString()
-      )
-    );
-  };
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(resetDiary());
+    }, [dispatch])
+  );
+
+  const listData = useMemo(() => {
+    if (showSkeleton) return [];
+    if (isCalendarMode) return dayData ? [dayData] : [];
+    return monthData ?? [];
+  }, [showSkeleton, isCalendarMode, dayData, monthData]);
+
+  const handleChangeMonth = useCallback(
+    (direction: 'left' | 'right') => {
+      dispatch(
+        setSelectedMonth(
+          dayjs(selectedMonth)
+            .add(direction === 'left' ? -1 : 1, 'month')
+            .toISOString()
+        )
+      );
+    },
+    [dispatch, selectedMonth]
+  );
 
   return (
     <>
@@ -64,64 +77,28 @@ const EmotionDiaryListPage = () => {
             onPressRight={() => {
               handleChangeMonth('right');
             }}
-            leftDisabled={showSkeleton || false}
-            rightDisabled={
-              showSkeleton || currentMonth.isSame(dayjs(selectedMonth), 'month') ? true : false
-            }
+            leftDisabled={showSkeleton ?? false}
+            rightDisabled={showSkeleton || currentMonth.isSame(dayjs(selectedMonth), 'month')}
           />
         }
       />
       <FlatList
         className="bg-gray-100"
-        data={showSkeleton ? [] : data}
+        data={listData}
         keyExtractor={(item, index) => item.emotionId?.toString() ?? index.toString()}
         contentContainerStyle={[styles.scrollViewContent, isEmpty(data) && styles.emptyContainer]}
         // 데이터 페칭 중일 때 스켈레톤 화면 표출
         // 패칭 완료 시 캘린더 뷰일경우, 캘린더정보 표출
-        ListHeaderComponent={() => (
-          <AnimatePresence>
-            {showSkeleton && (
-              <MotiView
-                key="skeleton"
-                from={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ type: 'timing', duration: 300 }}
-              >
-                <DiarySkeleton />
-              </MotiView>
-            )}
-            {!showSkeleton && diaryMode === DiaryPageMode.calendarMode && (
-              <AnimatePresence exitBeforeEnter>
-                <MotiView
-                  key="calendar"
-                  layout={Layout.springify().damping(16).stiffness(120).mass(0.8)}
-                  from={{ opacity: 0, translateY: -20 }}
-                  animate={{ opacity: 1, translateY: 0 }}
-                  exit={{ opacity: 0, translateY: 20 }}
-                  transition={{ type: 'timing', duration: 250 }}
-                  exitTransition={{ type: 'timing', duration: 0 }}
-                  className="relative mb-8"
-                >
-                  <WeekdayHeader />
-                  <CalendarBar
-                    monthlyDates={generateMonthGrid(dayjs(selectedMonth).month())}
-                    entries={data}
-                  />
-                  <View className="w-full left-0 right-0 h-1 bg-gray-200 mt-8" />
-                </MotiView>
-              </AnimatePresence>
-            )}
-          </AnimatePresence>
-        )}
-        // 빈 상태: 스켈레톤이 끝나고 데이터가 없을 때
-        ListEmptyComponent={() =>
-          !showSkeleton && (
-            <View style={styles.emptyContainer}>
-              <EmotionDiaryEmptyMessage />
-            </View>
-          )
+        ListHeaderComponent={
+          <EmotionDiaryListHeader
+            showSkeleton={showSkeleton ?? false}
+            diaryMode={diaryMode}
+            selectedMonth={selectedMonth}
+            monthData={monthData}
+          />
         }
+        // 빈 상태: 스켈레톤이 끝나고 데이터가 없을 때
+        ListEmptyComponent={<EmotionDiaryListEmpty showSkeleton={showSkeleton ?? false} />}
         renderItem={({ item }) => <EmotionDiaryCardList data={item} />}
         // 스크롤 잠금: 페칭 중일 때나 데이터가 없을 때
         scrollEnabled={!showSkeleton && isNotEmpty(data)}
