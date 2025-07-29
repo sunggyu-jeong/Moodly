@@ -6,7 +6,7 @@ import {
   deleteDiary as deleteDiaryRealm,
   getDiaryCount as getDiaryCountRealm,
   hasDiaryForDay as hasDiaryForDayRealm,
-  selectById as selectByIdRealm,
+  selectByDay as selectByDayRealm,
   selectByMonth as selectByMonthRealm,
   updateDiary as updateDiaryRealm,
 } from './diaryRealmService';
@@ -16,7 +16,7 @@ import {
   deleteDiary as deleteDiarySB,
   getDiaryCount as getDiaryCountSB,
   hasDiaryForDay as hasDiaryForDaySB,
-  selectById as selectByIdSB,
+  selectByDay as selectByDaySB,
   selectByMonth as selectByMonthSB,
   updateDiary as updateDiarySB,
 } from './diarySupabaseService';
@@ -57,12 +57,12 @@ export const diaryApi = baseApi.injectEndpoints({
       },
       providesTags: ['EmotionDiary'],
     }),
-    selectById: builder.query<EmotionDiaryDTO | null, number>({
-      async queryFn(_arg, _api, _extraOptions, _baseQuery) {
+    selectByDay: builder.query<EmotionDiaryDTO | null, string>({
+      async queryFn(date, _api, _extraOptions, _baseQuery) {
         return wrapQueryFn(() =>
           fetchWithAuth(
-            () => selectByIdRealm(_arg),
-            () => selectByIdSB(_arg)
+            () => selectByDayRealm(date),
+            () => selectByDaySB(date)
           )
         );
       },
@@ -117,7 +117,7 @@ export const {
   useGetDiaryCountQuery,
   useHasDiaryForDayQuery,
   useSelectByMonthQuery,
-  useSelectByIdQuery,
+  useSelectByDayQuery,
   useCreateDiaryMutation,
   useUpdateDiaryMutation,
   useDeleteDiaryMutation,

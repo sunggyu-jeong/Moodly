@@ -54,11 +54,15 @@ export async function selectByMonth(
   }
 }
 
-export async function selectById(emotionId: number): Promise<ApiResponse<EmotionDiaryDTO | null>> {
+export async function selectByDay(date: string): Promise<ApiResponse<EmotionDiaryDTO | null>> {
   try {
     const realm = getRealm();
-    const raw = realm.objectForPrimaryKey<EmotionDiary>('EmotionDiary', emotionId);
-    return { data: isNotEmpty(raw) ? EmotionDiaryToDTO(raw) : null };
+    const start = dayjs(date).startOf('day').toDate();
+    const end = dayjs(date).endOf('day').toDate();
+    const results = realm
+      .objects<EmotionDiary>('EmotionDiary')
+      .filtered('record_date >= $0 AND record_date <= $1', start, end);
+    return { data: results.length > 0 ? EmotionDiaryToDTO(results[0]) : null };
   } catch (err) {
     throw baseFormatError(err as Error);
   }

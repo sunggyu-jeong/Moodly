@@ -1,5 +1,6 @@
 import { ApiResponse } from '@entities/common/response';
 import { EmotionDiaryDTO, EmotionDiarySupabase, mapSupabaseToDTO } from '@entities/diary';
+import { EmotionDiaryToDTO } from '@features/diary/service/EmotionDiaryMapper';
 import { AuthError } from '@supabase/supabase-js';
 import { ApiCode } from '../../config/errorCodes';
 import { isNotEmpty } from '../../lib';
@@ -74,22 +75,21 @@ export async function selectByMonth(
   }
 }
 
-export async function selectById(emotionId: number): Promise<ApiResponse<EmotionDiaryDTO>> {
+export async function selectByDay(startDate: string): Promise<ApiResponse<EmotionDiaryDTO | null>> {
   try {
     const response = await supabase.auth.getSession();
-    const { data, error } = await supabase
+    const { data: rows, error } = await supabase
       .from('moodly_diary')
       .select('*')
-      .eq('emotion_id', emotionId)
-      .eq('user_id', response.data.session?.user.id)
-      .single();
+      .eq('record_date', startDate)
+      .eq('user_id', response.data.session?.user.id);
     if (error) throw error;
-    return { data: mapSupabaseToDTO(data) ?? null };
+    const row = rows && rows.length > 0 ? rows[0] : null;
+    return { data: row ? EmotionDiaryToDTO(row) : null };
   } catch (err) {
     throw baseFormatError(err as AuthError);
   }
 }
-
 export async function createDiary(
   dto: Omit<EmotionDiaryDTO, 'emotionId' | 'createdAt' | 'updatedAt'>
 ): Promise<ApiResponse<number>> {
