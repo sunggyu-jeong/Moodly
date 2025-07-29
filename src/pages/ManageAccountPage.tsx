@@ -70,7 +70,8 @@ const ManageAccountPage = () => {
           setShowModalPopup({
             visibility: true,
             title: '계정 삭제',
-            message: '계정을 삭제하게되면 데이터가 전부 사라져요',
+            message:
+              '삭제 시 모든 기록 정보가 완전히 삭제되며,\n복구가 불가능합니다.\n\n정말 삭제하시겠어요?',
             cancelText: '취소',
             confirmText: '삭제',
             confirmActionKey: MODAL_CONFIRM_ACTION_KEY.WITHDRAWAL,

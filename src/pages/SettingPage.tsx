@@ -58,7 +58,7 @@ const SettingPage = () => {
       switch (type) {
         case SETTING_EVENT_TYPE.MANAGE_ACCOUNT:
           navigate('Main', {
-            screen: 'Setting',
+            screen: 'SettingStack',
             params: { screen: 'ManageAccount' },
           });
           break;

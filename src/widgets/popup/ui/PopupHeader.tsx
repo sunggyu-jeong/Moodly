@@ -1,8 +1,8 @@
 import { StyleSheet, View } from 'react-native';
 
-import { gray } from '../../../shared/styles/colors';
-import { Body2 } from '../../../shared/ui/typography/Body2';
-import { H2 } from '../../../shared/ui/typography/H2';
+import { gray } from '@shared/styles/colors';
+import { Body2 } from '@shared/ui/typography/Body2';
+import { H2 } from '@shared/ui/typography/H2';
 
 interface PopupHeaderProps {
   title: string;
@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
   popupContent: {
     color: gray[400],
     marginTop: 9,
+    textAlign: 'center',
   },
   popupTitle: {
     color: gray[600],
