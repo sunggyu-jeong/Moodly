@@ -8,15 +8,25 @@ import useDelay from '@shared/hooks/useDelay';
 import colors from '@shared/styles/colors.ts';
 import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar.tsx';
 import dayjs from 'dayjs';
-import { useMemo } from 'react';
+import { AnimatePresence, MotiView } from 'moti';
+import { useMemo, useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
+import { Layout } from 'react-native-reanimated';
 import CalendarBar from '../features/calendar/ui/CalendarBar';
 import EmotionDiaryCardList from '../features/diary/ui/EmotionDiaryCardList';
 import { isEmpty, isNotEmpty } from '../shared/lib';
 import { generateMonthGrid } from '../shared/lib/date.util';
 import WeekdayHeader from '../shared/ui/elements/WeekdayHeader';
 
+const DiaryPageMode = {
+  listMode: 'LISTMODE',
+  calendarMode: 'CALENDARMODE',
+} as const;
+
+type DiaryPageModeType = (typeof DiaryPageMode)[keyof typeof DiaryPageMode];
+
 const EmotionDiaryListPage = () => {
+  const [diaryMode, setDiaryMode] = useState<DiaryPageModeType>(DiaryPageMode.calendarMode);
   const selectedMonth = useAppSelector(state => state.diarySlice.selectedMonth);
   const currentMonth = dayjs();
   const dispatch = useAppDispatch();
@@ -69,19 +79,40 @@ const EmotionDiaryListPage = () => {
         // 데이터 페칭 중일 때 스켈레톤 화면 표출
         // 패칭 완료 시 캘린더 뷰일경우, 캘린더정보 표출
         ListHeaderComponent={() => (
-          <>
-            {showSkeleton && <DiarySkeleton />}
-            {!showSkeleton && (
-              <View className="relative mb-8">
-                <WeekdayHeader />
-                <CalendarBar
-                  monthlyDates={generateMonthGrid(dayjs(selectedMonth).month())}
-                  entries={data}
-                />
-                <View className="w-full left-0 right-0 h-1 bg-gray-200 mt-8" />
-              </View>
+          <AnimatePresence>
+            {showSkeleton && (
+              <MotiView
+                key="skeleton"
+                from={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ type: 'timing', duration: 300 }}
+              >
+                <DiarySkeleton />
+              </MotiView>
             )}
-          </>
+            {!showSkeleton && diaryMode === DiaryPageMode.calendarMode && (
+              <AnimatePresence exitBeforeEnter>
+                <MotiView
+                  key="calendar"
+                  layout={Layout.springify().damping(16).stiffness(120).mass(0.8)}
+                  from={{ opacity: 0, translateY: -20 }}
+                  animate={{ opacity: 1, translateY: 0 }}
+                  exit={{ opacity: 0, translateY: 20 }}
+                  transition={{ type: 'timing', duration: 250 }}
+                  exitTransition={{ type: 'timing', duration: 0 }}
+                  className="relative mb-8"
+                >
+                  <WeekdayHeader />
+                  <CalendarBar
+                    monthlyDates={generateMonthGrid(dayjs(selectedMonth).month())}
+                    entries={data}
+                  />
+                  <View className="w-full left-0 right-0 h-1 bg-gray-200 mt-8" />
+                </MotiView>
+              </AnimatePresence>
+            )}
+          </AnimatePresence>
         )}
         // 빈 상태: 스켈레톤이 끝나고 데이터가 없을 때
         ListEmptyComponent={() =>
