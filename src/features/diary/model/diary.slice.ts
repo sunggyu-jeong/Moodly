@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
-import dayjs, { Dayjs } from 'dayjs';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import dayjs from 'dayjs';
 
 import { EmotionDiaryDTO } from '@entities/diary';
 import { EmotionIconData, ICON_DATA } from '@shared/constants/Icons';
@@ -7,7 +7,7 @@ import { EmotionIconData, ICON_DATA } from '@shared/constants/Icons';
 interface DiaryState {
   selectedDiary: EmotionDiaryDTO | null;
   selectedIcon: EmotionIconData | null;
-  todayDiary: EmotionDiaryDTO | null;
+  currentDiary: EmotionDiaryDTO | null;
   selectedMonth: string;
   isModifyMode: boolean;
   selectedDay: string;
@@ -16,7 +16,7 @@ interface DiaryState {
 const initialState: DiaryState = {
   selectedDiary: null,
   selectedIcon: ICON_DATA[0],
-  todayDiary: null,
+  currentDiary: null,
   selectedMonth: dayjs().toISOString(),
   isModifyMode: false,
   selectedDay: dayjs().toISOString(),
@@ -29,8 +29,11 @@ const diarySlice = createSlice({
     setSelectedIcon: (state, action) => {
       state.selectedIcon = action.payload;
     },
-    setTodayDiary: (state, action) => {
-      state.todayDiary = action.payload;
+    setCurrentDiary: (state, action: PayloadAction<Partial<EmotionDiaryDTO>>) => {
+      state.currentDiary = {
+        ...(state.currentDiary ?? {}),
+        ...action.payload,
+      };
     },
     setSelectedMonth: (state, action) => {
       state.selectedMonth = action.payload;
@@ -49,7 +52,7 @@ const diarySlice = createSlice({
 
 export const {
   setSelectedIcon,
-  setTodayDiary,
+  setCurrentDiary,
   setSelectedMonth,
   setSelectedDiary,
   setModifyMode,

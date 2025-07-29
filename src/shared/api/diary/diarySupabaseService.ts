@@ -98,10 +98,10 @@ export async function createDiary(
     const now = new Date().toISOString();
     const payload: Database['public']['Tables']['moodly_diary']['Insert'] = {
       icon_id: dto.iconId!,
-      record_date: now!,
-      description: dto.description || '',
-      created_at: now,
-      updated_at: now,
+      record_date: dto.recordDate ?? now,
+      description: dto.description ?? '',
+      created_at: dto.recordDate ?? now,
+      updated_at: dto.recordDate ?? now,
       user_id: response.data.session?.user.id || '',
     };
     const { data, error } = await supabase

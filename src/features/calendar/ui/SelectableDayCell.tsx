@@ -5,7 +5,8 @@ import { isEmpty, navigate } from '@shared/lib';
 import DayCell from '@shared/ui/elements/DayCell';
 import dayjs, { Dayjs } from 'dayjs';
 import React, { useCallback, useMemo } from 'react';
-import { setSelectedDay } from '../../diary/model/diary.slice';
+import { EmotionDiaryDTO } from '../../../entities/diary';
+import { setCurrentDiary, setSelectedDay } from '../../diary/model/diary.slice';
 
 interface SelectableDayCellProps {
   date: Dayjs;
@@ -27,6 +28,10 @@ const SelectableDayCell = ({ date, iconId }: SelectableDayCellProps) => {
 
   const onPress = useCallback(() => {
     if (!iconId) {
+      const emotion: Partial<EmotionDiaryDTO> = {
+        recordDate: date.toISOString(),
+      };
+      dispatch(setCurrentDiary(emotion));
       navigate('DiaryStack', { screen: 'EmotionSelectionPage' });
       return;
     }

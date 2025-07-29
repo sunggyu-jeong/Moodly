@@ -4,7 +4,7 @@ import { isEmpty } from '@shared/lib';
 import { useCallback } from 'react';
 
 export function useDiaryMutation(text: string) {
-  const todayDiary = useAppSelector(state => state.diarySlice.todayDiary);
+  const currentDiary = useAppSelector(state => state.diarySlice.currentDiary);
   const selectedDiary = useAppSelector(state => state.diarySlice.selectedDiary);
   const isModifyMode = useAppSelector(state => state.diarySlice.isModifyMode);
   const [create, { data: createRes, isLoading: createLoading }] = useCreateDiaryMutation();
@@ -12,13 +12,13 @@ export function useDiaryMutation(text: string) {
 
   const save = useCallback(async () => {
     if (isEmpty(text)) return;
-    const diary = { ...todayDiary, description: text };
+    const diary = { ...currentDiary, description: text };
     if (isModifyMode) {
       await update({ emotionId: selectedDiary?.emotionId ?? -1, updates: diary });
     } else {
       await create(diary);
     }
-  }, [text, create, update, selectedDiary, todayDiary, isModifyMode]);
+  }, [text, create, update, selectedDiary, currentDiary, isModifyMode]);
 
   return {
     save,

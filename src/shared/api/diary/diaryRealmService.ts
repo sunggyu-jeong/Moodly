@@ -69,15 +69,16 @@ export async function createDiary(data: EmotionDiaryDTO): Promise<ApiResponse<nu
     const realm = getRealm();
     const maxId = realm.objects('EmotionDiary').max('emotion_id');
     const nextId = (typeof maxId === 'number' ? maxId : 0) + 1;
+    const now = new Date();
 
     realm.write(() => {
       realm.create<EmotionDiary>('EmotionDiary', {
         emotion_id: nextId,
         icon_id: data.iconId,
-        record_date: new Date(),
+        record_date: data.recordDate ? dayjs(data.recordDate).toDate() : now,
         description: data.description,
-        created_at: new Date(),
-        updated_at: new Date(),
+        created_at: data.recordDate ? dayjs(data.recordDate).toDate() : now,
+        updated_at: data.recordDate ? dayjs(data.recordDate).toDate() : now,
       });
     });
 
