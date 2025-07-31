@@ -1,12 +1,15 @@
 import { DiaryPageMode, DiaryPageModeType } from '@entities/calendar/diary.type';
 import EmotionDiaryMonthView from '@features/calendar/ui/EmotionDiaryMonthView';
 import { resetDiary, setSelectedMonth } from '@features/diary/model/diary.slice';
+import EmotionDiaryMonthSelector from '@features/diary/ui/EmotionDiaryMonthSelector';
 import { useAppDispatch, useAppSelector } from '@shared/hooks';
-import { isEmpty, isNotEmpty } from '@shared/lib';
+import { isNotEmpty } from '@shared/lib';
+import colors from '@shared/styles/colors';
 import dayjs from 'dayjs';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import PagerView, { PagerViewOnPageSelectedEvent } from 'react-native-pager-view';
+import NavigationBar from '../../navigation-bar/ui/NavigationBar';
 import { useDiaryDayData, useDiaryMonthData } from '../hooks';
 
 const DiaryPager = () => {
@@ -31,9 +34,6 @@ const DiaryPager = () => {
   );
 
   const currentList = diaryMode === DiaryPageMode.calendarMode ? dayListData : listData;
-  useEffect(() => {
-    console.log('>141241241', dayListData);
-  }, [dayListData]);
 
   const onChangeMonth = useCallback(
     (dir: 'left' | 'right') => {
@@ -63,59 +63,66 @@ const DiaryPager = () => {
   }, [dispatch]);
 
   return (
-    <PagerView
-      ref={pagerRef}
-      style={styles.pager}
-      initialPage={1}
-      offscreenPageLimit={1}
-      overdrag={false}
-      onPageSelected={onPageSelected}
-    >
-      {/* 0: 이전 달 */}
-      <EmotionDiaryMonthView
-        key="prev"
-        monthDate={prevMonth}
-        listData={prevListData}
-        monthData={prevMonthData ?? []}
-        diaryMode={diaryMode}
-        currentMonth={currentMonth}
-        selectedMonth={selectedMonth}
-        onChangeMonth={onChangeMonth}
-        disableLeft={false}
-        disableRight
-        scrollEnabled={isNotEmpty(prevListData)}
+    <>
+      <NavigationBar
+        backgroundColor={colors.gray[100]}
+        showBackButton={false}
+        centerComponent={
+          <EmotionDiaryMonthSelector
+            monthLabel={selectedMonth.format('M월')}
+            onPressLeft={() => onChangeMonth('left')}
+            onPressRight={() => onChangeMonth('right')}
+            leftDisabled={false}
+            rightDisabled={currentMonth.isSame(selectedMonth, 'month')}
+          />
+        }
       />
 
-      {/* 1: 현재 선택 달 */}
-      <EmotionDiaryMonthView
-        key="current"
-        monthDate={selectedMonth}
-        listData={currentList}
-        monthData={data ?? []}
-        diaryMode={diaryMode}
-        currentMonth={currentMonth}
-        selectedMonth={selectedMonth}
-        onChangeMonth={onChangeMonth}
-        disableLeft={diaryMode !== DiaryPageMode.calendarMode && isEmpty(currentList)}
-        disableRight={currentMonth.isSame(selectedMonth, 'month')}
-        scrollEnabled={diaryMode !== DiaryPageMode.calendarMode && isNotEmpty(currentList)}
-      />
+      <PagerView
+        ref={pagerRef}
+        style={styles.pager}
+        initialPage={1}
+        offscreenPageLimit={1}
+        overdrag={false}
+        onPageSelected={onPageSelected}
+      >
+        {/* 0: 이전 달 */}
+        <EmotionDiaryMonthView
+          key="prev"
+          monthDate={prevMonth}
+          listData={prevListData}
+          monthData={prevMonthData ?? []}
+          diaryMode={diaryMode}
+          currentMonth={currentMonth}
+          selectedMonth={selectedMonth}
+          scrollEnabled={isNotEmpty(prevListData)}
+        />
 
-      {/* 2: 다음 달 */}
-      <EmotionDiaryMonthView
-        key="next"
-        monthDate={nextMonth}
-        listData={nextListData}
-        monthData={nextMonthData ?? []}
-        diaryMode={diaryMode}
-        currentMonth={currentMonth}
-        selectedMonth={selectedMonth}
-        onChangeMonth={onChangeMonth}
-        disableLeft
-        disableRight={currentMonth.isSame(nextMonth, 'month')}
-        scrollEnabled={isNotEmpty(nextListData)}
-      />
-    </PagerView>
+        {/* 1: 현재 선택 달 */}
+        <EmotionDiaryMonthView
+          key="current"
+          monthDate={selectedMonth}
+          listData={currentList}
+          monthData={data ?? []}
+          diaryMode={diaryMode}
+          currentMonth={currentMonth}
+          selectedMonth={selectedMonth}
+          scrollEnabled={diaryMode !== DiaryPageMode.calendarMode && isNotEmpty(currentList)}
+        />
+
+        {/* 2: 다음 달 */}
+        <EmotionDiaryMonthView
+          key="next"
+          monthDate={nextMonth}
+          listData={nextListData}
+          monthData={nextMonthData ?? []}
+          diaryMode={diaryMode}
+          currentMonth={currentMonth}
+          selectedMonth={selectedMonth}
+          scrollEnabled={isNotEmpty(nextListData)}
+        />
+      </PagerView>
+    </>
   );
 };
 
