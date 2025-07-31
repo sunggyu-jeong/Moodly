@@ -15,9 +15,8 @@ const EmotionDiaryListEmpty = ({ showSkeleton }: DiaryListEmptyProps) =>
 const styles = StyleSheet.create({
   emptyContainer: {
     alignItems: 'center',
-    flexGrow: 1,
+    flex: 1,
     justifyContent: 'center',
-    paddingTop: 20,
   },
 });
 

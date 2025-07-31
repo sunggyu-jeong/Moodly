@@ -64,58 +64,75 @@ const DiaryPager = () => {
     dispatch(resetDiary());
   }, [dispatch]);
 
-  const toggleDiaryMode = () => {
+  const toggleDiaryMode = useCallback(() => {
     setDiaryMode(prev =>
       prev === DiaryPageMode.listMode ? DiaryPageMode.calendarMode : DiaryPageMode.listMode
     );
-  };
+  }, []);
+
+  const monthSelector = useMemo(
+    () => (
+      <EmotionDiaryMonthSelector
+        monthLabel={selectedMonth.format('M월')}
+        onPressLeft={() => onChangeMonth('left')}
+        onPressRight={() => onChangeMonth('right')}
+      />
+    ),
+    [selectedMonth, onChangeMonth]
+  );
+
+  const leftComponents = useMemo(
+    () => [
+      {
+        item: monthSelector,
+        disabled: true,
+      },
+    ],
+    [monthSelector]
+  );
+
+  const viewModeButton = useMemo(
+    () => ({
+      item: (
+        <Image
+          source={
+            diaryMode === DiaryPageMode.calendarMode
+              ? DIARY_ICONS.iconDiaryCalendar
+              : DIARY_ICONS.iconDiaryList
+          }
+          className="w-6 h-6"
+          resizeMode="stretch"
+        />
+      ),
+      onPress: toggleDiaryMode,
+    }),
+    [diaryMode, toggleDiaryMode]
+  );
+
+  const actionButtons = useMemo(() => {
+    const buttons = [];
+    if (diaryMode === DiaryPageMode.calendarMode) {
+      buttons.push({
+        item: (
+          <DiaryToggle
+            isOn={true}
+            texts={['주간', '월간']}
+          />
+        ),
+        disabled: true,
+      });
+    }
+    buttons.push(viewModeButton);
+    return buttons;
+  }, [diaryMode, viewModeButton]);
 
   return (
     <>
       <NavigationBar
         backgroundColor={colors.gray[100]}
         showBackButton={false}
-        leftComponents={[
-          {
-            item: (
-              <EmotionDiaryMonthSelector
-                monthLabel={selectedMonth.format('M월')}
-                onPressLeft={() => onChangeMonth('left')}
-                onPressRight={() => onChangeMonth('right')}
-              />
-            ),
-            disabled: true,
-          },
-        ]}
-        actionButtons={[
-          ...(diaryMode === DiaryPageMode.calendarMode
-            ? [
-                {
-                  item: (
-                    <DiaryToggle
-                      isOn={diaryMode === DiaryPageMode.calendarMode}
-                      texts={['주간', '월간']}
-                    />
-                  ),
-                  disabled: true,
-                },
-              ]
-            : []),
-          {
-            item: (
-              <Image
-                source={
-                  diaryMode === DiaryPageMode.calendarMode
-                    ? DIARY_ICONS.iconDiaryCalendar
-                    : DIARY_ICONS.iconDiaryList
-                }
-                className="w-6 h-6"
-                resizeMode="stretch"
-              />
-            ),
-            onPress: toggleDiaryMode,
-          },
-        ]}
+        leftComponents={leftComponents}
+        actionButtons={actionButtons}
       />
 
       <PagerView
@@ -130,7 +147,7 @@ const DiaryPager = () => {
         <EmotionDiaryMonthView
           key="prev"
           monthDate={prevMonth}
-          listData={prevListData}
+          listData={diaryMode === DiaryPageMode.calendarMode ? currentList : prevListData}
           monthData={prevMonthData ?? []}
           diaryMode={diaryMode}
           currentMonth={currentMonth}
@@ -154,7 +171,7 @@ const DiaryPager = () => {
         <EmotionDiaryMonthView
           key="next"
           monthDate={nextMonth}
-          listData={nextListData}
+          listData={diaryMode === DiaryPageMode.calendarMode ? currentList : nextListData}
           monthData={nextMonthData ?? []}
           diaryMode={diaryMode}
           currentMonth={currentMonth}
@@ -171,4 +188,5 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
 export default DiaryPager;

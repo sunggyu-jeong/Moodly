@@ -51,7 +51,7 @@ const EmotionDiaryListHeader = ({
             monthlyDates={generateMonthGrid({ targetDate: dayjs(selectedMonth) })}
             entries={monthData}
           />
-          <View className="w-full left-0 right-0 h-1 bg-gray-200 mt-8" />
+          <View className="-mx-5 mt-8 h-[1px] bg-gray-200" />
         </MotiView>
       </AnimatePresence>
     )}

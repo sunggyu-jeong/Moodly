@@ -50,6 +50,7 @@ const EmotionDiaryMonthView = ({
 const styles = StyleSheet.create({
   emptyContainer: {
     alignItems: 'center',
+    flexGrow: 1,
     justifyContent: 'center',
   },
   list: {
