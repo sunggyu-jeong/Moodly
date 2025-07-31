@@ -2,18 +2,20 @@ import { DiaryPageMode, DiaryPageModeType } from '@entities/calendar/diary.type'
 import EmotionDiaryMonthView from '@features/calendar/ui/EmotionDiaryMonthView';
 import { resetDiary, setSelectedMonth } from '@features/diary/model/diary.slice';
 import EmotionDiaryMonthSelector from '@features/diary/ui/EmotionDiaryMonthSelector';
+import { DIARY_ICONS } from '@shared/assets/images/diary';
 import { useAppDispatch, useAppSelector } from '@shared/hooks';
 import { isNotEmpty } from '@shared/lib';
 import colors from '@shared/styles/colors';
+import DiaryToggle from '@shared/ui/elements/DiaryToggle';
 import dayjs from 'dayjs';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import PagerView, { PagerViewOnPageSelectedEvent } from 'react-native-pager-view';
 import NavigationBar from '../../navigation-bar/ui/NavigationBar';
 import { useDiaryDayData, useDiaryMonthData } from '../hooks';
 
 const DiaryPager = () => {
-  const [diaryMode] = useState<DiaryPageModeType>(DiaryPageMode.calendarMode);
+  const [diaryMode, setDiaryMode] = useState<DiaryPageModeType>(DiaryPageMode.calendarMode);
 
   const dispatch = useAppDispatch();
   const selectedMonthIso = useAppSelector(state => state.diarySlice.selectedMonth);
@@ -62,18 +64,58 @@ const DiaryPager = () => {
     dispatch(resetDiary());
   }, [dispatch]);
 
+  const toggleDiaryMode = () => {
+    setDiaryMode(prev =>
+      prev === DiaryPageMode.listMode ? DiaryPageMode.calendarMode : DiaryPageMode.listMode
+    );
+  };
+
   return (
     <>
       <NavigationBar
         backgroundColor={colors.gray[100]}
         showBackButton={false}
-        centerComponent={
-          <EmotionDiaryMonthSelector
-            monthLabel={selectedMonth.format('M월')}
-            onPressLeft={() => onChangeMonth('left')}
-            onPressRight={() => onChangeMonth('right')}
-          />
-        }
+        leftComponents={[
+          {
+            item: (
+              <EmotionDiaryMonthSelector
+                monthLabel={selectedMonth.format('M월')}
+                onPressLeft={() => onChangeMonth('left')}
+                onPressRight={() => onChangeMonth('right')}
+              />
+            ),
+            disabled: true,
+          },
+        ]}
+        actionButtons={[
+          ...(diaryMode === DiaryPageMode.calendarMode
+            ? [
+                {
+                  item: (
+                    <DiaryToggle
+                      isOn={diaryMode === DiaryPageMode.calendarMode}
+                      texts={['주간', '월간']}
+                    />
+                  ),
+                  disabled: true,
+                },
+              ]
+            : []),
+          {
+            item: (
+              <Image
+                source={
+                  diaryMode === DiaryPageMode.calendarMode
+                    ? DIARY_ICONS.iconDiaryCalendar
+                    : DIARY_ICONS.iconDiaryList
+                }
+                className="w-6 h-6"
+                resizeMode="stretch"
+              />
+            ),
+            onPress: toggleDiaryMode,
+          },
+        ]}
       />
 
       <PagerView
