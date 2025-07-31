@@ -72,8 +72,6 @@ const DiaryPager = () => {
             monthLabel={selectedMonth.format('M월')}
             onPressLeft={() => onChangeMonth('left')}
             onPressRight={() => onChangeMonth('right')}
-            leftDisabled={false}
-            rightDisabled={currentMonth.isSame(selectedMonth, 'month')}
           />
         }
       />
