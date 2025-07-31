@@ -3,6 +3,7 @@ import { GridList } from '@shared/ui/elements/GridList';
 import dayjs, { Dayjs } from 'dayjs';
 import { View } from 'react-native';
 import SelectableDayCell from './SelectableDayCell';
+import { useMemo } from 'react';
 
 interface CalendarBarProps {
   monthlyDates: (Dayjs | null)[][];
@@ -10,7 +11,7 @@ interface CalendarBarProps {
 }
 
 const CalendarBar = ({ monthlyDates, entries }: CalendarBarProps) => {
-  const flatDates = monthlyDates.flat();
+  const flatDates = useMemo(() => monthlyDates.flat(), [monthlyDates]);
 
   return (
     <GridList<{ date: Dayjs | null; iconId: number | null }>

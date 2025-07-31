@@ -67,7 +67,8 @@ const DiaryPager = () => {
       ref={pagerRef}
       style={styles.pager}
       initialPage={1}
-      offscreenPageLimit={2}
+      offscreenPageLimit={1}
+      overdrag={false}
       onPageSelected={onPageSelected}
     >
       {/* 0: 이전 달 */}
