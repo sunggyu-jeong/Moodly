@@ -17,6 +17,7 @@ interface EmotionDiaryMonthViewProps {
   currentMonth: Dayjs;
   selectedMonth: Dayjs;
   scrollEnabled: boolean;
+  showSkeleton?: boolean;
 }
 
 const EmotionDiaryMonthView = ({
@@ -25,6 +26,7 @@ const EmotionDiaryMonthView = ({
   monthData,
   diaryMode,
   scrollEnabled,
+  showSkeleton,
 }: EmotionDiaryMonthViewProps) => (
   <View style={styles.page}>
     <FlatList
@@ -34,13 +36,13 @@ const EmotionDiaryMonthView = ({
       contentContainerStyle={[styles.scrollViewContent, isEmpty(listData) && styles.emptyContainer]}
       ListHeaderComponent={
         <EmotionDiaryListHeader
-          showSkeleton={false}
+          showSkeleton={showSkeleton ?? false}
           diaryMode={diaryMode}
           selectedMonth={monthDate.toISOString()}
           monthData={monthData}
         />
       }
-      ListEmptyComponent={<EmotionDiaryListEmpty showSkeleton={false} />}
+      ListEmptyComponent={<EmotionDiaryListEmpty showSkeleton={showSkeleton ?? false} />}
       renderItem={({ item }) => <EmotionDiaryCardList data={item} />}
       scrollEnabled={scrollEnabled}
     />

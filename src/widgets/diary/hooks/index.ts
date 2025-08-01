@@ -1,3 +1,4 @@
+import { EmotionDiaryDTO } from '@entities/diary';
 import { useSelectByDayQuery, useSelectByMonthQuery } from '@shared/api/diary/diaryApi';
 import useDelay from '@shared/hooks/useDelay';
 import { Dayjs } from 'dayjs';
@@ -11,13 +12,14 @@ export const getMonthRange = (date: Dayjs) => ({
 export function useDiaryMonthData(monthDate: Dayjs) {
   const range = useMemo(() => getMonthRange(monthDate), [monthDate]);
   const { data, isFetching } = useSelectByMonthQuery(range);
-  const isDelay = useDelay(isFetching);
-  const listData = useMemo(() => (isDelay ? (data ?? []) : []), [isDelay, data]);
-  return { data, listData } as const;
+  const showSkeleton = useDelay(isFetching);
+  const listData = useMemo((): EmotionDiaryDTO[] => data ?? [], [data]);
+  return { listData, showSkeleton } as const;
 }
 
 export function useDiaryDayData(dayIso: string, enabled: boolean) {
-  const { data } = useSelectByDayQuery(dayIso, { skip: !enabled });
+  const { data, isFetching } = useSelectByDayQuery(dayIso, { skip: !enabled });
   const listData = useMemo(() => (enabled && data ? [data] : []), [enabled, data]);
-  return { data, listData } as const;
+  const showSkeleton = useDelay(isFetching);
+  return { listData, showSkeleton } as const;
 }
