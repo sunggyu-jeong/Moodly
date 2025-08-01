@@ -20,6 +20,8 @@ export function GridList<T>({
   return (
     <FlatList
       data={data}
+      initialNumToRender={7}
+      windowSize={3}
       numColumns={numColumns}
       keyExtractor={keyExtractor}
       scrollEnabled={false}
