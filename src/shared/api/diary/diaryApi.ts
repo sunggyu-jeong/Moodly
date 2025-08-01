@@ -55,7 +55,10 @@ export const diaryApi = baseApi.injectEndpoints({
           )
         );
       },
-      providesTags: ['EmotionDiary'],
+      providesTags: (result, _error, { start, end }) => [
+        { type: 'EmotionDiary' as const, id: `LIST-${start}-${end}` },
+        ...(result ? result.map(d => ({ type: 'EmotionDiary' as const, id: d.emotionId })) : []),
+      ],
     }),
     selectByDay: builder.query<EmotionDiaryDTO | null, string>({
       async queryFn(date, _api, _extraOptions, _baseQuery) {
@@ -66,7 +69,13 @@ export const diaryApi = baseApi.injectEndpoints({
           )
         );
       },
-      providesTags: ['EmotionDiary'],
+      providesTags: (result, _error, date) =>
+        result
+          ? [
+              { type: 'EmotionDiary' as const, id: `DAY-${date}` },
+              { type: 'EmotionDiary' as const, id: result.emotionId },
+            ]
+          : [{ type: 'EmotionDiary' as const, id: `DAY-${date}` }],
     }),
     createDiary: builder.mutation<
       number,
@@ -87,6 +96,9 @@ export const diaryApi = baseApi.injectEndpoints({
       {
         emotionId: number;
         updates: Partial<Omit<EmotionDiarySupabase, 'emotion_id'>>;
+        start: string;
+        end: string;
+        date: string;
       }
     >({
       async queryFn({ emotionId, updates }, _api, _extraOptions, _baseQuery) {
@@ -97,18 +109,30 @@ export const diaryApi = baseApi.injectEndpoints({
           )
         );
       },
-      invalidatesTags: ['EmotionDiary'],
+      invalidatesTags: (_result, _error, { emotionId, start, end, date }) => [
+        { type: 'EmotionDiary' as const, id: emotionId },
+        { type: 'EmotionDiary' as const, id: `LIST-${start}-${end}` },
+        { type: 'EmotionDiary' as const, id: `DAY-${date}` },
+      ],
     }),
-    deleteDiary: builder.mutation<string, number>({
-      async queryFn(_arg, _api, _extraOptions, _baseQuery) {
+
+    deleteDiary: builder.mutation<
+      string,
+      { emotionId: number; start: string; end: string; date: string }
+    >({
+      async queryFn({ emotionId }, _api, _extraOptions, _baseQuery) {
         return wrapQueryFn(() =>
           fetchWithAuth(
-            () => deleteDiaryRealm(_arg),
-            () => deleteDiarySB(_arg)
+            () => deleteDiaryRealm(emotionId),
+            () => deleteDiarySB(emotionId)
           )
         );
       },
-      invalidatesTags: ['EmotionDiary'],
+      invalidatesTags: (_result, _error, { emotionId, start, end, date }) => [
+        { type: 'EmotionDiary' as const, id: emotionId },
+        { type: 'EmotionDiary' as const, id: `LIST-${start}-${end}` },
+        { type: 'EmotionDiary' as const, id: `DAY-${date}` },
+      ],
     }),
   }),
 });
