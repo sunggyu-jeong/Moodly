@@ -1,5 +1,6 @@
 import { ApiResponse } from '@entities/common/response';
 import { EmotionDiaryDTO, EmotionDiarySupabase, mapSupabaseToDTO } from '@entities/diary';
+import { EmotionDiaryToDTO } from '@features/diary/service/EmotionDiaryMapper';
 import { AuthError } from '@supabase/supabase-js';
 import { ApiCode } from '../../config/errorCodes';
 import { isNotEmpty } from '../../lib';
@@ -74,22 +75,21 @@ export async function selectByMonth(
   }
 }
 
-export async function selectById(emotionId: number): Promise<ApiResponse<EmotionDiaryDTO>> {
+export async function selectByDay(startDate: string): Promise<ApiResponse<EmotionDiaryDTO | null>> {
   try {
     const response = await supabase.auth.getSession();
-    const { data, error } = await supabase
+    const { data: rows, error } = await supabase
       .from('moodly_diary')
       .select('*')
-      .eq('emotion_id', emotionId)
-      .eq('user_id', response.data.session?.user.id)
-      .single();
+      .eq('record_date', startDate)
+      .eq('user_id', response.data.session?.user.id);
     if (error) throw error;
-    return { data: mapSupabaseToDTO(data) ?? null };
+    const row = rows && rows.length > 0 ? rows[0] : null;
+    return { data: row ? EmotionDiaryToDTO(row) : null };
   } catch (err) {
     throw baseFormatError(err as AuthError);
   }
 }
-
 export async function createDiary(
   dto: Omit<EmotionDiaryDTO, 'emotionId' | 'createdAt' | 'updatedAt'>
 ): Promise<ApiResponse<number>> {
@@ -98,10 +98,10 @@ export async function createDiary(
     const now = new Date().toISOString();
     const payload: Database['public']['Tables']['moodly_diary']['Insert'] = {
       icon_id: dto.iconId!,
-      record_date: now!,
-      description: dto.description || '',
-      created_at: now,
-      updated_at: now,
+      record_date: dto.recordDate ?? now,
+      description: dto.description ?? '',
+      created_at: dto.recordDate ?? now,
+      updated_at: dto.recordDate ?? now,
       user_id: response.data.session?.user.id || '',
     };
     const { data, error } = await supabase
@@ -118,15 +118,15 @@ export async function createDiary(
 
 export async function updateDiary(
   emotionId: number,
-  updates: Partial<Omit<EmotionDiarySupabase, 'emotionId'>>
+  updates: Partial<Omit<EmotionDiaryDTO, 'emotionId'>>
 ): Promise<ApiResponse<number>> {
   try {
     const response = await supabase.auth.getSession();
     const now = new Date().toISOString();
     const payload: Database['public']['Tables']['moodly_diary']['Update'] = {
       updated_at: now,
-      ...(isNotEmpty(updates.icon_id) && { icon_id: updates.icon_id }),
-      ...(isNotEmpty(updates.record_date) && { record_date: updates.record_date }),
+      ...(isNotEmpty(updates.iconId) && { icon_id: updates.iconId }),
+      ...(isNotEmpty(updates.recordDate) && { record_date: updates.recordDate }),
       ...(isNotEmpty(updates.description) && { description: updates.description }),
     };
 

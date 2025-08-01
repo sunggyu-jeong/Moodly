@@ -1,14 +1,9 @@
 import { Image, StatusBar, StyleSheet, View } from 'react-native';
 
-import {
-  setSelectedDiary,
-  setSelectedIcon,
-  setTodayDiary,
-} from '@features/diary/model/diary.slice';
+import { resetDiary } from '@features/diary/model/diary.slice';
 import { useFocusEffect } from '@react-navigation/native';
 import { useGetDiaryCountQuery, useHasDiaryForDayQuery } from '@shared/api/diary/diaryApi';
 import { MAIN_ICONS } from '@shared/assets/images/main';
-import { ICON_DATA } from '@shared/constants';
 import { getScaleSize, useAppDispatch } from '@shared/hooks';
 import { jumpToTab, navigate } from '@shared/lib';
 import ActionButton from '@shared/ui/elements/ActionButton.tsx';
@@ -23,9 +18,7 @@ const HomePage = () => {
 
   useFocusEffect(
     useCallback(() => {
-      dispatch(setSelectedIcon(ICON_DATA[0]));
-      dispatch(setSelectedDiary({}));
-      dispatch(setTodayDiary(null));
+      dispatch(resetDiary());
     }, [dispatch])
   );
 

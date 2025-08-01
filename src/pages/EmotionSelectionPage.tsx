@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 
 import { EmotionDiaryDTO } from '@entities/diary';
-import { setSelectedIcon, setTodayDiary } from '@features/diary/model/diary.slice.ts';
+import { setCurrentDiary, setSelectedIcon } from '@features/diary/model/diary.slice.ts';
 import EmotionDisplaySelected from '@features/emotion/ui/EmotionDisplaySelected.tsx';
 import EmotionSelectionList from '@features/emotion/ui/EmotionSelectionList.tsx';
 import { ICON_DATA } from '@shared/constants/Icons.ts';
@@ -22,10 +22,10 @@ const EmotionSelectionPage = () => {
   const selectedDiary = useAppSelector(state => state.diarySlice.selectedDiary);
 
   const handleSelectEmotion = () => {
-    const emotion: EmotionDiaryDTO = {
+    const emotion: Partial<EmotionDiaryDTO> = {
       iconId: selectedEmotion?.id,
     };
-    dispatch(setTodayDiary(emotion));
+    dispatch(setCurrentDiary(emotion));
     navigate('DiaryStack', { screen: 'EmotionDiaryWritePage' });
   };
 
@@ -33,10 +33,10 @@ const EmotionSelectionPage = () => {
     // 수정일 때 사용
     if (isModifyMode && isNotEmpty(selectedDiary)) {
       dispatch(setSelectedIcon(ICON_DATA.find(el => el.id === selectedDiary.iconId)));
-      const emotion: EmotionDiaryDTO = {
+      const emotion: Partial<EmotionDiaryDTO> = {
         iconId: selectedDiary?.iconId,
       };
-      dispatch(setTodayDiary(emotion));
+      dispatch(setCurrentDiary(emotion));
     }
   }, [selectedDiary, dispatch, isModifyMode]);
 

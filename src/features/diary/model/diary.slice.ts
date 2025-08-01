@@ -1,38 +1,25 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import dayjs from 'dayjs';
 
 import { EmotionDiaryDTO } from '@entities/diary';
-import { AsyncOperationState, createInitialAsyncState } from '@shared/constants/ApiStatus';
 import { EmotionIconData, ICON_DATA } from '@shared/constants/Icons';
 
 interface DiaryState {
-  diaryCount: AsyncOperationState<number>;
-  searchById: AsyncOperationState<EmotionDiaryDTO>;
-  searchByMonth: AsyncOperationState<EmotionDiaryDTO[]>;
-  addDiary: AsyncOperationState<number>;
-  modifyDiary: AsyncOperationState<number>;
-  removeDiary: AsyncOperationState<void>;
   selectedDiary: EmotionDiaryDTO | null;
   selectedIcon: EmotionIconData | null;
-  todayDiary: EmotionDiaryDTO | null;
+  currentDiary: EmotionDiaryDTO | null;
   selectedMonth: string;
-  isDiaryExist: AsyncOperationState<boolean>;
   isModifyMode: boolean;
+  selectedDay: string;
 }
 
 const initialState: DiaryState = {
-  diaryCount: createInitialAsyncState<number>(),
-  searchById: createInitialAsyncState<EmotionDiaryDTO>(),
-  searchByMonth: createInitialAsyncState<EmotionDiaryDTO[]>(),
-  addDiary: createInitialAsyncState<number>(),
-  modifyDiary: createInitialAsyncState<number>(),
-  removeDiary: createInitialAsyncState<void>(),
-  isDiaryExist: createInitialAsyncState<boolean>(),
   selectedDiary: null,
   selectedIcon: ICON_DATA[0],
-  todayDiary: null,
+  currentDiary: null,
   selectedMonth: dayjs().toISOString(),
   isModifyMode: false,
+  selectedDay: dayjs().toISOString(),
 };
 
 const diarySlice = createSlice({
@@ -42,8 +29,11 @@ const diarySlice = createSlice({
     setSelectedIcon: (state, action) => {
       state.selectedIcon = action.payload;
     },
-    setTodayDiary: (state, action) => {
-      state.todayDiary = action.payload;
+    setCurrentDiary: (state, action: PayloadAction<Partial<EmotionDiaryDTO>>) => {
+      state.currentDiary = {
+        ...(state.currentDiary ?? {}),
+        ...action.payload,
+      };
     },
     setSelectedMonth: (state, action) => {
       state.selectedMonth = action.payload;
@@ -54,10 +44,26 @@ const diarySlice = createSlice({
     setModifyMode: (state, action) => {
       state.isModifyMode = action.payload;
     },
+    setSelectedDay: (state, action) => {
+      state.selectedDay = action.payload;
+    },
+    resetDiary: state => {
+      state.isModifyMode = false;
+      state.selectedIcon = ICON_DATA[0];
+      state.selectedDiary = null;
+      state.currentDiary = null;
+    },
   },
 });
 
-export const { setSelectedIcon, setTodayDiary, setSelectedMonth, setSelectedDiary, setModifyMode } =
-  diarySlice.actions;
+export const {
+  setSelectedIcon,
+  setCurrentDiary,
+  setSelectedMonth,
+  setSelectedDiary,
+  setModifyMode,
+  setSelectedDay,
+  resetDiary,
+} = diarySlice.actions;
 
 export default diarySlice.reducer;

@@ -24,7 +24,7 @@ import { DiarySaveButton } from '../features/diary/ui/EmotionDiarySaveButton';
 const actionButtons = [{ item: <NaviDismiss />, disabled: false }];
 
 const EmotionDiaryWritePage = () => {
-  const todayDiary = useAppSelector(state => state.diarySlice.todayDiary);
+  const currentDiary = useAppSelector(state => state.diarySlice.currentDiary);
   const selectedDiary = useAppSelector(state => state.diarySlice.selectedDiary);
   const scrollRef = useRef<ScrollView>(null);
 
@@ -54,7 +54,7 @@ const EmotionDiaryWritePage = () => {
             <H2 weight="semibold">왜 이 감정을 느꼈나요?</H2>
             <Image
               style={styles.emotionImage}
-              source={ICON_DATA.find(el => el.id === todayDiary?.iconId)?.iconBig}
+              source={ICON_DATA.find(el => el.id === currentDiary?.iconId)?.iconBig}
             />
           </View>
 

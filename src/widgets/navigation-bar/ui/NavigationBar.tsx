@@ -55,7 +55,7 @@ const NavigationBar = ({
         <View className="flex-1" />
 
         {isNotEmpty(actionButtons) && (
-          <View className="mr-[10px]">
+          <View className="flex-row mr-[10px] gap-3">
             {actionButtons.map((el, index) => (
               <NaviActionButton
                 key={index}

@@ -25,8 +25,8 @@ export const TEXTS = {
   guestTitle: '게스트',
   guestLabel: '기록한 내용을 저장하려면 로그인이 필요해요.',
   loginButton: '로그인 하기',
-  accountManagement: '계정관리',
-  notificationSettings: '알림설정',
+  accountManagement: '계정 관리',
+  notificationSettings: '알림 설정',
   feedback: '의견 보내기',
   appVersionPrefix: '앱 버전 : ',
 };

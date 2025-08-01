@@ -21,6 +21,8 @@ import { DropDownEventIdentifier } from '@widgets/dropdown/ui/DropDownItem.tsx';
 import NaviDismiss from '@widgets/navigation-bar/ui/NaviDismiss.tsx';
 import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar.tsx';
 
+import dayjs from 'dayjs';
+import { resetDiary } from '../features/diary/model/diary.slice';
 import { useDeleteDiaryMutation } from '../shared/api/diary/diaryApi';
 
 type DiaryDetailRouteParams = {
@@ -84,13 +86,14 @@ const EmotionDiaryDetailPage = () => {
   const handleRemoveDiary = useCallback(async () => {
     try {
       if (isNotEmpty(selectedDiary?.emotionId)) {
-        await deleteDiary(selectedDiary.emotionId);
-        if (route.params.origin === 'RootStack') {
-          goBack();
-        } else {
+        const start = dayjs(selectedDiary.createdAt).startOf('month').format('YYYY-MM-DD');
+        const end = dayjs(selectedDiary.createdAt).endOf('month').format('YYYY-MM-DD');
+        const date = dayjs(selectedDiary.createdAt).format('YYYY-MM-DD');
+        await deleteDiary({ emotionId: selectedDiary.emotionId, start, end, date });
+        if (route.params.origin !== 'RootStack') {
           dismissModalToScreen();
-          goBack();
         }
+        goBack();
         dispatch(setShowToastView({ visibility: true, message: '일기가 삭제되었어요!' }));
       }
     } catch (error) {
@@ -110,6 +113,12 @@ const EmotionDiaryDetailPage = () => {
       handleRemoveDiary();
     }
   }, [overlayEventHandler, handleRemoveDiary]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetDiary());
+    };
+  }, [dispatch]);
 
   return (
     <>
