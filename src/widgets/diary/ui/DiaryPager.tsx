@@ -150,7 +150,7 @@ const DiaryPager = () => {
         </PagerView>
       ) : (
         <EmotionDiaryMonthView
-          key="current"
+          key={`calendar-${selectedMonth.format('YYYY-MM')}`}
           monthDate={selectedMonth}
           listData={currentList}
           monthData={monthData}

@@ -32,6 +32,9 @@ const EmotionDiaryMonthView = ({
     <FlatList
       style={styles.list}
       data={listData}
+      initialNumToRender={listData.length}
+      windowSize={10}
+      maxToRenderPerBatch={5}
       keyExtractor={(item, idx) => item.emotionId?.toString() ?? idx.toString()}
       contentContainerStyle={[styles.scrollViewContent, isEmpty(listData) && styles.emptyContainer]}
       ListHeaderComponent={
