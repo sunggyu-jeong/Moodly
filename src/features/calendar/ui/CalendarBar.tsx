@@ -1,9 +1,9 @@
 import { EmotionDiaryDTO } from '@/entities/diary';
 import { GridList } from '@shared/ui/elements/GridList';
 import dayjs, { Dayjs } from 'dayjs';
+import { useMemo } from 'react';
 import { View } from 'react-native';
 import SelectableDayCell from './SelectableDayCell';
-import { useMemo } from 'react';
 
 interface CalendarBarProps {
   monthlyDates: (Dayjs | null)[][];
@@ -11,24 +11,36 @@ interface CalendarBarProps {
 }
 
 const CalendarBar = ({ monthlyDates, entries }: CalendarBarProps) => {
+  const entryMap = useMemo(() => {
+    const m = new Map<string, number>();
+    entries?.forEach(e => {
+      m.set(dayjs(e.recordDate).format('YYYY-MM-DD'), e.iconId ?? -1);
+    });
+    return m;
+  }, [entries]);
+
   const flatDates = useMemo(() => monthlyDates.flat(), [monthlyDates]);
 
+  const gridData = useMemo(
+    () =>
+      flatDates.map(date => ({
+        date,
+        iconId: date ? (entryMap.get(date.format('YYYY-MM-DD')) ?? null) : null,
+      })),
+    [flatDates, entryMap]
+  );
   return (
     <GridList<{ date: Dayjs | null; iconId: number | null }>
-      data={flatDates.map(date => {
-        if (!date) return { date: null, iconId: null };
-        const hit = entries?.find(e => dayjs(e.recordDate).isSame(date, 'day'));
-        return { date, iconId: hit?.iconId ?? null };
-      })}
-      renderItem={({ date, iconId }, idx) =>
+      data={gridData}
+      keyExtractor={(item, idx) => (item.date ? item.date.format('YYYY-MM-DD') : `empty-${idx}`)}
+      renderItem={({ date, iconId }) =>
         date ? (
           <SelectableDayCell
             date={date}
             iconId={iconId}
-            key={idx}
           />
         ) : (
-          <View key={idx} />
+          <View />
         )
       }
     />
