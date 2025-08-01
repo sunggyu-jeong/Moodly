@@ -1,17 +1,17 @@
+import { DiaryPageMode, DiaryPageModeType } from '@entities/calendar/diary.type';
+import EmotionDiaryMonthView from '@features/calendar/ui/EmotionDiaryMonthView';
+import { moveMonth, resetDiary } from '@features/diary/model/diary.slice';
+import EmotionDiaryMonthSelector from '@features/diary/ui/EmotionDiaryMonthSelector';
+import { DIARY_ICONS } from '@shared/assets/images/diary';
+import { useAppDispatch, useAppSelector } from '@shared/hooks';
+import { isNotEmpty } from '@shared/lib';
+import colors from '@shared/styles/colors';
+import DiaryToggle from '@shared/ui/elements/DiaryToggle';
+import { NaviActionButtonProps } from '@shared/ui/elements/NaviActionButton';
 import dayjs from 'dayjs';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { Image, InteractionManager, StyleSheet, TouchableOpacity } from 'react-native';
 import PagerView, { PagerViewOnPageSelectedEvent } from 'react-native-pager-view';
-import { DiaryPageMode, DiaryPageModeType } from '../../../entities/calendar/diary.type';
-import EmotionDiaryMonthView from '../../../features/calendar/ui/EmotionDiaryMonthView';
-import { resetDiary, setSelectedMonth } from '../../../features/diary/model/diary.slice';
-import EmotionDiaryMonthSelector from '../../../features/diary/ui/EmotionDiaryMonthSelector';
-import { DIARY_ICONS } from '../../../shared/assets/images/diary';
-import { useAppDispatch, useAppSelector } from '../../../shared/hooks';
-import { isNotEmpty } from '../../../shared/lib';
-import colors from '../../../shared/styles/colors';
-import DiaryToggle from '../../../shared/ui/elements/DiaryToggle';
-import { NaviActionButtonProps } from '../../../shared/ui/elements/NaviActionButton';
 import NavigationBar from '../../navigation-bar/ui/NavigationBar';
 import { useDiaryDayData, useDiaryMonthData } from '../hooks';
 
@@ -36,11 +36,8 @@ const DiaryPager = () => {
   const currentList = diaryMode === DiaryPageMode.calendarMode ? dayListData : monthData;
 
   const onChangeMonth = useCallback(
-    (dir: 'left' | 'right') => {
-      const nextIso = selectedMonth.add(dir === 'left' ? -1 : 1, 'month').toISOString();
-      dispatch(setSelectedMonth(nextIso));
-    },
-    [dispatch, selectedMonth]
+    (dir: 'left' | 'right') => dispatch(moveMonth(dir)),
+    [dispatch]
   );
 
   const pagerRef = useRef<PagerView>(null);
@@ -48,15 +45,18 @@ const DiaryPager = () => {
   const onPageSelected = useCallback(
     (e: PagerViewOnPageSelectedEvent) => {
       const idx = e.nativeEvent.position;
-      if (idx === 0) onChangeMonth('left');
-      if (idx === 2) onChangeMonth('right');
+
+      if (idx === 0 || idx === 2) {
+        pagerRef.current?.setPageWithoutAnimation(1);
+
+        InteractionManager.runAfterInteractions(() => {
+          if (idx === 0) onChangeMonth('left');
+          if (idx === 2) onChangeMonth('right');
+        });
+      }
     },
     [onChangeMonth]
   );
-
-  useEffect(() => {
-    pagerRef.current?.setPageWithoutAnimation(1);
-  }, [selectedMonthIso]);
 
   useEffect(() => {
     dispatch(resetDiary());
@@ -79,7 +79,10 @@ const DiaryPager = () => {
   const leftComponents = [{ item: monthSelector, disabled: true }];
   const viewModeButton = {
     item: (
-      <TouchableOpacity onPress={toggleDiaryMode}>
+      <TouchableOpacity
+        onPress={toggleDiaryMode}
+        hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+      >
         <Image
           source={
             diaryMode === DiaryPageMode.calendarMode

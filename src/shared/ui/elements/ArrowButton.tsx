@@ -14,6 +14,7 @@ const ArrowButton = ({ source, disabled, style, onPress }: ArrowButtonAtomProps)
     onPress={onPress}
     disabled={disabled}
     className={style}
+    hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
   >
     <Image
       source={source}

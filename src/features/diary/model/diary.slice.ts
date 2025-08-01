@@ -53,6 +53,10 @@ const diarySlice = createSlice({
       state.selectedDiary = null;
       state.currentDiary = null;
     },
+    moveMonth: (state, action: PayloadAction<'left' | 'right'>) => {
+      const delta = action.payload === 'left' ? -1 : 1;
+      state.selectedMonth = dayjs(state.selectedMonth).add(delta, 'month').toISOString();
+    },
   },
 });
 
@@ -64,6 +68,7 @@ export const {
   setModifyMode,
   setSelectedDay,
   resetDiary,
+  moveMonth,
 } = diarySlice.actions;
 
 export default diarySlice.reducer;
