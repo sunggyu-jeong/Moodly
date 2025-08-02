@@ -1,7 +1,7 @@
 import { EmotionDiaryDTO } from '@/entities/diary';
 import { GridList } from '@shared/ui/elements/GridList';
 import dayjs, { Dayjs } from 'dayjs';
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { View } from 'react-native';
 import SelectableDayCell from './SelectableDayCell';
 
@@ -47,4 +47,4 @@ const CalendarBar = ({ monthlyDates, entries }: CalendarBarProps) => {
   );
 };
 
-export default CalendarBar;
+export default memo(CalendarBar);

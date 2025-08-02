@@ -6,7 +6,7 @@ import EmotionDiaryListHeader from '@features/diary/ui/EmotionDiaryListHeader';
 import { isEmpty } from '@shared/lib';
 import colors from '@shared/styles/colors';
 import { Dayjs } from 'dayjs';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 
 interface EmotionDiaryMonthViewProps {
@@ -27,30 +27,39 @@ const EmotionDiaryMonthView = ({
   diaryMode,
   scrollEnabled,
   showSkeleton,
-}: EmotionDiaryMonthViewProps) => (
-  <View style={styles.page}>
-    <FlatList
-      style={styles.list}
-      data={listData}
-      initialNumToRender={listData.length}
-      windowSize={10}
-      maxToRenderPerBatch={5}
-      keyExtractor={(item, idx) => item.emotionId?.toString() ?? idx.toString()}
-      contentContainerStyle={[styles.scrollViewContent, isEmpty(listData) && styles.emptyContainer]}
-      ListHeaderComponent={
-        <EmotionDiaryListHeader
-          showSkeleton={showSkeleton ?? false}
-          diaryMode={diaryMode}
-          selectedMonth={monthDate.toISOString()}
-          monthData={monthData}
-        />
-      }
-      ListEmptyComponent={<EmotionDiaryListEmpty showSkeleton={showSkeleton ?? false} />}
-      renderItem={({ item }) => <EmotionDiaryCardList data={item} />}
-      scrollEnabled={scrollEnabled}
-    />
-  </View>
-);
+}: EmotionDiaryMonthViewProps) => {
+  const renderDiaryCard = useCallback(
+    ({ item }: { item: EmotionDiaryDTO }) => <EmotionDiaryCardList data={item} />,
+    []
+  );
+  return (
+    <View style={styles.page}>
+      <FlatList
+        style={styles.list}
+        data={listData}
+        initialNumToRender={listData.length}
+        windowSize={10}
+        maxToRenderPerBatch={5}
+        keyExtractor={(item, idx) => item.emotionId?.toString() ?? idx.toString()}
+        contentContainerStyle={[
+          styles.scrollViewContent,
+          isEmpty(listData) && styles.emptyContainer,
+        ]}
+        ListHeaderComponent={
+          <EmotionDiaryListHeader
+            showSkeleton={showSkeleton ?? false}
+            diaryMode={diaryMode}
+            selectedMonth={monthDate.toISOString()}
+            monthData={monthData}
+          />
+        }
+        ListEmptyComponent={<EmotionDiaryListEmpty showSkeleton={showSkeleton ?? false} />}
+        renderItem={renderDiaryCard}
+        scrollEnabled={scrollEnabled}
+      />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   emptyContainer: {
@@ -64,6 +73,7 @@ const styles = StyleSheet.create({
   page: {
     backgroundColor: colors.gray[100],
     flex: 1,
+    width: '100%',
   },
   scrollViewContent: {
     padding: 16,

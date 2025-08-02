@@ -10,10 +10,27 @@ import DiaryToggle from '@shared/ui/elements/DiaryToggle';
 import { NaviActionButtonProps } from '@shared/ui/elements/NaviActionButton';
 import dayjs from 'dayjs';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Image, InteractionManager, StyleSheet, TouchableOpacity } from 'react-native';
-import PagerView, { PagerViewOnPageSelectedEvent } from 'react-native-pager-view';
+import {
+  Dimensions,
+  FlatList,
+  Image,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
+import { EmotionDiaryDTO } from '../../../entities/diary';
 import NavigationBar from '../../navigation-bar/ui/NavigationBar';
 import { useDiaryDayData, useDiaryMonthData } from '../hooks';
+
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
+
+type CalendarPage = {
+  key: string;
+  monthDate: dayjs.Dayjs;
+  listData: EmotionDiaryDTO[];
+  monthData: EmotionDiaryDTO[];
+};
 
 const DiaryPager = () => {
   const [diaryMode, setDiaryMode] = useState<DiaryPageModeType>(DiaryPageMode.calendarMode);
@@ -35,32 +52,55 @@ const DiaryPager = () => {
   );
   const currentList = diaryMode === DiaryPageMode.calendarMode ? dayListData : monthData;
 
-  const onChangeMonth = useCallback(
-    (dir: 'left' | 'right') => dispatch(moveMonth(dir)),
+  /**
+   * ------------------
+   * MONTH CHANGE HANDLER (FlatList 기반)
+   * ------------------
+   */
+  const flatListRef = useRef<FlatList<CalendarPage>>(null);
+  const isScrollingRef = useRef(false); // 중복 month 이동 방지
+
+  const calendarPages: CalendarPage[] = useMemo(
+    () => [
+      { key: 'prev', monthDate: prevMonth, listData: prevMonthData, monthData: prevMonthData },
+      { key: 'current', monthDate: selectedMonth, listData: currentList, monthData: monthData },
+      { key: 'next', monthDate: nextMonth, listData: nextMonthData, monthData: nextMonthData },
+    ],
+    [prevMonth, selectedMonth, nextMonth, prevMonthData, monthData, nextMonthData, currentList]
+  );
+
+  const scrollToMiddle = () => {
+    flatListRef.current?.scrollToIndex({ index: 1, animated: false });
+    isScrollingRef.current = false;
+  };
+
+  // 월이 외부 상태로 바뀌면 리스트를 중앙으로 리셋
+  useEffect(() => {
+    scrollToMiddle();
+  }, [selectedMonthIso]);
+
+  // 초기 한 번 중앙으로 세팅
+  useEffect(() => {
+    scrollToMiddle();
+    dispatch(resetDiary());
+  }, []);
+
+  const onMomentumEnd = useCallback(
+    (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+      if (isScrollingRef.current) return; // 이미 처리 중이면 무시
+
+      const offsetX = e.nativeEvent.contentOffset.x;
+      const position = Math.round(offsetX / SCREEN_WIDTH);
+
+      if (position === 1) return; // 중앙이면 아무 것도 안 함
+
+      const dir = position === 0 ? 'left' : 'right';
+      isScrollingRef.current = true;
+      scrollToMiddle();
+      dispatch(moveMonth(dir));
+    },
     [dispatch]
   );
-
-  const pagerRef = useRef<PagerView>(null);
-
-  const onPageSelected = useCallback(
-    (e: PagerViewOnPageSelectedEvent) => {
-      const idx = e.nativeEvent.position;
-
-      if (idx === 0 || idx === 2) {
-        pagerRef.current?.setPageWithoutAnimation(1);
-
-        InteractionManager.runAfterInteractions(() => {
-          if (idx === 0) onChangeMonth('left');
-          if (idx === 2) onChangeMonth('right');
-        });
-      }
-    },
-    [onChangeMonth]
-  );
-
-  useEffect(() => {
-    dispatch(resetDiary());
-  }, [dispatch]);
 
   const toggleDiaryMode = useCallback(() => {
     setDiaryMode(prev =>
@@ -68,14 +108,14 @@ const DiaryPager = () => {
     );
   }, []);
 
+  /** UI 컴포넌트들 */
   const monthSelector = (
     <EmotionDiaryMonthSelector
       monthLabel={selectedMonth.format('M월')}
-      onPressLeft={() => onChangeMonth('left')}
-      onPressRight={() => onChangeMonth('right')}
+      onPressLeft={() => dispatch(moveMonth('left'))}
+      onPressRight={() => dispatch(moveMonth('right'))}
     />
   );
-
   const leftComponents = [{ item: monthSelector, disabled: true }];
   const viewModeButton = {
     item: (
@@ -111,14 +151,20 @@ const DiaryPager = () => {
       : []),
     viewModeButton,
   ];
-  const calendarPages = useMemo(
-    () => [
-      { key: 'prev', monthDate: prevMonth, listData: currentList, monthData: prevMonthData },
-      { key: 'current', monthDate: selectedMonth, listData: currentList, monthData: monthData },
-      { key: 'next', monthDate: nextMonth, listData: currentList, monthData: nextMonthData },
-    ],
-    [prevMonth, selectedMonth, nextMonth, prevMonthData, monthData, nextMonthData, currentList]
-  );
+
+  /** FlatList 렌더 함수 */
+  const renderPage = ({ item }: { item: CalendarPage }) => (
+    <EmotionDiaryMonthView
+      key={item.key}
+      monthDate={item.monthDate}
+      listData={item.listData}
+      monthData={item.monthData}
+      diaryMode={diaryMode}
+      currentMonth={currentMonth}
+      selectedMonth={selectedMonth}
+      scrollEnabled={isNotEmpty(item.monthData)}
+    />
+  );   
 
   return (
     <>
@@ -129,28 +175,25 @@ const DiaryPager = () => {
         actionButtons={actionButtons}
       />
 
-      {diaryMode === DiaryPageMode.calendarMode ? (
-        <PagerView
-          ref={pagerRef}
+      {diaryMode === DiaryPageMode.calendarMode ? ( 
+        <FlatList
+          ref={flatListRef}
+          data={calendarPages}
+          keyExtractor={item => item.key}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          renderItem={renderPage}
+          onMomentumScrollEnd={onMomentumEnd}
+          getItemLayout={(_, index) => ({
+            length: SCREEN_WIDTH,
+            offset: SCREEN_WIDTH * index,
+            index,
+          })}
+          initialScrollIndex={1}
+          windowSize={3}
           style={styles.pager}
-          initialPage={1}
-          offscreenPageLimit={1}
-          overdrag={false}
-          onPageSelected={onPageSelected}
-        >
-          {calendarPages.map(({ key, monthDate, listData, monthData }) => (
-            <EmotionDiaryMonthView
-              key={key}
-              monthDate={monthDate}
-              listData={listData}
-              monthData={monthData}
-              diaryMode={diaryMode}
-              currentMonth={currentMonth}
-              selectedMonth={selectedMonth}
-              scrollEnabled={isNotEmpty(monthData)}
-            />
-          ))}
-        </PagerView>
+        />
       ) : (
         <EmotionDiaryMonthView
           key={`calendar-${selectedMonth.format('YYYY-MM')}`}
@@ -170,6 +213,7 @@ const DiaryPager = () => {
 const styles = StyleSheet.create({
   pager: {
     flex: 1,
+    width: '100%',
   },
 });
 
