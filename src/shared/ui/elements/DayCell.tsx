@@ -12,27 +12,30 @@ interface DayCellProps {
 }
 
 const DayCell = ({ date, isSelected, isFuture, iconSource, onPress }: DayCellProps) => {
+  const renderIcon = () => {
+    console.log('>>124141', isFuture);
+    if (isFuture) {
+      return <View className="w-11 h-11 bg-gray-200 rounded-full" />;
+    }
+    if (iconSource) {
+      return (
+        <Image
+          source={iconSource}
+          className="w-10 h-10"
+          resizeMode="contain"
+        />
+      );
+    }
+    return <View className="w-10 h-10" />;
+  };
   return (
     <View className="items-center bg-common-transparent w-full h-full p-1">
-      {isFuture ? (
-        <View className="w-11 h-11 bg-gray-200 rounded-full" />
-      ) : (
-        <TouchableOpacity
-          className="w-10 h-10"
-          onPress={onPress}
-          disabled={isFuture}
-        >
-          {iconSource ? (
-            <Image
-              source={iconSource}
-              className="w-10 h-10"
-              resizeMode="contain"
-            />
-          ) : (
-            <View className="w-10 h-10" />
-          )}
-        </TouchableOpacity>
-      )}
+      <TouchableOpacity
+        className="w-10 h-10"
+        onPress={onPress}
+      >
+        {renderIcon()}
+      </TouchableOpacity>
 
       <View
         className={

@@ -1,4 +1,5 @@
 import { EmotionDiaryDTO } from '@entities/diary';
+import { setShowToastView } from '@processes/overlay/model/overlay.slice';
 import { COMMON_ICONS } from '@shared/assets/images/common';
 import { ICON_DATA } from '@shared/constants';
 import { useAppDispatch, useAppSelector } from '@shared/hooks';
@@ -26,17 +27,40 @@ const SelectableDayCell = ({ date, iconId }: SelectableDayCellProps) => {
     return found?.iconSelected ?? null;
   }, [iconId]);
 
+  const showFutureToast = useCallback(() => {
+    dispatch(
+      setShowToastView({
+        visibility: true,
+        message: '미래 날짜는 기록할 수 없어요!',
+      })
+    );
+  }, [dispatch]);
+
+  const startEmotionSelection = useCallback(() => {
+    const emotion: Partial<EmotionDiaryDTO> = {
+      recordDate: date.toISOString(),
+    };
+    dispatch(setCurrentDiary(emotion));
+    navigate('DiaryStack', { screen: 'EmotionSelectionPage' });
+  }, [dispatch, date]);
+
+  const selectDay = useCallback(() => {
+    dispatch(setSelectedDay(date.toISOString()));
+  }, [dispatch, date]);
+
   const onPress = useCallback(() => {
-    if (!iconId) {
-      const emotion: Partial<EmotionDiaryDTO> = {
-        recordDate: date.toISOString(),
-      };
-      dispatch(setCurrentDiary(emotion));
-      navigate('DiaryStack', { screen: 'EmotionSelectionPage' });
+    if (isFuture) {
+      showFutureToast();
       return;
     }
-    dispatch(setSelectedDay(date.toISOString()));
-  }, [dispatch, date, iconId]);
+
+    if (!iconId) {
+      startEmotionSelection();
+      return;
+    }
+
+    selectDay();
+  }, [showFutureToast, startEmotionSelection, selectDay, isFuture, iconId]);
 
   return (
     <DayCell

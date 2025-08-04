@@ -83,7 +83,7 @@ const DiaryPager = () => {
   useEffect(() => {
     scrollToMiddle();
     dispatch(resetDiary());
-  }, []);
+  }, [dispatch]);
 
   const onMomentumEnd = useCallback((e: NativeSyntheticEvent<NativeScrollEvent>) => {
     // 스크롤 완료 시 중복 이동 방어 해제
@@ -182,7 +182,6 @@ const DiaryPager = () => {
         leftComponents={leftComponents}
         actionButtons={actionButtons}
       />
-
       {diaryMode === DiaryPageMode.calendarMode ? (
         <FlatList
           ref={flatListRef}
