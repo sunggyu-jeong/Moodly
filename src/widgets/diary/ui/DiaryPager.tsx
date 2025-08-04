@@ -1,4 +1,5 @@
 import { DiaryPageMode, DiaryPageModeType } from '@entities/calendar/diary.type';
+import { EmotionDiaryDTO } from '@entities/diary';
 import EmotionDiaryMonthView from '@features/calendar/ui/EmotionDiaryMonthView';
 import { moveMonth, resetDiary } from '@features/diary/model/diary.slice';
 import EmotionDiaryMonthSelector from '@features/diary/ui/EmotionDiaryMonthSelector';
@@ -18,8 +19,8 @@ import {
   NativeSyntheticEvent,
   StyleSheet,
   TouchableOpacity,
+  View,
 } from 'react-native';
-import { EmotionDiaryDTO } from '../../../entities/diary';
 import NavigationBar from '../../navigation-bar/ui/NavigationBar';
 import { useDiaryDayData, useDiaryMonthData } from '../hooks';
 
@@ -154,17 +155,19 @@ const DiaryPager = () => {
 
   /** FlatList 렌더 함수 */
   const renderPage = ({ item }: { item: CalendarPage }) => (
-    <EmotionDiaryMonthView
-      key={item.key}
-      monthDate={item.monthDate}
-      listData={item.listData}
-      monthData={item.monthData}
-      diaryMode={diaryMode}
-      currentMonth={currentMonth}
-      selectedMonth={selectedMonth}
-      scrollEnabled={isNotEmpty(item.monthData)}
-    />
-  );   
+    <View style={{ width: SCREEN_WIDTH }}>
+      <EmotionDiaryMonthView
+        key={item.key}
+        monthDate={item.monthDate}
+        listData={currentList}
+        monthData={item.monthData}
+        diaryMode={diaryMode}
+        currentMonth={currentMonth}
+        selectedMonth={selectedMonth}
+        scrollEnabled={isNotEmpty(item.monthData)}
+      />
+    </View>
+  );
 
   return (
     <>
@@ -175,7 +178,7 @@ const DiaryPager = () => {
         actionButtons={actionButtons}
       />
 
-      {diaryMode === DiaryPageMode.calendarMode ? ( 
+      {diaryMode === DiaryPageMode.calendarMode ? (
         <FlatList
           ref={flatListRef}
           data={calendarPages}
