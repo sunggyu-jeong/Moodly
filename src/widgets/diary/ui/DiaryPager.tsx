@@ -95,11 +95,11 @@ const DiaryPager = () => {
       if (isScrollingRef.current) return;
       const offsetX = nativeEvent.contentOffset.x;
       const ratio = offsetX / SCREEN_WIDTH;
-      if (ratio <= 0.5) {
+      if (ratio <= 0.3) {
         isScrollingRef.current = true;
         scrollToMiddle();
         dispatch(moveMonth('left'));
-      } else if (ratio >= 1.5) {
+      } else if (ratio >= 1.7) {
         isScrollingRef.current = true;
         scrollToMiddle();
         dispatch(moveMonth('right'));
