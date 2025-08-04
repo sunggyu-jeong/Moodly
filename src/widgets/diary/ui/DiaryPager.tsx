@@ -72,7 +72,6 @@ const DiaryPager = () => {
 
   const scrollToMiddle = () => {
     flatListRef.current?.scrollToIndex({ index: 1, animated: false });
-    isScrollingRef.current = false;
   };
 
   // 월이 외부 상태로 바뀌면 리스트를 중앙으로 리셋
@@ -86,19 +85,25 @@ const DiaryPager = () => {
     dispatch(resetDiary());
   }, []);
 
-  const onMomentumEnd = useCallback(
-    (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-      if (isScrollingRef.current) return; // 이미 처리 중이면 무시
+  const onMomentumEnd = useCallback((e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    // 스크롤 완료 시 중복 이동 방어 해제
+    isScrollingRef.current = false;
+  }, []);
 
-      const offsetX = e.nativeEvent.contentOffset.x;
-      const position = Math.round(offsetX / SCREEN_WIDTH);
-
-      if (position === 1) return; // 중앙이면 아무 것도 안 함
-
-      const dir = position === 0 ? 'left' : 'right';
-      isScrollingRef.current = true;
-      scrollToMiddle();
-      dispatch(moveMonth(dir));
+  const onScroll = useCallback(
+    ({ nativeEvent }: NativeSyntheticEvent<NativeScrollEvent>) => {
+      if (isScrollingRef.current) return;
+      const offsetX = nativeEvent.contentOffset.x;
+      const ratio = offsetX / SCREEN_WIDTH;
+      if (ratio <= 0.5) {
+        isScrollingRef.current = true;
+        scrollToMiddle();
+        dispatch(moveMonth('left'));
+      } else if (ratio >= 1.5) {
+        isScrollingRef.current = true;
+        scrollToMiddle();
+        dispatch(moveMonth('right'));
+      }
     },
     [dispatch]
   );
@@ -187,6 +192,8 @@ const DiaryPager = () => {
           pagingEnabled
           showsHorizontalScrollIndicator={false}
           renderItem={renderPage}
+          scrollEventThrottle={16}
+          onScroll={onScroll}
           onMomentumScrollEnd={onMomentumEnd}
           getItemLayout={(_, index) => ({
             length: SCREEN_WIDTH,
