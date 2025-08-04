@@ -25,25 +25,25 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0AF897487F0947CD8DF46CDF /* Pretendard-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Regular.otf"; path = "../src/shared/assets/fonts/Pretendard-Regular.otf"; sourceTree = "<group>"; };
+		0AF897487F0947CD8DF46CDF /* Pretendard-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Regular.otf"; path = "../src/shared/assets/fonts/Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* MoodlyFrontend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoodlyFrontend.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MoodlyFrontend/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = MoodlyFrontend/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = MoodlyFrontend/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		36B1AB251844A602A39E7029 /* Pods-MoodlyFrontend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoodlyFrontend.debug.xcconfig"; path = "Target Support Files/Pods-MoodlyFrontend/Pods-MoodlyFrontend.debug.xcconfig"; sourceTree = "<group>"; };
-		4BEEC3FEEC1D4B129D4743E3 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Medium.otf"; path = "../src/shared/assets/fonts/Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		4BEEC3FEEC1D4B129D4743E3 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Medium.otf"; path = "../src/shared/assets/fonts/Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		5704B3D62E0282E000948E2C /* MoodlyFrontend.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = MoodlyFrontend.entitlements; path = MoodlyFrontend/MoodlyFrontend.entitlements; sourceTree = "<group>"; };
 		57E6D1712E0A6BD00082CB88 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		58ED261F5F4E43F385405F91 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Thin.otf"; path = "../src/shared/assets/fonts/Pretendard-Thin.otf"; sourceTree = "<group>"; };
-		6219029BE72F4D55986B0E6E /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-ExtraLight.otf"; path = "../src/shared/assets/fonts/Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
-		6F4AB07BA289499F98CEA923 /* Pretendard-Black.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Black.otf"; path = "../src/shared/assets/fonts/Pretendard-Black.otf"; sourceTree = "<group>"; };
+		58ED261F5F4E43F385405F91 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Thin.otf"; path = "../src/shared/assets/fonts/Pretendard-Thin.otf"; sourceTree = "<group>"; };
+		6219029BE72F4D55986B0E6E /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-ExtraLight.otf"; path = "../src/shared/assets/fonts/Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
+		6F4AB07BA289499F98CEA923 /* Pretendard-Black.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Black.otf"; path = "../src/shared/assets/fonts/Pretendard-Black.otf"; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = MoodlyFrontend/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = MoodlyFrontend/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		8F8C3676CF9249FFA4E45355 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-SemiBold.otf"; path = "../src/shared/assets/fonts/Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		8F8C3676CF9249FFA4E45355 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-SemiBold.otf"; path = "../src/shared/assets/fonts/Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		B22E567354EB0CE7C66C0798 /* Pods_MoodlyFrontend.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoodlyFrontend.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B6E565443F7640888A8643BB /* Pretendard-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Bold.otf"; path = "../src/shared/assets/fonts/Pretendard-Bold.otf"; sourceTree = "<group>"; };
-		C407F36FB2D74A049B3763F5 /* Pretendard-Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Light.otf"; path = "../src/shared/assets/fonts/Pretendard-Light.otf"; sourceTree = "<group>"; };
-		E81DF7B77D644C3F8DD478E4 /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-ExtraBold.otf"; path = "../src/shared/assets/fonts/Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
+		B6E565443F7640888A8643BB /* Pretendard-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Bold.otf"; path = "../src/shared/assets/fonts/Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		C407F36FB2D74A049B3763F5 /* Pretendard-Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Light.otf"; path = "../src/shared/assets/fonts/Pretendard-Light.otf"; sourceTree = "<group>"; };
+		E81DF7B77D644C3F8DD478E4 /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-ExtraBold.otf"; path = "../src/shared/assets/fonts/Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F5708D9EF2905C881FF1B4F0 /* Pods-MoodlyFrontend.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoodlyFrontend.release.xcconfig"; path = "Target Support Files/Pods-MoodlyFrontend/Pods-MoodlyFrontend.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -127,7 +127,6 @@
 				58ED261F5F4E43F385405F91 /* Pretendard-Thin.otf */,
 			);
 			name = Resources;
-			path = "";
 			sourceTree = "<group>";
 		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
@@ -325,7 +324,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MoodlyFrontend/MoodlyFrontend.entitlements;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = P25TGU6M77;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = MoodlyFrontend/Info.plist;
@@ -362,7 +361,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MoodlyFrontend/MoodlyFrontend.entitlements;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = P25TGU6M77;
 				INFOPLIST_FILE = MoodlyFrontend/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "무들리";
@@ -475,10 +474,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -563,10 +559,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
