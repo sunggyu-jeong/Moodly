@@ -13,6 +13,8 @@ import '../../global.css';
 
 import { HOT_UPDATER_SUPABASE_URL } from '@env';
 import { HotUpdater, getUpdateSource } from '@hot-updater/react-native';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -22,6 +24,8 @@ import store from './store';
 import Splash from './ui/screens/Splash';
 
 dayjs.locale('ko');
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 enableScreens();
 if (typeof globalThis.structuredClone !== 'function') {
