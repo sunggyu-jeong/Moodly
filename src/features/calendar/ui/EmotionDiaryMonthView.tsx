@@ -11,7 +11,7 @@ import { FlatList, StyleSheet, View } from 'react-native';
 
 interface EmotionDiaryMonthViewProps {
   monthDate: Dayjs;
-  listData: EmotionDiaryDTO[]; // EmotionDiaryDTO[]
+  listData?: EmotionDiaryDTO[]; // EmotionDiaryDTO[]
   monthData: EmotionDiaryDTO[]; // Month summary DTO
   diaryMode: DiaryPageModeType;
   currentMonth: Dayjs;
@@ -39,7 +39,7 @@ const EmotionDiaryMonthView = ({
       <FlatList
         style={styles.list}
         data={listData}
-        initialNumToRender={listData.length}
+        initialNumToRender={listData?.length ?? 0}
         windowSize={10}
         maxToRenderPerBatch={5}
         keyExtractor={(item, idx) => item.emotionId?.toString() ?? idx.toString()}
