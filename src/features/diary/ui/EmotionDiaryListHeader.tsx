@@ -1,6 +1,11 @@
-import { DiaryPageMode, DiaryPageModeType } from '@entities/calendar/diary.type';
+import {
+  DiaryCalendarMode,
+  DiaryCalendarModeType,
+  DiaryPageMode,
+  DiaryPageModeType,
+} from '@entities/calendar/diary.type';
 import { EmotionDiaryDTO } from '@entities/diary';
-import { generateMonthGrid } from '@shared/lib/date.util';
+import { generateMonthGrid, generateWeekGrid } from '@shared/lib/date.util';
 import WeekdayHeader from '@shared/ui/elements/WeekdayHeader';
 import dayjs from 'dayjs';
 import { AnimatePresence, MotiView } from 'moti';
@@ -14,12 +19,14 @@ interface DiaryListHeaderProps {
   diaryMode: DiaryPageModeType;
   selectedMonth: string;
   monthData?: EmotionDiaryDTO[];
+  calendarMode?: DiaryCalendarModeType;
 }
 const EmotionDiaryListHeader = ({
   showSkeleton,
   diaryMode,
   selectedMonth,
   monthData,
+  calendarMode,
 }: DiaryListHeaderProps) => {
   return (
     <AnimatePresence>
@@ -48,7 +55,11 @@ const EmotionDiaryListHeader = ({
             <WeekdayHeader />
             <CalendarBar
               key={selectedMonth}
-              monthlyDates={generateMonthGrid({ targetDate: dayjs(selectedMonth) })}
+              monthlyDates={
+                calendarMode === DiaryCalendarMode.monthDayMode
+                  ? generateMonthGrid({ targetDate: dayjs(selectedMonth) })
+                  : generateWeekGrid({ targetDate: dayjs(selectedMonth) })
+              }
               entries={monthData}
             />
             <View className="-mx-5 mt-8 h-[1px] bg-gray-200" />

@@ -32,3 +32,14 @@ export const generateMonthGrid = ({ targetDate }: GenerateMonthGridProps): (Dayj
 
   return weeks;
 };
+
+export const generateWeekGrid = ({ targetDate }: GenerateMonthGridProps): (Dayjs | null)[][] => {
+  const startOfWeek = targetDate.startOf('week');
+  const week: (Dayjs | null)[] = [];
+
+  for (let i = 0; i < 7; i++) {
+    week.push(startOfWeek.add(i, 'day'));
+  }
+
+  return [week];
+};

@@ -13,7 +13,6 @@ interface DayCellProps {
 
 const DayCell = ({ date, isSelected, isFuture, iconSource, onPress }: DayCellProps) => {
   const renderIcon = () => {
-    console.log('>>124141', isFuture);
     if (isFuture) {
       return <View className="w-11 h-11 bg-gray-200 rounded-full" />;
     }

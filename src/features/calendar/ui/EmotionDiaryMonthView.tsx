@@ -1,4 +1,4 @@
-import { DiaryPageModeType } from '@entities/calendar/diary.type';
+import { DiaryCalendarModeType, DiaryPageModeType } from '@entities/calendar/diary.type';
 import { EmotionDiaryDTO } from '@entities/diary';
 import EmotionDiaryCardList from '@features/diary/ui/EmotionDiaryCardList';
 import EmotionDiaryListEmpty from '@features/diary/ui/EmotionDiaryListEmpty';
@@ -18,6 +18,7 @@ interface EmotionDiaryMonthViewProps {
   selectedMonth: Dayjs;
   scrollEnabled: boolean;
   showSkeleton?: boolean;
+  calendarMode?: DiaryCalendarModeType;
 }
 
 const EmotionDiaryMonthView = ({
@@ -27,6 +28,7 @@ const EmotionDiaryMonthView = ({
   diaryMode,
   scrollEnabled,
   showSkeleton,
+  calendarMode,
 }: EmotionDiaryMonthViewProps) => {
   const renderDiaryCard = useCallback(
     ({ item }: { item: EmotionDiaryDTO }) => <EmotionDiaryCardList data={item} />,
@@ -51,6 +53,7 @@ const EmotionDiaryMonthView = ({
             diaryMode={diaryMode}
             selectedMonth={monthDate.toISOString()}
             monthData={monthData}
+            calendarMode={calendarMode}
           />
         }
         ListEmptyComponent={<EmotionDiaryListEmpty showSkeleton={showSkeleton ?? false} />}

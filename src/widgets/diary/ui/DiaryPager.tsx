@@ -1,7 +1,12 @@
-import { DiaryPageMode, DiaryPageModeType } from '@entities/calendar/diary.type';
+import {
+  DiaryCalendarMode,
+  DiaryCalendarModeType,
+  DiaryPageMode,
+  DiaryPageModeType,
+} from '@entities/calendar/diary.type';
 import { EmotionDiaryDTO } from '@entities/diary';
 import EmotionDiaryMonthView from '@features/calendar/ui/EmotionDiaryMonthView';
-import { moveMonth, resetDiary } from '@features/diary/model/diary.slice';
+import { moveMonth, moveWeek, resetDiary } from '@features/diary/model/diary.slice';
 import EmotionDiaryMonthSelector from '@features/diary/ui/EmotionDiaryMonthSelector';
 import { DIARY_ICONS } from '@shared/assets/images/diary';
 import { useAppDispatch, useAppSelector } from '@shared/hooks';
@@ -9,12 +14,13 @@ import { isNotEmpty } from '@shared/lib';
 import colors from '@shared/styles/colors';
 import DiaryToggle from '@shared/ui/elements/DiaryToggle';
 import { NaviActionButtonProps } from '@shared/ui/elements/NaviActionButton';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Dimensions,
   FlatList,
   Image,
+  ListRenderItem,
   NativeScrollEvent,
   NativeSyntheticEvent,
   StyleSheet,
@@ -22,21 +28,22 @@ import {
   View,
 } from 'react-native';
 import NavigationBar from '../../navigation-bar/ui/NavigationBar';
-import { useDiaryDayData, useDiaryMonthData } from '../hooks';
+import { useDiaryMonthData, useDiaryWeekData } from '../hooks';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 type CalendarPage = {
   key: string;
-  monthDate: dayjs.Dayjs;
-  listData: EmotionDiaryDTO[];
-  monthData: EmotionDiaryDTO[];
+  periodStart: Dayjs;
+  items: EmotionDiaryDTO[];
+  currentItems?: EmotionDiaryDTO[] | [];
 };
 
 const DiaryPager = () => {
   const [diaryMode, setDiaryMode] = useState<DiaryPageModeType>(DiaryPageMode.calendarMode);
   const dispatch = useAppDispatch();
   const selectedMonthIso = useAppSelector(state => state.diarySlice.selectedMonth);
+  const selectedWeekIso = useAppSelector(state => state.diarySlice.selectedWeek);
   const selectedDayIso = useAppSelector(state => state.diarySlice.selectedDay);
 
   const selectedMonth = useMemo(() => dayjs(selectedMonthIso), [selectedMonthIso]);
@@ -44,14 +51,26 @@ const DiaryPager = () => {
   const prevMonth = selectedMonth.add(-1, 'month');
   const nextMonth = selectedMonth.add(1, 'month');
 
+  const selectedWeek = useMemo(() => dayjs(selectedWeekIso), [selectedWeekIso]);
+  const [calendarMode, setCalendarMode] = useState<DiaryCalendarModeType>(
+    DiaryCalendarMode.monthDayMode
+  );
+  const weekStarts = [selectedWeek.add(-1, 'week'), selectedWeek, selectedWeek.add(1, 'week')];
+
+  const weekDataPrev = useDiaryWeekData(weekStarts[0]);
+  const weekDataCurr = useDiaryWeekData(weekStarts[1]);
+  const weekDataNext = useDiaryWeekData(weekStarts[2]);
+
   const { listData: prevMonthData } = useDiaryMonthData(prevMonth);
   const { listData: monthData } = useDiaryMonthData(selectedMonth);
   const { listData: nextMonthData } = useDiaryMonthData(nextMonth);
-  const { listData: dayListData } = useDiaryDayData(
-    selectedDayIso,
-    diaryMode === DiaryPageMode.calendarMode
-  );
-  const currentList = diaryMode === DiaryPageMode.calendarMode ? dayListData : monthData;
+
+  useEffect(() => {
+    const arr = monthData.filter(e =>
+      dayjs.utc(e.createdAt).isSame(dayjs.utc(selectedDayIso), 'day')
+    );
+    console.log(arr);
+  }, [selectedDayIso]);
 
   /**
    * ------------------
@@ -59,16 +78,65 @@ const DiaryPager = () => {
    * ------------------
    */
   const flatListRef = useRef<FlatList<CalendarPage>>(null);
-  const isScrollingRef = useRef(false); // 중복 month 이동 방지
+  const isScrollingRef = useRef(false);
 
-  const calendarPages: CalendarPage[] = useMemo(
-    () => [
-      { key: 'prev', monthDate: prevMonth, listData: prevMonthData, monthData: prevMonthData },
-      { key: 'current', monthDate: selectedMonth, listData: currentList, monthData: monthData },
-      { key: 'next', monthDate: nextMonth, listData: nextMonthData, monthData: nextMonthData },
-    ],
-    [prevMonth, selectedMonth, nextMonth, prevMonthData, monthData, nextMonthData, currentList]
-  );
+  const pages: CalendarPage[] = useMemo(() => {
+    if (calendarMode === DiaryCalendarMode.monthDayMode) {
+      return [
+        { key: 'prev', periodStart: prevMonth, items: prevMonthData, currentItems: prevMonthData },
+        {
+          key: 'current',
+          periodStart: selectedMonth,
+          items: monthData,
+          currentItems: isNotEmpty(selectedDayIso)
+            ? monthData?.filter(e => dayjs.utc(e.createdAt).isSame(dayjs(selectedDayIso), 'day'))
+            : monthData,
+        },
+        { key: 'next', periodStart: nextMonth, items: nextMonthData, currentItems: nextMonthData },
+      ];
+    } else {
+      return [
+        {
+          key: 'prev',
+          periodStart: weekStarts[0],
+          items: weekDataPrev.listData,
+          currentItems: weekDataPrev.listData,
+        },
+        {
+          key: 'current',
+          periodStart: weekStarts[1],
+          items: weekDataCurr.listData,
+          currentItems: isNotEmpty(selectedDayIso)
+            ? weekDataCurr.listData.filter(e =>
+                dayjs.utc(e.createdAt).isSame(dayjs(selectedDayIso), 'day')
+              )
+            : weekDataCurr.listData,
+        },
+        {
+          key: 'next',
+          periodStart: weekStarts[2],
+          items: weekDataNext.listData,
+          currentItems: weekDataNext.listData,
+        },
+      ];
+    }
+  }, [
+    calendarMode,
+    prevMonthData,
+    monthData,
+    nextMonthData,
+    selectedMonth,
+    prevMonth,
+    nextMonth,
+    weekDataPrev,
+    weekDataCurr,
+    weekDataNext,
+    weekStarts,
+  ]);
+
+  useEffect(() => {
+    console.log('>$@!$>>$$!>@', pages, selectedDayIso);
+  }, [pages]);
 
   const scrollToMiddle = () => {
     flatListRef.current?.scrollToIndex({ index: 1, animated: false });
@@ -90,6 +158,15 @@ const DiaryPager = () => {
     isScrollingRef.current = false;
   }, []);
 
+  function formatWeekLabel(weekStart: Dayjs): string {
+    const month = weekStart.month() + 1;
+    const firstOfMonth = weekStart.startOf('month');
+    const firstWeekStart = firstOfMonth.startOf('week');
+    const weekIndex = weekStart.diff(firstWeekStart, 'week') + 1;
+
+    return `${month}월 ${weekIndex}째주`;
+  }
+
   const onScroll = useCallback(
     ({ nativeEvent }: NativeSyntheticEvent<NativeScrollEvent>) => {
       if (isScrollingRef.current) return;
@@ -98,14 +175,22 @@ const DiaryPager = () => {
       if (ratio <= 0.3) {
         isScrollingRef.current = true;
         scrollToMiddle();
-        dispatch(moveMonth('left'));
+        if (calendarMode === DiaryCalendarMode.monthDayMode) {
+          dispatch(moveMonth('left'));
+        } else {
+          dispatch(moveWeek('left'));
+        }
       } else if (ratio >= 1.7) {
         isScrollingRef.current = true;
         scrollToMiddle();
-        dispatch(moveMonth('right'));
+        if (calendarMode === DiaryCalendarMode.monthDayMode) {
+          dispatch(moveMonth('right'));
+        } else {
+          dispatch(moveWeek('right'));
+        }
       }
     },
-    [dispatch]
+    [dispatch, calendarMode]
   );
 
   const toggleDiaryMode = useCallback(() => {
@@ -117,7 +202,11 @@ const DiaryPager = () => {
   /** UI 컴포넌트들 */
   const monthSelector = (
     <EmotionDiaryMonthSelector
-      monthLabel={selectedMonth.format('M월')}
+      monthLabel={
+        calendarMode === DiaryCalendarMode.monthDayMode
+          ? selectedMonth.format('M월')
+          : formatWeekLabel(selectedWeek)
+      }
       onPressLeft={() => dispatch(moveMonth('left'))}
       onPressRight={() => dispatch(moveMonth('right'))}
     />
@@ -147,8 +236,15 @@ const DiaryPager = () => {
           {
             item: (
               <DiaryToggle
-                isOn
+                isOn={calendarMode === DiaryCalendarMode.monthDayMode}
                 texts={['주간', '월간']}
+                onToggle={() =>
+                  setCalendarMode(c =>
+                    c === DiaryCalendarMode.monthDayMode
+                      ? DiaryCalendarMode.weekDayMode
+                      : DiaryCalendarMode.monthDayMode
+                  )
+                }
               />
             ),
             disabled: true,
@@ -158,18 +254,20 @@ const DiaryPager = () => {
     viewModeButton,
   ];
 
-  /** FlatList 렌더 함수 */
-  const renderPage = ({ item }: { item: CalendarPage }) => (
-    <View style={{ width: SCREEN_WIDTH }}>
+  const renderPage: ListRenderItem<CalendarPage> = ({ item }) => (
+    <View
+      key={item.key}
+      style={{ width: SCREEN_WIDTH }}
+    >
       <EmotionDiaryMonthView
-        key={item.key}
-        monthDate={item.monthDate}
-        listData={currentList}
-        monthData={item.monthData}
+        monthDate={item.periodStart}
+        listData={item.currentItems}
+        monthData={item.items}
         diaryMode={diaryMode}
         currentMonth={currentMonth}
         selectedMonth={selectedMonth}
-        scrollEnabled={isNotEmpty(item.monthData)}
+        scrollEnabled={isNotEmpty(item.items)}
+        calendarMode={calendarMode}
       />
     </View>
   );
@@ -185,7 +283,7 @@ const DiaryPager = () => {
       {diaryMode === DiaryPageMode.calendarMode ? (
         <FlatList
           ref={flatListRef}
-          data={calendarPages}
+          data={pages}
           keyExtractor={item => item.key}
           horizontal
           pagingEnabled
@@ -207,12 +305,12 @@ const DiaryPager = () => {
         <EmotionDiaryMonthView
           key={`calendar-${selectedMonth.format('YYYY-MM')}`}
           monthDate={selectedMonth}
-          listData={currentList}
+          listData={monthData}
           monthData={monthData}
           diaryMode={diaryMode}
           currentMonth={currentMonth}
           selectedMonth={selectedMonth}
-          scrollEnabled={isNotEmpty(currentList)}
+          scrollEnabled={isNotEmpty(monthData)}
         />
       )}
     </>

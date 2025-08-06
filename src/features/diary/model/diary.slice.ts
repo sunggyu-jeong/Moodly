@@ -9,8 +9,9 @@ interface DiaryState {
   selectedIcon: EmotionIconData | null;
   currentDiary: EmotionDiaryDTO | null;
   selectedMonth: string;
+  selectedWeek: string;
   isModifyMode: boolean;
-  selectedDay: string;
+  selectedDay: string | null;
 }
 
 const initialState: DiaryState = {
@@ -18,8 +19,9 @@ const initialState: DiaryState = {
   selectedIcon: ICON_DATA[0],
   currentDiary: null,
   selectedMonth: dayjs().toISOString(),
+  selectedWeek: dayjs().toISOString(),
   isModifyMode: false,
-  selectedDay: dayjs().toISOString(),
+  selectedDay: null,
 };
 
 const diarySlice = createSlice({
@@ -55,7 +57,17 @@ const diarySlice = createSlice({
     },
     moveMonth: (state, action: PayloadAction<'left' | 'right'>) => {
       const delta = action.payload === 'left' ? -1 : 1;
-      state.selectedMonth = dayjs(state.selectedMonth).add(delta, 'month').toISOString();
+      const newMonth = dayjs(state.selectedMonth).add(delta, 'month');
+      const firstOfMonth = newMonth.startOf('month');
+      state.selectedMonth = firstOfMonth.toISOString();
+      state.selectedDay = null;
+    },
+    moveWeek: (state, action: PayloadAction<'left' | 'right'>) => {
+      const delta = action.payload === 'left' ? -1 : 1;
+      const newWeek = dayjs(state.selectedWeek).add(delta, 'week');
+      state.selectedWeek = newWeek.toISOString();
+      state.selectedMonth = newWeek.startOf('month').toISOString();
+      state.selectedDay = null;
     },
   },
 });
@@ -69,6 +81,7 @@ export const {
   setSelectedDay,
   resetDiary,
   moveMonth,
+  moveWeek,
 } = diarySlice.actions;
 
 export default diarySlice.reducer;
