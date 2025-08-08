@@ -4,11 +4,13 @@ import {
   DiaryPageMode,
   DiaryPageModeType,
 } from '@entities/calendar/diary.type';
+import type { EmotionDiaryDTO } from '@entities/diary';
+import { diaryApi } from '@shared/api/diary/diaryApi';
 import { useAppDispatch, useAppSelector } from '@shared/hooks';
 import { formatWeekLabel } from '@shared/lib/date.util';
-import { useDiaryMonthData, useDiaryWeekData } from '@widgets/diary/hooks';
+import { getMonthRange, useDiaryMonthData, useDiaryWeekData } from '@widgets/diary/hooks';
 import dayjs, { Dayjs } from 'dayjs';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { moveMonth, moveWeek, resetDiary } from '../../diary/model/diary.slice';
 import { buildPages, CalendarPage } from '../lib/paging';
 import {
@@ -17,6 +19,14 @@ import {
   selectSelectedMonthIso,
   selectSelectedWeek,
 } from './selector';
+
+const EMPTY: EmotionDiaryDTO[] = [];
+
+const weekRange = (weekStart: Dayjs) =>
+  ({
+    start: weekStart.startOf('week').format('YYYY-MM-DD'),
+    end: weekStart.add(1, 'week').startOf('week').format('YYYY-MM-DD'),
+  }) as const;
 
 export const useDiaryPagerVM = () => {
   const dispatch = useAppDispatch();
@@ -31,42 +41,80 @@ export const useDiaryPagerVM = () => {
   );
 
   const currentMonth = dayjs();
-  const prevMonth = selectedMonth.add(-1, 'month');
-  const nextMonth = selectedMonth.add(1, 'month');
+  const isMonthMode = calendarMode === DiaryCalendarMode.monthDayMode;
 
-  const weekStarts = useMemo<[Dayjs, Dayjs, Dayjs]>(
-    () => [selectedWeek.add(-1, 'week'), selectedWeek, selectedWeek.add(1, 'week')],
-    [selectedWeek]
+  const monthWin = useMemo(() => {
+    const prev = selectedMonth.add(-1, 'month');
+    const curr = selectedMonth;
+    const next = selectedMonth.add(1, 'month');
+    return {
+      prev,
+      curr,
+      next,
+      prevArg: getMonthRange(prev),
+      currArg: getMonthRange(curr),
+      nextArg: getMonthRange(next),
+    } as const;
+  }, [selectedMonth]);
+
+  const weekWin = useMemo(() => {
+    const prev = selectedWeek.add(-1, 'week');
+    const curr = selectedWeek;
+    const next = selectedWeek.add(1, 'week');
+    return {
+      prev,
+      curr,
+      next,
+      prevArg: weekRange(prev),
+      currArg: weekRange(curr),
+      nextArg: weekRange(next),
+    } as const;
+  }, [selectedWeek]);
+
+  const { listData: monthData } = useDiaryMonthData(monthWin.curr);
+  const prevMonthSel = useAppSelector(diaryApi.endpoints.selectByMonth.select(monthWin.prevArg));
+  const nextMonthSel = useAppSelector(diaryApi.endpoints.selectByMonth.select(monthWin.nextArg));
+  const prevMonthData = useMemo<EmotionDiaryDTO[]>(
+    () => prevMonthSel?.data ?? EMPTY,
+    [prevMonthSel?.data]
+  );
+  const nextMonthData = useMemo<EmotionDiaryDTO[]>(
+    () => nextMonthSel?.data ?? EMPTY,
+    [nextMonthSel?.data]
   );
 
-  const { listData: prevMonthData } = useDiaryMonthData(prevMonth);
-  const { listData: monthData } = useDiaryMonthData(selectedMonth);
-  const { listData: nextMonthData } = useDiaryMonthData(nextMonth);
-
-  const { listData: weekPrevData } = useDiaryWeekData(weekStarts[0]);
-  const { listData: weekCurrData } = useDiaryWeekData(weekStarts[1]);
-  const { listData: weekNextData } = useDiaryWeekData(weekStarts[2]);
+  const { listData: weekCurrData } = useDiaryWeekData(weekWin.curr);
+  const weekPrevSel = useAppSelector(diaryApi.endpoints.selectByMonth.select(weekWin.prevArg));
+  const weekNextSel = useAppSelector(diaryApi.endpoints.selectByMonth.select(weekWin.nextArg));
+  const weekPrevData = useMemo<EmotionDiaryDTO[]>(
+    () => weekPrevSel?.data ?? EMPTY,
+    [weekPrevSel?.data]
+  );
+  const weekNextData = useMemo<EmotionDiaryDTO[]>(
+    () => weekNextSel?.data ?? EMPTY,
+    [weekNextSel?.data]
+  );
 
   const pages: CalendarPage[] = useMemo(() => {
-    const isMonth = calendarMode === DiaryCalendarMode.monthDayMode;
-
     return buildPages({
-      mode: isMonth ? 'month' : 'week',
+      mode: isMonthMode ? 'month' : 'week',
       selectedDayIso,
-      prevPeriod: isMonth ? prevMonth : weekStarts[0],
-      currPeriod: isMonth ? selectedMonth : weekStarts[1],
-      nextPeriod: isMonth ? nextMonth : weekStarts[2],
-      prevData: isMonth ? prevMonthData : weekPrevData,
-      currData: isMonth ? monthData : weekCurrData,
-      nextData: isMonth ? nextMonthData : weekNextData,
+      prevPeriod: isMonthMode ? monthWin.prev : weekWin.prev,
+      currPeriod: isMonthMode ? monthWin.curr : weekWin.curr,
+      nextPeriod: isMonthMode ? monthWin.next : weekWin.next,
+      prevData: isMonthMode ? prevMonthData : weekPrevData,
+      currData: isMonthMode ? monthData : weekCurrData,
+      nextData: isMonthMode ? nextMonthData : weekNextData,
     });
   }, [
-    calendarMode,
+    isMonthMode,
     selectedDayIso,
-    prevMonth,
-    selectedMonth,
-    nextMonth,
-    weekStarts,
+    monthWin.prev,
+    monthWin.curr,
+    monthWin.next,
+    weekWin.prev,
+    weekWin.curr,
+    weekWin.next,
     prevMonthData,
     monthData,
     nextMonthData,
@@ -75,33 +123,25 @@ export const useDiaryPagerVM = () => {
     weekNextData,
   ]);
 
-  const monthLabel = useMemo(() => {
-    return calendarMode === DiaryCalendarMode.monthDayMode
-      ? selectedMonth.format('M월')
-      : formatWeekLabel(weekStarts[1]);
-  }, [calendarMode, selectedMonth, weekStarts]);
+  const monthLabel = useMemo(
+    () => (isMonthMode ? monthWin.curr.format('M월') : formatWeekLabel(weekWin.curr)),
+    [isMonthMode, monthWin.curr, weekWin.curr]
+  );
 
   const goLeft = useCallback(() => {
-    if (calendarMode === DiaryCalendarMode.monthDayMode) {
-      dispatch(moveMonth('left'));
-    } else {
-      dispatch(moveWeek('left'));
-    }
-  }, [dispatch, calendarMode]);
+    dispatch(isMonthMode ? moveMonth('left') : moveWeek('left'));
+  }, [dispatch, isMonthMode]);
 
   const goRight = useCallback(() => {
-    if (calendarMode === DiaryCalendarMode.monthDayMode) {
-      dispatch(moveMonth('right'));
-    } else {
-      dispatch(moveWeek('right'));
-    }
-  }, [dispatch, calendarMode]);
+    dispatch(isMonthMode ? moveMonth('right') : moveWeek('right'));
+  }, [dispatch, isMonthMode]);
 
   const toggleDiaryMode = useCallback(() => {
     setDiaryMode(p =>
       p === DiaryPageMode.listMode ? DiaryPageMode.calendarMode : DiaryPageMode.listMode
     );
   }, []);
+
   const toggleCalendarMode = useCallback(() => {
     setCalendarMode(c =>
       c === DiaryCalendarMode.monthDayMode
@@ -112,10 +152,18 @@ export const useDiaryPagerVM = () => {
 
   const reset = useCallback(() => dispatch(resetDiary()), [dispatch]);
 
+  const prefetch = diaryApi.usePrefetch('selectByMonth');
+  useEffect(() => {
+    const args = isMonthMode
+      ? [monthWin.prevArg, monthWin.nextArg]
+      : [weekWin.prevArg, weekWin.nextArg];
+    args.forEach(a => prefetch(a, { force: false }));
+  }, [isMonthMode, monthWin.prevArg, monthWin.nextArg, weekWin.prevArg, weekWin.nextArg, prefetch]);
+
   return {
     diaryMode,
     calendarMode,
-    selectedMonth,
+    selectedMonth: monthWin.curr,
     currentMonth,
     selectedMonthIso,
     monthData,
@@ -126,5 +174,5 @@ export const useDiaryPagerVM = () => {
     toggleDiaryMode,
     toggleCalendarMode,
     reset,
-  };
+  } as const;
 };

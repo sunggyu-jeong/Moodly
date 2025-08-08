@@ -11,7 +11,12 @@ export const getMonthRange = (date: Dayjs) => ({
 
 export function useDiaryMonthData(monthDate: Dayjs) {
   const range = useMemo(() => getMonthRange(monthDate), [monthDate]);
-  const { data, isFetching } = useSelectByMonthQuery(range);
+  const { data, isFetching } = useSelectByMonthQuery(range, {
+    refetchOnMountOrArgChange: false,
+    refetchOnFocus: false,
+    refetchOnReconnect: false,
+    selectFromResult: r => ({ data: r.data, isFetching: r.isFetching }),
+  });
   const showSkeleton = useDelay(isFetching);
   const listData = useMemo((): EmotionDiaryDTO[] => data ?? [], [data]);
   return { listData, showSkeleton } as const;
@@ -24,7 +29,15 @@ export function useDiaryWeekData(weekStart: Dayjs) {
     return [start, end] as const;
   }, [weekStart]);
 
-  const { data, isFetching } = useSelectByMonthQuery({ start, end });
+  const { data, isFetching } = useSelectByMonthQuery(
+    { start, end },
+    {
+      refetchOnMountOrArgChange: false,
+      refetchOnFocus: false,
+      refetchOnReconnect: false,
+      selectFromResult: r => ({ data: r.data, isFetching: r.isFetching }),
+    }
+  );
   const showSkeleton = useDelay(isFetching);
   const listData = useMemo<EmotionDiaryDTO[]>(() => data ?? [], [data]);
 

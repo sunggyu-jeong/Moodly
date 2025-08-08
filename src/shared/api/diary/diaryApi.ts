@@ -55,6 +55,7 @@ export const diaryApi = baseApi.injectEndpoints({
           )
         );
       },
+      keepUnusedDataFor: 60,
       providesTags: (result, _error, { start, end }) => [
         { type: 'EmotionDiary' as const, id: `LIST-${start}-${end}` },
         ...(result ? result.map(d => ({ type: 'EmotionDiary' as const, id: d.emotionId })) : []),
