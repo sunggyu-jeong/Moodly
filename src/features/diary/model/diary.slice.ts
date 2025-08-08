@@ -62,14 +62,12 @@ const diarySlice = createSlice({
       state.selectedMonth = firstOfMonth.toISOString();
       state.selectedWeek = dayjs(firstOfMonth).startOf('week').toISOString();
       state.selectedDay = null;
-      console.log('!@>$>!@$>!@$>!$>', firstOfMonth.toISOString());
     },
     moveWeek: (state, action: PayloadAction<'left' | 'right'>) => {
       const delta = action.payload === 'left' ? -1 : 1;
       const newWeek = dayjs(state.selectedWeek).add(delta, 'week');
       state.selectedWeek = newWeek.toISOString();
       state.selectedMonth = newWeek.startOf('month').toISOString();
-      console.log('!@>$>!@$>!@$>!$>', newWeek.startOf('month').toISOString());
       state.selectedDay = null;
     },
   },
