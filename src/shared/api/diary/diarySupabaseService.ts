@@ -2,6 +2,7 @@ import { ApiResponse } from '@entities/common/response';
 import { EmotionDiaryDTO, EmotionDiarySupabase, mapSupabaseToDTO } from '@entities/diary';
 import { EmotionDiaryToDTO } from '@features/diary/service/EmotionDiaryMapper';
 import { AuthError } from '@supabase/supabase-js';
+import dayjs from 'dayjs';
 import { ApiCode } from '../../config/errorCodes';
 import { isNotEmpty } from '../../lib';
 import { supabase } from '../../lib/supabase.util';
@@ -39,7 +40,7 @@ export async function getDiaryCount(): Promise<ApiResponse<number>> {
 export async function hasDiaryForDay(): Promise<ApiResponse<boolean>> {
   try {
     const response = await supabase.auth.getSession();
-    const today = new Date();
+    const today = dayjs();
     const yyyyMMdd = today.toISOString().slice(0, 10);
 
     const { count, error } = await supabase
@@ -95,7 +96,7 @@ export async function createDiary(
 ): Promise<ApiResponse<number>> {
   try {
     const response = await supabase.auth.getSession();
-    const now = new Date().toISOString();
+    const now = dayjs().toISOString();
     const payload: Database['public']['Tables']['moodly_diary']['Insert'] = {
       icon_id: dto.iconId!,
       record_date: dto.recordDate ?? now,
@@ -122,7 +123,7 @@ export async function updateDiary(
 ): Promise<ApiResponse<number>> {
   try {
     const response = await supabase.auth.getSession();
-    const now = new Date().toISOString();
+    const now = dayjs().toISOString();
     const payload: Database['public']['Tables']['moodly_diary']['Update'] = {
       updated_at: now,
       ...(isNotEmpty(updates.iconId) && { icon_id: updates.iconId }),

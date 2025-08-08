@@ -21,10 +21,8 @@ export async function getDiaryCount(): Promise<ApiResponse<number>> {
 export async function hasDiaryForDay(): Promise<ApiResponse<boolean>> {
   try {
     const realm = getRealm();
-    const start = new Date();
-    start.setHours(0, 0, 0, 0);
-    const end = new Date();
-    end.setHours(23, 59, 59, 999);
+    const start = dayjs().startOf('day');
+    const end = dayjs().endOf('day');
     const results = realm
       .objects<EmotionDiary>('EmotionDiary')
       .filtered('record_date >= $0 && record_date <= $1', start, end);
@@ -73,7 +71,7 @@ export async function createDiary(data: EmotionDiaryDTO): Promise<ApiResponse<nu
     const realm = getRealm();
     const maxId = realm.objects('EmotionDiary').max('emotion_id');
     const nextId = (typeof maxId === 'number' ? maxId : 0) + 1;
-    const now = new Date();
+    const now = dayjs().toDate();
 
     realm.write(() => {
       realm.create<EmotionDiary>('EmotionDiary', {
@@ -121,7 +119,7 @@ export async function updateDiary(
           (target as EmotionDiary & Record<string, unknown>)[realmKey] = value;
         }
       });
-      target.updated_at = new Date();
+      target.updated_at = dayjs().toDate();
     });
 
     return { data: emotionId };

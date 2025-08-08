@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 /**
  * 앱·사용자 단위 설정을 저장하기 위한 Realm 스키마
  */
@@ -15,7 +17,7 @@ export class UserMeta extends Realm.Object<UserMeta> {
     properties: {
       user_id: 'string',
       is_first_load: { type: 'bool', default: true },
-      created_at: { type: 'date', default: () => new Date() },
+      created_at: { type: 'date', default: () => dayjs() },
     },
   };
 }
