@@ -43,3 +43,16 @@ export const generateWeekGrid = ({ targetDate }: GenerateMonthGridProps): (Dayjs
 
   return [week];
 };
+
+export const formatWeekLabel = (weekStart: Dayjs): string => {
+  const month = weekStart.month() + 1;
+
+  // 일요일=0 기준으로, 해당 월의 "첫 주 시작(일요일)"을 계산
+  const firstOfMonth = weekStart.startOf('month');
+  const firstWeekStart = firstOfMonth.subtract(firstOfMonth.day(), 'day').startOf('day');
+
+  const currentWeekStart = weekStart.subtract(weekStart.day(), 'day').startOf('day');
+  const weekIndex = Math.floor(currentWeekStart.diff(firstWeekStart, 'day') / 7) + 1;
+
+  return `${month}월 ${weekIndex}째주`;
+};

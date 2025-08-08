@@ -1,6 +1,6 @@
 export const DiaryPageMode = {
   listMode: 'LISTMODE',
-  calendarMode: 'MODE',
+  calendarMode: 'CALENDARMODE',
 } as const;
 
 export const DiaryCalendarMode = {
