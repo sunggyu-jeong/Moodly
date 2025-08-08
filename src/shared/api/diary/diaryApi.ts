@@ -129,11 +129,7 @@ export const diaryApi = baseApi.injectEndpoints({
           )
         );
       },
-      invalidatesTags: (_result, _error, { emotionId, start, end, date }) => [
-        { type: 'EmotionDiary' as const, id: emotionId },
-        { type: 'EmotionDiary' as const, id: `LIST-${start}-${end}` },
-        { type: 'EmotionDiary' as const, id: `DAY-${date}` },
-      ],
+      invalidatesTags: (_result, _error, { emotionId, start, end, date }) => ['EmotionDiary'],
     }),
   }),
 });
