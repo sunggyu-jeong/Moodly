@@ -30,7 +30,7 @@ const useStorage = <T>(
    */
   const setValue = async (value: T | undefined) => {
     if (isEmpty(value)) {
-      return undefined;
+      return;
     }
     try {
       setStoredValue(value ?? null);

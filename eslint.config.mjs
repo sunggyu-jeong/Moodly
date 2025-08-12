@@ -1,4 +1,5 @@
 import eslint from '@eslint/js';
+import configPrettier from 'eslint-config-prettier';
 import boundaries from 'eslint-plugin-boundaries';
 import pluginImport from 'eslint-plugin-import';
 import pluginPrettier from 'eslint-plugin-prettier';
@@ -124,8 +125,11 @@ export default tseslint.config(
       // React Native 전용 권장
       'react-native/no-unused-styles': 'error',
       'react-native/no-inline-styles': 'warn',
-      'react-native/no-raw-text': 'warn',
       'react-native/split-platform-components': 'warn',
+      'react-native/no-raw-text': [
+        'warn',
+        { skip: ['Title', 'Body1', 'Body2', 'Caption', 'H1', 'H2', 'H3', 'Label'] },
+      ],
 
       // import/정렬/미사용 제거
       'import/no-unresolved': 'off',
@@ -202,5 +206,8 @@ export default tseslint.config(
       '.prettierrc.cjs',
     ],
     languageOptions: { parserOptions: { project: null } },
-  }
+  },
+
+  // 6) Prettier와 충돌하는 규칙 비활성화(반드시 마지막에 배치)
+  configPrettier
 );

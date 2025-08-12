@@ -102,5 +102,5 @@ function allValuesNull<T>(obj: T) {
   if (!obj || typeof obj !== 'object') {
     return false;
   }
-  return Object.values(obj).every(v => v == null);
+  return Object.values(obj).every(v => v === null);
 }
