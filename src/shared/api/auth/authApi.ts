@@ -1,5 +1,6 @@
 import { UserMetaDTO } from '@entities/auth/User.scheme';
 import { User } from '@supabase/supabase-js';
+
 import { baseApi, wrapQueryFn } from '../base';
 import {
   fetchFirstLaunchFlag,

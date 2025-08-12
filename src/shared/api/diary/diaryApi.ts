@@ -1,6 +1,6 @@
 import { EmotionDiaryDTO, EmotionDiarySupabase } from '@entities/diary';
-import { baseApi, fetchWithAuth, wrapQueryFn } from '../base';
 
+import { baseApi, fetchWithAuth, wrapQueryFn } from '../base';
 import {
   createDiary as createDiaryRealm,
   deleteDiary as deleteDiaryRealm,
@@ -10,7 +10,6 @@ import {
   selectByMonth as selectByMonthRealm,
   updateDiary as updateDiaryRealm,
 } from './diaryRealmService';
-
 import {
   createDiary as createDiarySB,
   deleteDiary as deleteDiarySB,

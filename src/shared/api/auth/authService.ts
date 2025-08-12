@@ -3,6 +3,7 @@ import { ApiResponse } from '@entities/common/response';
 import { appleAuth } from '@invertase/react-native-apple-authentication';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { AuthError, Session, User } from '@supabase/supabase-js';
+
 import { ApiCode, AppCode, HttpStatus } from '../../config/errorCodes';
 import { isEmpty } from '../../lib';
 import { getRealm } from '../../lib/realm-client.util';
@@ -30,7 +31,9 @@ export async function signInWithIdToken(
       token,
       ...(nonce ? { nonce } : {}),
     });
-    if (error) throw error;
+    if (error) {
+      throw error;
+    }
     return {
       session: data.session!,
       data: data.session!.user,
@@ -111,7 +114,9 @@ export async function fetchSession(): Promise<ApiResponse<User>> {
 export async function signOut(): Promise<ApiResponse<string>> {
   try {
     const { error } = await supabase.auth.signOut();
-    if (error) throw error;
+    if (error) {
+      throw error;
+    }
     return { data: ApiCode.SUCCESS };
   } catch (err) {
     throw baseFormatError(err as Error);
@@ -129,7 +134,9 @@ export async function signOut(): Promise<ApiResponse<string>> {
 export async function getAuthToken(): Promise<ApiResponse<Session>> {
   try {
     const { data, error } = await supabase.auth.getSession();
-    if (error) throw error;
+    if (error) {
+      throw error;
+    }
     return { data: data.session };
   } catch (err) {
     throw baseFormatError(err as Error);

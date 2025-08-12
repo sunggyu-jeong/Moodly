@@ -5,9 +5,8 @@ import {
   ThunkDispatch,
   UnknownAction,
 } from '@reduxjs/toolkit';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
-
 import { isRejectedWithValue } from '@reduxjs/toolkit';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { parseApiError } from '@shared/api/parseApiError';
 import { AppCode, ERROR_MESSAGE_MAP } from '@shared/config/errorCodes';
 import { resetTo } from '@shared/lib';

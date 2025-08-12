@@ -33,7 +33,9 @@ export const buildPages = ({
   nextData,
 }: BuildPageArgs) => {
   const filterBySelected = (list: EmotionDiaryDTO[]) => {
-    if (!isNotEmpty(selectedDayIso)) return list;
+    if (!isNotEmpty(selectedDayIso)) {
+      return list;
+    }
     return list.filter(e => dayjs(e.createdAt).isSame(dayjs(selectedDayIso), 'day'));
   };
 

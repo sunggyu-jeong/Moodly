@@ -11,6 +11,7 @@ import dayjs from 'dayjs';
 import { AnimatePresence, MotiView } from 'moti';
 import React from 'react';
 import { View } from 'react-native';
+
 import CalendarBar from '../../calendar/ui/CalendarBar';
 import DiarySkeleton from './skeleton/DiaryCardSkeleton';
 

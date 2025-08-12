@@ -1,5 +1,3 @@
-import { Image, StatusBar, StyleSheet, View } from 'react-native';
-
 import { resetDiary } from '@features/diary/model/diary.slice';
 import { useFocusEffect } from '@react-navigation/native';
 import { useGetDiaryCountQuery, useHasDiaryForDayQuery } from '@shared/api/diary/diaryApi';
@@ -10,6 +8,7 @@ import ActionButton from '@shared/ui/elements/ActionButton.tsx';
 import DiaryCountCard from '@shared/ui/elements/DiaryCountCard.tsx';
 import { H2 } from '@shared/ui/typography/H2.tsx';
 import { useCallback } from 'react';
+import { Image, StatusBar, StyleSheet, View } from 'react-native';
 
 const HomePage = () => {
   const dispatch = useAppDispatch();

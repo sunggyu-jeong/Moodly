@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
 import { DropDownItemProps } from '@widgets/dropdown/ui/DropDownItem';
 
 interface DropdownViewPayload {

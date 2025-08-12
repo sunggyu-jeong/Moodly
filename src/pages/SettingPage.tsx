@@ -19,6 +19,7 @@ import { Label } from '@shared/ui/typography/Label';
 import { Session } from '@supabase/supabase-js';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Image, View } from 'react-native';
+
 import { version } from '../../package.json';
 
 const SettingPage = () => {
@@ -34,7 +35,9 @@ const SettingPage = () => {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_, session) => {
-      if (session) setUserInfo(session);
+      if (session) {
+        setUserInfo(session);
+      }
     });
     return () => subscription.unsubscribe();
   }, []);

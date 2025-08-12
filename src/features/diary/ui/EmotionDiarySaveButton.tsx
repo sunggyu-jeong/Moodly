@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from '@shared/hooks';
 import { isNotEmpty, navigate } from '@shared/lib';
 import { KeyboardAccessoryButton } from '@shared/ui/elements/KeyboardAccessory';
 import { useEffect } from 'react';
+
 import { useDiaryMutation } from '../hooks/useDiaryMutation';
 import { setSelectedDiary } from '../model/diary.slice';
 

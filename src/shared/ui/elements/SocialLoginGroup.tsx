@@ -4,6 +4,7 @@ import SocialLoginButton from '@features/auth/ui/SocialLoginButton';
 import { setShowToastView } from '@processes/overlay/model/overlay.slice';
 import { useCallback, useEffect } from 'react';
 import { Platform, View } from 'react-native';
+
 import { useFetchFirstLaunchFlagQuery } from '../../api/auth/authApi';
 import { useAppDispatch } from '../../hooks';
 import { isNotEmpty, resetTo } from '../../lib';
@@ -33,7 +34,9 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
   }, [isFirstLoad]);
 
   useEffect(() => {
-    if (isLoading) return;
+    if (isLoading) {
+      return;
+    }
     if (isNotEmpty(data)) {
       if (entrance === SOCIAL_LOGIN_ENTRANCE.LOGIN) {
         navigateInitialRoute();

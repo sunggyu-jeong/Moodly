@@ -1,6 +1,5 @@
-import { View } from 'react-native';
-
 import { Body2 } from '@shared/ui/typography/Body2';
+import { View } from 'react-native';
 
 interface ToastBaseProps {
   text: string;

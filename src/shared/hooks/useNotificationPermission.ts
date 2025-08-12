@@ -42,7 +42,9 @@ export function useNotificationPermission() {
   const requestNotification = async () => {
     try {
       const granted = await requestNotificationPermission();
-      if (!granted) return;
+      if (!granted) {
+        return;
+      }
 
       const token = await messaging().getToken();
       console.log('FCM 토큰:', token);

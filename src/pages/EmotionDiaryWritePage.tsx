@@ -1,4 +1,11 @@
 // src/screens/EmotionDiaryWritePage.tsx
+import { ICON_DATA } from '@shared/constants';
+import { getScaleSize, useAppSelector } from '@shared/hooks';
+import { isNotEmpty } from '@shared/lib';
+import { common } from '@shared/styles/colors.ts';
+import { H2 } from '@shared/ui/typography/H2.tsx';
+import NaviDismiss from '@widgets/navigation-bar/ui/NaviDismiss.tsx';
+import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar.tsx';
 import { useEffect, useRef, useState } from 'react';
 import {
   Image,
@@ -11,14 +18,6 @@ import {
 } from 'react-native';
 import InputAccessoryView from 'react-native-input-accessory-view';
 
-import { ICON_DATA } from '@shared/constants';
-import { getScaleSize, useAppSelector } from '@shared/hooks';
-import { H2 } from '@shared/ui/typography/H2.tsx';
-import NaviDismiss from '@widgets/navigation-bar/ui/NaviDismiss.tsx';
-import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar.tsx';
-
-import { isNotEmpty } from '@shared/lib';
-import { common } from '@shared/styles/colors.ts';
 import { DiarySaveButton } from '../features/diary/ui/EmotionDiarySaveButton';
 
 const actionButtons = [{ item: <NaviDismiss />, disabled: false }];

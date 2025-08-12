@@ -7,6 +7,7 @@ import { isEmpty, navigate } from '@shared/lib';
 import DayCell from '@shared/ui/elements/DayCell';
 import dayjs, { Dayjs } from 'dayjs';
 import React, { useCallback, useMemo } from 'react';
+
 import { setCurrentDiary, setSelectedDay } from '../../diary/model/diary.slice';
 
 interface SelectableDayCellProps {
@@ -22,7 +23,9 @@ const SelectableDayCell = ({ date, iconId }: SelectableDayCellProps) => {
   const isSelected = date.isSame(selectedDay, 'day');
 
   const iconSource = useMemo(() => {
-    if (isEmpty(iconId)) return COMMON_ICONS.iconAddDiary;
+    if (isEmpty(iconId)) {
+      return COMMON_ICONS.iconAddDiary;
+    }
     const found = ICON_DATA.find(i => i.id === iconId);
     return found?.iconSelected ?? null;
   }, [iconId]);

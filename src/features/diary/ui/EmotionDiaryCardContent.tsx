@@ -1,7 +1,6 @@
-import { StyleSheet } from 'react-native';
-
 import { gray } from '@shared/styles/colors.ts';
 import { Body2 } from '@shared/ui/typography/Body2.tsx';
+import { StyleSheet } from 'react-native';
 
 export interface DiaryCardContentProps {
   content: string;

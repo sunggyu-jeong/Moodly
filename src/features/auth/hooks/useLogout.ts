@@ -5,6 +5,7 @@ import { ApiCode } from '@shared/config/errorCodes';
 import { useAppDispatch } from '@shared/hooks';
 import { isNotEmpty, resetTo } from '@shared/lib';
 import { useEffect } from 'react';
+
 import { setRequestLogin } from '../../setting/model/setting.slice';
 
 export function useLogout() {
@@ -12,7 +13,9 @@ export function useLogout() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (isLoading) return;
+    if (isLoading) {
+      return;
+    }
 
     if (isNotEmpty(data) && data === ApiCode.SUCCESS) {
       dispatch(baseApi.util.invalidateTags(['EmotionDiary']));

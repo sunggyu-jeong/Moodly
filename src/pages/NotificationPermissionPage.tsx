@@ -1,10 +1,11 @@
-import { useNotificationPermission } from '@/shared/hooks/useNotificationPermission';
 import { UserMetaDTO } from '@entities/auth/User.scheme';
 import NotificationPermissionPrompt from '@features/notification-permission/ui/NotificationPermission.ui';
 import { useSaveFirstLaunchFlagMutation } from '@shared/api/auth/authApi';
 import { resetTo } from '@shared/lib';
 import dayjs from 'dayjs';
 import { useEffect } from 'react';
+
+import { useNotificationPermission } from '@/shared/hooks/useNotificationPermission';
 
 const NotificationPermissionPage = () => {
   const { requestNotification, skipPermission } = useNotificationPermission();

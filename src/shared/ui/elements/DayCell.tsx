@@ -1,7 +1,8 @@
-import { Caption } from '@/shared/ui/typography/Caption';
 import { Dayjs } from 'dayjs';
 import React from 'react';
 import { Image, ImageSourcePropType, TouchableOpacity, View } from 'react-native';
+
+import { Caption } from '@/shared/ui/typography/Caption';
 
 interface DayCellProps {
   date: Dayjs;

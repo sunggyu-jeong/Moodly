@@ -1,14 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { RootStackParamList } from '@app/navigation/RootStack';
+import { BottomTabParamList } from '@app/navigation/TabNavigation';
 import {
   CommonActions,
   createNavigationContainerRef,
   StackActions,
   TabActions,
 } from '@react-navigation/native';
-
-import { RootStackParamList } from '@app/navigation/RootStack';
-
-import { BottomTabParamList } from '@app/navigation/TabNavigation';
 
 export const navigationRef = createNavigationContainerRef<RootStackParamList>();
 
@@ -46,7 +44,9 @@ export function dismiss() {
 }
 
 export function resetToRoot() {
-  if (!navigationRef.isReady()) return;
+  if (!navigationRef.isReady()) {
+    return;
+  }
 
   const state = navigationRef.getRootState();
   if (state.routes.length > 1) {
@@ -67,7 +67,9 @@ export function resetTo<RouteName extends keyof RootStackParamList>(
 }
 
 export function dismissModalToScreen() {
-  if (!navigationRef.isReady()) return;
+  if (!navigationRef.isReady()) {
+    return;
+  }
 
   const rootState = navigationRef.getRootState();
   const lastRoute = rootState.routes[rootState.routes.length - 1];
@@ -82,7 +84,9 @@ export function dismissModalToScreen() {
 }
 
 export function navigateFlow(flow: NavigationFlow) {
-  if (!navigationRef.isReady()) return;
+  if (!navigationRef.isReady()) {
+    return;
+  }
 
   switch (flow) {
     case NavigationFlow.DiaryDetailToEmotionWriteWithReturn: {
@@ -106,7 +110,9 @@ export function navigateFlow(flow: NavigationFlow) {
       break;
     }
     case NavigationFlow.DiaryDetailToCompleteModify: {
-      if (!navigationRef.isReady()) return;
+      if (!navigationRef.isReady()) {
+        return;
+      }
 
       const rootState = navigationRef.getRootState();
       const newRoutes = [...rootState.routes].filter(el => el.name !== 'DiaryStack');

@@ -18,6 +18,7 @@ import { Label } from '@shared/ui/typography/Label';
 import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar';
 import { useCallback, useEffect, useMemo } from 'react';
 import { View } from 'react-native';
+
 import { version } from '../../package.json';
 
 const ManageAccountPage = () => {
@@ -29,7 +30,9 @@ const ManageAccountPage = () => {
     try {
       const user = await supabase.auth.getUser();
       const session = await supabase.auth.getSession();
-      if (!user.data.user) return;
+      if (!user.data.user) {
+        return;
+      }
 
       const res = await fetch(`${process.env.HOT_UPDATER_SUPABASE_URL}/functions/v1/smart-api`, {
         method: 'POST',
@@ -83,7 +86,9 @@ const ManageAccountPage = () => {
   );
 
   useEffect(() => {
-    if (isEmpty(requestWithDrawal)) return;
+    if (isEmpty(requestWithDrawal)) {
+      return;
+    }
     handleAccountDeletion();
   }, [requestWithDrawal]);
 

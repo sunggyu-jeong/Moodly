@@ -12,7 +12,9 @@ export function useDiaryMutation(text: string) {
   const [update, { data: updateRes, isLoading: updateLoading }] = useUpdateDiaryMutation();
 
   const save = useCallback(async () => {
-    if (isEmpty(text)) return;
+    if (isEmpty(text)) {
+      return;
+    }
     const diary = { ...currentDiary, description: text };
     const baseDate = isNotEmpty(diary.createdAt) ? dayjs(diary.createdAt) : dayjs();
 

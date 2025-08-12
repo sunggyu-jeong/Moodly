@@ -7,6 +7,7 @@ import { H3 } from '@shared/ui/typography/H3.tsx';
 import { Title } from '@shared/ui/typography/Title.tsx';
 import { useMemo } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
+
 import { Body1 } from '../shared/ui/typography/Body1';
 
 const Login = () => {

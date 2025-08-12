@@ -5,8 +5,9 @@ import {
 } from '@entities/calendar/diary.type';
 import { isNotEmpty } from '@shared/lib';
 import { Dayjs } from 'dayjs';
-import { useCallback, type Ref } from 'react';
+import { type Ref, useCallback } from 'react';
 import { Dimensions, FlatList, FlatListProps, ListRenderItem, View } from 'react-native';
+
 import { CalendarPage } from '../lib/paging';
 import EmotionDiaryMonthView from './EmotionDiaryMonthView';
 
@@ -55,7 +56,9 @@ export const EmotionDiaryMonthPager = ({
     [calendarMode, currentMonth, diaryMode, selectedMonth]
   );
 
-  if (diaryMode !== DiaryPageMode.calendarMode) return <>{listModeFallback}</>;
+  if (diaryMode !== DiaryPageMode.calendarMode) {
+    return <>{listModeFallback}</>;
+  }
 
   return (
     <FlatList<CalendarPage>

@@ -29,7 +29,9 @@ const useStorage = <T>(
    * @throws 저장소에 값을 설정하는 데 실패하면 콘솔에 오류를 기록합니다.
    */
   const setValue = async (value: T | undefined) => {
-    if (isEmpty(value)) return undefined;
+    if (isEmpty(value)) {
+      return undefined;
+    }
     try {
       setStoredValue(value ?? null);
       await AsyncStorage.setItem(key, JSON.stringify(value));

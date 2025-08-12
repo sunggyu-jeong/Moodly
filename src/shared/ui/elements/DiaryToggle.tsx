@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Animated, Easing, StyleSheet, TouchableOpacity, View } from 'react-native';
+
 import colors from '../../styles/colors';
 import { Caption } from '../typography/Caption';
 

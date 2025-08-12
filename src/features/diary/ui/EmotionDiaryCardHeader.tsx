@@ -1,6 +1,3 @@
-import dayjs from 'dayjs';
-import { StyleSheet, View } from 'react-native';
-
 import { EmotionDiaryDTO } from '@entities/diary';
 import { EMOTION_ICONS } from '@shared/assets/images/emotion';
 import { ICON_DATA } from '@shared/constants/Icons.ts';
@@ -8,6 +5,8 @@ import { gray } from '@shared/styles/colors.ts';
 import Avatar from '@shared/ui/elements/Avatar.tsx';
 import { Caption } from '@shared/ui/typography/Caption.tsx';
 import { Label } from '@shared/ui/typography/Label.tsx';
+import dayjs from 'dayjs';
+import { StyleSheet, View } from 'react-native';
 
 const EmotionDiaryCardHeader = ({ iconId, recordDate }: EmotionDiaryDTO) => {
   const emotionSource = ICON_DATA.find(item => item.id === iconId);

@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+
 import EmotionDiaryEmptyMessage from './EmotionDiaryEmptyMessage';
 
 interface DiaryListEmptyProps {

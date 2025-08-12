@@ -1,15 +1,11 @@
-import { RouteProp, useRoute } from '@react-navigation/native';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
-import { Image, Platform, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
-
 import { MODAL_CONFIRM_ACTION_KEY } from '@processes/key';
-
 import {
   resetModalPopup,
   setOverlayEventHandler,
   setShowDropdownView,
   setShowToastView,
 } from '@processes/overlay/model/overlay.slice';
+import { RouteProp, useRoute } from '@react-navigation/native';
 import { COMMON_ICONS } from '@shared/assets/images/common';
 import { ICON_DATA } from '@shared/constants/Icons.ts';
 import { getScaleSize, useAppDispatch, useAppSelector } from '@shared/hooks';
@@ -20,8 +16,10 @@ import { Body1 } from '@shared/ui/typography/Body1.tsx';
 import { DropDownEventIdentifier } from '@widgets/dropdown/ui/DropDownItem.tsx';
 import NaviDismiss from '@widgets/navigation-bar/ui/NaviDismiss.tsx';
 import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar.tsx';
-
 import dayjs from 'dayjs';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { Image, Platform, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+
 import { resetDiary } from '../features/diary/model/diary.slice';
 import { useDeleteDiaryMutation } from '../shared/api/diary/diaryApi';
 

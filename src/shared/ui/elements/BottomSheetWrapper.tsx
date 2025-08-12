@@ -7,6 +7,7 @@ import BottomSheet, {
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import React, { forwardRef } from 'react';
 import { StyleSheet } from 'react-native';
+
 import { common } from '../../styles/colors';
 
 export interface BottomSheetWrapperProps extends BottomSheetProps {
