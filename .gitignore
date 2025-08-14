@@ -269,3 +269,5 @@ ios/Pods
 ios/vendor
 
 vendor/bundle
+
+*.sh
