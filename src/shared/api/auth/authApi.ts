@@ -78,7 +78,7 @@ export const {
   useSignInGoogleMutation,
   useSignInAppleMutation,
   useLazyInitializeSessionQuery,
-  useFetchFirstLaunchFlagQuery,
+  useLazyFetchFirstLaunchFlagQuery,
   useSaveFirstLaunchFlagMutation,
   useSignOutMutation,
   useGetUserInfoQuery,

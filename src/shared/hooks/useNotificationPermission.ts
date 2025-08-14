@@ -42,7 +42,7 @@ export function useNotificationPermission() {
   const requestNotification = async () => {
     try {
       const granted = await requestNotificationPermission();
-      if (!granted) return;
+      if (!granted) return false;
 
       const token = await messaging().getToken();
       console.log('FCM 토큰:', token);
@@ -51,8 +51,10 @@ export function useNotificationPermission() {
       unsubscribeRef.current = messaging().onTokenRefresh(newToken => {
         console.log('FCM 토큰 갱신:', newToken);
       });
+      return true;
     } catch (err) {
       console.error('FCM 초기화 중 에러:', err);
+      return false;
     }
   };
 

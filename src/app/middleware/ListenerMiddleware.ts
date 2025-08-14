@@ -1,4 +1,3 @@
-import { setShowToastView } from '@processes/overlay/model/overlay.slice';
 import {
   createListenerMiddleware,
   ListenerEffectAPI,
@@ -45,11 +44,11 @@ listenerMiddleware.startListening({
 
     const message = errDetail.data?.message || ERROR_MESSAGE_MAP[apiCode];
 
-    listenerApi.dispatch(
-      setShowToastView({
-        visibility: true,
-        message,
-      })
-    );
+    // listenerApi.dispatch(
+    //   setShowToastView({
+    //     visibility: true,
+    //     message,
+    //   })
+    // );
   },
 });

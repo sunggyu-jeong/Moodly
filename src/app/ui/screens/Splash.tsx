@@ -1,20 +1,20 @@
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Image, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import UpdateContent from '@features/updateProgress/ui/UpdateContent.tsx';
 import { UpdateProgressProps } from '@processes/update/useUpdateProgress';
-import { useLazyInitializeSessionQuery } from '@shared/api/auth/authApi';
+import {
+  useLazyFetchFirstLaunchFlagQuery,
+  useLazyInitializeSessionQuery,
+} from '@shared/api/auth/authApi';
 import { MAIN_ICONS } from '@shared/assets/images/main';
 import { isNotEmpty, resetTo } from '@shared/lib';
 import { initRealm } from '@shared/lib/realm-client.util';
 
 const Splash = ({ status, progress }: UpdateProgressProps) => {
   const [initSession, { data, isLoading }] = useLazyInitializeSessionQuery();
-
-  const handleAuthFlow = useCallback(async () => {
-    await initSession();
-  }, [initSession]);
+  const [getFirstLaunchFlag, { data: isFirstLoad }] = useLazyFetchFirstLaunchFlagQuery();
 
   useEffect(() => {
     // 1) Realm 초기화
@@ -23,16 +23,23 @@ const Splash = ({ status, progress }: UpdateProgressProps) => {
     if (status !== 'UPDATE_PROCESS_COMPLETED') return;
 
     // 3) 2초 뒤에 인증 요청
-    const timer = setTimeout(handleAuthFlow, 2000);
+    const timer = setTimeout(flag, 2000);
     return () => clearTimeout(timer);
-  }, [status, handleAuthFlow]);
-
-  useEffect(() => {
-    if (isLoading) return;
-    if (isNotEmpty(data)) {
-      resetTo('Main');
+  }, [status]);
+  const flag = async () => {
+    const response = await getFirstLaunchFlag();
+    if (response.data) {
+      resetTo('Onboarding');
+      return;
     }
-  }, [data, isLoading]);
+    const res = await initSession();
+    console.log('!@>$>!@>$', data);
+    if (isNotEmpty(res.data)) {
+      resetTo('Main');
+    } else {
+      resetTo('Login');
+    }
+  };
 
   return (
     <>

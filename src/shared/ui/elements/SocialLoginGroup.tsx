@@ -4,7 +4,7 @@ import SocialLoginButton from '@features/auth/ui/SocialLoginButton';
 import { setShowToastView } from '@processes/overlay/model/overlay.slice';
 import { useCallback, useEffect } from 'react';
 import { Platform, View } from 'react-native';
-import { useFetchFirstLaunchFlagQuery, useLazyGetUserInfoQuery } from '../../api/auth/authApi';
+import { useLazyGetUserInfoQuery } from '../../api/auth/authApi';
 import { useAppDispatch } from '../../hooks';
 import { isEmpty, isNotEmpty, resetTo } from '../../lib';
 
@@ -20,18 +20,10 @@ interface SocialLoginGroupProps {
 const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
   const { handleLogin, data, isLoading } = useSocialLogin();
   const [getUserInfo, { data: userInfo }] = useLazyGetUserInfoQuery();
-  const { data: isFirstLoad } = useFetchFirstLaunchFlagQuery(undefined, {
-    skip: entrance !== SOCIAL_LOGIN_ENTRANCE.LOGIN,
-  });
-
   const dispatch = useAppDispatch();
   const navigateInitialRoute = useCallback(() => {
-    if (isFirstLoad) {
-      resetTo('NotificationPermissionPage');
-    } else {
-      resetTo('Main');
-    }
-  }, [isFirstLoad]);
+    resetTo('Main');
+  }, []);
 
   const fetchUserInfo = async () => {
     const response = await getUserInfo();

@@ -199,6 +199,7 @@ export async function fetchFirstLaunchFlag(): Promise<ApiResponse<boolean>> {
   try {
     const realm = getRealm();
     const meta = realm.objects<UserMeta>('UserMeta')[0];
+    console.log('!@>$>!@$>!@', meta);
     const isFirstLoad = meta?.is_first_load ?? true;
     return { data: isFirstLoad };
   } catch (err) {
