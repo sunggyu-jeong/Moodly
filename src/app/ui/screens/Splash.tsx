@@ -18,14 +18,17 @@ const Splash = ({ status, progress }: UpdateProgressProps) => {
   useEffect(() => {
     // 1) Realm 초기화
     initRealm();
+    let timer: NodeJS.Timeout | undefined;
     // 2) 업데이트가 완료된 뒤에만 로직 실행
-    if (status !== 'UPDATE_PROCESS_COMPLETED') {
-      return;
+    if (status === 'UPDATE_PROCESS_COMPLETED') {
+      timer = setTimeout(handleAuthFlow, 2000);
     }
 
     // 3) 2초 뒤에 인증 요청
-    const timer = setTimeout(handleAuthFlow, 2000);
-    return () => clearTimeout(timer);
+
+    return () => {
+      if (isNotEmpty(timer)) clearTimeout(timer);
+    };
   }, [status, handleAuthFlow]);
 
   useEffect(() => {

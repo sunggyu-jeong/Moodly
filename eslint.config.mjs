@@ -128,7 +128,7 @@ export default tseslint.config(
       'react-native/split-platform-components': 'warn',
       'react-native/no-raw-text': [
         'warn',
-        { skip: ['Title', 'Body1', 'Body2', 'Caption', 'H1', 'H2', 'H3', 'Label'] },
+        { skip: ['Title', 'Body1', 'Body2', 'Caption', 'H1', 'H2', 'H3', 'Label', 'ActionButton'] },
       ],
 
       // import/정렬/미사용 제거

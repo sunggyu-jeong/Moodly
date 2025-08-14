@@ -20,7 +20,7 @@ const EmotionDiaryCardList = ({ data }: EmotionDiaryCardListProps) => {
   };
 
   if (isEmpty(data)) {
-    return;
+    return <></>;
   }
 
   return (

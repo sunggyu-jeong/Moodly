@@ -30,6 +30,7 @@ export function useRealm() {
       return realmInstance;
     } catch (error) {
       console.error('Realm을 여는 도중 오류가 발생했습니다.', error);
+      return undefined;
     }
   }, []);
 

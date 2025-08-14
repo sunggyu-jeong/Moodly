@@ -9,7 +9,7 @@ import { setSelectedDiary } from '../model/diary.slice';
 export function DiarySaveButton(text: string) {
   const dispatch = useAppDispatch();
   const currentDiary = useAppSelector(state => state.diarySlice.currentDiary);
-  const { save, isLoading, result } = useDiaryMutation(text);
+  const { save, result } = useDiaryMutation(text);
 
   useEffect(() => {
     if (isNotEmpty(result)) {

@@ -50,8 +50,7 @@ const EmotionDiaryDetailPage = () => {
   const dispatch = useAppDispatch();
   const route = useRoute<RouteProp<DiaryDetailRouteParams, 'params'>>();
   const dropdownButtonRef = useRef<View>(null);
-  //FIXME: - 로딩 애니메이션 나오면 로딩 붙이기!
-  const [deleteDiary, { isLoading: idDeleteDiaryLoading }] = useDeleteDiaryMutation();
+  const [deleteDiary] = useDeleteDiaryMutation();
   const openDropdown = useCallback(() => {
     dropdownButtonRef.current?.measureInWindow((x, y, width, height) => {
       dispatch(
@@ -101,7 +100,13 @@ const EmotionDiaryDetailPage = () => {
       dispatch(setOverlayEventHandler(null));
       dispatch(resetModalPopup());
     }
-  }, [deleteDiary, dispatch, route.params.origin, selectedDiary?.emotionId]);
+  }, [
+    deleteDiary,
+    dispatch,
+    route.params.origin,
+    selectedDiary?.emotionId,
+    selectedDiary?.createdAt,
+  ]);
 
   useEffect(() => {
     if (
@@ -121,8 +126,8 @@ const EmotionDiaryDetailPage = () => {
   return (
     <>
       <NavigationBar
-        showBackButton={route.params.origin == 'RootStack'}
-        leftComponents={route.params.origin == 'DiaryStack' ? leftComponents : null}
+        showBackButton={route.params.origin === 'RootStack'}
+        leftComponents={route.params.origin === 'DiaryStack' ? leftComponents : null}
         actionButtons={actionButtons}
       />
 
