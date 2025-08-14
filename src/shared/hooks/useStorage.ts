@@ -5,7 +5,7 @@ import { isEmpty } from '@/shared/lib';
 
 const useStorage = <T>(
   key: string,
-  defaultValue: T
+  defaultValue: T,
 ): [T | null, (value: T) => Promise<void>, () => Promise<void>] => {
   // useState Hook을 사용하여 상태(storedValue)를 관리합니다.
   const [storedValue, setStoredValue] = useState<T | null>(defaultValue);

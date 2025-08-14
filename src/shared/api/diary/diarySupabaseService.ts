@@ -63,7 +63,7 @@ export async function hasDiaryForDay(): Promise<ApiResponse<boolean>> {
 
 export async function selectByMonth(
   startDate: string,
-  endDate: string
+  endDate: string,
 ): Promise<ApiResponse<EmotionDiaryDTO[]>> {
   try {
     const response = await supabase.auth.getSession();
@@ -101,7 +101,7 @@ export async function selectByDay(startDate: string): Promise<ApiResponse<Emotio
   }
 }
 export async function createDiary(
-  dto: Omit<EmotionDiaryDTO, 'emotionId' | 'createdAt' | 'updatedAt'>
+  dto: Omit<EmotionDiaryDTO, 'emotionId' | 'createdAt' | 'updatedAt'>,
 ): Promise<ApiResponse<number>> {
   try {
     const response = await supabase.auth.getSession();
@@ -130,7 +130,7 @@ export async function createDiary(
 
 export async function updateDiary(
   emotionId: number,
-  updates: Partial<Omit<EmotionDiaryDTO, 'emotionId'>>
+  updates: Partial<Omit<EmotionDiaryDTO, 'emotionId'>>,
 ): Promise<ApiResponse<number>> {
   try {
     const response = await supabase.auth.getSession();

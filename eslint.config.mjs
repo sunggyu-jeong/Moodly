@@ -166,7 +166,7 @@ export default tseslint.config(
         'error',
         {
           arrowParens: 'avoid',
-          trailingComma: 'es5',
+          trailingComma: 'all',
           singleQuote: true,
           singleAttributePerLine: true,
           semi: true,
@@ -213,5 +213,5 @@ export default tseslint.config(
   },
 
   // 6) Prettier와 충돌하는 규칙 비활성화(반드시 마지막에 배치)
-  configPrettier
+  configPrettier,
 );

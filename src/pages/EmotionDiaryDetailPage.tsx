@@ -58,7 +58,7 @@ const EmotionDiaryDetailPage = () => {
           visibility: true,
           dropdownList: props,
           pos: { x, y: y + height + 5 + (Platform.OS === 'ios' ? 0 : 70) },
-        })
+        }),
       );
     });
   }, [dropdownButtonRef, dispatch]);
@@ -77,7 +77,7 @@ const EmotionDiaryDetailPage = () => {
         disabled: false,
       },
     ],
-    [openDropdown]
+    [openDropdown],
   );
 
   const handleRemoveDiary = useCallback(async () => {
