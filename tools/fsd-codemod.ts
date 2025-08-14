@@ -17,7 +17,7 @@
 
 import fg from 'fast-glob';
 import { promises as fs } from 'fs';
-import path from 'path';
+import * as path from 'path';
 
 type Layer = 'app' | 'pages' | 'widgets' | 'features' | 'entities' | 'shared';
 
