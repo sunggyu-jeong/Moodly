@@ -93,7 +93,6 @@ export async function getUserInfo(): Promise<ApiResponse<UserInfo>> {
       .select('*')
       .eq('id', user?.id)
       .single();
-    console.log('!@$>!@>$>$!>$', data, error);
     if (error) throw error;
     return { data: data };
   } catch (err) {

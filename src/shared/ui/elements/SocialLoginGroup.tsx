@@ -35,7 +35,6 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
 
   const fetchUserInfo = async () => {
     const response = await getUserInfo();
-    console.log('@$>!>$@>$!@>$', response);
     if (isEmpty(response)) {
       resetTo('Nickname');
       return;
