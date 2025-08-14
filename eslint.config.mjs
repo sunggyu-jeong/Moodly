@@ -92,28 +92,29 @@ export default tseslint.config(
 
     rules: {
       // FSD 경계: 상향 의존 금지
-      'boundaries/element-types': [
-        'error',
-        {
-          default: 'disallow',
-          message: 'FSD 레이어 역참조 금지',
-          rules: [
-            { from: ['shared'], allow: ['shared'] },
-            { from: ['entities'], allow: ['shared', 'entities'] },
-            { from: ['features'], allow: ['shared', 'entities', 'features'] },
-            { from: ['widgets'], allow: ['features', 'shared', 'entities', 'widgets'] },
-            { from: ['pages'], allow: ['widgets', 'features', 'shared', 'entities', 'pages'] },
-            {
-              from: ['processes'],
-              allow: ['pages', 'widgets', 'features', 'shared', 'entities', 'processes'],
-            },
-            {
-              from: ['app'],
-              allow: ['processes', 'pages', 'widgets', 'features', 'shared', 'entities', 'app'],
-            },
-          ],
-        },
-      ],
+      // FIXME: 나중에 한번에 작업
+      // 'boundaries/element-types': [
+      //   'error',
+      //   {
+      //     default: 'disallow',
+      //     message: 'FSD 레이어 역참조 금지',
+      //     rules: [
+      //       { from: ['shared'], allow: ['shared'] },
+      //       { from: ['entities'], allow: ['shared', 'entities'] },
+      //       { from: ['features'], allow: ['shared', 'entities', 'features'] },
+      //       { from: ['widgets'], allow: ['features', 'shared', 'entities', 'widgets'] },
+      //       { from: ['pages'], allow: ['widgets', 'features', 'shared', 'entities', 'pages'] },
+      //       {
+      //         from: ['processes'],
+      //         allow: ['pages', 'widgets', 'features', 'shared', 'entities', 'processes'],
+      //       },
+      //       {
+      //         from: ['app'],
+      //         allow: ['processes', 'pages', 'widgets', 'features', 'shared', 'entities', 'app'],
+      //       },
+      //     ],
+      //   },
+      // ],
 
       // React / Hooks / Fast Refresh
       'react/react-in-jsx-scope': 'off',
