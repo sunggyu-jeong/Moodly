@@ -53,7 +53,7 @@ export const EmotionDiaryMonthPager = ({
         </View>
       );
     },
-    [calendarMode, currentMonth, diaryMode, selectedMonth]
+    [calendarMode, currentMonth, diaryMode, selectedMonth],
   );
 
   if (diaryMode !== DiaryPageMode.calendarMode) {

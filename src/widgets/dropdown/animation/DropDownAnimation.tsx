@@ -16,7 +16,7 @@ const DropDownAnimation = () => {
         visibility: false,
         dropdownList: showDropDownView?.dropdownList ?? [],
         pos: { x: showDropDownView?.pos?.x ?? 0, y: showDropDownView?.pos?.y ?? 0 },
-      })
+      }),
     );
   }, [
     dispatch,
@@ -38,7 +38,7 @@ const DropDownAnimation = () => {
             visibility: null,
             dropdownList: null,
             pos: { x: null, y: null },
-          })
+          }),
         );
       }
     });

@@ -29,7 +29,7 @@ const CalendarBar = ({ monthlyDates, entries }: CalendarBarProps) => {
         date,
         iconId: date ? (entryMap.get(date.format('YYYY-MM-DD')) ?? null) : null,
       })),
-    [flatDates, entryMap]
+    [flatDates, entryMap],
   );
   return (
     <GridList<{ date: Dayjs | null; iconId: number | null }>

@@ -2,7 +2,7 @@ import { isEmpty } from './value.util';
 
 export function withRequired<F extends (...args: unknown[]) => unknown>(
   fn: F,
-  paramNames: string[]
+  paramNames: string[],
 ) {
   return async (...args: Parameters<F>): Promise<Awaited<ReturnType<F>>> => {
     paramNames.forEach((name, idx) => {

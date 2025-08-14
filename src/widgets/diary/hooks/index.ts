@@ -36,7 +36,7 @@ export function useDiaryWeekData(weekStart: Dayjs) {
       refetchOnFocus: false,
       refetchOnReconnect: false,
       selectFromResult: r => ({ data: r.data, isFetching: r.isFetching }),
-    }
+    },
   );
   const showSkeleton = useDelay(isFetching);
   const listData = useMemo<EmotionDiaryDTO[]>(() => data ?? [], [data]);

@@ -23,7 +23,7 @@ import { baseFormatError } from '../base';
  */
 export async function signInWithIdToken(
   provider: 'google' | 'apple',
-  getToken: () => Promise<{ token: string; nonce?: string }>
+  getToken: () => Promise<{ token: string; nonce?: string }>,
 ): Promise<ApiResponse<User>> {
   try {
     const { token, nonce } = await getToken();

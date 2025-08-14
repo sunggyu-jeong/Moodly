@@ -32,7 +32,7 @@ export const usePagerController = <T>(opts: { onLeft: () => void; onRight: () =>
         opts.onRight();
       }
     },
-    [opts, scrollToMiddle]
+    [opts, scrollToMiddle],
   );
   return { flatListRef, onScroll, onMomentumScrollEnd, scrollToMiddle };
 };

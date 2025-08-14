@@ -19,7 +19,7 @@ export function useOpenKakao(): useOpenChat {
             setShowToastView({
               visibility: true,
               message: '해당 링크를 열 수 없습니다.',
-            })
+            }),
           );
           return;
         }
@@ -30,11 +30,11 @@ export function useOpenKakao(): useOpenChat {
           setShowToastView({
             visibility: true,
             message: '오픈채팅 연결 중 오류가 발생했습니다.',
-          })
+          }),
         );
       }
     },
-    [dispatch]
+    [dispatch],
   );
 
   return { openChat };

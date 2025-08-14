@@ -48,7 +48,7 @@ const ManageAccountPage = () => {
         await supabase.auth.signOut();
         dispatch(baseApi.util.resetApiState());
         dispatch(
-          setShowToastView({ visibility: true, message: '회원 탈퇴 요청이 완료되었습니다.' })
+          setShowToastView({ visibility: true, message: '회원 탈퇴 요청이 완료되었습니다.' }),
         );
         dispatch(setRequestWithDrawal(null));
 
@@ -78,11 +78,11 @@ const ManageAccountPage = () => {
             cancelText: '취소',
             confirmText: '삭제',
             confirmActionKey: MODAL_CONFIRM_ACTION_KEY.WITHDRAWAL,
-          })
+          }),
         );
       }
     },
-    [signOut, dispatch]
+    [signOut, dispatch],
   );
 
   useEffect(() => {
@@ -106,7 +106,7 @@ const ManageAccountPage = () => {
         onPress: () => handlePress(SETTING_EVENT_TYPE.DELETE_ACCOUNT),
       },
     ],
-    [handlePress]
+    [handlePress],
   );
 
   return (

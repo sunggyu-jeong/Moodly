@@ -94,7 +94,7 @@ const layerOrder = (l: Layer | null): number => (l ? layers.indexOf(l) : Number.
 
 const resolveImportTargetAbs = async (
   fromFile: string,
-  importPath: string
+  importPath: string,
 ): Promise<string | null> => {
   if (importPath.startsWith(aliasRoot + '/')) {
     const rel = importPath.slice((aliasRoot + '/').length);
@@ -142,7 +142,7 @@ const isDir = async (p: string): Promise<boolean> => {
 
 // 슬라이스 루트: src/<layer>/<slice>
 const sliceRootDir = (
-  absTarget: string
+  absTarget: string,
 ): { layer: Layer; sliceDirAbs: string; sliceName: string } | null => {
   const rel = path.relative(srcRoot, absTarget).split(path.sep);
   const layer = rel[0] as Layer | undefined;
@@ -156,7 +156,7 @@ const toPublicApiImport = (targetLayer: Layer, sliceName: string): string =>
   `${aliasRoot}/${targetLayer}/${sliceName}`;
 
 const collectImportStatements = (
-  code: string
+  code: string,
 ): Array<{ full: string; spec: string; start: number; end: number }> => {
   const results: Array<{ full: string; spec: string; start: number; end: number }> = [];
   const importFromRe = /import[\s\S]*?from\s+['"]([^'"]+)['"];?/g;
@@ -626,7 +626,7 @@ const main = async (): Promise<void> => {
     console.log('\n[역참조 감지]');
     for (const r of reverse) {
       console.log(
-        `- ${path.relative(projectRoot, r.fromFile)} imports "${r.original}" (${r.reason})${r.next ? ` → 후보: "${r.next}"` : ''}`
+        `- ${path.relative(projectRoot, r.fromFile)} imports "${r.original}" (${r.reason})${r.next ? ` → 후보: "${r.next}"` : ''}`,
       );
     }
   }
@@ -642,7 +642,7 @@ const main = async (): Promise<void> => {
     console.log('\n[역참조지만 공개 API로 축약 제안]');
     for (const r of suggested) {
       console.log(
-        `- ${path.relative(projectRoot, r.fromFile)}: "${r.original}" → "${r.next}" (규칙 위반 자체는 남음)`
+        `- ${path.relative(projectRoot, r.fromFile)}: "${r.original}" → "${r.next}" (규칙 위반 자체는 남음)`,
       );
     }
   }

@@ -28,8 +28,8 @@ export const diaryApi = baseApi.injectEndpoints({
         return wrapQueryFn(() =>
           fetchWithAuth(
             () => getDiaryCountRealm(),
-            () => getDiaryCountSB()
-          )
+            () => getDiaryCountSB(),
+          ),
         );
       },
       providesTags: ['EmotionDiary'],
@@ -39,8 +39,8 @@ export const diaryApi = baseApi.injectEndpoints({
         return wrapQueryFn(() =>
           fetchWithAuth(
             () => hasDiaryForDayRealm(),
-            () => hasDiaryForDaySB()
-          )
+            () => hasDiaryForDaySB(),
+          ),
         );
       },
       providesTags: ['EmotionDiary'],
@@ -50,8 +50,8 @@ export const diaryApi = baseApi.injectEndpoints({
         return wrapQueryFn(() =>
           fetchWithAuth(
             () => selectByMonthRealm(start, end),
-            () => selectByMonthSB(start, end)
-          )
+            () => selectByMonthSB(start, end),
+          ),
         );
       },
       keepUnusedDataFor: 60,
@@ -65,8 +65,8 @@ export const diaryApi = baseApi.injectEndpoints({
         return wrapQueryFn(() =>
           fetchWithAuth(
             () => selectByDayRealm(date),
-            () => selectByDaySB(date)
-          )
+            () => selectByDaySB(date),
+          ),
         );
       },
       providesTags: (result, _error, date) =>
@@ -85,8 +85,8 @@ export const diaryApi = baseApi.injectEndpoints({
         return wrapQueryFn(() =>
           fetchWithAuth(
             () => createDiaryRealm(_arg),
-            () => createDiarySB(_arg)
-          )
+            () => createDiarySB(_arg),
+          ),
         );
       },
       invalidatesTags: ['EmotionDiary'],
@@ -105,8 +105,8 @@ export const diaryApi = baseApi.injectEndpoints({
         return wrapQueryFn(() =>
           fetchWithAuth(
             () => updateDiaryRealm(emotionId, updates),
-            () => updateDiarySB(emotionId, updates)
-          )
+            () => updateDiarySB(emotionId, updates),
+          ),
         );
       },
       invalidatesTags: (_result, _error, { emotionId, start, end, date }) => [
@@ -124,8 +124,8 @@ export const diaryApi = baseApi.injectEndpoints({
         return wrapQueryFn(() =>
           fetchWithAuth(
             () => deleteDiaryRealm(emotionId),
-            () => deleteDiarySB(emotionId)
-          )
+            () => deleteDiarySB(emotionId),
+          ),
         );
       },
       invalidatesTags: (_result, _error, { emotionId, start, end, date }) => ['EmotionDiary'],

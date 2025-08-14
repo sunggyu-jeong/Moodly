@@ -40,11 +40,11 @@ const DropDownItem = ({ text, source, eventIdentifier }: DropDownItemProps) => {
               cancelText: '취소',
               confirmText: '삭제',
               confirmActionKey: MODAL_CONFIRM_ACTION_KEY.DELETE_DIARY,
-            })
+            }),
           );
         },
       }) as Record<keyof typeof DropDownEventIdentifier, () => void>,
-    [dispatch]
+    [dispatch],
   );
 
   const handlePress = useCallback(() => {
@@ -53,7 +53,7 @@ const DropDownItem = ({ text, source, eventIdentifier }: DropDownItemProps) => {
         visibility: null,
         dropdownList: null,
         pos: { x: null, y: null },
-      })
+      }),
     );
     handlers[eventIdentifier]();
   }, [dispatch, eventIdentifier, handlers]);

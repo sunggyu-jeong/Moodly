@@ -46,7 +46,7 @@ const PopupContainer = ({ ...props }: PopupContainerProps) => {
             title: '',
             message: '',
             confirmActionKey: '',
-          })
+          }),
         );
       }
     });
@@ -61,7 +61,7 @@ const PopupContainer = ({ ...props }: PopupContainerProps) => {
         confirmText: showModalPopup?.confirmText,
         cancelText: showModalPopup?.cancelText,
         confirmActionKey: showModalPopup?.confirmActionKey ?? '',
-      })
+      }),
     );
   };
 

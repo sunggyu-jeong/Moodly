@@ -67,7 +67,7 @@ export function useNotificationPermission() {
     () => () => {
       unsubscribeRef.current?.();
     },
-    [dispatch]
+    [dispatch],
   );
 
   /** platform 분기 로컬 함수 */
@@ -82,7 +82,7 @@ export function useNotificationPermission() {
     }
     if (typeof Platform.Version === 'number' && Platform.Version >= 33) {
       const result = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
+        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
       );
       return result === PermissionsAndroid.RESULTS.GRANTED;
     }

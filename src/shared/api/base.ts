@@ -4,8 +4,7 @@ import { createApi, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit
 import { ApiCode } from '@shared/config/errorCodes';
 import { AuthError } from '@supabase/supabase-js';
 
-import { isEmpty, isNotEmpty } from '@/shared/lib';
-import { supabase } from '@/shared/lib';
+import { isEmpty, isNotEmpty, supabase } from '@/shared/lib';
 
 /**
  * 공통 API 인스턴스를 생성합니다.
@@ -60,7 +59,7 @@ export const baseFormatError = (err: Partial<AuthError> | Error, code: string | 
  * - 실패 시 `{ error: FetchBaseQueryError }`
  */
 export async function wrapQueryFn<T>(
-  fn: () => Promise<ApiResponse<T>>
+  fn: () => Promise<ApiResponse<T>>,
 ): Promise<{ data: T } | { error: FetchBaseQueryError }> {
   try {
     const result = await fn();
@@ -98,7 +97,7 @@ export async function wrapQueryFn<T>(
  */
 export async function fetchWithAuth<T>(
   realmCall: () => Promise<T>,
-  sbCall: () => Promise<T>
+  sbCall: () => Promise<T>,
 ): Promise<T> {
   const { data } = await supabase.auth.getSession();
   return isEmpty(data) ? realmCall() : sbCall();

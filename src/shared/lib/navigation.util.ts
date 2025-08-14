@@ -56,7 +56,7 @@ export function resetToRoot() {
 
 export function resetTo<RouteName extends keyof RootStackParamList>(
   screen: RouteName,
-  params?: RootStackParamList[RouteName]
+  params?: RootStackParamList[RouteName],
 ) {
   if (navigationRef.isReady()) {
     navigationRef.reset({

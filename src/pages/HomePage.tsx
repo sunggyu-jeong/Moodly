@@ -18,7 +18,7 @@ const HomePage = () => {
   useFocusEffect(
     useCallback(() => {
       dispatch(resetDiary());
-    }, [dispatch])
+    }, [dispatch]),
   );
 
   const titleText = hasDiary

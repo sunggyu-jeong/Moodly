@@ -47,7 +47,7 @@ const SettingPage = () => {
       return () => {
         socialSheetRef.current?.close();
       };
-    }, [])
+    }, []),
   );
 
   useEffect(() => {
@@ -75,7 +75,7 @@ const SettingPage = () => {
           break;
       }
     },
-    [openChat, signOut]
+    [openChat, signOut],
   );
 
   const headerItem = isNotEmpty(userInfo)
@@ -124,7 +124,7 @@ const SettingPage = () => {
                 cancelText: '나중에 하기',
                 confirmText: '설정하기',
                 confirmActionKey: MODAL_CONFIRM_ACTION_KEY.PERMISSION_CHANGE,
-              })
+              }),
             )
           }
         />

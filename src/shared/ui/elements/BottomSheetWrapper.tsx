@@ -42,7 +42,7 @@ const BottomSheetWrapper = forwardRef<BottomSheetMethods, BottomSheetWrapperProp
     >
       <BottomSheetView style={styles.bottomSheetView}>{children}</BottomSheetView>
     </BottomSheet>
-  )
+  ),
 );
 
 BottomSheetWrapper.displayName = 'BottomSheetWrapper';

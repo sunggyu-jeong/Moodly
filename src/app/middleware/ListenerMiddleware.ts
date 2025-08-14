@@ -15,7 +15,11 @@ const appCodeHandlers: Record<
   AppCode,
   (
     errDetail: { data: { code: string; message: string } },
-    listenerApi: ListenerEffectAPI<unknown, ThunkDispatch<unknown, unknown, UnknownAction>, unknown>
+    listenerApi: ListenerEffectAPI<
+      unknown,
+      ThunkDispatch<unknown, unknown, UnknownAction>,
+      unknown
+    >,
   ) => void
 > = {
   [AppCode.NOT_LOGIN]: _errDetail => {
@@ -48,7 +52,7 @@ listenerMiddleware.startListening({
       setShowToastView({
         visibility: true,
         message,
-      })
+      }),
     );
   },
 });

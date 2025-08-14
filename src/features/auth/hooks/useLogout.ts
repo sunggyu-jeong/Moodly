@@ -25,7 +25,7 @@ export function useLogout() {
         setShowToastView({
           visibility: true,
           message: '로그아웃 요청이 완료되었습니다.',
-        })
+        }),
       );
       resetTo('Login');
     }

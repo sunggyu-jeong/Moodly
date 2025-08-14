@@ -39,7 +39,7 @@ export const useDiaryPagerVM = () => {
 
   const [diaryMode, setDiaryMode] = useState<DiaryPageModeType>(DiaryPageMode.calendarMode);
   const [calendarMode, setCalendarMode] = useState<DiaryCalendarModeType>(
-    DiaryCalendarMode.monthDayMode
+    DiaryCalendarMode.monthDayMode,
   );
 
   const currentMonth = dayjs();
@@ -78,11 +78,11 @@ export const useDiaryPagerVM = () => {
   const nextMonthSel = useAppSelector(diaryApi.endpoints.selectByMonth.select(monthWin.nextArg));
   const prevMonthData = useMemo<EmotionDiaryDTO[]>(
     () => prevMonthSel?.data ?? EMPTY,
-    [prevMonthSel?.data]
+    [prevMonthSel?.data],
   );
   const nextMonthData = useMemo<EmotionDiaryDTO[]>(
     () => nextMonthSel?.data ?? EMPTY,
-    [nextMonthSel?.data]
+    [nextMonthSel?.data],
   );
 
   const { listData: weekCurrData } = useDiaryWeekData(weekWin.curr);
@@ -90,11 +90,11 @@ export const useDiaryPagerVM = () => {
   const weekNextSel = useAppSelector(diaryApi.endpoints.selectByMonth.select(weekWin.nextArg));
   const weekPrevData = useMemo<EmotionDiaryDTO[]>(
     () => weekPrevSel?.data ?? EMPTY,
-    [weekPrevSel?.data]
+    [weekPrevSel?.data],
   );
   const weekNextData = useMemo<EmotionDiaryDTO[]>(
     () => weekNextSel?.data ?? EMPTY,
-    [weekNextSel?.data]
+    [weekNextSel?.data],
   );
 
   const pages: CalendarPage[] = useMemo(() => {
@@ -127,7 +127,7 @@ export const useDiaryPagerVM = () => {
 
   const monthLabel = useMemo(
     () => (isMonthMode ? monthWin.curr.format('M월') : formatWeekLabel(weekWin.curr)),
-    [isMonthMode, monthWin.curr, weekWin.curr]
+    [isMonthMode, monthWin.curr, weekWin.curr],
   );
 
   const goLeft = useCallback(() => {
@@ -140,7 +140,7 @@ export const useDiaryPagerVM = () => {
 
   const toggleDiaryMode = useCallback(() => {
     setDiaryMode(p =>
-      p === DiaryPageMode.listMode ? DiaryPageMode.calendarMode : DiaryPageMode.listMode
+      p === DiaryPageMode.listMode ? DiaryPageMode.calendarMode : DiaryPageMode.listMode,
     );
   }, []);
 
@@ -148,7 +148,7 @@ export const useDiaryPagerVM = () => {
     setCalendarMode(c =>
       c === DiaryCalendarMode.monthDayMode
         ? DiaryCalendarMode.weekDayMode
-        : DiaryCalendarMode.monthDayMode
+        : DiaryCalendarMode.monthDayMode,
     );
   }, []);
 

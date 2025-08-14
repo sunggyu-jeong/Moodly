@@ -35,7 +35,7 @@ export async function hasDiaryForDay(): Promise<ApiResponse<boolean>> {
 
 export async function selectByMonth(
   startDate: string,
-  endDate: string
+  endDate: string,
 ): Promise<ApiResponse<EmotionDiaryDTO[]>> {
   try {
     const realm = getRealm();
@@ -93,7 +93,7 @@ export async function createDiary(data: EmotionDiaryDTO): Promise<ApiResponse<nu
 
 export async function updateDiary(
   emotionId: number,
-  updates: Partial<EmotionDiaryDTO>
+  updates: Partial<EmotionDiaryDTO>,
 ): Promise<ApiResponse<number>> {
   try {
     const realm = getRealm();

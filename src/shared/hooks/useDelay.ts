@@ -6,7 +6,7 @@ const SKELETON_MIN_DURATION_MS = 700;
 
 export default function useDelay(
   value: boolean,
-  delay: number = SKELETON_MIN_DURATION_MS
+  delay: number = SKELETON_MIN_DURATION_MS,
 ): boolean | null {
   const [delayedValue, setDelayedValue] = useState<boolean | null>(null);
   const startTimeRef = useRef<number>(0);

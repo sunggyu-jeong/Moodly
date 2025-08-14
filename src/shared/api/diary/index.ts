@@ -7,6 +7,5 @@ export {
   hasDiaryForDay as hasDiaryForDaySupabase,
   selectByDay as selectByDaySupabase,
   selectByMonth as selectByMonthSupabase,
-  updateDiary as updateDiarySupabase
+  updateDiary as updateDiarySupabase,
 } from './diarySupabaseService';
-
