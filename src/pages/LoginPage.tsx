@@ -8,7 +8,7 @@ import { Title } from '@shared/ui/typography/Title.tsx';
 import { useMemo } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
-import { Body1 } from '../shared/ui/typography/Body1';
+import { Body1 } from '@/shared/ui';
 
 const Login = () => {
   const scaleSize = useMemo(() => getScaleSize(214), []);

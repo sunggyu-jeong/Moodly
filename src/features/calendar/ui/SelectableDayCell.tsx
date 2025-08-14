@@ -8,7 +8,7 @@ import DayCell from '@shared/ui/elements/DayCell';
 import dayjs, { Dayjs } from 'dayjs';
 import React, { useCallback, useMemo } from 'react';
 
-import { setCurrentDiary, setSelectedDay } from '../../diary/model/diary.slice';
+import { setCurrentDiary, setSelectedDay } from '@/features/diary';
 
 interface SelectableDayCellProps {
   date: Dayjs;

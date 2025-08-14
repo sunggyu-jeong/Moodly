@@ -1,6 +1,6 @@
 import { Text, TextProps } from 'react-native';
 
-import { useScale } from '../../hooks';
+import { useScale } from '@/shared/hooks';
 
 type Props = TextProps & { weight: 'regular' | 'semibold'; size?: number };
 

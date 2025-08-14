@@ -12,7 +12,7 @@ import DiaryToggle from '@shared/ui/elements/DiaryToggle';
 import { useEffect } from 'react';
 import { Image, TouchableOpacity } from 'react-native';
 
-import NavigationBar from '../../navigation-bar/ui/NavigationBar';
+import { NavigationBar } from '@/widgets/navigation-bar';
 
 export const DiaryPager = () => {
   const {

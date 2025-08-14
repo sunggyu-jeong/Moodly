@@ -19,9 +19,9 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { UpdateProgressProps } from '../processes/update/useUpdateProgress';
-import RootStack from './navigation/RootStack';
-import store from './store';
-import Splash from './ui/screens/Splash';
+import { RootStack } from '@/app/navigation';
+import { store } from '@/app/store.ts';
+import { Splash } from '@/app/ui';
 
 dayjs.locale('ko');
 dayjs.extend(utc);

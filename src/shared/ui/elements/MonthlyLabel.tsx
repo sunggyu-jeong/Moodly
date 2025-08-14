@@ -1,4 +1,5 @@
-import { gray } from '../../styles/colors';
+import { gray } from '@/shared/styles';
+
 import { H3 } from '../typography/H3';
 
 interface MonthlyLabelProps {

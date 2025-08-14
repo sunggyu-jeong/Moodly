@@ -5,9 +5,9 @@ import { setShowToastView } from '@processes/overlay/model/overlay.slice';
 import { useCallback, useEffect } from 'react';
 import { Platform, View } from 'react-native';
 
-import { useFetchFirstLaunchFlagQuery } from '../../api/auth/authApi';
-import { useAppDispatch } from '../../hooks';
-import { isNotEmpty, resetTo } from '../../lib';
+import { useFetchFirstLaunchFlagQuery } from '@/shared/api';
+import { useAppDispatch } from '@/shared/hooks';
+import { isNotEmpty, resetTo } from '@/shared/lib';
 
 export enum SOCIAL_LOGIN_ENTRANCE {
   LOGIN = 'login',

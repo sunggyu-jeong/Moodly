@@ -4,8 +4,9 @@ import { EmotionDiaryToDTO } from '@features/diary/service/EmotionDiaryMapper';
 import { isNotEmpty } from '@shared/lib';
 import dayjs from 'dayjs';
 
-import { ApiCode, HttpStatus } from '../../config/errorCodes';
-import { getRealm } from '../../lib/realm-client.util';
+import { ApiCode, HttpStatus } from '@/shared/config';
+import { getRealm } from '@/shared/lib';
+
 import { baseFormatError } from '../base';
 
 export async function getDiaryCount(): Promise<ApiResponse<number>> {

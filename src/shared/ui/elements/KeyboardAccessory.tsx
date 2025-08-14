@@ -2,7 +2,7 @@ import { gray } from '@shared/styles/colors';
 import { H3 } from '@shared/ui/typography/H3';
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 
-import { getScaleSize } from '../../hooks';
+import { getScaleSize } from '@/shared/hooks';
 
 interface keyboardAccessoryButtonProps {
   onPress: () => void;

@@ -5,7 +5,8 @@ import OverlayManager from '@processes/overlay/ui/OverlayManager';
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import Splash from '../ui/screens/Splash';
+import { Splash } from '@/app/ui';
+
 import DiaryStack, { DiaryStackParamList } from './DiaryStack';
 import TabNavigation, { BottomTabParamList } from './TabNavigation';
 

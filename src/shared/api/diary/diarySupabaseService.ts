@@ -4,9 +4,9 @@ import { EmotionDiaryToDTO } from '@features/diary/service/EmotionDiaryMapper';
 import { AuthError } from '@supabase/supabase-js';
 import dayjs from 'dayjs';
 
-import { ApiCode } from '../../config/errorCodes';
-import { isNotEmpty } from '../../lib';
-import { supabase } from '../../lib/supabase.util';
+import { ApiCode } from '@/shared/config';
+import { isNotEmpty, supabase } from '@/shared/lib';
+
 import { baseFormatError } from '../base';
 
 interface Database {

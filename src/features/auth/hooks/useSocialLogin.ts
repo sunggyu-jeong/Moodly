@@ -3,8 +3,8 @@ import { useSignInAppleMutation, useSignInGoogleMutation } from '@shared/api/aut
 import { baseApi } from '@shared/api/base';
 import { useAppDispatch } from '@shared/hooks';
 
-import { useDiaryMigration } from '../../diary/hooks/useDiaryMigration';
-import { setRequestLogin } from '../../setting/model/setting.slice';
+import { useDiaryMigration } from '@/features/diary';
+import { setRequestLogin } from '@/features/setting';
 
 export function useSocialLogin() {
   const [signInGoogle, { data: googleData, isLoading: isGoogleLoading }] =

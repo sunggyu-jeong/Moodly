@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Animated, ImageSourcePropType } from 'react-native';
 
-import { useScale } from '../../hooks';
+import { useScale } from '@/shared/hooks';
 
 interface AnimatedZoomImageProps {
   source: ImageSourcePropType;

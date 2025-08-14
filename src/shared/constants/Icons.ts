@@ -1,6 +1,6 @@
 import { ImageSourcePropType } from 'react-native';
 
-import { EMOTION_ICONS } from '../assets/images/emotion';
+import { EMOTION_ICONS } from '@/shared/assets';
 
 export interface EmotionIconData {
   id: number;

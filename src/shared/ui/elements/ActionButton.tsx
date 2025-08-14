@@ -1,8 +1,9 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
-import { ColorKeyEnum, getColor } from '../../constants/Colors';
-import { getScaleSize } from '../../hooks';
+import { ColorKeyEnum, getColor } from '@/shared/constants';
+import { getScaleSize } from '@/shared/hooks';
+
 import { Body2 } from '../typography/Body2';
 
 interface ActionButtonProps {

@@ -5,7 +5,7 @@ import { resetTo } from '@shared/lib';
 import dayjs from 'dayjs';
 import { useEffect } from 'react';
 
-import { useNotificationPermission } from '@/shared/hooks/useNotificationPermission';
+import { useNotificationPermission } from '@/shared/hooks';
 
 const NotificationPermissionPage = () => {
   const { requestNotification, skipPermission } = useNotificationPermission();

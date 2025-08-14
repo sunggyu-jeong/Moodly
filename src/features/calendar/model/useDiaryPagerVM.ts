@@ -12,7 +12,8 @@ import { getMonthRange, useDiaryMonthData, useDiaryWeekData } from '@widgets/dia
 import dayjs, { Dayjs } from 'dayjs';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { moveMonth, moveWeek, resetDiary } from '../../diary/model/diary.slice';
+import { moveMonth, moveWeek, resetDiary } from '@/features/diary';
+
 import { buildPages, CalendarPage } from '../lib/paging';
 import {
   selectSelectedDayIso,

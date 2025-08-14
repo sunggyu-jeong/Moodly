@@ -5,7 +5,7 @@ import overlaySlice from '@processes/overlay/model/overlay.slice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { baseApi } from '@shared/api/base';
 
-import { listenerMiddleware } from './middleware/ListenerMiddleware';
+import { listenerMiddleware } from '@/app/middleware';
 
 const reducers = combineReducers({
   // RTK Query의 API 인스턴스 리듀서

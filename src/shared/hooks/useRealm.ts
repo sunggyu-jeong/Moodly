@@ -2,7 +2,7 @@ import { EmotionDiary } from '@entities/diary';
 import { useCallback, useRef } from 'react';
 import Realm from 'realm';
 
-import { isNotEmpty } from '../lib';
+import { isNotEmpty } from '@/shared/lib';
 
 export function useRealm() {
   const realmRef = useRef<Realm | null>(null);

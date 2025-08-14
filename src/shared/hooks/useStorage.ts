@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 
-import { isEmpty } from '../lib';
+import { isEmpty } from '@/shared/lib';
 
 const useStorage = <T>(
   key: string,

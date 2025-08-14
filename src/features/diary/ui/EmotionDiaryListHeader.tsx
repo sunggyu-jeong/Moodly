@@ -12,7 +12,8 @@ import { AnimatePresence, MotiView } from 'moti';
 import React from 'react';
 import { View } from 'react-native';
 
-import CalendarBar from '../../calendar/ui/CalendarBar';
+import { CalendarBar } from '@/features/calendar';
+
 import DiarySkeleton from './skeleton/DiaryCardSkeleton';
 
 interface DiaryListHeaderProps {

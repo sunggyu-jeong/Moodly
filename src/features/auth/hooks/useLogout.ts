@@ -6,7 +6,7 @@ import { useAppDispatch } from '@shared/hooks';
 import { isNotEmpty, resetTo } from '@shared/lib';
 import { useEffect } from 'react';
 
-import { setRequestLogin } from '../../setting/model/setting.slice';
+import { setRequestLogin } from '@/features/setting';
 
 export function useLogout() {
   const [signOut, { data, isLoading }] = useSignOutMutation();

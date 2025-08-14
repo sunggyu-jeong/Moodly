@@ -4,10 +4,11 @@ import { appleAuth } from '@invertase/react-native-apple-authentication';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { AuthError, Session, User } from '@supabase/supabase-js';
 
-import { ApiCode, AppCode, HttpStatus } from '../../config/errorCodes';
-import { isEmpty } from '../../lib';
-import { getRealm } from '../../lib/realm-client.util';
-import { supabase } from '../../lib/supabase.util';
+import { ApiCode, AppCode, HttpStatus } from '@/shared/config';
+import { isEmpty } from '@/shared/lib';
+import { getRealm } from '@/shared/lib';
+import { supabase } from '@/shared/lib';
+
 import { baseFormatError } from '../base';
 
 /**

@@ -18,7 +18,7 @@ import {
 } from 'react-native';
 import InputAccessoryView from 'react-native-input-accessory-view';
 
-import { DiarySaveButton } from '../features/diary/ui/EmotionDiarySaveButton';
+import { DiarySaveButton } from '@/features/diary';
 
 const actionButtons = [{ item: <NaviDismiss />, disabled: false }];
 

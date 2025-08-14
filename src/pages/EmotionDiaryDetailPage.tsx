@@ -20,8 +20,8 @@ import dayjs from 'dayjs';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { Image, Platform, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 
-import { resetDiary } from '../features/diary/model/diary.slice';
-import { useDeleteDiaryMutation } from '../shared/api/diary/diaryApi';
+import { resetDiary } from '@/features/diary';
+import { useDeleteDiaryMutation } from '@/shared/api';
 
 type DiaryDetailRouteParams = {
   params: {

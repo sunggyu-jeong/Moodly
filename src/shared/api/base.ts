@@ -4,8 +4,8 @@ import { createApi, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit
 import { ApiCode } from '@shared/config/errorCodes';
 import { AuthError } from '@supabase/supabase-js';
 
-import { isEmpty, isNotEmpty } from '../lib';
-import { supabase } from '../lib/supabase.util';
+import { isEmpty, isNotEmpty } from '@/shared/lib';
+import { supabase } from '@/shared/lib';
 
 /**
  * 공통 API 인스턴스를 생성합니다.
