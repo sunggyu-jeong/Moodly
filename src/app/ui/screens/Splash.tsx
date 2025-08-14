@@ -9,7 +9,7 @@ import { Image, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Splash = ({ status, progress }: UpdateProgressProps) => {
-  const [initSession, { data, isLoading }] = useLazyInitializeSessionQuery();
+  const [initSession, { data, isLoading, isError }] = useLazyInitializeSessionQuery();
 
   const handleAuthFlow = useCallback(async () => {
     await initSession();
@@ -38,7 +38,10 @@ const Splash = ({ status, progress }: UpdateProgressProps) => {
     if (isNotEmpty(data)) {
       resetTo('Main');
     }
-  }, [data, isLoading]);
+    if (isError) {
+      resetTo('Login');
+    }
+  }, [data, isLoading, isError]);
 
   return (
     <>
