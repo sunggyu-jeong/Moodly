@@ -8,6 +8,7 @@ import Splash from '../ui/screens/Splash';
 import Login from '@pages/LoginPage.tsx';
 import NotificationPermissionPage from '@pages/NotificationPermissionPage';
 import { NavigatorScreenParams } from '@react-navigation/native';
+import NicknamePage from '../../pages/NicknamePage';
 import DiaryStack, { DiaryStackParamList } from './DiaryStack';
 import TabNavigation, { BottomTabParamList } from './TabNavigation';
 
@@ -15,6 +16,7 @@ export type RootStackParamList = {
   Splash: undefined;
   Login: undefined;
   NotificationPermissionPage: undefined;
+  Nickname: undefined;
   Main: NavigatorScreenParams<BottomTabParamList>;
   DiaryList: undefined;
   DiaryStack: NavigatorScreenParams<DiaryStackParamList>;
@@ -42,6 +44,10 @@ const RootStack = () => {
         <Stack.Screen
           name="NotificationPermissionPage"
           component={NotificationPermissionPage}
+        />
+        <Stack.Screen
+          name="Nickname"
+          component={NicknamePage}
         />
         <Stack.Screen
           name="Login"

@@ -6,10 +6,19 @@ import {
   fetchSession,
   getAppleToken,
   getGoogleToken,
+  getUserInfo,
   saveFirstLaunchFlag,
+  setUserInfo,
   signInWithIdToken,
   signOut,
 } from './authService';
+
+export interface UserInfo {
+  id: string;
+  nickname: string;
+  created_at: string;
+  email: string;
+}
 
 export const authApi = baseApi.injectEndpoints({
   overrideExisting: false,
@@ -23,6 +32,18 @@ export const authApi = baseApi.injectEndpoints({
     signInApple: builder.mutation<User, void>({
       async queryFn(_arg, _api, _extraOptions, _baseQuery) {
         return wrapQueryFn(async () => signInWithIdToken('apple', getAppleToken));
+      },
+      invalidatesTags: ['Auth'],
+    }),
+    getUserInfo: builder.query<UserInfo, void>({
+      async queryFn() {
+        return wrapQueryFn(async () => getUserInfo());
+      },
+      providesTags: ['Auth'],
+    }),
+    setUserInfo: builder.mutation<boolean, Pick<UserInfo, 'nickname'>>({
+      async queryFn(_arg, _api, _extraOptions, _baseQuery) {
+        return wrapQueryFn(async () => setUserInfo(_arg));
       },
       invalidatesTags: ['Auth'],
     }),
@@ -60,4 +81,7 @@ export const {
   useFetchFirstLaunchFlagQuery,
   useSaveFirstLaunchFlagMutation,
   useSignOutMutation,
+  useGetUserInfoQuery,
+  useLazyGetUserInfoQuery,
+  useSetUserInfoMutation,
 } = authApi;

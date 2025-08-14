@@ -11,33 +11,23 @@ import { useAppDispatch, useAppSelector } from '@shared/hooks';
 import { useNotificationPermission } from '@shared/hooks/useNotificationPermission';
 import { useOpenKakao } from '@shared/hooks/useOpenChat';
 import { isEmpty, isNotEmpty, navigate } from '@shared/lib';
-import { supabase } from '@shared/lib/supabase.util';
 import ActionButton from '@shared/ui/elements/ActionButton';
 import Toggle from '@shared/ui/elements/Toggle';
 import { Body1 } from '@shared/ui/typography/Body1';
 import { Label } from '@shared/ui/typography/Label';
-import { Session } from '@supabase/supabase-js';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { Image, View } from 'react-native';
 import { version } from '../../package.json';
+import { useGetUserInfoQuery } from '../shared/api/auth/authApi';
 
 const SettingPage = () => {
   const { openChat } = useOpenKakao();
   const { signOut } = useLogout();
-  const [userInfo, setUserInfo] = useState<Session | null>(null);
   const socialSheetRef = useRef<SocialLoginSheetHandle>(null);
   const loginStatus = useAppSelector(state => state.settingSlice.loginStatus);
   const dispatch = useAppDispatch();
   const { status } = useNotificationPermission();
-
-  useEffect(() => {
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_, session) => {
-      if (session) setUserInfo(session);
-    });
-    return () => subscription.unsubscribe();
-  }, []);
+  const { data: userInfo } = useGetUserInfoQuery();
 
   useFocusEffect(
     useCallback(() => {
@@ -79,8 +69,8 @@ const SettingPage = () => {
     ? {
         leftComponent: (
           <View className="flex-col">
-            <Body1 weight="semibold">{userInfo.user.user_metadata.full_name}</Body1>
-            <Label weight="regular">{userInfo.user.email}</Label>
+            <Body1 weight="semibold">{userInfo.nickname}</Body1>
+            <Label weight="regular">{userInfo.email}</Label>
           </View>
         ),
       }

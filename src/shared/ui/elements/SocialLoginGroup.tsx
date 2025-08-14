@@ -4,9 +4,9 @@ import SocialLoginButton from '@features/auth/ui/SocialLoginButton';
 import { setShowToastView } from '@processes/overlay/model/overlay.slice';
 import { useCallback, useEffect } from 'react';
 import { Platform, View } from 'react-native';
-import { useFetchFirstLaunchFlagQuery } from '../../api/auth/authApi';
+import { useFetchFirstLaunchFlagQuery, useLazyGetUserInfoQuery } from '../../api/auth/authApi';
 import { useAppDispatch } from '../../hooks';
-import { isNotEmpty, resetTo } from '../../lib';
+import { isEmpty, isNotEmpty, resetTo } from '../../lib';
 
 export enum SOCIAL_LOGIN_ENTRANCE {
   LOGIN = 'login',
@@ -19,6 +19,7 @@ interface SocialLoginGroupProps {
 
 const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
   const { handleLogin, data, isLoading } = useSocialLogin();
+  const [getUserInfo, { data: userInfo }] = useLazyGetUserInfoQuery();
   const { data: isFirstLoad } = useFetchFirstLaunchFlagQuery(undefined, {
     skip: entrance !== SOCIAL_LOGIN_ENTRANCE.LOGIN,
   });
@@ -32,14 +33,29 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
     }
   }, [isFirstLoad]);
 
+  const fetchUserInfo = async () => {
+    const response = await getUserInfo();
+    console.log('@$>!>$@>$!@>$', response);
+    if (isEmpty(response)) {
+      resetTo('Nickname');
+      return;
+    } else {
+      if (isEmpty(response.data)) {
+        resetTo('Nickname');
+        return;
+      }
+    }
+    if (entrance === SOCIAL_LOGIN_ENTRANCE.LOGIN) {
+      navigateInitialRoute();
+    } else {
+      dispatch(setShowToastView({ visibility: true, message: '로그인이 완료됐어요!' }));
+    }
+  };
+
   useEffect(() => {
     if (isLoading) return;
     if (isNotEmpty(data)) {
-      if (entrance === SOCIAL_LOGIN_ENTRANCE.LOGIN) {
-        navigateInitialRoute();
-      } else {
-        dispatch(setShowToastView({ visibility: true, message: '로그인이 완료됐어요!' }));
-      }
+      fetchUserInfo();
     }
   }, [data, isLoading, dispatch, navigateInitialRoute, entrance]);
 

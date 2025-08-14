@@ -3,11 +3,13 @@ import { ApiResponse } from '@entities/common/response';
 import { appleAuth } from '@invertase/react-native-apple-authentication';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { AuthError, Session, User } from '@supabase/supabase-js';
+import dayjs from 'dayjs';
 import { ApiCode, AppCode, HttpStatus } from '../../config/errorCodes';
 import { isEmpty } from '../../lib';
 import { getRealm } from '../../lib/realm-client.util';
 import { supabase } from '../../lib/supabase.util';
 import { baseFormatError } from '../base';
+import type { UserInfo } from './authApi';
 
 /**
  * 주어진 OAuth 공급자(Google 또는 Apple)에 대해 토큰을 획득하고,
@@ -78,6 +80,56 @@ export async function getAppleToken() {
     throw authErr;
   }
   return { token: resp.identityToken, nonce: resp.nonce };
+}
+
+export async function getUserInfo(): Promise<ApiResponse<UserInfo>> {
+  try {
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
+    const { data, error } = await supabase
+      .from('tb_profiles')
+      .select('*')
+      .eq('id', user?.id)
+      .single();
+    console.log('!@$>!@>$>$!>$', data, error);
+    if (error) throw error;
+    return { data: data };
+  } catch (err) {
+    throw baseFormatError(err as AuthError);
+  }
+}
+
+export async function setUserInfo(
+  payload: Pick<UserInfo, 'nickname'>
+): Promise<ApiResponse<boolean>> {
+  try {
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
+    if (authError) throw authError;
+    console.log('>>>>>>>', user);
+
+    if (!user) {
+      return { error: baseFormatError(new Error('로그인이 필요합니다.'), AppCode.NOT_LOGIN) };
+    }
+
+    const { data, error } = await supabase.from('tb_profiles').upsert({
+      id: user.id,
+      nickname: payload.nickname,
+      email: user.email,
+      created_at: dayjs().toISOString(),
+    });
+    console.log('>>>>>>>', data, error);
+
+    if (error) throw error;
+
+    return { data: true };
+  } catch (err) {
+    return { error: baseFormatError(err as AuthError) };
+  }
 }
 
 /**

@@ -1,13 +1,11 @@
 import { MAIN_ICONS } from '@shared/assets/images/main';
 import { getScaleSize } from '@shared/hooks';
-import { resetTo } from '@shared/lib';
 import { primary } from '@shared/styles/colors.ts';
 import SocialLoginGroup, { SOCIAL_LOGIN_ENTRANCE } from '@shared/ui/elements/SocialLoginGroup';
 import { H3 } from '@shared/ui/typography/H3.tsx';
 import { Title } from '@shared/ui/typography/Title.tsx';
 import { useMemo } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
-import { Body1 } from '../shared/ui/typography/Body1';
 
 const Login = () => {
   const scaleSize = useMemo(() => getScaleSize(214), []);
@@ -38,12 +36,6 @@ const Login = () => {
       </View>
       <View className="absolute bottom-12 w-full gap-3 items-center">
         <SocialLoginGroup entrance={SOCIAL_LOGIN_ENTRANCE.LOGIN} />
-        <Body1
-          weight="regular"
-          onPress={() => resetTo('Main')}
-        >
-          게스트로 시작하기
-        </Body1>
       </View>
     </View>
   );
