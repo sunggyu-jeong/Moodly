@@ -3,7 +3,7 @@ import { isNotEmpty, navigate } from '@shared/lib';
 import { KeyboardAccessoryButton } from '@shared/ui/elements/KeyboardAccessory';
 import { useEffect } from 'react';
 import { useDiaryMutation } from '../hooks/useDiaryMutation';
-import { setSelectedDiary } from '../model/diary.slice';
+import { setSelectedDiary } from '../model/diarySlice';
 
 export function DiarySaveButton(text: string) {
   const dispatch = useAppDispatch();

@@ -15,7 +15,7 @@ import {
 import { FlatList } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { UserMetaDTO } from '../entities/auth/User.scheme';
-import { setShowToastView } from '../processes/overlay/model/overlay.slice';
+import { setShowToastView } from '../processes/overlay/model/overlaySlice';
 import { useSaveFirstLaunchFlagMutation } from '../shared/api/auth/authApi';
 import { ONBOARDING_ICONS } from '../shared/assets/images/onboarding';
 import { useAppDispatch } from '../shared/hooks';

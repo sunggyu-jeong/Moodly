@@ -1,5 +1,5 @@
-import { UpdateProgressProps, useUpdateProgress } from '@processes/update/useUpdateProgress.ts';
-import Progress from '@shared/ui/elements/Progress.tsx';
+import { UpdateProgressProps, useUpdateProgress } from '@processes/update/useUpdateProgress';
+import Progress from '@shared/ui/elements/Progress';
 import { Text, View } from 'react-native';
 
 const UPDATE_LABELS: Record<string, { title: string; subtitle?: string }> = {

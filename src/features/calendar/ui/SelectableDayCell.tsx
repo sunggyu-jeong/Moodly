@@ -1,5 +1,5 @@
 import { EmotionDiaryDTO } from '@entities/diary';
-import { setShowToastView } from '@processes/overlay/model/overlay.slice';
+import { setShowToastView } from '@processes/overlay/model/overlaySlice';
 import { COMMON_ICONS } from '@shared/assets/images/common';
 import { ICON_DATA } from '@shared/constants';
 import { useAppDispatch, useAppSelector } from '@shared/hooks';
@@ -7,7 +7,7 @@ import { isEmpty, navigate } from '@shared/lib';
 import DayCell from '@shared/ui/elements/DayCell';
 import dayjs, { Dayjs } from 'dayjs';
 import React, { useCallback, useMemo } from 'react';
-import { setCurrentDiary, setSelectedDay } from '../../diary/model/diary.slice';
+import { setCurrentDiary, setSelectedDay } from '../../diary/model/diarySlice';
 
 interface SelectableDayCellProps {
   date: Dayjs;

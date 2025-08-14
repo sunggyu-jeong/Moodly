@@ -1,8 +1,8 @@
 import { View } from 'react-native';
 
 import { COMMON_ICONS } from '@shared/assets/images/common';
-import ArrowButton from '@shared/ui/elements/ArrowButton.tsx';
-import MonthlyLabel from '@shared/ui/elements/MonthlyLabel.tsx';
+import ArrowButton from '@shared/ui/elements/ArrowButton';
+import MonthlyLabel from '@shared/ui/elements/MonthlyLabel';
 
 interface DiaryMonthProps {
   monthLabel: string;

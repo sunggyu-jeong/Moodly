@@ -1,11 +1,11 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import EmotionDiaryDetailPage from '@pages/EmotionDiaryDetailPage.tsx';
+import EmotionDiaryDetailPage from '@pages/EmotionDiaryDetailPage';
 import OverlayManager from '@processes/overlay/ui/OverlayManager';
 
 import Splash from '../ui/screens/Splash';
 
-import Login from '@pages/LoginPage.tsx';
+import Login from '@pages/LoginPage';
 import NotificationPermissionPage from '@pages/NotificationPermissionPage';
 import { NavigatorScreenParams } from '@react-navigation/native';
 import NicknamePage from '../../pages/NicknamePage';

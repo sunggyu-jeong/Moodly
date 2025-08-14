@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { SafeAreaView, TextInput, View } from 'react-native';
-import { setShowToastView } from '../processes/overlay/model/overlay.slice';
+import { setShowToastView } from '../processes/overlay/model/overlaySlice';
 import { useSetUserInfoMutation, type UserInfo } from '../shared/api/auth/authApi';
 import { useAppDispatch } from '../shared/hooks';
 import { resetTo } from '../shared/lib';

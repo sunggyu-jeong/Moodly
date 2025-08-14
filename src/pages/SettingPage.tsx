@@ -4,7 +4,6 @@ import { SETTING_EVENT_TYPE, TEXTS } from '@features/setting/types';
 import SettingRoot from '@features/setting/ui/SettingRoot';
 import { SocialLoginSheet, SocialLoginSheetHandle } from '@features/setting/ui/SocialLoginSheet';
 import { MODAL_CONFIRM_ACTION_KEY } from '@processes/key';
-import { setShowModalPopup } from '@processes/overlay/model/overlay.slice';
 import { useFocusEffect } from '@react-navigation/native';
 import { COMMON_ICONS } from '@shared/assets/images/common';
 import { useAppDispatch, useAppSelector } from '@shared/hooks';
@@ -18,6 +17,7 @@ import { Label } from '@shared/ui/typography/Label';
 import { useCallback, useEffect, useRef } from 'react';
 import { Image, View } from 'react-native';
 import { version } from '../../package.json';
+import { setShowModalPopup } from '../processes/overlay/model/overlaySlice';
 import { useGetUserInfoQuery } from '../shared/api/auth/authApi';
 
 const SettingPage = () => {

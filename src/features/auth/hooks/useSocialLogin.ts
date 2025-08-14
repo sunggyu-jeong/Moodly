@@ -1,12 +1,8 @@
 import { AUTH_PROVIDERS, AuthProvider } from '@entities/auth/types';
-import {
-  useLazyGetUserInfoQuery,
-  useSignInAppleMutation,
-  useSignInGoogleMutation,
-} from '@shared/api/auth/authApi';
+import { useSignInAppleMutation, useSignInGoogleMutation } from '@shared/api/auth/authApi';
 import { baseApi } from '@shared/api/base';
 import { useAppDispatch } from '@shared/hooks/useHooks';
-import { setRequestLogin } from '../../setting/model/setting.slice';
+import { setRequestLogin } from '../../setting/model/settingSlice';
 
 export function useSocialLogin() {
   const [signInGoogle, { data: googleData, isLoading: isGoogleLoading }] =

@@ -1,7 +1,7 @@
 import { AUTH_PROVIDERS } from '@entities/auth/types';
 import { useSocialLogin } from '@features/auth/hooks/useSocialLogin';
 import SocialLoginButton from '@features/auth/ui/SocialLoginButton';
-import { setShowToastView } from '@processes/overlay/model/overlay.slice';
+import { setShowToastView } from '@processes/overlay/model/overlaySlice';
 import { useCallback, useEffect } from 'react';
 import { Platform, View } from 'react-native';
 import { useLazyGetUserInfoQuery } from '../../api/auth/authApi';

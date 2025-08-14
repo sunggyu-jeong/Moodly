@@ -2,16 +2,16 @@ import { useEffect } from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 
 import { EmotionDiaryDTO } from '@entities/diary';
-import { setCurrentDiary, setSelectedIcon } from '@features/diary/model/diary.slice.ts';
-import EmotionDisplaySelected from '@features/emotion/ui/EmotionDisplaySelected.tsx';
-import EmotionSelectionList from '@features/emotion/ui/EmotionSelectionList.tsx';
-import { ICON_DATA } from '@shared/constants/Icons.ts';
+import { setCurrentDiary, setSelectedIcon } from '@features/diary/model/diarySlice';
+import EmotionDisplaySelected from '@features/emotion/ui/EmotionDisplaySelected';
+import EmotionSelectionList from '@features/emotion/ui/EmotionSelectionList';
+import { ICON_DATA } from '@shared/constants/Icons';
 import { getScaleSize, useAppDispatch, useAppSelector } from '@shared/hooks';
 import { isNotEmpty, navigate } from '@shared/lib';
-import ActionButton from '@shared/ui/elements/ActionButton.tsx';
-import { H2 } from '@shared/ui/typography/H2.tsx';
-import NaviDismiss from '@widgets/navigation-bar/ui/NaviDismiss.tsx';
-import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar.tsx';
+import ActionButton from '@shared/ui/elements/ActionButton';
+import { H2 } from '@shared/ui/typography/H2';
+import NaviDismiss from '@widgets/navigation-bar/ui/NaviDismiss';
+import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar';
 
 const actionButtons = [{ item: <NaviDismiss />, disabled: false }];
 

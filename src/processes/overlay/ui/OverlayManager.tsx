@@ -4,13 +4,13 @@ import DropDownAnimation from '@widgets/dropdown/animation/DropDownAnimation';
 import PopupContainerOrga from '@widgets/popup/ui/PopupContainer';
 import ToastController from '@widgets/toast/ui/ToastController';
 
+import { openSettings } from 'react-native-permissions';
+import { MODAL_CONFIRM_ACTION_KEY } from '../../key';
 import {
   resetModalPopup,
   setOverlayEventHandler,
   setRequestWithDrawal,
-} from '@processes/overlay/model/overlay.slice';
-import { openSettings } from 'react-native-permissions';
-import { MODAL_CONFIRM_ACTION_KEY } from '../../key';
+} from '../model/overlaySlice';
 
 const OverlayManager = () => {
   const showToastView = useAppSelector(state => state.overlaySlice.showToastView);

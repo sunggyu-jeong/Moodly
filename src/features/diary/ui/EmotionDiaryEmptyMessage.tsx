@@ -2,8 +2,8 @@ import { Image, StyleSheet, View } from 'react-native';
 
 import { MAIN_ICONS } from '@shared/assets/images/main';
 import { getScaleSize } from '@shared/hooks';
-import colors from '@shared/styles/colors.ts';
-import { Body1 } from '@shared/ui/typography/Body1.tsx';
+import colors from '@shared/styles/colors';
+import { Body1 } from '@shared/ui/typography/Body1';
 
 const EmotionDiaryEmptyMessage = () => {
   return (

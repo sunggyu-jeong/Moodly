@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Image, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import UpdateContent from '@features/updateProgress/ui/UpdateContent.tsx';
+import UpdateContent from '@features/update-progress/updateProgress/ui/UpdateContent';
 import { UpdateProgressProps } from '@processes/update/useUpdateProgress';
 import {
   useLazyFetchFirstLaunchFlagQuery,

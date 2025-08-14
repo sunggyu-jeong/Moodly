@@ -1,10 +1,9 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-
-import diarySlice from '@features/diary/model/diary.slice';
-import settingSlice from '@features/setting/model/setting.slice';
-import progressSlice from '@features/updateProgress/model/progress.slice';
-import overlaySlice from '@processes/overlay/model/overlay.slice';
-import { baseApi } from '@shared/api/base';
+import diarySlice from '../features/diary/model/diarySlice';
+import settingSlice from '../features/setting/model/settingSlice';
+import progressSlice from '../features/update-progress/updateProgress/model/progressSlice';
+import overlaySlice from '../processes/overlay/model/overlaySlice';
+import { baseApi } from '../shared/api/base';
 import { listenerMiddleware } from './middleware/ListenerMiddleware';
 
 const reducers = combineReducers({

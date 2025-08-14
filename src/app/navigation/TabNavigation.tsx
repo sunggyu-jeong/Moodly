@@ -2,8 +2,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import EmotionDiaryListPage from '@pages/EmotionDiaryListPage.tsx';
-import HomePage from '@pages/HomePage.tsx';
+import EmotionDiaryListPage from '@pages/EmotionDiaryListPage';
+import HomePage from '@pages/HomePage';
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { MAIN_ICONS } from '@shared/assets/images/main';
 import { useScale } from '@shared/hooks';

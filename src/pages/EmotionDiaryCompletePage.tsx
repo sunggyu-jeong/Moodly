@@ -4,12 +4,11 @@ import { Image, StyleSheet, View } from 'react-native';
 import { MAIN_ICONS } from '@shared/assets/images/main';
 import { getScaleSize, useAppDispatch, useAppSelector } from '@shared/hooks';
 import { dismissModalToScreen, navigate } from '@shared/lib';
-import { gray } from '@shared/styles/colors.ts';
-import { Body2 } from '@shared/ui/typography/Body2.tsx';
-import { H2 } from '@shared/ui/typography/H2.tsx';
-
-import { setModifyMode } from '@features/diary/model/diary.slice';
-import { setShowToastView } from '@processes/overlay/model/overlay.slice';
+import { gray } from '@shared/styles/colors';
+import { Body2 } from '@shared/ui/typography/Body2';
+import { H2 } from '@shared/ui/typography/H2';
+import { setModifyMode } from '../features/diary/model/diarySlice';
+import { setShowToastView } from '../processes/overlay/model/overlaySlice';
 
 const EmotionDiaryCompletePage = () => {
   const isModifyMode = useAppSelector(state => state.diarySlice.isModifyMode);

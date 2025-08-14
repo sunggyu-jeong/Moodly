@@ -1,12 +1,12 @@
 import { TouchableOpacity, View } from 'react-native';
 
 import { EmotionDiaryDTO } from '@entities/diary';
-import { setSelectedDiary } from '@features/diary/model/diary.slice.ts';
+import { setSelectedDiary } from '@features/diary/model/diarySlice';
 import { useAppDispatch } from '@shared/hooks';
 import { isEmpty, navigate } from '@shared/lib';
 
-import EmotionDiaryCardContent from './EmotionDiaryCardContent.tsx';
-import EmotionDiaryCardHeader from './EmotionDiaryCardHeader.tsx';
+import EmotionDiaryCardContent from './EmotionDiaryCardContent';
+import EmotionDiaryCardHeader from './EmotionDiaryCardHeader';
 
 interface EmotionDiaryCardListProps {
   data: EmotionDiaryDTO | undefined;
