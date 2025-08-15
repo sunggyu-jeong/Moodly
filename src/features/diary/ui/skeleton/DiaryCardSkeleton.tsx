@@ -16,7 +16,7 @@ const DiarySkeleton = () => {
             key={idx}
             className="bg-gray-400 py-5 px-[18px] mb-4 rounded-[15px] w-full"
           >
-            {/* 아바타 자리 (원형) */}
+            {/* 아바타 자리 (원형). */}
             <View className="mb-3">
               <Skeleton
                 width={40}
