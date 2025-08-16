@@ -19,7 +19,7 @@ interface SocialLoginGroupProps {
 
 const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
   const { handleLogin, data, isLoading } = useSocialLogin();
-  const [getUserInfo, { data: userInfo }] = useLazyGetUserInfoQuery();
+  const [getUserInfo] = useLazyGetUserInfoQuery();
   const dispatch = useAppDispatch();
   const navigateInitialRoute = useCallback(() => {
     resetTo('Main');
@@ -36,11 +36,8 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
         return;
       }
     }
-    if (entrance === SOCIAL_LOGIN_ENTRANCE.LOGIN) {
-      navigateInitialRoute();
-    } else {
-      dispatch(setShowToastView({ visibility: true, message: '로그인이 완료됐어요!' }));
-    }
+    resetTo('Main');
+    dispatch(setShowToastView({ visibility: true, message: '로그인이 완료됐어요!' }));
   };
 
   useEffect(() => {

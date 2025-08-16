@@ -1,7 +1,13 @@
-import { useState } from 'react';
+import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
 import { SafeAreaView, TextInput, View } from 'react-native';
+import { UserMetaDTO } from '../entities/auth/User.scheme';
 import { setShowToastView } from '../processes/overlay/model/overlay.slice';
-import { useSetUserInfoMutation, type UserInfo } from '../shared/api/auth/authApi';
+import {
+  useSaveFirstLaunchFlagMutation,
+  useSetUserInfoMutation,
+  type UserInfo,
+} from '../shared/api/auth/authApi';
 import { useAppDispatch } from '../shared/hooks';
 import { resetTo } from '../shared/lib';
 import ActionButton from '../shared/ui/elements/ActionButton';
@@ -13,7 +19,7 @@ const NicknamePage = () => {
   const dispatch = useAppDispatch();
   const [text, onChangeText] = useState('');
   const [isAvailableNickname, setIsAvailableNickname] = useState(true);
-  const [setUserInfoMutation, { data }] = useSetUserInfoMutation();
+  const [setUserInfoMutation] = useSetUserInfoMutation();
   const handleSetUserInfo = async () => {
     const userInfo: Pick<UserInfo, 'nickname'> = {
       nickname: text,
@@ -26,6 +32,18 @@ const NicknamePage = () => {
       dispatch(setShowToastView({ visibility: true, message: '닉네임 저장 요청이 실패했어요.' }));
     }
   };
+  const [saveFirstLaunchFlag] = useSaveFirstLaunchFlagMutation();
+
+  useEffect(() => {
+    return () => {
+      const dto: UserMetaDTO = {
+        userId: 'local',
+        isFirstLoad: false,
+        createdAt: dayjs().toDate(),
+      };
+      saveFirstLaunchFlag(dto);
+    };
+  }, [saveFirstLaunchFlag]);
   const handleChangeText = (e: string) => {
     onChangeText(e);
     setIsAvailableNickname(e.length < 2);

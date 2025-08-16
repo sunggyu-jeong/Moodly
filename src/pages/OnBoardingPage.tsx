@@ -1,5 +1,5 @@
-import dayjs from 'dayjs';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import {
   FlatListProps,
   Image,
@@ -14,13 +14,11 @@ import {
 } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import type { UserMetaDTO } from '../entities/auth/User.scheme';
+import { SocialLoginSheet, SocialLoginSheetHandle } from '../features/setting/ui/SocialLoginSheet';
 import { setShowToastView } from '../processes/overlay/model/overlay.slice';
-import { useSaveFirstLaunchFlagMutation } from '../shared/api/auth/authApi';
 import { ONBOARDING_ICONS } from '../shared/assets/images/onboarding';
 import { useAppDispatch } from '../shared/hooks';
 import { useNotificationPermission } from '../shared/hooks/useNotificationPermission';
-import { resetTo } from '../shared/lib';
 import colors from '../shared/styles/colors';
 import ActionButton from '../shared/ui/elements/ActionButton';
 import { H2 } from '../shared/ui/typography/H2';
@@ -68,22 +66,19 @@ const OnboardingPage = () => {
   const listRef = useRef<FlatList<SlideProps>>(null);
   const [index, setIndex] = useState<number>(0);
   const isScrollingRef = useRef(false);
-  const { status, requestNotification } = useNotificationPermission();
+  const { requestNotification } = useNotificationPermission();
   const dispatch = useAppDispatch();
-  const [saveFirstLaunchFlag] = useSaveFirstLaunchFlagMutation();
-  const [showAlarmButton, setShowAlarmButton] = useState(false);
+  const [showStartButton, setShowStartButton] = useState(false);
+  const [showAlarmPermission, setShowAlarmPermission] = useState(false);
+  const socialSheetRef = useRef<SocialLoginSheetHandle>(null);
 
-  useEffect(() => {
-    return () => {
-      const dto: UserMetaDTO = {
-        userId: 'local',
-        isFirstLoad: false,
-        createdAt: dayjs().toDate(),
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        socialSheetRef.current?.close();
       };
-      saveFirstLaunchFlag(dto);
-    };
-  }, [saveFirstLaunchFlag]);
-
+    }, [])
+  );
   const total = SLIDES.length;
   const isLast = index === total - 1;
 
@@ -101,7 +96,7 @@ const OnboardingPage = () => {
   const renderItem = useCallback<ListRenderItem<SlideProps>>(
     ({ item }) => (
       <View
-        className="flex-1 justify-center items-center px-[50px] gap-10"
+        className="flex-1 justify-center items-center px-[10px] gap-10"
         style={{ width, height }}
       >
         <View className="mb-10 justify-center gap-3">
@@ -116,7 +111,7 @@ const OnboardingPage = () => {
         <Image
           className="h-[70%] bottom-12 w-full items-center gap-3"
           source={item.source}
-          resizeMode="cover"
+          resizeMode="contain"
         />
       </View>
     ),
@@ -124,7 +119,7 @@ const OnboardingPage = () => {
   );
 
   const onMomentumScrollEnd = useCallback(
-    (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    async (e: NativeSyntheticEvent<NativeScrollEvent>) => {
       const viewWidth = e.nativeEvent.layoutMeasurement.width;
       const x = e.nativeEvent.contentOffset.x;
 
@@ -132,11 +127,18 @@ const OnboardingPage = () => {
 
       const next = Math.floor(ratio) + (ratio % 1 > 0.3 ? 1 : 0);
       if (next !== index) setIndex(next);
-      console.log('@>$!>$>@', next, total);
-      setShowAlarmButton(next === total - 1);
+      setShowStartButton(next === total - 1);
+      if (next === 2 && !showAlarmPermission) {
+        console.log('실행됨');
+        setShowAlarmPermission(true);
+        await requestNotification();
+        const response = await requestNotification();
+        const message = response ? '알림이 켜졌어요!' : '알림 수신요청이 거부되었습니다.';
+        dispatch(setShowToastView({ visibility: true, message }));
+      }
       isScrollingRef.current = false;
     },
-    [index]
+    [index, dispatch, requestNotification, showAlarmPermission, total]
   );
 
   const onScroll = useCallback(
@@ -149,13 +151,12 @@ const OnboardingPage = () => {
       const frac = ratio - base;
 
       if (frac >= 0.2) {
-        if (base === 2 && showAlarmButton) {
-          setShowAlarmButton(false);
-          console.log('>1241맞미ㅏㄱ');
+        if (base === 2 && showStartButton) {
+          setShowStartButton(false);
         }
       }
     },
-    [width, index, total]
+    [width, showStartButton]
   );
 
   const Dots = useMemo(() => {
@@ -182,11 +183,7 @@ const OnboardingPage = () => {
   };
 
   const startService = async () => {
-    const response = await requestNotification();
-    console.log('@!>$!@$!@>$>', response);
-    const message = response ? '알림이 켜졌어요!' : '알림 수신요청이 거부되었습니다.';
-    dispatch(setShowToastView({ visibility: true, message }));
-    resetTo('Login');
+    socialSheetRef.current?.expand();
   };
 
   return (
@@ -232,11 +229,12 @@ const OnboardingPage = () => {
           scrollEventThrottle={16}
         />
       </View>
-      {showAlarmButton && (
+      {showStartButton && (
         <View className="absolute bottom-12 w-full items-center gap-3 px-5">
           <ActionButton onPress={startService}>서비스 시작하기</ActionButton>
         </View>
       )}
+      <SocialLoginSheet ref={socialSheetRef} />
     </SafeAreaView>
   );
 };
