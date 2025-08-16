@@ -2,9 +2,11 @@ import { AUTH_PROVIDERS } from '@entities/auth/types';
 import { useSocialLogin } from '@features/auth/hooks/useSocialLogin';
 import SocialLoginButton from '@features/auth/ui/SocialLoginButton';
 import { setShowToastView } from '@processes/overlay/model/overlay.slice';
+import dayjs from 'dayjs';
 import { useCallback, useEffect } from 'react';
 import { Platform, View } from 'react-native';
-import { useLazyGetUserInfoQuery } from '../../api/auth/authApi';
+import { UserMetaDTO } from '../../../entities/auth/User.scheme';
+import { useLazyGetUserInfoQuery, useSaveFirstLaunchFlagMutation } from '../../api/auth/authApi';
 import { useAppDispatch } from '../../hooks';
 import { isEmpty, isNotEmpty, resetTo } from '../../lib';
 
@@ -24,6 +26,7 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
   const navigateInitialRoute = useCallback(() => {
     resetTo('Main');
   }, []);
+  const [saveFirstLaunchFlag] = useSaveFirstLaunchFlagMutation();
 
   const fetchUserInfo = async () => {
     const response = await getUserInfo();
@@ -36,6 +39,12 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
         return;
       }
     }
+    const dto: UserMetaDTO = {
+      userId: 'local',
+      isFirstLoad: false,
+      createdAt: dayjs().toDate(),
+    };
+    saveFirstLaunchFlag(dto);
     resetTo('Main');
     dispatch(setShowToastView({ visibility: true, message: '로그인이 완료됐어요!' }));
   };
