@@ -10,7 +10,7 @@ import { COMMON_ICONS } from '@shared/assets/images/common';
 import { useAppDispatch, useAppSelector } from '@shared/hooks';
 import { useNotificationPermission } from '@shared/hooks/useNotificationPermission';
 import { useOpenKakao } from '@shared/hooks/useOpenChat';
-import { isEmpty, isNotEmpty, navigate } from '@shared/lib';
+import { isNotEmpty, navigate } from '@shared/lib';
 import ActionButton from '@shared/ui/elements/ActionButton';
 import Toggle from '@shared/ui/elements/Toggle';
 import { Body1 } from '@shared/ui/typography/Body1';
@@ -68,9 +68,14 @@ const SettingPage = () => {
   const headerItem = isNotEmpty(userInfo)
     ? {
         leftComponent: (
-          <View className="flex-col">
-            <Body1 weight="semibold">{userInfo.nickname}</Body1>
-            <Label weight="regular">{userInfo.email}</Label>
+          <View className="flex justify-between gap-4">
+            <View className="flex-col mr-3">
+              <Body1 weight="semibold">{TEXTS.guestTitle}</Body1>
+              <Label weight="regular">{TEXTS.guestLabel}</Label>
+            </View>
+            <ActionButton onPress={() => socialSheetRef.current?.expand()}>
+              {TEXTS.loginButton}
+            </ActionButton>
           </View>
         ),
       }
@@ -137,7 +142,7 @@ const SettingPage = () => {
         settingItems={settingListItems}
         version={version}
       />
-      {isEmpty(userInfo) && <SocialLoginSheet ref={socialSheetRef} />}
+      {<SocialLoginSheet ref={socialSheetRef} />}
     </>
   );
 };

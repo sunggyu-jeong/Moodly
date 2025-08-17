@@ -13,8 +13,8 @@ import { isNotEmpty, resetTo } from '@shared/lib';
 import { initRealm } from '@shared/lib/realm-client.util';
 
 const Splash = ({ status, progress }: UpdateProgressProps) => {
-  const [initSession, { data, isLoading }] = useLazyInitializeSessionQuery();
-  const [getFirstLaunchFlag, { data: isFirstLoad }] = useLazyFetchFirstLaunchFlagQuery();
+  const [initSession] = useLazyInitializeSessionQuery();
+  const [getFirstLaunchFlag] = useLazyFetchFirstLaunchFlagQuery();
 
   useEffect(() => {
     // 1) Realm 초기화
@@ -26,6 +26,7 @@ const Splash = ({ status, progress }: UpdateProgressProps) => {
     const timer = setTimeout(flag, 2000);
     return () => clearTimeout(timer);
   }, [status]);
+
   const flag = async () => {
     const response = await getFirstLaunchFlag();
     if (response.data) {
