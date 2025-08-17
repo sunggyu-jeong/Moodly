@@ -9,12 +9,18 @@ import { jumpToTab, navigate } from '@shared/lib';
 import ActionButton from '@shared/ui/elements/ActionButton.tsx';
 import DiaryCountCard from '@shared/ui/elements/DiaryCountCard.tsx';
 import { H2 } from '@shared/ui/typography/H2.tsx';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
+import { useNotificationPermission } from '../shared/hooks/useNotificationPermission';
 
 const HomePage = () => {
   const dispatch = useAppDispatch();
   const { data: hasDiary } = useHasDiaryForDayQuery();
   const { data: diaryCount } = useGetDiaryCountQuery();
+  const { requestNotification } = useNotificationPermission();
+
+  useEffect(() => {
+    requestNotification();
+  }, []);
 
   useFocusEffect(
     useCallback(() => {
