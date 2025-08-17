@@ -15,7 +15,6 @@ import {
 import { FlatList } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SocialLoginSheet, SocialLoginSheetHandle } from '../features/setting/ui/SocialLoginSheet';
-import { setShowToastView } from '../processes/overlay/model/overlay.slice';
 import { ONBOARDING_ICONS } from '../shared/assets/images/onboarding';
 import { useAppDispatch } from '../shared/hooks';
 import { useNotificationPermission } from '../shared/hooks/useNotificationPermission';
@@ -49,14 +48,15 @@ const SLIDES: ReadonlyArray<SlideProps> = [
   },
   {
     id: 3,
-    title: '감정의 흐름을 파악하세요',
-    message: '감정은 달력에 쌓이며\n나를 이해하는 단서가 됩니다.',
+    title: '잊지 않도록 알림을 드려요',
+    message: '하루의 감정은 금방 지나가요.\n그 순간을 놓치지 않도록 알려드릴게요.',
     source: ONBOARDING_ICONS.onboardingStep3,
   },
   {
     id: 4,
-    title: '잊지 않도록 알림을 드려요',
-    message: '하루의 감정은 금방 지나가요.\n그 순간을 놓치지 않도록 알려드릴게요.',
+    title: '감정의 흐름을 파악하세요',
+    message: '감정은 달력에 쌓이며\n나를 이해하는 단서가 됩니다.',
+
     source: ONBOARDING_ICONS.onboardingStep4,
   },
 ];
@@ -132,9 +132,6 @@ const OnboardingPage = () => {
         console.log('실행됨');
         setShowAlarmPermission(true);
         await requestNotification();
-        const response = await requestNotification();
-        const message = response ? '알림이 켜졌어요!' : '알림 수신요청이 거부되었습니다.';
-        dispatch(setShowToastView({ visibility: true, message }));
       }
       isScrollingRef.current = false;
     },

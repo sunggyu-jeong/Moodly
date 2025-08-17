@@ -3,12 +3,12 @@ import { useSocialLogin } from '@features/auth/hooks/useSocialLogin';
 import SocialLoginButton from '@features/auth/ui/SocialLoginButton';
 import { setShowToastView } from '@processes/overlay/model/overlay.slice';
 import dayjs from 'dayjs';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Platform, View } from 'react-native';
 import { UserMetaDTO } from '../../../entities/auth/User.scheme';
 import { useLazyGetUserInfoQuery, useSaveFirstLaunchFlagMutation } from '../../api/auth/authApi';
 import { useAppDispatch } from '../../hooks';
-import { isEmpty, isNotEmpty, resetTo } from '../../lib';
+import { isEmpty, isNotEmpty, navigate, resetTo } from '../../lib';
 
 export enum SOCIAL_LOGIN_ENTRANCE {
   LOGIN = 'login',
@@ -23,19 +23,16 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
   const { handleLogin, data, isLoading } = useSocialLogin();
   const [getUserInfo] = useLazyGetUserInfoQuery();
   const dispatch = useAppDispatch();
-  const navigateInitialRoute = useCallback(() => {
-    resetTo('Main');
-  }, []);
   const [saveFirstLaunchFlag] = useSaveFirstLaunchFlagMutation();
 
   const fetchUserInfo = async () => {
     const response = await getUserInfo();
     if (isEmpty(response)) {
-      resetTo('Nickname');
+      navigate('Nickname');
       return;
     } else {
       if (isEmpty(response.data)) {
-        resetTo('Nickname');
+        navigate('Nickname');
         return;
       }
     }
@@ -45,6 +42,7 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
       createdAt: dayjs().toDate(),
     };
     saveFirstLaunchFlag(dto);
+    console.log('@!$여기서저장?', dto);
     resetTo('Main');
     dispatch(setShowToastView({ visibility: true, message: '로그인이 완료됐어요!' }));
   };
@@ -54,7 +52,7 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
     if (isNotEmpty(data)) {
       fetchUserInfo();
     }
-  }, [data, isLoading, dispatch, navigateInitialRoute, entrance]);
+  }, [data, isLoading, dispatch, entrance]);
 
   return (
     <View className="w-full px-6 gap-3">
