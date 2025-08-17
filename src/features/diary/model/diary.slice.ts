@@ -18,8 +18,8 @@ const initialState: DiaryState = {
   selectedDiary: null,
   selectedIcon: ICON_DATA[0],
   currentDiary: null,
-  selectedMonth: dayjs().toISOString(),
-  selectedWeek: dayjs().toISOString(),
+  selectedMonth: dayjs().toString(),
+  selectedWeek: dayjs().toString(),
   isModifyMode: false,
   selectedDay: null,
 };
@@ -59,15 +59,15 @@ const diarySlice = createSlice({
       const delta = action.payload === 'left' ? -1 : 1;
       const newMonth = dayjs(state.selectedMonth).add(delta, 'month');
       const firstOfMonth = newMonth.startOf('month');
-      state.selectedMonth = firstOfMonth.toISOString();
-      state.selectedWeek = dayjs(firstOfMonth).startOf('week').toISOString();
+      state.selectedMonth = firstOfMonth.toString();
+      state.selectedWeek = dayjs(firstOfMonth).startOf('week').toString();
       state.selectedDay = null;
     },
     moveWeek: (state, action: PayloadAction<'left' | 'right'>) => {
       const delta = action.payload === 'left' ? -1 : 1;
       const newWeek = dayjs(state.selectedWeek).add(delta, 'week');
-      state.selectedWeek = newWeek.toISOString();
-      state.selectedMonth = newWeek.startOf('month').toISOString();
+      state.selectedWeek = newWeek.toString();
+      state.selectedMonth = newWeek.startOf('month').toString();
       state.selectedDay = null;
     },
   },

@@ -26,6 +26,7 @@ import Splash from './ui/screens/Splash';
 dayjs.locale('ko');
 dayjs.extend(utc);
 dayjs.extend(timezone);
+dayjs.tz.setDefault('Asia/Seoul');
 
 enableScreens();
 if (typeof globalThis.structuredClone !== 'function') {

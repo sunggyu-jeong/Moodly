@@ -38,14 +38,14 @@ const SelectableDayCell = ({ date, iconId }: SelectableDayCellProps) => {
 
   const startEmotionSelection = useCallback(() => {
     const emotion: Partial<EmotionDiaryDTO> = {
-      recordDate: date.toISOString(),
+      recordDate: date.toString(),
     };
     dispatch(setCurrentDiary(emotion));
     navigate('DiaryStack', { screen: 'EmotionSelectionPage' });
   }, [dispatch, date]);
 
   const selectDay = useCallback(() => {
-    dispatch(setSelectedDay(date.toISOString()));
+    dispatch(setSelectedDay(date.toString()));
   }, [dispatch, date]);
 
   const onPress = useCallback(() => {

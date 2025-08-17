@@ -51,7 +51,7 @@ const EmotionDiaryMonthView = ({
           <EmotionDiaryListHeader
             showSkeleton={showSkeleton ?? false}
             diaryMode={diaryMode}
-            selectedMonth={monthDate.toISOString()}
+            selectedMonth={monthDate.toString()}
             monthData={monthData}
             calendarMode={calendarMode}
           />

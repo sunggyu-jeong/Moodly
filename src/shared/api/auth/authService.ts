@@ -119,7 +119,7 @@ export async function setUserInfo(
       id: user.id,
       nickname: payload.nickname,
       email: user.email,
-      created_at: dayjs().toISOString(),
+      created_at: dayjs().toString(),
     });
     console.log('>>>>>>>', data, error);
 
