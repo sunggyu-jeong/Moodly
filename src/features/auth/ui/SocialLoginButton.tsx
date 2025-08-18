@@ -14,7 +14,7 @@ const SocialLoginButton = ({ disabled, provider, onPress }: SocialLoginButtonPro
   const { label, backgroundColor, textColor, Icon, borderColor } = AUTH_PROVIDER_CONFIG[provider];
   return (
     <View
-      className="h-[52px] rounded-xl bg-common-transparent"
+      className="w-full h-[52px] rounded-xl bg-common-transparent"
       // eslint-disable-next-line react-native/no-inline-styles
       style={{ borderWidth: isNotEmpty(borderColor) ? 1 : 0, borderColor: borderColor }}
     >

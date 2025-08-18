@@ -1,11 +1,16 @@
-import { AUTH_PROVIDERS, UserMetaDTO } from "@entities/auth";
-import { SocialLoginButton, useSocialLogin } from "@features/auth";
-import { setShowToastView } from "@processes/overlay/model/overlaySlice";
-import { isEmpty, isNotEmpty, navigate, resetTo, useAppDispatch } from "@shared";
-import { useLazyGetUserInfoQuery, useSaveFirstLaunchFlagMutation } from "@shared/api";
-import dayjs from "dayjs";
-import { useEffect } from "react";
-import { Platform, View } from "react-native";
+import { AUTH_PROVIDERS } from '@entities/auth/types';
+import { UserMetaDTO } from '@entities/auth/User.scheme';
+import { useSocialLogin } from '@features/auth/hooks/useSocialLogin';
+import SocialLoginButton from '@features/auth/ui/SocialLoginButton';
+import { setShowToastView } from '@processes/overlay/model/overlaySlice';
+import { useLazyGetUserInfoQuery, useSaveFirstLaunchFlagMutation } from '@shared/api/auth/authApi';
+import { useAppDispatch } from '@shared/hooks';
+import { isEmpty, isNotEmpty, navigate, resetTo } from '@shared/lib';
+import { gray } from '@shared/styles/colors';
+import dayjs from 'dayjs';
+import { useEffect } from 'react';
+import { Platform, StyleSheet, Text, View } from 'react-native';
+import { Caption } from '../typography/Caption';
 
 export enum SOCIAL_LOGIN_ENTRANCE {
   LOGIN = 'login',
@@ -39,7 +44,6 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
       createdAt: dayjs().toDate(),
     };
     saveFirstLaunchFlag(dto);
-    console.log('@!$여기서저장?', dto);
     resetTo('Main');
     dispatch(setShowToastView({ visibility: true, message: '로그인이 완료됐어요!' }));
   };
@@ -54,7 +58,7 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
   }, [data, isLoading, dispatch, entrance]);
 
   return (
-    <View className="w-full px-6 gap-3">
+    <View className="w-full px-8 gap-3 items-center">
       {Platform.OS === 'ios' && (
         <SocialLoginButton
           disabled={isLoading}
@@ -67,8 +71,40 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
         provider={AUTH_PROVIDERS.GOOGLE}
         onPress={() => handleLogin(AUTH_PROVIDERS.GOOGLE)}
       />
+      <View className="mt-8">
+        <Caption
+          weight="regular"
+          style={styles.captionText}
+        >
+          로그인 시{' '}
+          <Text
+            style={styles.textUnderline}
+            onPress={() => {}}
+          >
+            이용약관
+          </Text>
+          과{' '}
+          <Text
+            style={styles.textUnderline}
+            onPress={() => {}}
+          >
+            개인정보 처리 방침
+          </Text>
+          에 동의하게 됩니다
+        </Caption>
+      </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  captionText: {
+    color: gray[400],
+  },
+  textUnderline: {
+    color: gray[400],
+    textDecorationLine: 'underline',
+  },
+});
 
 export default SocialLoginGroup;

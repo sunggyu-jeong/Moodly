@@ -1,4 +1,5 @@
 // shared/ui/BottomSheetWrapper.tsx
+import { common, gray } from '@/shared/styles/colors';
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetProps,
@@ -7,8 +8,6 @@ import BottomSheet, {
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import React, { forwardRef } from 'react';
 import { StyleSheet } from 'react-native';
-
-import { common } from '@/shared/styles';
 
 export interface BottomSheetWrapperProps extends BottomSheetProps {
   children: React.ReactNode;
@@ -27,7 +26,10 @@ const BottomSheetWrapper = forwardRef<BottomSheetMethods, BottomSheetWrapperProp
     <BottomSheet
       ref={ref}
       index={-1}
+      handleIndicatorStyle={styles.indicatorStyle}
       snapPoints={snapPoints}
+      bottomInset={24}
+      detached
       onChange={onChange}
       backgroundStyle={styles.background}
       backdropComponent={backdropProps => (
@@ -48,9 +50,20 @@ const BottomSheetWrapper = forwardRef<BottomSheetMethods, BottomSheetWrapperProp
 BottomSheetWrapper.displayName = 'BottomSheetWrapper';
 
 const styles = StyleSheet.create({
-  background: { backgroundColor: common.white },
+  background: {
+    backgroundColor: common.white,
+    borderRadius: 24,
+    marginLeft: 16,
+    marginRight: 16,
+  },
   bottomSheetBackground: { backgroundColor: common.overlay },
   bottomSheetView: { flex: 1 },
+  indicatorStyle: {
+    backgroundColor: gray[300],
+    borderRadius: 10,
+    height: 4,
+    width: 45,
+  },
 });
 
 export default BottomSheetWrapper;

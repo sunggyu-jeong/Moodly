@@ -1,15 +1,24 @@
-import { KAKAO_OPEN_CHAT_LINK } from "@env";
-import { useLogout } from "@features/auth";
-import { SettingRoot, SocialLoginSheet, SocialLoginSheetHandle } from "@features/setting";
-import { SETTING_EVENT_TYPE, TEXTS } from "@features/setting/types";
-import { MODAL_CONFIRM_ACTION_KEY } from "@processes/key";
-import { setShowModalPopup } from "@processes/overlay/model/overlaySlice";
-import { useFocusEffect } from "@react-navigation/native";
-import { ActionButton, Body1, Label, Toggle, isEmpty, isNotEmpty, navigate, useAppDispatch, useAppSelector, useGetUserInfoQuery, useNotificationPermission, useOpenKakao } from "@shared";
-import { COMMON_ICONS } from "@shared/assets/images/common";
-import { useCallback, useEffect, useRef, version } from "react";
-import { Image, View } from "react-native";
-
+import { KAKAO_OPEN_CHAT_LINK } from '@env';
+import { useLogout } from '@features/auth/hooks/useLogout';
+import { SETTING_EVENT_TYPE, TEXTS } from '@features/setting/types';
+import SettingRoot from '@features/setting/ui/SettingRoot';
+import { SocialLoginSheet, SocialLoginSheetHandle } from '@features/setting/ui/SocialLoginSheet';
+import { MODAL_CONFIRM_ACTION_KEY } from '@processes/key';
+import { setShowModalPopup } from '@processes/overlay/model/overlaySlice';
+import { useFocusEffect } from '@react-navigation/native';
+import { useGetUserInfoQuery } from '@shared/api/auth/authApi';
+import { COMMON_ICONS } from '@shared/assets/images/common';
+import { useAppDispatch, useAppSelector } from '@shared/hooks';
+import { useNotificationPermission } from '@shared/hooks/useNotificationPermission';
+import { useOpenKakao } from '@shared/hooks/useOpenChat';
+import { isNotEmpty, navigate } from '@shared/lib';
+import ActionButton from '@shared/ui/elements/ActionButton';
+import Toggle from '@shared/ui/elements/Toggle';
+import { Body1 } from '@shared/ui/typography/Body1';
+import { Label } from '@shared/ui/typography/Label';
+import { useCallback, useEffect, useRef } from 'react';
+import { Image, View } from 'react-native';
+import { version } from '../../package.json';
 
 const SettingPage = () => {
   const { openChat } = useOpenKakao();
@@ -19,8 +28,6 @@ const SettingPage = () => {
   const dispatch = useAppDispatch();
   const { status } = useNotificationPermission();
   const { data: userInfo } = useGetUserInfoQuery();
-
-
 
   useFocusEffect(
     useCallback(() => {
@@ -61,9 +68,14 @@ const SettingPage = () => {
   const headerItem = isNotEmpty(userInfo)
     ? {
         leftComponent: (
-          <View className="flex-col">
-            <Body1 weight="semibold">{userInfo.nickname}</Body1>
-            <Label weight="regular">{userInfo.email}</Label>
+          <View className="flex justify-between gap-4">
+            <View className="flex-col mr-3">
+              <Body1 weight="semibold">{TEXTS.guestTitle}</Body1>
+              <Label weight="regular">{TEXTS.guestLabel}</Label>
+            </View>
+            <ActionButton onPress={() => socialSheetRef.current?.expand()}>
+              {TEXTS.loginButton}
+            </ActionButton>
           </View>
         ),
       }
@@ -130,7 +142,7 @@ const SettingPage = () => {
         settingItems={settingListItems}
         version={version}
       />
-      {isEmpty(userInfo) && <SocialLoginSheet ref={socialSheetRef} />}
+      {<SocialLoginSheet ref={socialSheetRef} />}
     </>
   );
 };
