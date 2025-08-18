@@ -8,7 +8,7 @@ interface ServiceThunkOptions<Returned, ThunkArg> {
 export function createServiceThunk<Returned, ThunkArg>(
   type: string,
   serviceFn: (arg: ThunkArg) => Promise<Returned>,
-  options: ServiceThunkOptions<Returned, ThunkArg> = {}
+  options: ServiceThunkOptions<Returned, ThunkArg> = {},
 ) {
   return createAsyncThunk<Returned, ThunkArg>(type, async (arg, { rejectWithValue }) => {
     try {
@@ -22,7 +22,7 @@ export function createServiceThunk<Returned, ThunkArg>(
         await options.onError(error, arg);
       }
       return rejectWithValue(
-        error instanceof Error ? error.message : '알 수 없는 에러가 발생했습니다.'
+        error instanceof Error ? error.message : '알 수 없는 에러가 발생했습니다.',
       );
     }
   });

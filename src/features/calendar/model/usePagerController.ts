@@ -17,7 +17,9 @@ export const usePagerController = <T>(opts: { onLeft: () => void; onRight: () =>
 
   const onScroll = useCallback(
     ({ nativeEvent }: NativeSyntheticEvent<NativeScrollEvent>) => {
-      if (isScrollingRef.current) return;
+      if (isScrollingRef.current) {
+        return;
+      }
       const ratio = nativeEvent.contentOffset.x / SCREEN_WIDTH;
 
       if (ratio <= 0.3) {
@@ -30,7 +32,7 @@ export const usePagerController = <T>(opts: { onLeft: () => void; onRight: () =>
         opts.onRight();
       }
     },
-    [opts, scrollToMiddle]
+    [opts, scrollToMiddle],
   );
   return { flatListRef, onScroll, onMomentumScrollEnd, scrollToMiddle };
 };

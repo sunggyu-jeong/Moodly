@@ -1,8 +1,7 @@
+import { useToastAnimation } from '@shared/hooks/useToastAnimation';
 import { StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
-import { useToastAnimation } from '@shared/hooks/useToastAnimation';
 
 import ToastBase from '../ui/ToastBase';
 
@@ -16,7 +15,9 @@ const ToastAnimated = ({ visible, text, onHide }: ToastAnimatedProps) => {
   const insets = useSafeAreaInsets();
   const { style, isMounted } = useToastAnimation(visible, 200, 1500, onHide);
 
-  if (!isMounted) return null;
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <Animated.View

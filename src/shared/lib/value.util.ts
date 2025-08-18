@@ -19,17 +19,28 @@ export function isEmpty(value: string | null | undefined): value is '' | null | 
 export function isEmpty<T>(value: T | null | undefined): value is null | undefined;
 export function isEmpty(value: unknown): boolean {
   // 주어진 값이 null 또는 undefined인 경우
-  if (value === null || value === undefined) return true;
-  // 문자열의 경우, 공백을 제거한 값이 빈 문자열이면 true
-  if (typeof value === 'string' && value.trim() === '') return true;
-  // 배열인 경우, 길이가 0이면 true
-  if (Array.isArray(value) && value.length === 0) return true;
-  // 객체인 경우, (배열 제외) 키가 하나도 없으면 true
-  if (typeof value === 'object' && !Array.isArray(value) && Object.keys(value).length === 0)
+  if (value === null || value === undefined) {
     return true;
+  }
+  // 문자열의 경우, 공백을 제거한 값이 빈 문자열이면 true
+  if (typeof value === 'string' && value.trim() === '') {
+    return true;
+  }
+  // 배열인 경우, 길이가 0이면 true
+  if (Array.isArray(value) && value.length === 0) {
+    return true;
+  }
+  // 객체인 경우, (배열 제외) 키가 하나도 없으면 true
+  if (typeof value === 'object' && !Array.isArray(value) && Object.keys(value).length === 0) {
+    return true;
+  }
   // 숫자인 경우, NaN이면 true
-  if (typeof value === 'number' && Number.isNaN(value)) return true;
-  if (allValuesNull(value as Record<string, unknown>)) return true;
+  if (typeof value === 'number' && Number.isNaN(value)) {
+    return true;
+  }
+  if (allValuesNull(value as Record<string, unknown>)) {
+    return true;
+  }
   // 그 외의 경우 값이 있다고 판단
   return false;
 }
@@ -88,6 +99,8 @@ export const rawValue = <T extends Record<string, string>>(obj: T, key: keyof T)
   obj[key];
 
 function allValuesNull<T>(obj: T) {
-  if (!obj || typeof obj !== 'object') return false;
-  return Object.values(obj).every(v => v == null);
+  if (!obj || typeof obj !== 'object') {
+    return false;
+  }
+  return Object.values(obj).every(v => v === null);
 }

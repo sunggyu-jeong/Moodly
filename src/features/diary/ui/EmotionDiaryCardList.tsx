@@ -1,9 +1,8 @@
-import { TouchableOpacity, View } from 'react-native';
-
 import { EmotionDiaryDTO } from '@entities/diary';
 import { setSelectedDiary } from '@features/diary/model/diarySlice';
 import { useAppDispatch } from '@shared/hooks';
 import { isEmpty, navigate } from '@shared/lib';
+import { TouchableOpacity, View } from 'react-native';
 
 import EmotionDiaryCardContent from './EmotionDiaryCardContent';
 import EmotionDiaryCardHeader from './EmotionDiaryCardHeader';
@@ -20,7 +19,9 @@ const EmotionDiaryCardList = ({ data }: EmotionDiaryCardListProps) => {
     navigate('EmotionDiaryDetailPage', { origin: 'RootStack' });
   };
 
-  if (isEmpty(data)) return;
+  if (isEmpty(data)) {
+    return <></>;
+  }
 
   return (
     <>

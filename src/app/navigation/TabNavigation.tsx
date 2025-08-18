@@ -1,14 +1,13 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import EmotionDiaryListPage from "@pages/EmotionDiaryListPage";
+import HomePage from "@pages/HomePage";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigatorScreenParams } from "@react-navigation/native";
+import { MAIN_ICONS } from "@shared/assets/images/main";
+import { View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { TabBarIcon, useScale } from "../../shared";
+import SettingStack, { type SettingStackParamList } from "./SettingStack";
 
-import EmotionDiaryListPage from '@pages/EmotionDiaryListPage';
-import HomePage from '@pages/HomePage';
-import { NavigatorScreenParams } from '@react-navigation/native';
-import { MAIN_ICONS } from '@shared/assets/images/main';
-import { useScale } from '@shared/hooks';
-import TabBarIcon from '@shared/ui/elements/TabBarIcon';
-import SettingStack, { SettingStackParamList } from './SettingStack';
 
 export type BottomTabParamList = {
   Home: undefined;

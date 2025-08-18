@@ -1,15 +1,12 @@
-import { UserMeta, UserMetaDTO } from '@entities/auth/User.scheme';
-import { ApiResponse } from '@entities/common/response';
-import { appleAuth } from '@invertase/react-native-apple-authentication';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { UserMeta, UserMetaDTO } from "@entities/auth";
+import { ApiResponse } from "@entities/common";
+import appleAuth from "@invertase/react-native-apple-authentication";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import { baseFormatError, getRealm, isEmpty, supabase } from "@shared";
+import { ApiCode, AppCode, HttpStatus } from "@shared/config";
 import { AuthError, Session, User } from '@supabase/supabase-js';
-import dayjs from 'dayjs';
-import { ApiCode, AppCode, HttpStatus } from '../../config/errorCodes';
-import { isEmpty } from '../../lib';
-import { getRealm } from '../../lib/realm-client.util';
-import { supabase } from '../../lib/supabase.util';
-import { baseFormatError } from '../base';
-import type { UserInfo } from './authApi';
+import dayjs from "dayjs";
+import { UserInfo } from "./authApi";
 
 /**
  * 주어진 OAuth 공급자(Google 또는 Apple)에 대해 토큰을 획득하고,
@@ -23,7 +20,7 @@ import type { UserInfo } from './authApi';
  */
 export async function signInWithIdToken(
   provider: 'google' | 'apple',
-  getToken: () => Promise<{ token: string; nonce?: string }>
+  getToken: () => Promise<{ token: string; nonce?: string }>,
 ): Promise<ApiResponse<User>> {
   try {
     const { token, nonce } = await getToken();
@@ -32,7 +29,9 @@ export async function signInWithIdToken(
       token,
       ...(nonce ? { nonce } : {}),
     });
-    if (error) throw error;
+    if (error) {
+      throw error;
+    }
     return {
       session: data.session!,
       data: data.session!.user,
@@ -162,7 +161,9 @@ export async function fetchSession(): Promise<ApiResponse<User>> {
 export async function signOut(): Promise<ApiResponse<string>> {
   try {
     const { error } = await supabase.auth.signOut();
-    if (error) throw error;
+    if (error) {
+      throw error;
+    }
     return { data: ApiCode.SUCCESS };
   } catch (err) {
     throw baseFormatError(err as Error);
@@ -180,7 +181,9 @@ export async function signOut(): Promise<ApiResponse<string>> {
 export async function getAuthToken(): Promise<ApiResponse<Session>> {
   try {
     const { data, error } = await supabase.auth.getSession();
-    if (error) throw error;
+    if (error) {
+      throw error;
+    }
     return { data: data.session };
   } catch (err) {
     throw baseFormatError(err as Error);

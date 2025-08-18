@@ -1,9 +1,8 @@
-import { shallowEqual } from 'react-redux';
+import { setShowToastView } from "@processes/overlay/model/overlaySlice";
+import { useAppDispatch, useAppSelector } from "@shared";
+import { shallowEqual } from "react-redux";
+import { ToastAnimated } from "../animation";
 
-import { useAppDispatch, useAppSelector } from '@shared/hooks';
-
-import { setShowToastView } from '@processes/overlay/model/overlaySlice';
-import ToastAnimated from '../animation/ToastAnimated';
 
 const ToastController = () => {
   const dispatch = useAppDispatch();

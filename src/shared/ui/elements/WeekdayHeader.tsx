@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+
 import { Caption } from '../typography/Caption';
 import { GridList } from './GridList';
 

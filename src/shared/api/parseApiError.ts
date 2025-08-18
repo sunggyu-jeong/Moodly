@@ -1,9 +1,12 @@
 import { SerializedError } from '@reduxjs/toolkit';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
-import { ApiCode } from '../config/errorCodes';
+
+import { ApiCode } from '@/shared/config';
 
 export function parseApiError(error: FetchBaseQueryError | SerializedError | undefined): ApiCode {
-  if (!error) return ApiCode.UNKNOWN;
+  if (!error) {
+    return ApiCode.UNKNOWN;
+  }
 
   if ('status' in error && typeof error.status === 'number') {
     switch (error.status) {

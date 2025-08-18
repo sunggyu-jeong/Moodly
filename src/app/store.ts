@@ -1,10 +1,11 @@
+import diarySlice from '@features/diary/model/diarySlice';
+import settingSlice from '@features/setting/model/settingSlice';
+import progressSlice from '@features/update-progress/updateProgress/model/progressSlice';
+import overlaySlice from '@processes/overlay/model/overlaySlice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import diarySlice from '../features/diary/model/diarySlice';
-import settingSlice from '../features/setting/model/settingSlice';
-import progressSlice from '../features/update-progress/updateProgress/model/progressSlice';
-import overlaySlice from '../processes/overlay/model/overlaySlice';
-import { baseApi } from '../shared/api/base';
-import { listenerMiddleware } from './middleware/ListenerMiddleware';
+import { baseApi } from '../shared';
+import { listenerMiddleware } from './middleware';
+
 
 const reducers = combineReducers({
   // RTK Query의 API 인스턴스 리듀서

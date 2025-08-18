@@ -8,18 +8,68 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "importsNotUsedAsValues": "remove",
+    "verbatimModuleSyntax": false,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@app/*": ["src/app/*"],
-      "@processes/*": ["src/processes/*"],
-      "@pages/*": ["src/pages/*"],
-      "@widgets/*": ["src/widgets/*"],
-      "@features/*": ["src/features/*"],
-      "@entities/*": ["src/entities/*"],
-      "@shared/*": ["src/shared/*"],
-      "@components/*": ["src/components/*"],
-      "@env": ["node_modules/react-native-dotenv"]
+      "@": [
+        "src/index.ts"
+      ],
+      "@app": [
+        "src/app/index.ts"
+      ],
+      "@processes": [
+        "src/processes/index.ts"
+      ],
+      "@pages": [
+        "src/pages/index.ts"
+      ],
+      "@widgets": [
+        "src/widgets/index.ts"
+      ],
+      "@features": [
+        "src/features/index.ts"
+      ],
+      "@entities": [
+        "src/entities/index.ts"
+      ],
+      "@shared": [
+        "src/shared/index.ts"
+      ],
+      "@components": [
+        "src/components/index.ts"
+      ],
+      "@/*": [
+        "src/*"
+      ],
+      "@app/*": [
+        "src/app/*"
+      ],
+      "@processes/*": [
+        "src/processes/*"
+      ],
+      "@pages/*": [
+        "src/pages/*"
+      ],
+      "@widgets/*": [
+        "src/widgets/*"
+      ],
+      "@features/*": [
+        "src/features/*"
+      ],
+      "@entities/*": [
+        "src/entities/*"
+      ],
+      "@shared/*": [
+        "src/shared/*"
+      ],
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@env": [
+        "node_modules/react-native-dotenv"
+      ]
     }
   },
   "include": [
@@ -29,5 +79,8 @@
     "react-native-textinput-extensions.d.ts",
     "hot-updater.config.ts"
   ],
-  "exclude": ["node_modules", "build"]
+  "exclude": [
+    "node_modules",
+    "build"
+  ]
 }

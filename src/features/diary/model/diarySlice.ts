@@ -1,8 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import dayjs from 'dayjs';
-
 import { EmotionDiaryDTO } from '@entities/diary';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { EmotionIconData, ICON_DATA } from '@shared/constants/Icons';
+import dayjs from 'dayjs';
 
 interface DiaryState {
   selectedDiary: EmotionDiaryDTO | null;

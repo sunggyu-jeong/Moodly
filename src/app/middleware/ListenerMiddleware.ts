@@ -1,12 +1,11 @@
 import {
   createListenerMiddleware,
+  isRejectedWithValue,
   ListenerEffectAPI,
   ThunkDispatch,
   UnknownAction,
 } from '@reduxjs/toolkit';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
-
-import { isRejectedWithValue } from '@reduxjs/toolkit';
 import { parseApiError } from '@shared/api/parseApiError';
 import { AppCode, ERROR_MESSAGE_MAP } from '@shared/config/errorCodes';
 import { resetTo } from '@shared/lib';
@@ -15,7 +14,11 @@ const appCodeHandlers: Record<
   AppCode,
   (
     errDetail: { data: { code: string; message: string } },
-    listenerApi: ListenerEffectAPI<unknown, ThunkDispatch<unknown, unknown, UnknownAction>, unknown>
+    listenerApi: ListenerEffectAPI<
+      unknown,
+      ThunkDispatch<unknown, unknown, UnknownAction>,
+      unknown
+    >,
   ) => void
 > = {
   [AppCode.NOT_LOGIN]: _errDetail => {

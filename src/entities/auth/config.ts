@@ -1,5 +1,6 @@
 import { AUTH_ICONS } from '@shared/assets/images/auth';
 import { ImageSourcePropType } from 'react-native';
+
 import { AUTH_PROVIDERS, AuthProvider } from './types';
 
 type ProviderConfig = {

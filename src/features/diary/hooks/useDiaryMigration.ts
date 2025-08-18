@@ -30,8 +30,12 @@ export function useDiaryMigration() {
         data: { session },
         error: sessionErr,
       } = await supabase.auth.getSession();
-      if (sessionErr) throw sessionErr as AuthError;
-      if (!session) throw new Error('Supabase 세션이 없습니다.');
+      if (sessionErr) {
+        throw sessionErr as AuthError;
+      }
+      if (!session) {
+        throw new Error('Supabase 세션이 없습니다.');
+      }
 
       const userId = session.user.id;
 
@@ -47,7 +51,9 @@ export function useDiaryMigration() {
 
       const { error: insertErr } = await supabase.from('moodly_diary').insert(inserts);
 
-      if (insertErr) throw insertErr;
+      if (insertErr) {
+        throw insertErr;
+      }
 
       // 4) 성공 시 Realm 데이터 전부 삭제
       realm.write(() => {

@@ -1,8 +1,9 @@
 import { Image, TouchableOpacity } from 'react-native';
 
+import { getScaleSize } from '@/shared/hooks';
+import { goBack } from '@/shared/lib';
+
 import { COMMON_ICONS } from '../../assets/images/common';
-import { getScaleSize } from '../../hooks';
-import { goBack } from '../../lib';
 
 const NaviBackButton = () => (
   <TouchableOpacity

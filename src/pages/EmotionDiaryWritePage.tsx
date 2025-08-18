@@ -1,25 +1,10 @@
-// src/screens/EmotionDiaryWritePage.tsx
-import { useEffect, useRef, useState } from 'react';
-import {
-  Image,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  TextInput,
-  View,
-} from 'react-native';
+import { DiarySaveButton } from "@features/diary";
+import { H2, ICON_DATA, common, getScaleSize, isNotEmpty, useAppSelector } from "@shared";
+import { NaviDismiss, NavigationBar } from "@widgets/navigation-bar";
+import { useEffect, useRef, useState } from "react";
+import { Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, TextInput, View } from "react-native";
 import InputAccessoryView from 'react-native-input-accessory-view';
 
-import { ICON_DATA } from '@shared/constants';
-import { getScaleSize, useAppSelector } from '@shared/hooks';
-import { H2 } from '@shared/ui/typography/H2';
-import NaviDismiss from '@widgets/navigation-bar/ui/NaviDismiss';
-import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar';
-
-import { isNotEmpty } from '@shared/lib';
-import { common } from '@shared/styles/colors';
-import { DiarySaveButton } from '../features/diary/ui/EmotionDiarySaveButton';
 
 const actionButtons = [{ item: <NaviDismiss />, disabled: false }];
 

@@ -32,7 +32,7 @@ const EmotionDiaryMonthView = ({
 }: EmotionDiaryMonthViewProps) => {
   const renderDiaryCard = useCallback(
     ({ item }: { item: EmotionDiaryDTO }) => <EmotionDiaryCardList data={item} />,
-    []
+    [],
   );
   return (
     <View style={styles.page}>

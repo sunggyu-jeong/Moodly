@@ -1,10 +1,9 @@
-import { useCallback, useEffect, useRef } from 'react';
-import { Animated, TouchableOpacity } from 'react-native';
+import { setShowDropdownView } from "@processes/overlay/model/overlaySlice";
+import { useAppDispatch, useAppSelector } from "@shared";
+import { DropDownContainer } from "@widgets/dropdown";
+import { useCallback, useEffect, useRef } from "react";
+import { Animated, TouchableOpacity } from "react-native";
 
-import { useAppDispatch, useAppSelector } from '@shared/hooks';
-
-import { setShowDropdownView } from '@processes/overlay/model/overlaySlice';
-import DropDownContainer from '../ui/DropDownContainer';
 
 const DropDownAnimation = () => {
   const animationValue = useRef(new Animated.Value(0)).current;
@@ -17,7 +16,7 @@ const DropDownAnimation = () => {
         visibility: false,
         dropdownList: showDropDownView?.dropdownList ?? [],
         pos: { x: showDropDownView?.pos?.x ?? 0, y: showDropDownView?.pos?.y ?? 0 },
-      })
+      }),
     );
   }, [
     dispatch,
@@ -39,7 +38,7 @@ const DropDownAnimation = () => {
             visibility: null,
             dropdownList: null,
             pos: { x: null, y: null },
-          })
+          }),
         );
       }
     });

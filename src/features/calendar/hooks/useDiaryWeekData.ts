@@ -16,7 +16,7 @@ export const useDiaryWeekData = (weekStart: Dayjs) => {
         isFetching,
         listData: data ?? [],
       }),
-    }
+    },
   );
 
   return useMemo(
@@ -24,6 +24,6 @@ export const useDiaryWeekData = (weekStart: Dayjs) => {
       listData: data ?? [],
       showSkeleton: isFetching,
     }),
-    [data, isFetching]
+    [data, isFetching],
   );
 };

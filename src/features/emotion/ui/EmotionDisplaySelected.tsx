@@ -1,12 +1,10 @@
-import { StyleSheet, View } from 'react-native';
-
 import { EMOTION_ICONS } from '@shared/assets/images/emotion';
 import { getScaleSize, useAppSelector, useScale } from '@shared/hooks';
-import AnimatedZoomImage from '@shared/ui/elements/AnimatedZoomImage';
-
 import { gray } from '@shared/styles/colors';
+import AnimatedZoomImage from '@shared/ui/elements/AnimatedZoomImage';
 import { Body1 } from '@shared/ui/typography/Body1';
 import { H1 } from '@shared/ui/typography/H1';
+import { StyleSheet, View } from 'react-native';
 
 const EmotionDisplaySelected = () => {
   const selectedIcon = useAppSelector(state => state.diarySlice.selectedIcon);

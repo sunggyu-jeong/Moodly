@@ -1,14 +1,11 @@
-import { AUTH_PROVIDERS } from '@entities/auth/types';
-import { UserMetaDTO } from '@entities/auth/User.scheme';
-import { useSocialLogin } from '@features/auth/hooks/useSocialLogin';
-import SocialLoginButton from '@features/auth/ui/SocialLoginButton';
-import { setShowToastView } from '@processes/overlay/model/overlaySlice';
-import dayjs from 'dayjs';
-import { useEffect } from 'react';
-import { Platform, View } from 'react-native';
-import { useLazyGetUserInfoQuery, useSaveFirstLaunchFlagMutation } from '../../api/auth/authApi';
-import { useAppDispatch } from '../../hooks';
-import { isEmpty, isNotEmpty, navigate, resetTo } from '../../lib';
+import { AUTH_PROVIDERS, UserMetaDTO } from "@entities/auth";
+import { SocialLoginButton, useSocialLogin } from "@features/auth";
+import { setShowToastView } from "@processes/overlay/model/overlaySlice";
+import { isEmpty, isNotEmpty, navigate, resetTo, useAppDispatch } from "@shared";
+import { useLazyGetUserInfoQuery, useSaveFirstLaunchFlagMutation } from "@shared/api";
+import dayjs from "dayjs";
+import { useEffect } from "react";
+import { Platform, View } from "react-native";
 
 export enum SOCIAL_LOGIN_ENTRANCE {
   LOGIN = 'login',
@@ -48,7 +45,9 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
   };
 
   useEffect(() => {
-    if (isLoading) return;
+    if (isLoading) {
+      return;
+    }
     if (isNotEmpty(data)) {
       fetchUserInfo();
     }

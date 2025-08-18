@@ -1,29 +1,15 @@
-import { RouteProp, useRoute } from '@react-navigation/native';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
-import { Image, Platform, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { resetDiary } from "@features/diary/model/diarySlice";
+import { MODAL_CONFIRM_ACTION_KEY } from "@processes/key";
+import { resetModalPopup, setOverlayEventHandler, setShowDropdownView, setShowToastView } from "@processes/overlay/model/overlaySlice";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import { Body1, dismissModalToScreen, getScaleSize, goBack, ICON_DATA, isNotEmpty, NaviActionButtonProps, NaviMore, useAppDispatch, useAppSelector, useDeleteDiaryMutation } from "@shared";
+import { COMMON_ICONS } from "@shared/assets/images/common";
+import { DropDownEventIdentifier } from "@widgets/dropdown";
+import { NaviDismiss, NavigationBar } from "@widgets/navigation-bar";
+import dayjs from "dayjs";
+import { useCallback, useEffect, useMemo, useRef } from "react";
+import { Image, Platform, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 
-import { MODAL_CONFIRM_ACTION_KEY } from '@processes/key';
-
-import { COMMON_ICONS } from '@shared/assets/images/common';
-import { ICON_DATA } from '@shared/constants/Icons';
-import { getScaleSize, useAppDispatch, useAppSelector } from '@shared/hooks';
-import { dismissModalToScreen, goBack, isNotEmpty } from '@shared/lib';
-import { NaviActionButtonProps } from '@shared/ui/elements/NaviActionButton';
-import NaviMore from '@shared/ui/elements/NaviMore';
-import { Body1 } from '@shared/ui/typography/Body1';
-import { DropDownEventIdentifier } from '@widgets/dropdown/ui/DropDownItem';
-import NaviDismiss from '@widgets/navigation-bar/ui/NaviDismiss';
-import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar';
-
-import dayjs from 'dayjs';
-import { resetDiary } from '../features/diary/model/diarySlice';
-import {
-  resetModalPopup,
-  setOverlayEventHandler,
-  setShowDropdownView,
-  setShowToastView,
-} from '../processes/overlay/model/overlaySlice';
-import { useDeleteDiaryMutation } from '../shared/api/diary/diaryApi';
 
 type DiaryDetailRouteParams = {
   params: {
@@ -52,8 +38,7 @@ const EmotionDiaryDetailPage = () => {
   const dispatch = useAppDispatch();
   const route = useRoute<RouteProp<DiaryDetailRouteParams, 'params'>>();
   const dropdownButtonRef = useRef<View>(null);
-  //FIXME: - 로딩 애니메이션 나오면 로딩 붙이기!
-  const [deleteDiary, { isLoading: idDeleteDiaryLoading }] = useDeleteDiaryMutation();
+  const [deleteDiary] = useDeleteDiaryMutation();
   const openDropdown = useCallback(() => {
     dropdownButtonRef.current?.measureInWindow((x, y, width, height) => {
       dispatch(
@@ -61,7 +46,7 @@ const EmotionDiaryDetailPage = () => {
           visibility: true,
           dropdownList: props,
           pos: { x, y: y + height + 5 + (Platform.OS === 'ios' ? 0 : 70) },
-        })
+        }),
       );
     });
   }, [dropdownButtonRef, dispatch]);
@@ -80,7 +65,7 @@ const EmotionDiaryDetailPage = () => {
         disabled: false,
       },
     ],
-    [openDropdown]
+    [openDropdown],
   );
 
   const handleRemoveDiary = useCallback(async () => {
@@ -103,7 +88,13 @@ const EmotionDiaryDetailPage = () => {
       dispatch(setOverlayEventHandler(null));
       dispatch(resetModalPopup());
     }
-  }, [deleteDiary, dispatch, route.params.origin, selectedDiary?.emotionId]);
+  }, [
+    deleteDiary,
+    dispatch,
+    route.params.origin,
+    selectedDiary?.emotionId,
+    selectedDiary?.createdAt,
+  ]);
 
   useEffect(() => {
     if (
@@ -123,8 +114,8 @@ const EmotionDiaryDetailPage = () => {
   return (
     <>
       <NavigationBar
-        showBackButton={route.params.origin == 'RootStack'}
-        leftComponents={route.params.origin == 'DiaryStack' ? leftComponents : null}
+        showBackButton={route.params.origin === 'RootStack'}
+        leftComponents={route.params.origin === 'DiaryStack' ? leftComponents : null}
         actionButtons={actionButtons}
       />
 

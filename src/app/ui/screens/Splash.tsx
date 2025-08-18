@@ -1,16 +1,10 @@
-import { useEffect } from 'react';
-import { Image, StatusBar } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { initRealm, isNotEmpty, resetTo, useLazyFetchFirstLaunchFlagQuery, useLazyInitializeSessionQuery } from "@/shared";
+import { UpdateContent } from "@features/update-progress/updateProgress";
+import { UpdateProgressProps } from "@processes/update/useUpdateProgress";
+import { MAIN_ICONS } from "@shared/assets/images/main";
+import { useEffect } from "react";
+import { Image, SafeAreaView, StatusBar } from "react-native";
 
-import UpdateContent from '@features/update-progress/updateProgress/ui/UpdateContent';
-import { UpdateProgressProps } from '@processes/update/useUpdateProgress';
-import {
-  useLazyFetchFirstLaunchFlagQuery,
-  useLazyInitializeSessionQuery,
-} from '@shared/api/auth/authApi';
-import { MAIN_ICONS } from '@shared/assets/images/main';
-import { isNotEmpty, resetTo } from '@shared/lib';
-import { initRealm } from '@shared/lib/realm-client.util';
 
 const Splash = ({ status, progress }: UpdateProgressProps) => {
   const [initSession, { data, isLoading }] = useLazyInitializeSessionQuery();

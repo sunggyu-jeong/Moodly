@@ -1,13 +1,10 @@
-import React, { useCallback } from 'react';
-import { ImageSourcePropType } from 'react-native';
+import { setModifyMode } from "@features/diary/model/diarySlice";
+import { MODAL_CONFIRM_ACTION_KEY } from "@processes/key";
+import { setShowDropdownView, setShowModalPopup } from "@processes/overlay/model/overlaySlice";
+import { navigateFlow, NavigationFlow, SelectableItem, useAppDispatch } from "@shared";
+import React, { useCallback } from "react";
+import { ImageSourcePropType } from "react-native";
 
-import { MODAL_CONFIRM_ACTION_KEY } from '@processes/key';
-
-import { setModifyMode } from '@features/diary/model/diarySlice';
-import { setShowDropdownView, setShowModalPopup } from '@processes/overlay/model/overlaySlice';
-import { useAppDispatch } from '@shared/hooks';
-import { navigateFlow, NavigationFlow } from '@shared/lib';
-import SelectableItem from '@shared/ui/elements/SelectableItem';
 
 export const DropDownEventIdentifier = {
   MODIFY_DIARY: 'MODIFY_DIARY',
@@ -42,11 +39,11 @@ const DropDownItem = ({ text, source, eventIdentifier }: DropDownItemProps) => {
               cancelText: '취소',
               confirmText: '삭제',
               confirmActionKey: MODAL_CONFIRM_ACTION_KEY.DELETE_DIARY,
-            })
+            }),
           );
         },
       }) as Record<keyof typeof DropDownEventIdentifier, () => void>,
-    [dispatch]
+    [dispatch],
   );
 
   const handlePress = useCallback(() => {
@@ -55,7 +52,7 @@ const DropDownItem = ({ text, source, eventIdentifier }: DropDownItemProps) => {
         visibility: null,
         dropdownList: null,
         pos: { x: null, y: null },
-      })
+      }),
     );
     handlers[eventIdentifier]();
   }, [dispatch, eventIdentifier, handlers]);

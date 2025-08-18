@@ -1,8 +1,10 @@
-import { EmotionDiaryDTO } from '@/entities/diary';
 import { GridList } from '@shared/ui/elements/GridList';
 import dayjs, { Dayjs } from 'dayjs';
 import { memo, useMemo } from 'react';
 import { View } from 'react-native';
+
+import { EmotionDiaryDTO } from '@/entities/diary';
+
 import SelectableDayCell from './SelectableDayCell';
 
 interface CalendarBarProps {
@@ -27,7 +29,7 @@ const CalendarBar = ({ monthlyDates, entries }: CalendarBarProps) => {
         date,
         iconId: date ? (entryMap.get(date.format('YYYY-MM-DD')) ?? null) : null,
       })),
-    [flatDates, entryMap]
+    [flatDates, entryMap],
   );
   return (
     <GridList<{ date: Dayjs | null; iconId: number | null }>

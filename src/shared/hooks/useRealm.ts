@@ -1,9 +1,8 @@
+import { EmotionDiary } from '@entities/diary';
 import { useCallback, useRef } from 'react';
 import Realm from 'realm';
 
-import { EmotionDiary } from '@entities/diary';
-
-import { isNotEmpty } from '../lib';
+import { isNotEmpty } from '@/shared/lib';
 
 export function useRealm() {
   const realmRef = useRef<Realm | null>(null);
@@ -31,6 +30,7 @@ export function useRealm() {
       return realmInstance;
     } catch (error) {
       console.error('Realm을 여는 도중 오류가 발생했습니다.', error);
+      return undefined;
     }
   }, []);
 

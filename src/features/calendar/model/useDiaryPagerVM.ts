@@ -1,24 +1,15 @@
-import {
-  DiaryCalendarMode,
-  DiaryCalendarModeType,
-  DiaryPageMode,
-  DiaryPageModeType,
-} from '@entities/calendar/diary.type';
-import type { EmotionDiaryDTO } from '@entities/diary';
-import { diaryApi } from '@shared/api/diary/diaryApi';
-import { useAppDispatch, useAppSelector } from '@shared/hooks';
-import { formatWeekLabel } from '@shared/lib/date.util';
-import { getMonthRange, useDiaryMonthData, useDiaryWeekData } from '@widgets/diary/hooks';
-import dayjs, { Dayjs } from 'dayjs';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { moveMonth, moveWeek, resetDiary } from '../../diary/model/diarySlice';
-import { buildPages, CalendarPage } from '../lib/paging';
-import {
-  selectSelectedDayIso,
-  selectSelectedMonth,
-  selectSelectedMonthIso,
-  selectSelectedWeek,
-} from './selector';
+import { DiaryCalendarMode, DiaryCalendarModeType, DiaryPageMode, DiaryPageModeType } from "@/entities/calendar";
+import { EmotionDiaryDTO } from "@/entities/diary";
+import { diaryApi, formatWeekLabel, useAppDispatch, useAppSelector } from "@/shared";
+import { getMonthRange } from "@/widgets/diary";
+import dayjs, { Dayjs } from "dayjs";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { moveMonth, moveWeek, resetDiary } from "../../diary/model/diarySlice";
+import { useDiaryMonthData, useDiaryWeekData } from "../hooks";
+import { CalendarPage, buildPages } from "../lib";
+import { selectSelectedDayIso, selectSelectedMonth, selectSelectedMonthIso, selectSelectedWeek } from "./selector";
+
+
 
 const EMPTY: EmotionDiaryDTO[] = [];
 
@@ -37,7 +28,7 @@ export const useDiaryPagerVM = () => {
 
   const [diaryMode, setDiaryMode] = useState<DiaryPageModeType>(DiaryPageMode.calendarMode);
   const [calendarMode, setCalendarMode] = useState<DiaryCalendarModeType>(
-    DiaryCalendarMode.monthDayMode
+    DiaryCalendarMode.monthDayMode,
   );
 
   const currentMonth = dayjs();
@@ -76,11 +67,11 @@ export const useDiaryPagerVM = () => {
   const nextMonthSel = useAppSelector(diaryApi.endpoints.selectByMonth.select(monthWin.nextArg));
   const prevMonthData = useMemo<EmotionDiaryDTO[]>(
     () => prevMonthSel?.data ?? EMPTY,
-    [prevMonthSel?.data]
+    [prevMonthSel?.data],
   );
   const nextMonthData = useMemo<EmotionDiaryDTO[]>(
     () => nextMonthSel?.data ?? EMPTY,
-    [nextMonthSel?.data]
+    [nextMonthSel?.data],
   );
 
   const { listData: weekCurrData } = useDiaryWeekData(weekWin.curr);
@@ -88,11 +79,11 @@ export const useDiaryPagerVM = () => {
   const weekNextSel = useAppSelector(diaryApi.endpoints.selectByMonth.select(weekWin.nextArg));
   const weekPrevData = useMemo<EmotionDiaryDTO[]>(
     () => weekPrevSel?.data ?? EMPTY,
-    [weekPrevSel?.data]
+    [weekPrevSel?.data],
   );
   const weekNextData = useMemo<EmotionDiaryDTO[]>(
     () => weekNextSel?.data ?? EMPTY,
-    [weekNextSel?.data]
+    [weekNextSel?.data],
   );
 
   const pages: CalendarPage[] = useMemo(() => {
@@ -125,7 +116,7 @@ export const useDiaryPagerVM = () => {
 
   const monthLabel = useMemo(
     () => (isMonthMode ? monthWin.curr.format('M월') : formatWeekLabel(weekWin.curr)),
-    [isMonthMode, monthWin.curr, weekWin.curr]
+    [isMonthMode, monthWin.curr, weekWin.curr],
   );
 
   const goLeft = useCallback(() => {
@@ -138,7 +129,7 @@ export const useDiaryPagerVM = () => {
 
   const toggleDiaryMode = useCallback(() => {
     setDiaryMode(p =>
-      p === DiaryPageMode.listMode ? DiaryPageMode.calendarMode : DiaryPageMode.listMode
+      p === DiaryPageMode.listMode ? DiaryPageMode.calendarMode : DiaryPageMode.listMode,
     );
   }, []);
 
@@ -146,7 +137,7 @@ export const useDiaryPagerVM = () => {
     setCalendarMode(c =>
       c === DiaryCalendarMode.monthDayMode
         ? DiaryCalendarMode.weekDayMode
-        : DiaryCalendarMode.monthDayMode
+        : DiaryCalendarMode.monthDayMode,
     );
   }, []);
 

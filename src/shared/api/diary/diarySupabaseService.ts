@@ -3,9 +3,10 @@ import { EmotionDiaryDTO, EmotionDiarySupabase, mapSupabaseToDTO } from '@entiti
 import { EmotionDiaryToDTO } from '@features/diary/service/EmotionDiaryMapper';
 import { AuthError } from '@supabase/supabase-js';
 import dayjs from 'dayjs';
-import { ApiCode } from '../../config/errorCodes';
-import { isNotEmpty } from '../../lib';
-import { supabase } from '../../lib/supabase.util';
+
+import { ApiCode } from '@/shared/config';
+import { isNotEmpty, supabase } from '@/shared/lib';
+
 import { baseFormatError } from '../base';
 
 interface Database {
@@ -30,7 +31,9 @@ export async function getDiaryCount(): Promise<ApiResponse<number>> {
       .from('moodly_diary')
       .select('*', { count: 'exact', head: true })
       .eq('user_id', response.data.session?.user.id);
-    if (error) throw error;
+    if (error) {
+      throw error;
+    }
     return { data: count ?? 0 };
   } catch (err) {
     throw baseFormatError(err as AuthError);
@@ -49,7 +52,9 @@ export async function hasDiaryForDay(): Promise<ApiResponse<boolean>> {
       .eq('record_date', yyyyMMdd)
       .eq('user_id', response.data.session?.user.id);
 
-    if (error) throw error;
+    if (error) {
+      throw error;
+    }
     return { data: (count ?? 0) > 0 };
   } catch (err) {
     throw baseFormatError(err as AuthError);
@@ -58,7 +63,7 @@ export async function hasDiaryForDay(): Promise<ApiResponse<boolean>> {
 
 export async function selectByMonth(
   startDate: string,
-  endDate: string
+  endDate: string,
 ): Promise<ApiResponse<EmotionDiaryDTO[]>> {
   try {
     const response = await supabase.auth.getSession();
@@ -69,7 +74,9 @@ export async function selectByMonth(
       .eq('user_id', response.data.session?.user.id)
       .lt('record_date', endDate)
       .order('record_date', { ascending: false });
-    if (error) throw error;
+    if (error) {
+      throw error;
+    }
     return { data: data.map(mapSupabaseToDTO) ?? [] };
   } catch (err) {
     throw baseFormatError(err as AuthError);
@@ -84,7 +91,9 @@ export async function selectByDay(startDate: string): Promise<ApiResponse<Emotio
       .select('*')
       .eq('record_date', startDate)
       .eq('user_id', response.data.session?.user.id);
-    if (error) throw error;
+    if (error) {
+      throw error;
+    }
     const row = rows && rows.length > 0 ? rows[0] : null;
     return { data: row ? EmotionDiaryToDTO(row) : null };
   } catch (err) {
@@ -92,7 +101,7 @@ export async function selectByDay(startDate: string): Promise<ApiResponse<Emotio
   }
 }
 export async function createDiary(
-  dto: Omit<EmotionDiaryDTO, 'emotionId' | 'createdAt' | 'updatedAt'>
+  dto: Omit<EmotionDiaryDTO, 'emotionId' | 'createdAt' | 'updatedAt'>,
 ): Promise<ApiResponse<number>> {
   try {
     const response = await supabase.auth.getSession();
@@ -110,7 +119,9 @@ export async function createDiary(
       .insert(payload)
       .select('emotion_id')
       .single();
-    if (error) throw error;
+    if (error) {
+      throw error;
+    }
     return { data: data.emotion_id };
   } catch (err) {
     throw baseFormatError(err as AuthError);
@@ -119,7 +130,7 @@ export async function createDiary(
 
 export async function updateDiary(
   emotionId: number,
-  updates: Partial<Omit<EmotionDiaryDTO, 'emotionId'>>
+  updates: Partial<Omit<EmotionDiaryDTO, 'emotionId'>>,
 ): Promise<ApiResponse<number>> {
   try {
     const response = await supabase.auth.getSession();
@@ -138,7 +149,9 @@ export async function updateDiary(
       .eq('user_id', response.data.session?.user.id)
       .select('emotion_id')
       .single();
-    if (error) throw error;
+    if (error) {
+      throw error;
+    }
     return { data: updated.emotion_id };
   } catch (err) {
     throw baseFormatError(err as AuthError);
@@ -153,7 +166,9 @@ export async function deleteDiary(emotionId: number): Promise<ApiResponse<string
       .delete()
       .eq('emotion_id', emotionId)
       .eq('user_id', response.data.session?.user.id);
-    if (error) throw error;
+    if (error) {
+      throw error;
+    }
     return { data: ApiCode.SUCCESS };
   } catch (err) {
     throw baseFormatError(err as AuthError);

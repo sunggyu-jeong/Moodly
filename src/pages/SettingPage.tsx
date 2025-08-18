@@ -1,24 +1,15 @@
-import { KAKAO_OPEN_CHAT_LINK } from '@env';
-import { useLogout } from '@features/auth/hooks/useLogout';
-import { SETTING_EVENT_TYPE, TEXTS } from '@features/setting/types';
-import SettingRoot from '@features/setting/ui/SettingRoot';
-import { SocialLoginSheet, SocialLoginSheetHandle } from '@features/setting/ui/SocialLoginSheet';
-import { MODAL_CONFIRM_ACTION_KEY } from '@processes/key';
-import { useFocusEffect } from '@react-navigation/native';
-import { COMMON_ICONS } from '@shared/assets/images/common';
-import { useAppDispatch, useAppSelector } from '@shared/hooks';
-import { useNotificationPermission } from '@shared/hooks/useNotificationPermission';
-import { useOpenKakao } from '@shared/hooks/useOpenChat';
-import { isEmpty, isNotEmpty, navigate } from '@shared/lib';
-import ActionButton from '@shared/ui/elements/ActionButton';
-import Toggle from '@shared/ui/elements/Toggle';
-import { Body1 } from '@shared/ui/typography/Body1';
-import { Label } from '@shared/ui/typography/Label';
-import { useCallback, useEffect, useRef } from 'react';
-import { Image, View } from 'react-native';
-import { version } from '../../package.json';
-import { setShowModalPopup } from '../processes/overlay/model/overlaySlice';
-import { useGetUserInfoQuery } from '../shared/api/auth/authApi';
+import { KAKAO_OPEN_CHAT_LINK } from "@env";
+import { useLogout } from "@features/auth";
+import { SettingRoot, SocialLoginSheet, SocialLoginSheetHandle } from "@features/setting";
+import { SETTING_EVENT_TYPE, TEXTS } from "@features/setting/types";
+import { MODAL_CONFIRM_ACTION_KEY } from "@processes/key";
+import { setShowModalPopup } from "@processes/overlay/model/overlaySlice";
+import { useFocusEffect } from "@react-navigation/native";
+import { ActionButton, Body1, Label, Toggle, isEmpty, isNotEmpty, navigate, useAppDispatch, useAppSelector, useGetUserInfoQuery, useNotificationPermission, useOpenKakao } from "@shared";
+import { COMMON_ICONS } from "@shared/assets/images/common";
+import { useCallback, useEffect, useRef, version } from "react";
+import { Image, View } from "react-native";
+
 
 const SettingPage = () => {
   const { openChat } = useOpenKakao();
@@ -29,12 +20,14 @@ const SettingPage = () => {
   const { status } = useNotificationPermission();
   const { data: userInfo } = useGetUserInfoQuery();
 
+
+
   useFocusEffect(
     useCallback(() => {
       return () => {
         socialSheetRef.current?.close();
       };
-    }, [])
+    }, []),
   );
 
   useEffect(() => {
@@ -62,7 +55,7 @@ const SettingPage = () => {
           break;
       }
     },
-    [openChat, signOut]
+    [openChat, signOut],
   );
 
   const headerItem = isNotEmpty(userInfo)
@@ -111,7 +104,7 @@ const SettingPage = () => {
                 cancelText: '나중에 하기',
                 confirmText: '설정하기',
                 confirmActionKey: MODAL_CONFIRM_ACTION_KEY.PERMISSION_CHANGE,
-              })
+              }),
             )
           }
         />

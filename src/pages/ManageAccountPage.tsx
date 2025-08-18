@@ -12,6 +12,7 @@ import { Label } from '@shared/ui/typography/Label';
 import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar';
 import { useCallback, useEffect, useMemo } from 'react';
 import { View } from 'react-native';
+
 import { version } from '../../package.json';
 import {
   resetModalPopup,
@@ -25,11 +26,13 @@ const ManageAccountPage = () => {
   const { signOut } = useLogout();
   const dispatch = useAppDispatch();
 
-  async function handleAccountDeletion() {
+  const handleAccountDeletion = useCallback(async () => {
     try {
       const user = await supabase.auth.getUser();
       const session = await supabase.auth.getSession();
-      if (!user.data.user) return;
+      if (!user.data.user) {
+        return;
+      }
 
       const res = await fetch(`${process.env.HOT_UPDATER_SUPABASE_URL}/functions/v1/smart-api`, {
         method: 'POST',
@@ -45,7 +48,7 @@ const ManageAccountPage = () => {
         await supabase.auth.signOut();
         dispatch(baseApi.util.resetApiState());
         dispatch(
-          setShowToastView({ visibility: true, message: '회원 탈퇴 요청이 완료되었습니다.' })
+          setShowToastView({ visibility: true, message: '회원 탈퇴 요청이 완료되었습니다.' }),
         );
         dispatch(setRequestWithDrawal(null));
 
@@ -58,7 +61,7 @@ const ManageAccountPage = () => {
     } finally {
       dispatch(resetModalPopup());
     }
-  }
+  }, [dispatch]);
 
   const handlePress = useCallback(
     (identifier: SETTING_EVENT_TYPE) => {
@@ -75,17 +78,19 @@ const ManageAccountPage = () => {
             cancelText: '취소',
             confirmText: '삭제',
             confirmActionKey: MODAL_CONFIRM_ACTION_KEY.WITHDRAWAL,
-          })
+          }),
         );
       }
     },
-    [signOut, dispatch]
+    [signOut, dispatch],
   );
 
   useEffect(() => {
-    if (isEmpty(requestWithDrawal)) return;
+    if (isEmpty(requestWithDrawal)) {
+      return;
+    }
     handleAccountDeletion();
-  }, [requestWithDrawal]);
+  }, [requestWithDrawal, handleAccountDeletion]);
 
   const settingListItems = useMemo(
     () => [
@@ -101,7 +106,7 @@ const ManageAccountPage = () => {
         onPress: () => handlePress(SETTING_EVENT_TYPE.DELETE_ACCOUNT),
       },
     ],
-    [handlePress]
+    [handlePress],
   );
 
   return (

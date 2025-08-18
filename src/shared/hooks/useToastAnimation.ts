@@ -6,7 +6,7 @@ export function useToastAnimation(
   visible: boolean,
   duration = 200,
   holdTime = 1500,
-  onFinish?: () => void
+  onFinish?: () => void,
 ) {
   const translateY = useSharedValue(-40);
   const opacity = useSharedValue(0);
@@ -23,7 +23,9 @@ export function useToastAnimation(
         translateY.value = withTiming(-40, { duration }, finished => {
           if (finished) {
             runOnJS(setIsMounted)(false);
-            if (onFinish) runOnJS(onFinish)();
+            if (onFinish) {
+              runOnJS(onFinish)();
+            }
           }
         });
         opacity.value = withTiming(0, { duration });

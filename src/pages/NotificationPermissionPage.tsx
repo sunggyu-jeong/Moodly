@@ -1,8 +1,7 @@
-import { useNotificationPermission } from '@/shared/hooks/useNotificationPermission';
-import NotificationPermissionPrompt from '@features/notification-permission/ui/NotificationPermission.ui';
-import { useSaveFirstLaunchFlagMutation } from '@shared/api/auth/authApi';
-import { resetTo } from '@shared/lib';
-import { useEffect } from 'react';
+import NotificationPermissionUI from "@features/notification-permission/ui/NotificationPermission.ui";
+import { resetTo, useNotificationPermission, useSaveFirstLaunchFlagMutation } from "@shared";
+import { useEffect } from "react";
+
 
 const NotificationPermissionPage = () => {
   const { requestNotification, skipPermission } = useNotificationPermission();
@@ -24,7 +23,7 @@ const NotificationPermissionPage = () => {
   }, [saveFirstLaunchFlag]);
 
   return (
-    <NotificationPermissionPrompt
+    <NotificationPermissionUI
       onAllow={handleAllow}
       onSkip={skipPermission}
     />

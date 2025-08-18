@@ -7,7 +7,8 @@ import BottomSheet, {
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import React, { forwardRef } from 'react';
 import { StyleSheet } from 'react-native';
-import { common } from '../../styles/colors';
+
+import { common } from '@/shared/styles';
 
 export interface BottomSheetWrapperProps extends BottomSheetProps {
   children: React.ReactNode;
@@ -41,7 +42,7 @@ const BottomSheetWrapper = forwardRef<BottomSheetMethods, BottomSheetWrapperProp
     >
       <BottomSheetView style={styles.bottomSheetView}>{children}</BottomSheetView>
     </BottomSheet>
-  )
+  ),
 );
 
 BottomSheetWrapper.displayName = 'BottomSheetWrapper';

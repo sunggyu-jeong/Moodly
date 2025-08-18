@@ -1,16 +1,10 @@
-import { Image, StatusBar, StyleSheet, View } from 'react-native';
+import { resetDiary } from "@features/diary/model/diarySlice";
+import { useFocusEffect } from "@react-navigation/native";
+import { ActionButton, DiaryCountCard, getScaleSize, H2, jumpToTab, navigate, useAppDispatch, useGetDiaryCountQuery, useHasDiaryForDayQuery, useNotificationPermission } from "@shared";
+import { MAIN_ICONS } from "@shared/assets/images/main";
+import { useCallback, useEffect } from "react";
+import { Image, StatusBar, StyleSheet, View } from "react-native";
 
-import { useFocusEffect } from '@react-navigation/native';
-import { useGetDiaryCountQuery, useHasDiaryForDayQuery } from '@shared/api/diary/diaryApi';
-import { MAIN_ICONS } from '@shared/assets/images/main';
-import { getScaleSize, useAppDispatch } from '@shared/hooks';
-import { jumpToTab, navigate } from '@shared/lib';
-import ActionButton from '@shared/ui/elements/ActionButton.tsx';
-import DiaryCountCard from '@shared/ui/elements/DiaryCountCard.tsx';
-import { H2 } from '@shared/ui/typography/H2.tsx';
-import { useCallback, useEffect } from 'react';
-import { resetDiary } from '../features/diary/model/diarySlice';
-import { useNotificationPermission } from '../shared/hooks/useNotificationPermission';
 
 const HomePage = () => {
   const dispatch = useAppDispatch();
@@ -25,7 +19,7 @@ const HomePage = () => {
   useFocusEffect(
     useCallback(() => {
       dispatch(resetDiary());
-    }, [dispatch])
+    }, [dispatch]),
   );
 
   const titleText = hasDiary

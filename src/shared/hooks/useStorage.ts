@@ -1,11 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 
-import { isEmpty } from '../lib';
+import { isEmpty } from '@/shared/lib';
 
 const useStorage = <T>(
   key: string,
-  defaultValue: T
+  defaultValue: T,
 ): [T | null, (value: T) => Promise<void>, () => Promise<void>] => {
   // useState Hook을 사용하여 상태(storedValue)를 관리합니다.
   const [storedValue, setStoredValue] = useState<T | null>(defaultValue);
@@ -29,7 +29,9 @@ const useStorage = <T>(
    * @throws 저장소에 값을 설정하는 데 실패하면 콘솔에 오류를 기록합니다.
    */
   const setValue = async (value: T | undefined) => {
-    if (isEmpty(value)) return undefined;
+    if (isEmpty(value)) {
+      return;
+    }
     try {
       setStoredValue(value ?? null);
       await AsyncStorage.setItem(key, JSON.stringify(value));

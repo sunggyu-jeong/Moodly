@@ -1,6 +1,6 @@
 import { Image, ImageSourcePropType, StyleSheet, View } from 'react-native';
 
-import { getScaleSize } from '../../hooks';
+import { getScaleSize } from '@/shared/hooks';
 
 interface TabbarIconProps {
   source: ImageSourcePropType;

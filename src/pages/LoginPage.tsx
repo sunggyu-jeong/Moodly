@@ -1,11 +1,7 @@
-import { MAIN_ICONS } from '@shared/assets/images/main';
-import { getScaleSize } from '@shared/hooks';
-import { primary } from '@shared/styles/colors';
-import SocialLoginGroup, { SOCIAL_LOGIN_ENTRANCE } from '@shared/ui/elements/SocialLoginGroup';
-import { H3 } from '@shared/ui/typography/H3';
-import { Title } from '@shared/ui/typography/Title';
-import { useMemo } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { getScaleSize, H3, primary, SOCIAL_LOGIN_ENTRANCE, SocialLoginGroup, Title } from "@shared";
+import { MAIN_ICONS } from "@shared/assets/images/main";
+import { useMemo } from "react";
+import { Image, StyleSheet, View } from "react-native";
 
 const Login = () => {
   const scaleSize = useMemo(() => getScaleSize(214), []);

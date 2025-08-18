@@ -1,16 +1,10 @@
-import { useAppDispatch, useAppSelector } from '@shared/hooks';
-import { isNotEmpty } from '@shared/lib';
-import DropDownAnimation from '@widgets/dropdown/animation/DropDownAnimation';
-import PopupContainerOrga from '@widgets/popup/ui/PopupContainer';
-import ToastController from '@widgets/toast/ui/ToastController';
+import { isNotEmpty, useAppDispatch, useAppSelector } from "@shared";
+import { DropDownAnimation } from "@widgets/dropdown/animation";
+import { ToastController } from "@widgets/toast";
+import { PopupContainer } from "../../../widgets/popup";
+import { MODAL_CONFIRM_ACTION_KEY } from "../../key";
+import { resetModalPopup, setOverlayEventHandler, setRequestWithDrawal } from "../model/overlaySlice";
 
-import { openSettings } from 'react-native-permissions';
-import { MODAL_CONFIRM_ACTION_KEY } from '../../key';
-import {
-  resetModalPopup,
-  setOverlayEventHandler,
-  setRequestWithDrawal,
-} from '../model/overlaySlice';
 
 const OverlayManager = () => {
   const showToastView = useAppSelector(state => state.overlaySlice.showToastView);
@@ -23,7 +17,7 @@ const OverlayManager = () => {
       {isNotEmpty(showToastView?.visibility) && <ToastController />}
 
       {isNotEmpty(showModalPopup?.visibility) && (
-        <PopupContainerOrga
+        <PopupContainer
           title={showModalPopup?.title ?? ''}
           message={showModalPopup?.message ?? ''}
           cancelText={showModalPopup?.cancelText ?? ''}
@@ -36,7 +30,7 @@ const OverlayManager = () => {
             } else if (
               showModalPopup?.confirmActionKey === MODAL_CONFIRM_ACTION_KEY.PERMISSION_CHANGE
             ) {
-              openSettings();
+              // openSettings();
               dispatch(resetModalPopup());
             }
           }}

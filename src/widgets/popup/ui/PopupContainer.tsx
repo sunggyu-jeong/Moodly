@@ -1,12 +1,10 @@
-import React, { useEffect, useRef } from 'react';
-import { Animated, Modal, View } from 'react-native';
+import { setShowModalPopup } from "@processes/overlay/model/overlaySlice";
+import { DimmedView, useAppDispatch, useAppSelector } from "@shared";
+import React, { useEffect, useRef } from "react";
+import { Animated, Modal, View } from "react-native";
+import PopupFooter from "./PopupFooter";
+import PopupHeader from "./PopupHeader";
 
-import { useAppDispatch, useAppSelector } from '@shared/hooks';
-import DimmedView from '@shared/ui/elements/DimmedView';
-
-import { setShowModalPopup } from '@processes/overlay/model/overlaySlice';
-import PopupFooter from './PopupFooter';
-import PopupHeader from './PopupHeader';
 
 interface PopupContainerProps {
   title: string;
@@ -47,7 +45,7 @@ const PopupContainer = ({ ...props }: PopupContainerProps) => {
             title: '',
             message: '',
             confirmActionKey: '',
-          })
+          }),
         );
       }
     });
@@ -62,7 +60,7 @@ const PopupContainer = ({ ...props }: PopupContainerProps) => {
         confirmText: showModalPopup?.confirmText,
         cancelText: showModalPopup?.cancelText,
         confirmActionKey: showModalPopup?.confirmActionKey ?? '',
-      })
+      }),
     );
   };
 

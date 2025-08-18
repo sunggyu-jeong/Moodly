@@ -1,12 +1,19 @@
 module.exports = {
   presets: ['@react-native/babel-preset', 'nativewind/babel'],
   plugins: [
-    'react-native-reanimated/plugin',
-    'hot-updater/babel-plugin',
+    [
+      'module:react-native-dotenv',
+      {
+        moduleName: '@env',
+        path: '.env',
+        safe: false,
+        allowUndefined: true
+      }
+    ],
     [
       'module-resolver',
       {
-        root: ['./src'],
+        root: ['./'],
         alias: {
           '@': './src',
           '@app': './src/app',
@@ -18,18 +25,12 @@ module.exports = {
           '@shared': './src/shared',
           '@components': './src/components',
           'moti/skeleton': 'moti/skeleton/react-native-linear-gradient',
-          'expo-linear-gradient': 'react-native-linear-gradient',
-        },
-      },
+          'expo-linear-gradient': 'react-native-linear-gradient'
+        }
+      }
     ],
-    [
-      'module:react-native-dotenv',
-      {
-        moduleName: '@env',
-        path: '.env',
-        safe: false,
-        allowUndefined: true,
-      },
-    ],
-  ],
+    ['@babel/plugin-transform-typescript', { isTSX: true, allowDeclareFields: true, onlyRemoveTypeImports: true }],
+    'hot-updater/babel-plugin',
+    'react-native-reanimated/plugin'
+  ]
 };

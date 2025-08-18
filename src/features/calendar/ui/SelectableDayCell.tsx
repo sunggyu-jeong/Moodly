@@ -1,13 +1,11 @@
-import { EmotionDiaryDTO } from '@entities/diary';
-import { setShowToastView } from '@processes/overlay/model/overlaySlice';
-import { COMMON_ICONS } from '@shared/assets/images/common';
-import { ICON_DATA } from '@shared/constants';
-import { useAppDispatch, useAppSelector } from '@shared/hooks';
-import { isEmpty, navigate } from '@shared/lib';
-import DayCell from '@shared/ui/elements/DayCell';
-import dayjs, { Dayjs } from 'dayjs';
-import React, { useCallback, useMemo } from 'react';
-import { setCurrentDiary, setSelectedDay } from '../../diary/model/diarySlice';
+import { EmotionDiaryDTO } from "@entities/diary";
+import { setCurrentDiary, setSelectedDay } from "@features/diary/model/diarySlice";
+import { setShowToastView } from "@processes/overlay/model/overlaySlice";
+import { DayCell, ICON_DATA, isEmpty, navigate, useAppDispatch, useAppSelector } from "@shared";
+import { COMMON_ICONS } from "@shared/assets/images/common";
+import dayjs, { Dayjs } from "dayjs";
+import React, { useCallback, useMemo } from "react";
+
 
 interface SelectableDayCellProps {
   date: Dayjs;
@@ -22,7 +20,9 @@ const SelectableDayCell = ({ date, iconId }: SelectableDayCellProps) => {
   const isSelected = date.isSame(selectedDay, 'day');
 
   const iconSource = useMemo(() => {
-    if (isEmpty(iconId)) return COMMON_ICONS.iconAddDiary;
+    if (isEmpty(iconId)) {
+      return COMMON_ICONS.iconAddDiary;
+    }
     const found = ICON_DATA.find(i => i.id === iconId);
     return found?.iconSelected ?? null;
   }, [iconId]);
@@ -32,7 +32,7 @@ const SelectableDayCell = ({ date, iconId }: SelectableDayCellProps) => {
       setShowToastView({
         visibility: true,
         message: '미래 날짜는 기록할 수 없어요!',
-      })
+      }),
     );
   }, [dispatch]);
 

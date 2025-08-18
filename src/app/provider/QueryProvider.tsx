@@ -9,7 +9,7 @@ export default function QueryProvider({ children }: PropsWithChildren) {
           queries: { staleTime: 1000 * 60 }, // 1분
           mutations: { retry: 2 }, // 2회 자동 재시도
         },
-      })
+      }),
   );
   return <QueryClientProvider client={client}>{children}</QueryClientProvider>;
 }
