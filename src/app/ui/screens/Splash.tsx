@@ -33,7 +33,6 @@ const Splash = ({ status, progress }: UpdateProgressProps) => {
       return;
     }
     const res = await initSession();
-    console.log('!@>$>!@>$', data);
     if (isNotEmpty(res.data)) {
       resetTo('Main');
     } else {

@@ -3,8 +3,8 @@ import { Dayjs } from 'dayjs';
 import { useMemo } from 'react';
 
 export const useDiaryWeekData = (weekStart: Dayjs) => {
-  const start = weekStart.startOf('week').toISOString();
-  const end = weekStart.endOf('week').toISOString();
+  const start = weekStart.startOf('week').toString();
+  const end = weekStart.endOf('week').toString();
 
   const { data, isFetching } = useSelectByMonthQuery(
     { start, end },

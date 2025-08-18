@@ -38,10 +38,10 @@ export function useDiaryMigration() {
       // 3) Supabase에 업로드 처리
       const inserts = localDiaries.map(d => ({
         icon_id: d.icon_id,
-        record_date: dayjs(d.record_date).toISOString().slice(0, 10),
+        record_date: dayjs(d.record_date).toString().slice(0, 10),
         description: d.description,
-        created_at: d.created_at.toISOString(),
-        updated_at: d.updated_at.toISOString(),
+        created_at: d.created_at.toString(),
+        updated_at: d.updated_at.toString(),
         user_id: userId,
       }));
 

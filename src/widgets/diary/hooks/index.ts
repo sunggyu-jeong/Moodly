@@ -5,8 +5,8 @@ import { Dayjs } from 'dayjs';
 import { useMemo } from 'react';
 
 export const getMonthRange = (date: Dayjs) => ({
-  start: date.startOf('month').toISOString(),
-  end: date.add(1, 'month').startOf('month').toISOString(),
+  start: date.startOf('month').toString(),
+  end: date.add(1, 'month').startOf('month').toString(),
 });
 
 export function useDiaryMonthData(monthDate: Dayjs) {

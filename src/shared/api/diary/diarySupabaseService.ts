@@ -41,7 +41,7 @@ export async function hasDiaryForDay(): Promise<ApiResponse<boolean>> {
   try {
     const response = await supabase.auth.getSession();
     const today = dayjs();
-    const yyyyMMdd = today.toISOString().slice(0, 10);
+    const yyyyMMdd = today.toString().slice(0, 10);
 
     const { count, error } = await supabase
       .from('moodly_diary')
@@ -96,7 +96,7 @@ export async function createDiary(
 ): Promise<ApiResponse<number>> {
   try {
     const response = await supabase.auth.getSession();
-    const now = dayjs().toISOString();
+    const now = dayjs().toString();
     const payload: Database['public']['Tables']['moodly_diary']['Insert'] = {
       icon_id: dto.iconId!,
       record_date: dto.recordDate ?? now,
@@ -123,7 +123,7 @@ export async function updateDiary(
 ): Promise<ApiResponse<number>> {
   try {
     const response = await supabase.auth.getSession();
-    const now = dayjs().toISOString();
+    const now = dayjs().toString();
     const payload: Database['public']['Tables']['moodly_diary']['Update'] = {
       updated_at: now,
       ...(isNotEmpty(updates.iconId) && { icon_id: updates.iconId }),

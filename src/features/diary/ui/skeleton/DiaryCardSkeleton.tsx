@@ -44,7 +44,7 @@ const DiarySkeleton = () => {
               />
             </View>
 
-            {/* 본문 텍스트 */}
+            {/* 본문 ㅁㄴㅇㄹ텍스트 */}
             <View className="mb-2">
               <Skeleton
                 width="100%"
