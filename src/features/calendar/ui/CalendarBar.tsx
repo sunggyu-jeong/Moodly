@@ -1,15 +1,14 @@
+import { Diary } from '@entities/diary/model/diary.types';
 import { GridList } from '@shared/ui/elements/GridList';
 import dayjs, { Dayjs } from 'dayjs';
 import { memo, useMemo } from 'react';
 import { View } from 'react-native';
 
-import { EmotionDiaryDTO } from '@/entities/diary';
-
 import SelectableDayCell from './SelectableDayCell';
 
 interface CalendarBarProps {
   monthlyDates: (Dayjs | null)[][];
-  entries: EmotionDiaryDTO[] | undefined;
+  entries: Diary[] | undefined;
 }
 
 const CalendarBar = ({ monthlyDates, entries }: CalendarBarProps) => {

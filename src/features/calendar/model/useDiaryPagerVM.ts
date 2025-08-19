@@ -1,17 +1,28 @@
-import { DiaryCalendarMode, DiaryCalendarModeType, DiaryPageMode, DiaryPageModeType } from "@/entities/calendar";
-import { EmotionDiaryDTO } from "@/entities/diary";
-import { diaryApi, formatWeekLabel, useAppDispatch, useAppSelector } from "@/shared";
-import { getMonthRange } from "@/widgets/diary";
-import dayjs, { Dayjs } from "dayjs";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { moveMonth, moveWeek, resetDiary } from "../../diary/model/diarySlice";
-import { useDiaryMonthData, useDiaryWeekData } from "../hooks";
-import { CalendarPage, buildPages } from "../lib";
-import { selectSelectedDayIso, selectSelectedMonth, selectSelectedMonthIso, selectSelectedWeek } from "./selector";
+import { diaryApi } from '@entities/diary/api/diary.api';
+import dayjs, { Dayjs } from 'dayjs';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
+import {
+  DiaryCalendarMode,
+  DiaryCalendarModeType,
+  DiaryPageMode,
+  DiaryPageModeType,
+} from '@/entities/calendar';
+import type { Diary } from '@/entities/diary/model/diary.types';
+import { formatWeekLabel, useAppDispatch, useAppSelector } from '@/shared';
+import { getMonthRange } from '@/widgets/diary';
 
+import { moveMonth, moveWeek, resetDiary } from '../../diary/model/diarySlice';
+import { useDiaryMonthData, useDiaryWeekData } from '../hooks';
+import { buildPages, CalendarPage } from '../lib';
+import {
+  selectSelectedDayIso,
+  selectSelectedMonth,
+  selectSelectedMonthIso,
+  selectSelectedWeek,
+} from './selector';
 
-const EMPTY: EmotionDiaryDTO[] = [];
+const EMPTY: Diary[] = [];
 
 const weekRange = (weekStart: Dayjs) =>
   ({
@@ -63,28 +74,20 @@ export const useDiaryPagerVM = () => {
   }, [selectedWeek]);
 
   const { listData: monthData } = useDiaryMonthData(monthWin.curr);
-  const prevMonthSel = useAppSelector(diaryApi.endpoints.selectByMonth.select(monthWin.prevArg));
-  const nextMonthSel = useAppSelector(diaryApi.endpoints.selectByMonth.select(monthWin.nextArg));
-  const prevMonthData = useMemo<EmotionDiaryDTO[]>(
-    () => prevMonthSel?.data ?? EMPTY,
-    [prevMonthSel?.data],
+  const prevMonthSel = useAppSelector(
+    diaryApi.endpoints.getDiariesByRange.select(monthWin.prevArg),
   );
-  const nextMonthData = useMemo<EmotionDiaryDTO[]>(
-    () => nextMonthSel?.data ?? EMPTY,
-    [nextMonthSel?.data],
+  const nextMonthSel = useAppSelector(
+    diaryApi.endpoints.getDiariesByRange.select(monthWin.nextArg),
   );
+  const prevMonthData = useMemo<Diary[]>(() => prevMonthSel?.data ?? EMPTY, [prevMonthSel?.data]);
+  const nextMonthData = useMemo<Diary[]>(() => nextMonthSel?.data ?? EMPTY, [nextMonthSel?.data]);
 
   const { listData: weekCurrData } = useDiaryWeekData(weekWin.curr);
-  const weekPrevSel = useAppSelector(diaryApi.endpoints.selectByMonth.select(weekWin.prevArg));
-  const weekNextSel = useAppSelector(diaryApi.endpoints.selectByMonth.select(weekWin.nextArg));
-  const weekPrevData = useMemo<EmotionDiaryDTO[]>(
-    () => weekPrevSel?.data ?? EMPTY,
-    [weekPrevSel?.data],
-  );
-  const weekNextData = useMemo<EmotionDiaryDTO[]>(
-    () => weekNextSel?.data ?? EMPTY,
-    [weekNextSel?.data],
-  );
+  const weekPrevSel = useAppSelector(diaryApi.endpoints.getDiariesByRange.select(weekWin.prevArg));
+  const weekNextSel = useAppSelector(diaryApi.endpoints.getDiariesByRange.select(weekWin.nextArg));
+  const weekPrevData = useMemo<Diary[]>(() => weekPrevSel?.data ?? EMPTY, [weekPrevSel?.data]);
+  const weekNextData = useMemo<Diary[]>(() => weekNextSel?.data ?? EMPTY, [weekNextSel?.data]);
 
   const pages: CalendarPage[] = useMemo(() => {
     return buildPages({
@@ -143,7 +146,7 @@ export const useDiaryPagerVM = () => {
 
   const reset = useCallback(() => dispatch(resetDiary()), [dispatch]);
 
-  const prefetch = diaryApi.usePrefetch('selectByMonth');
+  const prefetch = diaryApi.usePrefetch('getDiariesByRange');
   useEffect(() => {
     const args = isMonthMode
       ? [monthWin.prevArg, monthWin.nextArg]

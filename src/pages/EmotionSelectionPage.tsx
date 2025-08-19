@@ -1,11 +1,19 @@
-import { EmotionDiaryDTO } from "@entities/diary";
-import { setCurrentDiary, setSelectedIcon } from "@features/diary/model/diarySlice";
-import { EmotionDisplaySelected, EmotionSelectionList } from "@features/emotion";
-import { ActionButton, getScaleSize, H2, ICON_DATA, isNotEmpty, navigate, useAppDispatch, useAppSelector } from "@shared";
-import { NaviDismiss, NavigationBar } from "@widgets/navigation-bar";
-import { useEffect } from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
-
+import { Diary } from '@entities/diary/model/diary.types';
+import { setCurrentDiary, setSelectedIcon } from '@features/diary/model/diarySlice';
+import { EmotionDisplaySelected, EmotionSelectionList } from '@features/emotion';
+import {
+  ActionButton,
+  getScaleSize,
+  H2,
+  ICON_DATA,
+  isNotEmpty,
+  navigate,
+  useAppDispatch,
+  useAppSelector,
+} from '@shared';
+import { NaviDismiss, NavigationBar } from '@widgets/navigation-bar';
+import { useEffect } from 'react';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 
 const actionButtons = [{ item: <NaviDismiss />, disabled: false }];
 
@@ -16,7 +24,7 @@ const EmotionSelectionPage = () => {
   const selectedDiary = useAppSelector(state => state.diarySlice.selectedDiary);
 
   const handleSelectEmotion = () => {
-    const emotion: Partial<EmotionDiaryDTO> = {
+    const emotion: Partial<Diary> = {
       iconId: selectedEmotion?.id,
     };
     dispatch(setCurrentDiary(emotion));
@@ -27,7 +35,7 @@ const EmotionSelectionPage = () => {
     // 수정일 때 사용
     if (isModifyMode && isNotEmpty(selectedDiary)) {
       dispatch(setSelectedIcon(ICON_DATA.find(el => el.id === selectedDiary.iconId)));
-      const emotion: Partial<EmotionDiaryDTO> = {
+      const emotion: Partial<Diary> = {
         iconId: selectedDiary?.iconId,
       };
       dispatch(setCurrentDiary(emotion));

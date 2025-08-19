@@ -1,15 +1,15 @@
+import { useLazyGetUserInfoQuery } from '@entities/auth/api/auth.api';
+import { useUpdateFirstLaunchFlagMutation } from '@entities/auth/api/user-meta.api';
 import { AUTH_PROVIDERS } from '@entities/auth/types';
-import { UserMetaDTO } from '@entities/auth/User.scheme';
 import { useSocialLogin } from '@features/auth/hooks/useSocialLogin';
 import SocialLoginButton from '@features/auth/ui/SocialLoginButton';
 import { setShowToastView } from '@processes/overlay/model/overlaySlice';
-import { useLazyGetUserInfoQuery, useSaveFirstLaunchFlagMutation } from '@shared/api/auth/authApi';
 import { useAppDispatch } from '@shared/hooks';
 import { isEmpty, isNotEmpty, navigate, resetTo } from '@shared/lib';
 import { gray } from '@shared/styles/colors';
-import dayjs from 'dayjs';
 import { useEffect } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
+
 import { Caption } from '../typography/Caption';
 
 export enum SOCIAL_LOGIN_ENTRANCE {
@@ -25,7 +25,7 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
   const { handleLogin, data, isLoading } = useSocialLogin();
   const [getUserInfo] = useLazyGetUserInfoQuery();
   const dispatch = useAppDispatch();
-  const [saveFirstLaunchFlag] = useSaveFirstLaunchFlagMutation();
+  const [saveFirstLaunchFlag] = useUpdateFirstLaunchFlagMutation();
 
   const fetchUserInfo = async () => {
     const response = await getUserInfo();
@@ -38,12 +38,7 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
         return;
       }
     }
-    const dto: UserMetaDTO = {
-      userId: 'local',
-      isFirstLoad: false,
-      createdAt: dayjs().toDate(),
-    };
-    saveFirstLaunchFlag(dto);
+    saveFirstLaunchFlag({ isFirstLoad: true });
     resetTo('Main');
     dispatch(setShowToastView({ visibility: true, message: '로그인이 완료됐어요!' }));
   };

@@ -1,11 +1,10 @@
-import { EmotionDiaryDTO } from "@entities/diary";
-import { Avatar, Caption, ICON_DATA, Label, gray } from "@shared";
-import { EMOTION_ICONS } from "@shared/assets/images/emotion";
-import dayjs from "dayjs";
-import { StyleSheet, View } from "react-native";
+import { Diary } from '@entities/diary/model/diary.types';
+import { Avatar, Caption, gray, ICON_DATA, Label } from '@shared';
+import { EMOTION_ICONS } from '@shared/assets/images/emotion';
+import dayjs from 'dayjs';
+import { StyleSheet, View } from 'react-native';
 
-
-const EmotionDiaryCardHeader = ({ iconId, recordDate }: EmotionDiaryDTO) => {
+const EmotionDiaryCardHeader = ({ iconId, recordDate }: Partial<Diary>) => {
   const emotionSource = ICON_DATA.find(item => item.id === iconId);
 
   return (

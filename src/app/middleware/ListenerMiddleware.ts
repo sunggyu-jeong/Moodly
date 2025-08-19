@@ -5,10 +5,8 @@ import {
   ThunkDispatch,
   UnknownAction,
 } from '@reduxjs/toolkit';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
-import { parseApiError } from '@shared/api/parseApiError';
-import { AppCode, ERROR_MESSAGE_MAP } from '@shared/config/errorCodes';
-import { resetTo } from '@shared/lib';
+import { resetTo } from '@shared';
+import { AppCode } from '@shared/config';
 
 const appCodeHandlers: Record<
   AppCode,
@@ -43,9 +41,8 @@ listenerMiddleware.startListening({
       handler(errDetail, listenerApi);
       return;
     }
-    const apiCode = parseApiError(payload as FetchBaseQueryError);
-
-    const message = errDetail.data?.message || ERROR_MESSAGE_MAP[apiCode];
+    const message = errDetail.data?.message;
+    console.log('error handler >>>>>>>>>', message);
 
     // listenerApi.dispatch(
     //   setShowToastView({

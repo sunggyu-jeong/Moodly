@@ -1,15 +1,30 @@
-import { resetDiary } from "@features/diary/model/diarySlice";
-import { MODAL_CONFIRM_ACTION_KEY } from "@processes/key";
-import { resetModalPopup, setOverlayEventHandler, setShowDropdownView, setShowToastView } from "@processes/overlay/model/overlaySlice";
-import { RouteProp, useRoute } from "@react-navigation/native";
-import { Body1, dismissModalToScreen, getScaleSize, goBack, ICON_DATA, isNotEmpty, NaviActionButtonProps, NaviMore, useAppDispatch, useAppSelector, useDeleteDiaryMutation } from "@shared";
-import { COMMON_ICONS } from "@shared/assets/images/common";
-import { DropDownEventIdentifier } from "@widgets/dropdown";
-import { NaviDismiss, NavigationBar } from "@widgets/navigation-bar";
-import dayjs from "dayjs";
-import { useCallback, useEffect, useMemo, useRef } from "react";
-import { Image, Platform, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
-
+import { useDeleteDiaryMutation } from '@entities/diary/api';
+import { resetDiary } from '@features/diary/model/diarySlice';
+import { MODAL_CONFIRM_ACTION_KEY } from '@processes/key';
+import {
+  resetModalPopup,
+  setOverlayEventHandler,
+  setShowDropdownView,
+  setShowToastView,
+} from '@processes/overlay/model/overlaySlice';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import {
+  Body1,
+  dismissModalToScreen,
+  getScaleSize,
+  goBack,
+  ICON_DATA,
+  isNotEmpty,
+  NaviActionButtonProps,
+  NaviMore,
+  useAppDispatch,
+  useAppSelector,
+} from '@shared';
+import { COMMON_ICONS } from '@shared/assets/images/common';
+import { DropDownEventIdentifier } from '@widgets/dropdown';
+import { NaviDismiss, NavigationBar } from '@widgets/navigation-bar';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { Image, Platform, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 type DiaryDetailRouteParams = {
   params: {
@@ -71,10 +86,7 @@ const EmotionDiaryDetailPage = () => {
   const handleRemoveDiary = useCallback(async () => {
     try {
       if (isNotEmpty(selectedDiary?.emotionId)) {
-        const start = dayjs(selectedDiary.createdAt).startOf('month').format('YYYY-MM-DD');
-        const end = dayjs(selectedDiary.createdAt).endOf('month').format('YYYY-MM-DD');
-        const date = dayjs(selectedDiary.createdAt).format('YYYY-MM-DD');
-        await deleteDiary({ emotionId: selectedDiary.emotionId, start, end, date });
+        await deleteDiary({ id: String(selectedDiary.emotionId) });
         if (route.params.origin !== 'RootStack') {
           dismissModalToScreen();
         }
@@ -88,13 +100,7 @@ const EmotionDiaryDetailPage = () => {
       dispatch(setOverlayEventHandler(null));
       dispatch(resetModalPopup());
     }
-  }, [
-    deleteDiary,
-    dispatch,
-    route.params.origin,
-    selectedDiary?.emotionId,
-    selectedDiary?.createdAt,
-  ]);
+  }, [deleteDiary, dispatch, route.params.origin, selectedDiary?.emotionId]);
 
   useEffect(() => {
     if (

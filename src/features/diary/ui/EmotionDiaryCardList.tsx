@@ -1,4 +1,4 @@
-import { EmotionDiaryDTO } from '@entities/diary';
+import { Diary } from '@entities/diary/model/diary.types';
 import { setSelectedDiary } from '@features/diary/model/diarySlice';
 import { useAppDispatch } from '@shared/hooks';
 import { isEmpty, navigate } from '@shared/lib';
@@ -8,13 +8,13 @@ import EmotionDiaryCardContent from './EmotionDiaryCardContent';
 import EmotionDiaryCardHeader from './EmotionDiaryCardHeader';
 
 interface EmotionDiaryCardListProps {
-  data: EmotionDiaryDTO | undefined;
+  data: Diary | undefined;
 }
 
 const EmotionDiaryCardList = ({ data }: EmotionDiaryCardListProps) => {
   const dispatch = useAppDispatch();
 
-  const handleDiaryDetail = (item: EmotionDiaryDTO) => {
+  const handleDiaryDetail = (item: Diary) => {
     dispatch(setSelectedDiary(item));
     navigate('EmotionDiaryDetailPage', { origin: 'RootStack' });
   };

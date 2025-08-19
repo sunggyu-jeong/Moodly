@@ -1,4 +1,4 @@
-import { useSelectByMonthQuery } from '@shared/api/diary/diaryApi';
+import { useGetDiariesByRangeQuery } from '@entities/diary/api';
 import { Dayjs } from 'dayjs';
 import { useMemo } from 'react';
 
@@ -6,7 +6,7 @@ export const useDiaryWeekData = (weekStart: Dayjs) => {
   const start = weekStart.startOf('week').toString();
   const end = weekStart.endOf('week').toString();
 
-  const { data, isFetching } = useSelectByMonthQuery(
+  const { data, isFetching } = useGetDiariesByRangeQuery(
     { start, end },
     {
       refetchOnFocus: false,

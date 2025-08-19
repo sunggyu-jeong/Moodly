@@ -3,8 +3,7 @@ import { HOT_UPDATER_SUPABASE_ANON_KEY, HOT_UPDATER_SUPABASE_URL } from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createClient } from '@supabase/supabase-js';
 
-import { authApi } from '@/shared/api';
-
+import { appApi } from '../api/AppApi';
 import { resetTo } from './navigation.util';
 
 const nativeFetch = globalThis.fetch.bind(globalThis);
@@ -30,7 +29,7 @@ export const supabase = createClient(HOT_UPDATER_SUPABASE_URL, HOT_UPDATER_SUPAB
             return res;
           }
           if (res.status === 401 || res.status === 403) {
-            store.dispatch(authApi.util.resetApiState());
+            store.dispatch(appApi.util.resetApiState());
             resetTo('Login');
             throw new Error('인증이 만료되었습니다. 다시 로그인하세요.');
           }

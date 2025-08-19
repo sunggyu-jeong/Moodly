@@ -11,18 +11,19 @@ import { Provider } from 'react-redux';
 import { navigationRef } from '@shared/lib';
 import '../../global.css';
 
-import { RootStack } from '@/app/navigation';
-import { store } from '@/app/store.ts';
-import { Splash } from '@/app/ui';
+import { RootStack } from '@app/navigation';
+import { store } from '@app/store.ts';
+import { Splash } from '@app/ui';
 import { HOT_UPDATER_SUPABASE_URL } from '@env';
 import { getUpdateSource, HotUpdater } from '@hot-updater/react-native';
+import { UpdateProgressProps } from '@processes/update/useUpdateProgress';
+import { useNotificationPermission } from '@shared/hooks/useNotificationPermission';
+import '@shared/lib/dayjs.util';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { UpdateProgressProps } from '../processes/update/useUpdateProgress';
-import { useNotificationPermission } from '../shared/hooks/useNotificationPermission';
 
 dayjs.locale('ko');
 dayjs.extend(utc);

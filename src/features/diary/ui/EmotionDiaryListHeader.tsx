@@ -4,7 +4,7 @@ import {
   DiaryPageMode,
   DiaryPageModeType,
 } from '@entities/calendar/diary.type';
-import { EmotionDiaryDTO } from '@entities/diary';
+import { Diary } from '@entities/diary/model/diary.types';
 import { generateMonthGrid, generateWeekGrid } from '@shared/lib/date.util';
 import WeekdayHeader from '@shared/ui/elements/WeekdayHeader';
 import dayjs from 'dayjs';
@@ -20,7 +20,7 @@ interface DiaryListHeaderProps {
   showSkeleton: boolean;
   diaryMode: DiaryPageModeType;
   selectedMonth: string;
-  monthData?: EmotionDiaryDTO[];
+  monthData?: Diary[];
   calendarMode?: DiaryCalendarModeType;
 }
 const EmotionDiaryListHeader = ({

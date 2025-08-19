@@ -1,13 +1,12 @@
+import { useSignOutMutation } from '@entities/auth/api/auth.api';
 import { setShowToastView } from '@processes/overlay/model/overlaySlice';
-import { useSignOutMutation } from '@shared/api/auth/authApi';
-import { baseApi } from '@shared/api/base';
+import { appApi } from '@shared/api/AppApi';
 import { ApiCode } from '@shared/config/errorCodes';
 import { useAppDispatch } from '@shared/hooks';
 import { isNotEmpty, resetTo } from '@shared/lib';
 import { useEffect } from 'react';
+
 import { setRequestLogin } from '../../setting/model/settingSlice';
-
-
 
 export function useLogout() {
   const [signOut, { data, isLoading }] = useSignOutMutation();
@@ -19,8 +18,7 @@ export function useLogout() {
     }
 
     if (isNotEmpty(data) && data === ApiCode.SUCCESS) {
-      dispatch(baseApi.util.invalidateTags(['EmotionDiary']));
-      dispatch(baseApi.util.invalidateTags(['Auth']));
+      dispatch(appApi.util.resetApiState());
       dispatch(setRequestLogin('FINISH'));
       dispatch(
         setShowToastView({

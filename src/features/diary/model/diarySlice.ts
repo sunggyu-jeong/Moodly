@@ -1,12 +1,12 @@
-import { EmotionDiaryDTO } from '@entities/diary';
+import { Diary } from '@entities/diary/model/diary.types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { EmotionIconData, ICON_DATA } from '@shared/constants/Icons';
 import dayjs from 'dayjs';
 
 interface DiaryState {
-  selectedDiary: EmotionDiaryDTO | null;
+  selectedDiary: Diary | null;
   selectedIcon: EmotionIconData | null;
-  currentDiary: EmotionDiaryDTO | null;
+  currentDiary: Partial<Diary> | null;
   selectedMonth: string;
   selectedWeek: string;
   isModifyMode: boolean;
@@ -30,7 +30,7 @@ const diarySlice = createSlice({
     setSelectedIcon: (state, action) => {
       state.selectedIcon = action.payload;
     },
-    setCurrentDiary: (state, action: PayloadAction<Partial<EmotionDiaryDTO>>) => {
+    setCurrentDiary: (state, action: PayloadAction<Partial<Diary>>) => {
       state.currentDiary = {
         ...(state.currentDiary ?? {}),
         ...action.payload,

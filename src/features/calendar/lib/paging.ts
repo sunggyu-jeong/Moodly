@@ -1,4 +1,4 @@
-import { EmotionDiaryDTO } from '@entities/diary';
+import { Diary } from '@entities/diary/model/diary.types';
 import { isNotEmpty } from '@shared/lib';
 import dayjs, { Dayjs } from 'dayjs';
 
@@ -7,8 +7,8 @@ export type CalendarPageKey = 'prev' | 'current' | 'next';
 export type CalendarPage = {
   key: CalendarPageKey;
   periodStart: Dayjs;
-  items: EmotionDiaryDTO[];
-  currentItems: EmotionDiaryDTO[];
+  items: Diary[];
+  currentItems: Diary[];
 };
 
 type BuildPageArgs = {
@@ -17,9 +17,9 @@ type BuildPageArgs = {
   prevPeriod: Dayjs;
   currPeriod: Dayjs;
   nextPeriod: Dayjs;
-  prevData: EmotionDiaryDTO[];
-  currData: EmotionDiaryDTO[];
-  nextData: EmotionDiaryDTO[];
+  prevData: Diary[];
+  currData: Diary[];
+  nextData: Diary[];
 };
 
 export const buildPages = ({
@@ -32,14 +32,14 @@ export const buildPages = ({
   currData,
   nextData,
 }: BuildPageArgs) => {
-  const filterBySelected = (list: EmotionDiaryDTO[]) => {
+  const filterBySelected = (list: Diary[]) => {
     if (!isNotEmpty(selectedDayIso)) {
       return list;
     }
     return list.filter(e => dayjs(e.createdAt).isSame(dayjs(selectedDayIso), 'day'));
   };
 
-  const toPage = (key: CalendarPageKey, period: Dayjs, data: EmotionDiaryDTO[]) => ({
+  const toPage = (key: CalendarPageKey, period: Dayjs, data: Diary[]) => ({
     key,
     periodStart: period,
     items: data,

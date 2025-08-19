@@ -1,11 +1,10 @@
-import { EmotionDiaryDTO } from "@entities/diary";
-import { setCurrentDiary, setSelectedDay } from "@features/diary/model/diarySlice";
-import { setShowToastView } from "@processes/overlay/model/overlaySlice";
-import { DayCell, ICON_DATA, isEmpty, navigate, useAppDispatch, useAppSelector } from "@shared";
-import { COMMON_ICONS } from "@shared/assets/images/common";
-import dayjs, { Dayjs } from "dayjs";
-import React, { useCallback, useMemo } from "react";
-
+import { Diary } from '@entities/diary/model/diary.types';
+import { setCurrentDiary, setSelectedDay } from '@features/diary/model/diarySlice';
+import { setShowToastView } from '@processes/overlay/model/overlaySlice';
+import { DayCell, ICON_DATA, isEmpty, navigate, useAppDispatch, useAppSelector } from '@shared';
+import { COMMON_ICONS } from '@shared/assets/images/common';
+import dayjs, { Dayjs } from 'dayjs';
+import React, { useCallback, useMemo } from 'react';
 
 interface SelectableDayCellProps {
   date: Dayjs;
@@ -37,7 +36,7 @@ const SelectableDayCell = ({ date, iconId }: SelectableDayCellProps) => {
   }, [dispatch]);
 
   const startEmotionSelection = useCallback(() => {
-    const emotion: Partial<EmotionDiaryDTO> = {
+    const emotion: Partial<Diary> = {
       recordDate: date.toString(),
     };
     dispatch(setCurrentDiary(emotion));

@@ -1,18 +1,11 @@
-import dayjs from 'dayjs';
+import { ActionButton, Caption, H2, resetTo, useAppDispatch } from '@shared';
+import { NavigationBar } from '@widgets/navigation-bar';
 import { useState } from 'react';
-import { SafeAreaView, TextInput, View } from 'react-native';
-import { UserMetaDTO } from '../entities/auth/User.scheme';
-import {
-  useSaveFirstLaunchFlagMutation,
-  useSetUserInfoMutation,
-  type UserInfo,
-} from '../shared/api/auth/authApi';
-import { useAppDispatch } from '../shared/hooks';
-import { resetTo } from '../shared/lib';
-import ActionButton from '../shared/ui/elements/ActionButton';
-import { Caption } from '../shared/ui/typography/Caption';
-import { H2 } from '../shared/ui/typography/H2';
-import NavigationBar from '../widgets/navigation-bar/ui/NavigationBar';
+import { SafeAreaView, StyleSheet, TextInput, View } from 'react-native';
+
+import { useSetUserInfoMutation } from '../entities/auth/api/auth.api';
+import { useUpdateFirstLaunchFlagMutation } from '../entities/auth/api/user-meta.api';
+import { UserInfo } from '../entities/auth/model/auth.types';
 
 const MAX_LENGTH = 8;
 const NicknamePage = () => {
@@ -20,19 +13,14 @@ const NicknamePage = () => {
   const [text, onChangeText] = useState('');
   const [isAvailableNickname, setIsAvailableNickname] = useState(true);
   const [setUserInfoMutation] = useSetUserInfoMutation();
-  const [saveFirstLaunchFlag] = useSaveFirstLaunchFlagMutation();
+  const [saveFirstLaunchFlag] = useUpdateFirstLaunchFlagMutation();
   const handleSetUserInfo = async () => {
     const userInfo: Pick<UserInfo, 'nickname'> = {
       nickname: text,
     };
     const response = await setUserInfoMutation(userInfo);
     if (response.data) {
-      const dto: UserMetaDTO = {
-        userId: 'local',
-        isFirstLoad: false,
-        createdAt: dayjs().toDate(),
-      };
-      saveFirstLaunchFlag(dto);
+      saveFirstLaunchFlag({ isFirstLoad: true });
       resetTo('Main');
     }
   };
@@ -48,7 +36,7 @@ const NicknamePage = () => {
         <View className="px-5 gap-10 mt-[7px]">
           <H2
             weight="semibold"
-            style={{ textAlign: 'left' }}
+            style={Styles.nicknameStyle}
           >
             사용하실 닉네임을 알려주세요.
           </H2>
@@ -61,7 +49,7 @@ const NicknamePage = () => {
             />
             <Caption
               weight="regular"
-              style={{ textAlign: 'right', marginTop: 10 }}
+              style={Styles.textLengthStyle}
             >
               {`${text.length}/${MAX_LENGTH}`}
             </Caption>
@@ -79,5 +67,15 @@ const NicknamePage = () => {
     </>
   );
 };
+
+const Styles = StyleSheet.create({
+  nicknameStyle: {
+    textAlign: 'left',
+  },
+  textLengthStyle: {
+    textAlign: 'right',
+    marginRight: 10,
+  },
+});
 
 export default NicknamePage;

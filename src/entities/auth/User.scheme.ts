@@ -25,5 +25,4 @@ export class UserMeta extends Realm.Object<UserMeta> {
 export interface UserMetaDTO {
   userId: string;
   isFirstLoad: boolean;
-  createdAt: Date;
 }

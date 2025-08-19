@@ -1,10 +1,20 @@
-import { resetDiary } from "@features/diary/model/diarySlice";
-import { useFocusEffect } from "@react-navigation/native";
-import { ActionButton, DiaryCountCard, getScaleSize, H2, jumpToTab, navigate, useAppDispatch, useGetDiaryCountQuery, useHasDiaryForDayQuery, useNotificationPermission } from "@shared";
-import { MAIN_ICONS } from "@shared/assets/images/main";
-import { useCallback, useEffect } from "react";
-import { Image, StatusBar, StyleSheet, View } from "react-native";
+import { resetDiary } from '@features/diary';
+import { useFocusEffect } from '@react-navigation/native';
+import { MAIN_ICONS } from '@shared/assets/images/main';
+import { useCallback, useEffect } from 'react';
+import { Image, StatusBar, StyleSheet, View } from 'react-native';
 
+import { useGetDiaryCountQuery, useHasDiaryForDayQuery } from '../entities/diary/api/diary.api';
+import {
+  ActionButton,
+  DiaryCountCard,
+  getScaleSize,
+  H2,
+  jumpToTab,
+  navigate,
+  useAppDispatch,
+  useNotificationPermission,
+} from '../shared';
 
 const HomePage = () => {
   const dispatch = useAppDispatch();

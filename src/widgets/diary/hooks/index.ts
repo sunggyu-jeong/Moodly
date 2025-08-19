@@ -1,24 +1,24 @@
-import { EmotionDiaryDTO } from '@entities/diary';
-import { useSelectByMonthQuery } from '@shared/api/diary/diaryApi';
+import { useGetDiariesByRangeQuery } from '@entities/diary/api/diary.api';
+import { Diary } from '@entities/diary/model/diary.types';
 import useDelay from '@shared/hooks/useDelay';
 import { Dayjs } from 'dayjs';
 import { useMemo } from 'react';
 
 export const getMonthRange = (date: Dayjs) => ({
-  start: date.startOf('month').toString(),
-  end: date.add(1, 'month').startOf('month').toString(),
+  start: date.startOf('month').format('YYYY-MM-DD'),
+  end: date.add(1, 'month').startOf('month').format('YYYY-MM-DD'),
 });
 
 export function useDiaryMonthData(monthDate: Dayjs) {
   const range = useMemo(() => getMonthRange(monthDate), [monthDate]);
-  const { data, isFetching } = useSelectByMonthQuery(range, {
+  const { data, isFetching } = useGetDiariesByRangeQuery(range, {
     refetchOnMountOrArgChange: false,
     refetchOnFocus: false,
     refetchOnReconnect: false,
     selectFromResult: r => ({ data: r.data, isFetching: r.isFetching }),
   });
   const showSkeleton = useDelay(isFetching);
-  const listData = useMemo((): EmotionDiaryDTO[] => data ?? [], [data]);
+  const listData = useMemo((): Diary[] => data ?? [], [data]);
   return { listData, showSkeleton } as const;
 }
 
@@ -29,7 +29,7 @@ export function useDiaryWeekData(weekStart: Dayjs) {
     return [start, end] as const;
   }, [weekStart]);
 
-  const { data, isFetching } = useSelectByMonthQuery(
+  const { data, isFetching } = useGetDiariesByRangeQuery(
     { start, end },
     {
       refetchOnMountOrArgChange: false,
@@ -39,7 +39,7 @@ export function useDiaryWeekData(weekStart: Dayjs) {
     },
   );
   const showSkeleton = useDelay(isFetching);
-  const listData = useMemo<EmotionDiaryDTO[]>(() => data ?? [], [data]);
+  const listData = useMemo<Diary[]>(() => data ?? [], [data]);
 
   return { listData, showSkeleton } as const;
 }

@@ -7,10 +7,6 @@ const config = getDefaultConfig(__dirname);
 
 config.resolver.sourceExts = [...config.resolver.sourceExts, 'env', 'css'];
 
-config.resolver.alias = {
-  '@': path.resolve(__dirname, 'src'),
-};
-
 module.exports = withNativeWind(config, {
   input: path.resolve(__dirname, 'global.css'),
 });

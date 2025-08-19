@@ -3,13 +3,13 @@ import settingSlice from '@features/setting/model/settingSlice';
 import progressSlice from '@features/update-progress/updateProgress/model/progressSlice';
 import overlaySlice from '@processes/overlay/model/overlaySlice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { baseApi } from '../shared';
-import { listenerMiddleware } from './middleware';
+import { appApi } from '@shared/api/AppApi';
 
+import { listenerMiddleware } from './middleware';
 
 const reducers = combineReducers({
   // RTK Query의 API 인스턴스 리듀서
-  [baseApi.reducerPath]: baseApi.reducer,
+  [appApi.reducerPath]: appApi.reducer,
 
   // 앱 기능별 리듀서
   overlaySlice,
@@ -31,7 +31,7 @@ const rootReducer = (state: RootState | undefined, action: RootAction): RootStat
 export const store = configureStore({
   reducer: rootReducer,
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(baseApi.middleware).concat(listenerMiddleware.middleware),
+    getDefaultMiddleware().concat(appApi.middleware).concat(listenerMiddleware.middleware),
 });
 
 export default store;

@@ -1,25 +1,28 @@
-import { useLogout } from '@features/auth/hooks/useLogout';
+import { useLogout } from '@features/auth';
+import { SettingList } from '@features/setting';
 import { SETTING_EVENT_TYPE } from '@features/setting/types';
-import SettingList from '@features/setting/ui/SettingList';
 import { MODAL_CONFIRM_ACTION_KEY } from '@processes/key';
-import { baseApi } from '@shared/api/base';
-import { useAppDispatch, useAppSelector } from '@shared/hooks';
-import { isEmpty, resetTo } from '@shared/lib';
-import { supabase } from '@shared/lib/supabase.util';
-import { common, gray } from '@shared/styles/colors';
-import NaviTitleDisplay from '@shared/ui/elements/NaviTitle';
-import { Label } from '@shared/ui/typography/Label';
-import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar';
-import { useCallback, useEffect, useMemo } from 'react';
-import { View } from 'react-native';
-
-import { version } from '../../package.json';
 import {
   resetModalPopup,
   setRequestWithDrawal,
   setShowModalPopup,
   setShowToastView,
-} from '../processes/overlay/model/overlaySlice';
+} from '@processes/overlay/model/overlaySlice';
+import {
+  common,
+  gray,
+  isEmpty,
+  Label,
+  resetTo,
+  supabase,
+  useAppDispatch,
+  useAppSelector,
+} from '@shared';
+import { appApi } from '@shared/api/AppApi';
+import NaviTitleDisplay from '@shared/ui/elements/NaviTitle';
+import { NavigationBar } from '@widgets/navigation-bar';
+import { useCallback, useEffect, useMemo, version } from 'react';
+import { View } from 'react-native';
 
 const ManageAccountPage = () => {
   const requestWithDrawal = useAppSelector(state => state.overlaySlice.requestWithDrawal);
@@ -46,7 +49,7 @@ const ManageAccountPage = () => {
       await res.json();
       if (res.ok) {
         await supabase.auth.signOut();
-        dispatch(baseApi.util.resetApiState());
+        dispatch(appApi.util.resetApiState());
         dispatch(
           setShowToastView({ visibility: true, message: '회원 탈퇴 요청이 완료되었습니다.' }),
         );

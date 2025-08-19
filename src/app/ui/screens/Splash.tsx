@@ -1,39 +1,45 @@
-import { initRealm, isNotEmpty, resetTo, useLazyFetchFirstLaunchFlagQuery, useLazyInitializeSessionQuery } from "@/shared";
-import { UpdateContent } from "@features/update-progress/updateProgress";
-import { UpdateProgressProps } from "@processes/update/useUpdateProgress";
-import { MAIN_ICONS } from "@shared/assets/images/main";
-import { useEffect } from "react";
-import { Image, SafeAreaView, StatusBar } from "react-native";
+import { useLazyGetFirstLaunchFlagQuery } from '@entities/auth/api/user-meta.api';
+import { UpdateContent } from '@features/update-progress/updateProgress';
+import { UpdateProgressProps } from '@processes/update/useUpdateProgress';
+import { isNotEmpty, resetTo, supabase } from '@shared';
+import { MAIN_ICONS } from '@shared/assets/images/main';
+import { useCallback, useEffect } from 'react';
+import { Image, SafeAreaView, StatusBar } from 'react-native';
 
+import AppBootstrap from '../../provider/AppBootstrap';
 
 const Splash = ({ status, progress }: UpdateProgressProps) => {
-  const [initSession] = useLazyInitializeSessionQuery();
-  const [getFirstLaunchFlag] = useLazyFetchFirstLaunchFlagQuery();
+  const [getFirstLaunchFlag] = useLazyGetFirstLaunchFlagQuery();
 
-  useEffect(() => {
-    // 1) Realm 초기화
-    initRealm();
-    // 2) 업데이트가 완료된 뒤에만 로직 실행
-    if (status !== 'UPDATE_PROCESS_COMPLETED') return;
-
-    // 3) 2초 뒤에 인증 요청
-    const timer = setTimeout(flag, 2000);
-    return () => clearTimeout(timer);
-  }, [status]);
-
-  const flag = async () => {
+  const flag = useCallback(async () => {
     const response = await getFirstLaunchFlag();
     if (response.data) {
       resetTo('Onboarding');
       return;
     }
-    const res = await initSession();
-    if (isNotEmpty(res.data)) {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (isNotEmpty(user)) {
       resetTo('Main');
     } else {
       resetTo('Login');
     }
-  };
+  }, [getFirstLaunchFlag]);
+
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout> | null = null;
+
+    if (status === 'UPDATE_PROCESS_COMPLETED') {
+      timer = setTimeout(flag, 2000);
+    }
+
+    return () => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+    };
+  }, [status, flag]);
 
   return (
     <>
@@ -48,6 +54,7 @@ const Splash = ({ status, progress }: UpdateProgressProps) => {
           status={status}
         />
       </SafeAreaView>
+      <AppBootstrap />
     </>
   );
 };

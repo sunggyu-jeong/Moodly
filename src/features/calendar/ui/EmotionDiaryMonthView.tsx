@@ -1,5 +1,5 @@
 import { DiaryCalendarModeType, DiaryPageModeType } from '@entities/calendar/diary.type';
-import { EmotionDiaryDTO } from '@entities/diary';
+import { Diary } from '@entities/diary/model/diary.types';
 import EmotionDiaryCardList from '@features/diary/ui/EmotionDiaryCardList';
 import EmotionDiaryListEmpty from '@features/diary/ui/EmotionDiaryListEmpty';
 import EmotionDiaryListHeader from '@features/diary/ui/EmotionDiaryListHeader';
@@ -11,8 +11,8 @@ import { FlatList, StyleSheet, View } from 'react-native';
 
 interface EmotionDiaryMonthViewProps {
   monthDate: Dayjs;
-  listData?: EmotionDiaryDTO[]; // EmotionDiaryDTO[]
-  monthData: EmotionDiaryDTO[]; // Month summary DTO
+  listData?: Diary[]; // Diary[]
+  monthData: Diary[]; // Month summary DTO
   diaryMode: DiaryPageModeType;
   currentMonth: Dayjs;
   selectedMonth: Dayjs;
@@ -31,7 +31,7 @@ const EmotionDiaryMonthView = ({
   calendarMode,
 }: EmotionDiaryMonthViewProps) => {
   const renderDiaryCard = useCallback(
-    ({ item }: { item: EmotionDiaryDTO }) => <EmotionDiaryCardList data={item} />,
+    ({ item }: { item: Diary }) => <EmotionDiaryCardList data={item} />,
     [],
   );
   return (

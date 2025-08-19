@@ -1,7 +1,8 @@
-import { useCreateDiaryMutation, useUpdateDiaryMutation } from '@shared/api/diary/diaryApi';
+import { useCreateDiaryMutation, useUpdateDiaryMutation } from '@entities/diary/api';
 import { useAppSelector } from '@shared/hooks';
-import { isEmpty, isNotEmpty } from '@shared/lib';
-import dayjs from 'dayjs';
+import { isEmpty } from '@shared/lib';
+import { nowISOUtc, toDateOnly } from '@shared/lib/day.util';
+import { getUserId } from '@shared/lib/user.util';
 import { useCallback } from 'react';
 
 export function useDiaryMutation(text: string) {
@@ -15,22 +16,26 @@ export function useDiaryMutation(text: string) {
     if (isEmpty(text)) {
       return;
     }
-    const diary = { ...currentDiary, description: text };
-    const baseDate = isNotEmpty(diary.createdAt) ? dayjs(diary.createdAt) : dayjs();
+    const userId = await getUserId();
 
-    const start = baseDate.startOf('month').format('YYYY-MM-DD');
-    const end = baseDate.endOf('month').format('YYYY-MM-DD');
-    const date = baseDate.format('YYYY-MM-DD');
     if (isModifyMode) {
+      if (isEmpty(selectedDiary?.emotionId)) return;
+
       await update({
-        emotionId: selectedDiary?.emotionId ?? -1,
-        updates: diary,
-        start: start,
-        end: end,
-        date: date,
+        emotionId: selectedDiary!.emotionId,
+        iconId: currentDiary?.iconId,
+        userId,
+        description: text,
+        updatedAt: nowISOUtc(),
       });
     } else {
-      await create(diary);
+      await create({
+        userId,
+        iconId: currentDiary?.iconId ?? 0,
+        recordDate: toDateOnly(),
+        description: text,
+        createdAt: nowISOUtc(),
+      });
     }
   }, [text, create, update, selectedDiary, currentDiary, isModifyMode]);
 
