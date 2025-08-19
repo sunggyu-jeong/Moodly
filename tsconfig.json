@@ -40,9 +40,6 @@
       "@components/*": [
         "src/components/*"
       ],
-      "@env": [
-        "node_modules/react-native-dotenv"
-      ],
       "@shared": [
         "src/shared"
       ]

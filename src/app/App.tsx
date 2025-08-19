@@ -18,7 +18,7 @@ import { HOT_UPDATER_SUPABASE_URL } from '@env';
 import { getUpdateSource, HotUpdater } from '@hot-updater/react-native';
 import type { UpdateProgressProps } from '@processes/update/useUpdateProgress';
 import { useNotificationPermission } from '@shared/hooks/useNotificationPermission';
-import '@shared/lib/dayjs.util';
+import '@shared/lib/day.util';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import React from 'react';

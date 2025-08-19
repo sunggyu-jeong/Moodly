@@ -34,7 +34,6 @@ module.exports = {
       '@babel/plugin-transform-typescript',
       { isTSX: true, allowDeclareFields: true, onlyRemoveTypeImports: true },
     ],
-    'module:react-native-dotenv',
     'hot-updater/babel-plugin',
     'react-native-reanimated/plugin',
   ],

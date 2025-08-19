@@ -1,4 +1,5 @@
 export * from './date.util';
+export * from './day.util';
 export * from './error.util';
 export * from './navigation.util';
 export * from './supabase.util';
