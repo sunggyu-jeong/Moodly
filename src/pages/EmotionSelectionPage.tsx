@@ -1,4 +1,4 @@
-import { Diary } from '@entities/diary/model/diary.types';
+import type { Diary } from '@entities/diary/model/diary.types';
 import { setCurrentDiary, setSelectedIcon } from '@features/diary/model/diarySlice';
 import { EmotionDisplaySelected, EmotionSelectionList } from '@features/emotion';
 import {

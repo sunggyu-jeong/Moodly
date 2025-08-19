@@ -1,4 +1,4 @@
-import { GestureResponderEvent, TouchableOpacity } from 'react-native';
+import { type GestureResponderEvent, TouchableOpacity } from 'react-native';
 
 export interface NaviActionButtonProps {
   onPress?: (event: GestureResponderEvent) => void;

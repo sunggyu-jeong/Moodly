@@ -1,15 +1,13 @@
-import { ActionButton, Caption, H2, resetTo, useAppDispatch } from '@shared';
+import { useSetUserInfoMutation } from '@entities/auth/api/auth.api';
+import { useUpdateFirstLaunchFlagMutation } from '@entities/auth/api/user-meta.api';
+import type { UserInfo } from '@entities/auth/model/auth.types';
+import { ActionButton, Caption, H2, resetTo } from '@shared';
 import { NavigationBar } from '@widgets/navigation-bar';
 import { useState } from 'react';
 import { SafeAreaView, StyleSheet, TextInput, View } from 'react-native';
 
-import { useSetUserInfoMutation } from '../entities/auth/api/auth.api';
-import { useUpdateFirstLaunchFlagMutation } from '../entities/auth/api/user-meta.api';
-import { UserInfo } from '../entities/auth/model/auth.types';
-
 const MAX_LENGTH = 8;
 const NicknamePage = () => {
-  const dispatch = useAppDispatch();
   const [text, onChangeText] = useState('');
   const [isAvailableNickname, setIsAvailableNickname] = useState(true);
   const [setUserInfoMutation] = useSetUserInfoMutation();

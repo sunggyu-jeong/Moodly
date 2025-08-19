@@ -1,7 +1,7 @@
-import { EmotionIconData } from "@shared";
-import { View } from "react-native";
-import EmotionSelectionIcon from "./EmotionSelectionIcon";
+import type { EmotionIconData } from '@shared';
+import { View } from 'react-native';
 
+import EmotionSelectionIcon from './EmotionSelectionIcon';
 
 interface EmotionListProps {
   emotionList: EmotionIconData[];

@@ -1,4 +1,4 @@
-import { Diary } from '@entities/diary/model/diary.types';
+import type { Diary } from '@entities/diary/model/diary.types';
 import { Avatar, Caption, gray, ICON_DATA, Label } from '@shared';
 import { EMOTION_ICONS } from '@shared/assets/images/emotion';
 import dayjs from 'dayjs';

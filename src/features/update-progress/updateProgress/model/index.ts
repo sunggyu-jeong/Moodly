@@ -1,1 +1,1 @@
-export * from "./progressSlice";
+export * from './progressSlice';

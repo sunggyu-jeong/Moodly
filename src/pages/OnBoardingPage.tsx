@@ -1,20 +1,24 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import {
-  FlatListProps,
+  type FlatListProps,
   Image,
-  Platform,
-  Pressable,
-  useWindowDimensions,
-  View,
   type ImageSourcePropType,
   type ListRenderItem,
   type NativeScrollEvent,
   type NativeSyntheticEvent,
+  Platform,
+  Pressable,
+  useWindowDimensions,
+  View,
 } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { SocialLoginSheet, SocialLoginSheetHandle } from '../features/setting/ui/SocialLoginSheet';
+
+import {
+  SocialLoginSheet,
+  type SocialLoginSheetHandle,
+} from '../features/setting/ui/SocialLoginSheet';
 import { ONBOARDING_ICONS } from '../shared/assets/images/onboarding';
 import { useAppDispatch } from '../shared/hooks';
 import { useNotificationPermission } from '../shared/hooks/useNotificationPermission';
@@ -77,7 +81,7 @@ const OnboardingPage = () => {
       return () => {
         socialSheetRef.current?.close();
       };
-    }, [])
+    }, []),
   );
   const total = SLIDES.length;
   const isLast = index === total - 1;
@@ -88,7 +92,7 @@ const OnboardingPage = () => {
       offset: width * i,
       index: i,
     }),
-    [width]
+    [width],
   );
 
   const keyExtractor = useCallback((item: SlideProps) => String(item.id), []);
@@ -115,7 +119,7 @@ const OnboardingPage = () => {
         />
       </View>
     ),
-    [width, height]
+    [width, height],
   );
 
   const onMomentumScrollEnd = useCallback(
@@ -135,7 +139,7 @@ const OnboardingPage = () => {
       }
       isScrollingRef.current = false;
     },
-    [index, dispatch, requestNotification, showAlarmPermission, total]
+    [index, dispatch, requestNotification, showAlarmPermission, total],
   );
 
   const onScroll = useCallback(
@@ -153,7 +157,7 @@ const OnboardingPage = () => {
         }
       }
     },
-    [width, showStartButton]
+    [width, showStartButton],
   );
 
   const Dots = useMemo(() => {

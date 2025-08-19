@@ -1,4 +1,4 @@
-import { UpdateProgressProps, useUpdateProgress } from '@processes/update/useUpdateProgress';
+import { type UpdateProgressProps, useUpdateProgress } from '@processes/update/useUpdateProgress';
 import Progress from '@shared/ui/elements/Progress';
 import { Text, View } from 'react-native';
 

@@ -1,4 +1,4 @@
-import { Image, ImageSourcePropType, StyleSheet, View } from 'react-native';
+import { Image, type ImageSourcePropType, StyleSheet, View } from 'react-native';
 
 import { getScaleSize } from '@/shared/hooks';
 

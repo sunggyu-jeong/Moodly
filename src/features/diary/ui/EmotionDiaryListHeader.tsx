@@ -1,10 +1,10 @@
 import {
   DiaryCalendarMode,
-  DiaryCalendarModeType,
+  type DiaryCalendarModeType,
   DiaryPageMode,
-  DiaryPageModeType,
+  type DiaryPageModeType,
 } from '@entities/calendar/diary.type';
-import { Diary } from '@entities/diary/model/diary.types';
+import type { Diary } from '@entities/diary/model/diary.types';
 import { generateMonthGrid, generateWeekGrid } from '@shared/lib/date.util';
 import WeekdayHeader from '@shared/ui/elements/WeekdayHeader';
 import dayjs from 'dayjs';

@@ -1,13 +1,14 @@
 // shared/ui/BottomSheetWrapper.tsx
-import { common, gray } from '@/shared/styles/colors';
 import BottomSheet, {
   BottomSheetBackdrop,
-  BottomSheetProps,
+  type BottomSheetProps,
   BottomSheetView,
 } from '@gorhom/bottom-sheet';
-import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
+import type { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import React, { forwardRef } from 'react';
 import { StyleSheet } from 'react-native';
+
+import { common, gray } from '@/shared/styles/colors';
 
 export interface BottomSheetWrapperProps extends BottomSheetProps {
   children: React.ReactNode;

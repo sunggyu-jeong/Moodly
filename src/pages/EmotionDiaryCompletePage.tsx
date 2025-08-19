@@ -1,10 +1,18 @@
-import { setModifyMode } from "@features/diary/model/diarySlice";
-import { setShowToastView } from "@processes/overlay/model/overlaySlice";
-import { Body2, dismissModalToScreen, getScaleSize, gray, H2, navigate, useAppDispatch, useAppSelector } from "@shared";
-import { MAIN_ICONS } from "@shared/assets/images/main";
-import { useEffect } from "react";
-import { Image, StyleSheet, View } from "react-native";
-
+import { setModifyMode } from '@features/diary/model/diarySlice';
+import { setShowToastView } from '@processes/overlay/model/overlaySlice';
+import {
+  Body2,
+  dismissModalToScreen,
+  getScaleSize,
+  gray,
+  H2,
+  navigate,
+  useAppDispatch,
+  useAppSelector,
+} from '@shared';
+import { MAIN_ICONS } from '@shared/assets/images/main';
+import { useEffect } from 'react';
+import { Image, StyleSheet, View } from 'react-native';
 
 const EmotionDiaryCompletePage = () => {
   const isModifyMode = useAppSelector(state => state.diarySlice.isModifyMode);

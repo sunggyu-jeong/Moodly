@@ -7,7 +7,7 @@ import {
   setShowDropdownView,
   setShowToastView,
 } from '@processes/overlay/model/overlaySlice';
-import { RouteProp, useRoute } from '@react-navigation/native';
+import { type RouteProp, useRoute } from '@react-navigation/native';
 import {
   Body1,
   dismissModalToScreen,
@@ -15,7 +15,7 @@ import {
   goBack,
   ICON_DATA,
   isNotEmpty,
-  NaviActionButtonProps,
+  type NaviActionButtonProps,
   NaviMore,
   useAppDispatch,
   useAppSelector,

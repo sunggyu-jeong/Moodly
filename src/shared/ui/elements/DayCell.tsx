@@ -1,6 +1,6 @@
 import { Dayjs } from 'dayjs';
 import React from 'react';
-import { Image, ImageSourcePropType, TouchableOpacity, View } from 'react-native';
+import { Image, type ImageSourcePropType, TouchableOpacity, View } from 'react-native';
 
 import { Caption } from '@/shared/ui/typography/Caption';
 

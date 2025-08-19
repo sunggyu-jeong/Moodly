@@ -1,45 +1,18 @@
 {
   "extends": "@react-native/typescript-config/tsconfig.json",
   "compilerOptions": {
-    "target": "es5",
-    "module": "es2015",
-    "strict": true,
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "jsx": "react-jsx",
+    "verbatimModuleSyntax": true,
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "allowSyntheticDefaultImports": true,
-    "importsNotUsedAsValues": "remove",
-    "verbatimModuleSyntax": false,
     "baseUrl": ".",
     "paths": {
-      "@": [
-        "src/index.ts"
-      ],
-      "@app": [
-        "src/app/index.ts"
-      ],
-      "@processes": [
-        "src/processes/index.ts"
-      ],
-      "@pages": [
-        "src/pages/index.ts"
-      ],
-      "@widgets": [
-        "src/widgets/index.ts"
-      ],
-      "@features": [
-        "src/features/index.ts"
-      ],
-      "@entities": [
-        "src/entities/index.ts"
-      ],
-      "@shared": [
-        "src/shared/index.ts"
-      ],
-      "@components": [
-        "src/components/index.ts"
-      ],
       "@/*": [
         "src/*"
       ],
@@ -69,18 +42,22 @@
       ],
       "@env": [
         "node_modules/react-native-dotenv"
+      ],
+      "@shared": [
+        "src/shared"
       ]
     }
   },
   "include": [
-    "src/**/*",
+    "src",
     "nativewind-env.d.ts",
-    "./.env.d.ts",
+    ".env.d.ts",
     "react-native-textinput-extensions.d.ts",
     "hot-updater.config.ts"
   ],
   "exclude": [
     "node_modules",
-    "build"
+    "build",
+    "dist"
   ]
 }

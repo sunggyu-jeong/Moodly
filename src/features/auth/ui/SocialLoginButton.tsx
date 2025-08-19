@@ -1,5 +1,5 @@
 import { AUTH_PROVIDER_CONFIG } from '@entities/auth/config';
-import { AuthProvider } from '@entities/auth/types';
+import type { AuthProvider } from '@entities/auth/types';
 import { isNotEmpty } from '@shared/lib';
 import { Body1 } from '@shared/ui/typography/Body1';
 import { Image, TouchableOpacity, View } from 'react-native';

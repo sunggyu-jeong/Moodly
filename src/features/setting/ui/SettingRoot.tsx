@@ -5,7 +5,7 @@ import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar';
 import React from 'react';
 import { View } from 'react-native';
 
-import { HeaderItem, SettingItemProps, TEXTS } from '../types';
+import { type HeaderItem, type SettingItemProps, TEXTS } from '../types';
 import SettingList from './SettingList';
 
 interface Props {

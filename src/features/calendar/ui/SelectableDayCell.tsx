@@ -1,4 +1,4 @@
-import { Diary } from '@entities/diary/model/diary.types';
+import type { Diary } from '@entities/diary/model/diary.types';
 import { setCurrentDiary, setSelectedDay } from '@features/diary/model/diarySlice';
 import { setShowToastView } from '@processes/overlay/model/overlaySlice';
 import { DayCell, ICON_DATA, isEmpty, navigate, useAppDispatch, useAppSelector } from '@shared';

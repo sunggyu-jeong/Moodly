@@ -1,6 +1,6 @@
 import { TouchableOpacity, View } from 'react-native';
 
-import { SettingItemProps } from '../types';
+import type { SettingItemProps } from '../types';
 import SettingItem from './SettingItem';
 
 interface SettingListProps {

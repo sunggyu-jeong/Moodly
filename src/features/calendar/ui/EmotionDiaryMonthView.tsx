@@ -1,5 +1,5 @@
-import { DiaryCalendarModeType, DiaryPageModeType } from '@entities/calendar/diary.type';
-import { Diary } from '@entities/diary/model/diary.types';
+import type { DiaryCalendarModeType, DiaryPageModeType } from '@entities/calendar/diary.type';
+import type { Diary } from '@entities/diary/model/diary.types';
 import EmotionDiaryCardList from '@features/diary/ui/EmotionDiaryCardList';
 import EmotionDiaryListEmpty from '@features/diary/ui/EmotionDiaryListEmpty';
 import EmotionDiaryListHeader from '@features/diary/ui/EmotionDiaryListHeader';

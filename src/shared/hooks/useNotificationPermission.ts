@@ -9,7 +9,7 @@ import { useAppDispatch } from '@shared/hooks';
 import { resetTo } from '@shared/lib';
 import { useEffect, useRef, useState } from 'react';
 import { AppState, PermissionsAndroid, Platform } from 'react-native';
-import { checkNotifications, PermissionStatus } from 'react-native-permissions';
+import { checkNotifications, type PermissionStatus } from 'react-native-permissions';
 
 export function useNotificationPermission() {
   const dispatch = useAppDispatch();
@@ -67,7 +67,7 @@ export function useNotificationPermission() {
     () => () => {
       unsubscribeRef.current?.();
     },
-    [dispatch]
+    [dispatch],
   );
 
   /** platform 분기 로컬 함수 */
@@ -82,7 +82,7 @@ export function useNotificationPermission() {
     }
     if (typeof Platform.Version === 'number' && Platform.Version >= 33) {
       const result = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
+        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
       );
       return result === PermissionsAndroid.RESULTS.GRANTED;
     }

@@ -1,5 +1,5 @@
 import { DiaryCalendarMode, DiaryPageMode } from '@entities/calendar/diary.type';
-import { CalendarPage } from '@features/calendar/lib/paging';
+import type { CalendarPage } from '@features/calendar/lib/paging';
 import { useDiaryPagerVM } from '@features/calendar/model/useDiaryPagerVM';
 import { usePagerController } from '@features/calendar/model/usePagerController';
 import { EmotionDiaryMonthPager } from '@features/calendar/ui/EmotionDiaryMonthPager';

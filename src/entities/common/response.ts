@@ -1,4 +1,4 @@
-import { AuthError, Session } from '@supabase/supabase-js';
+import { AuthError, type Session } from '@supabase/supabase-js';
 
 export type ApiResponse<T> = {
   session?: Session | null;

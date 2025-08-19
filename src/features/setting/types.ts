@@ -1,5 +1,5 @@
-import { ReactNode } from 'react';
-import { StyleProp, TextStyle } from 'react-native';
+import type { ReactNode } from 'react';
+import type { StyleProp, TextStyle } from 'react-native';
 
 export interface SettingItemProps {
   title?: string;

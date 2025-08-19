@@ -1,4 +1,4 @@
-import { Diary } from '@entities/diary/model/diary.types';
+import type { Diary } from '@entities/diary/model/diary.types';
 import { GridList } from '@shared/ui/elements/GridList';
 import dayjs, { Dayjs } from 'dayjs';
 import { memo, useMemo } from 'react';

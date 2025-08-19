@@ -1,7 +1,7 @@
 import type { BaseQueryFn } from '@reduxjs/toolkit/query';
 import { supabase } from '@shared';
 
-import { AppError, toAppError } from './Error';
+import { type AppError, toAppError } from './Error';
 
 interface SupabaseType<T> {
   data: T | null;

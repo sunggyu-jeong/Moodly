@@ -1,7 +1,7 @@
 import { useGetUserInfoQuery } from '@entities/auth/api/auth.api';
 import { KAKAO_OPEN_CHAT_LINK } from '@env';
 import { useLogout } from '@features/auth';
-import { SettingRoot, SocialLoginSheet, SocialLoginSheetHandle } from '@features/setting';
+import { SettingRoot, SocialLoginSheet, type SocialLoginSheetHandle } from '@features/setting';
 import { SETTING_EVENT_TYPE, TEXTS } from '@features/setting/types';
 import { MODAL_CONFIRM_ACTION_KEY } from '@processes/key';
 import { setShowModalPopup } from '@processes/overlay/model/overlaySlice';

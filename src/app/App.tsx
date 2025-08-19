@@ -2,7 +2,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
-import { ProfilerOnRenderCallback } from 'react';
+import type { ProfilerOnRenderCallback } from 'react';
 import 'react-native-get-random-values';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
@@ -16,7 +16,7 @@ import { store } from '@app/store.ts';
 import { Splash } from '@app/ui';
 import { HOT_UPDATER_SUPABASE_URL } from '@env';
 import { getUpdateSource, HotUpdater } from '@hot-updater/react-native';
-import { UpdateProgressProps } from '@processes/update/useUpdateProgress';
+import type { UpdateProgressProps } from '@processes/update/useUpdateProgress';
 import { useNotificationPermission } from '@shared/hooks/useNotificationPermission';
 import '@shared/lib/dayjs.util';
 import timezone from 'dayjs/plugin/timezone';

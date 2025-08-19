@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { RootStackParamList } from '@app/navigation/RootStack';
-import { BottomTabParamList } from '@app/navigation/TabNavigation';
+import type { RootStackParamList } from '@app/navigation/RootStack';
+import type { BottomTabParamList } from '@app/navigation/TabNavigation';
 import {
   CommonActions,
   createNavigationContainerRef,

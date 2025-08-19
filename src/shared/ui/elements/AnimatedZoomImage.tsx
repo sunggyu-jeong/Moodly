@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Animated, ImageSourcePropType } from 'react-native';
+import { Animated, type ImageSourcePropType } from 'react-native';
 
 import { useScale } from '@/shared/hooks';
 

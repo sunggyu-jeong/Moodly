@@ -1,5 +1,5 @@
 import { useGetDiariesByRangeQuery } from '@entities/diary/api/diary.api';
-import { Diary } from '@entities/diary/model/diary.types';
+import type { Diary } from '@entities/diary/model/diary.types';
 import useDelay from '@shared/hooks/useDelay';
 import { Dayjs } from 'dayjs';
 import { useMemo } from 'react';

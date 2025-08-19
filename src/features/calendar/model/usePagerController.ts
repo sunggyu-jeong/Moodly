@@ -1,5 +1,10 @@
 import { useCallback, useRef } from 'react';
-import { Dimensions, FlatList, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
+import {
+  Dimensions,
+  FlatList,
+  type NativeScrollEvent,
+  type NativeSyntheticEvent,
+} from 'react-native';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 

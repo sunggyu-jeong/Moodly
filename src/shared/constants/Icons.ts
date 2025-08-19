@@ -1,4 +1,4 @@
-import { ImageSourcePropType } from 'react-native';
+import type { ImageSourcePropType } from 'react-native';
 
 import { EMOTION_ICONS } from '../assets/images/emotion';
 

@@ -1,10 +1,10 @@
-import { setShowModalPopup } from "@processes/overlay/model/overlaySlice";
-import { DimmedView, useAppDispatch, useAppSelector } from "@shared";
-import React, { useEffect, useRef } from "react";
-import { Animated, Modal, View } from "react-native";
-import PopupFooter from "./PopupFooter";
-import PopupHeader from "./PopupHeader";
+import { setShowModalPopup } from '@processes/overlay/model/overlaySlice';
+import { DimmedView, useAppDispatch, useAppSelector } from '@shared';
+import React, { useEffect, useRef } from 'react';
+import { Animated, Modal, View } from 'react-native';
 
+import PopupFooter from './PopupFooter';
+import PopupHeader from './PopupHeader';
 
 interface PopupContainerProps {
   title: string;

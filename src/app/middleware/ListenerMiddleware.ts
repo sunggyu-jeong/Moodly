@@ -1,12 +1,8 @@
-import {
-  createListenerMiddleware,
-  isRejectedWithValue,
-  ListenerEffectAPI,
-  ThunkDispatch,
-  UnknownAction,
-} from '@reduxjs/toolkit';
-import { resetTo } from '@shared';
+import type { ListenerEffectAPI, ThunkDispatch, UnknownAction } from '@reduxjs/toolkit';
+import { createListenerMiddleware, isRejectedWithValue } from '@reduxjs/toolkit';
 import { AppCode } from '@shared/config';
+
+import { resetTo } from '../../shared';
 
 const appCodeHandlers: Record<
   AppCode,

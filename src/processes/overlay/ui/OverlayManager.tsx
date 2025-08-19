@@ -1,10 +1,14 @@
-import { isNotEmpty, useAppDispatch, useAppSelector } from "@shared";
-import { DropDownAnimation } from "@widgets/dropdown/animation";
-import { ToastController } from "@widgets/toast";
-import { PopupContainer } from "../../../widgets/popup";
-import { MODAL_CONFIRM_ACTION_KEY } from "../../key";
-import { resetModalPopup, setOverlayEventHandler, setRequestWithDrawal } from "../model/overlaySlice";
+import { isNotEmpty, useAppDispatch, useAppSelector } from '@shared';
+import { DropDownAnimation } from '@widgets/dropdown/animation';
+import { ToastController } from '@widgets/toast';
 
+import { PopupContainer } from '../../../widgets/popup';
+import { MODAL_CONFIRM_ACTION_KEY } from '../../key';
+import {
+  resetModalPopup,
+  setOverlayEventHandler,
+  setRequestWithDrawal,
+} from '../model/overlaySlice';
 
 const OverlayManager = () => {
   const showToastView = useAppSelector(state => state.overlaySlice.showToastView);

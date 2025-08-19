@@ -1,14 +1,14 @@
 import {
-  DiaryCalendarModeType,
+  type DiaryCalendarModeType,
   DiaryPageMode,
-  DiaryPageModeType,
+  type DiaryPageModeType,
 } from '@entities/calendar/diary.type';
 import { isNotEmpty } from '@shared/lib';
 import { Dayjs } from 'dayjs';
 import { type Ref, useCallback } from 'react';
-import { Dimensions, FlatList, FlatListProps, ListRenderItem, View } from 'react-native';
+import { Dimensions, FlatList, type FlatListProps, type ListRenderItem, View } from 'react-native';
 
-import { CalendarPage } from '../lib/paging';
+import type { CalendarPage } from '../lib/paging';
 import EmotionDiaryMonthView from './EmotionDiaryMonthView';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');

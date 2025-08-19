@@ -1,6 +1,6 @@
-import { Diary } from '@entities/diary/model/diary.types';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { EmotionIconData, ICON_DATA } from '@shared/constants/Icons';
+import type { Diary } from '@entities/diary/model/diary.types';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { type EmotionIconData, ICON_DATA } from '@shared/constants/Icons';
 import dayjs from 'dayjs';
 
 interface DiaryState {

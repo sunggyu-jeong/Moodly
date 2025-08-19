@@ -1,9 +1,9 @@
 import appleAuth from '@invertase/react-native-apple-authentication';
-import { GoogleSignin, User } from '@react-native-google-signin/google-signin';
+import { GoogleSignin, type User } from '@react-native-google-signin/google-signin';
 import { appApi } from '@shared/api/AppApi';
 import { ApiCode } from '@shared/config';
 
-import { SetUserInfoInput, SignInProviderInput, UserInfo } from '../model/auth.types';
+import type { SetUserInfoInput, SignInProviderInput, UserInfo } from '../model/auth.types';
 
 export async function getGoogleToken() {
   await GoogleSignin.hasPlayServices();

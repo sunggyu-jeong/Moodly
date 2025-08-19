@@ -1,4 +1,4 @@
-import { Diary } from '@entities/diary/model/diary.types';
+import type { Diary } from '@entities/diary/model/diary.types';
 import { isNotEmpty } from '@shared/lib';
 import dayjs, { Dayjs } from 'dayjs';
 

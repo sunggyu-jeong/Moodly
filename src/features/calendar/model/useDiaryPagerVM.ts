@@ -4,9 +4,9 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import {
   DiaryCalendarMode,
-  DiaryCalendarModeType,
+  type DiaryCalendarModeType,
   DiaryPageMode,
-  DiaryPageModeType,
+  type DiaryPageModeType,
 } from '@/entities/calendar';
 import type { Diary } from '@/entities/diary/model/diary.types';
 import { formatWeekLabel, useAppDispatch, useAppSelector } from '@/shared';
@@ -14,7 +14,7 @@ import { getMonthRange } from '@/widgets/diary';
 
 import { moveMonth, moveWeek, resetDiary } from '../../diary/model/diarySlice';
 import { useDiaryMonthData, useDiaryWeekData } from '../hooks';
-import { buildPages, CalendarPage } from '../lib';
+import { buildPages, type CalendarPage } from '../lib';
 import {
   selectSelectedDayIso,
   selectSelectedMonth,

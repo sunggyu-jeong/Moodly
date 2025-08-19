@@ -1,4 +1,4 @@
-import { Image, ImageSourcePropType, TouchableOpacity } from 'react-native';
+import { Image, type ImageSourcePropType, TouchableOpacity } from 'react-native';
 
 import { getScaleSize } from '@/shared/hooks';
 
