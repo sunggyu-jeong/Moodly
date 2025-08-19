@@ -3,8 +3,8 @@ import { nowISOUtc, toKstDate } from '@shared/lib/day.util';
 import { getUserId } from '@shared/lib/user.util';
 import dayjs from 'dayjs';
 
-import { byIdTag } from '../lib/diary.mapper';
-import type { CreateDiaryInput, Diary, UpdateDiaryInput } from '../model/diary.types';
+import { byIdTag, fromRow } from '../lib/diary.mapper';
+import type { CreateDiaryInput, DbDiaryRow, Diary, UpdateDiaryInput } from '../model/diary.types';
 
 type DiaryDateRangeQuery = { start: string; end: string };
 
@@ -14,17 +14,18 @@ export const diaryApi = appApi.injectEndpoints({
       query:
         ({ start, end }) =>
         async client => {
-          const userId = getUserId();
+          const userId = await getUserId();
           const q = client
             .from('moodly_diary')
             .select('*')
             .gte('record_date', start)
             .lt('record_date', end)
-            .eq('user_id', userId);
+            .eq('user_id', userId)
+            .returns<DbDiaryRow[]>();
 
           const { data, error } = await q.order('record_date', { ascending: true });
 
-          return { data: (data ?? null) as Diary[] | null, error };
+          return { data: data ? data.map(fromRow) : null, error };
         },
       providesTags: result =>
         result && Array.isArray(result)
@@ -34,7 +35,7 @@ export const diaryApi = appApi.injectEndpoints({
 
     getDiaryCount: build.query<number, void>({
       query: () => async client => {
-        const userId = getUserId();
+        const userId = await getUserId();
 
         const q = client
           .from('moodly_diary')
@@ -48,7 +49,7 @@ export const diaryApi = appApi.injectEndpoints({
 
     hasDiaryForDay: build.query<boolean, void>({
       query: () => async client => {
-        const userId = getUserId();
+        const userId = await getUserId();
         const q = client
           .from('moodly_diary')
           .select('*', { count: 'exact', head: true })
@@ -78,7 +79,7 @@ export const diaryApi = appApi.injectEndpoints({
           .select('*')
           .single();
 
-        return { data: (data ?? null) as Diary | null, error };
+        return { data: fromRow((data ?? null) as Diary | null), error };
       },
       invalidatesTags: (_res, _err) => [{ type: 'Diary', id: 'LIST' }],
     }),

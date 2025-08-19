@@ -1,18 +1,22 @@
-/* eslint-disable react-native/split-platform-components */
 import { getApp } from '@react-native-firebase/app';
-import messaging, {
+import {
   AuthorizationStatus,
   getMessaging,
+  getToken,
+  isDeviceRegisteredForRemoteMessages,
+  onTokenRefresh,
+  registerDeviceForRemoteMessages,
   requestPermission,
 } from '@react-native-firebase/messaging';
-import { useAppDispatch } from '@shared/hooks';
 import { resetTo } from '@shared/lib';
 import { useEffect, useRef, useState } from 'react';
 import { AppState, PermissionsAndroid, Platform } from 'react-native';
 import { checkNotifications, type PermissionStatus } from 'react-native-permissions';
 
+const app = getApp();
+const msg = getMessaging(app);
+
 export function useNotificationPermission() {
-  const dispatch = useAppDispatch();
   const [status, setStatus] = useState<PermissionStatus>('unavailable');
   const appState = useRef(AppState.currentState);
   const unsubscribeRef = useRef<(() => void) | null>(null);
@@ -25,9 +29,7 @@ export function useNotificationPermission() {
     const sub = AppState.addEventListener('change', async nextState => {
       if (appState.current.match(/inactive|background/) && nextState === 'active') {
         const { status: newStatus } = await checkNotifications();
-        if (newStatus !== status) {
-          setStatus(newStatus);
-        }
+        if (newStatus !== status) setStatus(newStatus);
       }
       appState.current = nextState;
     });
@@ -44,11 +46,10 @@ export function useNotificationPermission() {
       const granted = await requestNotificationPermission();
       if (!granted) return false;
 
-      const token = await messaging().getToken();
+      const token = await getToken(msg);
       console.log('FCM 토큰:', token);
 
-      // 토큰 갱신 리스너 등록
-      unsubscribeRef.current = messaging().onTokenRefresh(newToken => {
+      unsubscribeRef.current = onTokenRefresh(msg, newToken => {
         console.log('FCM 토큰 갱신:', newToken);
       });
       return true;
@@ -62,24 +63,30 @@ export function useNotificationPermission() {
     resetTo('Main');
   };
 
-  // 언마운트 시 리스너 해제
   useEffect(
     () => () => {
       unsubscribeRef.current?.();
     },
-    [dispatch],
+    [],
   );
 
-  /** platform 분기 로컬 함수 */
+  async function ensureRegisteredForRemoteMessagesIOS() {
+    if (Platform.OS !== 'ios') return;
+    if (!isDeviceRegisteredForRemoteMessages(msg)) {
+      await registerDeviceForRemoteMessages(msg);
+    }
+  }
+
   async function requestNotificationPermission(): Promise<boolean> {
     if (Platform.OS === 'ios') {
-      await getMessaging(getApp()).registerDeviceForRemoteMessages();
-      const authStatus = await requestPermission(getMessaging(getApp()));
+      await ensureRegisteredForRemoteMessagesIOS();
+      const authStatus = await requestPermission(msg);
       return (
         authStatus === AuthorizationStatus.AUTHORIZED ||
         authStatus === AuthorizationStatus.PROVISIONAL
       );
     }
+    // Android 13+ 알림 권한
     if (typeof Platform.Version === 'number' && Platform.Version >= 33) {
       const result = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
