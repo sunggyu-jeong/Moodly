@@ -11,3 +11,6 @@ export const toDateOnly = (v?: string): string => {
   if (/^\d{4}-\d{2}-\d{2}$/.test(v)) return v;
   return toKstDate(v);
 };
+
+export const toDateOnlyKST = (value: string | Date) =>
+  dayjs(value).tz('Asia/Seoul').format('YYYY-MM-DD');

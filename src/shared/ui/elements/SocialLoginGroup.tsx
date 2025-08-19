@@ -38,7 +38,7 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
         return;
       }
     }
-    saveFirstLaunchFlag({ isFirstLoad: true });
+    saveFirstLaunchFlag({ isFirstLoad: false });
     resetTo('Main');
     dispatch(setShowToastView({ visibility: true, message: '로그인이 완료됐어요!' }));
   };

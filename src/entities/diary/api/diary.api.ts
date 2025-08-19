@@ -1,9 +1,9 @@
 import { appApi } from '@shared/api/AppApi';
-import { nowISOUtc, toKstDate } from '@shared/lib/day.util';
+import { toKstDate } from '@shared/lib/day.util';
 import { getUserId } from '@shared/lib/user.util';
 import dayjs from 'dayjs';
 
-import { byIdTag, fromRow } from '../lib/diary.mapper';
+import { byIdTag, fromRow, toInsertRow, toUpdateRow } from '../lib/diary.mapper';
 import type { CreateDiaryInput, DbDiaryRow, Diary, UpdateDiaryInput } from '../model/diary.types';
 
 type DiaryDateRangeQuery = { start: string; end: string };
@@ -21,9 +21,10 @@ export const diaryApi = appApi.injectEndpoints({
             .gte('record_date', start)
             .lt('record_date', end)
             .eq('user_id', userId)
-            .returns<DbDiaryRow[]>();
+            .order('record_date', { ascending: true })
+            .overrideTypes<DbDiaryRow[], { merge: false }>();
 
-          const { data, error } = await q.order('record_date', { ascending: true });
+          const { data, error } = await q;
 
           return { data: data ? data.map(fromRow) : null, error };
         },
@@ -53,8 +54,9 @@ export const diaryApi = appApi.injectEndpoints({
         const q = client
           .from('moodly_diary')
           .select('*', { count: 'exact', head: true })
-          .eq('record_date', dayjs())
-          .eq('user_id', userId);
+          .eq('record_date', toKstDate(dayjs()))
+          .eq('user_id', userId)
+          .overrideTypes<DbDiaryRow[], { merge: false }>();
 
         const { count, error } = await q;
         return { data: ((count ?? 0) > 0) as boolean, error };
@@ -63,39 +65,23 @@ export const diaryApi = appApi.injectEndpoints({
 
     createDiary: build.mutation<Diary, CreateDiaryInput>({
       query: input => async client => {
-        const nowISO = nowISOUtc();
-        const payload = {
-          user_id: input.userId,
-          icon_id: input.iconId,
-          record_date: toKstDate(input.recordDate ?? undefined),
-          description: input.description ?? null,
-          created_at: nowISO,
-          updated_at: nowISO,
-        };
-
         const { data, error } = await client
           .from('moodly_diary')
-          .insert(payload)
+          .insert(toInsertRow(input))
           .select('*')
-          .single();
+          .single()
+          .overrideTypes<DbDiaryRow, { merge: false }>();
 
-        return { data: fromRow((data ?? null) as Diary | null), error };
+        return { data: (data ?? null) as Diary | null, error };
       },
       invalidatesTags: (_res, _err) => [{ type: 'Diary', id: 'LIST' }],
     }),
 
     updateDiary: build.mutation<Diary, UpdateDiaryInput>({
       query: input => async client => {
-        const nowISO = nowISOUtc();
-        const patch = {
-          icon_id: input.iconId,
-          description: input.description ?? undefined,
-          updated_at: nowISO,
-        };
-
         const { data, error } = await client
           .from('moodly_diary')
-          .update(patch)
+          .update(toUpdateRow(input))
           .eq('emotion_id', input.emotionId)
           .select('*')
           .single();

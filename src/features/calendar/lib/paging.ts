@@ -36,7 +36,7 @@ export const buildPages = ({
     if (!isNotEmpty(selectedDayIso)) {
       return list;
     }
-    return list.filter(e => dayjs(e.createdAt).isSame(dayjs(selectedDayIso), 'day'));
+    return list.filter(e => dayjs(e.recordDate).isSame(dayjs(selectedDayIso), 'day'));
   };
 
   const toPage = (key: CalendarPageKey, period: Dayjs, data: Diary[]) => ({

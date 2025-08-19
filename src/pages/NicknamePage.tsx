@@ -18,7 +18,7 @@ const NicknamePage = () => {
     };
     const response = await setUserInfoMutation(userInfo);
     if (response.data) {
-      saveFirstLaunchFlag({ isFirstLoad: true });
+      saveFirstLaunchFlag({ isFirstLoad: false });
       resetTo('Main');
     }
   };

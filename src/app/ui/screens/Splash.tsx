@@ -1,11 +1,11 @@
 import { useLazyGetFirstLaunchFlagQuery } from '@entities/auth/api/user-meta.api';
 import { UpdateContent } from '@features/update-progress/updateProgress';
 import type { UpdateProgressProps } from '@processes/update/useUpdateProgress';
+import { isNotEmpty, resetTo, supabase } from '@shared';
 import { MAIN_ICONS } from '@shared/assets/images/main';
 import { useCallback, useEffect } from 'react';
 import { Image, SafeAreaView, StatusBar } from 'react-native';
 
-import { isNotEmpty, resetTo, supabase } from '../../../shared';
 import AppBootstrap from '../../provider/AppBootstrap';
 
 const Splash = ({ status, progress }: UpdateProgressProps) => {
