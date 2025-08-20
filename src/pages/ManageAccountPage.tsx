@@ -21,9 +21,10 @@ import {
 import { appApi } from '@shared/api/AppApi';
 import NaviTitleDisplay from '@shared/ui/elements/NaviTitle';
 import { NavigationBar } from '@widgets/navigation-bar';
-import { useCallback, useEffect, useMemo, useRef, version } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
+import packageJson from '../../package.json';
 import { useGetUserInfoQuery } from '../entities/auth/api/auth.api';
 import { type BottomSheetHandler, SettingList } from '../features/setting';
 import { ChangeNicknameSheet } from '../features/setting/ui/ChangeNicknameSheet';
@@ -149,7 +150,7 @@ const ManageAccountPage = () => {
     <>
       <NavigationBar
         backgroundColor={gray[100]}
-        showBackButton={false}
+        showBackButton={true}
         centerComponent={<NaviTitleDisplay title={'계정 관리'} />}
       />
       <View className="bg-gray-100 flex-1 justify-between px-4 rounded-xl pt-[14px]">
@@ -158,7 +159,7 @@ const ManageAccountPage = () => {
           weight="regular"
           className="text-gray-400 mb-[13px] text-center"
         >
-          {'앱 버전: ' + version}
+          {'앱 버전: ' + packageJson.version}
         </Label>
       </View>
       <ChangeNicknameSheet ref={changeNicknameSheetRef} />

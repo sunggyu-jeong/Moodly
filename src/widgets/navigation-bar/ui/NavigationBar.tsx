@@ -48,7 +48,7 @@ const NavigationBar = ({
         )}
         <View className="flex-1" />
 
-        {centerComponent && <View className="items-center flex-1">{centerComponent}</View>}
+        {centerComponent && <View style={styles.center}>{centerComponent}</View>}
 
         <View className="flex-1" />
 
@@ -70,6 +70,17 @@ const NavigationBar = ({
 const styles = StyleSheet.create({
   container: {
     height: getScaleSize(56),
+  },
+  center: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // 이 컨테이너가 다른 버튼의 터치를 막지 않도록 설정
+    pointerEvents: 'box-none',
   },
 });
 export default React.memo(NavigationBar);

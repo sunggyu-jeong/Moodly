@@ -81,9 +81,14 @@ export const authApi = appApi.injectEndpoints({
           data: { user },
         } = await client.auth.getUser();
         if (!user) {
-          const error = new Error('로그인이 필요합니다.');
-          Object.assign(error, { status: 401, code: 'NOT_LOGIN' });
-          throw error;
+          return {
+            error: {
+              message: '로그인이 필요합니다.',
+              status: 401,
+              code: 'NOT_LOGIN',
+            },
+            data: null,
+          };
         }
         const { data, error } = await client
           .from('tb_profiles')
@@ -101,9 +106,14 @@ export const authApi = appApi.injectEndpoints({
           data: { user },
         } = await client.auth.getUser();
         if (!user) {
-          const error = new Error('로그인이 필요합니다.');
-          Object.assign(error, { status: 401, code: 'NOT_LOGIN' });
-          throw error;
+          return {
+            error: {
+              message: '로그인이 필요합니다.',
+              status: 401,
+              code: 'NOT_LOGIN',
+            },
+            data: null,
+          };
         }
         const { error } = await client.from('tb_profiles').upsert({
           id: user.id,

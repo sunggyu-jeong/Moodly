@@ -4,7 +4,7 @@ import { useLogout } from '@features/auth';
 import { SettingRoot } from '@features/setting';
 import { SETTING_EVENT_TYPE, TEXTS } from '@features/setting/types';
 import { MODAL_CONFIRM_ACTION_KEY } from '@processes/key';
-import { setShowModalPopup } from '@processes/overlay/model/overlaySlice';
+import { setShowModalPopup, setShowToastView } from '@processes/overlay/model/overlaySlice';
 import {
   Body1,
   gray,
@@ -41,6 +41,12 @@ const SettingPage = () => {
           break;
         case SETTING_EVENT_TYPE.LOG_OUT:
           signOut();
+          break;
+        case SETTING_EVENT_TYPE.PRIVACY_POLICY:
+          dispatch(setShowToastView({ visibility: true, message: '개인정보 이용동의 화면이동!' }));
+          break;
+        case SETTING_EVENT_TYPE.TERMS_OF_SERVICE:
+          dispatch(setShowToastView({ visibility: true, message: '약관정보 화면이동!' }));
           break;
         default:
           break;
@@ -124,7 +130,7 @@ const SettingPage = () => {
     [
       {
         title: TEXTS.privacyPolicy,
-        onPress: () => handlePress(SETTING_EVENT_TYPE.SEND_FEEDBACK),
+        onPress: () => handlePress(SETTING_EVENT_TYPE.PRIVACY_POLICY),
         rightComponent: (
           <Image
             source={COMMON_ICONS.iconNextGray}
@@ -135,7 +141,7 @@ const SettingPage = () => {
       },
       {
         title: TEXTS.termsOfService,
-        onPress: () => handlePress(SETTING_EVENT_TYPE.SEND_FEEDBACK),
+        onPress: () => handlePress(SETTING_EVENT_TYPE.TERMS_OF_SERVICE),
         rightComponent: (
           <Image
             source={COMMON_ICONS.iconNextGray}
