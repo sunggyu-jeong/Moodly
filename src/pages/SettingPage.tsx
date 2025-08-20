@@ -70,14 +70,9 @@ const SettingPage = () => {
   const headerItem = isNotEmpty(userInfo)
     ? {
         leftComponent: (
-          <View className="flex justify-between gap-4">
-            <View className="flex-col mr-3">
-              <Body1 weight="semibold">{TEXTS.guestTitle}</Body1>
-              <Label weight="regular">{TEXTS.guestLabel}</Label>
-            </View>
-            <ActionButton onPress={() => socialSheetRef.current?.expand()}>
-              {TEXTS.loginButton}
-            </ActionButton>
+          <View className="flex-col">
+            <Body1 weight="semibold">{userInfo.nickname}</Body1>
+            <Label weight="regular">{userInfo.email}</Label>
           </View>
         ),
       }
