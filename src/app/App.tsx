@@ -12,7 +12,7 @@ import { navigationRef } from '@shared/lib';
 import '../../global.css';
 
 import { RootStack } from '@app/navigation';
-import { store } from '@app/store.ts';
+import { store } from '@app/store';
 import { Splash } from '@app/ui';
 import { HOT_UPDATER_SUPABASE_URL } from '@env';
 import { getUpdateSource, HotUpdater } from '@hot-updater/react-native';

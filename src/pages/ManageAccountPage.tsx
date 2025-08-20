@@ -8,6 +8,7 @@ import {
   setShowToastView,
 } from '@processes/overlay/model/overlaySlice';
 import {
+  Body1,
   common,
   gray,
   isEmpty,
@@ -20,13 +21,20 @@ import {
 import { appApi } from '@shared/api/AppApi';
 import NaviTitleDisplay from '@shared/ui/elements/NaviTitle';
 import { NavigationBar } from '@widgets/navigation-bar';
-import { useCallback, useEffect, useMemo, version } from 'react';
-import { View } from 'react-native';
+import { useCallback, useEffect, useMemo, useRef, version } from 'react';
+import { Image, StyleSheet, View } from 'react-native';
+
+import { useGetUserInfoQuery } from '../entities/auth/api/auth.api';
+import { type BottomSheetHandler, SettingList } from '../features/setting';
+import { ChangeNicknameSheet } from '../features/setting/ui/ChangeNicknameSheet';
+import { SETTING_ICONS } from '../shared/assets/images/setting';
 
 const ManageAccountPage = () => {
   const requestWithDrawal = useAppSelector(state => state.overlaySlice.requestWithDrawal);
   const { signOut } = useLogout();
   const dispatch = useAppDispatch();
+  const { data: userInfo } = useGetUserInfoQuery();
+  const changeNicknameSheetRef = useRef<BottomSheetHandler>(null);
 
   const handleAccountDeletion = useCallback(async () => {
     try {
@@ -67,7 +75,9 @@ const ManageAccountPage = () => {
 
   const handlePress = useCallback(
     (identifier: SETTING_EVENT_TYPE) => {
-      if (identifier === SETTING_EVENT_TYPE.LOG_OUT) {
+      if (identifier === SETTING_EVENT_TYPE.CHANGE_NICKNAME) {
+        changeNicknameSheetRef.current?.expand();
+      } else if (identifier === SETTING_EVENT_TYPE.LOG_OUT) {
         signOut();
       } else if (identifier === SETTING_EVENT_TYPE.DELETE_ACCOUNT) {
         dispatch(setRequestWithDrawal(null));
@@ -98,19 +108,41 @@ const ManageAccountPage = () => {
     () => [
       [
         {
+          key: 'change-nickname',
+          title: '닉네임 변경',
+          onPress: () => handlePress(SETTING_EVENT_TYPE.CHANGE_NICKNAME),
+          rightComponent: (
+            <View className="flex-row align-middle gap-2">
+              <Body1
+                weight="regular"
+                style={styles.nickname}
+              >
+                {userInfo?.nickname}
+              </Body1>
+              <Image
+                source={SETTING_ICONS.modifyNickname}
+                className="w-6 h-6"
+                accessibilityLabel="의견 보내기"
+              />
+            </View>
+          ),
+        },
+      ],
+      [
+        {
           key: 'log-out',
           title: '로그아웃',
           onPress: () => handlePress(SETTING_EVENT_TYPE.LOG_OUT),
         },
         {
           key: 'delete-account',
-          title: '계정 삭제',
+          title: '회원 탈퇴',
           titleStyle: { color: common.red },
           onPress: () => handlePress(SETTING_EVENT_TYPE.DELETE_ACCOUNT),
         },
       ],
     ],
-    [handlePress],
+    [handlePress, userInfo?.nickname],
   );
 
   return (
@@ -121,7 +153,7 @@ const ManageAccountPage = () => {
         centerComponent={<NaviTitleDisplay title={'계정 관리'} />}
       />
       <View className="bg-gray-100 flex-1 justify-between px-4 rounded-xl pt-[14px]">
-        {/* <SettingList items={settingListItems} /> */}
+        <SettingList groups={settingListItems} />
         <Label
           weight="regular"
           className="text-gray-400 mb-[13px] text-center"
@@ -129,8 +161,15 @@ const ManageAccountPage = () => {
           {'앱 버전: ' + version}
         </Label>
       </View>
+      <ChangeNicknameSheet ref={changeNicknameSheetRef} />
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  nickname: {
+    color: gray[500],
+  },
+});
 
 export default ManageAccountPage;

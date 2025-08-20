@@ -1,4 +1,10 @@
+import { type BottomSheetHandler, SocialLoginSheet } from '@features/setting/ui/SocialLoginSheet';
 import { useFocusEffect } from '@react-navigation/native';
+import { ONBOARDING_ICONS } from '@shared/assets/images/onboarding';
+import { useAppDispatch } from '@shared/hooks';
+import { useNotificationPermission } from '@shared/hooks/useNotificationPermission';
+import colors from '@shared/styles/colors';
+import ActionButton from '@shared/ui/elements/ActionButton';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import {
   type FlatListProps,
@@ -15,15 +21,6 @@ import {
 import { FlatList } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import {
-  SocialLoginSheet,
-  type SocialLoginSheetHandle,
-} from '../features/setting/ui/SocialLoginSheet';
-import { ONBOARDING_ICONS } from '../shared/assets/images/onboarding';
-import { useAppDispatch } from '../shared/hooks';
-import { useNotificationPermission } from '../shared/hooks/useNotificationPermission';
-import colors from '../shared/styles/colors';
-import ActionButton from '../shared/ui/elements/ActionButton';
 import { H2 } from '../shared/ui/typography/H2';
 import { Label } from '../shared/ui/typography/Label';
 
@@ -74,7 +71,7 @@ const OnboardingPage = () => {
   const dispatch = useAppDispatch();
   const [showStartButton, setShowStartButton] = useState(false);
   const [showAlarmPermission, setShowAlarmPermission] = useState(false);
-  const socialSheetRef = useRef<SocialLoginSheetHandle>(null);
+  const socialSheetRef = useRef<BottomSheetHandler>(null);
 
   useFocusEffect(
     useCallback(() => {

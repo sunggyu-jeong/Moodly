@@ -16,6 +16,7 @@ export enum SETTING_EVENT_TYPE {
   SEND_FEEDBACK = 'send_feedback',
   PRIVACY_POLICY = 'privacy_policy',
   TERMS_OF_SERVICE = 'terms_of_service',
+  CHANGE_NICKNAME = 'change_nickname',
 }
 
 export const TEXTS = {
