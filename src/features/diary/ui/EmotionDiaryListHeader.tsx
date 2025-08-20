@@ -9,7 +9,7 @@ import { generateMonthGrid, generateWeekGrid } from '@shared/lib/date.util';
 import WeekdayHeader from '@shared/ui/elements/WeekdayHeader';
 import dayjs from 'dayjs';
 import { AnimatePresence, MotiView } from 'moti';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View } from 'react-native';
 
 import { CalendarBar } from '@/features/calendar';
@@ -30,6 +30,13 @@ const EmotionDiaryListHeader = ({
   monthData,
   calendarMode,
 }: DiaryListHeaderProps) => {
+  const monthlyDates = useMemo(
+    () =>
+      calendarMode === DiaryCalendarMode.monthDayMode
+        ? generateMonthGrid({ targetDate: dayjs(selectedMonth) })
+        : generateWeekGrid({ targetDate: dayjs(selectedMonth) }),
+    [calendarMode, selectedMonth],
+  );
   return (
     <AnimatePresence>
       {showSkeleton && (
@@ -57,11 +64,7 @@ const EmotionDiaryListHeader = ({
             <WeekdayHeader />
             <CalendarBar
               key={selectedMonth}
-              monthlyDates={
-                calendarMode === DiaryCalendarMode.monthDayMode
-                  ? generateMonthGrid({ targetDate: dayjs(selectedMonth) })
-                  : generateWeekGrid({ targetDate: dayjs(selectedMonth) })
-              }
+              monthlyDates={monthlyDates}
               entries={monthData}
             />
             <View className="-mx-5 mt-8 h-[1px] bg-gray-200" />

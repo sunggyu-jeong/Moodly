@@ -45,6 +45,7 @@ export const diaryApi = appApi.injectEndpoints({
         const { count, error } = await q;
         return { data: (count ?? 0) as number, error };
       },
+      providesTags: [{ type: 'Diary', id: 'COUNT' }],
     }),
 
     hasDiaryForDay: build.query<boolean, void>({
@@ -73,7 +74,11 @@ export const diaryApi = appApi.injectEndpoints({
 
         return { data: (data ?? null) as Diary | null, error };
       },
-      invalidatesTags: (_res, _err) => [{ type: 'Diary', id: 'LIST' }],
+      invalidatesTags: (_res, _err) => [
+        { type: 'Diary', id: 'LIST' },
+        { type: 'Diary', id: 'COUNT' },
+        { type: 'Diary', id: 'HAS_TODAY' },
+      ],
     }),
 
     updateDiary: build.mutation<Diary, UpdateDiaryInput>({
@@ -94,7 +99,7 @@ export const diaryApi = appApi.injectEndpoints({
       query:
         ({ id }) =>
         async client => {
-          const { error } = await client.from('moodly_diary').delete().eq('id', id);
+          const { error } = await client.from('moodly_diary').delete().eq('emotion_id', id);
           return {
             data: error ? null : { id },
             error,
@@ -104,6 +109,8 @@ export const diaryApi = appApi.injectEndpoints({
       invalidatesTags: (_res, _err, arg) => [
         { type: 'Diary', id: arg.id },
         { type: 'Diary', id: 'LIST' },
+        { type: 'Diary', id: 'COUNT' },
+        { type: 'Diary', id: 'HAS_TODAY' },
       ],
     }),
   }),

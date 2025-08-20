@@ -1,7 +1,15 @@
 import type { Diary } from '@entities/diary/model/diary.types';
 import { setCurrentDiary, setSelectedDay } from '@features/diary/model/diarySlice';
 import { setShowToastView } from '@processes/overlay/model/overlaySlice';
-import { DayCell, ICON_DATA, isEmpty, navigate, useAppDispatch, useAppSelector } from '@shared';
+import {
+  DayCell,
+  ICON_DATA,
+  isEmpty,
+  navigate,
+  toKstDate,
+  useAppDispatch,
+  useAppSelector,
+} from '@shared';
 import { COMMON_ICONS } from '@shared/assets/images/common';
 import dayjs, { Dayjs } from 'dayjs';
 import React, { useCallback, useMemo } from 'react';
@@ -37,14 +45,14 @@ const SelectableDayCell = ({ date, iconId }: SelectableDayCellProps) => {
 
   const startEmotionSelection = useCallback(() => {
     const emotion: Partial<Diary> = {
-      recordDate: date.toISOString(),
+      recordDate: toKstDate(date),
     };
+    console.log(emotion);
     dispatch(setCurrentDiary(emotion));
     navigate('DiaryStack', { screen: 'EmotionSelectionPage' });
   }, [dispatch, date]);
 
   const selectDay = useCallback(() => {
-    console.log(date.toString());
     dispatch(setSelectedDay(date.toString()));
   }, [dispatch, date]);
 
