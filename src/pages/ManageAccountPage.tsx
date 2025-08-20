@@ -1,5 +1,4 @@
 import { useLogout } from '@features/auth';
-import { SettingList } from '@features/setting';
 import { SETTING_EVENT_TYPE } from '@features/setting/types';
 import { MODAL_CONFIRM_ACTION_KEY } from '@processes/key';
 import {
@@ -97,17 +96,19 @@ const ManageAccountPage = () => {
 
   const settingListItems = useMemo(
     () => [
-      {
-        key: 'log-out',
-        title: '로그아웃',
-        onPress: () => handlePress(SETTING_EVENT_TYPE.LOG_OUT),
-      },
-      {
-        key: 'delete-account',
-        title: '계정 삭제',
-        titleStyle: { color: common.red },
-        onPress: () => handlePress(SETTING_EVENT_TYPE.DELETE_ACCOUNT),
-      },
+      [
+        {
+          key: 'log-out',
+          title: '로그아웃',
+          onPress: () => handlePress(SETTING_EVENT_TYPE.LOG_OUT),
+        },
+        {
+          key: 'delete-account',
+          title: '계정 삭제',
+          titleStyle: { color: common.red },
+          onPress: () => handlePress(SETTING_EVENT_TYPE.DELETE_ACCOUNT),
+        },
+      ],
     ],
     [handlePress],
   );
@@ -120,7 +121,7 @@ const ManageAccountPage = () => {
         centerComponent={<NaviTitleDisplay title={'계정 관리'} />}
       />
       <View className="bg-gray-100 flex-1 justify-between px-4 rounded-xl pt-[14px]">
-        <SettingList items={settingListItems} />
+        {/* <SettingList items={settingListItems} /> */}
         <Label
           weight="regular"
           className="text-gray-400 mb-[13px] text-center"

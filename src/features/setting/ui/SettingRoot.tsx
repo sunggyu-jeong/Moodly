@@ -5,12 +5,12 @@ import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar';
 import React from 'react';
 import { View } from 'react-native';
 
-import { type HeaderItem, type SettingItemProps, TEXTS } from '../types';
+import { type SettingItemProps, TEXTS } from '../types';
 import SettingList from './SettingList';
 
 interface Props {
-  headerItem: HeaderItem;
-  settingItems: SettingItemProps[];
+  headerItem: SettingItemProps;
+  settingItems: SettingItemProps[][];
   version: string;
 }
 
@@ -22,7 +22,10 @@ const SettingRoot = ({ headerItem, settingItems, version }: Props) => (
       centerComponent={<NaviTitleDisplay title={TEXTS.pageTitle} />}
     />
     <View className="bg-gray-100 flex-1 justify-between px-4 rounded-xl pt-[14px]">
-      <SettingList items={[headerItem, ...settingItems]} />
+      <SettingList
+        header={[headerItem]}
+        groups={settingItems}
+      />
       <Label
         weight="regular"
         className="text-gray-400 mb-[13px] text-center"
