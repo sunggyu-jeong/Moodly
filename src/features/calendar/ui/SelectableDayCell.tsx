@@ -53,7 +53,7 @@ const SelectableDayCell = ({ date, iconId }: SelectableDayCellProps) => {
   }, [dispatch, date]);
 
   const selectDay = useCallback(() => {
-    dispatch(setSelectedDay(date.toString()));
+    dispatch(setSelectedDay(toKstDate(date)));
   }, [dispatch, date]);
 
   const onPress = useCallback(() => {

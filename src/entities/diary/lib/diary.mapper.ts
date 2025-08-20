@@ -1,5 +1,4 @@
-import { toDateOnly } from '@shared/lib/day.util';
-import dayjs from 'dayjs';
+import { toDateOnly, toKstDate } from '@shared/lib/day.util';
 
 import type { CreateDiaryInput, DbDiaryRow, Diary, UpdateDiaryInput } from '../model/diary.types';
 
@@ -20,15 +19,15 @@ export const toInsertRow = (input: CreateDiaryInput) => ({
   icon_id: input.iconId ?? null,
   record_date: toDateOnly(input.recordDate),
   description: input.description ?? null,
-  created_at: dayjs().toISOString(),
-  updated_at: dayjs().toISOString(),
+  created_at: toKstDate(),
+  updated_at: toKstDate(),
 });
 
 // Domain -> DB (UPDATE)
 export const toUpdateRow = (input: UpdateDiaryInput) => ({
   icon_id: input.iconId ?? undefined,
   description: input.description ?? undefined,
-  updated_at: dayjs().toISOString(),
+  updated_at: toKstDate(),
 });
 
 export const byIdTag = (d: Diary) => ({ type: 'Diary' as const, id: d.emotionId });
