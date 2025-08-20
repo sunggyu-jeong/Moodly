@@ -25,7 +25,6 @@ export const diaryApi = appApi.injectEndpoints({
             .overrideTypes<DbDiaryRow[], { merge: false }>();
 
           const { data, error } = await q;
-          console.log('1241241 몇번호출하냐?');
           return { data: data ? data.map(fromRow) : null, error };
         },
       providesTags: result =>

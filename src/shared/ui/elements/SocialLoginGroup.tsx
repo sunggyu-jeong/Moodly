@@ -6,6 +6,7 @@ import SocialLoginButton from '@features/auth/ui/SocialLoginButton';
 import { setShowToastView } from '@processes/overlay/model/overlaySlice';
 import { useAppDispatch } from '@shared/hooks';
 import { isEmpty, isNotEmpty, navigate, resetTo } from '@shared/lib';
+import { initUserId } from '@shared/lib/user.util';
 import { gray } from '@shared/styles/colors';
 import { useEffect } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
@@ -29,6 +30,7 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
 
   const fetchUserInfo = async () => {
     const response = await getUserInfo();
+    await initUserId();
     if (isEmpty(response)) {
       navigate('Nickname');
       return;

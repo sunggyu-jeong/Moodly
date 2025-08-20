@@ -1,9 +1,9 @@
 import { useSignOutMutation } from '@entities/auth/api/auth.api';
 import { setShowToastView } from '@processes/overlay/model/overlaySlice';
 import { appApi } from '@shared/api/AppApi';
-import { ApiCode } from '@shared/config/errorCodes';
 import { useAppDispatch } from '@shared/hooks';
 import { isNotEmpty, resetTo } from '@shared/lib';
+import { clearUserIdCache } from '@shared/lib/user.util';
 import { useEffect } from 'react';
 
 import { setRequestLogin } from '../../setting/model/settingSlice';
@@ -16,8 +16,8 @@ export function useLogout() {
     if (isLoading) {
       return;
     }
-
-    if (isNotEmpty(data) && data === ApiCode.SUCCESS) {
+    clearUserIdCache();
+    if (isNotEmpty(data) && data) {
       dispatch(appApi.util.resetApiState());
       dispatch(setRequestLogin('FINISH'));
       dispatch(

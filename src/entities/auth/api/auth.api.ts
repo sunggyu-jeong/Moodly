@@ -1,5 +1,6 @@
 import appleAuth from '@invertase/react-native-apple-authentication';
 import { GoogleSignin, type User } from '@react-native-google-signin/google-signin';
+import { isEmpty } from '@shared';
 import { appApi } from '@shared/api/AppApi';
 import { ApiCode } from '@shared/config';
 
@@ -50,10 +51,10 @@ export const authApi = appApi.injectEndpoints({
       invalidatesTags: ['User', 'Session'],
     }),
 
-    signOut: build.mutation<null, void>({
+    signOut: build.mutation<boolean, void>({
       query: () => async client => {
         const { error } = await client.auth.signOut();
-        return { data: null, error };
+        return { data: isEmpty(error), error };
       },
       invalidatesTags: ['User', 'Session'],
     }),

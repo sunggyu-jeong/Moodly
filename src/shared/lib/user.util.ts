@@ -50,7 +50,7 @@ const fetchAndCache = async (): Promise<string> => {
 };
 
 export const initUserId = async (): Promise<string> => {
-  if (cachedUserId) return cachedUserId;
+  await clearUserIdCache();
   const persisted = await readPersisted();
   if (persisted) {
     cachedUserId = persisted;
