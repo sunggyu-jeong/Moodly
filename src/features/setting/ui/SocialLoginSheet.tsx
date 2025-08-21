@@ -15,7 +15,7 @@ const MIN_HEIGHT = 300;
 
 export const SocialLoginSheet = forwardRef<BottomSheetHandler>((_, ref) => {
   const { sheetRef, snapPoints, handleSheetChanges } = useBottomSheet({
-    snapPoints: [MIN_HEIGHT, '37.3%'],
+    snapPoints: [MIN_HEIGHT, '31.3%'],
   });
 
   useImperativeHandle(ref, () => ({
@@ -30,11 +30,8 @@ export const SocialLoginSheet = forwardRef<BottomSheetHandler>((_, ref) => {
       snapPoints={snapPoints}
       onChange={handleSheetChanges}
     >
-      <View className="absolute w-full items-center mt-[16px]">
-        <View
-          className="gap-2"
-          style={{ marginBottom: getScaleSize(30) }}
-        >
+      <View className="absolute w-full items-center mt-[8px]">
+        <View style={{ marginBottom: getScaleSize(25) }}>
           <H3 weight="semibold">로그인</H3>
         </View>
         <SocialLoginGroup entrance={SOCIAL_LOGIN_ENTRANCE.SETTING} />

@@ -103,7 +103,7 @@ const OnboardingPage = () => {
         <View className="mb-10 justify-center gap-3">
           <H2 weight="semibold">{item.title}</H2>
           <Label
-            weight="semibold"
+            weight="regular"
             style={{ color: colors.gray[400], textAlign: 'center' }}
           >
             {item.message}

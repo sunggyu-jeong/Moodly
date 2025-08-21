@@ -1,7 +1,7 @@
 import { AUTH_PROVIDER_CONFIG } from '@entities/auth/config';
 import type { AuthProvider } from '@entities/auth/types';
+import { Label } from '@shared';
 import { isNotEmpty } from '@shared/lib';
-import { Body1 } from '@shared/ui/typography/Body1';
 import { Image, TouchableOpacity, View } from 'react-native';
 
 type SocialLoginButtonProps = {
@@ -28,12 +28,12 @@ const SocialLoginButton = ({ disabled, provider, onPress }: SocialLoginButtonPro
           source={Icon}
           resizeMode="contain"
         />
-        <Body1
+        <Label
           weight="regular"
           className={`${textColor}`}
         >
           {label}
-        </Body1>
+        </Label>
       </TouchableOpacity>
     </View>
   );

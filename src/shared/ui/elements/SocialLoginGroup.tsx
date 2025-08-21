@@ -55,7 +55,7 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
   }, [data, isLoading, dispatch, entrance]);
 
   return (
-    <View className="w-full px-8 gap-3 items-center">
+    <View className="w-full px-9 gap-3 items-center">
       {Platform.OS === 'ios' && (
         <SocialLoginButton
           disabled={isLoading}
@@ -68,7 +68,7 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
         provider={AUTH_PROVIDERS.GOOGLE}
         onPress={() => handleLogin(AUTH_PROVIDERS.GOOGLE)}
       />
-      <View className="mt-8">
+      <View className="mt-6">
         <Caption
           weight="regular"
           style={styles.captionText}

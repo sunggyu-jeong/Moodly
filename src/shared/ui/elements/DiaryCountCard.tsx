@@ -26,7 +26,7 @@ const DiaryCountCard = ({ count, onPress }: Props) => {
           />
           <Label
             weight="regular"
-            style={[styles.labelStyle, { color: colors.gray[500] }]}
+            style={styles.labelStyle}
           >
             작성한 일기 수
           </Label>
@@ -51,9 +51,11 @@ const DiaryCountCard = ({ count, onPress }: Props) => {
 const styles = StyleSheet.create({
   h2MarginRight: {
     marginRight: 6,
+    color: colors.gray[600],
   },
   labelStyle: {
     marginLeft: 13,
+    color: colors.gray[500],
   },
 });
 

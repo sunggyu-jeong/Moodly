@@ -9,6 +9,7 @@ import {
   ActionButton,
   DiaryCountCard,
   getScaleSize,
+  gray,
   H2,
   jumpToTab,
   navigate,
@@ -87,6 +88,7 @@ const styles = StyleSheet.create({
   },
   mentStyle: {
     marginTop: getScaleSize(36),
+    color: gray[600],
   },
 });
 
