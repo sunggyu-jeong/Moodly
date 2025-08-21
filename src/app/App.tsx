@@ -13,15 +13,12 @@ import '../../global.css';
 
 import { RootStack } from '@app/navigation';
 import { store } from '@app/store';
-import { Splash } from '@app/ui';
 import { HOT_UPDATER_SUPABASE_URL } from '@env';
 import { getUpdateSource, HotUpdater } from '@hot-updater/react-native';
-import type { UpdateProgressProps } from '@processes/update/useUpdateProgress';
 import { useNotificationPermission } from '@shared/hooks/useNotificationPermission';
 import '@shared/lib/day.util';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
-import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
@@ -67,15 +64,6 @@ function App() {
   );
 }
 
-const FallbackComponent = React.memo(({ status, progress }: UpdateProgressProps) => {
-  return (
-    <Splash
-      status={status}
-      progress={progress * 100}
-    />
-  );
-});
-
 const styles = StyleSheet.create({
   appContainer: {
     flex: 1,
@@ -91,5 +79,4 @@ export default HotUpdater.wrap({
   source: getUpdateSource(`${HOT_UPDATER_SUPABASE_URL}/functions/v1/update-server`, {
     updateStrategy: 'fingerprint',
   }),
-  fallbackComponent: FallbackComponent,
 })(App);

@@ -4,7 +4,7 @@ import type { UpdateProgressProps } from '@processes/update/useUpdateProgress';
 import { isNotEmpty, resetTo, supabase } from '@shared';
 import { MAIN_ICONS } from '@shared/assets/images/main';
 import { useCallback, useEffect } from 'react';
-import { Image, SafeAreaView, StatusBar } from 'react-native';
+import { Image, SafeAreaView, StatusBar, View } from 'react-native';
 
 import AppBootstrap from '../../provider/AppBootstrap';
 
@@ -48,12 +48,18 @@ const Splash = ({ status, progress }: UpdateProgressProps) => {
         barStyle="dark-content"
       />
       <SafeAreaView className="bg-primary-300 flex-1 justify-center items-center">
-        <Image source={MAIN_ICONS.logo} />
-        <UpdateContent
-          progress={progress}
-          status={status}
-        />
+        <View className="absolute">
+          <Image source={MAIN_ICONS.logo} />
+        </View>
+
+        <View className="absolute bottom-12 w-full gap-3 items-center">
+          <UpdateContent
+            progress={progress}
+            status={status}
+          />
+        </View>
       </SafeAreaView>
+
       <AppBootstrap />
     </>
   );

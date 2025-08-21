@@ -12,7 +12,7 @@ export function useUpdateProgress({ progress }: Pick<UpdateProgressProps, 'progr
 
   useEffect(() => {
     if (progress === 0) {
-      setProgressMent('업데이트 내용을 확인하고 있습니다.');
+      setProgressMent('업데이트를 확인하고 있습니다.');
     } else if (progress < 20) {
       setProgressMent('다운로드 중...');
     } else if (progress < 40) {

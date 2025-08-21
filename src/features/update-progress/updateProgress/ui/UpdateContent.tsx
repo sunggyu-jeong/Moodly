@@ -19,8 +19,11 @@ const UpdateContent = ({ progress, status }: UpdateProgressProps) => {
   const { progressMent } = useUpdateProgress({ progress });
 
   const { title, subtitle } = UPDATE_LABELS[status];
+  const isLatest = status === 'UPDATE_PROCESS_COMPLETED';
+  const showStatusUI = !isLatest;
+  const showPercent = status === 'UPDATING';
 
-  return (
+  return showStatusUI ? (
     <View className="w-full max-w-xs my-6 space-y-6">
       {/* 헤더 */}
       <View className="items-center mb-4 space-y-1">
@@ -28,21 +31,20 @@ const UpdateContent = ({ progress, status }: UpdateProgressProps) => {
         {subtitle && <Text className="text-common-white/80 text-sm">{subtitle}</Text>}
       </View>
 
-      {/* 업데이트 중일 때만 프로그레스 바 표출 */}
-      {status === 'UPDATING' && (
-        <View className="space-y-3">
-          <Progress
-            value={progress}
-            className="w-full h-2 bg-common-white/20"
-          />
-          <View className="flex-row justify-between items-center mt-1">
-            <Text className="text-common-white/90 text-base">{progressMent}</Text>
+      <View className="space-y-3">
+        <Progress
+          value={progress}
+          className="w-full h-2 bg-common-white/20"
+        />
+        <View className="flex-row justify-between items-center mt-1">
+          <Text className="text-common-white/90 text-base">{progressMent}</Text>
+          {showPercent && (
             <Text className="text-common-white/90 text-base">{Math.round(progress)}%</Text>
-          </View>
+          )}
         </View>
-      )}
+      </View>
     </View>
-  );
+  ) : null;
 };
 
 export default UpdateContent;
