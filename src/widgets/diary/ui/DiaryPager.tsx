@@ -9,17 +9,15 @@ import { DIARY_ICONS } from '@shared/assets/images/diary';
 import { isNotEmpty } from '@shared/lib';
 import colors from '@shared/styles/colors';
 import DiaryToggle from '@shared/ui/elements/DiaryToggle';
+import { NavigationBar } from '@widgets/navigation-bar';
 import { useEffect, useMemo } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
-
-import { NavigationBar } from '@/widgets/navigation-bar';
 
 export const DiaryPager = () => {
   const {
     diaryMode,
     calendarMode,
     selectedMonth,
-    currentMonth,
     monthData,
     pages,
     monthLabel,
@@ -112,8 +110,6 @@ export const DiaryPager = () => {
             data={pages}
             diaryMode={diaryMode}
             calendarMode={calendarMode}
-            currentMonth={currentMonth}
-            selectedMonth={selectedMonth}
             flatListRef={flatListRef}
             onScroll={onScroll}
             onMomentumScrollEnd={onMomentumScrollEnd}
@@ -127,8 +123,6 @@ export const DiaryPager = () => {
             monthDate={selectedMonth}
             monthData={monthData}
             diaryMode={diaryMode}
-            currentMonth={currentMonth}
-            selectedMonth={selectedMonth}
             scrollEnabled={isNotEmpty(monthData)}
           />
         </View>
