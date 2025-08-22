@@ -3,15 +3,17 @@ import type { Diary } from '@entities/diary/model/diary.types';
 import EmotionDiaryCardList from '@features/diary/ui/EmotionDiaryCardList';
 import EmotionDiaryListEmpty from '@features/diary/ui/EmotionDiaryListEmpty';
 import EmotionDiaryListHeader from '@features/diary/ui/EmotionDiaryListHeader';
+import { useAppSelector } from '@shared';
 import { isEmpty } from '@shared/lib';
 import colors from '@shared/styles/colors';
-import { Dayjs } from 'dayjs';
-import React, { useCallback } from 'react';
+import dayjs, { Dayjs } from 'dayjs';
+import React, { useCallback, useMemo } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
+
+import { selectSelectedDayIso } from '../model';
 
 interface EmotionDiaryMonthViewProps {
   monthDate: Dayjs;
-  listData?: Diary[]; // Diary[]
   monthData: Diary[]; // Month summary DTO
   diaryMode: DiaryPageModeType;
   currentMonth: Dayjs;
@@ -23,7 +25,6 @@ interface EmotionDiaryMonthViewProps {
 
 const EmotionDiaryMonthView = ({
   monthDate,
-  listData,
   monthData,
   diaryMode,
   scrollEnabled,
@@ -34,18 +35,28 @@ const EmotionDiaryMonthView = ({
     ({ item }: { item: Diary }) => <EmotionDiaryCardList data={item} />,
     [],
   );
+
+  const selectedDayIso = useAppSelector(selectSelectedDayIso);
+
+  const filteredListData = useMemo(() => {
+    if (!selectedDayIso) {
+      return monthData;
+    }
+    return monthData.filter(e => dayjs(e.recordDate).isSame(dayjs(selectedDayIso), 'day'));
+  }, [monthData, selectedDayIso]);
+
   return (
     <View style={styles.page}>
       <FlatList
         style={styles.list}
-        data={listData}
-        initialNumToRender={listData?.length ?? 0}
+        data={filteredListData}
+        initialNumToRender={filteredListData?.length ?? 0}
         windowSize={10}
         maxToRenderPerBatch={5}
         keyExtractor={(item, idx) => item.emotionId?.toString() ?? idx.toString()}
         contentContainerStyle={[
           styles.scrollViewContent,
-          isEmpty(listData) && styles.emptyContainer,
+          isEmpty(filteredListData) && styles.emptyContainer,
         ]}
         ListHeaderComponent={
           <EmotionDiaryListHeader

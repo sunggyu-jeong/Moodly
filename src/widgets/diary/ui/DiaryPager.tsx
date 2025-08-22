@@ -20,7 +20,6 @@ export const DiaryPager = () => {
     calendarMode,
     selectedMonth,
     currentMonth,
-    selectedMonthIso,
     monthData,
     pages,
     monthLabel,
@@ -38,7 +37,7 @@ export const DiaryPager = () => {
 
   useEffect(() => {
     scrollToMiddle(false);
-  }, [selectedMonthIso, scrollToMiddle]);
+  }, [scrollToMiddle]);
 
   useEffect(() => {
     scrollToMiddle(false);
@@ -111,7 +110,6 @@ export const DiaryPager = () => {
           <EmotionDiaryMonthView
             key={`calendar-${selectedMonth.format('YYYY-MM')}`}
             monthDate={selectedMonth}
-            listData={monthData}
             monthData={monthData}
             diaryMode={diaryMode}
             currentMonth={currentMonth}

@@ -1,30 +1,26 @@
-import type { Diary } from '@entities/diary/model/diary.types';
-import { setCurrentDiary, setSelectedDay } from '@features/diary/model/diarySlice';
 import { setShowToastView } from '@processes/overlay/model/overlaySlice';
-import {
-  DayCell,
-  ICON_DATA,
-  isEmpty,
-  navigate,
-  toKstDate,
-  useAppDispatch,
-  useAppSelector,
-} from '@shared';
+import { DayCell, ICON_DATA, isEmpty, useAppDispatch } from '@shared';
 import { COMMON_ICONS } from '@shared/assets/images/common';
 import dayjs, { Dayjs } from 'dayjs';
-import React, { useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 
 interface SelectableDayCellProps {
   date: Dayjs;
   iconId?: number | null;
+  isSelected: boolean;
+  onSelectDay: (date: Dayjs) => void;
+  onStartEmotionSelection: (date: Dayjs) => void;
 }
 
-const SelectableDayCell = ({ date, iconId }: SelectableDayCellProps) => {
-  const dispatch = useAppDispatch();
-  const selectedDayStr = useAppSelector(state => state.diarySlice.selectedDay);
-  const selectedDay = dayjs(selectedDayStr);
+const SelectableDayCell = ({
+  date,
+  iconId,
+  isSelected,
+  onSelectDay,
+  onStartEmotionSelection,
+}: SelectableDayCellProps) => {
+  const dispatch = useAppDispatch(); // Toast 같은 부가 기능은 유지
   const isFuture = date.isAfter(dayjs(), 'day');
-  const isSelected = date.isSame(selectedDay, 'day');
 
   const iconSource = useMemo(() => {
     if (isEmpty(iconId)) {
@@ -43,19 +39,6 @@ const SelectableDayCell = ({ date, iconId }: SelectableDayCellProps) => {
     );
   }, [dispatch]);
 
-  const startEmotionSelection = useCallback(() => {
-    const emotion: Partial<Diary> = {
-      recordDate: toKstDate(date),
-    };
-    console.log(emotion);
-    dispatch(setCurrentDiary(emotion));
-    navigate('DiaryStack', { screen: 'EmotionSelectionPage' });
-  }, [dispatch, date]);
-
-  const selectDay = useCallback(() => {
-    dispatch(setSelectedDay(toKstDate(date)));
-  }, [dispatch, date]);
-
   const onPress = useCallback(() => {
     if (isFuture) {
       showFutureToast();
@@ -63,12 +46,12 @@ const SelectableDayCell = ({ date, iconId }: SelectableDayCellProps) => {
     }
 
     if (!iconId) {
-      startEmotionSelection();
+      onStartEmotionSelection(date);
       return;
     }
 
-    selectDay();
-  }, [showFutureToast, startEmotionSelection, selectDay, isFuture, iconId]);
+    onSelectDay(date);
+  }, [isFuture, iconId, date, showFutureToast, onStartEmotionSelection, onSelectDay]);
 
   return (
     <DayCell
@@ -81,4 +64,4 @@ const SelectableDayCell = ({ date, iconId }: SelectableDayCellProps) => {
   );
 };
 
-export default React.memo(SelectableDayCell);
+export default memo(SelectableDayCell);

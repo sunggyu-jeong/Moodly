@@ -42,7 +42,6 @@ export const EmotionDiaryMonthPager = ({
         <View style={{ width: SCREEN_WIDTH }}>
           <EmotionDiaryMonthView
             monthDate={item.periodStart}
-            listData={item.currentItems}
             monthData={item.items}
             diaryMode={diaryMode}
             currentMonth={currentMonth}

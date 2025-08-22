@@ -1,9 +1,11 @@
 import type { Diary } from '@entities/diary/model/diary.types';
+import { navigate, toKstDate, useAppDispatch, useAppSelector } from '@shared';
 import { GridList } from '@shared/ui/elements/GridList';
 import dayjs, { Dayjs } from 'dayjs';
-import { memo, useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { View } from 'react-native';
 
+import { setCurrentDiary, setSelectedDay } from '../../diary';
 import SelectableDayCell from './SelectableDayCell';
 
 interface CalendarBarProps {
@@ -12,6 +14,10 @@ interface CalendarBarProps {
 }
 
 const CalendarBar = ({ monthlyDates, entries }: CalendarBarProps) => {
+  const selectedDayStr = useAppSelector(state => state.diarySlice.selectedDay);
+  const selectedDay = useMemo(() => dayjs(selectedDayStr), [selectedDayStr]);
+  const dispatch = useAppDispatch();
+
   const entryMap = useMemo(() => {
     const m = new Map<string, number>();
     entries?.forEach(e => {
@@ -30,20 +36,42 @@ const CalendarBar = ({ monthlyDates, entries }: CalendarBarProps) => {
       })),
     [flatDates, entryMap],
   );
+
+  const handleSelectDay = useCallback(
+    (date: Dayjs) => {
+      dispatch(setSelectedDay(toKstDate(date)));
+    },
+    [dispatch],
+  );
+
+  const handleStartEmotionSelection = useCallback(
+    (date: Dayjs) => {
+      const emotion: Partial<Diary> = { recordDate: toKstDate(date) };
+      dispatch(setCurrentDiary(emotion));
+      navigate('DiaryStack', { screen: 'EmotionSelectionPage' });
+    },
+    [dispatch],
+  );
   return (
     <GridList<{ date: Dayjs | null; iconId: number | null }>
       data={gridData}
       keyExtractor={(item, idx) => (item.date ? item.date.format('YYYY-MM-DD') : `empty-${idx}`)}
-      renderItem={({ date, iconId }) =>
-        date ? (
+      renderItem={item => {
+        if (!item.date) return <View />;
+
+        const iconId = entryMap.get(item.date.format('YYYY-MM-DD')) ?? null;
+        const isSelected = item.date.isSame(selectedDay, 'day');
+
+        return (
           <SelectableDayCell
-            date={date}
+            date={item.date}
             iconId={iconId}
+            isSelected={isSelected}
+            onSelectDay={handleSelectDay}
+            onStartEmotionSelection={handleStartEmotionSelection}
           />
-        ) : (
-          <View />
-        )
-      }
+        );
+      }}
     />
   );
 };
