@@ -1,8 +1,4 @@
-import {
-  type DiaryCalendarModeType,
-  DiaryPageMode,
-  type DiaryPageModeType,
-} from '@entities/calendar/diary.type';
+import { type DiaryCalendarModeType, type DiaryPageModeType } from '@entities/calendar/diary.type';
 import { isNotEmpty } from '@shared/lib';
 import { Dayjs } from 'dayjs';
 import { type Ref, useCallback } from 'react';
@@ -19,7 +15,6 @@ interface EmotionDiaryMonthPagerProps {
   calendarMode: DiaryCalendarModeType;
   currentMonth: Dayjs;
   selectedMonth: Dayjs;
-  listModeFallback: React.ReactNode;
   flatListRef: Ref<FlatList<CalendarPage>>;
   onScroll?: FlatListProps<CalendarPage>['onScroll'];
   onMomentumScrollEnd?: FlatListProps<CalendarPage>['onMomentumScrollEnd'];
@@ -31,7 +26,6 @@ export const EmotionDiaryMonthPager = ({
   calendarMode,
   currentMonth,
   selectedMonth,
-  listModeFallback,
   flatListRef,
   onScroll,
   onMomentumScrollEnd,
@@ -54,10 +48,6 @@ export const EmotionDiaryMonthPager = ({
     },
     [calendarMode, currentMonth, diaryMode, selectedMonth],
   );
-
-  if (diaryMode !== DiaryPageMode.calendarMode) {
-    return <>{listModeFallback}</>;
-  }
 
   return (
     <FlatList<CalendarPage>

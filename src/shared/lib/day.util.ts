@@ -1,9 +1,11 @@
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 
 export const d = (input?: dayjs.ConfigType) => (input ? dayjs(input) : dayjs()).tz();
 
-export const toKstDate = (input?: dayjs.ConfigType) =>
-  dayjs.tz(input, 'Asia/Seoul').format('YYYY-MM-DD');
+export const toKstDate = (input?: dayjs.ConfigType) => {
+  console.log('$!@$>!@>', input, dayjs.tz(input, 'Asia/Seoul').format('YYYY-MM-DD'));
+  return dayjs.tz(input, 'Asia/Seoul').format('YYYY-MM-DD');
+};
 
 export const toDateOnly = (v?: string): string => {
   if (!v) return toKstDate();
@@ -13,3 +15,7 @@ export const toDateOnly = (v?: string): string => {
 
 export const toDateOnlyKST = (value: string | Date) =>
   dayjs(value).tz('Asia/Seoul').format('YYYY-MM-DD');
+
+export const createKstDay = (input?: dayjs.ConfigType): Dayjs => {
+  return dayjs.tz(input, 'Asia/Seoul');
+};

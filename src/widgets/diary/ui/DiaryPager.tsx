@@ -9,8 +9,8 @@ import { DIARY_ICONS } from '@shared/assets/images/diary';
 import { isNotEmpty } from '@shared/lib';
 import colors from '@shared/styles/colors';
 import DiaryToggle from '@shared/ui/elements/DiaryToggle';
-import { useEffect } from 'react';
-import { Image, TouchableOpacity } from 'react-native';
+import { useEffect, useMemo } from 'react';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { NavigationBar } from '@/widgets/navigation-bar';
 
@@ -37,57 +37,65 @@ export const DiaryPager = () => {
 
   useEffect(() => {
     scrollToMiddle(false);
-  }, [scrollToMiddle]);
-
-  useEffect(() => {
-    scrollToMiddle(false);
     reset();
-  }, [reset, scrollToMiddle]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const monthSelector = (
-    <EmotionDiaryMonthSelector
-      monthLabel={monthLabel}
-      onPressLeft={goLeft}
-      onPressRight={goRight}
-    />
+  const leftComponents = useMemo(
+    () => [
+      {
+        item: (
+          <EmotionDiaryMonthSelector
+            monthLabel={monthLabel}
+            onPressLeft={goLeft}
+            onPressRight={goRight}
+          />
+        ),
+        disabled: true,
+      },
+    ],
+    [goLeft, goRight, monthLabel],
   );
-  const leftComponents = [{ item: monthSelector, disabled: true }];
-  const viewModeButton = {
-    item: (
-      <TouchableOpacity
-        onPress={toggleDiaryMode}
-        hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-      >
-        <Image
-          source={
-            diaryMode === DiaryPageMode.calendarMode
-              ? DIARY_ICONS.iconDiaryCalendar
-              : DIARY_ICONS.iconDiaryList
-          }
-          className="w-6 h-6"
-          resizeMode="stretch"
-        />
-      </TouchableOpacity>
-    ),
-  };
 
-  const actionButtons = [
-    ...(diaryMode === DiaryPageMode.calendarMode
-      ? [
-          {
-            item: (
-              <DiaryToggle
-                isOn={calendarMode === DiaryCalendarMode.monthDayMode}
-                texts={['주간', '월간']}
-                onToggle={toggleCalendarMode}
-              />
-            ),
-            disabled: true,
-          },
-        ]
-      : []),
-    viewModeButton,
-  ];
+  const actionButtons = useMemo(
+    () => [
+      ...(diaryMode === DiaryPageMode.calendarMode
+        ? [
+            {
+              item: (
+                <DiaryToggle
+                  isOn={calendarMode === DiaryCalendarMode.monthDayMode}
+                  texts={['주간', '월간']}
+                  onToggle={toggleCalendarMode}
+                />
+              ),
+              disabled: true,
+            },
+          ]
+        : []),
+      {
+        item: (
+          <TouchableOpacity
+            onPress={toggleDiaryMode}
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+          >
+            <Image
+              source={
+                diaryMode === DiaryPageMode.calendarMode
+                  ? DIARY_ICONS.iconDiaryCalendar
+                  : DIARY_ICONS.iconDiaryList
+              }
+              className="w-6 h-6"
+              resizeMode="stretch"
+            />
+          </TouchableOpacity>
+        ),
+      },
+    ],
+    [calendarMode, diaryMode, toggleCalendarMode, toggleDiaryMode],
+  );
+
+  const isCalendarMode = diaryMode === DiaryPageMode.calendarMode;
 
   return (
     <>
@@ -97,18 +105,25 @@ export const DiaryPager = () => {
         leftComponents={leftComponents}
         actionButtons={actionButtons}
       />
-      <EmotionDiaryMonthPager
-        data={pages}
-        diaryMode={diaryMode}
-        calendarMode={calendarMode}
-        currentMonth={currentMonth}
-        selectedMonth={selectedMonth}
-        flatListRef={flatListRef}
-        onScroll={onScroll}
-        onMomentumScrollEnd={onMomentumScrollEnd}
-        listModeFallback={
+      <View style={styles.container}>
+        {/* 캘린더 뷰: isCalendarMode가 아닐 때 숨김 */}
+        <View style={!isCalendarMode ? styles.hidden : styles.visible}>
+          <EmotionDiaryMonthPager
+            data={pages}
+            diaryMode={diaryMode}
+            calendarMode={calendarMode}
+            currentMonth={currentMonth}
+            selectedMonth={selectedMonth}
+            flatListRef={flatListRef}
+            onScroll={onScroll}
+            onMomentumScrollEnd={onMomentumScrollEnd}
+          />
+        </View>
+
+        {/* 리스트 뷰: isCalendarMode일 때 숨김 */}
+        <View style={isCalendarMode ? styles.hidden : styles.visible}>
           <EmotionDiaryMonthView
-            key={`calendar-${selectedMonth.format('YYYY-MM')}`}
+            key={`list-${selectedMonth.format('YYYY-MM')}`}
             monthDate={selectedMonth}
             monthData={monthData}
             diaryMode={diaryMode}
@@ -116,8 +131,20 @@ export const DiaryPager = () => {
             selectedMonth={selectedMonth}
             scrollEnabled={isNotEmpty(monthData)}
           />
-        }
-      />
+        </View>
+      </View>
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  hidden: {
+    display: 'none',
+  },
+  visible: {
+    flex: 1,
+  },
+});

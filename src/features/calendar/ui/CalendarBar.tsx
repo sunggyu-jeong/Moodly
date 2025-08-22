@@ -59,13 +59,12 @@ const CalendarBar = ({ monthlyDates, entries }: CalendarBarProps) => {
       renderItem={item => {
         if (!item.date) return <View />;
 
-        const iconId = entryMap.get(item.date.format('YYYY-MM-DD')) ?? null;
         const isSelected = item.date.isSame(selectedDay, 'day');
 
         return (
           <SelectableDayCell
             date={item.date}
-            iconId={iconId}
+            iconId={item.iconId}
             isSelected={isSelected}
             onSelectDay={handleSelectDay}
             onStartEmotionSelection={handleStartEmotionSelection}
