@@ -13,6 +13,7 @@ import {
   navigate,
   Toggle,
   useAppDispatch,
+  useDelay,
   useNotificationPermission,
   useOpenKakao,
 } from '@shared';
@@ -25,7 +26,7 @@ const SettingPage = () => {
   const { signOut } = useLogout();
   const dispatch = useAppDispatch();
   const { status } = useNotificationPermission();
-  const { data: userInfo } = useGetUserInfoQuery();
+  const { data: userInfo, isLoading } = useGetUserInfoQuery();
 
   const handlePress = useCallback(
     (type: SETTING_EVENT_TYPE) => {
@@ -52,7 +53,7 @@ const SettingPage = () => {
           break;
       }
     },
-    [openChat, signOut],
+    [openChat, signOut, dispatch],
   );
 
   const headerItem = isNotEmpty(userInfo)
@@ -159,6 +160,7 @@ const SettingPage = () => {
         headerItem={headerItem}
         settingItems={settingListItems}
         version={version}
+        isLoading={useDelay(isLoading) ?? false}
       />
     </>
   );

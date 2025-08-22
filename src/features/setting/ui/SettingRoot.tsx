@@ -5,6 +5,7 @@ import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar';
 import React from 'react';
 import { View } from 'react-native';
 
+import SettingWidgetSkeleton from '../../../widgets/setting/ui/SettingWidgetSkeleton';
 import { type SettingItemProps, TEXTS } from '../types';
 import SettingList from './SettingList';
 
@@ -12,9 +13,10 @@ interface Props {
   headerItem: SettingItemProps;
   settingItems: SettingItemProps[][];
   version: string;
+  isLoading: boolean;
 }
 
-const SettingRoot = ({ headerItem, settingItems, version }: Props) => (
+const SettingRoot = ({ headerItem, settingItems, version, isLoading }: Props) => (
   <>
     <NavigationBar
       backgroundColor={gray[100]}
@@ -22,10 +24,16 @@ const SettingRoot = ({ headerItem, settingItems, version }: Props) => (
       centerComponent={<NaviTitleDisplay title={TEXTS.pageTitle} />}
     />
     <View className="bg-gray-100 flex-1 justify-between px-4 rounded-xl pt-[14px]">
-      <SettingList
-        header={[headerItem]}
-        groups={settingItems}
-      />
+      {isLoading ? (
+        <SettingWidgetSkeleton />
+      ) : (
+        <>
+          <SettingList
+            header={[headerItem]}
+            groups={settingItems}
+          />
+        </>
+      )}
       <Label
         weight="regular"
         className="text-gray-400 mb-[13px] text-center"
