@@ -1,6 +1,5 @@
 import { type DiaryCalendarModeType, type DiaryPageModeType } from '@entities/calendar/diary.type';
 import { isNotEmpty } from '@shared/lib';
-import { Dayjs } from 'dayjs';
 import { type Ref, useCallback } from 'react';
 import { Dimensions, FlatList, type FlatListProps, type ListRenderItem, View } from 'react-native';
 
@@ -13,8 +12,6 @@ interface EmotionDiaryMonthPagerProps {
   data: CalendarPage[];
   diaryMode: DiaryPageModeType;
   calendarMode: DiaryCalendarModeType;
-  currentMonth: Dayjs;
-  selectedMonth: Dayjs;
   flatListRef: Ref<FlatList<CalendarPage>>;
   onScroll?: FlatListProps<CalendarPage>['onScroll'];
   onMomentumScrollEnd?: FlatListProps<CalendarPage>['onMomentumScrollEnd'];
@@ -24,8 +21,6 @@ export const EmotionDiaryMonthPager = ({
   data,
   diaryMode,
   calendarMode,
-  currentMonth,
-  selectedMonth,
   flatListRef,
   onScroll,
   onMomentumScrollEnd,
@@ -38,15 +33,13 @@ export const EmotionDiaryMonthPager = ({
             monthDate={item.periodStart}
             monthData={item.items}
             diaryMode={diaryMode}
-            currentMonth={currentMonth}
-            selectedMonth={selectedMonth}
             scrollEnabled={isNotEmpty(item.items)}
             calendarMode={calendarMode}
           />
         </View>
       );
     },
-    [calendarMode, currentMonth, diaryMode, selectedMonth],
+    [calendarMode, diaryMode],
   );
 
   return (

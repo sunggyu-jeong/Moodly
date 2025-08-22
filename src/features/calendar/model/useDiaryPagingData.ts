@@ -8,9 +8,8 @@ const EMPTY_ARRAY: Diary[] = [];
 
 const weekRange = (weekStart: Dayjs) => ({
   start: weekStart.startOf('week').format('YYYY-MM-DD'),
-  end: weekStart.endOf('week').startOf('week').format('YYYY-MM-DD'),
+  end: weekStart.endOf('week').format('YYYY-MM-DD'),
 });
-
 interface UseDiaryPagingDataProps {
   isMonthMode: boolean;
   selectedPeriod: Dayjs;

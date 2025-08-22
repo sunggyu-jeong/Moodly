@@ -16,8 +16,6 @@ interface EmotionDiaryMonthViewProps {
   monthDate: Dayjs;
   monthData: Diary[]; // Month summary DTO
   diaryMode: DiaryPageModeType;
-  currentMonth: Dayjs;
-  selectedMonth: Dayjs;
   scrollEnabled: boolean;
   showSkeleton?: boolean;
   calendarMode?: DiaryCalendarModeType;
