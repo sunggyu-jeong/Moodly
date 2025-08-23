@@ -22,10 +22,6 @@ export function useNotificationPermission() {
   const unsubscribeRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
-    checkPermission();
-  }, []);
-
-  useEffect(() => {
     const sub = AppState.addEventListener('change', async nextState => {
       if (appState.current.match(/inactive|background/) && nextState === 'active') {
         const { status: newStatus } = await checkNotifications();
@@ -35,11 +31,6 @@ export function useNotificationPermission() {
     });
     return () => sub.remove();
   }, [status]);
-
-  const checkPermission = async () => {
-    const { status: initStatus } = await checkNotifications();
-    setStatus(initStatus);
-  };
 
   const requestNotification = async () => {
     try {

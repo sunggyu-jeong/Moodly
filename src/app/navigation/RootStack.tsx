@@ -8,6 +8,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { Splash } from '../ui';
 import DiaryStack, { type DiaryStackParamList } from './DiaryStack';
+import { useUpdateProgress } from './hooks/useUpdateProgress';
 import TabNavigation, { type BottomTabParamList } from './TabNavigation';
 
 export type RootStackParamList = {
@@ -25,6 +26,7 @@ export type RootStackParamList = {
 const Stack = createNativeStackNavigator();
 
 const RootStack = () => {
+  const { status, progress, ment } = useUpdateProgress();
   return (
     <>
       <OverlayManager />
@@ -35,8 +37,9 @@ const RootStack = () => {
         <Stack.Screen name="Splash">
           {() => (
             <Splash
-              status="UPDATE_PROCESS_COMPLETED"
-              progress={100}
+              status={status}
+              progress={progress}
+              ment={ment}
             />
           )}
         </Stack.Screen>

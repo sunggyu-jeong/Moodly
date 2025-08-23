@@ -68,9 +68,13 @@ const diarySlice = createSlice({
     },
     moveWeek: (state, action: PayloadAction<'left' | 'right'>) => {
       const delta = action.payload === 'left' ? -1 : 1;
-      const newWeek = dayjs(state.selectedWeek).add(delta, 'week');
-      state.selectedWeek = newWeek.toString();
-      state.selectedMonth = newWeek.startOf('month').toString();
+      const currentWeekStart = dayjs(state.selectedWeek);
+      const newWeekStart = currentWeekStart.add(delta, 'week');
+
+      const middleOfWeek = newWeekStart.add(3, 'day');
+
+      state.selectedWeek = newWeekStart.format('YYYY-MM-DD');
+      state.selectedMonth = middleOfWeek.startOf('month').format('YYYY-MM-DD');
       state.selectedDay = null;
     },
   },

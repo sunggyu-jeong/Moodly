@@ -13,8 +13,6 @@ import '../../global.css';
 
 import { RootStack } from '@app/navigation';
 import { store } from '@app/store';
-import { HOT_UPDATER_SUPABASE_URL } from '@env';
-import { getUpdateSource, HotUpdater } from '@hot-updater/react-native';
 import { useNotificationPermission } from '@shared/hooks/useNotificationPermission';
 import '@shared/lib/day.util';
 import timezone from 'dayjs/plugin/timezone';
@@ -75,8 +73,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HotUpdater.wrap({
-  source: getUpdateSource(`${HOT_UPDATER_SUPABASE_URL}/functions/v1/update-server`, {
-    updateStrategy: 'fingerprint',
-  }),
-})(App);
+export default App;
