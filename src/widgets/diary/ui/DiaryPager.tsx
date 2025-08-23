@@ -3,10 +3,8 @@ import type { CalendarPage } from '@features/calendar/lib/paging';
 import { useDiaryPagerVM } from '@features/calendar/model/useDiaryPagerVM';
 import { usePagerController } from '@features/calendar/model/usePagerController';
 import { EmotionDiaryMonthPager } from '@features/calendar/ui/EmotionDiaryMonthPager';
-import EmotionDiaryMonthView from '@features/calendar/ui/EmotionDiaryMonthView';
 import EmotionDiaryMonthSelector from '@features/diary/ui/EmotionDiaryMonthSelector';
 import { DIARY_ICONS } from '@shared/assets/images/diary';
-import { isNotEmpty } from '@shared/lib';
 import colors from '@shared/styles/colors';
 import DiaryToggle from '@shared/ui/elements/DiaryToggle';
 import { NavigationBar } from '@widgets/navigation-bar';
@@ -17,8 +15,6 @@ export const DiaryPager = () => {
   const {
     diaryMode,
     calendarMode,
-    selectedMonth,
-    monthData,
     pages,
     monthLabel,
     goLeft,
@@ -93,8 +89,6 @@ export const DiaryPager = () => {
     [calendarMode, diaryMode, toggleCalendarMode, toggleDiaryMode],
   );
 
-  const isCalendarMode = diaryMode === DiaryPageMode.calendarMode;
-
   return (
     <>
       <NavigationBar
@@ -105,27 +99,14 @@ export const DiaryPager = () => {
       />
       <View style={styles.container}>
         {/* 캘린더 뷰: isCalendarMode가 아닐 때 숨김 */}
-        <View style={!isCalendarMode ? styles.hidden : styles.visible}>
-          <EmotionDiaryMonthPager
-            data={pages}
-            diaryMode={diaryMode}
-            calendarMode={calendarMode}
-            flatListRef={flatListRef}
-            onScroll={onScroll}
-            onMomentumScrollEnd={onMomentumScrollEnd}
-          />
-        </View>
-
-        {/* 리스트 뷰: isCalendarMode일 때 숨김 */}
-        <View style={isCalendarMode ? styles.hidden : styles.visible}>
-          <EmotionDiaryMonthView
-            key={`list-${selectedMonth.format('YYYY-MM')}`}
-            monthDate={selectedMonth}
-            monthData={monthData}
-            diaryMode={diaryMode}
-            scrollEnabled={isNotEmpty(monthData)}
-          />
-        </View>
+        <EmotionDiaryMonthPager
+          data={pages}
+          diaryMode={diaryMode}
+          calendarMode={calendarMode}
+          flatListRef={flatListRef}
+          onScroll={onScroll}
+          onMomentumScrollEnd={onMomentumScrollEnd}
+        />
       </View>
     </>
   );
@@ -133,12 +114,6 @@ export const DiaryPager = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-  },
-  hidden: {
-    display: 'none',
-  },
-  visible: {
     flex: 1,
   },
 });

@@ -8,7 +8,7 @@ import { formatWeekLabel, useAppDispatch, useAppSelector } from '@shared';
 import dayjs from 'dayjs';
 import { useCallback, useMemo, useState } from 'react';
 
-import { moveMonth, moveWeek, resetDiary } from '../../diary';
+import { moveMonth, moveWeek, resetDiary, setSelectedDay } from '../../diary';
 import { buildPages, type CalendarPage } from '../lib';
 import { selectSelectedDayIso, selectSelectedMonth, selectSelectedWeek } from './selector';
 import { useDiaryPagingData } from './useDiaryPagingData';
@@ -57,6 +57,7 @@ export const useDiaryPagerVM = () => {
     setDiaryMode(p =>
       p === DiaryPageMode.listMode ? DiaryPageMode.calendarMode : DiaryPageMode.listMode,
     );
+    setSelectedDay(null);
   }, []);
   const toggleCalendarMode = useCallback(() => {
     setCalendarMode(c =>

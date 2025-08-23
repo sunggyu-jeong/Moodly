@@ -47,7 +47,7 @@ const EmotionDiaryMonthView = ({
     <View style={styles.page}>
       <FlatList
         style={styles.list}
-        data={filteredListData}
+        data={diaryMode === 'CALENDARMODE' ? filteredListData : monthData}
         initialNumToRender={filteredListData?.length ?? 0}
         windowSize={10}
         maxToRenderPerBatch={5}
@@ -57,13 +57,15 @@ const EmotionDiaryMonthView = ({
           isEmpty(filteredListData) && styles.emptyContainer,
         ]}
         ListHeaderComponent={
-          <EmotionDiaryListHeader
-            showSkeleton={showSkeleton ?? false}
-            diaryMode={diaryMode}
-            selectedMonth={monthDate.toString()}
-            monthData={monthData}
-            calendarMode={calendarMode}
-          />
+          diaryMode === 'CALENDARMODE' ? (
+            <EmotionDiaryListHeader
+              showSkeleton={showSkeleton ?? false}
+              diaryMode={diaryMode}
+              selectedMonth={monthDate.toString()}
+              monthData={monthData}
+              calendarMode={calendarMode}
+            />
+          ) : null
         }
         ListEmptyComponent={<EmotionDiaryListEmpty showSkeleton={showSkeleton ?? false} />}
         renderItem={renderDiaryCard}
