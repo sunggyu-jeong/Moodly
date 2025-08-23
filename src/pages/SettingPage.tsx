@@ -18,7 +18,7 @@ import {
   useNotificationPermission,
 } from '@shared';
 import { COMMON_ICONS } from '@shared/assets/images/common';
-import { useCallback, version } from 'react';
+import { useCallback } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 const SettingPage = () => {
@@ -159,7 +159,6 @@ const SettingPage = () => {
       <SettingRoot
         headerItem={headerItem}
         settingItems={settingListItems}
-        version={version}
         isLoading={useDelay(isLoading) ?? false}
       />
     </>

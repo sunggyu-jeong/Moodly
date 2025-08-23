@@ -2,7 +2,7 @@ import { goBack } from '@shared';
 import { useBottomSheet } from '@shared/hooks/useBottomSheet';
 import BottomSheetWrapper from '@shared/ui/elements/BottomSheetWrapper';
 import { H3 } from '@shared/ui/typography/H3';
-import { forwardRef, useImperativeHandle } from 'react';
+import { forwardRef, useImperativeHandle, useState } from 'react';
 import { Keyboard, View } from 'react-native';
 
 import { SetNicknameForm } from '../../set-nickname/ui/SetNicknameForm';
@@ -14,6 +14,7 @@ export const ChangeNicknameSheet = forwardRef<BottomSheetHandler>((_, ref) => {
   const { sheetRef, snapPoints, handleSheetChanges } = useBottomSheet({
     snapPoints: [MIN_HEIGHT, '31.3%'],
   });
+  const [formKey, setFormKey] = useState(0);
 
   useImperativeHandle(ref, () => ({
     expand: () => sheetRef.current?.expand(),
@@ -28,6 +29,7 @@ export const ChangeNicknameSheet = forwardRef<BottomSheetHandler>((_, ref) => {
   const handleSheetStateChange = (index: number) => {
     if (index === -1) {
       Keyboard.dismiss();
+      setFormKey(prevKey => prevKey + 1);
     }
     handleSheetChanges(index);
   };
@@ -42,6 +44,7 @@ export const ChangeNicknameSheet = forwardRef<BottomSheetHandler>((_, ref) => {
         <H3 weight="semibold">닉네임 변경</H3>
 
         <SetNicknameForm
+          key={formKey}
           inputBackgroundColor="white"
           onSuccess={handleSuccess}
         />

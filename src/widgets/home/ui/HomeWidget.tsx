@@ -1,7 +1,7 @@
 import { useGetDiaryCountQuery, useHasDiaryForDayQuery } from '@entities/diary/api/diary.api';
 import { resetDiary } from '@features/diary';
 import { useFocusEffect } from '@react-navigation/native';
-import { jumpToTab, navigate, useAppDispatch, useNotificationPermission } from '@shared';
+import { jumpToTab, navigate, useAppDispatch, useDelay, useNotificationPermission } from '@shared';
 import { useCallback, useEffect } from 'react';
 
 import HomeContent from './HomeContent';
@@ -25,7 +25,7 @@ const HomeWidget = () => {
     }, [dispatch]),
   );
 
-  if (isLoading) {
+  if (useDelay(isLoading)) {
     return <HomeLoading />;
   }
 

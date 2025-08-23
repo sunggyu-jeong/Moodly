@@ -13,11 +13,10 @@ import SettingList from './SettingList';
 interface Props {
   headerItem: SettingItemProps;
   settingItems: SettingItemProps[][];
-  version: string;
   isLoading: boolean;
 }
 
-const SettingRoot = ({ headerItem, settingItems, version, isLoading }: Props) => (
+const SettingRoot = ({ headerItem, settingItems, isLoading }: Props) => (
   <>
     <NavigationBar
       backgroundColor={gray[100]}
