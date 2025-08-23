@@ -9,8 +9,8 @@ import {
   requestPermission,
 } from '@react-native-firebase/messaging';
 import { resetTo } from '@shared/lib';
-import { useEffect, useRef, useState } from 'react';
-import { AppState, PermissionsAndroid, Platform } from 'react-native';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { AppState, Linking, PermissionsAndroid, Platform } from 'react-native';
 import { checkNotifications, type PermissionStatus } from 'react-native-permissions';
 
 const app = getApp();
@@ -77,6 +77,10 @@ export function useNotificationPermission() {
     }
   }
 
+  const openSettings = useCallback(async () => {
+    await Linking.openSettings();
+  }, []);
+
   async function requestNotificationPermission(): Promise<boolean> {
     if (Platform.OS === 'ios') {
       await ensureRegisteredForRemoteMessagesIOS();
@@ -96,5 +100,5 @@ export function useNotificationPermission() {
     return true;
   }
 
-  return { status, requestNotification, skipPermission };
+  return { status, requestNotification, skipPermission, openSettings };
 }

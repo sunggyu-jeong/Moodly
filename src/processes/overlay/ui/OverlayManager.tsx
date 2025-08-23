@@ -1,4 +1,4 @@
-import { isNotEmpty, useAppDispatch, useAppSelector } from '@shared';
+import { isNotEmpty, useAppDispatch, useAppSelector, useNotificationPermission } from '@shared';
 import { DropDownAnimation } from '@widgets/dropdown/animation';
 import { ToastController } from '@widgets/toast';
 
@@ -15,6 +15,7 @@ const OverlayManager = () => {
   const showModalPopup = useAppSelector(state => state.overlaySlice.showModalPopup);
   const showDropDownView = useAppSelector(state => state.overlaySlice.showDropDownView);
   const dispatch = useAppDispatch();
+  const { openSettings } = useNotificationPermission();
 
   return (
     <>
@@ -34,7 +35,7 @@ const OverlayManager = () => {
             } else if (
               showModalPopup?.confirmActionKey === MODAL_CONFIRM_ACTION_KEY.PERMISSION_CHANGE
             ) {
-              // openSettings();
+              openSettings();
               dispatch(resetModalPopup());
             }
           }}
