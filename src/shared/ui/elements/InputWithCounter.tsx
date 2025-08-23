@@ -1,5 +1,5 @@
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
-import { StyleSheet, type TextInputProps, View } from 'react-native';
+import { StyleSheet, TextInput, type TextInputProps, View } from 'react-native';
 
 import { gray } from '../../styles';
 import { Caption } from '../typography';
@@ -27,13 +27,15 @@ export const InputWithCounterProps = ({
       borderColor: gray[200],
     },
   });
+  const isBottomSheet = !!inputBackgroundColor;
+  const InputComponent = isBottomSheet ? BottomSheetTextInput : TextInput;
 
   return (
     <View
       className="w-full h-[60px] rounded-xl border-gray-200 mb-[80px]"
       style={styles.inputContainer}
     >
-      <BottomSheetTextInput
+      <InputComponent
         className="w-full h-[60px] ml-[26px]"
         value={value}
         maxLength={maxLength}
