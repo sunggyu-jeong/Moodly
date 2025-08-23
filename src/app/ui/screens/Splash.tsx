@@ -2,12 +2,13 @@ import { useLazyGetFirstLaunchFlagQuery } from '@entities/auth/api/user-meta.api
 import { UpdateContent } from '@features/update-progress/updateProgress';
 import { isNotEmpty, resetTo, supabase } from '@shared';
 import { MAIN_ICONS } from '@shared/assets/images/main';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { Image, SafeAreaView, StatusBar, View } from 'react-native';
 
-import type {
-  UpdateProgressMent,
-  UpdateProgressStatus,
+import {
+  type UpdateProgressMent,
+  type UpdateProgressStatus,
+  useUpdateProgress,
 } from '../../navigation/hooks/useUpdateProgress';
 import AppBootstrap from '../../provider/AppBootstrap';
 
@@ -16,7 +17,7 @@ export interface SplashProps {
   progress: number;
   ment: UpdateProgressMent;
 }
-const Splash = ({ status, progress, ment }: SplashProps) => {
+const Splash = () => {
   const [getFirstLaunchFlag] = useLazyGetFirstLaunchFlagQuery();
 
   const flag = useCallback(async () => {
@@ -35,19 +36,7 @@ const Splash = ({ status, progress, ment }: SplashProps) => {
     }
   }, [getFirstLaunchFlag]);
 
-  useEffect(() => {
-    let timer: ReturnType<typeof setTimeout> | null = null;
-
-    if (status === 'UPDATE_PROCESS_COMPLETED') {
-      timer = setTimeout(flag, 2000);
-    }
-
-    return () => {
-      if (timer) {
-        clearTimeout(timer);
-      }
-    };
-  }, [status, flag]);
+  const { status, progress, ment } = useUpdateProgress(flag);
 
   return (
     <>

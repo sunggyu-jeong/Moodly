@@ -12,9 +12,10 @@ export type UpdateProgressMent =
   | '업데이트를 확인하고 있습니다.'
   | '업데이트 중...'
   | '업데이트가 완료되었습니다.'
-  | '오류가 발생했습니다.';
+  | '오류가 발생했습니다.'
+  | '업데이트가 완료되었습니다. 앱을 재시작합니다.';
 
-export const useUpdateProgress = () => {
+export const useUpdateProgress = (onUpdateProcessFinished: () => void) => {
   const [status, setStatus] = useState<UpdateProgressStatus>('UPDATE_CHECKING');
   const [progress, setProgress] = useState(0);
   const [ment, setMent] = useState<UpdateProgressMent>('업데이트를 확인하고 있습니다.');
@@ -25,9 +26,20 @@ export const useUpdateProgress = () => {
     let isMounted = true;
     const updateSourceUrl = `${HOT_UPDATER_SUPABASE_URL}/functions/v1/update-server`;
 
+    const finishProcess = () => {
+      if (isMounted) {
+        setStatus('UPDATE_PROCESS_COMPLETED');
+        setMent('업데이트가 완료되었습니다.');
+        setProgress(100);
+        // 0.5초 후 콜백을 실행하여 네비게이션 로직 시작
+        setTimeout(onUpdateProcessFinished, 500);
+      }
+    };
+
     const runUpdate = async () => {
       try {
         if (!isMounted) return;
+
         setStatus('UPDATE_CHECKING');
         setMent('업데이트를 확인하고 있습니다.');
         setProgress(10);
@@ -37,11 +49,7 @@ export const useUpdateProgress = () => {
         });
 
         if (!update) {
-          if (isMounted) {
-            setStatus('UPDATE_PROCESS_COMPLETED');
-            setMent('업데이트가 완료되었습니다.');
-            setProgress(100);
-          }
+          finishProcess();
           return;
         }
 
@@ -60,6 +68,7 @@ export const useUpdateProgress = () => {
           });
         }, 50);
 
+        // 실제 번들 파일 다운로드 및 적용
         await HotUpdater.updateBundle({
           bundleId: update.id,
           fileUrl: update.fileUrl,
@@ -70,22 +79,16 @@ export const useUpdateProgress = () => {
 
         if (isMounted) {
           setProgress(100);
+          setMent('업데이트가 완료되었습니다. 앱을 재시작합니다.');
         }
+
         setTimeout(() => {
           HotUpdater.reload();
-        }, 300);
+        }, 1000);
       } catch (error) {
         console.log('>>> Hot update error:', error);
         if (intervalRef.current) clearInterval(intervalRef.current);
-        if (isMounted) {
-          setTimeout(() => {
-            if (isMounted) {
-              setStatus('UPDATE_PROCESS_COMPLETED');
-              setMent('업데이트가 완료되었습니다.');
-              setProgress(100);
-            }
-          }, 500);
-        }
+        finishProcess();
       }
     };
 
@@ -97,7 +100,7 @@ export const useUpdateProgress = () => {
         clearInterval(intervalRef.current);
       }
     };
-  }, []);
+  }, [onUpdateProcessFinished]);
 
   return { status, progress, ment };
 };
