@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { type StyleProp, StyleSheet, TouchableOpacity, type ViewStyle } from 'react-native';
 
 import { ColorKeyEnum, getColor } from '@/shared/constants';
 import { getScaleSize } from '@/shared/hooks';
@@ -10,14 +10,15 @@ interface ActionButtonProps {
   children: React.ReactNode;
   disabled?: boolean;
   onPress: () => void;
+  style?: StyleProp<ViewStyle>;
 }
 
-const ActionButton = ({ children, disabled, onPress }: ActionButtonProps) => {
+const ActionButton = ({ children, disabled, onPress, style }: ActionButtonProps) => {
   return (
     <TouchableOpacity
       onPress={onPress}
       className="rounded-xl h-[56px] justify-center items-center w-full px-[25px]"
-      style={disabled ? styles.buttonDisabled : styles.buttonEnabled}
+      style={[disabled ? styles.buttonDisabled : styles.buttonEnabled, style]}
       disabled={disabled}
     >
       <Body2

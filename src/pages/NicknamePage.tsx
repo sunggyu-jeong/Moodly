@@ -12,7 +12,7 @@ const NicknamePage = () => {
     <>
       <NavigationBar />
       <SafeAreaView className="flex-1 h-full bg-common-white">
-        <View className="px-5 mt-[7px]">
+        <View className="h-full px-5 mt-[7px]">
           <H2
             weight="semibold"
             style={Styles.titleStyle}

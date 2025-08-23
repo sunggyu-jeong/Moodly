@@ -1,6 +1,6 @@
 import { setShowToastView } from '@processes/overlay/model/overlaySlice';
 import { goBack } from '@shared';
-import { getScaleSize, useAppDispatch } from '@shared/hooks';
+import { useAppDispatch } from '@shared/hooks';
 import { useBottomSheet } from '@shared/hooks/useBottomSheet';
 import BottomSheetWrapper from '@shared/ui/elements/BottomSheetWrapper';
 import { H3 } from '@shared/ui/typography/H3';
@@ -42,13 +42,8 @@ export const ChangeNicknameSheet = forwardRef<BottomSheetHandler>((_, ref) => {
       snapPoints={snapPoints}
       onChange={handleSheetStateChange}
     >
-      <View className="flex-1 items-center mt-[8px] justify-between">
-        <View
-          className="gap-2"
-          style={{ marginBottom: getScaleSize(30) }}
-        >
-          <H3 weight="semibold">닉네임 변경</H3>
-        </View>
+      <View className="flex-1 items-center pt-4">
+        <H3 weight="semibold">닉네임 변경</H3>
 
         <SetNicknameForm
           inputBackgroundColor="white"

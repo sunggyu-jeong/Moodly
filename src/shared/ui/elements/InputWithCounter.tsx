@@ -23,8 +23,8 @@ export const InputWithCounterProps = ({
     },
     inputContainer: {
       backgroundColor: inputBackgroundColor ?? gray[100],
-      borderWidth: inputBackgroundColor ? 1 : 0,
-      borderColor: gray[200],
+      marginBottom: inputBackgroundColor ? 80 : 0,
+      marginTop: inputBackgroundColor ? 30 : 0,
     },
   });
   const isBottomSheet = !!inputBackgroundColor;
@@ -32,7 +32,7 @@ export const InputWithCounterProps = ({
 
   return (
     <View
-      className="w-full h-[60px] rounded-xl border-gray-200 mb-[80px]"
+      className="w-full h-[60px] rounded-xl border border-b-gray-200 border-gray-200"
       style={styles.inputContainer}
     >
       <InputComponent

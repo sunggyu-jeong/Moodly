@@ -4,7 +4,7 @@ import type { UserInfo } from '@entities/auth/model/auth.types';
 import { ActionButton } from '@shared';
 import { InputWithCounterProps } from '@shared/ui/elements/InputWithCounter';
 import { useState } from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 const MAX_LENGTH = 8;
 
@@ -32,8 +32,21 @@ export const SetNicknameForm = ({ onSuccess, inputBackgroundColor }: SetNickname
     }
   };
 
+  const styles = StyleSheet.create({
+    viewContainer: {
+      paddingLeft: inputBackgroundColor ? 36 : 0,
+      paddingRight: inputBackgroundColor ? 36 : 0,
+    },
+    buttonStyle: {
+      marginBottom: inputBackgroundColor ? 0 : 61,
+    },
+  });
+
   return (
-    <View className="w-full px-9 flex-1 justify-between">
+    <View
+      className="w-full h-full flex-1 justify-between"
+      style={styles.viewContainer}
+    >
       <InputWithCounterProps
         value={nickname}
         onChangeText={setNickname}
@@ -44,6 +57,7 @@ export const SetNicknameForm = ({ onSuccess, inputBackgroundColor }: SetNickname
       <ActionButton
         disabled={!isSubmittable || isSettingUser || isSavingFlag}
         onPress={handleSubmit}
+        style={styles.buttonStyle}
       >
         {inputBackgroundColor ? '완료' : '다음'}
       </ActionButton>
