@@ -1,7 +1,6 @@
+import { createKstDay } from '@shared';
 import { appApi } from '@shared/api/AppApi';
-import { toKstDate } from '@shared/lib/day.util';
 import { getUserId } from '@shared/lib/user.util';
-import dayjs from 'dayjs';
 
 import { byIdTag, fromRow, toInsertRow, toUpdateRow } from '../lib/diary.mapper';
 import type { CreateDiaryInput, DbDiaryRow, Diary, UpdateDiaryInput } from '../model/diary.types';
@@ -51,16 +50,17 @@ export const diaryApi = appApi.injectEndpoints({
     hasDiaryForDay: build.query<boolean, void>({
       query: () => async client => {
         const userId = await getUserId();
+        const todayDateString = createKstDay().format('YYYY-MM-DD');
+
         const q = client
           .from('moodly_diary')
           .select('*', { count: 'exact', head: true })
-          .eq('record_date', toKstDate(dayjs()))
           .eq('user_id', userId)
-          .overrideTypes<DbDiaryRow[], { merge: false }>();
-
+          .eq('record_date', todayDateString);
         const { count, error } = await q;
         return { data: ((count ?? 0) > 0) as boolean, error };
       },
+      providesTags: [{ type: 'Diary', id: 'HAS_TODAY' }],
     }),
 
     createDiary: build.mutation<Diary, CreateDiaryInput>({
