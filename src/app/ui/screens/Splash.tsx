@@ -1,12 +1,14 @@
 import { useLazyGetFirstLaunchFlagQuery } from '@entities/auth/api/user-meta.api';
+import { UpdateContent } from '@features/update-progress/updateProgress';
 import { isNotEmpty, resetTo, supabase } from '@shared';
 import { MAIN_ICONS } from '@shared/assets/images/main';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { Image, SafeAreaView, StatusBar, View } from 'react-native';
 
 import {
   type UpdateProgressMent,
   type UpdateProgressStatus,
+  useUpdateProgress,
 } from '../../navigation/hooks/useUpdateProgress';
 import AppBootstrap from '../../provider/AppBootstrap';
 
@@ -17,10 +19,6 @@ export interface SplashProps {
 }
 const Splash = () => {
   const [getFirstLaunchFlag] = useLazyGetFirstLaunchFlagQuery();
-
-  useEffect(() => {
-    flag();
-  }, []);
 
   const flag = useCallback(async () => {
     const response = await getFirstLaunchFlag();
@@ -38,7 +36,7 @@ const Splash = () => {
     }
   }, [getFirstLaunchFlag]);
 
-  // const { status, progress, ment } = useUpdateProgress(flag);
+  const { status, progress, ment } = useUpdateProgress(flag);
 
   return (
     <>
@@ -52,11 +50,11 @@ const Splash = () => {
         </View>
 
         <View className="absolute bottom-12 w-full gap-3 items-center">
-          {/* <UpdateContent
+          <UpdateContent
             progress={progress}
             status={status}
             ment={ment}
-          /> */}
+          />
         </View>
       </SafeAreaView>
 
