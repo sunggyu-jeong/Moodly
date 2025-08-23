@@ -3,9 +3,10 @@ import NaviTitleDisplay from '@shared/ui/elements/NaviTitle';
 import { Label } from '@shared/ui/typography/Label';
 import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar';
 import SettingWidgetSkeleton from '@widgets/setting/ui/SettingWidgetSkeleton';
-import React from 'react';
+import { memo } from 'react';
 import { View } from 'react-native';
 
+import packageJson from '../../../../package.json';
 import { type SettingItemProps, TEXTS } from '../types';
 import SettingList from './SettingList';
 
@@ -38,10 +39,10 @@ const SettingRoot = ({ headerItem, settingItems, version, isLoading }: Props) =>
         weight="regular"
         className="text-gray-400 mb-[13px] text-center"
       >
-        {TEXTS.appVersionPrefix + version}
+        {TEXTS.appVersionPrefix + packageJson.version}
       </Label>
     </View>
   </>
 );
 
-export default React.memo(SettingRoot);
+export default memo(SettingRoot);

@@ -9,10 +9,11 @@ import { View } from 'react-native';
 const MAX_LENGTH = 8;
 
 interface SetNicknameFormProps {
+  inputBackgroundColor?: string;
   onSuccess: () => void;
 }
 
-export const SetNicknameForm = ({ onSuccess }: SetNicknameFormProps) => {
+export const SetNicknameForm = ({ onSuccess, inputBackgroundColor }: SetNicknameFormProps) => {
   const [nickname, setNickname] = useState('');
   const isSubmittable = nickname.length >= 2;
 
@@ -32,10 +33,11 @@ export const SetNicknameForm = ({ onSuccess }: SetNicknameFormProps) => {
   };
 
   return (
-    <View className="w-full items-center gap-10">
+    <View className="w-full px-9 flex-1 justify-between">
       <InputWithCounterProps
         value={nickname}
         onChangeText={setNickname}
+        inputBackgroundColor={inputBackgroundColor}
         maxLength={MAX_LENGTH}
         placeholder="닉네임을 입력해주세요."
       />
@@ -43,7 +45,7 @@ export const SetNicknameForm = ({ onSuccess }: SetNicknameFormProps) => {
         disabled={!isSubmittable || isSettingUser || isSavingFlag}
         onPress={handleSubmit}
       >
-        다음
+        {inputBackgroundColor ? '완료' : '다음'}
       </ActionButton>
     </View>
   );

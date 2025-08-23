@@ -44,7 +44,10 @@ const SettingList = ({ header, groups }: SettingListProps) => {
                 disabled={!item.onPress}
                 activeOpacity={item.onPress ? 0.7 : 1}
               >
-                <SettingItem {...item} />
+                <SettingItem
+                  key={itemIndex}
+                  {...item}
+                />
               </TouchableOpacity>
               {itemIndex < group.length - 1 && <View className="w-full h-px bg-gray-200" />}
             </View>
