@@ -1,5 +1,4 @@
 import { setModifyMode } from '@features/diary/model/diarySlice';
-import { setShowToastView } from '@processes/overlay/model/overlaySlice';
 import {
   Body2,
   dismissModalToScreen,
@@ -19,10 +18,6 @@ const EmotionDiaryCompletePage = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (isModifyMode) {
-      dispatch(setShowToastView({ visibility: true, message: '일기가 수정되었어요.' }));
-    }
-
     const timer = setTimeout(() => {
       if (isModifyMode) {
         dismissModalToScreen();

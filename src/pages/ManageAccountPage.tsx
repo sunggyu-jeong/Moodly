@@ -58,14 +58,11 @@ const ManageAccountPage = () => {
       if (res.ok) {
         await supabase.auth.signOut();
         dispatch(appApi.util.resetApiState());
-        dispatch(
-          setShowToastView({ visibility: true, message: '회원 탈퇴 요청이 완료되었습니다.' }),
-        );
         dispatch(setRequestWithDrawal(null));
 
         resetTo('Login');
       } else {
-        dispatch(setShowToastView({ visibility: true, message: '회원 탈퇴 요청이 실패했습니다.' }));
+        dispatch(setShowToastView({ visibility: true, message: '회원 탈퇴 요청이 실패했어요.' }));
       }
     } catch (err) {
       console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', err);

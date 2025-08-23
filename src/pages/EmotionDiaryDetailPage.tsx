@@ -5,7 +5,6 @@ import {
   resetModalPopup,
   setOverlayEventHandler,
   setShowDropdownView,
-  setShowToastView,
 } from '@processes/overlay/model/overlaySlice';
 import { type RouteProp, useRoute } from '@react-navigation/native';
 import {
@@ -91,7 +90,6 @@ const EmotionDiaryDetailPage = () => {
           dismissModalToScreen();
         }
         goBack();
-        dispatch(setShowToastView({ visibility: true, message: '일기가 삭제되었어요!' }));
       }
     } catch (error) {
       console.error('다이어리 삭제 요청 실패:', error);

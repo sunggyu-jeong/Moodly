@@ -1,6 +1,4 @@
-import { setShowToastView } from '@processes/overlay/model/overlaySlice';
 import { goBack } from '@shared';
-import { useAppDispatch } from '@shared/hooks';
 import { useBottomSheet } from '@shared/hooks/useBottomSheet';
 import BottomSheetWrapper from '@shared/ui/elements/BottomSheetWrapper';
 import { H3 } from '@shared/ui/typography/H3';
@@ -16,7 +14,6 @@ export const ChangeNicknameSheet = forwardRef<BottomSheetHandler>((_, ref) => {
   const { sheetRef, snapPoints, handleSheetChanges } = useBottomSheet({
     snapPoints: [MIN_HEIGHT, '31.3%'],
   });
-  const dispatch = useAppDispatch();
 
   useImperativeHandle(ref, () => ({
     expand: () => sheetRef.current?.expand(),
@@ -25,7 +22,6 @@ export const ChangeNicknameSheet = forwardRef<BottomSheetHandler>((_, ref) => {
   }));
 
   const handleSuccess = () => {
-    dispatch(setShowToastView({ visibility: true, message: '닉네임 변경 요청이 성공했어요.' }));
     goBack();
   };
 

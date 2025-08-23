@@ -34,7 +34,7 @@ const SelectableDayCell = ({
     dispatch(
       setShowToastView({
         visibility: true,
-        message: '미래 날짜는 기록할 수 없어요!',
+        message: '미래 날짜는 작성할 수 없어요!',
       }),
     );
   }, [dispatch]);
