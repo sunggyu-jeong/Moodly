@@ -21,8 +21,6 @@ type BuildPageArgs = {
 };
 
 export const buildPages = ({
-  mode,
-  selectedDayIso,
   prevPeriod,
   currPeriod,
   nextPeriod,

@@ -3,6 +3,8 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { type EmotionIconData, ICON_DATA } from '@shared/constants/Icons';
 import dayjs from 'dayjs';
 
+import { createKstDay } from '../../../shared';
+
 interface DiaryState {
   selectedDiary: Diary | null;
   selectedIcon: EmotionIconData | null;
@@ -56,10 +58,12 @@ const diarySlice = createSlice({
     },
     moveMonth: (state, action: PayloadAction<'left' | 'right'>) => {
       const delta = action.payload === 'left' ? -1 : 1;
-      const newMonth = dayjs(state.selectedMonth).add(delta, 'month');
+      const currentMonth = createKstDay(state.selectedMonth);
+      const newMonth = currentMonth.add(delta, 'month');
       const firstOfMonth = newMonth.startOf('month');
-      state.selectedMonth = firstOfMonth.toString();
-      state.selectedWeek = dayjs(firstOfMonth).startOf('week').toString();
+
+      state.selectedMonth = firstOfMonth.format('YYYY-MM-DD');
+      state.selectedWeek = firstOfMonth.startOf('week').format('YYYY-MM-DD');
       state.selectedDay = null;
     },
     moveWeek: (state, action: PayloadAction<'left' | 'right'>) => {
