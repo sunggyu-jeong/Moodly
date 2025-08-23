@@ -1,10 +1,11 @@
 import { useLazyGetUserInfoQuery } from '@entities/auth/api/auth.api';
 import { useUpdateFirstLaunchFlagMutation } from '@entities/auth/api/user-meta.api';
 import { AUTH_PROVIDERS } from '@entities/auth/types';
+import { PRIVACY_POLICY_LINK, TERMS_OF_SERVICE_LINK } from '@env';
 import { useSocialLogin } from '@features/auth/hooks/useSocialLogin';
 import SocialLoginButton from '@features/auth/ui/SocialLoginButton';
 import { setShowToastView } from '@processes/overlay/model/overlaySlice';
-import { useAppDispatch } from '@shared/hooks';
+import { useAppDispatch, useExternalWebSite } from '@shared/hooks';
 import { isEmpty, isNotEmpty, navigate, resetTo } from '@shared/lib';
 import { initUserId } from '@shared/lib/user.util';
 import { gray } from '@shared/styles/colors';
@@ -27,6 +28,7 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
   const [getUserInfo] = useLazyGetUserInfoQuery();
   const dispatch = useAppDispatch();
   const [saveFirstLaunchFlag] = useUpdateFirstLaunchFlagMutation();
+  const { openLink } = useExternalWebSite();
 
   const fetchUserInfo = async () => {
     const response = await getUserInfo();
@@ -76,14 +78,18 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
           로그인 시{' '}
           <Text
             style={styles.textUnderline}
-            onPress={() => {}}
+            onPress={() => {
+              openLink(TERMS_OF_SERVICE_LINK);
+            }}
           >
             이용약관
           </Text>
           과{' '}
           <Text
             style={styles.textUnderline}
-            onPress={() => {}}
+            onPress={() => {
+              openLink(PRIVACY_POLICY_LINK);
+            }}
           >
             개인정보 처리 방침
           </Text>

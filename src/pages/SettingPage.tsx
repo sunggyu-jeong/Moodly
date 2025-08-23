@@ -1,10 +1,10 @@
 import { useGetUserInfoQuery } from '@entities/auth/api/auth.api';
-import { KAKAO_OPEN_CHAT_LINK } from '@env';
+import { KAKAO_OPEN_CHAT_LINK, PRIVACY_POLICY_LINK, TERMS_OF_SERVICE_LINK } from '@env';
 import { useLogout } from '@features/auth';
 import { SettingRoot } from '@features/setting';
 import { SETTING_EVENT_TYPE, TEXTS } from '@features/setting/types';
 import { MODAL_CONFIRM_ACTION_KEY } from '@processes/key';
-import { setShowModalPopup, setShowToastView } from '@processes/overlay/model/overlaySlice';
+import { setShowModalPopup } from '@processes/overlay/model/overlaySlice';
 import {
   Body1,
   gray,
@@ -14,15 +14,15 @@ import {
   Toggle,
   useAppDispatch,
   useDelay,
+  useExternalWebSite,
   useNotificationPermission,
-  useOpenKakao,
 } from '@shared';
 import { COMMON_ICONS } from '@shared/assets/images/common';
 import { useCallback, version } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 const SettingPage = () => {
-  const { openChat } = useOpenKakao();
+  const { openLink } = useExternalWebSite();
   const { signOut } = useLogout();
   const dispatch = useAppDispatch();
   const { status } = useNotificationPermission();
@@ -38,22 +38,22 @@ const SettingPage = () => {
           });
           break;
         case SETTING_EVENT_TYPE.SEND_FEEDBACK:
-          openChat(KAKAO_OPEN_CHAT_LINK);
+          openLink(KAKAO_OPEN_CHAT_LINK);
           break;
         case SETTING_EVENT_TYPE.LOG_OUT:
           signOut();
           break;
         case SETTING_EVENT_TYPE.PRIVACY_POLICY:
-          dispatch(setShowToastView({ visibility: true, message: '개인정보 이용동의 화면이동!' }));
+          openLink(PRIVACY_POLICY_LINK);
           break;
         case SETTING_EVENT_TYPE.TERMS_OF_SERVICE:
-          dispatch(setShowToastView({ visibility: true, message: '약관정보 화면이동!' }));
+          openLink(TERMS_OF_SERVICE_LINK);
           break;
         default:
           break;
       }
     },
-    [openChat, signOut, dispatch],
+    [openLink, signOut],
   );
 
   const headerItem = isNotEmpty(userInfo)

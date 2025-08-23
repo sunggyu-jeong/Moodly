@@ -4,16 +4,17 @@ import { Linking } from 'react-native';
 
 import { useAppDispatch } from './useHooks';
 
-type useOpenChat = {
-  openChat: (chatUrl: string) => Promise<void>;
+type UseOpenLink = {
+  openLink: (url: string) => Promise<void>;
 };
 
-export function useOpenKakao(): useOpenChat {
+export const useExternalWebSite = (): UseOpenLink => {
   const dispatch = useAppDispatch();
-  const openChat = useCallback(
-    async (chatUrl: string) => {
+
+  const openLink = useCallback(
+    async (url: string) => {
       try {
-        const supported = await Linking.canOpenURL(chatUrl);
+        const supported = await Linking.canOpenURL(url);
         if (!supported) {
           dispatch(
             setShowToastView({
@@ -23,13 +24,13 @@ export function useOpenKakao(): useOpenChat {
           );
           return;
         }
-        await Linking.openURL(chatUrl);
+        await Linking.openURL(url);
       } catch (err) {
-        console.error('오픈채팅 연결 실패:', err);
+        console.error('외부 링크 연결 실패:', err);
         dispatch(
           setShowToastView({
             visibility: true,
-            message: '오픈채팅 연결 중 오류가 발생했습니다.',
+            message: '링크를 여는 중 오류가 발생했습니다.',
           }),
         );
       }
@@ -37,5 +38,5 @@ export function useOpenKakao(): useOpenChat {
     [dispatch],
   );
 
-  return { openChat };
-}
+  return { openLink };
+};
