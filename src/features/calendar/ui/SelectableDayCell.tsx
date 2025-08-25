@@ -1,7 +1,7 @@
 import { setShowToastView } from '@processes/overlay/model/overlaySlice';
-import { DayCell, ICON_DATA, isEmpty, useAppDispatch } from '@shared';
+import { DayCell, ICON_DATA, isEmpty, now, useAppDispatch } from '@shared';
 import { COMMON_ICONS } from '@shared/assets/images/common';
-import dayjs, { Dayjs } from 'dayjs';
+import { Dayjs } from 'dayjs';
 import { memo, useCallback, useMemo } from 'react';
 
 interface SelectableDayCellProps {
@@ -19,8 +19,8 @@ const SelectableDayCell = ({
   onSelectDay,
   onStartEmotionSelection,
 }: SelectableDayCellProps) => {
-  const dispatch = useAppDispatch(); // Toast 같은 부가 기능은 유지
-  const isFuture = date.isAfter(dayjs(), 'day');
+  const dispatch = useAppDispatch();
+  const isFuture = date.isAfter(now(), 'day');
 
   const iconSource = useMemo(() => {
     if (isEmpty(iconId)) {

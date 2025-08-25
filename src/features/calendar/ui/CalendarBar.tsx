@@ -1,5 +1,5 @@
 import type { Diary } from '@entities/diary/model/diary.types';
-import { navigate, toKstDate, useAppDispatch, useAppSelector } from '@shared';
+import { formatDate, navigate, useAppDispatch, useAppSelector } from '@shared';
 import { GridList } from '@shared/ui/elements/GridList';
 import dayjs, { Dayjs } from 'dayjs';
 import { memo, useCallback, useMemo } from 'react';
@@ -39,14 +39,14 @@ const CalendarBar = ({ monthlyDates, entries }: CalendarBarProps) => {
 
   const handleSelectDay = useCallback(
     (date: Dayjs) => {
-      dispatch(setSelectedDay(toKstDate(date)));
+      dispatch(setSelectedDay(formatDate(date)));
     },
     [dispatch],
   );
 
   const handleStartEmotionSelection = useCallback(
     (date: Dayjs) => {
-      const emotion: Partial<Diary> = { recordDate: toKstDate(date) };
+      const emotion: Partial<Diary> = { recordDate: formatDate(date) };
       dispatch(setCurrentDiary(emotion));
       navigate('DiaryStack', { screen: 'EmotionSelectionPage' });
     },

@@ -5,9 +5,9 @@ import {
   type DiaryPageModeType,
 } from '@entities/calendar/diary.type';
 import type { Diary } from '@entities/diary/model/diary.types';
+import { now } from '@shared';
 import { generateMonthGrid, generateWeekGrid } from '@shared/lib/date.util';
 import WeekdayHeader from '@shared/ui/elements/WeekdayHeader';
-import dayjs from 'dayjs';
 import { AnimatePresence, MotiView } from 'moti';
 import React, { useMemo } from 'react';
 import { View } from 'react-native';
@@ -33,8 +33,8 @@ const EmotionDiaryListHeader = ({
   const monthlyDates = useMemo(
     () =>
       calendarMode === DiaryCalendarMode.monthDayMode
-        ? generateMonthGrid({ targetDate: dayjs(selectedMonth) })
-        : generateWeekGrid({ targetDate: dayjs(selectedMonth) }),
+        ? generateMonthGrid({ targetDate: now(selectedMonth) })
+        : generateWeekGrid({ targetDate: now(selectedMonth) }),
     [calendarMode, selectedMonth],
   );
   return (

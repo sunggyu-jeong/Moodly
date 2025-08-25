@@ -1,7 +1,7 @@
 import type { RootState } from '@app/store';
 import { diaryApi } from '@entities/diary/api/diary.api'; // 추가
 import { createSelector } from '@reduxjs/toolkit';
-import { createKstDay } from '@shared';
+import { now } from '@shared';
 import { getMonthRange } from '@widgets/diary'; // 추가
 import dayjs, { Dayjs } from 'dayjs';
 
@@ -12,11 +12,9 @@ export const selectSelectedWeekIso = (st: RootState) => s(st).selectedWeek;
 export const selectSelectedDayIso = (st: RootState) => s(st).selectedDay;
 export const selectCalendarMode = (st: RootState) => s(st).calendarMode;
 
-export const selectSelectedMonth = createSelector([selectSelectedMonthIso], iso =>
-  createKstDay(iso),
-);
+export const selectSelectedMonth = createSelector([selectSelectedMonthIso], iso => now(iso));
 
-export const selectSelectedWeek = createSelector([selectSelectedWeekIso], iso => createKstDay(iso));
+export const selectSelectedWeek = createSelector([selectSelectedWeekIso], iso => now(iso));
 
 const weekRange = (weekStart: Dayjs) => ({
   start: weekStart.startOf('week').format('YYYY-MM-DD'),

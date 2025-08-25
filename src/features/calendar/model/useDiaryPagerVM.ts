@@ -1,6 +1,5 @@
 import { DiaryCalendarMode, DiaryPageMode, type DiaryPageModeType } from '@entities/calendar';
-import { formatWeekLabel, useAppDispatch, useAppSelector } from '@shared';
-import dayjs from 'dayjs';
+import { formatWeekLabel, now, useAppDispatch, useAppSelector } from '@shared';
 import { useCallback, useMemo, useState } from 'react';
 
 import { moveMonth, moveWeek, resetDiary, setSelectedDay } from '../../diary';
@@ -28,7 +27,6 @@ export const useDiaryPagerVM = () => {
     isMonthMode,
     selectedPeriod: isMonthMode ? selectedMonth : selectedWeek,
   });
-
   const pages: CalendarPage[] = useMemo(() => {
     return buildPages({
       mode: isMonthMode ? 'month' : 'week',
@@ -63,7 +61,7 @@ export const useDiaryPagerVM = () => {
   return {
     diaryMode,
     selectedMonth: periods.curr,
-    currentMonth: dayjs(),
+    currentMonth: now(),
     monthData: datasets.currData,
     pages,
     monthLabel,

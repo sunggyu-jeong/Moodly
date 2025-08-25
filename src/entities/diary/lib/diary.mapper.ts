@@ -1,4 +1,4 @@
-import { toDateOnly, toKstDate } from '@shared/lib/day.util';
+import { formatDate, now } from '@shared';
 
 import type { CreateDiaryInput, DbDiaryRow, Diary, UpdateDiaryInput } from '../model/diary.types';
 
@@ -17,17 +17,17 @@ export const fromRow = (row: DbDiaryRow): Diary => ({
 export const toInsertRow = (input: CreateDiaryInput) => ({
   user_id: input.userId,
   icon_id: input.iconId ?? null,
-  record_date: toDateOnly(input.recordDate),
+  record_date: formatDate(now(input.recordDate)),
   description: input.description ?? null,
-  created_at: toKstDate(),
-  updated_at: toKstDate(),
+  created_at: formatDate(),
+  updated_at: formatDate(),
 });
 
 // Domain -> DB (UPDATE)
 export const toUpdateRow = (input: UpdateDiaryInput) => ({
   icon_id: input.iconId ?? undefined,
   description: input.description ?? undefined,
-  updated_at: toKstDate(),
+  updated_at: formatDate(now()),
 });
 
 export const byIdTag = (d: Diary) => ({ type: 'Diary' as const, id: d.emotionId });

@@ -1,10 +1,8 @@
+import type { DiaryCalendarModeType } from '@entities/calendar';
 import type { Diary } from '@entities/diary/model/diary.types';
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { now } from '@shared';
 import { type EmotionIconData, ICON_DATA } from '@shared/constants/Icons';
-import dayjs from 'dayjs';
-
-import type { DiaryCalendarModeType } from '../../../entities/calendar';
-import { createKstDay } from '../../../shared';
 
 interface DiaryState {
   selectedDiary: Diary | null;
@@ -21,8 +19,8 @@ const initialState: DiaryState = {
   selectedDiary: null,
   selectedIcon: ICON_DATA[0],
   currentDiary: null,
-  selectedMonth: dayjs().toString(),
-  selectedWeek: dayjs().toString(),
+  selectedMonth: now().toString(),
+  selectedWeek: now().toString(),
   isModifyMode: false,
   selectedDay: null,
   calendarMode: 'MONTHDAYMODE',
@@ -61,7 +59,7 @@ const diarySlice = createSlice({
     },
     moveMonth: (state, action: PayloadAction<'left' | 'right'>) => {
       const delta = action.payload === 'left' ? -1 : 1;
-      const currentMonth = createKstDay(state.selectedMonth);
+      const currentMonth = now(state.selectedMonth);
       const newMonth = currentMonth.add(delta, 'month');
       const firstOfMonth = newMonth.startOf('month');
 
@@ -71,7 +69,7 @@ const diarySlice = createSlice({
     },
     moveWeek: (state, action: PayloadAction<'left' | 'right'>) => {
       const delta = action.payload === 'left' ? -1 : 1;
-      const currentWeekStart = dayjs(state.selectedWeek);
+      const currentWeekStart = now(state.selectedWeek);
       const newWeekStart = currentWeekStart.add(delta, 'week');
 
       const middleOfWeek = newWeekStart.add(3, 'day');

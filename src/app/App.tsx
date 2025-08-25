@@ -14,7 +14,6 @@ import '../../global.css';
 import { RootStack } from '@app/navigation';
 import { store } from '@app/store';
 import { useNotificationPermission } from '@shared/hooks/useNotificationPermission';
-import '@shared/lib/day.util';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import { StyleSheet, View } from 'react-native';

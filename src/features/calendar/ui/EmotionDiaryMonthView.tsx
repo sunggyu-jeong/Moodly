@@ -71,6 +71,8 @@ const EmotionDiaryMonthView = ({
         return item.data.emotionId?.toString() ?? item.data.recordDate;
       case 'SKELETON':
         return `skeleton-${item.id}`;
+      default:
+        return `unknown-${item}`;
     }
   }, []);
 
