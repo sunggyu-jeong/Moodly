@@ -54,8 +54,8 @@ export const useDiaryPagerVM = () => {
     setDiaryMode(p =>
       p === DiaryPageMode.listMode ? DiaryPageMode.calendarMode : DiaryPageMode.listMode,
     );
-    setSelectedDay(null);
-  }, []);
+    dispatch(setSelectedDay(null));
+  }, [dispatch]);
   const reset = useCallback(() => dispatch(resetDiary()), [dispatch]);
 
   return {

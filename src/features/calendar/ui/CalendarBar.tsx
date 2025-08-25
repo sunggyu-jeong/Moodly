@@ -1,5 +1,5 @@
 import type { Diary } from '@entities/diary/model/diary.types';
-import { formatDate, navigate, now, useAppDispatch, useAppSelector } from '@shared';
+import { formatDate, isEmpty, navigate, now, useAppDispatch, useAppSelector } from '@shared';
 import { GridList } from '@shared/ui/elements/GridList';
 import dayjs, { Dayjs } from 'dayjs';
 import { memo, useCallback, useMemo } from 'react';
@@ -15,7 +15,12 @@ interface CalendarBarProps {
 
 const CalendarBar = ({ monthlyDates, entries }: CalendarBarProps) => {
   const selectedDayStr = useAppSelector(state => state.diarySlice.selectedDay);
-  const selectedDay = useMemo(() => now(selectedDayStr), [selectedDayStr]);
+  const selectedDay = useMemo(() => {
+    if (isEmpty(selectedDayStr)) {
+      return null;
+    }
+    return now(selectedDayStr);
+  }, [selectedDayStr]);
   const dispatch = useAppDispatch();
 
   const entryMap = useMemo(() => {
