@@ -26,7 +26,7 @@ const CalendarBar = ({ monthlyDates, entries }: CalendarBarProps) => {
   const entryMap = useMemo(() => {
     const m = new Map<string, number>();
     entries?.forEach(e => {
-      m.set(dayjs(e.recordDate).format('YYYY-MM-DD'), e.iconId ?? -1);
+      m.set(formatDate(dayjs(e.recordDate)), e.iconId ?? -1);
     });
     return m;
   }, [entries]);
@@ -37,7 +37,7 @@ const CalendarBar = ({ monthlyDates, entries }: CalendarBarProps) => {
     () =>
       flatDates.map(date => ({
         date,
-        iconId: date ? (entryMap.get(date.format('YYYY-MM-DD')) ?? null) : null,
+        iconId: date ? (entryMap.get(formatDate(date)) ?? null) : null,
       })),
     [flatDates, entryMap],
   );

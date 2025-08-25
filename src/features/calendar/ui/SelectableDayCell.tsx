@@ -26,6 +26,7 @@ const SelectableDayCell = ({
     if (isEmpty(iconId)) {
       return COMMON_ICONS.iconAddDiary;
     }
+
     const found = ICON_DATA.find(i => i.id === iconId);
     return found?.iconSelected ?? null;
   }, [iconId]);

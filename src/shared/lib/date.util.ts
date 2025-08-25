@@ -16,7 +16,8 @@ export const generateMonthGrid = ({ targetDate }: GenerateMonthGridProps): (Dayj
   let day = 1;
 
   for (let i = firstDayWeekday; i < 7; i++) {
-    currentWeek[i] = cleanDate.date(day);
+    const cellDate = targetDate.clone().date(day).startOf('day');
+    currentWeek[i] = cellDate;
     day++;
   }
 
@@ -25,7 +26,8 @@ export const generateMonthGrid = ({ targetDate }: GenerateMonthGridProps): (Dayj
   while (day <= daysInMonth) {
     currentWeek = new Array(7).fill(null);
     for (let i = 0; i < 7 && day <= daysInMonth; i++) {
-      currentWeek[i] = cleanDate.date(day);
+      const cellDate = targetDate.clone().date(day).startOf('day');
+      currentWeek[i] = cellDate;
       day++;
     }
     weeks.push(currentWeek);
