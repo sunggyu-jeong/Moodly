@@ -50,10 +50,10 @@ export const EmotionDiaryMonthPager = ({
       pagingEnabled
       keyExtractor={it => it.key}
       renderItem={renderPage}
-      initialNumToRender={1}
-      maxToRenderPerBatch={1}
+      initialNumToRender={3}
+      maxToRenderPerBatch={3}
       updateCellsBatchingPeriod={80}
-      windowSize={1}
+      windowSize={3}
       removeClippedSubviews
       getItemLayout={(_, i) => ({ length: SCREEN_WIDTH, offset: SCREEN_WIDTH * i, index: i })}
       initialScrollIndex={1}
