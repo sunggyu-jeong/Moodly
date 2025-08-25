@@ -59,6 +59,7 @@ const selectNextQueryState = createSelector(
 export const selectIsDiaryPagingLoading = createSelector(
   [selectPrevQueryState, selectCurrQueryState, selectNextQueryState],
   (prevQuery, currQuery, nextQuery) => {
+    return false;
     return prevQuery?.isLoading || currQuery?.isLoading || nextQuery?.isLoading;
   },
 );

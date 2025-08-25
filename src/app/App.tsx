@@ -13,11 +13,14 @@ import '../../global.css';
 
 import { RootStack } from '@app/navigation';
 import { store } from '@app/store';
+import { HOT_UPDATER_SUPABASE_URL } from '@env';
+import { HotUpdater, getUpdateSource } from '@hot-updater/react-native';
 import { useNotificationPermission } from '@shared/hooks/useNotificationPermission';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import { StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import FallbackUI from './ui/screens/FallbackUI';
 
 dayjs.locale('ko');
 dayjs.extend(utc);
@@ -72,4 +75,9 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default HotUpdater.wrap({
+  source: getUpdateSource(`${HOT_UPDATER_SUPABASE_URL}/functions/v1/update-server`, {
+    updateStrategy: 'fingerprint',
+  }),
+  fallbackComponent: FallbackUI,
+})(App);

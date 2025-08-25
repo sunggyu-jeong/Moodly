@@ -1,5 +1,5 @@
 import { useDeleteDiaryMutation } from '@entities/diary/api';
-import { resetDiary } from '@features/diary/model/diarySlice';
+import { resetDiary, setSelectedDay } from '@features/diary/model/diarySlice';
 import { MODAL_CONFIRM_ACTION_KEY } from '@processes/key';
 import {
   resetModalPopup,
@@ -89,6 +89,7 @@ const EmotionDiaryDetailPage = () => {
         if (route.params.origin !== 'RootStack') {
           dismissModalToScreen();
         }
+        dispatch(setSelectedDay(null));
         goBack();
       }
     } catch (error) {
