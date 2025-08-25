@@ -19,8 +19,8 @@ export const toInsertRow = (input: CreateDiaryInput) => ({
   icon_id: input.iconId ?? null,
   record_date: formatDate(now(input.recordDate)),
   description: input.description ?? null,
-  created_at: formatDate(),
-  updated_at: formatDate(),
+  created_at: formatDate(now()),
+  updated_at: formatDate(now()),
 });
 
 // Domain -> DB (UPDATE)

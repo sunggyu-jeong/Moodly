@@ -9,7 +9,7 @@ import { now } from '@shared';
 import { generateMonthGrid, generateWeekGrid } from '@shared/lib/date.util';
 import WeekdayHeader from '@shared/ui/elements/WeekdayHeader';
 import { AnimatePresence, MotiView } from 'moti';
-import React, { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { View } from 'react-native';
 
 import { CalendarBar } from '@/features/calendar';
@@ -75,4 +75,4 @@ const EmotionDiaryListHeader = ({
   );
 };
 
-export default React.memo(EmotionDiaryListHeader);
+export default memo(EmotionDiaryListHeader);

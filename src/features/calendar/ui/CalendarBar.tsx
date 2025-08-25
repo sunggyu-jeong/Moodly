@@ -1,5 +1,5 @@
 import type { Diary } from '@entities/diary/model/diary.types';
-import { formatDate, navigate, useAppDispatch, useAppSelector } from '@shared';
+import { formatDate, navigate, now, useAppDispatch, useAppSelector } from '@shared';
 import { GridList } from '@shared/ui/elements/GridList';
 import dayjs, { Dayjs } from 'dayjs';
 import { memo, useCallback, useMemo } from 'react';
@@ -15,7 +15,7 @@ interface CalendarBarProps {
 
 const CalendarBar = ({ monthlyDates, entries }: CalendarBarProps) => {
   const selectedDayStr = useAppSelector(state => state.diarySlice.selectedDay);
-  const selectedDay = useMemo(() => dayjs(selectedDayStr), [selectedDayStr]);
+  const selectedDay = useMemo(() => now(selectedDayStr), [selectedDayStr]);
   const dispatch = useAppDispatch();
 
   const entryMap = useMemo(() => {
@@ -60,7 +60,6 @@ const CalendarBar = ({ monthlyDates, entries }: CalendarBarProps) => {
         if (!item.date) return <View />;
 
         const isSelected = item.date.isSame(selectedDay, 'day');
-
         return (
           <SelectableDayCell
             date={item.date}

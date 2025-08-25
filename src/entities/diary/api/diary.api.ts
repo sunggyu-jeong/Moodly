@@ -1,4 +1,4 @@
-import { formatDate } from '@shared';
+import { formatDate, now } from '@shared';
 import { appApi } from '@shared/api/AppApi';
 import { getUserId } from '@shared/lib/user.util';
 
@@ -50,7 +50,7 @@ export const diaryApi = appApi.injectEndpoints({
     hasDiaryForDay: build.query<boolean, void>({
       query: () => async client => {
         const userId = await getUserId();
-        const todayDateString = formatDate();
+        const todayDateString = formatDate(now());
 
         const q = client
           .from('moodly_diary')
