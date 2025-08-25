@@ -4,7 +4,7 @@ import { View } from 'react-native';
 
 const DayCellSkeleton = () => {
   return (
-    <View className="items-center bg-common-transparent w-full h-full p-1">
+    <View className="items-center justify-center bg-common-transparent w-full h-full p-1">
       <View className="w-10 h-10">
         <Skeleton
           width={40}
@@ -14,9 +14,9 @@ const DayCellSkeleton = () => {
         />
       </View>
 
-      <View className="w-5/6 items-center mt-2">
+      <View className="ml-2 items-center mt-2">
         <Skeleton
-          width="60%"
+          width="50%"
           height={12}
           radius={4}
           colorMode={COLOR_MODE}
