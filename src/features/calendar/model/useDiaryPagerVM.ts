@@ -1,28 +1,27 @@
-import {
-  DiaryCalendarMode,
-  type DiaryCalendarModeType,
-  DiaryPageMode,
-  type DiaryPageModeType,
-} from '@entities/calendar';
+import { DiaryCalendarMode, DiaryPageMode, type DiaryPageModeType } from '@entities/calendar';
 import { formatWeekLabel, useAppDispatch, useAppSelector } from '@shared';
 import dayjs from 'dayjs';
 import { useCallback, useMemo, useState } from 'react';
 
 import { moveMonth, moveWeek, resetDiary, setSelectedDay } from '../../diary';
 import { buildPages, type CalendarPage } from '../lib';
-import { selectSelectedDayIso, selectSelectedMonth, selectSelectedWeek } from './selector';
+import {
+  selectCalendarMode,
+  selectSelectedDayIso,
+  selectSelectedMonth,
+  selectSelectedWeek,
+} from './selector';
 import { useDiaryPagingData } from './useDiaryPagingData';
 
 export const useDiaryPagerVM = () => {
   const dispatch = useAppDispatch();
   const selectedMonth = useAppSelector(selectSelectedMonth);
   const selectedWeek = useAppSelector(selectSelectedWeek);
+  const calendarMode = useAppSelector(selectCalendarMode);
   const selectedDayIso = useAppSelector(selectSelectedDayIso);
 
   const [diaryMode, setDiaryMode] = useState<DiaryPageModeType>(DiaryPageMode.calendarMode);
-  const [calendarMode, setCalendarMode] = useState<DiaryCalendarModeType>(
-    DiaryCalendarMode.monthDayMode,
-  );
+
   const isMonthMode = calendarMode === DiaryCalendarMode.monthDayMode;
 
   const { periods, datasets } = useDiaryPagingData({
@@ -59,18 +58,10 @@ export const useDiaryPagerVM = () => {
     );
     setSelectedDay(null);
   }, []);
-  const toggleCalendarMode = useCallback(() => {
-    setCalendarMode(c =>
-      c === DiaryCalendarMode.monthDayMode
-        ? DiaryCalendarMode.weekDayMode
-        : DiaryCalendarMode.monthDayMode,
-    );
-  }, []);
   const reset = useCallback(() => dispatch(resetDiary()), [dispatch]);
 
   return {
     diaryMode,
-    calendarMode,
     selectedMonth: periods.curr,
     currentMonth: dayjs(),
     monthData: datasets.currData,
@@ -79,7 +70,6 @@ export const useDiaryPagerVM = () => {
     goLeft,
     goRight,
     toggleDiaryMode,
-    toggleCalendarMode,
     reset,
   } as const;
 };

@@ -18,7 +18,6 @@ interface UseDiaryPagingDataProps {
 export const useDiaryPagingData = ({ isMonthMode, selectedPeriod }: UseDiaryPagingDataProps) => {
   const periodType = isMonthMode ? 'month' : 'week';
 
-  // ✅ 현재 모드에 따라 필요한 기간만 계산합니다.
   const { prev, curr, next } = useMemo(
     () => ({
       prev: selectedPeriod.add(-1, periodType),

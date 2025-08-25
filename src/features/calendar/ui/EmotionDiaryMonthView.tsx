@@ -67,7 +67,7 @@ const EmotionDiaryMonthView = ({
             />
           ) : null
         }
-        ListEmptyComponent={<EmotionDiaryListEmpty showSkeleton={showSkeleton ?? false} />}
+        ListEmptyComponent={<EmotionDiaryListEmpty />}
         renderItem={renderDiaryCard}
         scrollEnabled={scrollEnabled}
       />

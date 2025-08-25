@@ -1,8 +1,11 @@
+import { selectIsDiaryPagingLoading } from '@features/calendar';
 import { Dayjs } from 'dayjs';
-import React from 'react';
+import { memo } from 'react';
 import { Image, type ImageSourcePropType, TouchableOpacity, View } from 'react-native';
 
-import { Caption } from '@/shared/ui/typography/Caption';
+import { useAppSelector } from '../../hooks';
+import { Caption } from '../typography';
+import DayCellSkeleton from './Skeleton/DayCellSkeleton';
 
 interface DayCellProps {
   date: Dayjs;
@@ -13,7 +16,11 @@ interface DayCellProps {
 }
 
 const DayCell = ({ date, isSelected, isFuture, iconSource, onPress }: DayCellProps) => {
+  const isDiaryLoading = useAppSelector(selectIsDiaryPagingLoading);
   const renderIcon = () => {
+    if (isDiaryLoading) {
+      return <DayCellSkeleton />;
+    }
     if (isFuture) {
       return <View className="w-11 h-11 bg-gray-200 rounded-full" />;
     }
@@ -55,4 +62,4 @@ const DayCell = ({ date, isSelected, isFuture, iconSource, onPress }: DayCellPro
   );
 };
 
-export default React.memo(DayCell);
+export default memo(DayCell);

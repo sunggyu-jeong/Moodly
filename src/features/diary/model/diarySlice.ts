@@ -3,6 +3,7 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { type EmotionIconData, ICON_DATA } from '@shared/constants/Icons';
 import dayjs from 'dayjs';
 
+import type { DiaryCalendarModeType } from '../../../entities/calendar';
 import { createKstDay } from '../../../shared';
 
 interface DiaryState {
@@ -13,6 +14,7 @@ interface DiaryState {
   selectedWeek: string;
   isModifyMode: boolean;
   selectedDay: string | null;
+  calendarMode: DiaryCalendarModeType;
 }
 
 const initialState: DiaryState = {
@@ -23,6 +25,7 @@ const initialState: DiaryState = {
   selectedWeek: dayjs().toString(),
   isModifyMode: false,
   selectedDay: null,
+  calendarMode: 'MONTHDAYMODE',
 };
 
 const diarySlice = createSlice({
@@ -77,6 +80,9 @@ const diarySlice = createSlice({
       state.selectedMonth = middleOfWeek.startOf('month').format('YYYY-MM-DD');
       state.selectedDay = null;
     },
+    setCalendarMode: (state, action: PayloadAction<DiaryCalendarModeType>) => {
+      state.calendarMode = action.payload;
+    },
   },
 });
 
@@ -90,6 +96,7 @@ export const {
   resetDiary,
   moveMonth,
   moveWeek,
+  setCalendarMode,
 } = diarySlice.actions;
 
 export default diarySlice.reducer;

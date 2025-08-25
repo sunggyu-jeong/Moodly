@@ -12,7 +12,6 @@ interface EmotionDiaryCardListProps {
 }
 
 const EmotionDiaryCardList = ({ data }: EmotionDiaryCardListProps) => {
-  console.log('!@$>@!>$>$!@>', data);
   const dispatch = useAppDispatch();
 
   const handleDiaryDetail = (item: Diary) => {

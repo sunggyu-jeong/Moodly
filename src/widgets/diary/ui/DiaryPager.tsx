@@ -1,28 +1,24 @@
 import { DiaryCalendarMode, DiaryPageMode } from '@entities/calendar/diary.type';
+import { selectCalendarMode } from '@features/calendar';
 import type { CalendarPage } from '@features/calendar/lib/paging';
 import { useDiaryPagerVM } from '@features/calendar/model/useDiaryPagerVM';
 import { usePagerController } from '@features/calendar/model/usePagerController';
 import { EmotionDiaryMonthPager } from '@features/calendar/ui/EmotionDiaryMonthPager';
+import { setCalendarMode } from '@features/diary';
 import EmotionDiaryMonthSelector from '@features/diary/ui/EmotionDiaryMonthSelector';
+import { useAppDispatch, useAppSelector } from '@shared';
 import { DIARY_ICONS } from '@shared/assets/images/diary';
 import colors from '@shared/styles/colors';
 import DiaryToggle from '@shared/ui/elements/DiaryToggle';
 import { NavigationBar } from '@widgets/navigation-bar';
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 export const DiaryPager = () => {
-  const {
-    diaryMode,
-    calendarMode,
-    pages,
-    monthLabel,
-    goLeft,
-    goRight,
-    toggleDiaryMode,
-    toggleCalendarMode,
-    reset,
-  } = useDiaryPagerVM();
+  const { diaryMode, pages, monthLabel, goLeft, goRight, toggleDiaryMode, reset } =
+    useDiaryPagerVM();
+  const calendarMode = useAppSelector(selectCalendarMode);
+  const dispatch = useAppDispatch();
   const { flatListRef, onScroll, onMomentumScrollEnd, scrollToMiddle } =
     usePagerController<CalendarPage>({
       onLeft: goLeft,
@@ -50,6 +46,15 @@ export const DiaryPager = () => {
     ],
     [goLeft, goRight, monthLabel],
   );
+
+  const toggleCalendarMode = useCallback(() => {
+    const nextMode =
+      calendarMode === DiaryCalendarMode.monthDayMode
+        ? DiaryCalendarMode.weekDayMode
+        : DiaryCalendarMode.monthDayMode;
+
+    dispatch(setCalendarMode(nextMode));
+  }, [calendarMode, dispatch]);
 
   const actionButtons = useMemo(
     () => [
@@ -98,7 +103,6 @@ export const DiaryPager = () => {
         actionButtons={actionButtons}
       />
       <View style={styles.container}>
-        {/* 캘린더 뷰: isCalendarMode가 아닐 때 숨김 */}
         <EmotionDiaryMonthPager
           data={pages}
           diaryMode={diaryMode}

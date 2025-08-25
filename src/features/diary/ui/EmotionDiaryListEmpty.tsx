@@ -3,15 +3,11 @@ import { StyleSheet, View } from 'react-native';
 
 import EmotionDiaryEmptyMessage from './EmotionDiaryEmptyMessage';
 
-interface DiaryListEmptyProps {
-  showSkeleton: boolean;
-}
-const EmotionDiaryListEmpty = ({ showSkeleton }: DiaryListEmptyProps) =>
-  !showSkeleton ? (
-    <View style={styles.emptyContainer}>
-      <EmotionDiaryEmptyMessage />
-    </View>
-  ) : null;
+const EmotionDiaryListEmpty = () => (
+  <View style={styles.emptyContainer}>
+    <EmotionDiaryEmptyMessage />
+  </View>
+);
 
 const styles = StyleSheet.create({
   emptyContainer: {
