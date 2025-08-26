@@ -21,7 +21,7 @@ export function useDiaryMutation(text: string) {
       if (isEmpty(selectedDiary?.emotionId)) return;
 
       await update({
-        emotionId: selectedDiary!.emotionId,
+        emotionId: selectedDiary.emotionId,
         iconId: currentDiary?.iconId,
         userId,
         description: text,
