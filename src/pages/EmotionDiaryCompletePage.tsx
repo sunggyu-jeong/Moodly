@@ -26,7 +26,7 @@ const EmotionDiaryCompletePage = () => {
       } else {
         navigate('DiaryStack', { screen: 'EmotionDetailPage', params: { origin: 'DiaryStack' } });
       }
-    }, 1500);
+    }, 2500);
 
     return () => {
       clearTimeout(timer);
