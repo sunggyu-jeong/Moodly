@@ -5,9 +5,8 @@ interface GenerateMonthGridProps {
 }
 
 export const generateMonthGrid = ({ targetDate }: GenerateMonthGridProps): (Dayjs | null)[][] => {
-  const cleanDate = targetDate.clone().startOf('day');
-  const daysInMonth = cleanDate.daysInMonth();
-  const firstDayOfMonth = cleanDate.date(1);
+  const daysInMonth = targetDate.daysInMonth();
+  const firstDayOfMonth = targetDate.date(1);
   const firstDayWeekday = firstDayOfMonth.day();
 
   const weeks: (Dayjs | null)[][] = [];
@@ -16,8 +15,7 @@ export const generateMonthGrid = ({ targetDate }: GenerateMonthGridProps): (Dayj
   let day = 1;
 
   for (let i = firstDayWeekday; i < 7; i++) {
-    const cellDate = targetDate.clone().date(day).startOf('day');
-    currentWeek[i] = cellDate;
+    currentWeek[i] = targetDate.date(day);
     day++;
   }
 
@@ -26,8 +24,7 @@ export const generateMonthGrid = ({ targetDate }: GenerateMonthGridProps): (Dayj
   while (day <= daysInMonth) {
     currentWeek = new Array(7).fill(null);
     for (let i = 0; i < 7 && day <= daysInMonth; i++) {
-      const cellDate = targetDate.clone().date(day).startOf('day');
-      currentWeek[i] = cellDate;
+      currentWeek[i] = targetDate.date(day);
       day++;
     }
     weeks.push(currentWeek);
