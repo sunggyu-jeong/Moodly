@@ -63,7 +63,7 @@ export const diaryApi = appApi.injectEndpoints({
       providesTags: [{ type: 'Diary', id: 'HAS_TODAY' }],
     }),
 
-    createDiary: build.mutation<Diary, CreateDiaryInput>({
+    createDiary: build.mutation<DbDiaryRow, CreateDiaryInput>({
       query: input => async client => {
         const { data, error } = await client
           .from('moodly_diary')
@@ -72,7 +72,7 @@ export const diaryApi = appApi.injectEndpoints({
           .single()
           .overrideTypes<DbDiaryRow, { merge: false }>();
 
-        return { data: (data ?? null) as Diary | null, error };
+        return { data: data, error };
       },
       invalidatesTags: (_res, _err) => [
         { type: 'Diary', id: 'LIST' },
@@ -81,7 +81,7 @@ export const diaryApi = appApi.injectEndpoints({
       ],
     }),
 
-    updateDiary: build.mutation<Diary, UpdateDiaryInput>({
+    updateDiary: build.mutation<DbDiaryRow, UpdateDiaryInput>({
       query: input => async client => {
         const { data, error } = await client
           .from('moodly_diary')
@@ -90,9 +90,10 @@ export const diaryApi = appApi.injectEndpoints({
           .select('*')
           .single();
 
-        return { data: (data ?? null) as Diary | null, error };
+        return { data: data, error };
       },
-      invalidatesTags: res => (res ? [byIdTag(res)] : [{ type: 'Diary', id: 'LIST' }]),
+      invalidatesTags: res =>
+        res ? [{ type: 'Diary', id: res.emotion_id }] : [{ type: 'Diary', id: 'LIST' }],
     }),
 
     deleteDiary: build.mutation<{ id: string }, { id: string }>({

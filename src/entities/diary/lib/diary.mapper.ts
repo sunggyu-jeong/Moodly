@@ -3,14 +3,14 @@ import { formatDate, now } from '@shared';
 import type { CreateDiaryInput, DbDiaryRow, Diary, UpdateDiaryInput } from '../model/diary.types';
 
 // DB row -> Domain
-export const fromRow = (row: DbDiaryRow): Diary => ({
-  emotionId: row.emotion_id,
-  iconId: row.icon_id,
-  userId: row.user_id,
-  recordDate: row.record_date,
-  description: row.description,
-  createdAt: row.created_at,
-  updatedAt: row.updated_at,
+export const fromRow = (row?: DbDiaryRow | null): Diary => ({
+  emotionId: row?.emotion_id ?? 0,
+  iconId: row?.icon_id ?? 0,
+  userId: row?.user_id ?? '',
+  recordDate: row?.record_date ?? '',
+  description: row?.description ?? '',
+  createdAt: row?.created_at ?? '',
+  updatedAt: row?.updated_at ?? '',
 });
 
 // Domain -> DB (INSERT)
