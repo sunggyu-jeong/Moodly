@@ -87,4 +87,4 @@ jobs:
           # 3) 실제 배포
           yarn hot-updater deploy -p android $FLAG
           yarn hot-updater deploy -p ios -t '1.0.x' $FLAG
-      # 9 TRIGGER ON/OFF
+      # 9 TRIGGER ON
