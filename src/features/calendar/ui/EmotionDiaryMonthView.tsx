@@ -100,6 +100,7 @@ const EmotionDiaryMonthView = ({
           ) : null
         }
         ListEmptyComponent={isDelayedLoading ? null : <EmotionDiaryListEmpty />}
+        initialNumToRender={listData.length}
       />
     </View>
   );
