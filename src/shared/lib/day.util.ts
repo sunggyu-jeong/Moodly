@@ -1,13 +1,15 @@
 import dayjs, { Dayjs } from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
+const SEOUL_TIMEZONE = 'Asia/Seoul';
 
-export function now(): Dayjs;
-export function now(input: dayjs.ConfigType): Dayjs;
-export function now(input?: dayjs.ConfigType): Dayjs {
-  if (input) {
-    return dayjs.utc(input).tz('Asia/Seoul');
-  }
-  return dayjs().tz('Asia/Seoul');
-}
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.tz.setDefault(SEOUL_TIMEZONE);
+
+export const now = (input: dayjs.ConfigType): Dayjs => {
+  return dayjs(input);
+};
 
 export const formatDate = (date: Dayjs): string => {
   return date.format('YYYY-MM-DD');

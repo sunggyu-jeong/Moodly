@@ -1,6 +1,5 @@
 /* eslint-disable */
 import { NavigationContainer } from '@react-navigation/native';
-import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import type { ProfilerOnRenderCallback } from 'react';
 import 'react-native-get-random-values';
@@ -16,16 +15,10 @@ import { store } from '@app/store';
 import { HOT_UPDATER_SUPABASE_URL } from '@env';
 import { HotUpdater, getUpdateSource } from '@hot-updater/react-native';
 import { useNotificationPermission } from '@shared/hooks/useNotificationPermission';
-import timezone from 'dayjs/plugin/timezone';
-import utc from 'dayjs/plugin/utc';
+import '@shared/lib/day.util';
 import { StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import FallbackUI from './ui/screens/FallbackUI';
-
-dayjs.locale('ko');
-dayjs.extend(utc);
-dayjs.extend(timezone);
-dayjs.tz.setDefault('Asia/Seoul');
 
 enableScreens();
 if (typeof globalThis.structuredClone !== 'function') {
