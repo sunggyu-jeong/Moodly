@@ -7,7 +7,7 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.tz.setDefault(SEOUL_TIMEZONE);
 
-export const now = (input: dayjs.ConfigType): Dayjs => {
+export const now = (input?: dayjs.ConfigType): Dayjs => {
   return dayjs(input);
 };
 
