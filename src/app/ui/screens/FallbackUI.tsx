@@ -69,7 +69,7 @@ const FallbackUI = ({ status, progress }: FallbackProps) => {
           <UpdateContent
             title={title}
             subtitle={subtitle}
-            progress={progress / 100}
+            progress={progress * 100}
             progressLabel={progressLabel}
           />
         </View>

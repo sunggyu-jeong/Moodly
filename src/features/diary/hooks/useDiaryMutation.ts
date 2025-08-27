@@ -1,6 +1,6 @@
 import { useCreateDiaryMutation, useUpdateDiaryMutation } from '@entities/diary/api';
 import { useAppSelector } from '@shared/hooks';
-import { isEmpty } from '@shared/lib';
+import { formatDate, isEmpty, now } from '@shared/lib';
 import { getUserId } from '@shared/lib/user.util';
 import { useCallback } from 'react';
 
@@ -30,7 +30,7 @@ export function useDiaryMutation(text: string) {
       await create({
         userId,
         iconId: currentDiary?.iconId ?? 0,
-        recordDate: currentDiary?.recordDate ?? '',
+        recordDate: currentDiary?.recordDate ?? formatDate(now()),
         description: text,
       });
     }
