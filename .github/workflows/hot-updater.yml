@@ -2,16 +2,15 @@ name: Moodly HotUpdater CI/CD
 
 on:
   push:
-    branches: [main]
+    branches: [main,hotfix]
 
 permissions:
   contents: write
   
 jobs:
   deploy-ota:
-    if: contains(github.event.head_commit.message, '[hot-update]')
+    if: contains(github.event.head_commit.message, '[hot-update]') || github.ref == 'refs/heads/hotfix'
     runs-on: ubuntu-latest
-
     env:
       HOT_UPDATER_SUPABASE_URL: ${{ secrets.HOT_UPDATER_SUPABASE_URL }}
       HOT_UPDATER_SUPABASE_ANON_KEY: ${{ secrets.HOT_UPDATER_SUPABASE_ANON_KEY }}
@@ -66,25 +65,24 @@ jobs:
       # 8) [hot-update], [force] 명령어 설정
       - name: Deploy bundles
         run: |
-          COMMIT_MSG="${{ steps.get_msg.outputs.msg }}"
-          echo "커밋 메시지: $COMMIT_MSG"
-
-          # 1) [hot-update] 태그가 없으면 스킵
-          if [[ "$COMMIT_MSG" != *"[hot-update]"* ]]; then
-            echo "Hot update 스킵"
-            exit 0
-          fi
-
-          # 2) [force] 태그가 있으면 -f 옵션 추가
-          if [[ "$COMMIT_MSG" == *"[force]"* ]]; then
-            echo "강제 업데이트(-f) 모드"
+          FLAG=""
+          if [[ "${{ github.ref }}" == "refs/heads/hotfix" ]]; then
+            echo "Hotfix 브랜치입니다. 강제 업데이트를 실행합니다."
             FLAG="-f"
           else
-            echo "일반 업데이트 모드"
-            FLAG=""
+            COMMIT_MSG="${{ steps.get_msg.outputs.msg }}"
+            echo "커밋 메시지: $COMMIT_MSG"
+
+            if [[ "$COMMIT_MSG" == *"[force]"* ]]; then
+              echo "강제 업데이트(-f) 모드"
+              FLAG="-f"
+            else
+              echo "일반 업데이트 모드"
+            fi
           fi
 
-          # 3) 실제 배포
+          # 실제 배포
+          echo "배포를 시작합니다. FLAG: $FLAG"
           yarn hot-updater deploy -p android $FLAG
           yarn hot-updater deploy -p ios -t '1.0.x' $FLAG
       # 9 TRIGGER ON
