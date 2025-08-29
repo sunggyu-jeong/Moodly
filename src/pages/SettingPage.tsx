@@ -4,7 +4,7 @@ import { useLogout } from '@features/auth';
 import { SettingRoot } from '@features/setting';
 import { SETTING_EVENT_TYPE, TEXTS } from '@features/setting/types';
 import { MODAL_CONFIRM_ACTION_KEY } from '@processes/key';
-import { setShowModalPopup, setShowToastView } from '@processes/overlay/model/overlaySlice';
+import { setShowModalPopup } from '@processes/overlay/model/overlaySlice';
 import {
   Body1,
   gray,
@@ -15,22 +15,26 @@ import {
   useAppDispatch,
   useDelay,
   useExternalWebSite,
-  useNotificationPermission,
 } from '@shared';
 import { COMMON_ICONS } from '@shared/assets/images/common';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { checkNotifications } from 'react-native-permissions';
 
 const SettingPage = () => {
   const { openLink } = useExternalWebSite();
   const { signOut } = useLogout();
   const dispatch = useAppDispatch();
-  const { status } = useNotificationPermission();
   const { data: userInfo, isLoading } = useGetUserInfoQuery();
+  const [status, setStatus] = useState('');
 
   useEffect(() => {
-    dispatch(setShowToastView({ visibility: true, message: `>>>>> ${status}` }));
-  }, [status]);
+    const checkApi = async () => {
+      const response = await checkNotifications();
+      setStatus(response.status);
+    };
+    checkApi();
+  }, []);
 
   const handlePress = useCallback(
     (type: SETTING_EVENT_TYPE) => {
@@ -42,10 +46,7 @@ const SettingPage = () => {
           });
           break;
         case SETTING_EVENT_TYPE.SEND_FEEDBACK:
-          dispatch(
-            setShowToastView({ visibility: true, message: `>>>>> ${KAKAO_OPEN_CHAT_LINK}` }),
-          );
-          // openLink(KAKAO_OPEN_CHAT_LINK);
+          openLink(KAKAO_OPEN_CHAT_LINK);
           break;
         case SETTING_EVENT_TYPE.LOG_OUT:
           signOut();
