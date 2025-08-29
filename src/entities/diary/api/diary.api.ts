@@ -20,7 +20,7 @@ export const diaryApi = appApi.injectEndpoints({
             .gte('record_date', start)
             .lt('record_date', end)
             .eq('user_id', userId)
-            .order('record_date', { ascending: true })
+            .order('record_date', { ascending: false })
             .overrideTypes<DbDiaryRow[], { merge: false }>();
 
           const { data, error } = await q;
