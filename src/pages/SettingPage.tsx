@@ -45,7 +45,7 @@ const SettingPage = () => {
           dispatch(
             setShowToastView({ visibility: true, message: `>>>>> ${KAKAO_OPEN_CHAT_LINK}` }),
           );
-          openLink(KAKAO_OPEN_CHAT_LINK);
+          // openLink(KAKAO_OPEN_CHAT_LINK);
           break;
         case SETTING_EVENT_TYPE.LOG_OUT:
           signOut();
