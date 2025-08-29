@@ -15,6 +15,16 @@ jobs:
       HOT_UPDATER_SUPABASE_URL: ${{ secrets.HOT_UPDATER_SUPABASE_URL }}
       HOT_UPDATER_SUPABASE_ANON_KEY: ${{ secrets.HOT_UPDATER_SUPABASE_ANON_KEY }}
       HOT_UPDATER_SUPABASE_BUCKET_NAME: ${{ secrets.HOT_UPDATER_SUPABASE_BUCKET_NAME }}
+      
+      TEAM_ID: ${{ secrets.TEAM_ID }}
+      CLIENT_ID: ${{ secrets.CLIENT_ID }}
+      KEY_ID: ${{ secrets.KEY_ID }}
+      KAKAO_OPEN_CHAT_LINK: ${{ secrets.KAKAO_OPEN_CHAT_LINK }}
+      GOOGLE_WEB_CLIENT_ID: ${{ secrets.GOOGLE_WEB_CLIENT_ID }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      PRIVACY_POLICY_LINK: ${{ secrets.PRIVACY_POLICY_LINK }}
+      TERMS_OF_SERVICE_LINK: ${{ secrets.TERMS_OF_SERVICE_LINK }}
+
 
     steps:
       # 1) 원격 레포지토리 데이터 내려받기

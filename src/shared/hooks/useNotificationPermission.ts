@@ -16,72 +16,54 @@ export function useNotificationPermission(
   const [status, setStatus] = useState<PermissionStatus>('unavailable');
 
   useEffect(() => {
-    if (!setupListeners || !onTokenUpdate) {
-      return;
-    }
-
-    const syncTokenOnlyIfPermitted = async () => {
+    const checkAndSyncEverything = async () => {
       try {
-        const authStatus = await messaging().hasPermission();
-        const hasPermission =
-          authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-          authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+        const { status: currentStatus } = await checkNotifications();
+        setStatus(currentStatus);
 
-        if (!hasPermission) {
+        if (!setupListeners || !onTokenUpdate) {
+          return;
+        }
+
+        const hasPermission = currentStatus === 'granted';
+
+        if (hasPermission) {
+          const currentToken = await messaging().getToken();
+          const storedToken = await AsyncStorage.getItem(TOKEN_STORAGE_KEY);
+
+          if (currentToken && currentToken !== storedToken) {
+            await onTokenUpdate(currentToken);
+            await AsyncStorage.setItem(TOKEN_STORAGE_KEY, currentToken);
+          }
+        } else {
           const storedToken = await AsyncStorage.getItem(TOKEN_STORAGE_KEY);
           if (storedToken) {
             await onTokenUpdate(null);
             await AsyncStorage.removeItem(TOKEN_STORAGE_KEY);
           }
-          return;
-        }
-
-        const currentToken = await messaging().getToken();
-        const storedToken = await AsyncStorage.getItem(TOKEN_STORAGE_KEY);
-
-        if (currentToken && currentToken !== storedToken) {
-          await onTokenUpdate(currentToken);
-          await AsyncStorage.setItem(TOKEN_STORAGE_KEY, currentToken);
         }
       } catch (error) {
-        console.error('FCM 토큰 동기화 실패:', error);
+        console.error('알림 권한 확인 및 토큰 동기화 실패:', error);
       }
     };
 
-    const unsubscribeRefresh = messaging().onTokenRefresh(async () => {
-      await syncTokenOnlyIfPermitted();
-    });
-    const unsubscribeAppState = AppState.addEventListener('change', nextAppState => {
-      if (nextAppState === 'active') {
-        syncTokenOnlyIfPermitted();
+    const appStateSubscription = AppState.addEventListener('change', nextState => {
+      if (nextState === 'active') {
+        checkAndSyncEverything();
       }
     });
-    syncTokenOnlyIfPermitted();
-    // eslint-disable-next-line consistent-return
+
+    const tokenRefreshSubscription = setupListeners
+      ? messaging().onTokenRefresh(checkAndSyncEverything)
+      : () => {};
+
+    checkAndSyncEverything();
+
     return () => {
-      unsubscribeRefresh();
-      unsubscribeAppState.remove();
+      appStateSubscription.remove();
+      tokenRefreshSubscription();
     };
   }, [setupListeners, onTokenUpdate]);
-
-  useEffect(() => {
-    const checkAndUpdateStatus = async () => {
-      const { status: currentStatus } = await checkNotifications();
-      setStatus(currentStatus);
-    };
-
-    const subscription = AppState.addEventListener('change', nextState => {
-      if (nextState === 'active') {
-        checkAndUpdateStatus();
-      }
-    });
-
-    checkAndUpdateStatus();
-
-    return () => {
-      subscription.remove();
-    };
-  }, []);
 
   async function requestNativeNotificationPermission(): Promise<boolean> {
     if (Platform.OS === 'ios') {
@@ -119,6 +101,7 @@ export function useNotificationPermission(
       await AsyncStorage.removeItem(TOKEN_STORAGE_KEY);
     }
 
+    // 권한 요청 직후에도 최신 상태를 다시 확인하여 반영합니다.
     const { status: newStatus } = await checkNotifications();
     setStatus(newStatus);
 
