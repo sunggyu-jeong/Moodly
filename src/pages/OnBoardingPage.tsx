@@ -1,7 +1,6 @@
 import { type BottomSheetHandler, SocialLoginSheet } from '@features/setting/ui/SocialLoginSheet';
 import { useFocusEffect } from '@react-navigation/native';
 import { ONBOARDING_ICONS } from '@shared/assets/images/onboarding';
-import { useAppDispatch } from '@shared/hooks';
 import { useNotificationPermission } from '@shared/hooks/useNotificationPermission';
 import colors from '@shared/styles/colors';
 import ActionButton from '@shared/ui/elements/ActionButton';
@@ -67,11 +66,11 @@ const OnboardingPage = () => {
   const listRef = useRef<FlatList<SlideProps>>(null);
   const [index, setIndex] = useState<number>(0);
   const isScrollingRef = useRef(false);
-  const { requestNotification } = useNotificationPermission();
-  const dispatch = useAppDispatch();
   const [showStartButton, setShowStartButton] = useState(false);
   const [showAlarmPermission, setShowAlarmPermission] = useState(false);
   const socialSheetRef = useRef<BottomSheetHandler>(null);
+
+  const { requestNativeNotificationPermission } = useNotificationPermission();
 
   useFocusEffect(
     useCallback(() => {
@@ -130,13 +129,12 @@ const OnboardingPage = () => {
       if (next !== index) setIndex(next);
       setShowStartButton(next === total - 1);
       if (next === 2 && !showAlarmPermission) {
-        console.log('실행됨');
         setShowAlarmPermission(true);
-        await requestNotification();
+        await requestNativeNotificationPermission();
       }
       isScrollingRef.current = false;
     },
-    [index, dispatch, requestNotification, showAlarmPermission, total],
+    [index, requestNativeNotificationPermission, showAlarmPermission, total],
   );
 
   const onScroll = useCallback(

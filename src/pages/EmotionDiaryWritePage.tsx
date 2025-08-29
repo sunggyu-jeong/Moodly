@@ -38,9 +38,6 @@ const EmotionDiaryWritePage = () => {
           ref={scrollRef}
           style={styles.keyboardAvoiding}
           keyboardShouldPersistTaps="handled"
-          onScroll={({ nativeEvent }) => {
-            console.log('[ScrollView] contentOffset.y =', nativeEvent.contentOffset.y);
-          }}
         >
           <View className="items-center justify-center bg-common-white">
             <H2 weight="semibold">왜 이 감정을 느꼈나요?</H2>

@@ -7,7 +7,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
 import { Provider } from 'react-redux';
 
-import { navigationRef } from '@shared/lib';
+import { isEmpty, navigationRef } from '@shared/lib';
 import '../../global.css';
 
 import { RootStack } from '@app/navigation';
@@ -18,6 +18,7 @@ import { useNotificationPermission } from '@shared/hooks/useNotificationPermissi
 import '@shared/lib/day.util';
 import { StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { useUpsertPushTokenMutation } from '../entities/auth/api/auth.api';
 import FallbackUI from './ui/screens/FallbackUI';
 
 enableScreens();
@@ -40,7 +41,21 @@ export const onRenderCallback: ProfilerOnRenderCallback = (
 };
 
 function App() {
-  useNotificationPermission();
+  const [updateFcmToken] = useUpsertPushTokenMutation();
+
+  useNotificationPermission({
+    setupListeners: true,
+    onTokenUpdate: async (token: string | null) => {
+      try {
+        if (isEmpty(token)) return;
+        await updateFcmToken({ token }).unwrap();
+        console.log('App.tsx: 서버 토큰 업데이트 성공');
+      } catch (error) {
+        console.error('App.tsx: 서버 토큰 업데이트 실패', error);
+      }
+    },
+  });
+
 
   return (
     <GestureHandlerRootView style={styles.container}>

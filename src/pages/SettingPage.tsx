@@ -4,7 +4,7 @@ import { useLogout } from '@features/auth';
 import { SettingRoot } from '@features/setting';
 import { SETTING_EVENT_TYPE, TEXTS } from '@features/setting/types';
 import { MODAL_CONFIRM_ACTION_KEY } from '@processes/key';
-import { setShowModalPopup } from '@processes/overlay/model/overlaySlice';
+import { setShowModalPopup, setShowToastView } from '@processes/overlay/model/overlaySlice';
 import {
   Body1,
   gray,
@@ -18,7 +18,7 @@ import {
   useNotificationPermission,
 } from '@shared';
 import { COMMON_ICONS } from '@shared/assets/images/common';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 const SettingPage = () => {
@@ -27,6 +27,10 @@ const SettingPage = () => {
   const dispatch = useAppDispatch();
   const { status } = useNotificationPermission();
   const { data: userInfo, isLoading } = useGetUserInfoQuery();
+
+  useEffect(() => {
+    dispatch(setShowToastView({ visibility: true, message: `>>>>> ${status}` }));
+  }, [status]);
 
   const handlePress = useCallback(
     (type: SETTING_EVENT_TYPE) => {

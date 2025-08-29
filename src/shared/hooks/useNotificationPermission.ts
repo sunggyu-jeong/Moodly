@@ -1,88 +1,97 @@
-import { getApp } from '@react-native-firebase/app';
-import {
-  AuthorizationStatus,
-  getMessaging,
-  getToken,
-  isDeviceRegisteredForRemoteMessages,
-  onTokenRefresh,
-  registerDeviceForRemoteMessages,
-  requestPermission,
-} from '@react-native-firebase/messaging';
-import { resetTo } from '@shared/lib';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import messaging from '@react-native-firebase/messaging';
+import { useCallback, useEffect, useState } from 'react';
 import { AppState, Linking, PermissionsAndroid, Platform } from 'react-native';
 import { checkNotifications, type PermissionStatus } from 'react-native-permissions';
 
-const app = getApp();
-const msg = getMessaging(app);
+export const TOKEN_STORAGE_KEY = '@fcm_token';
 
-export function useNotificationPermission() {
+export function useNotificationPermission(
+  options: {
+    setupListeners?: boolean;
+    onTokenUpdate?: (token: string | null) => Promise<void>;
+  } = {},
+) {
+  const { setupListeners = false, onTokenUpdate } = options;
   const [status, setStatus] = useState<PermissionStatus>('unavailable');
-  const appState = useRef(AppState.currentState);
-  const unsubscribeRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
-    const sub = AppState.addEventListener('change', async nextState => {
-      if (appState.current.match(/inactive|background/) && nextState === 'active') {
-        const { status: newStatus } = await checkNotifications();
-        if (newStatus !== status) setStatus(newStatus);
+    if (!setupListeners || !onTokenUpdate) {
+      return;
+    }
+
+    const syncTokenOnlyIfPermitted = async () => {
+      try {
+        const authStatus = await messaging().hasPermission();
+        const hasPermission =
+          authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+          authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+        if (!hasPermission) {
+          const storedToken = await AsyncStorage.getItem(TOKEN_STORAGE_KEY);
+          if (storedToken) {
+            await onTokenUpdate(null);
+            await AsyncStorage.removeItem(TOKEN_STORAGE_KEY);
+          }
+          return;
+        }
+
+        const currentToken = await messaging().getToken();
+        const storedToken = await AsyncStorage.getItem(TOKEN_STORAGE_KEY);
+
+        if (currentToken && currentToken !== storedToken) {
+          await onTokenUpdate(currentToken);
+          await AsyncStorage.setItem(TOKEN_STORAGE_KEY, currentToken);
+        }
+      } catch (error) {
+        console.error('FCM 토큰 동기화 실패:', error);
       }
-      appState.current = nextState;
+    };
+
+    const unsubscribeRefresh = messaging().onTokenRefresh(async () => {
+      await syncTokenOnlyIfPermitted();
     });
-    return () => sub.remove();
-  }, [status]);
+    const unsubscribeAppState = AppState.addEventListener('change', nextAppState => {
+      if (nextAppState === 'active') {
+        syncTokenOnlyIfPermitted();
+      }
+    });
+    syncTokenOnlyIfPermitted();
+    // eslint-disable-next-line consistent-return
+    return () => {
+      unsubscribeRefresh();
+      unsubscribeAppState.remove();
+    };
+  }, [setupListeners, onTokenUpdate]);
 
-  const requestNotification = async () => {
-    try {
-      const granted = await requestNotificationPermission();
-      if (!granted) return false;
+  useEffect(() => {
+    const checkAndUpdateStatus = async () => {
+      const { status: currentStatus } = await checkNotifications();
+      setStatus(currentStatus);
+    };
 
-      const token = await getToken(msg);
-      console.log('FCM 토큰:', token);
+    const subscription = AppState.addEventListener('change', nextState => {
+      if (nextState === 'active') {
+        checkAndUpdateStatus();
+      }
+    });
 
-      unsubscribeRef.current = onTokenRefresh(msg, newToken => {
-        console.log('FCM 토큰 갱신:', newToken);
-      });
-      return true;
-    } catch (err) {
-      console.error('FCM 초기화 중 에러:', err);
-      return false;
-    }
-  };
+    checkAndUpdateStatus();
 
-  const skipPermission = () => {
-    resetTo('Main');
-  };
-
-  useEffect(
-    () => () => {
-      unsubscribeRef.current?.();
-    },
-    [],
-  );
-
-  async function ensureRegisteredForRemoteMessagesIOS() {
-    if (Platform.OS !== 'ios') return;
-    if (!isDeviceRegisteredForRemoteMessages(msg)) {
-      await registerDeviceForRemoteMessages(msg);
-    }
-  }
-
-  const openSettings = useCallback(async () => {
-    await Linking.openSettings();
+    return () => {
+      subscription.remove();
+    };
   }, []);
 
-  async function requestNotificationPermission(): Promise<boolean> {
+  async function requestNativeNotificationPermission(): Promise<boolean> {
     if (Platform.OS === 'ios') {
-      await ensureRegisteredForRemoteMessagesIOS();
-      const authStatus = await requestPermission(msg);
+      const authStatus = await messaging().requestPermission();
       return (
-        authStatus === AuthorizationStatus.AUTHORIZED ||
-        authStatus === AuthorizationStatus.PROVISIONAL
+        authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+        authStatus === messaging.AuthorizationStatus.PROVISIONAL
       );
     }
-    // Android 13+ 알림 권한
-    if (typeof Platform.Version === 'number' && Platform.Version >= 33) {
+    if (Platform.OS === 'android' && Platform.Version >= 33) {
       const result = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
       );
@@ -91,5 +100,34 @@ export function useNotificationPermission() {
     return true;
   }
 
-  return { status, requestNotification, skipPermission, openSettings };
+  const requestUserPermission = useCallback(async (): Promise<boolean> => {
+    if (!onTokenUpdate) {
+      console.error('onTokenUpdate 함수가 제공되지 않았습니다.');
+      return false;
+    }
+
+    const granted = await requestNativeNotificationPermission();
+
+    if (granted) {
+      const currentToken = await messaging().getToken();
+      await onTokenUpdate(currentToken);
+      if (currentToken) {
+        await AsyncStorage.setItem(TOKEN_STORAGE_KEY, currentToken);
+      }
+    } else {
+      await onTokenUpdate(null);
+      await AsyncStorage.removeItem(TOKEN_STORAGE_KEY);
+    }
+
+    const { status: newStatus } = await checkNotifications();
+    setStatus(newStatus);
+
+    return granted;
+  }, [onTokenUpdate]);
+
+  const openSettings = useCallback(() => {
+    Linking.openSettings();
+  }, []);
+
+  return { status, requestUserPermission, requestNativeNotificationPermission, openSettings };
 }

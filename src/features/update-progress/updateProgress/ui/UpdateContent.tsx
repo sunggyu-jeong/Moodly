@@ -1,4 +1,5 @@
 import Progress from '@shared/ui/elements/Progress';
+import { useEffect } from 'react';
 import { Text, View } from 'react-native';
 
 // props를 더 직관적으로 변경합니다.
@@ -11,6 +12,10 @@ export interface UpdateContentProps {
 
 const UpdateContent = ({ title, subtitle, progress, progressLabel }: UpdateContentProps) => {
   const showPercent = !!progressLabel;
+
+  useEffect(() => {
+    console.log(progress);
+  }, [progress]);
 
   return (
     <View className="w-full max-w-xs my-6 space-y-6">
