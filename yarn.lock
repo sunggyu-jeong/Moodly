@@ -1861,12 +1861,17 @@
   resolved "https://registry.yarnpkg.com/@hot-updater/core/-/core-0.19.7.tgz#3107dbe2cbfd42b5a930b8ba12f9dbb3dfb4df56"
   integrity sha512-Rt3SqghsSaBGmt5FpKJ7SSmwDjSwvKevtmLf1REN1feM6uoqg0x5+iUaNZGck5NRIGgG41sSLzjmBHvpyREY8w==
 
-"@hot-updater/js@0.19.7":
-  version "0.19.7"
-  resolved "https://registry.yarnpkg.com/@hot-updater/js/-/js-0.19.7.tgz#2f650e96baa80a27f6e2083d850194dbe3404879"
-  integrity sha512-IPkzZI/x/KXdIaaIU9IwXUj/rlIqWq8Rc2DovOoRemL96AS78iHmN+psCklPNGf6jOTIxP4uN+TpYsO7UEYrfQ==
+"@hot-updater/core@0.20.8":
+  version "0.20.8"
+  resolved "https://registry.yarnpkg.com/@hot-updater/core/-/core-0.20.8.tgz#0263802f24914369791282b77015fd5e8e65250d"
+  integrity sha512-BNLF7izP6eZtgBP/sPUepqJacrDAWFy+mt5gH3KMLmEhkU9UITe4Zm0AxOBtP4QrAcbOnh/QnkfZDM8n4sEoRg==
+
+"@hot-updater/js@0.20.8":
+  version "0.20.8"
+  resolved "https://registry.yarnpkg.com/@hot-updater/js/-/js-0.20.8.tgz#06e70d0fbd265673aeb067b52987b694870c7cfd"
+  integrity sha512-+3hJu/60apvT5AsxXYFKluqqfQxfptaPvHfC0PcJGUwJ09sqma5vvKiUJya9te/lyUq88BiZtf0F+o4BsclrHA==
   dependencies:
-    "@hot-updater/core" "0.19.7"
+    "@hot-updater/core" "0.20.8"
 
 "@hot-updater/plugin-core@0.19.10":
   version "0.19.10"
@@ -1888,13 +1893,26 @@
     cosmiconfig-typescript-loader "5.0.0"
     oxc-transform "0.72.0"
 
-"@hot-updater/react-native@0.19.7":
-  version "0.19.7"
-  resolved "https://registry.yarnpkg.com/@hot-updater/react-native/-/react-native-0.19.7.tgz#ab9c0dca3c617ea41b6187bba6a520cc85cad24c"
-  integrity sha512-ZpALJXIbiLgeAqXeANOQQKUzegCb9kO8wKDz+GeH0xcP8mHs+4Lu5lN1HhyGuSYthu/GCYydKdcBq35UCNvh0Q==
+"@hot-updater/plugin-core@0.20.8":
+  version "0.20.8"
+  resolved "https://registry.yarnpkg.com/@hot-updater/plugin-core/-/plugin-core-0.20.8.tgz#20d0c2f746768d5b65cba3f5adcff87fff47a308"
+  integrity sha512-XV7lpbXu2Seft5Z+rGAlh0DkhIr8vjODYDTlNMjlHbGb8pWW7dfPbdGU5QOmg2dkhV46OFKcjGam7bU1VaKkQA==
   dependencies:
-    "@hot-updater/core" "0.19.7"
-    "@hot-updater/js" "0.19.7"
+    "@hot-updater/core" "0.20.8"
+    cosmiconfig "9.0.0"
+    cosmiconfig-typescript-loader "5.0.0"
+    fast-glob "3.3.3"
+    oxc-transform "0.82.1"
+    semver "^7.7.2"
+
+"@hot-updater/react-native@0.20.8":
+  version "0.20.8"
+  resolved "https://registry.yarnpkg.com/@hot-updater/react-native/-/react-native-0.20.8.tgz#141b4a9986613a2f4c0cbdb2ff91347a5c39411e"
+  integrity sha512-jr8Z4/DzQdkk68U/uKhvnq2ZchrVqTonBgifEPwLoNSRmWe3pDhJ+Trl8jDQElVADQWljV3RNg5Db+srtY+F+A==
+  dependencies:
+    "@hot-updater/core" "0.20.8"
+    "@hot-updater/js" "0.20.8"
+    "@hot-updater/plugin-core" "0.20.8"
     use-sync-external-store "1.5.0"
 
 "@hot-updater/supabase@0.19.7":
@@ -5799,7 +5817,7 @@ fast-diff@^1.1.2:
   resolved "https://registry.yarnpkg.com/fast-diff/-/fast-diff-1.3.0.tgz#ece407fa550a64d638536cd727e129c61616e0f0"
   integrity sha512-VxPP4NqbUjj6MaAOafWeUn2cXWLcCtljklUtZf0Ind4XQ+QPtmA0b18zZy0jIQx+ExRVCR/ZQpBmik5lXshNsw==
 
-fast-glob@^3.2.9, fast-glob@^3.3.2, fast-glob@^3.3.3:
+fast-glob@3.3.3, fast-glob@^3.2.9, fast-glob@^3.3.2, fast-glob@^3.3.3:
   version "3.3.3"
   resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-3.3.3.tgz#d06d585ce8dba90a16b0505c543c3ccfb3aeb818"
   integrity sha512-7MptL8U0cqcFdzIzwOTHoilX9x5BrNqye7Z/LuC7kCMRio1EMSyqRK3BEAUD7sXRq4iT4AzTVuZdhgQ2TCvYLg==
