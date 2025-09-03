@@ -12,13 +12,14 @@ import '../../global.css';
 
 import { RootStack } from '@app/navigation';
 import { store } from '@app/store';
+import { useUpsertPushTokenMutation } from '@entities/auth/api/auth.api';
 import { HOT_UPDATER_SUPABASE_URL } from '@env';
 import { HotUpdater, getUpdateSource } from '@hot-updater/react-native';
+import OverlayManager from '@processes/overlay/ui/OverlayManager';
+import { useNotificationPermission } from '@shared';
 import '@shared/lib/day.util';
 import { StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { useUpsertPushTokenMutation } from '../entities/auth/api/auth.api';
-import { useNotificationPermission } from '../shared';
 import FallbackUI from './ui/screens/FallbackUI';
 
 enableScreens();
@@ -68,6 +69,7 @@ function App() {
               <RootStack />
             </NavigationContainer>
           </SafeAreaProvider>
+          <OverlayManager />
         </Provider>
       </View>
     </GestureHandlerRootView>
