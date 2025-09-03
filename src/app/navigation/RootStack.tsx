@@ -2,7 +2,6 @@ import EmotionDiaryDetailPage from '@pages/EmotionDiaryDetailPage';
 import Login from '@pages/LoginPage';
 import NicknamePage from '@pages/NicknamePage';
 import OnboardingPage from '@pages/OnBoardingPage';
-import OverlayManager from '@processes/overlay/ui/OverlayManager';
 import type { NavigatorScreenParams } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -27,7 +26,6 @@ const Stack = createNativeStackNavigator();
 const RootStack = () => {
   return (
     <>
-      <OverlayManager />
       <Stack.Navigator
         initialRouteName={'Splash'}
         screenOptions={{ headerShown: false }}

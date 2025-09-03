@@ -1,6 +1,5 @@
 import {
   useDeletePushTokenMutation,
-  useFetchSessionQuery,
   useUpsertPushTokenMutation,
 } from '@entities/auth/api/auth.api';
 import { useGetDiaryCountQuery, useHasDiaryForDayQuery } from '@entities/diary/api/diary.api';

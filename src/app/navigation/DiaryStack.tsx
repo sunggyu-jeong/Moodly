@@ -2,7 +2,6 @@ import EmotionDiaryCompletePage from '@pages/EmotionDiaryCompletePage';
 import EmotionDiaryDetailPage from '@pages/EmotionDiaryDetailPage';
 import EmotionDiaryWritePage from '@pages/EmotionDiaryWritePage';
 import EmotionSelectionPage from '@pages/EmotionSelectionPage';
-import OverlayManager from '@processes/overlay/ui/OverlayManager';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 export type DiaryStackParamList = {
@@ -17,7 +16,6 @@ const Stack = createNativeStackNavigator<DiaryStackParamList>();
 const DiaryStack = () => {
   return (
     <>
-      <OverlayManager />
       <Stack.Navigator
         initialRouteName="EmotionSelectionPage"
         screenOptions={{ headerShown: false }}
