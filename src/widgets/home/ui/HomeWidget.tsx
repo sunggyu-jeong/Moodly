@@ -16,7 +16,6 @@ const HomeWidget = () => {
   const dispatch = useAppDispatch();
   const { data: hasDiary, isLoading: isHasDiaryLoading } = useHasDiaryForDayQuery();
   const { data: diaryCount, isLoading: isDiaryCountLoading } = useGetDiaryCountQuery();
-  const { data: session, isLoading: isSessionLoading } = useFetchSessionQuery();
   const [permissionRequested, setPermissionRequested] = useState(false);
 
   const isLoading = isHasDiaryLoading || isDiaryCountLoading;
@@ -42,16 +41,14 @@ const HomeWidget = () => {
     [upsertToken, deleteToken, permissionRequested],
   );
 
-  const { status, requestUserPermission } = useNotificationPermission({
+  const { requestUserPermission } = useNotificationPermission({
     onTokenUpdate: handleTokenUpdate,
   });
 
   useEffect(() => {
-    if (session && !isSessionLoading && status === 'denied' && !permissionRequested) {
-      requestUserPermission();
-      setPermissionRequested(true);
-    }
-  }, [session, isSessionLoading, status, permissionRequested, requestUserPermission]);
+    requestUserPermission();
+    setPermissionRequested(true);
+  }, [requestUserPermission]);
 
   useFocusEffect(
     useCallback(() => {

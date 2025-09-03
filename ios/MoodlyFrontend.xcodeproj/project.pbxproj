@@ -150,9 +150,9 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				5AF1B8FC45343A2566EF2EB7 /* [CP] Embed Pods Frameworks */,
 				BBCF350B8AD64D0819ABE135 /* [CP] Copy Pods Resources */,
 				E2678CBC0004493F5B93C90A /* [CP-User] [RNFB] Core Configuration */,
+				47FCF37EF0D94D5995883166 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -234,7 +234,7 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\n# 1) Node 바이너리 위치를 명시적으로 지정\nexport NODE_BINARY=$(which node)\n\n# 2) React Native 모듈 경로를 Xcode 프로젝트 기준으로 맞춰줍니다.\n#    SRCROOT 은 .xcodeproj 파일이 있는 폴더를 가리킵니다.\nexport REACT_NATIVE_DIR=\"${SRCROOT}/../node_modules/react-native\"\n\n# 3) with-environment, react-native-xcode 스크립트 경로\nexport WITH_ENVIRONMENT=\"$REACT_NATIVE_DIR/scripts/xcode/with-environment.sh\"\nexport REACT_NATIVE_XCODE=\"$REACT_NATIVE_DIR/scripts/react-native-xcode.sh\"\n\n# 4) 실제 번들링 실행\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		5AF1B8FC45343A2566EF2EB7 /* [CP] Embed Pods Frameworks */ = {
+		47FCF37EF0D94D5995883166 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
