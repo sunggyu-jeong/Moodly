@@ -5,6 +5,7 @@ import ReactAppDependencyProvider
 import Firebase
 import HotUpdater
 import GoogleSignIn
+import FirebaseMessaging
 
 @main
 class AppDelegate: RCTAppDelegate {
@@ -34,6 +35,14 @@ class AppDelegate: RCTAppDelegate {
         RCTBundleURLProvider.sharedSettings().jsBundleURL(forBundleRoot: "index")
     #else
         HotUpdater.bundleURL()
+    #endif
+  }
+  
+  override func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+    #if DEBUG
+      Messaging.messaging().setAPNSToken(deviceToken, type: .sandbox)
+    #else
+      Messaging.messaging().setAPNSToken(deviceToken, type: .prod)
     #endif
   }
   

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		09926B6611184FB807B1411E /* Pods_MoodlyFrontend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A2A545AF264383406ED3D57 /* Pods_MoodlyFrontend.framework */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		14B16777D660FD6E731758E1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 		1D098D3E5E0F4EDAA5B6F118 /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6F4AB07BA289499F98CEA923 /* Pretendard-Black.otf */; };
@@ -19,13 +18,13 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		82CB1A98F3BD482EBB7B4198 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C3676CF9249FFA4E45355 /* Pretendard-SemiBold.otf */; };
 		997A3CB778D34660B31F55EB /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0AF897487F0947CD8DF46CDF /* Pretendard-Regular.otf */; };
+		9B5828D5E21D674B814CF11B /* Pods_Moodly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B5A38B0330C571A645082F7 /* Pods_Moodly.framework */; };
 		B1847261EB4E4E42AF4428E0 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B6E565443F7640888A8643BB /* Pretendard-Bold.otf */; };
 		E990AE6F972840F1A25881DC /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 58ED261F5F4E43F385405F91 /* Pretendard-Thin.otf */; };
 		F78C238B20B44AFB98774C12 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = C407F36FB2D74A049B3763F5 /* Pretendard-Light.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0A2A545AF264383406ED3D57 /* Pods_MoodlyFrontend.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoodlyFrontend.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AF897487F0947CD8DF46CDF /* Pretendard-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Regular.otf"; path = "../src/shared/assets/fonts/Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* MoodlyFrontend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoodlyFrontend.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MoodlyFrontend/Images.xcassets; sourceTree = "<group>"; };
@@ -41,10 +40,13 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = MoodlyFrontend/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8F8C3676CF9249FFA4E45355 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-SemiBold.otf"; path = "../src/shared/assets/fonts/Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		921BCB31129A890BC25C451D /* Pods-MoodlyFrontend.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoodlyFrontend.release.xcconfig"; path = "Target Support Files/Pods-MoodlyFrontend/Pods-MoodlyFrontend.release.xcconfig"; sourceTree = "<group>"; };
+		9B5A38B0330C571A645082F7 /* Pods_Moodly.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Moodly.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6E565443F7640888A8643BB /* Pretendard-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Bold.otf"; path = "../src/shared/assets/fonts/Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		C407F36FB2D74A049B3763F5 /* Pretendard-Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Light.otf"; path = "../src/shared/assets/fonts/Pretendard-Light.otf"; sourceTree = "<group>"; };
+		CDA5515967DF0B20487CB896 /* Pods-Moodly.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Moodly.release.xcconfig"; path = "Target Support Files/Pods-Moodly/Pods-Moodly.release.xcconfig"; sourceTree = "<group>"; };
 		E81DF7B77D644C3F8DD478E4 /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-ExtraBold.otf"; path = "../src/shared/assets/fonts/Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F56F2EAFBAB009DB17240911 /* Pods-Moodly.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Moodly.debug.xcconfig"; path = "Target Support Files/Pods-Moodly/Pods-Moodly.debug.xcconfig"; sourceTree = "<group>"; };
 		F5723CD91D2775DF838E57B1 /* Pods-MoodlyFrontend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoodlyFrontend.debug.xcconfig"; path = "Target Support Files/Pods-MoodlyFrontend/Pods-MoodlyFrontend.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -53,7 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				09926B6611184FB807B1411E /* Pods_MoodlyFrontend.framework in Frameworks */,
+				9B5828D5E21D674B814CF11B /* Pods_Moodly.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,7 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				0A2A545AF264383406ED3D57 /* Pods_MoodlyFrontend.framework */,
+				9B5A38B0330C571A645082F7 /* Pods_Moodly.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -134,6 +136,8 @@
 			children = (
 				F5723CD91D2775DF838E57B1 /* Pods-MoodlyFrontend.debug.xcconfig */,
 				921BCB31129A890BC25C451D /* Pods-MoodlyFrontend.release.xcconfig */,
+				F56F2EAFBAB009DB17240911 /* Pods-Moodly.debug.xcconfig */,
+				CDA5515967DF0B20487CB896 /* Pods-Moodly.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -141,9 +145,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		13B07F861A680F5B00A75B9A /* MoodlyFrontend */ = {
+		13B07F861A680F5B00A75B9A /* Moodly */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "MoodlyFrontend" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Moodly" */;
 			buildPhases = (
 				8145B6B3D8B4ECE016534C75 /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
@@ -158,7 +162,7 @@
 			);
 			dependencies = (
 			);
-			name = MoodlyFrontend;
+			name = Moodly;
 			productName = MoodlyFrontend;
 			productReference = 13B07F961A680F5B00A75B9A /* MoodlyFrontend.app */;
 			productType = "com.apple.product-type.application";
@@ -189,7 +193,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* MoodlyFrontend */,
+				13B07F861A680F5B00A75B9A /* Moodly */,
 			);
 		};
 /* End PBXProject section */
@@ -240,15 +244,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MoodlyFrontend/Pods-MoodlyFrontend-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Moodly/Pods-Moodly-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MoodlyFrontend/Pods-MoodlyFrontend-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Moodly/Pods-Moodly-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MoodlyFrontend/Pods-MoodlyFrontend-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Moodly/Pods-Moodly-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8145B6B3D8B4ECE016534C75 /* [CP] Check Pods Manifest.lock */ = {
@@ -266,7 +270,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MoodlyFrontend-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Moodly-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -279,15 +283,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MoodlyFrontend/Pods-MoodlyFrontend-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Moodly/Pods-Moodly-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MoodlyFrontend/Pods-MoodlyFrontend-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Moodly/Pods-Moodly-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MoodlyFrontend/Pods-MoodlyFrontend-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Moodly/Pods-Moodly-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E2678CBC0004493F5B93C90A /* [CP-User] [RNFB] Core Configuration */ = {
@@ -319,7 +323,7 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F5723CD91D2775DF838E57B1 /* Pods-MoodlyFrontend.debug.xcconfig */;
+			baseConfigurationReference = F56F2EAFBAB009DB17240911 /* Pods-Moodly.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -356,7 +360,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 921BCB31129A890BC25C451D /* Pods-MoodlyFrontend.release.xcconfig */;
+			baseConfigurationReference = CDA5515967DF0B20487CB896 /* Pods-Moodly.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -576,7 +580,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "MoodlyFrontend" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Moodly" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,

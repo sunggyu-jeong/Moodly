@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
                BuildableName = "MoodlyFrontend.app"
-               BlueprintName = "MoodlyFrontend"
+               BlueprintName = "Moodly"
                ReferencedContainer = "container:MoodlyFrontend.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -56,17 +56,10 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
             BuildableName = "MoodlyFrontend.app"
-            BlueprintName = "MoodlyFrontend"
+            BlueprintName = "Moodly"
             ReferencedContainer = "container:MoodlyFrontend.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <EnvironmentVariables>
-         <EnvironmentVariable
-            key = "TZ"
-            value = "Pacific/Guadalcanal"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -80,7 +73,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
             BuildableName = "MoodlyFrontend.app"
-            BlueprintName = "MoodlyFrontend"
+            BlueprintName = "Moodly"
             ReferencedContainer = "container:MoodlyFrontend.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

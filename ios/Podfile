@@ -15,7 +15,7 @@ prepare_react_native_project!
 linkage = ENV['USE_FRAMEWORKS'] || 'static'
 use_frameworks! :linkage => linkage.to_sym
 
-target 'MoodlyFrontend' do
+target 'Moodly' do
   config = use_native_modules!
 
   setup_permissions([
@@ -27,7 +27,7 @@ target 'MoodlyFrontend' do
   pod 'GTMSessionFetcher/Core', '~> 3.4'
 
   use_react_native!(
-    :path => config[:reactNativePath]
+    :path => config[:reactNativePath],
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
