@@ -1,10 +1,6 @@
 <div align="center">
 
-<img width="144" height="144" alt="Image" src="https://github.com/user-attachments/assets/c80f8bfb-2fc6-4dab-a7b2-b2c44b86f87c" />
-
-# Moodly
-
-**하루의 감정을 기록하는 감성 일기 앱, Moodly**
+<img width="500" height="541" alt="Image" src="https://github.com/user-attachments/assets/8e9563bf-ee27-4b06-9f5f-ee02fe16b90c" />
 
 <p>
   <img alt="React Native" src="https://img.shields.io/badge/React%20Native-0.79.1-61DAFB?logo=react&logoColor=black"/>
