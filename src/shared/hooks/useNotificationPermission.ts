@@ -101,7 +101,6 @@ export function useNotificationPermission(
       await AsyncStorage.removeItem(TOKEN_STORAGE_KEY);
     }
 
-    // 권한 요청 직후에도 최신 상태를 다시 확인하여 반영합니다.
     const { status: newStatus } = await checkNotifications();
     setStatus(newStatus);
 

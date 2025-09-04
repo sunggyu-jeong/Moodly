@@ -68,8 +68,8 @@ function App() {
             <NavigationContainer ref={navigationRef}>
               <RootStack />
             </NavigationContainer>
+            <OverlayManager />
           </SafeAreaProvider>
-          <OverlayManager />
         </Provider>
       </View>
     </GestureHandlerRootView>

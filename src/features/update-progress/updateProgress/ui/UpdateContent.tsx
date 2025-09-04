@@ -2,7 +2,6 @@ import Progress from '@shared/ui/elements/Progress';
 import { useEffect } from 'react';
 import { Text, View } from 'react-native';
 
-// props를 더 직관적으로 변경합니다.
 export interface UpdateContentProps {
   title: string;
   subtitle?: string;

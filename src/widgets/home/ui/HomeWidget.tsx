@@ -4,6 +4,7 @@ import {
 } from '@entities/auth/api/auth.api';
 import { useGetDiaryCountQuery, useHasDiaryForDayQuery } from '@entities/diary/api/diary.api';
 import { resetDiary } from '@features/diary';
+import { usePushNavigation } from '@features/diary/hooks/usePushNavigation';
 import { useFocusEffect } from '@react-navigation/native';
 import { jumpToTab, navigate, useAppDispatch, useDelay, useNotificationPermission } from '@shared';
 import { useCallback, useEffect, useState } from 'react';
@@ -54,6 +55,8 @@ const HomeWidget = () => {
       dispatch(resetDiary());
     }, [dispatch]),
   );
+
+  usePushNavigation({ hasDiary });
 
   if (useDelay(isLoading)) {
     return <HomeLoading />;
