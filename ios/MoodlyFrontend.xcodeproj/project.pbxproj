@@ -328,7 +328,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MoodlyFrontend/MoodlyFrontend.entitlements;
-				CURRENT_PROJECT_VERSION = 33;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 37;
 				DEVELOPMENT_TEAM = P25TGU6M77;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = MoodlyFrontend/Info.plist;
@@ -347,6 +349,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.moodly.diary.emotion;
 				PRODUCT_NAME = MoodlyFrontend;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -365,7 +368,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MoodlyFrontend/MoodlyFrontend.entitlements;
-				CURRENT_PROJECT_VERSION = 32;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 37;
 				DEVELOPMENT_TEAM = P25TGU6M77;
 				INFOPLIST_FILE = MoodlyFrontend/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "무들리";
@@ -383,6 +388,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.moodly.diary.emotion;
 				PRODUCT_NAME = MoodlyFrontend;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
