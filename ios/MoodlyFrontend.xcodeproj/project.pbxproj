@@ -330,7 +330,7 @@
 				CODE_SIGN_ENTITLEMENTS = MoodlyFrontend/MoodlyFrontend.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 37;
+				CURRENT_PROJECT_VERSION = 38;
 				DEVELOPMENT_TEAM = P25TGU6M77;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = MoodlyFrontend/Info.plist;
@@ -370,7 +370,7 @@
 				CODE_SIGN_ENTITLEMENTS = MoodlyFrontend/MoodlyFrontend.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 37;
+				CURRENT_PROJECT_VERSION = 38;
 				DEVELOPMENT_TEAM = P25TGU6M77;
 				INFOPLIST_FILE = MoodlyFrontend/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "무들리";
