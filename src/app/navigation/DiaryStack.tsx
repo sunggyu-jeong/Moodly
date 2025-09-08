@@ -2,7 +2,9 @@ import EmotionDiaryCompletePage from '@pages/EmotionDiaryCompletePage';
 import EmotionDiaryDetailPage from '@pages/EmotionDiaryDetailPage';
 import EmotionDiaryWritePage from '@pages/EmotionDiaryWritePage';
 import EmotionSelectionPage from '@pages/EmotionSelectionPage';
+import OverlayManager from '@processes/overlay/ui/OverlayManager';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StyleSheet, View } from 'react-native';
 
 export type DiaryStackParamList = {
   EmotionSelectionPage: undefined;
@@ -15,7 +17,7 @@ const Stack = createNativeStackNavigator<DiaryStackParamList>();
 
 const DiaryStack = () => {
   return (
-    <>
+    <View style={styles.container}>
       <Stack.Navigator
         initialRouteName="EmotionSelectionPage"
         screenOptions={{ headerShown: false }}
@@ -41,8 +43,15 @@ const DiaryStack = () => {
           }}
         />
       </Stack.Navigator>
-    </>
+      <OverlayManager />
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 export default DiaryStack;

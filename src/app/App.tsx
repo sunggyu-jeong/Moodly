@@ -67,8 +67,8 @@ function App() {
           <SafeAreaProvider>
             <NavigationContainer ref={navigationRef}>
               <RootStack />
+              <OverlayManager />
             </NavigationContainer>
-            <OverlayManager />
           </SafeAreaProvider>
         </Provider>
       </View>
