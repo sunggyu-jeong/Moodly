@@ -1,15 +1,11 @@
 import { diaryApi } from '@entities/diary/api/diary.api';
 import type { Diary } from '@entities/diary/model/diary.types';
-import { getMonthRange } from '@widgets/diary';
+import { getMonthRange, getWeekRange } from '@widgets/diary';
 import { Dayjs } from 'dayjs';
 import { useMemo } from 'react';
 
 const EMPTY_ARRAY: Diary[] = [];
 
-const weekRange = (weekStart: Dayjs) => ({
-  start: weekStart.startOf('week').format('YYYY-MM-DD'),
-  end: weekStart.endOf('week').format('YYYY-MM-DD'),
-});
 interface UseDiaryPagingDataProps {
   isMonthMode: boolean;
   selectedPeriod: Dayjs;
@@ -27,7 +23,7 @@ export const useDiaryPagingData = ({ isMonthMode, selectedPeriod }: UseDiaryPagi
     [selectedPeriod, periodType],
   );
 
-  const rangeFn = isMonthMode ? getMonthRange : weekRange;
+  const rangeFn = isMonthMode ? getMonthRange : getWeekRange;
 
   const { data: prevData, isSuccess: prevSuccess } = diaryApi.useGetDiariesByRangeQuery(
     rangeFn(prev),

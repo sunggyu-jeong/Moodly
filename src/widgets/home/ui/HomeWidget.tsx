@@ -14,7 +14,9 @@ import HomeLoading from './HomeLoading';
 
 const HomeWidget = () => {
   const dispatch = useAppDispatch();
-  const { data: hasDiary, isLoading: isHasDiaryLoading } = useHasDiaryForDayQuery();
+  const { data: hasDiary, isLoading: isHasDiaryLoading } = useHasDiaryForDayQuery(undefined, {
+    pollingInterval: 300000,
+  });
   const { data: diaryCount, isLoading: isDiaryCountLoading } = useGetDiaryCountQuery();
   const [permissionRequested, setPermissionRequested] = useState(false);
 
