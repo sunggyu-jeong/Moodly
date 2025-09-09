@@ -48,7 +48,7 @@ export const EmotionDiaryMonthPager = ({
       data={data}
       horizontal
       pagingEnabled
-      keyExtractor={it => it.key}
+      keyExtractor={it => it.periodStart.toISOString()}
       renderItem={renderPage}
       initialNumToRender={3}
       maxToRenderPerBatch={3}

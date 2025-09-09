@@ -44,6 +44,7 @@ export const useDiaryPagerVM = () => {
     () => (isMonthMode ? periods.curr.format('M월') : formatWeekLabel(periods.curr)),
     [isMonthMode, periods.curr],
   );
+
   const goLeft = useCallback(() => {
     dispatch(isMonthMode ? moveMonth('left') : moveWeek('left'));
   }, [dispatch, isMonthMode]);

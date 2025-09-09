@@ -8,11 +8,12 @@ import { getUniqueId } from 'react-native-device-info';
 
 import type { SetUserInfoInput, SignInProviderInput, UserInfo } from '../model/auth.types';
 
+GoogleSignin.configure({
+  webClientId: process.env.GOOGLE_WEB_CLIENT_ID!,
+});
+
 export async function getGoogleToken() {
   await GoogleSignin.hasPlayServices();
-  GoogleSignin.configure({
-    webClientId: process.env.GOOGLE_WEB_CLIENT_ID!,
-  });
   await GoogleSignin.signIn();
   const { idToken: token } = await GoogleSignin.getTokens();
   return { token };
