@@ -2,7 +2,7 @@ import { setShowDropdownView } from '@processes/overlay/model/overlaySlice';
 import { useAppDispatch, useAppSelector } from '@shared';
 import { DropDownContainer } from '@widgets/dropdown';
 import { useCallback, useEffect, useRef } from 'react';
-import { Animated, TouchableOpacity } from 'react-native';
+import { Animated, Platform, StyleSheet, TouchableOpacity } from 'react-native';
 
 const DropDownAnimation = () => {
   const animationValue = useRef(new Animated.Value(0)).current;
@@ -46,14 +46,14 @@ const DropDownAnimation = () => {
   return (
     <>
       <TouchableOpacity
-        className="absolute inset-0 z-[998]"
+        style={styles.container}
         onPress={onClose}
       />
       <Animated.View
         className="absolute z-[998]"
         style={[
           {
-            top: showDropDownView?.pos?.y ?? 0,
+            top: (showDropDownView?.pos?.y ?? 0) - (Platform.OS === 'android' ? 70 : 0),
             left: (showDropDownView?.pos?.x ?? 0) - 120,
           },
           {
@@ -74,5 +74,15 @@ const DropDownAnimation = () => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+  },
+});
 
 export default DropDownAnimation;
