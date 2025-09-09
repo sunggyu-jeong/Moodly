@@ -79,6 +79,7 @@ const EmotionDiaryMonthView = ({
   return (
     <View style={styles.page}>
       <FlatList<ListItem>
+        key={`${diaryMode}-${calendarMode}`}
         style={styles.list}
         data={listData}
         renderItem={renderItem}
