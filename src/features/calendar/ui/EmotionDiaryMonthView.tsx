@@ -8,7 +8,7 @@ import { isEmpty } from '@shared/lib';
 import colors from '@shared/styles/colors';
 import dayjs, { Dayjs } from 'dayjs';
 import { memo, useCallback, useMemo } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, Platform, StyleSheet, View } from 'react-native';
 
 import DiarySkeleton from '../../diary/ui/skeleton/DiaryCardSkeleton';
 import { selectIsDiaryPagingLoading, selectSelectedDayIso } from '../model';
@@ -59,6 +59,9 @@ const EmotionDiaryMonthView = ({
       case 'DIARY':
         return <EmotionDiaryCardList data={item.data} />;
       case 'SKELETON':
+        if (Platform.OS === 'android') {
+          return null;
+        }
         return <DiarySkeleton />;
       default:
         return null;
