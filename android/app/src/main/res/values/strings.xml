@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">무들리</string>
+    <string name="hot_updater_fingerprint_hash" moduleConfig="true">f42bcac48da74231b723fc9437182884d22c7b4a</string>
+</resources>
