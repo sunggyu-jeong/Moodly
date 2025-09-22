@@ -12,6 +12,8 @@ interface PopupContainerProps {
   cancelText: string;
   confirmText: string;
   onConfirm: () => void;
+  onCancel?: () => void;
+  disableBackdropClose?: boolean;
 }
 
 const PopupContainer = ({ ...props }: PopupContainerProps) => {
@@ -52,6 +54,9 @@ const PopupContainer = ({ ...props }: PopupContainerProps) => {
   }, [showModalPopup?.visibility, dispatch, opacity, translateY]);
 
   const handleCloseModal = () => {
+    if (props.onCancel) {
+      props.onCancel();
+    }
     dispatch(
       setShowModalPopup({
         visibility: false,
@@ -71,7 +76,7 @@ const PopupContainer = ({ ...props }: PopupContainerProps) => {
       onRequestClose={handleCloseModal}
       animationType="fade"
     >
-      <DimmedView onPress={handleCloseModal}>
+      <DimmedView onPress={props.disableBackdropClose ? undefined : handleCloseModal}>
         <Animated.View
           style={{ transform: [{ translateY }], opacity: opacity }}
           className="flex-1 justify-center p-10"

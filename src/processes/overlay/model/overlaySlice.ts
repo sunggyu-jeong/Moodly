@@ -19,6 +19,8 @@ interface ModalViewPayload {
   cancelText?: string;
   confirmText?: string;
   confirmActionKey: string;
+  cancelActionKey?: string;
+  disableBackdropClose?: boolean;
 }
 
 interface OverlayState {
@@ -30,7 +32,12 @@ interface OverlayState {
 }
 
 const initialState: OverlayState = {
-  showModalPopup: { visibility: null, title: '', message: '', confirmActionKey: '' },
+  showModalPopup: {
+    visibility: null,
+    title: '',
+    message: '',
+    confirmActionKey: '',
+  },
   showDropDownView: { visibility: false, dropdownList: null, pos: { x: null, y: null } },
   showToastView: { visibility: null, message: '' },
   overlayEventHandler: null,

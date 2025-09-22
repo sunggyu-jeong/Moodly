@@ -1,9 +1,16 @@
-import { isNotEmpty, useAppDispatch, useAppSelector, useNotificationPermission } from '@shared';
+import {
+  isNotEmpty,
+  useAppDispatch,
+  useAppNavigation,
+  useAppSelector,
+  useNotificationPermission,
+} from '@shared';
+import { openAppStore } from '@shared/lib/open-app.util';
 import { DropDownAnimation } from '@widgets/dropdown/animation';
+import { PopupContainer } from '@widgets/popup';
 import { ToastController } from '@widgets/toast';
 
-import { PopupContainer } from '../../../widgets/popup';
-import { MODAL_CONFIRM_ACTION_KEY } from '../../key';
+import { MODAL_CANCEL_ACTION_KEY, MODAL_CONFIRM_ACTION_KEY } from '../../key';
 import {
   resetModalPopup,
   setOverlayEventHandler,
@@ -16,6 +23,7 @@ const OverlayManager = () => {
   const showDropDownView = useAppSelector(state => state.overlaySlice.showDropDownView);
   const dispatch = useAppDispatch();
   const { openSettings } = useNotificationPermission();
+  const { navigate } = useAppNavigation();
 
   return (
     <>
@@ -37,8 +45,16 @@ const OverlayManager = () => {
             ) {
               openSettings();
               dispatch(resetModalPopup());
+            } else if (showModalPopup.confirmActionKey === MODAL_CONFIRM_ACTION_KEY.MOVE_STORE) {
+              openAppStore();
             }
           }}
+          onCancel={() => {
+            if (showModalPopup.cancelActionKey === MODAL_CANCEL_ACTION_KEY.GO_MAIN) {
+              navigate();
+            }
+          }}
+          disableBackdropClose={showModalPopup?.disableBackdropClose}
         />
       )}
 

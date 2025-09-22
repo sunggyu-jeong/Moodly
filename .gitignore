@@ -272,3 +272,5 @@ ios/vendor
 vendor/bundle
 
 *.sh
+
+vendor/*

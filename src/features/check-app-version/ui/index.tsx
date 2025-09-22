@@ -5,7 +5,7 @@ import DeviceInfo from 'react-native-device-info';
 
 import { useGetAppVersionPolicyQuery } from '../api/version.api';
 
-type VersionStatus = 'latest' | 'recommended' | 'required';
+type VersionStatus = 'latest' | 'recommended' | 'required' | null;
 
 interface UseVersionCheckResult {
   isLoading: boolean;
@@ -15,9 +15,10 @@ interface UseVersionCheckResult {
 
 export const useVersionCheck = (): UseVersionCheckResult => {
   const { data: versionPolicy, isLoading, isSuccess } = useGetAppVersionPolicyQuery();
-  const [versionStatus, setVersionStatus] = useState<VersionStatus>('latest');
+  const [versionStatus, setVersionStatus] = useState<VersionStatus>(null);
 
   useEffect(() => {
+    if (isLoading) return;
     if (isSuccess && versionPolicy) {
       const { minimum_version, latest_version } = versionPolicy;
 
@@ -34,6 +35,9 @@ export const useVersionCheck = (): UseVersionCheckResult => {
       } else {
         setVersionStatus('latest');
       }
+    } else {
+      // 서버오류로 조회 실패 시 최신버전으로 간주
+      setVersionStatus('latest');
     }
   }, [versionPolicy, isSuccess]);
 

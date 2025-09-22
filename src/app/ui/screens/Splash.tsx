@@ -1,7 +1,8 @@
-import { useLazyGetFirstLaunchFlagQuery } from '@entities/auth/api/user-meta.api';
-import { isNotEmpty, resetTo, supabase } from '@shared';
+import { useVersionCheck } from '@features/check-app-version/ui';
+import { setShowModalPopup } from '@processes/overlay/model/overlaySlice';
+import { isNotEmpty, useAppDispatch, useAppNavigation } from '@shared';
 import { MAIN_ICONS } from '@shared/assets/images/main';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Image, SafeAreaView, StatusBar, View } from 'react-native';
 
 import {
@@ -16,32 +17,57 @@ export interface SplashProps {
   ment: UpdateProgressMent;
 }
 const Splash = () => {
-  const [getFirstLaunchFlag] = useLazyGetFirstLaunchFlagQuery();
-
-  const flag = useCallback(async () => {
-    const response = await getFirstLaunchFlag();
-    if (response.data) {
-      resetTo('Onboarding');
-      return;
-    }
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (isNotEmpty(user)) {
-      resetTo('Main');
-    } else {
-      resetTo('Login');
-    }
-  }, [getFirstLaunchFlag]);
+  const dispatch = useAppDispatch();
+  const { isLoading, versionStatus, versionPolicy } = useVersionCheck();
+  const { navigate } = useAppNavigation();
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      flag();
-    }, 2000);
+    let timerId: NodeJS.Timeout;
+    if (!isLoading && isNotEmpty(versionStatus)) {
+      switch (versionStatus) {
+        case 'required':
+          dispatch(
+            setShowModalPopup({
+              visibility: true,
+              title: '업데이트 알림',
+              message:
+                versionPolicy?.update_message ||
+                '새로운 버전이 출시되었습니다. 업데이트 후 이용해주세요.',
+              confirmText: '업데이트',
+              confirmActionKey: 'MOVE_STORE',
+              disableBackdropClose: true,
+            }),
+          );
+          break;
+        case 'recommended':
+          dispatch(
+            setShowModalPopup({
+              visibility: true,
+              title: '업데이트 알림',
+              message: versionPolicy?.update_message || '업데이트 후 이용해주세요.',
+              confirmText: '업데이트',
+              cancelText: '이용',
+              confirmActionKey: 'MOVE_STORE',
+              cancelActionKey: 'GO_MAIN',
+              disableBackdropClose: true,
+            }),
+          );
+          break;
+        case 'latest':
+          {
+            timerId = setTimeout(() => {
+              navigate();
+            }, 2000);
+          }
+          break;
+      }
+    }
     return () => {
-      clearTimeout(timeout);
+      if (timerId) {
+        clearTimeout(timerId);
+      }
     };
-  }, [flag]);
+  }, [isLoading, versionStatus, versionPolicy, dispatch, navigate]);
 
   return (
     <>
