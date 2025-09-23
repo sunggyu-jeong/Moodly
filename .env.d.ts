@@ -5,4 +5,5 @@ declare module '@env' {
   export const GOOGLE_WEB_CLIENT_ID: string;
   export const PRIVACY_POLICY_LINK: string;
   export const TERMS_OF_SERVICE_LINK: string;
+  export const AMPLITUDE_API_KEY: string;
 }

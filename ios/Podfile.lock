@@ -1188,6 +1188,36 @@ PODS:
     - abseil/meta/type_traits
     - abseil/xcprivacy
   - abseil/xcprivacy (1.20240722.0)
+  - amplitude-plugin-session-replay-react-native (0.4.3):
+    - AmplitudeSessionReplay (>= 0.4.0)
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-hermes
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
+  - amplitude-react-native (1.5.11):
+    - React-Core
+  - AmplitudeCore (1.2.2)
+  - AmplitudeSessionReplay (0.8.0):
+    - AmplitudeCore (< 2.0.0, >= 1.1.0)
   - AppAuth (1.7.6):
     - AppAuth/Core (= 1.7.6)
     - AppAuth/ExternalUserAgent (= 1.7.6)
@@ -3497,6 +3527,8 @@ PODS:
   - Yoga (0.0.0)
 
 DEPENDENCIES:
+  - "amplitude-plugin-session-replay-react-native (from `../node_modules/@amplitude/plugin-session-replay-react-native`)"
+  - "amplitude-react-native (from `../node_modules/@amplitude/analytics-react-native`)"
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
   - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
@@ -3591,6 +3623,8 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - abseil
+    - AmplitudeCore
+    - AmplitudeSessionReplay
     - AppAuth
     - AppCheckCore
     - BoringSSL-GRPC
@@ -3621,6 +3655,10 @@ SPEC REPOS:
     - SSZipArchive
 
 EXTERNAL SOURCES:
+  amplitude-plugin-session-replay-react-native:
+    :path: "../node_modules/@amplitude/plugin-session-replay-react-native"
+  amplitude-react-native:
+    :path: "../node_modules/@amplitude/analytics-react-native"
   boost:
     :podspec: "../node_modules/react-native/third-party-podspecs/boost.podspec"
   BVLinearGradient:
@@ -3795,6 +3833,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   abseil: a05cc83bf02079535e17169a73c5be5ba47f714b
+  amplitude-plugin-session-replay-react-native: a9247224a1725a0412177892bd6a0f6222e2fd2a
+  amplitude-react-native: 039edf581d6cde79e2e6d5a740695f74c4a22b56
+  AmplitudeCore: 2cb120efbf0e96129d1a6972265ea479ee334565
+  AmplitudeSessionReplay: 8adf65af704fd5996b0fc138645b9e823a4b7f23
   AppAuth: d4f13a8fe0baf391b2108511793e4b479691fb73
   AppCheckCore: cc8fd0a3a230ddd401f326489c99990b013f0c4f
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90

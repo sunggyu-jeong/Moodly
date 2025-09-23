@@ -11,6 +11,8 @@
     "ios:sim": "react-native run-ios --simulator 'iPhone 11'"
   },
   "dependencies": {
+    "@amplitude/analytics-react-native": "^1.5.11",
+    "@amplitude/plugin-session-replay-react-native": "^0.4.3",
     "@gorhom/bottom-sheet": "^5",
     "@hot-updater/react-native": "0.20.8",
     "@invertase/react-native-apple-authentication": "^2.4.1",
