@@ -3263,7 +3263,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNDeviceInfo (14.0.4):
+  - RNDeviceInfo (14.1.1):
     - React-Core
   - RNFBApp (22.4.0):
     - Firebase/CoreOnly (= 11.15.0)
@@ -3939,7 +3939,7 @@ SPEC CHECKSUMS:
   RecaptchaInterop: 11e0b637842dfb48308d242afc3f448062325aba
   RNAppleAuthentication: c3dddf5918126c9aae85dc2e2ce9fb87835e9e04
   RNCAsyncStorage: c1dca434eda758348a549efb46822b4091d76804
-  RNDeviceInfo: d863506092aef7e7af3a1c350c913d867d795047
+  RNDeviceInfo: bcce8752b5043a623fe3c26789679b473f705d3c
   RNFBApp: 12884d3bf9b3a0223efe4a0adce516edf72c4102
   RNFBMessaging: e954bfb053a5c6bb10b26bae4bbc58a4edd41131
   RNGestureHandler: c50b05a3941646c4e4098344033ca4609b42be85

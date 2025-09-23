@@ -65,7 +65,9 @@ function App() {
     const initializeAmplitude = async () => {
       try {
         console.log('Amplitude 초기화를 시작합니다...');
-        await amplitude.init(AMPLITUDE_API_KEY).promise;
+        await amplitude.init(AMPLITUDE_API_KEY, undefined, { 
+          disableCookies: true 
+        }).promise;
         await amplitude.add(new SessionReplayPlugin()).promise;
 
         console.log('Amplitude 초기화 및 플러그인 추가 완료.');
@@ -74,7 +76,6 @@ function App() {
         console.error('Amplitude 초기화 중 에러가 발생했습니다:', error);
       }
     };
-    
     initializeAmplitude();
   }, []);
 

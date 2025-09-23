@@ -3,10 +3,12 @@ import { GoogleSignin, type User } from '@react-native-google-signin/google-sign
 import { isEmpty } from '@shared';
 import { appApi } from '@shared/api/AppApi';
 import { ApiCode } from '@shared/config';
+import dayjs from 'dayjs';
 import { Platform } from 'react-native';
 import { getUniqueId } from 'react-native-device-info';
 
 import type { SetUserInfoInput, SignInProviderInput, UserInfo } from '../model/auth.types';
+import type { AuthProvider } from '../types';
 
 GoogleSignin.configure({
   webClientId: process.env.GOOGLE_WEB_CLIENT_ID!,
@@ -33,9 +35,15 @@ export async function getAppleToken() {
   return { token: resp.identityToken, nonce: resp.nonce };
 }
 
+export interface SignInResult {
+  user: User | null;
+  isNewUser: boolean;
+  provider: AuthProvider;
+}
+
 export const authApi = appApi.injectEndpoints({
   endpoints: build => ({
-    signInWithProvider: build.mutation<User, SignInProviderInput>({
+    signInWithProvider: build.mutation<SignInResult, SignInProviderInput>({
       query:
         ({ provider }) =>
         async client => {
@@ -49,7 +57,18 @@ export const authApi = appApi.injectEndpoints({
             token,
             ...(nonce ? { nonce } : {}),
           });
-          return { data: data?.user ?? null, error };
+          if (error || !data.user) {
+            return { data: { user: null, isNewUser: false, provider }, error };
+          }
+
+          const createdAt = dayjs(data.user?.created_at);
+          const lastSignInAt = dayjs(data.user?.last_sign_in_at);
+
+          const diffInMs = lastSignInAt.diff(createdAt);
+
+          const isNewUser = diffInMs < 5000;
+          console.log('>>@$>!$>$>', createdAt, lastSignInAt, diffInMs, isNewUser);
+          return { data: { user: data.user, isNewUser, provider }, error: null };
         },
       invalidatesTags: ['User', 'Session'],
     }),
