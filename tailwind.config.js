@@ -3,7 +3,7 @@ const { typography } = require('./src/shared/styles/typography');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./App.{js,jsx,ts,tsx}', './src/**/*.{js,jsx,ts,tsx}'],
+  content: ['./index.js', './App.{js,jsx,ts,tsx}', './src/**/*.{js,jsx,ts,tsx}'],
   presets: [require('nativewind/preset')],
   theme: {
     extend: {

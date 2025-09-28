@@ -8,7 +8,6 @@ import { enableScreens } from 'react-native-screens';
 import { Provider } from 'react-redux';
 
 import { isEmpty, navigationRef } from '@shared/lib';
-import '../../global.css';
 
 import * as amplitude from '@amplitude/analytics-react-native';
 import { SessionReplayPlugin } from '@amplitude/plugin-session-replay-react-native';

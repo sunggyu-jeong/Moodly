@@ -2,6 +2,7 @@
  * @format
  */
 import 'react-native-url-polyfill/auto';
+import './global.css';
 
 import { AppRegistry } from 'react-native';
 import { Provider } from 'react-redux';
