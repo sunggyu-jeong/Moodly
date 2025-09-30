@@ -1,21 +1,21 @@
 apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
+apply plugin: "com.google.gms.google-services"
 
 react {
     autolinkLibrariesWithApp()
 }
 
 def enableProguardInReleaseBuilds = false
-
 def jscFlavor = 'io.github.react-native-community:jsc-android:2026004.+'
 
 android {
-    ndkVersion rootProject.ext.ndkVersion
+    compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
-    compileSdk rootProject.ext.compileSdkVersion
-
+    ndkVersion rootProject.ext.ndkVersion
     namespace "com.moodlyfrontend"
+
     defaultConfig {
         applicationId "com.moodlyfrontend"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -23,6 +23,7 @@ android {
         versionCode 5
         versionName "1.0"
     }
+
     signingConfigs {
         debug {
             storeFile file('debug.keystore')
@@ -37,6 +38,7 @@ android {
             storePassword STORE_PASSWORD
         }
     }
+
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
@@ -44,13 +46,22 @@ android {
         release {
             signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
+    }
+
+    // Kotlin 옵션
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
     }
 }
 
 dependencies {
-    implementation("com.facebook.react:react-android")
+    implementation("com.facebook.react:react-android:0.79.1") // RN 버전 명시
 
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
@@ -58,5 +69,3 @@ dependencies {
         implementation jscFlavor
     }
 }
-
-apply plugin: 'com.google.gms.google-services'
