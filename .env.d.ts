@@ -6,4 +6,5 @@ declare module '@env' {
   export const PRIVACY_POLICY_LINK: string;
   export const TERMS_OF_SERVICE_LINK: string;
   export const AMPLITUDE_API_KEY: string;
+  export const ENCRYPTION_SECRET_KEY: string;
 }

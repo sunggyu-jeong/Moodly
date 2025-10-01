@@ -1,5 +1,6 @@
 import { formatDate, now } from '@shared';
 
+import { decryptData, encryptData } from '../../../shared/lib/crypto.util';
 import type { CreateDiaryInput, DbDiaryRow, Diary, UpdateDiaryInput } from '../model/diary.types';
 
 // DB row -> Domain
@@ -8,7 +9,7 @@ export const fromRow = (row?: DbDiaryRow | null): Diary => ({
   iconId: row?.icon_id ?? 0,
   userId: row?.user_id ?? '',
   recordDate: row?.record_date ?? '',
-  description: row?.description ?? '',
+  description: decryptData(row?.description ?? '') ?? '',
   createdAt: row?.created_at ?? '',
   updatedAt: row?.updated_at ?? '',
 });
@@ -18,7 +19,7 @@ export const toInsertRow = (input: CreateDiaryInput) => ({
   user_id: input.userId,
   icon_id: input.iconId ?? null,
   record_date: formatDate(now(input.recordDate)),
-  description: input.description ?? null,
+  description: encryptData(input.description) ?? null,
   created_at: formatDate(now()),
   updated_at: formatDate(now()),
 });
