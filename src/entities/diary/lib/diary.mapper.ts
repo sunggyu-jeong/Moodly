@@ -27,7 +27,7 @@ export const toInsertRow = (input: CreateDiaryInput) => ({
 // Domain -> DB (UPDATE)
 export const toUpdateRow = (input: UpdateDiaryInput) => ({
   icon_id: input.iconId ?? undefined,
-  description: input.description ?? undefined,
+  description: encryptData(input.description) ?? undefined,
   updated_at: formatDate(now()),
 });
 
