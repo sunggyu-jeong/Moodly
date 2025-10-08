@@ -1,7 +1,7 @@
-import EmotionDiaryDetailPage from '@pages/EmotionDiaryDetailPage';
-import Login from '@pages/LoginPage';
-import NicknamePage from '@pages/NicknamePage';
-import OnboardingPage from '@pages/OnBoardingPage';
+import EmotionDiaryDetailPage from '@/pages/EmotionDiaryDetailPage';
+import Login from '@/pages/LoginPage';
+import NicknamePage from '@/pages/NicknamePage';
+import OnboardingPage from '@/pages/OnBoardingPage';
 import type { NavigatorScreenParams } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 

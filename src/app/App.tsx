@@ -1,24 +1,23 @@
 /* eslint-disable */
 import { NavigationContainer } from '@react-navigation/native';
 import 'dayjs/locale/ko';
-import { useCallback, useEffect, type ProfilerOnRenderCallback } from 'react';
+import { useCallback, type ProfilerOnRenderCallback } from 'react';
 import 'react-native-get-random-values';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
 import { Provider } from 'react-redux';
 
-import { isEmpty, navigationRef } from '@shared/lib';
+import { isEmpty, navigationRef } from '@/shared/lib';
+import '../../global.css';
 
-import * as amplitude from '@amplitude/analytics-react-native';
-import { SessionReplayPlugin } from '@amplitude/plugin-session-replay-react-native';
-import { RootStack } from '@app/navigation';
-import { store } from '@app/store';
-import { useUpsertPushTokenMutation } from '@entities/auth/api/auth.api';
-import { AMPLITUDE_API_KEY, HOT_UPDATER_SUPABASE_URL } from '@env';
+import { RootStack } from '@/app/navigation';
+import { store } from '@/app/store';
+import { useUpsertPushTokenMutation } from '@/entities/auth/api/auth.api';
+import { HOT_UPDATER_SUPABASE_URL } from '@env';
 import { HotUpdater, getUpdateSource } from '@hot-updater/react-native';
-import OverlayManager from '@processes/overlay/ui/OverlayManager';
-import { useNotificationPermission } from '@shared';
-import '@shared/lib/day.util';
+import OverlayManager from '@/processes/overlay/ui/OverlayManager';
+import { useNotificationPermission } from '@/shared';
+import '@/shared/lib/day.util';
 import { StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import FallbackUI from './ui/screens/FallbackUI';
@@ -60,23 +59,6 @@ function App() {
     onTokenUpdate: onTokenUpdate,
   });
 
- useEffect(() => {
-    const initializeAmplitude = async () => {
-      try {
-        console.log('Amplitude 초기화를 시작합니다...');
-        await amplitude.init(AMPLITUDE_API_KEY, undefined, { 
-          disableCookies: true 
-        }).promise;
-        await amplitude.add(new SessionReplayPlugin()).promise;
-
-        console.log('Amplitude 초기화 및 플러그인 추가 완료.');
-
-      } catch (error) {
-        console.error('Amplitude 초기화 중 에러가 발생했습니다:', error);
-      }
-    };
-    initializeAmplitude();
-  }, []);
 
   return (
     <GestureHandlerRootView style={styles.container}>

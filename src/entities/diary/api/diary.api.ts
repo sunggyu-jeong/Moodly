@@ -1,6 +1,6 @@
-import { formatDate, now } from '@shared';
-import { appApi } from '@shared/api/AppApi';
-import { getUserId } from '@shared/lib/user.util';
+import { formatDate, now } from '@/shared';
+import { appApi } from '@/shared/api/AppApi';
+import { getUserId } from '@/shared/lib/user.util';
 
 import { byIdTag, fromRow, toInsertRow, toUpdateRow } from '../lib/diary.mapper';
 import type { CreateDiaryInput, DbDiaryRow, Diary, UpdateDiaryInput } from '../model/diary.types';

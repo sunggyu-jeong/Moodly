@@ -1,8 +1,8 @@
-import type { RootState } from '@app/store';
-import { diaryApi } from '@entities/diary/api/diary.api'; // 추가
+import type { RootState } from '@/app/store';
+import { diaryApi } from '@/entities/diary/api/diary.api'; // 추가
 import { createSelector } from '@reduxjs/toolkit';
-import { now } from '@shared';
-import { getMonthRange } from '@widgets/diary'; // 추가
+import { now } from '@/shared';
+import { getMonthRange } from '@/widgets/diary'; // 추가
 import dayjs, { Dayjs } from 'dayjs';
 
 const s = (st: RootState) => st.diarySlice;

@@ -1,9 +1,9 @@
-import EmotionDiaryListPage from '@pages/EmotionDiaryListPage';
-import HomePage from '@pages/HomePage';
+import EmotionDiaryListPage from '@/pages/EmotionDiaryListPage';
+import HomePage from '@/pages/HomePage';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import type { NavigatorScreenParams } from '@react-navigation/native';
-import { TabBarIcon, useScale } from '@shared';
-import { MAIN_ICONS } from '@shared/assets/images/main';
+import { TabBarIcon, useScale } from '@/shared';
+import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 

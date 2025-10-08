@@ -1,4 +1,4 @@
-import { setShowToastView } from '@processes/overlay/model/overlaySlice';
+import { setShowToastView } from '@/processes/overlay/model/overlaySlice';
 import { useCallback } from 'react';
 import { Linking } from 'react-native';
 

@@ -1,10 +1,10 @@
-import { useGetUserInfoQuery } from '@entities/auth/api/auth.api';
+import { useGetUserInfoQuery } from '@/entities/auth/api/auth.api';
 import { KAKAO_OPEN_CHAT_LINK, PRIVACY_POLICY_LINK, TERMS_OF_SERVICE_LINK } from '@env';
-import { useLogout } from '@features/auth';
-import { SettingRoot } from '@features/setting';
-import { SETTING_EVENT_TYPE, TEXTS } from '@features/setting/types';
-import { MODAL_CONFIRM_ACTION_KEY } from '@processes/key';
-import { setShowModalPopup } from '@processes/overlay/model/overlaySlice';
+import { useLogout } from '@/features/auth';
+import { SettingRoot } from '@/features/setting';
+import { SETTING_EVENT_TYPE, TEXTS } from '@/features/setting/types';
+import { MODAL_CONFIRM_ACTION_KEY } from '@/processes/key';
+import { setShowModalPopup } from '@/processes/overlay/model/overlaySlice';
 import {
   Body1,
   gray,
@@ -15,26 +15,29 @@ import {
   useAppDispatch,
   useDelay,
   useExternalWebSite,
-} from '@shared';
-import { COMMON_ICONS } from '@shared/assets/images/common';
+} from '@/shared';
+import { COMMON_ICONS } from '@/shared/assets/images/common';
+import * as Notifications from 'expo-notifications';
 import { useCallback, useEffect, useState } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { checkNotifications } from 'react-native-permissions';
 
 const SettingPage = () => {
   const { openLink } = useExternalWebSite();
   const { signOut } = useLogout();
   const dispatch = useAppDispatch();
   const { data: userInfo, isLoading } = useGetUserInfoQuery();
-  const [status, setStatus] = useState('');
+  const [notificationStatus, setNotificationStatus] = useState<Notifications.PermissionStatus>(
+    Notifications.PermissionStatus.UNDETERMINED
+  );
 
   useEffect(() => {
-    console.log('!@>$!@>$>>!@$>!@이고동작하냐');
-    const checkApi = async () => {
-      const response = await checkNotifications();
-      setStatus(response.status);
-    };
-    checkApi();
+    useCallback(() => {
+      const checkNotificationStatus = async () => {
+        const { status } = await Notifications.getPermissionsAsync();
+        setNotificationStatus(status);
+      };
+      checkNotificationStatus();
+    }, [])
   }, []);
 
   const handlePress = useCallback(

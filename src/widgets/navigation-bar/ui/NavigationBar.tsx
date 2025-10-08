@@ -1,7 +1,7 @@
-import { getScaleSize } from '@shared/hooks';
-import { isNotEmpty } from '@shared/lib';
-import NaviActionButton, { type NaviActionButtonProps } from '@shared/ui/elements/NaviActionButton';
-import NaviBackButton from '@shared/ui/elements/NaviBackButton';
+import { getScaleSize } from '@/shared/hooks';
+import { isNotEmpty } from '@/shared/lib';
+import NaviActionButton, { type NaviActionButtonProps } from '@/shared/ui/elements/NaviActionButton';
+import NaviBackButton from '@/shared/ui/elements/NaviBackButton';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';

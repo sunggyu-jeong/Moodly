@@ -1,6 +1,6 @@
-import { DiarySaveButton } from '@features/diary';
-import { common, getScaleSize, H2, ICON_DATA, isNotEmpty, useAppSelector } from '@shared';
-import { NaviDismiss, NavigationBar } from '@widgets/navigation-bar';
+import { DiarySaveButton } from '@/features/diary';
+import { common, getScaleSize, H2, ICON_DATA, isNotEmpty, useAppSelector } from '@/shared';
+import { NaviDismiss, NavigationBar } from '@/widgets/navigation-bar';
 import { useEffect, useRef, useState } from 'react';
 import {
   Image,

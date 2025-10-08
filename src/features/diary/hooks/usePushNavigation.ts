@@ -1,6 +1,6 @@
 // src/hooks/usePushNavigation.ts
 import messaging from '@react-native-firebase/messaging';
-import { navigate } from '@shared';
+import { navigate } from '@/shared';
 import { useEffect, useRef } from 'react';
 
 interface UsePushNavigationProps {

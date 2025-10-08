@@ -1,7 +1,7 @@
-import { COMMON_ICONS } from '@shared/assets/images/common';
-import { useScale } from '@shared/hooks';
-import { H2 } from '@shared/ui/typography/H2';
-import { Label } from '@shared/ui/typography/Label';
+import { COMMON_ICONS } from '@/shared/assets/images/common';
+import { useScale } from '@/shared/hooks';
+import { H2 } from '@/shared/ui/typography/H2';
+import { Label } from '@/shared/ui/typography/Label';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { colors } from '@/shared/styles';

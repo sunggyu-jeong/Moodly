@@ -1,11 +1,11 @@
-import type { VersionPolicy } from '@entities/app/model/types';
-import { versionToNumber } from '@shared';
+import type { VersionPolicy } from '@/entities/app/model/types';
+import { versionToNumber } from '@/shared';
 import { useEffect, useState } from 'react';
-import DeviceInfo from 'react-native-device-info';
+import Constants from 'expo-constants'; 
 
 import { useGetAppVersionPolicyQuery } from '../api/version.api';
 
-type VersionStatus = 'latest' | 'recommended' | 'required' | null;
+type VersionStatus = 'latest' | 'recommended' | 'required';
 
 interface UseVersionCheckResult {
   isLoading: boolean;
@@ -15,14 +15,13 @@ interface UseVersionCheckResult {
 
 export const useVersionCheck = (): UseVersionCheckResult => {
   const { data: versionPolicy, isLoading, isSuccess } = useGetAppVersionPolicyQuery();
-  const [versionStatus, setVersionStatus] = useState<VersionStatus>(null);
+  const [versionStatus, setVersionStatus] = useState<VersionStatus>('latest');
 
   useEffect(() => {
-    if (isLoading) return;
     if (isSuccess && versionPolicy) {
       const { minimum_version, latest_version } = versionPolicy;
 
-      const currentVersion = DeviceInfo.getVersion();
+      const currentVersion = Constants.expoConfig?.version ?? '1.0.0';
 
       const currentVersionNum = versionToNumber(currentVersion);
       const minimumVersionNum = versionToNumber(minimum_version);
@@ -35,9 +34,6 @@ export const useVersionCheck = (): UseVersionCheckResult => {
       } else {
         setVersionStatus('latest');
       }
-    } else {
-      // 서버오류로 조회 실패 시 최신버전으로 간주
-      setVersionStatus('latest');
     }
   }, [versionPolicy, isSuccess]);
 

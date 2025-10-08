@@ -1,5 +1,5 @@
-import { ActionButton, DiaryCountCard, getScaleSize, gray, H2 } from '@shared';
-import { MAIN_ICONS } from '@shared/assets/images/main';
+import { ActionButton, DiaryCountCard, getScaleSize, gray, H2 } from '@/shared';
+import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { Image, StyleSheet, View } from 'react-native';
 
 interface HomeContentProps {

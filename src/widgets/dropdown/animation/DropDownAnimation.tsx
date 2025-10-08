@@ -1,6 +1,6 @@
-import { setShowDropdownView } from '@processes/overlay/model/overlaySlice';
-import { useAppDispatch, useAppSelector } from '@shared';
-import { DropDownContainer } from '@widgets/dropdown';
+import { setShowDropdownView } from '@/processes/overlay/model/overlaySlice';
+import { useAppDispatch, useAppSelector } from '@/shared';
+import { DropDownContainer } from '@/widgets/dropdown';
 import { useCallback, useEffect, useRef } from 'react';
 import { Animated, Platform, StyleSheet, TouchableOpacity } from 'react-native';
 

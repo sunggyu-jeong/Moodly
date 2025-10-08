@@ -2,8 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import messaging from '@react-native-firebase/messaging';
 import { useCallback, useEffect, useState } from 'react';
 import { AppState, Linking, PermissionsAndroid, Platform } from 'react-native';
-import { checkNotifications, type PermissionStatus } from 'react-native-permissions';
-
+import * as Notifications from 'expo-notifications';
 export const TOKEN_STORAGE_KEY = '@fcm_token';
 
 export function useNotificationPermission(
@@ -13,12 +12,14 @@ export function useNotificationPermission(
   } = {},
 ) {
   const { setupListeners = false, onTokenUpdate } = options;
-  const [status, setStatus] = useState<PermissionStatus>('unavailable');
+    const [status, setStatus] = useState<Notifications.PermissionStatus>(
+      Notifications.PermissionStatus.UNDETERMINED
+    );
 
   useEffect(() => {
     const checkAndSyncEverything = async () => {
       try {
-        const { status: currentStatus } = await checkNotifications();
+        const { status: currentStatus } = await Notifications.getPermissionsAsync();
         setStatus(currentStatus);
 
         if (!setupListeners || !onTokenUpdate) {
@@ -101,7 +102,7 @@ export function useNotificationPermission(
       await AsyncStorage.removeItem(TOKEN_STORAGE_KEY);
     }
 
-    const { status: newStatus } = await checkNotifications();
+    const { status: newStatus } = await Notifications.getPermissionsAsync();
     setStatus(newStatus);
 
     return granted;

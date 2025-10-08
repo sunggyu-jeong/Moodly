@@ -3,11 +3,11 @@ import {
   type DiaryCalendarModeType,
   DiaryPageMode,
   type DiaryPageModeType,
-} from '@entities/calendar/diary.type';
-import type { Diary } from '@entities/diary/model/diary.types';
-import { now } from '@shared';
-import { generateMonthGrid, generateWeekGrid } from '@shared/lib/date.util';
-import WeekdayHeader from '@shared/ui/elements/WeekdayHeader';
+} from '@/entities/calendar/diary.type';
+import type { Diary } from '@/entities/diary/model/diary.types';
+import { now } from '@/shared';
+import { generateMonthGrid, generateWeekGrid } from '@/shared/lib/date.util';
+import WeekdayHeader from '@/shared/ui/elements/WeekdayHeader';
 import { AnimatePresence, MotiView } from 'moti';
 import { memo, useMemo } from 'react';
 import { View } from 'react-native';

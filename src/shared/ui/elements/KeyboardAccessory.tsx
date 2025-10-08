@@ -1,5 +1,5 @@
-import { gray } from '@shared/styles/colors';
-import { H3 } from '@shared/ui/typography/H3';
+import { gray } from '@/shared/styles/colors';
+import { H3 } from '@/shared/ui/typography/H3';
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 
 import { getScaleSize } from '@/shared/hooks';

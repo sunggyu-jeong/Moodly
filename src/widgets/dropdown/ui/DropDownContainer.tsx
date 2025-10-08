@@ -1,7 +1,7 @@
-import { useAppSelector } from '@shared/hooks';
-import { isNotEmpty } from '@shared/lib';
-import { common } from '@shared/styles/colors';
-import DropDownItem, { type DropDownItemProps } from '@widgets/dropdown/ui/DropDownItem';
+import { useAppSelector } from '@/shared/hooks';
+import { isNotEmpty } from '@/shared/lib';
+import { common } from '@/shared/styles/colors';
+import DropDownItem, { type DropDownItemProps } from '@/widgets/dropdown/ui/DropDownItem';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 

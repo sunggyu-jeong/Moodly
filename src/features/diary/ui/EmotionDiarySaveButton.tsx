@@ -1,7 +1,7 @@
-import { fromRow } from '@entities/diary/lib/diary.mapper';
-import { useAppDispatch, useAppSelector } from '@shared/hooks';
-import { isNotEmpty, navigate } from '@shared/lib';
-import { KeyboardAccessoryButton } from '@shared/ui/elements/KeyboardAccessory';
+import { fromRow } from '@/entities/diary/lib/diary.mapper';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks';
+import { isNotEmpty, navigate } from '@/shared/lib';
+import { KeyboardAccessoryButton } from '@/shared/ui/elements/KeyboardAccessory';
 import { useEffect } from 'react';
 
 import { useDiaryMutation } from '../hooks/useDiaryMutation';

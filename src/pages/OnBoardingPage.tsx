@@ -1,9 +1,9 @@
-import { type BottomSheetHandler, SocialLoginSheet } from '@features/setting/ui/SocialLoginSheet';
+import { type BottomSheetHandler, SocialLoginSheet } from '@/features/setting/ui/SocialLoginSheet';
 import { useFocusEffect } from '@react-navigation/native';
-import { ONBOARDING_ICONS } from '@shared/assets/images/onboarding';
-import { useNotificationPermission } from '@shared/hooks/useNotificationPermission';
-import colors from '@shared/styles/colors';
-import ActionButton from '@shared/ui/elements/ActionButton';
+import { ONBOARDING_ICONS } from '@/shared/assets/images/onboarding';
+import { useNotificationPermission } from '@/shared/hooks/useNotificationPermission';
+import colors from '@/shared/styles/colors';
+import ActionButton from '@/shared/ui/elements/ActionButton';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import {
   type FlatListProps,

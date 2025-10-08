@@ -1,8 +1,8 @@
-import { gray } from '@shared/styles/colors';
-import NaviTitleDisplay from '@shared/ui/elements/NaviTitle';
-import { Label } from '@shared/ui/typography/Label';
-import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar';
-import SettingWidgetSkeleton from '@widgets/setting/ui/SettingWidgetSkeleton';
+import { gray } from '@/shared/styles/colors';
+import NaviTitleDisplay from '@/shared/ui/elements/NaviTitle';
+import { Label } from '@/shared/ui/typography/Label';
+import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
+import SettingWidgetSkeleton from '@/widgets/setting/ui/SettingWidgetSkeleton';
 import { memo } from 'react';
 import { View } from 'react-native';
 

@@ -1,6 +1,5 @@
-import * as amplitude from '@amplitude/analytics-react-native';
-import { DiaryCalendarMode, DiaryPageMode, type DiaryPageModeType } from '@entities/calendar';
-import { formatWeekLabel, now, useAppDispatch, useAppSelector } from '@shared';
+import { DiaryCalendarMode, DiaryPageMode, type DiaryPageModeType } from '@/entities/calendar';
+import { formatWeekLabel, now, useAppDispatch, useAppSelector } from '@/shared';
 import { useCallback, useMemo, useState } from 'react';
 
 import { moveMonth, moveWeek, resetDiary, setSelectedDay } from '../../diary';
@@ -53,14 +52,11 @@ export const useDiaryPagerVM = () => {
     dispatch(isMonthMode ? moveMonth('right') : moveWeek('right'));
   }, [dispatch, isMonthMode]);
   const toggleDiaryMode = useCallback(() => {
-    if (diaryMode === DiaryPageMode.calendarMode) {
-      amplitude.track('Diary_CalendarToList_Toggle');
-    }
     setDiaryMode(p =>
       p === DiaryPageMode.listMode ? DiaryPageMode.calendarMode : DiaryPageMode.listMode,
     );
     dispatch(setSelectedDay(null));
-  }, [dispatch, diaryMode]);
+  }, [dispatch]);
   const reset = useCallback(() => dispatch(resetDiary()), [dispatch]);
 
   return {

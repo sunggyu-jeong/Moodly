@@ -1,4 +1,4 @@
-import { HomeWidget } from '@widgets/home';
+import { HomeWidget } from '@/widgets/home';
 import { StatusBar, View } from 'react-native';
 
 const HomePage = () => {

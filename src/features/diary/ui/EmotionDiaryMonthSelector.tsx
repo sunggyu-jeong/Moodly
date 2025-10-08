@@ -1,5 +1,5 @@
-import { ArrowButton, MonthlyLabel } from '@shared';
-import { COMMON_ICONS } from '@shared/assets/images/common';
+import { ArrowButton, MonthlyLabel } from '@/shared';
+import { COMMON_ICONS } from '@/shared/assets/images/common';
 import { View } from 'react-native';
 
 interface DiaryMonthProps {
