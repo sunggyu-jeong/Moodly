@@ -2,24 +2,29 @@ import 'dotenv/config';
 
 export default {
   expo: {
-    name: "MoodlyFrontend",
+    name: "무들리",
     slug: "MoodlyFrontend",
     version: "1.0.0",
     orientation: "portrait",
     icon: "./assets/icon.png",
     splash: {
-      image: "./assets/splash.png", 
+      image: "./assets/splash.png",
       resizeMode: "contain",
       backgroundColor: "#ffffff"
     },
     updates: {
-      fallbackToCacheTimeout: 0
+      fallbackToCacheTimeout: 0,
+      "url": "https://u.expo.dev/7a306411-86c9-4e39-8036-de136b0f42a8"
+    },
+    runtimeVersion: {
+      "policy": "appVersion"
     },
     assetBundlePatterns: ["**/*"],
     ios: {
       bundleIdentifier: "com.moodlyfrontend",
-      googleServicesFile: process.env.GOOGLE_SERVICE_INFO_PLIST,
+      googleServicesFile: "./GoogleService-Info.plist",
       infoPlist: {
+        ITSAppUsesNonExemptEncryption: false,
         CFBundleURLTypes: [
           {
             CFBundleURLSchemes: [process.env.IOS_REVERSED_CLIENT_ID],
@@ -33,18 +38,26 @@ export default {
         backgroundColor: "#ffffff"
       },
       package: "com.moodlyfrontend",
-      googleServicesFile: process.env.GOOGLE_SERVICES_JSON,
+      googleServicesFile: "./google-services.json",
     },
     plugins: [
       "@react-native-firebase/app",
       "@react-native-firebase/messaging",
       "@react-native-google-signin/google-signin",
-      ["@amplitude/analytics-react-native/expo-plugin", { apiKey: process.env.AMPLITUDE_API_KEY }],
       ["expo-build-properties", {
         android: {
-          kotlinVersion: "1.8.10" 
+          kotlinVersion: "1.8.10"
+        },
+        ios: {
+          useFrameworks: "static",
+          useModularHeaders: true
         }
       }]
     ],
+    extra: {
+      eas: {
+        projectId: "7a306411-86c9-4e39-8036-de136b0f42a8"
+      }
+    }
   },
 };

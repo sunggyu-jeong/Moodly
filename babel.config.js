@@ -28,7 +28,7 @@ module.exports = function (api) {
           extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
         },
       ],
-      'hot-updater/babel-plugin',
+      // 'hot-updater/babel-plugin',
       // Reanimated 플러그인은 항상 마지막에 위치해야 합니다.
       'react-native-reanimated/plugin',
     ],
