@@ -44,7 +44,7 @@ export default {
       "@react-native-google-signin/google-signin",
       ["expo-build-properties", {
         android: {
-          kotlinVersion: "1.8.10"
+          kotlinVersion: "2.1.20"
         },
         ios: {
           useFrameworks: "static",
