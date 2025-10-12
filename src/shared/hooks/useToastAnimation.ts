@@ -1,6 +1,6 @@
 // hooks/useToastAnimation.ts
 import { useEffect, useState } from 'react';
-import { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 export function useToastAnimation(
   visible: boolean,
@@ -22,10 +22,10 @@ export function useToastAnimation(
       timeout = setTimeout(() => {
         translateY.value = withTiming(-40, { duration }, finished => {
           if (finished) {
-            runOnJS(setIsMounted)(false);
-            if (onFinish) {
-              runOnJS(onFinish)();
-            }
+            // runOnJS(setIsMounted)(false);
+            // if (onFinish) {
+            //   runOnJS(onFinish)();
+            // }
           }
         });
         opacity.value = withTiming(0, { duration });

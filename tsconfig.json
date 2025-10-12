@@ -38,6 +38,5 @@
     "nativewind-env.d.ts",
     ".env.d.ts",
     "react-native-textinput-extensions.d.ts",
-    "hot-updater.config.ts"
   ]
 }

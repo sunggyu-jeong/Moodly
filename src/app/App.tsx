@@ -7,23 +7,20 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
 import { Provider } from 'react-redux';
 
-import { isEmpty, navigationRef } from '@/shared/lib';
 import '../../global.css';
 
 import { RootStack } from '@/app/navigation';
 import { store } from '@/app/store';
 import { useUpsertPushTokenMutation } from '@/entities/auth/api/auth.api';
-import { HOT_UPDATER_SUPABASE_URL } from '@env';
 // import { HotUpdater, getUpdateSource } from '@hot-updater/react-native';
 import OverlayManager from '@/processes/overlay/ui/OverlayManager';
-import { useNotificationPermission } from '@/shared';
+import { isEmpty, navigationRef, useNotificationPermission } from '@/shared';
 import '@/shared/lib/day.util';
 import { StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import FallbackUI from './ui/screens/FallbackUI';
-import { HotUpdater, getUpdateSource } from '@hot-updater/react-native';
 
 enableScreens();
+
 if (typeof globalThis.structuredClone !== 'function') {
   globalThis.structuredClone = obj => JSON.parse(JSON.stringify(obj));
 }
@@ -45,21 +42,23 @@ export const onRenderCallback: ProfilerOnRenderCallback = (
 function App() {
   const [updateFcmToken] = useUpsertPushTokenMutation();
 
-  const onTokenUpdate = useCallback(async (token: string | null) => {
-    try {
-      if (isEmpty(token)) return;
-      await updateFcmToken({ token }).unwrap();
-      console.log('App.tsx: 서버 토큰 업데이트 성공');
-    } catch (error) {
-      console.error('App.tsx: 서버 토큰 업데이트 실패', error);
-    }
-  }, [updateFcmToken]); 
+  const onTokenUpdate = useCallback(
+    async (token: string | null) => {
+      try {
+        if (isEmpty(token)) return;
+        await updateFcmToken({ token }).unwrap();
+        console.log('App.tsx: 서버 토큰 업데이트 성공');
+      } catch (error) {
+        console.error('App.tsx: 서버 토큰 업데이트 실패', error);
+      }
+    },
+    [updateFcmToken]
+  );
 
   useNotificationPermission({
     setupListeners: true,
     onTokenUpdate: onTokenUpdate,
   });
-
 
   return (
     <GestureHandlerRootView style={styles.container}>
@@ -88,9 +87,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HotUpdater.wrap({
-  source: getUpdateSource(`${HOT_UPDATER_SUPABASE_URL}/functions/v1/update-server`, {
-    updateStrategy: 'fingerprint',
-  }),
-  fallbackComponent: FallbackUI,
-})(App);
+export default App;

@@ -41,8 +41,6 @@ export default {
       googleServicesFile: "./google-services.json",
     },
     plugins: [
-      "@react-native-firebase/app",
-      "@react-native-firebase/messaging",
       "@react-native-google-signin/google-signin",
       ["expo-build-properties", {
         android: {
@@ -50,7 +48,6 @@ export default {
         },
         ios: {
           useFrameworks: "static",
-          useModularHeaders: true
         }
       }]
     ],
