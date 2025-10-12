@@ -7,15 +7,15 @@ interface UsePushNavigationProps {
 }
 
 export const usePushNavigation = ({ hasDiary }: UsePushNavigationProps) => {
+  const lastNotificationResponse = Notifications.useLastNotificationResponse();
+  
   const didNavigateRef = useRef(false);
-  const notificationListener = useRef<Notifications.EventSubscription>();
-  const responseListener = useRef<Notifications.EventSubscription>();
+  const notificationListener = useRef<Notifications.EventSubscription | null>(null);
+  const responseListener = useRef<Notifications.EventSubscription | null>(null);
 
   useEffect(() => {
-    // 앱이 종료된 상태에서 알림 탭 (최신 API)
-    const response = Notifications.useLastNotificationResponse();
-    if (response && !didNavigateRef.current && hasDiary !== undefined) {
-      const data = response.notification.request.content.data;
+    if (lastNotificationResponse && !didNavigateRef.current && hasDiary !== undefined) {
+      const data = lastNotificationResponse.notification.request.content.data;
       const { screen: stackName, params: paramsValue } = data as any;
       
       if (stackName === 'DiaryStack') {
@@ -29,17 +29,17 @@ export const usePushNavigation = ({ hasDiary }: UsePushNavigationProps) => {
             }, 500);
           }
         } catch (e) {
-          console.error('푸시 알림 params 파싱 실패:', e);
+          console.error('푸시 알림 params 파싱 실패 (초기 실행):', e);
         }
       }
     }
+  }, [lastNotificationResponse, hasDiary]);
 
-    // 앱이 실행 중일 때 알림 수신
+  useEffect(() => {
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
       console.log('알림 수신:', notification);
     });
 
-    // 알림 탭했을 때
     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
       if (didNavigateRef.current || hasDiary === undefined) return;
 
@@ -56,13 +56,13 @@ export const usePushNavigation = ({ hasDiary }: UsePushNavigationProps) => {
           navigate(stackName, { screen: params.screen });
         }
       } catch (e) {
-        console.error('푸시 알림 params 파싱 실패:', e);
+        console.error('푸시 알림 params 파싱 실패 (리스너):', e);
       }
     });
 
     return () => {
       if (notificationListener.current) {
-        notificationListener.current.remove();
+        notificationListener.current.remove(); 
       }
       if (responseListener.current) {
         responseListener.current.remove();

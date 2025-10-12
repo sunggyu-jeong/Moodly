@@ -38,7 +38,7 @@ listenerMiddleware.startListening({
       return;
     }
     const message = errDetail.data?.message;
-    console.log('error handler >>>>>>>>>', message);
+    console.log('error handler >>>>>>>>>', payload);
 
     // listenerApi.dispatch(
     //   setShowToastView({
