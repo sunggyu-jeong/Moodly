@@ -33,12 +33,13 @@ export default {
       },
     },
     android: {
-      adaptiveIcon: {
-        foregroundImage: "./assets/adaptive-icon.png",
-        backgroundColor: "#ffffff"
+      adaptiveIcon: null,
+      splash: {
+        backgroundColor: "#5168DB"
       },
       package: "com.moodlyfrontend",
       googleServicesFile: "./google-services.json",
+      versionCode: 1
     },
     plugins: [
       "@react-native-google-signin/google-signin",
