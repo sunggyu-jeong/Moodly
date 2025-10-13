@@ -1,9 +1,9 @@
-import { type BottomSheetHandler, SocialLoginSheet } from '@features/setting/ui/SocialLoginSheet';
+import { type BottomSheetHandler, SocialLoginSheet } from '@/features/setting/ui/SocialLoginSheet';
 import { useFocusEffect } from '@react-navigation/native';
-import { ONBOARDING_ICONS } from '@shared/assets/images/onboarding';
-import { useNotificationPermission } from '@shared/hooks/useNotificationPermission';
-import colors from '@shared/styles/colors';
-import ActionButton from '@shared/ui/elements/ActionButton';
+import { ONBOARDING_ICONS } from '@/shared/assets/images/onboarding';
+import { useNotificationPermission } from '@/shared/hooks/useNotificationPermission';
+import colors from '@/shared/styles/colors';
+import ActionButton from '@/shared/ui/elements/ActionButton';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import {
   type FlatListProps,
@@ -226,7 +226,7 @@ const OnboardingPage = () => {
         />
       </View>
       {showStartButton && (
-        <View className="absolute bottom-12 w-full items-center gap-3 px-5">
+        <View className={`absolute ${Platform.OS === 'android' ? 'bottom-20' : 'bottom-12'} w-full items-center gap-3 px-5`}>
           <ActionButton onPress={startService}>서비스 시작하기</ActionButton>
         </View>
       )}

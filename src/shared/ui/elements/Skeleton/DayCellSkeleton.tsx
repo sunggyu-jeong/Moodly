@@ -1,4 +1,4 @@
-import { COLOR_MODE } from '@shared/constants';
+import { COLOR_MODE } from '@/shared/constants';
 import { Skeleton } from 'moti/skeleton';
 import { View } from 'react-native';
 

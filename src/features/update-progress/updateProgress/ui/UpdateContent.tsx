@@ -1,4 +1,4 @@
-import Progress from '@shared/ui/elements/Progress';
+import Progress from '@/shared/ui/elements/Progress';
 import { useEffect } from 'react';
 import { Text, View } from 'react-native';
 

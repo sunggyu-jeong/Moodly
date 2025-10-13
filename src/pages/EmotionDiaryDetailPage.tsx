@@ -1,11 +1,11 @@
-import { useDeleteDiaryMutation } from '@entities/diary/api';
-import { resetDiary, setSelectedDay } from '@features/diary/model/diarySlice';
-import { MODAL_CONFIRM_ACTION_KEY } from '@processes/key';
+import { useDeleteDiaryMutation } from '@/entities/diary/api';
+import { resetDiary, setSelectedDay } from '@/features/diary/model/diarySlice';
+import { MODAL_CONFIRM_ACTION_KEY } from '@/processes/key';
 import {
   resetModalPopup,
   setOverlayEventHandler,
   setShowDropdownView,
-} from '@processes/overlay/model/overlaySlice';
+} from '@/processes/overlay/model/overlaySlice';
 import { type RouteProp, useRoute } from '@react-navigation/native';
 import {
   Body1,
@@ -18,10 +18,10 @@ import {
   NaviMore,
   useAppDispatch,
   useAppSelector,
-} from '@shared';
-import { COMMON_ICONS } from '@shared/assets/images/common';
-import { DropDownEventIdentifier } from '@widgets/dropdown';
-import { NaviDismiss, NavigationBar } from '@widgets/navigation-bar';
+} from '@/shared';
+import { COMMON_ICONS } from '@/shared/assets/images/common';
+import { DropDownEventIdentifier } from '@/widgets/dropdown';
+import { NaviDismiss, NavigationBar } from '@/widgets/navigation-bar';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { Image, Platform, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 

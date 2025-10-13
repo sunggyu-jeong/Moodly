@@ -1,7 +1,7 @@
-import { setModifyMode } from '@features/diary/model/diarySlice';
-import { MODAL_CONFIRM_ACTION_KEY } from '@processes/key';
-import { setShowDropdownView, setShowModalPopup } from '@processes/overlay/model/overlaySlice';
-import { navigateFlow, NavigationFlow, SelectableItem, useAppDispatch } from '@shared';
+import { setModifyMode } from '@/features/diary/model/diarySlice';
+import { MODAL_CONFIRM_ACTION_KEY } from '@/processes/key';
+import { setShowDropdownView, setShowModalPopup } from '@/processes/overlay/model/overlaySlice';
+import { navigateFlow, NavigationFlow, SelectableItem, useAppDispatch } from '@/shared';
 import React, { useCallback } from 'react';
 import type { ImageSourcePropType } from 'react-native';
 

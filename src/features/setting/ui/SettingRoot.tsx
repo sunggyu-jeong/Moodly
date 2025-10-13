@@ -1,8 +1,8 @@
-import { gray } from '@shared/styles/colors';
-import NaviTitleDisplay from '@shared/ui/elements/NaviTitle';
-import { Label } from '@shared/ui/typography/Label';
-import NavigationBar from '@widgets/navigation-bar/ui/NavigationBar';
-import SettingWidgetSkeleton from '@widgets/setting/ui/SettingWidgetSkeleton';
+import { gray } from '@/shared/styles/colors';
+import NaviTitleDisplay from '@/shared/ui/elements/NaviTitle';
+import { Label } from '@/shared/ui/typography/Label';
+import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
+import SettingWidgetSkeleton from '@/widgets/setting/ui/SettingWidgetSkeleton';
 import { memo } from 'react';
 import { View } from 'react-native';
 
@@ -11,8 +11,8 @@ import { type SettingItemProps, TEXTS } from '../types';
 import SettingList from './SettingList';
 
 interface Props {
-  headerItem: SettingItemProps;
-  settingItems: SettingItemProps[][];
+  headerItem?: SettingItemProps;
+  settingItems?: SettingItemProps[][];
   isLoading: boolean;
 }
 
@@ -29,7 +29,7 @@ const SettingRoot = ({ headerItem, settingItems, isLoading }: Props) => (
       ) : (
         <>
           <SettingList
-            header={[headerItem]}
+            header={[headerItem].filter(Boolean) as SettingItemProps[]}
             groups={settingItems}
           />
         </>

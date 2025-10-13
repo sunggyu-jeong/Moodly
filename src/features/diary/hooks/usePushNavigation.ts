@@ -1,6 +1,5 @@
-// src/hooks/usePushNavigation.ts
-import messaging from '@react-native-firebase/messaging';
-import { navigate } from '@shared';
+import * as Notifications from 'expo-notifications';
+import { navigate } from '@/shared';
 import { useEffect, useRef } from 'react';
 
 interface UsePushNavigationProps {
@@ -8,14 +7,45 @@ interface UsePushNavigationProps {
 }
 
 export const usePushNavigation = ({ hasDiary }: UsePushNavigationProps) => {
+  const lastNotificationResponse = Notifications.useLastNotificationResponse();
+  
   const didNavigateRef = useRef(false);
+  const notificationListener = useRef<Notifications.EventSubscription | null>(null);
+  const responseListener = useRef<Notifications.EventSubscription | null>(null);
 
   useEffect(() => {
-    const init = async () => {
-      const remoteMessage = await messaging().getInitialNotification();
-      if (!remoteMessage?.data || didNavigateRef.current) return;
+    if (lastNotificationResponse && !didNavigateRef.current && hasDiary !== undefined) {
+      const data = lastNotificationResponse.notification.request.content.data;
+      const { screen: stackName, params: paramsValue } = data as any;
+      
+      if (stackName === 'DiaryStack') {
+        try {
+          const params = typeof paramsValue === 'string' ? JSON.parse(paramsValue) : paramsValue;
 
-      const { screen: stackName, params: paramsValue } = remoteMessage.data;
+          if (params?.screen && hasDiary === false) {
+            didNavigateRef.current = true;
+            setTimeout(() => {
+              navigate(stackName, { screen: params.screen });
+            }, 500);
+          }
+        } catch (e) {
+          console.error('푸시 알림 params 파싱 실패 (초기 실행):', e);
+        }
+      }
+    }
+  }, [lastNotificationResponse, hasDiary]);
+
+  useEffect(() => {
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      console.log('알림 수신:', notification);
+    });
+
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      if (didNavigateRef.current || hasDiary === undefined) return;
+
+      const data = response.notification.request.content.data;
+      const { screen: stackName, params: paramsValue } = data as any;
+      
       if (stackName !== 'DiaryStack') return;
 
       try {
@@ -23,23 +53,20 @@ export const usePushNavigation = ({ hasDiary }: UsePushNavigationProps) => {
 
         if (params?.screen && hasDiary === false) {
           didNavigateRef.current = true;
-          setTimeout(() => {
-            navigate(stackName, { screen: params.screen });
-          }, 500);
+          navigate(stackName, { screen: params.screen });
         }
       } catch (e) {
-        console.error('푸시 알림 params 파싱 실패:', e);
-      }
-    };
-
-    if (hasDiary !== undefined) init();
-
-    const unsubscribe = messaging().onNotificationOpenedApp(() => {
-      if (hasDiary === false && !didNavigateRef.current) {
-        init();
+        console.error('푸시 알림 params 파싱 실패 (리스너):', e);
       }
     });
 
-    return unsubscribe;
+    return () => {
+      if (notificationListener.current) {
+        notificationListener.current.remove(); 
+      }
+      if (responseListener.current) {
+        responseListener.current.remove();
+      }
+    };
   }, [hasDiary]);
 };

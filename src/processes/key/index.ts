@@ -4,7 +4,3 @@ export const MODAL_CONFIRM_ACTION_KEY = {
   PERMISSION_CHANGE: 'PERMISSION_CHANGE',
   MOVE_STORE: 'MOVE_STORE',
 } as const;
-
-export const MODAL_CANCEL_ACTION_KEY = {
-  GO_MAIN: 'GO_MAIN',
-} as const;

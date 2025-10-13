@@ -1,6 +1,6 @@
 import type { ListenerEffectAPI, ThunkDispatch, UnknownAction } from '@reduxjs/toolkit';
 import { createListenerMiddleware, isRejectedWithValue } from '@reduxjs/toolkit';
-import { AppCode } from '@shared/config';
+import { AppCode } from '@/shared/config';
 
 import { resetTo } from '../../shared';
 
@@ -38,7 +38,7 @@ listenerMiddleware.startListening({
       return;
     }
     const message = errDetail.data?.message;
-    console.log('error handler >>>>>>>>>', message);
+    console.log('error handler >>>>>>>>>', payload);
 
     // listenerApi.dispatch(
     //   setShowToastView({

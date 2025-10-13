@@ -1,4 +1,4 @@
-import { Body2, gray } from '@shared';
+import { Body2, gray } from '@/shared';
 import { StyleSheet } from 'react-native';
 
 export interface DiaryCardContentProps {

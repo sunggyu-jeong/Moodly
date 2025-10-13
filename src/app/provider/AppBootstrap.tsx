@@ -1,4 +1,4 @@
-import { initUserId, subscribeAuthChanges, unsubscribeAuthChanges } from '@shared/lib/user.util';
+import { initUserId, subscribeAuthChanges, unsubscribeAuthChanges } from '@/shared/lib/user.util';
 import { useEffect } from 'react';
 
 const AppBootstrap = () => {

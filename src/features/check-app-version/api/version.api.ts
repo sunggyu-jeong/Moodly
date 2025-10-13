@@ -1,3 +1,4 @@
+// Supabase 클라이언트 타입 (프로젝트에 맞게 경로 수정 필요)
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { Platform } from 'react-native';
 

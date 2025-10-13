@@ -1,5 +1,5 @@
-import { getScaleSize, H3, primary, SOCIAL_LOGIN_ENTRANCE, SocialLoginGroup, Title } from '@shared';
-import { MAIN_ICONS } from '@shared/assets/images/main';
+import { getScaleSize, H3, primary, SOCIAL_LOGIN_ENTRANCE, SocialLoginGroup, Title } from '@/shared';
+import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { useMemo } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 

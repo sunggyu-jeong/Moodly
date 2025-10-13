@@ -1,6 +1,6 @@
-import type { Diary } from '@entities/diary/model/diary.types';
-import { formatDate, isEmpty, navigate, now, useAppDispatch, useAppSelector } from '@shared';
-import { GridList } from '@shared/ui/elements/GridList';
+import type { Diary } from '@/entities/diary/model/diary.types';
+import { formatDate, isEmpty, navigate, now, useAppDispatch, useAppSelector } from '@/shared';
+import { GridList } from '@/shared/ui/elements/GridList';
 import dayjs, { Dayjs } from 'dayjs';
 import { memo, useCallback, useMemo } from 'react';
 import { View } from 'react-native';

@@ -1,8 +1,8 @@
-import { getScaleSize } from '@shared/hooks';
-import { useBottomSheet } from '@shared/hooks/useBottomSheet';
-import BottomSheetWrapper from '@shared/ui/elements/BottomSheetWrapper';
-import SocialLoginGroup, { SOCIAL_LOGIN_ENTRANCE } from '@shared/ui/elements/SocialLoginGroup';
-import { H3 } from '@shared/ui/typography/H3';
+import { getScaleSize } from '@/shared/hooks';
+import { useBottomSheet } from '@/shared/hooks/useBottomSheet';
+import BottomSheetWrapper from '@/shared/ui/elements/BottomSheetWrapper';
+import SocialLoginGroup, { SOCIAL_LOGIN_ENTRANCE } from '@/shared/ui/elements/SocialLoginGroup';
+import { H3 } from '@/shared/ui/typography/H3';
 import { forwardRef, useImperativeHandle } from 'react';
 import { View } from 'react-native';
 

@@ -1,6 +1,6 @@
-import { UpdateContent } from '@features/update-progress/updateProgress';
-import { primary } from '@shared';
-import { MAIN_ICONS } from '@shared/assets/images/main';
+import { UpdateContent } from '@/features/update-progress/updateProgress';
+import { primary } from '@/shared';
+import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { Image, SafeAreaView, StatusBar, StyleSheet, View } from 'react-native';
 
 type CustomStatus = 'checking' | 'downloading' | 'installing' | 'error';

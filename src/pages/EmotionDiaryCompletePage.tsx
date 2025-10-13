@@ -1,4 +1,4 @@
-import { setModifyMode } from '@features/diary/model/diarySlice';
+import { setModifyMode } from '@/features/diary/model/diarySlice';
 import { useFocusEffect } from '@react-navigation/native';
 import {
   Body2,
@@ -9,8 +9,8 @@ import {
   navigate,
   useAppDispatch,
   useAppSelector,
-} from '@shared';
-import { MAIN_ICONS } from '@shared/assets/images/main';
+} from '@/shared';
+import { MAIN_ICONS } from '@/shared/assets/images/main';
 import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 

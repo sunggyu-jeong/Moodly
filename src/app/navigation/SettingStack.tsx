@@ -1,5 +1,5 @@
-import ManageAccountPage from '@pages/ManageAccountPage';
-import SettingPage from '@pages/SettingPage';
+import ManageAccountPage from '@/pages/ManageAccountPage';
+import SettingPage from '@/pages/SettingPage';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 export type SettingStackParamList = {

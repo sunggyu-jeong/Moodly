@@ -1,18 +1,25 @@
-import appleAuth from '@invertase/react-native-apple-authentication';
 import { GoogleSignin, type User } from '@react-native-google-signin/google-signin';
-import { isEmpty } from '@shared';
-import { appApi } from '@shared/api/AppApi';
-import { ApiCode } from '@shared/config';
-import dayjs from 'dayjs';
+import { isEmpty } from '@/shared';
+import { appApi } from '@/shared/api/AppApi';
+import { ApiCode } from '@/shared/config';
 import { Platform } from 'react-native';
-import { getUniqueId } from 'react-native-device-info';
+import * as Application from 'expo-application';
 
 import type { SetUserInfoInput, SignInProviderInput, UserInfo } from '../model/auth.types';
-import type { AuthProvider } from '../types';
 
 GoogleSignin.configure({
   webClientId: process.env.GOOGLE_WEB_CLIENT_ID!,
 });
+
+async function getDeviceId(): Promise<string> {
+  if (Platform.OS === 'ios') {
+    const id = await Application.getIosIdForVendorAsync();
+    return id ?? 'unknown-ios-device';
+  }
+  const id = Application.getAndroidId();
+  return id ?? 'unknown-android-device';
+}
+
 
 export async function getGoogleToken() {
   await GoogleSignin.hasPlayServices();
@@ -35,15 +42,9 @@ export async function getAppleToken() {
   return { token: resp.identityToken, nonce: resp.nonce };
 }
 
-export interface SignInResult {
-  user: User | null;
-  isNewUser: boolean;
-  provider: AuthProvider;
-}
-
 export const authApi = appApi.injectEndpoints({
   endpoints: build => ({
-    signInWithProvider: build.mutation<SignInResult, SignInProviderInput>({
+    signInWithProvider: build.mutation<User, SignInProviderInput>({
       query:
         ({ provider }) =>
         async client => {
@@ -57,18 +58,7 @@ export const authApi = appApi.injectEndpoints({
             token,
             ...(nonce ? { nonce } : {}),
           });
-          if (error || !data.user) {
-            return { data: { user: null, isNewUser: false, provider }, error };
-          }
-
-          const createdAt = dayjs(data.user?.created_at);
-          const lastSignInAt = dayjs(data.user?.last_sign_in_at);
-
-          const diffInMs = lastSignInAt.diff(createdAt);
-
-          const isNewUser = diffInMs < 5000;
-          console.log('>>@$>!$>$>', createdAt, lastSignInAt, diffInMs, isNewUser);
-          return { data: { user: data.user, isNewUser, provider }, error: null };
+          return { data: data?.user ?? null, error };
         },
       invalidatesTags: ['User', 'Session'],
     }),
@@ -156,7 +146,7 @@ export const authApi = appApi.injectEndpoints({
           } = await client.auth.getUser();
           if (!user) return { data: false, error: '로그인 필요' };
 
-          const deviceId = await getUniqueId();
+          const deviceId = await getDeviceId();
           const { error } = await client.from('push_tokens').upsert({
             user_id: user.id,
             device_id: deviceId,
@@ -174,7 +164,7 @@ export const authApi = appApi.injectEndpoints({
         } = await client.auth.getUser();
         if (!user) return { data: false, error: '로그인 필요' };
 
-        const deviceId = await getUniqueId();
+        const deviceId = await getDeviceId();
         const { error } = await client
           .from('push_tokens')
           .delete()

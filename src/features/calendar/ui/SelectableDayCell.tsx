@@ -1,6 +1,6 @@
-import { setShowToastView } from '@processes/overlay/model/overlaySlice';
-import { DayCell, ICON_DATA, isEmpty, now, useAppDispatch } from '@shared';
-import { COMMON_ICONS } from '@shared/assets/images/common';
+import { setShowToastView } from '@/processes/overlay/model/overlaySlice';
+import { DayCell, ICON_DATA, isEmpty, now, useAppDispatch } from '@/shared';
+import { COMMON_ICONS } from '@/shared/assets/images/common';
 import { Dayjs } from 'dayjs';
 import { memo, useCallback, useMemo } from 'react';
 

@@ -1,0 +1,37 @@
+{
+  "cli": {
+    "version": ">= 9.0.0",
+    "appVersionSource": "local"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "channel": "development",
+      "ios": {
+        "simulator": true,
+        "buildConfiguration": "Debug",
+        "prebuildCommand": "npx expo prebuild --clean"
+      },
+      "env": {
+        "APP_ENV": "development"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "channel": "preview",
+      "ios": {},
+      "env": {
+        "APP_ENV": "staging"
+      }
+    },
+    "production": {
+      "autoIncrement": true,
+      "channel": "production",
+      "ios": {},
+      "env": {
+        "APP_ENV": "production"
+      }
+    }
+  }
+}

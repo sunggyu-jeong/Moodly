@@ -1,4 +1,4 @@
-import { DiaryPager } from '@widgets/diary/ui/DiaryPager';
+import { DiaryPager } from '@/widgets/diary/ui/DiaryPager';
 
 const EmotionDiaryListPage = () => {
   return <DiaryPager />;

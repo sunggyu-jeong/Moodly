@@ -1,5 +1,5 @@
-import { setShowModalPopup } from '@processes/overlay/model/overlaySlice';
-import { DimmedView, useAppDispatch, useAppSelector } from '@shared';
+import { setShowModalPopup } from '@/processes/overlay/model/overlaySlice';
+import { DimmedView, useAppDispatch, useAppSelector } from '@/shared';
 import React, { useEffect, useRef } from 'react';
 import { Animated, Modal, View } from 'react-native';
 
@@ -12,8 +12,6 @@ interface PopupContainerProps {
   cancelText: string;
   confirmText: string;
   onConfirm: () => void;
-  onCancel?: () => void;
-  disableBackdropClose?: boolean;
 }
 
 const PopupContainer = ({ ...props }: PopupContainerProps) => {
@@ -54,9 +52,6 @@ const PopupContainer = ({ ...props }: PopupContainerProps) => {
   }, [showModalPopup?.visibility, dispatch, opacity, translateY]);
 
   const handleCloseModal = () => {
-    if (props.onCancel) {
-      props.onCancel();
-    }
     dispatch(
       setShowModalPopup({
         visibility: false,
@@ -76,7 +71,7 @@ const PopupContainer = ({ ...props }: PopupContainerProps) => {
       onRequestClose={handleCloseModal}
       animationType="fade"
     >
-      <DimmedView onPress={props.disableBackdropClose ? undefined : handleCloseModal}>
+      <DimmedView onPress={handleCloseModal}>
         <Animated.View
           style={{ transform: [{ translateY }], opacity: opacity }}
           className="flex-1 justify-center p-10"

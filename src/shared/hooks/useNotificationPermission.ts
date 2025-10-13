@@ -1,10 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import messaging from '@react-native-firebase/messaging';
 import { useCallback, useEffect, useState } from 'react';
-import { AppState, Linking, PermissionsAndroid, Platform } from 'react-native';
-import { checkNotifications, type PermissionStatus } from 'react-native-permissions';
+import { AppState, Linking, Platform } from 'react-native';
+import * as Notifications from 'expo-notifications';
+import * as Device from 'expo-device';
 
-export const TOKEN_STORAGE_KEY = '@fcm_token';
+export const TOKEN_STORAGE_KEY = '@expo_push_token';
 
 export function useNotificationPermission(
   options: {
@@ -13,22 +13,22 @@ export function useNotificationPermission(
   } = {},
 ) {
   const { setupListeners = false, onTokenUpdate } = options;
-  const [status, setStatus] = useState<PermissionStatus>('unavailable');
+  const [status, setStatus] = useState<Notifications.PermissionStatus>(
+    Notifications.PermissionStatus.UNDETERMINED
+  );
 
   useEffect(() => {
     const checkAndSyncEverything = async () => {
       try {
-        const { status: currentStatus } = await checkNotifications();
+        const { status: currentStatus } = await Notifications.getPermissionsAsync();
         setStatus(currentStatus);
 
-        if (!setupListeners || !onTokenUpdate) {
-          return;
-        }
+        if (!setupListeners || !onTokenUpdate) return;
 
         const hasPermission = currentStatus === 'granted';
 
-        if (hasPermission) {
-          const currentToken = await messaging().getToken();
+        if (hasPermission && Device.isDevice) {
+          const { data: currentToken } = await Notifications.getExpoPushTokenAsync();
           const storedToken = await AsyncStorage.getItem(TOKEN_STORAGE_KEY);
 
           if (currentToken && currentToken !== storedToken) {
@@ -43,7 +43,7 @@ export function useNotificationPermission(
           }
         }
       } catch (error) {
-        console.error('알림 권한 확인 및 토큰 동기화 실패:', error);
+        console.error('알림 권한 확인 실패:', error);
       }
     };
 
@@ -53,34 +53,12 @@ export function useNotificationPermission(
       }
     });
 
-    const tokenRefreshSubscription = setupListeners
-      ? messaging().onTokenRefresh(checkAndSyncEverything)
-      : () => {};
-
     checkAndSyncEverything();
 
     return () => {
       appStateSubscription.remove();
-      tokenRefreshSubscription();
     };
   }, [setupListeners, onTokenUpdate]);
-
-  async function requestNativeNotificationPermission(): Promise<boolean> {
-    if (Platform.OS === 'ios') {
-      const authStatus = await messaging().requestPermission();
-      return (
-        authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-        authStatus === messaging.AuthorizationStatus.PROVISIONAL
-      );
-    }
-    if (Platform.OS === 'android' && Platform.Version >= 33) {
-      const result = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
-      );
-      return result === PermissionsAndroid.RESULTS.GRANTED;
-    }
-    return true;
-  }
 
   const requestUserPermission = useCallback(async (): Promise<boolean> => {
     if (!onTokenUpdate) {
@@ -88,28 +66,44 @@ export function useNotificationPermission(
       return false;
     }
 
-    const granted = await requestNativeNotificationPermission();
+    if (!Device.isDevice) {
+      console.warn('실제 기기에서만 푸시 알림을 사용할 수 있습니다.');
+      return false;
+    }
 
-    if (granted) {
-      const currentToken = await messaging().getToken();
-      await onTokenUpdate(currentToken);
-      if (currentToken) {
-        await AsyncStorage.setItem(TOKEN_STORAGE_KEY, currentToken);
-      }
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+
+    if (finalStatus === 'granted') {
+      const { data: token } = await Notifications.getExpoPushTokenAsync();
+      await onTokenUpdate(token);
+      await AsyncStorage.setItem(TOKEN_STORAGE_KEY, token);
+      setStatus('granted' as Notifications.PermissionStatus);
+      return true;
     } else {
       await onTokenUpdate(null);
       await AsyncStorage.removeItem(TOKEN_STORAGE_KEY);
+      setStatus(finalStatus);
+      return false;
     }
-
-    const { status: newStatus } = await checkNotifications();
-    setStatus(newStatus);
-
-    return granted;
   }, [onTokenUpdate]);
 
   const openSettings = useCallback(() => {
-    Linking.openSettings();
+    if (Platform.OS === 'ios') {
+      Linking.openURL('app-settings:');
+    } else {
+      Linking.openSettings();
+    }
   }, []);
 
-  return { status, requestUserPermission, requestNativeNotificationPermission, openSettings };
+  return { 
+    status, 
+    requestUserPermission, 
+    openSettings 
+  };
 }

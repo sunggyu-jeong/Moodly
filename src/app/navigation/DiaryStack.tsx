@@ -1,8 +1,8 @@
-import EmotionDiaryCompletePage from '@pages/EmotionDiaryCompletePage';
-import EmotionDiaryDetailPage from '@pages/EmotionDiaryDetailPage';
-import EmotionDiaryWritePage from '@pages/EmotionDiaryWritePage';
-import EmotionSelectionPage from '@pages/EmotionSelectionPage';
-import OverlayManager from '@processes/overlay/ui/OverlayManager';
+import EmotionDiaryCompletePage from '@/pages/EmotionDiaryCompletePage';
+import EmotionDiaryDetailPage from '@/pages/EmotionDiaryDetailPage';
+import EmotionDiaryWritePage from '@/pages/EmotionDiaryWritePage';
+import EmotionSelectionPage from '@/pages/EmotionSelectionPage';
+import OverlayManager from '@/processes/overlay/ui/OverlayManager';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet, View } from 'react-native';
 
@@ -43,7 +43,7 @@ const DiaryStack = () => {
           }}
         />
       </Stack.Navigator>
-      <OverlayManager />
+      {/* <OverlayManager /> */}
     </View>
   );
 };
