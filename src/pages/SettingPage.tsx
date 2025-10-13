@@ -19,7 +19,7 @@ import {
 import { COMMON_ICONS } from '@/shared/assets/images/common';
 import * as Notifications from 'expo-notifications';
 import { useCallback, useEffect, useState } from 'react';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const SettingPage = () => {
   const { openLink } = useExternalWebSite();
@@ -31,13 +31,16 @@ const SettingPage = () => {
   );
 
   useEffect(() => {
-    useCallback(() => {
-      const checkNotificationStatus = async () => {
+    const checkNotificationStatus = async () => {
+      try {
         const { status } = await Notifications.getPermissionsAsync();
         setNotificationStatus(status);
-      };
-      checkNotificationStatus();
-    }, [])
+      } catch (error) {
+        console.error("알림 권한 확인 중 오류 발생:", error);
+      }
+    };
+  
+    checkNotificationStatus();
   }, []);
 
   const handlePress = useCallback(
@@ -110,7 +113,7 @@ const SettingPage = () => {
         title: TEXTS.notificationSettings,
         rightComponent: (
           <Toggle
-            isOn={status === 'granted'}
+            isOn={notificationStatus === Notifications.PermissionStatus.GRANTED}
             onToggle={() =>
               dispatch(
                 setShowModalPopup({
@@ -167,7 +170,7 @@ const SettingPage = () => {
   ];
 
   return (
-    <>
+    <>    
       <SettingRoot
         headerItem={headerItem}
         settingItems={settingListItems}

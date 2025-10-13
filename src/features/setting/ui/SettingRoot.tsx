@@ -11,8 +11,8 @@ import { type SettingItemProps, TEXTS } from '../types';
 import SettingList from './SettingList';
 
 interface Props {
-  headerItem: SettingItemProps;
-  settingItems: SettingItemProps[][];
+  headerItem?: SettingItemProps;
+  settingItems?: SettingItemProps[][];
   isLoading: boolean;
 }
 
@@ -29,7 +29,7 @@ const SettingRoot = ({ headerItem, settingItems, isLoading }: Props) => (
       ) : (
         <>
           <SettingList
-            header={[headerItem]}
+            header={[headerItem].filter(Boolean) as SettingItemProps[]}
             groups={settingItems}
           />
         </>

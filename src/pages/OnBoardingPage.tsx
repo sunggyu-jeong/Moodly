@@ -226,7 +226,7 @@ const OnboardingPage = () => {
         />
       </View>
       {showStartButton && (
-        <View className="absolute bottom-12 w-full items-center gap-3 px-5">
+        <View className={`absolute ${Platform.OS === 'android' ? 'bottom-20' : 'bottom-12'} w-full items-center gap-3 px-5`}>
           <ActionButton onPress={startService}>서비스 시작하기</ActionButton>
         </View>
       )}

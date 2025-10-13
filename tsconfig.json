@@ -38,5 +38,10 @@
     "nativewind-env.d.ts",
     ".env.d.ts",
     "react-native-textinput-extensions.d.ts",
+  ],
+  "exclude": [
+    "node_modules",
+    "babel.config.js",
+    "metro.config.js"
   ]
 }

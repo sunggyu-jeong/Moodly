@@ -61,7 +61,7 @@ const EmotionDiaryWritePage = () => {
       </KeyboardAvoidingView>
 
       <InputAccessoryView
-        spaceHeight={40}
+        spaceHeight={40 + (Platform.OS === 'android' ? 40 : 0)}
         extraHeight={0}
         renderView={() => DiarySaveButton(text)}
       />

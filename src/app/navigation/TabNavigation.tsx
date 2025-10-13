@@ -34,7 +34,9 @@ const TabNavigation = () => {
             elevation: 0,
           },
           tabBarItemStyle: {
-            marginTop: 4,
+            justifyContent: 'flex-start',
+            paddingTop: getScaleSize(4),
+            paddingBottom: insets.bottom ? insets.bottom : getScaleSize(8),
           },
         }}
       >

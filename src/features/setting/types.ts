@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import type { StyleProp, TextStyle } from 'react-native';
 
 export interface SettingItemProps {
+  key: string;
   title?: string;
   leftComponent?: ReactNode;
   rightComponent?: ReactNode;

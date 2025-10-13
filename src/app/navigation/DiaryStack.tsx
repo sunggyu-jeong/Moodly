@@ -43,7 +43,7 @@ const DiaryStack = () => {
           }}
         />
       </Stack.Navigator>
-      <OverlayManager />
+      {/* <OverlayManager /> */}
     </View>
   );
 };
