@@ -6,7 +6,7 @@ const HomePage = () => {
     <View className="bg-gray-100 flex-1 px-5 justify-center items-center">
       <StatusBar
         translucent
-        barStyle="dark-content"
+        backgroundColor="transparent" 
       />
       <HomeWidget />
     </View>

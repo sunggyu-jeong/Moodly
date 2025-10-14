@@ -58,7 +58,7 @@ const FallbackUI = ({ status, progress }: FallbackProps) => {
     <>
       <StatusBar
         translucent
-        barStyle="dark-content"
+        backgroundColor="transparent"
       />
       <SafeAreaView style={styles.contentView}>
         <View style={styles.imageView}>

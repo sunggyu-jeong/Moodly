@@ -47,7 +47,7 @@ const Splash = () => {
     <>
       <StatusBar
         translucent
-        barStyle="dark-content"
+        backgroundColor="transparent"
       />
       <SafeAreaView className="bg-primary-300 flex-1 justify-center items-center">
         <View className="absolute">

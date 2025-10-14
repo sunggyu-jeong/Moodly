@@ -66,6 +66,7 @@ export function useNotificationPermission(
       return false;
     }
 
+    console.log(Device.isDevice)
     if (!Device.isDevice) {
       console.warn('실제 기기에서만 푸시 알림을 사용할 수 있습니다.');
       return false;
