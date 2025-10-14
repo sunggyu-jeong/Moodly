@@ -5,7 +5,6 @@ export default {
     name: "무들리",
     slug: "MoodlyFrontend",
     version: "1.0.1",
-    orientation: "portrait",
     icon: "./assets/icon.png",
     userInterfaceStyle: "light",
     orientation: "landscape",
