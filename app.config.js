@@ -4,7 +4,7 @@ export default {
   expo: {
     name: "무들리",
     slug: "MoodlyFrontend",
-    version: "1.0.1",
+    version: "1.0.2",
     icon: "./assets/icon.png",
     userInterfaceStyle: "light",
     orientation: "landscape",
@@ -22,6 +22,7 @@ export default {
     },
     assetBundlePatterns: ["**/*"],
     ios: {
+      buildNumber: "7",
       bundleIdentifier: "com.moodlyfrontend",
       googleServicesFile: "./GoogleService-Info.plist",
       infoPlist: {
@@ -31,6 +32,10 @@ export default {
             CFBundleURLSchemes: [process.env.IOS_REVERSED_CLIENT_ID],
           },
         ],
+        infoPlist: {
+          CFBundleDevelopmentRegion: "ko",
+          CFBundleLocalizations: ["ko"],
+        },
       },
     },
     android: {
@@ -40,7 +45,7 @@ export default {
       },
       package: "com.moodlyfrontend",
       googleServicesFile: "./google-services.json",
-      versionCode: 6
+      versionCode: 7
     },
     plugins: [
       "@react-native-google-signin/google-signin",
