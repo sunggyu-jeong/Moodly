@@ -1,4 +1,4 @@
-import { HomeDiaryCountSkeleton, HomeDiarySkeleton } from '@features/home';
+import { HomeDiaryCountSkeleton, HomeDiarySkeleton } from '@/features/home';
 
 const HomeLoading = () => (
   <>

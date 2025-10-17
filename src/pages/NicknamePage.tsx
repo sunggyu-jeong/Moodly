@@ -1,6 +1,6 @@
-import { SetNicknameForm } from '@features/set-nickname/ui/SetNicknameForm';
-import { H2, resetTo } from '@shared';
-import { NavigationBar } from '@widgets/navigation-bar';
+import { SetNicknameForm } from '@/features/set-nickname/ui/SetNicknameForm';
+import { H2, resetTo } from '@/shared';
+import { NavigationBar } from '@/widgets/navigation-bar';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 
 const NicknamePage = () => {

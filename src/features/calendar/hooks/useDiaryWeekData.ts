@@ -1,4 +1,4 @@
-import { useGetDiariesByRangeQuery } from '@entities/diary/api';
+import { useGetDiariesByRangeQuery } from '@/entities/diary/api';
 import { Dayjs } from 'dayjs';
 import { useMemo } from 'react';
 

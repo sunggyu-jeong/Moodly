@@ -1,5 +1,5 @@
-import { appApi } from '@shared/api/AppApi';
-import { d } from '@shared/lib/day.util';
+import { now } from '@/shared';
+import { appApi } from '@/shared/api/AppApi';
 
 import type { MonthlyQuery } from '../model/diary.types';
 
@@ -11,8 +11,8 @@ export const diaryStatsApi = appApi.injectEndpoints({
       query:
         ({ userId, month }) =>
         async client => {
-          const start = d(`${month}-01`).startOf('month').format('YYYY-MM-DD');
-          const end = d(`${month}-01`).endOf('month').format('YYYY-MM-DD');
+          const start = now(`${month}-01`).startOf('month').format('YYYY-MM-DD');
+          const end = now(`${month}-01`).endOf('month').format('YYYY-MM-DD');
 
           const { data, error } = await client
             .from('moodly_diary')

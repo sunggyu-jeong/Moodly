@@ -3,13 +3,13 @@ import {
   type DiaryCalendarModeType,
   DiaryPageMode,
   type DiaryPageModeType,
-} from '@entities/calendar/diary.type';
-import type { Diary } from '@entities/diary/model/diary.types';
-import { generateMonthGrid, generateWeekGrid } from '@shared/lib/date.util';
-import WeekdayHeader from '@shared/ui/elements/WeekdayHeader';
-import dayjs from 'dayjs';
+} from '@/entities/calendar/diary.type';
+import type { Diary } from '@/entities/diary/model/diary.types';
+import { now } from '@/shared';
+import { generateMonthGrid, generateWeekGrid } from '@/shared/lib/date.util';
+import WeekdayHeader from '@/shared/ui/elements/WeekdayHeader';
 import { AnimatePresence, MotiView } from 'moti';
-import React, { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { View } from 'react-native';
 
 import { CalendarBar } from '@/features/calendar';
@@ -33,8 +33,8 @@ const EmotionDiaryListHeader = ({
   const monthlyDates = useMemo(
     () =>
       calendarMode === DiaryCalendarMode.monthDayMode
-        ? generateMonthGrid({ targetDate: dayjs(selectedMonth) })
-        : generateWeekGrid({ targetDate: dayjs(selectedMonth) }),
+        ? generateMonthGrid({ targetDate: now(selectedMonth) })
+        : generateWeekGrid({ targetDate: now(selectedMonth) }),
     [calendarMode, selectedMonth],
   );
   return (
@@ -75,4 +75,4 @@ const EmotionDiaryListHeader = ({
   );
 };
 
-export default React.memo(EmotionDiaryListHeader);
+export default memo(EmotionDiaryListHeader);

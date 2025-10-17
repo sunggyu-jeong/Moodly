@@ -1,5 +1,5 @@
-import { setModifyMode } from '@features/diary/model/diarySlice';
-import { setShowToastView } from '@processes/overlay/model/overlaySlice';
+import { setModifyMode } from '@/features/diary/model/diarySlice';
+import { useFocusEffect } from '@react-navigation/native';
 import {
   Body2,
   dismissModalToScreen,
@@ -9,20 +9,16 @@ import {
   navigate,
   useAppDispatch,
   useAppSelector,
-} from '@shared';
-import { MAIN_ICONS } from '@shared/assets/images/main';
-import { useEffect } from 'react';
+} from '@/shared';
+import { MAIN_ICONS } from '@/shared/assets/images/main';
+import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
 const EmotionDiaryCompletePage = () => {
   const isModifyMode = useAppSelector(state => state.diarySlice.isModifyMode);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    if (isModifyMode) {
-      dispatch(setShowToastView({ visibility: true, message: '일기가 수정되었어요.' }));
-    }
-
+  const handleScreenFocus = React.useCallback(() => {
     const timer = setTimeout(() => {
       if (isModifyMode) {
         dismissModalToScreen();
@@ -30,10 +26,14 @@ const EmotionDiaryCompletePage = () => {
       } else {
         navigate('DiaryStack', { screen: 'EmotionDetailPage', params: { origin: 'DiaryStack' } });
       }
-    }, 1500);
+    }, 2500);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+    };
   }, [dispatch, isModifyMode]);
+
+  useFocusEffect(handleScreenFocus);
 
   return (
     <View className="flex-1 bg-common-white items-center justify-center">

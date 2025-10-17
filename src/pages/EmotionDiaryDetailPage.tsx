@@ -1,12 +1,11 @@
-import { useDeleteDiaryMutation } from '@entities/diary/api';
-import { resetDiary } from '@features/diary/model/diarySlice';
-import { MODAL_CONFIRM_ACTION_KEY } from '@processes/key';
+import { useDeleteDiaryMutation } from '@/entities/diary/api';
+import { resetDiary, setSelectedDay } from '@/features/diary/model/diarySlice';
+import { MODAL_CONFIRM_ACTION_KEY } from '@/processes/key';
 import {
   resetModalPopup,
   setOverlayEventHandler,
   setShowDropdownView,
-  setShowToastView,
-} from '@processes/overlay/model/overlaySlice';
+} from '@/processes/overlay/model/overlaySlice';
 import { type RouteProp, useRoute } from '@react-navigation/native';
 import {
   Body1,
@@ -19,10 +18,10 @@ import {
   NaviMore,
   useAppDispatch,
   useAppSelector,
-} from '@shared';
-import { COMMON_ICONS } from '@shared/assets/images/common';
-import { DropDownEventIdentifier } from '@widgets/dropdown';
-import { NaviDismiss, NavigationBar } from '@widgets/navigation-bar';
+} from '@/shared';
+import { COMMON_ICONS } from '@/shared/assets/images/common';
+import { DropDownEventIdentifier } from '@/widgets/dropdown';
+import { NaviDismiss, NavigationBar } from '@/widgets/navigation-bar';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { Image, Platform, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 
@@ -90,8 +89,8 @@ const EmotionDiaryDetailPage = () => {
         if (route.params.origin !== 'RootStack') {
           dismissModalToScreen();
         }
+        dispatch(setSelectedDay(null));
         goBack();
-        dispatch(setShowToastView({ visibility: true, message: '일기가 삭제되었어요!' }));
       }
     } catch (error) {
       console.error('다이어리 삭제 요청 실패:', error);

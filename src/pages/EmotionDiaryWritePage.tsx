@@ -1,6 +1,6 @@
-import { DiarySaveButton } from '@features/diary';
-import { common, getScaleSize, H2, ICON_DATA, isNotEmpty, useAppSelector } from '@shared';
-import { NaviDismiss, NavigationBar } from '@widgets/navigation-bar';
+import { DiarySaveButton } from '@/features/diary';
+import { common, getScaleSize, H2, ICON_DATA, isNotEmpty, useAppSelector } from '@/shared';
+import { NaviDismiss, NavigationBar } from '@/widgets/navigation-bar';
 import { useEffect, useRef, useState } from 'react';
 import {
   Image,
@@ -38,9 +38,6 @@ const EmotionDiaryWritePage = () => {
           ref={scrollRef}
           style={styles.keyboardAvoiding}
           keyboardShouldPersistTaps="handled"
-          onScroll={({ nativeEvent }) => {
-            console.log('[ScrollView] contentOffset.y =', nativeEvent.contentOffset.y);
-          }}
         >
           <View className="items-center justify-center bg-common-white">
             <H2 weight="semibold">왜 이 감정을 느꼈나요?</H2>
@@ -64,7 +61,7 @@ const EmotionDiaryWritePage = () => {
       </KeyboardAvoidingView>
 
       <InputAccessoryView
-        spaceHeight={40}
+        spaceHeight={40 + (Platform.OS === 'android' ? 40 : 0)}
         extraHeight={0}
         renderView={() => DiarySaveButton(text)}
       />

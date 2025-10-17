@@ -1,12 +1,12 @@
-import { useLogout } from '@features/auth';
-import { SETTING_EVENT_TYPE } from '@features/setting/types';
-import { MODAL_CONFIRM_ACTION_KEY } from '@processes/key';
+import { useLogout } from '@/features/auth';
+import { SETTING_EVENT_TYPE } from '@/features/setting/types';
+import { MODAL_CONFIRM_ACTION_KEY } from '@/processes/key';
 import {
   resetModalPopup,
   setRequestWithDrawal,
   setShowModalPopup,
   setShowToastView,
-} from '@processes/overlay/model/overlaySlice';
+} from '@/processes/overlay/model/overlaySlice';
 import {
   Body1,
   common,
@@ -17,10 +17,10 @@ import {
   supabase,
   useAppDispatch,
   useAppSelector,
-} from '@shared';
-import { appApi } from '@shared/api/AppApi';
-import NaviTitleDisplay from '@shared/ui/elements/NaviTitle';
-import { NavigationBar } from '@widgets/navigation-bar';
+} from '@/shared';
+import { appApi } from '@/shared/api/AppApi';
+import NaviTitleDisplay from '@/shared/ui/elements/NaviTitle';
+import { NavigationBar } from '@/widgets/navigation-bar';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
@@ -58,14 +58,11 @@ const ManageAccountPage = () => {
       if (res.ok) {
         await supabase.auth.signOut();
         dispatch(appApi.util.resetApiState());
-        dispatch(
-          setShowToastView({ visibility: true, message: '회원 탈퇴 요청이 완료되었습니다.' }),
-        );
         dispatch(setRequestWithDrawal(null));
 
         resetTo('Login');
       } else {
-        dispatch(setShowToastView({ visibility: true, message: '회원 탈퇴 요청이 실패했습니다.' }));
+        dispatch(setShowToastView({ visibility: true, message: '회원 탈퇴 요청이 실패했어요.' }));
       }
     } catch (err) {
       console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', err);

@@ -1,5 +1,5 @@
-import { type DiaryCalendarModeType, type DiaryPageModeType } from '@entities/calendar/diary.type';
-import { isNotEmpty } from '@shared/lib';
+import { type DiaryCalendarModeType, type DiaryPageModeType } from '@/entities/calendar/diary.type';
+import { isNotEmpty } from '@/shared/lib';
 import { type Ref, useCallback } from 'react';
 import { Dimensions, FlatList, type FlatListProps, type ListRenderItem, View } from 'react-native';
 
@@ -48,7 +48,7 @@ export const EmotionDiaryMonthPager = ({
       data={data}
       horizontal
       pagingEnabled
-      keyExtractor={it => it.key}
+      keyExtractor={it => it.periodStart.toISOString()}
       renderItem={renderPage}
       initialNumToRender={3}
       maxToRenderPerBatch={3}

@@ -1,7 +1,7 @@
-import { useCreateDiaryMutation, useUpdateDiaryMutation } from '@entities/diary/api';
-import { useAppSelector } from '@shared/hooks';
-import { isEmpty } from '@shared/lib';
-import { getUserId } from '@shared/lib/user.util';
+import { useCreateDiaryMutation, useUpdateDiaryMutation } from '@/entities/diary/api';
+import { useAppSelector } from '@/shared/hooks';
+import { formatDate, isEmpty, now } from '@/shared/lib';
+import { getUserId } from '@/shared/lib/user.util';
 import { useCallback } from 'react';
 
 export function useDiaryMutation(text: string) {
@@ -21,7 +21,7 @@ export function useDiaryMutation(text: string) {
       if (isEmpty(selectedDiary?.emotionId)) return;
 
       await update({
-        emotionId: selectedDiary!.emotionId,
+        emotionId: selectedDiary.emotionId,
         iconId: currentDiary?.iconId,
         userId,
         description: text,
@@ -30,7 +30,7 @@ export function useDiaryMutation(text: string) {
       await create({
         userId,
         iconId: currentDiary?.iconId ?? 0,
-        recordDate: currentDiary?.recordDate ?? '',
+        recordDate: currentDiary?.recordDate ?? formatDate(now()),
         description: text,
       });
     }

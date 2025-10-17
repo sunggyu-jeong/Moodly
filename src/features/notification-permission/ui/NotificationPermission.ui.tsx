@@ -1,9 +1,9 @@
-import { MAIN_ICONS } from '@shared/assets/images/main';
-import { gray } from '@shared/styles/colors';
-import ActionButton from '@shared/ui/elements/ActionButton';
-import { Body1 } from '@shared/ui/typography/Body1';
-import { Body2 } from '@shared/ui/typography/Body2';
-import { Title } from '@shared/ui/typography/Title';
+import { MAIN_ICONS } from '@/shared/assets/images/main';
+import { gray } from '@/shared/styles/colors';
+import ActionButton from '@/shared/ui/elements/ActionButton';
+import { Body1 } from '@/shared/ui/typography/Body1';
+import { Body2 } from '@/shared/ui/typography/Body2';
+import { Title } from '@/shared/ui/typography/Title';
 import { Image, StyleSheet, View } from 'react-native';
 
 interface Props {

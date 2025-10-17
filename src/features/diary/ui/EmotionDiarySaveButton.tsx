@@ -1,6 +1,7 @@
-import { useAppDispatch, useAppSelector } from '@shared/hooks';
-import { isNotEmpty, navigate } from '@shared/lib';
-import { KeyboardAccessoryButton } from '@shared/ui/elements/KeyboardAccessory';
+import { fromRow } from '@/entities/diary/lib/diary.mapper';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks';
+import { isNotEmpty, navigate } from '@/shared/lib';
+import { KeyboardAccessoryButton } from '@/shared/ui/elements/KeyboardAccessory';
 import { useEffect } from 'react';
 
 import { useDiaryMutation } from '../hooks/useDiaryMutation';
@@ -15,8 +16,8 @@ export function DiarySaveButton(text: string) {
     if (isNotEmpty(result)) {
       const diary = {
         ...currentDiary,
+        ...fromRow(result),
         description: text,
-        emotionId: result,
       };
       dispatch(setSelectedDiary(diary));
       navigate('DiaryStack', { screen: 'Complete' });

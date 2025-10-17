@@ -1,6 +1,6 @@
-import { isNotEmpty, useAppDispatch, useAppSelector, useNotificationPermission } from '@shared';
-import { DropDownAnimation } from '@widgets/dropdown/animation';
-import { ToastController } from '@widgets/toast';
+import { isNotEmpty, useAppDispatch, useAppSelector, useNotificationPermission } from '@/shared';
+import { DropDownAnimation } from '@/widgets/dropdown/animation';
+import { ToastController } from '@/widgets/toast';
 
 import { PopupContainer } from '../../../widgets/popup';
 import { MODAL_CONFIRM_ACTION_KEY } from '../../key';

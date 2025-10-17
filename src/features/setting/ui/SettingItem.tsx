@@ -1,4 +1,4 @@
-import { Body1, gray } from '@shared';
+import { Body1, gray } from '@/shared';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import type { SettingItemProps } from '../types';

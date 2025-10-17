@@ -1,4 +1,4 @@
-import { useScale } from '@shared/hooks';
+import { useScale } from '@/shared/hooks';
 import { Image, type ImageSourcePropType } from 'react-native';
 
 export interface AvatarAtomProps {

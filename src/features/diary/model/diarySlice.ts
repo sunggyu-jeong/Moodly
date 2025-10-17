@@ -1,9 +1,8 @@
-import type { Diary } from '@entities/diary/model/diary.types';
+import type { DiaryCalendarModeType } from '@/entities/calendar';
+import type { Diary } from '@/entities/diary/model/diary.types';
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { type EmotionIconData, ICON_DATA } from '@shared/constants/Icons';
+import { type EmotionIconData, ICON_DATA } from '@/shared/constants/Icons';
 import dayjs from 'dayjs';
-
-import { createKstDay } from '../../../shared';
 
 interface DiaryState {
   selectedDiary: Diary | null;
@@ -13,6 +12,7 @@ interface DiaryState {
   selectedWeek: string;
   isModifyMode: boolean;
   selectedDay: string | null;
+  calendarMode: DiaryCalendarModeType;
 }
 
 const initialState: DiaryState = {
@@ -23,6 +23,7 @@ const initialState: DiaryState = {
   selectedWeek: dayjs().toString(),
   isModifyMode: false,
   selectedDay: null,
+  calendarMode: 'MONTHDAYMODE',
 };
 
 const diarySlice = createSlice({
@@ -58,7 +59,7 @@ const diarySlice = createSlice({
     },
     moveMonth: (state, action: PayloadAction<'left' | 'right'>) => {
       const delta = action.payload === 'left' ? -1 : 1;
-      const currentMonth = createKstDay(state.selectedMonth);
+      const currentMonth = dayjs(state.selectedMonth);
       const newMonth = currentMonth.add(delta, 'month');
       const firstOfMonth = newMonth.startOf('month');
 
@@ -68,10 +69,17 @@ const diarySlice = createSlice({
     },
     moveWeek: (state, action: PayloadAction<'left' | 'right'>) => {
       const delta = action.payload === 'left' ? -1 : 1;
-      const newWeek = dayjs(state.selectedWeek).add(delta, 'week');
-      state.selectedWeek = newWeek.toString();
-      state.selectedMonth = newWeek.startOf('month').toString();
+      const currentWeekStart = dayjs(state.selectedWeek);
+      const newWeekStart = currentWeekStart.add(delta, 'week');
+
+      const middleOfWeek = newWeekStart.add(3, 'day');
+
+      state.selectedWeek = newWeekStart.format('YYYY-MM-DD');
+      state.selectedMonth = middleOfWeek.startOf('month').format('YYYY-MM-DD');
       state.selectedDay = null;
+    },
+    setCalendarMode: (state, action: PayloadAction<DiaryCalendarModeType>) => {
+      state.calendarMode = action.payload;
     },
   },
 });
@@ -86,6 +94,7 @@ export const {
   resetDiary,
   moveMonth,
   moveWeek,
+  setCalendarMode,
 } = diarySlice.actions;
 
 export default diarySlice.reducer;

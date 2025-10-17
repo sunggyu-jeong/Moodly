@@ -1,19 +1,20 @@
 import dayjs, { Dayjs } from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
+const SEOUL_TIMEZONE = 'Asia/Seoul';
 
-export const d = (input?: dayjs.ConfigType): Dayjs => {
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.tz.setDefault(SEOUL_TIMEZONE);
+
+export const now = (input?: dayjs.ConfigType): Dayjs => {
   return dayjs(input);
 };
 
-export const toKstDate = (input?: dayjs.ConfigType): string => {
-  return dayjs(input).format('YYYY-MM-DD');
+export const formatDate = (date: Dayjs): string => {
+  return date.format('YYYY-MM-DD');
 };
 
-export const toDateOnly = (v?: string): string => {
-  if (!v) return toKstDate();
-  if (/^\d{4}-\d{2}-\d{2}$/.test(v)) return v;
-  return toKstDate(v);
-};
-
-export const createKstDay = (input?: dayjs.ConfigType): Dayjs => {
-  return dayjs.tz(input, 'Asia/Seoul');
+export const formatDateTime = (date: Dayjs): string => {
+  return date.format('YYYY-MM-DD HH:mm:ss');
 };

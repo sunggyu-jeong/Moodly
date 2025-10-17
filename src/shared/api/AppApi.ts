@@ -7,5 +7,6 @@ export const appApi = createApi({
   reducerPath: 'appApi',
   baseQuery: supabaseBaseQuery,
   tagTypes: [...TAGS],
+  refetchOnFocus: true,
   endpoints: () => ({}),
 });

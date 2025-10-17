@@ -1,10 +1,9 @@
-import { type BottomSheetHandler, SocialLoginSheet } from '@features/setting/ui/SocialLoginSheet';
+import { type BottomSheetHandler, SocialLoginSheet } from '@/features/setting/ui/SocialLoginSheet';
 import { useFocusEffect } from '@react-navigation/native';
-import { ONBOARDING_ICONS } from '@shared/assets/images/onboarding';
-import { useAppDispatch } from '@shared/hooks';
-import { useNotificationPermission } from '@shared/hooks/useNotificationPermission';
-import colors from '@shared/styles/colors';
-import ActionButton from '@shared/ui/elements/ActionButton';
+import { ONBOARDING_ICONS } from '@/shared/assets/images/onboarding';
+import { useNotificationPermission } from '@/shared/hooks/useNotificationPermission';
+import colors from '@/shared/styles/colors';
+import ActionButton from '@/shared/ui/elements/ActionButton';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import {
   type FlatListProps,
@@ -67,11 +66,11 @@ const OnboardingPage = () => {
   const listRef = useRef<FlatList<SlideProps>>(null);
   const [index, setIndex] = useState<number>(0);
   const isScrollingRef = useRef(false);
-  const { requestNotification } = useNotificationPermission();
-  const dispatch = useAppDispatch();
   const [showStartButton, setShowStartButton] = useState(false);
   const [showAlarmPermission, setShowAlarmPermission] = useState(false);
   const socialSheetRef = useRef<BottomSheetHandler>(null);
+
+  const { requestNativeNotificationPermission } = useNotificationPermission();
 
   useFocusEffect(
     useCallback(() => {
@@ -130,13 +129,12 @@ const OnboardingPage = () => {
       if (next !== index) setIndex(next);
       setShowStartButton(next === total - 1);
       if (next === 2 && !showAlarmPermission) {
-        console.log('실행됨');
         setShowAlarmPermission(true);
-        await requestNotification();
+        await requestNativeNotificationPermission();
       }
       isScrollingRef.current = false;
     },
-    [index, dispatch, requestNotification, showAlarmPermission, total],
+    [index, requestNativeNotificationPermission, showAlarmPermission, total],
   );
 
   const onScroll = useCallback(
@@ -228,7 +226,7 @@ const OnboardingPage = () => {
         />
       </View>
       {showStartButton && (
-        <View className="absolute bottom-12 w-full items-center gap-3 px-5">
+        <View className={`absolute ${Platform.OS === 'android' ? 'bottom-20' : 'bottom-12'} w-full items-center gap-3 px-5`}>
           <ActionButton onPress={startService}>서비스 시작하기</ActionButton>
         </View>
       )}

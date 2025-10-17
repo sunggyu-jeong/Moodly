@@ -1,7 +1,7 @@
-import type { Diary } from '@entities/diary/model/diary.types';
-import { setSelectedDiary } from '@features/diary/model/diarySlice';
-import { useAppDispatch } from '@shared/hooks';
-import { isEmpty, navigate } from '@shared/lib';
+import type { Diary } from '@/entities/diary/model/diary.types';
+import { setSelectedDiary } from '@/features/diary/model/diarySlice';
+import { useAppDispatch } from '@/shared/hooks';
+import { isEmpty, navigate } from '@/shared/lib';
 import { TouchableOpacity, View } from 'react-native';
 
 import EmotionDiaryCardContent from './EmotionDiaryCardContent';
@@ -12,7 +12,6 @@ interface EmotionDiaryCardListProps {
 }
 
 const EmotionDiaryCardList = ({ data }: EmotionDiaryCardListProps) => {
-  console.log('!@$>@!>$>$!@>', data);
   const dispatch = useAppDispatch();
 
   const handleDiaryDetail = (item: Diary) => {

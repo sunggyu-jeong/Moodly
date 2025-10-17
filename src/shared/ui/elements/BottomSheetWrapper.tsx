@@ -29,6 +29,7 @@ const BottomSheetWrapper = forwardRef<BottomSheetMethods, BottomSheetWrapperProp
       index={-1}
       handleIndicatorStyle={styles.indicatorStyle}
       snapPoints={snapPoints}
+      keyboardBlurBehavior={'restore'}
       bottomInset={24}
       detached
       onChange={onChange}

@@ -1,6 +1,6 @@
-import type { AuthProvider } from '@entities/auth';
-import { useSignInWithProviderMutation } from '@entities/auth/api/auth.api';
-import { useAppDispatch } from '@shared';
+import type { AuthProvider } from '@/entities/auth';
+import { useSignInWithProviderMutation } from '@/entities/auth/api/auth.api';
+import { useAppDispatch } from '@/shared';
 
 import { setRequestLogin } from '../../setting';
 

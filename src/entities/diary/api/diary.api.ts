@@ -1,6 +1,6 @@
-import { createKstDay } from '@shared';
-import { appApi } from '@shared/api/AppApi';
-import { getUserId } from '@shared/lib/user.util';
+import { formatDate, now } from '@/shared';
+import { appApi } from '@/shared/api/AppApi';
+import { getUserId } from '@/shared/lib/user.util';
 
 import { byIdTag, fromRow, toInsertRow, toUpdateRow } from '../lib/diary.mapper';
 import type { CreateDiaryInput, DbDiaryRow, Diary, UpdateDiaryInput } from '../model/diary.types';
@@ -20,7 +20,7 @@ export const diaryApi = appApi.injectEndpoints({
             .gte('record_date', start)
             .lt('record_date', end)
             .eq('user_id', userId)
-            .order('record_date', { ascending: true })
+            .order('record_date', { ascending: false })
             .overrideTypes<DbDiaryRow[], { merge: false }>();
 
           const { data, error } = await q;
@@ -50,7 +50,7 @@ export const diaryApi = appApi.injectEndpoints({
     hasDiaryForDay: build.query<boolean, void>({
       query: () => async client => {
         const userId = await getUserId();
-        const todayDateString = createKstDay().format('YYYY-MM-DD');
+        const todayDateString = formatDate(now());
 
         const q = client
           .from('moodly_diary')
@@ -63,7 +63,7 @@ export const diaryApi = appApi.injectEndpoints({
       providesTags: [{ type: 'Diary', id: 'HAS_TODAY' }],
     }),
 
-    createDiary: build.mutation<Diary, CreateDiaryInput>({
+    createDiary: build.mutation<DbDiaryRow, CreateDiaryInput>({
       query: input => async client => {
         const { data, error } = await client
           .from('moodly_diary')
@@ -72,7 +72,7 @@ export const diaryApi = appApi.injectEndpoints({
           .single()
           .overrideTypes<DbDiaryRow, { merge: false }>();
 
-        return { data: (data ?? null) as Diary | null, error };
+        return { data: data, error };
       },
       invalidatesTags: (_res, _err) => [
         { type: 'Diary', id: 'LIST' },
@@ -81,7 +81,7 @@ export const diaryApi = appApi.injectEndpoints({
       ],
     }),
 
-    updateDiary: build.mutation<Diary, UpdateDiaryInput>({
+    updateDiary: build.mutation<DbDiaryRow, UpdateDiaryInput>({
       query: input => async client => {
         const { data, error } = await client
           .from('moodly_diary')
@@ -90,9 +90,10 @@ export const diaryApi = appApi.injectEndpoints({
           .select('*')
           .single();
 
-        return { data: (data ?? null) as Diary | null, error };
+        return { data: data, error };
       },
-      invalidatesTags: res => (res ? [byIdTag(res)] : [{ type: 'Diary', id: 'LIST' }]),
+      invalidatesTags: res =>
+        res ? [{ type: 'Diary', id: res.emotion_id }] : [{ type: 'Diary', id: 'LIST' }],
     }),
 
     deleteDiary: build.mutation<{ id: string }, { id: string }>({

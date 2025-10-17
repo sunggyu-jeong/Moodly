@@ -1,14 +1,14 @@
-import { useLazyGetUserInfoQuery } from '@entities/auth/api/auth.api';
-import { useUpdateFirstLaunchFlagMutation } from '@entities/auth/api/user-meta.api';
-import { AUTH_PROVIDERS } from '@entities/auth/types';
+import { useLazyGetUserInfoQuery } from '@/entities/auth/api/auth.api';
+import { useUpdateFirstLaunchFlagMutation } from '@/entities/auth/api/user-meta.api';
+import { AUTH_PROVIDERS } from '@/entities/auth/types';
 import { PRIVACY_POLICY_LINK, TERMS_OF_SERVICE_LINK } from '@env';
-import { useSocialLogin } from '@features/auth/hooks/useSocialLogin';
-import SocialLoginButton from '@features/auth/ui/SocialLoginButton';
-import { setShowToastView } from '@processes/overlay/model/overlaySlice';
-import { useAppDispatch, useExternalWebSite } from '@shared/hooks';
-import { isEmpty, isNotEmpty, navigate, resetTo } from '@shared/lib';
-import { initUserId } from '@shared/lib/user.util';
-import { gray } from '@shared/styles/colors';
+import { useSocialLogin } from '@/features/auth/hooks/useSocialLogin';
+import SocialLoginButton from '@/features/auth/ui/SocialLoginButton';
+import { setShowToastView } from '@/processes/overlay/model/overlaySlice';
+import { useAppDispatch, useExternalWebSite } from '@/shared/hooks';
+import { isEmpty, isNotEmpty, navigate, resetTo } from '@/shared/lib';
+import { initUserId } from '@/shared/lib/user.util';
+import { gray } from '@/shared/styles/colors';
 import { useEffect } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
 

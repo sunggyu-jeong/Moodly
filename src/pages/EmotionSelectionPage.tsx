@@ -1,6 +1,6 @@
-import type { Diary } from '@entities/diary/model/diary.types';
-import { setCurrentDiary, setSelectedIcon } from '@features/diary/model/diarySlice';
-import { EmotionDisplaySelected, EmotionSelectionList } from '@features/emotion';
+import type { Diary } from '@/entities/diary/model/diary.types';
+import { setCurrentDiary, setSelectedIcon } from '@/features/diary/model/diarySlice';
+import { EmotionDisplaySelected, EmotionSelectionList } from '@/features/emotion';
 import {
   ActionButton,
   getScaleSize,
@@ -10,8 +10,8 @@ import {
   navigate,
   useAppDispatch,
   useAppSelector,
-} from '@shared';
-import { NaviDismiss, NavigationBar } from '@widgets/navigation-bar';
+} from '@/shared';
+import { NaviDismiss, NavigationBar } from '@/widgets/navigation-bar';
 import { useEffect } from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 

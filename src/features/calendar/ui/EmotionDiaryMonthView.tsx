@@ -1,20 +1,25 @@
-import type { DiaryCalendarModeType, DiaryPageModeType } from '@entities/calendar/diary.type';
-import type { Diary } from '@entities/diary/model/diary.types';
-import EmotionDiaryCardList from '@features/diary/ui/EmotionDiaryCardList';
-import EmotionDiaryListEmpty from '@features/diary/ui/EmotionDiaryListEmpty';
-import EmotionDiaryListHeader from '@features/diary/ui/EmotionDiaryListHeader';
-import { useAppSelector } from '@shared';
-import { isEmpty } from '@shared/lib';
-import colors from '@shared/styles/colors';
+import { type DiaryCalendarModeType, type DiaryPageModeType } from '@/entities/calendar/diary.type';
+import type { Diary } from '@/entities/diary/model/diary.types';
+import EmotionDiaryCardList from '@/features/diary/ui/EmotionDiaryCardList';
+import EmotionDiaryListEmpty from '@/features/diary/ui/EmotionDiaryListEmpty';
+import EmotionDiaryListHeader from '@/features/diary/ui/EmotionDiaryListHeader';
+import { useAppSelector, useDelay } from '@/shared';
+import { isEmpty } from '@/shared/lib';
+import colors from '@/shared/styles/colors';
 import dayjs, { Dayjs } from 'dayjs';
-import React, { useCallback, useMemo } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { memo, useCallback, useMemo } from 'react';
+import { FlatList, Platform, StyleSheet, View } from 'react-native';
 
-import { selectSelectedDayIso } from '../model';
+import DiarySkeleton from '../../diary/ui/skeleton/DiaryCardSkeleton';
+import { selectIsDiaryPagingLoading, selectSelectedDayIso } from '../model';
+
+type DiaryListItem = { type: 'DIARY'; data: Diary };
+type SkeletonListItem = { type: 'SKELETON'; id: number };
+type ListItem = DiaryListItem | SkeletonListItem;
 
 interface EmotionDiaryMonthViewProps {
   monthDate: Dayjs;
-  monthData: Diary[]; // Month summary DTO
+  monthData: Diary[];
   diaryMode: DiaryPageModeType;
   scrollEnabled: boolean;
   showSkeleton?: boolean;
@@ -29,32 +34,63 @@ const EmotionDiaryMonthView = ({
   showSkeleton,
   calendarMode,
 }: EmotionDiaryMonthViewProps) => {
-  const renderDiaryCard = useCallback(
-    ({ item }: { item: Diary }) => <EmotionDiaryCardList data={item} />,
+  const isDiaryLoading = useAppSelector(selectIsDiaryPagingLoading);
+  const isDelayedLoading = useDelay(isDiaryLoading);
+  const selectedDayIso = useAppSelector(selectSelectedDayIso);
+
+  const SKELETON_DATA: SkeletonListItem[] = useMemo(
+    () => Array.from({ length: 4 }, (_, i) => ({ type: 'SKELETON', id: i })),
     [],
   );
 
-  const selectedDayIso = useAppSelector(selectSelectedDayIso);
-
-  const filteredListData = useMemo(() => {
+  const realData: Diary[] = useMemo(() => {
     if (!selectedDayIso) {
       return monthData;
     }
     return monthData.filter(e => dayjs(e.recordDate).isSame(dayjs(selectedDayIso), 'day'));
   }, [monthData, selectedDayIso]);
 
+  const listData: ListItem[] = isDelayedLoading
+    ? SKELETON_DATA
+    : realData.map(diary => ({ type: 'DIARY', data: diary }));
+
+  const renderItem = useCallback(({ item }: { item: ListItem }) => {
+    switch (item.type) {
+      case 'DIARY':
+        return <EmotionDiaryCardList data={item.data} />;
+      case 'SKELETON':
+        if (Platform.OS === 'android') {
+          return null;
+        }
+        return <DiarySkeleton />;
+      default:
+        return null;
+    }
+  }, []);
+
+  const keyExtractor = useCallback((item: ListItem) => {
+    switch (item.type) {
+      case 'DIARY':
+        return item.data.emotionId?.toString() ?? item.data.recordDate;
+      case 'SKELETON':
+        return `skeleton-${item.id}`;
+      default:
+        return `unknown-${item}`;
+    }
+  }, []);
+
   return (
     <View style={styles.page}>
-      <FlatList
+      <FlatList<ListItem>
+        key={`${diaryMode}-${calendarMode}`}
         style={styles.list}
-        data={diaryMode === 'CALENDARMODE' ? filteredListData : monthData}
-        initialNumToRender={filteredListData?.length ?? 0}
-        windowSize={10}
-        maxToRenderPerBatch={5}
-        keyExtractor={(item, idx) => item.emotionId?.toString() ?? idx.toString()}
+        data={listData}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
+        scrollEnabled={!isDelayedLoading && scrollEnabled}
         contentContainerStyle={[
           styles.scrollViewContent,
-          isEmpty(filteredListData) && styles.emptyContainer,
+          !isDelayedLoading && isEmpty(realData) && styles.emptyContainer,
         ]}
         ListHeaderComponent={
           diaryMode === 'CALENDARMODE' ? (
@@ -67,9 +103,8 @@ const EmotionDiaryMonthView = ({
             />
           ) : null
         }
-        ListEmptyComponent={<EmotionDiaryListEmpty showSkeleton={showSkeleton ?? false} />}
-        renderItem={renderDiaryCard}
-        scrollEnabled={scrollEnabled}
+        ListEmptyComponent={isDelayedLoading ? null : <EmotionDiaryListEmpty />}
+        initialNumToRender={listData.length}
       />
     </View>
   );
@@ -94,4 +129,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(EmotionDiaryMonthView);
+export default memo(EmotionDiaryMonthView);

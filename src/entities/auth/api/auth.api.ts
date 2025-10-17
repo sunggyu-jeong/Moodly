@@ -1,16 +1,28 @@
-import appleAuth from '@invertase/react-native-apple-authentication';
 import { GoogleSignin, type User } from '@react-native-google-signin/google-signin';
-import { isEmpty } from '@shared';
-import { appApi } from '@shared/api/AppApi';
-import { ApiCode } from '@shared/config';
+import { isEmpty } from '@/shared';
+import { appApi } from '@/shared/api/AppApi';
+import { ApiCode } from '@/shared/config';
+import { Platform } from 'react-native';
+import * as Application from 'expo-application';
 
 import type { SetUserInfoInput, SignInProviderInput, UserInfo } from '../model/auth.types';
 
+GoogleSignin.configure({
+  webClientId: process.env.GOOGLE_WEB_CLIENT_ID!,
+});
+
+async function getDeviceId(): Promise<string> {
+  if (Platform.OS === 'ios') {
+    const id = await Application.getIosIdForVendorAsync();
+    return id ?? 'unknown-ios-device';
+  }
+  const id = Application.getAndroidId();
+  return id ?? 'unknown-android-device';
+}
+
+
 export async function getGoogleToken() {
   await GoogleSignin.hasPlayServices();
-  GoogleSignin.configure({
-    webClientId: process.env.GOOGLE_WEB_CLIENT_ID!,
-  });
   await GoogleSignin.signIn();
   const { idToken: token } = await GoogleSignin.getTokens();
   return { token };
@@ -125,10 +137,45 @@ export const authApi = appApi.injectEndpoints({
       },
       invalidatesTags: [{ type: 'User', id: 'ME' }],
     }),
+    upsertPushToken: build.mutation<boolean, { token: string }>({
+      query:
+        ({ token }) =>
+        async client => {
+          const {
+            data: { user },
+          } = await client.auth.getUser();
+          if (!user) return { data: false, error: '로그인 필요' };
+
+          const deviceId = await getDeviceId();
+          const { error } = await client.from('push_tokens').upsert({
+            user_id: user.id,
+            device_id: deviceId,
+            token,
+            platform: Platform.OS,
+            last_seen_at: new Date().toISOString(),
+          });
+          return { data: !error, error };
+        },
+    }),
+    deletePushToken: build.mutation<boolean, void>({
+      query: () => async client => {
+        const {
+          data: { user },
+        } = await client.auth.getUser();
+        if (!user) return { data: false, error: '로그인 필요' };
+
+        const deviceId = await getDeviceId();
+        const { error } = await client
+          .from('push_tokens')
+          .delete()
+          .match({ user_id: user.id, device_id: deviceId });
+
+        return { data: !error, error };
+      },
+    }),
   }),
 });
 
-// 생성된 훅 자동 export
 export const {
   useSignInWithProviderMutation,
   useSignOutMutation,
@@ -137,4 +184,6 @@ export const {
   useGetUserInfoQuery,
   useLazyGetUserInfoQuery,
   useSetUserInfoMutation,
+  useUpsertPushTokenMutation,
+  useDeletePushTokenMutation,
 } = authApi;

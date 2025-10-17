@@ -23,6 +23,7 @@ const SettingList = ({ header, groups }: SettingListProps) => {
               activeOpacity={item.onPress ? 0.7 : 1}
             >
               <SettingItem
+                key={item.key}
                 title={item.title}
                 leftComponent={item.leftComponent}
                 rightComponent={item.rightComponent}
@@ -37,17 +38,14 @@ const SettingList = ({ header, groups }: SettingListProps) => {
           key={groupIndex}
           className="bg-common-white rounded-xl overflow-hidden"
         >
-          {group.map((item, itemIndex) => (
-            <View key={itemIndex}>
+          {group.map(({ key, ...rest }, itemIndex) => (
+            <View key={key}>
               <TouchableOpacity
-                onPress={item.onPress}
-                disabled={!item.onPress}
-                activeOpacity={item.onPress ? 0.7 : 1}
+                onPress={rest.onPress}
+                disabled={!rest.onPress}
+                activeOpacity={rest.onPress ? 0.7 : 1}
               >
-                <SettingItem
-                  key={itemIndex}
-                  {...item}
-                />
+                <SettingItem key={key} {...rest} />
               </TouchableOpacity>
               {itemIndex < group.length - 1 && <View className="w-full h-px bg-gray-200" />}
             </View>

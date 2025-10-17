@@ -1,5 +1,5 @@
-import { setShowModalPopup } from '@processes/overlay/model/overlaySlice';
-import { DimmedView, useAppDispatch, useAppSelector } from '@shared';
+import { setShowModalPopup } from '@/processes/overlay/model/overlaySlice';
+import { DimmedView, useAppDispatch, useAppSelector } from '@/shared';
 import React, { useEffect, useRef } from 'react';
 import { Animated, Modal, View } from 'react-native';
 

@@ -1,14 +1,21 @@
-import { useLazyGetFirstLaunchFlagQuery } from '@entities/auth/api/user-meta.api';
-import { UpdateContent } from '@features/update-progress/updateProgress';
-import type { UpdateProgressProps } from '@processes/update/useUpdateProgress';
-import { isNotEmpty, resetTo, supabase } from '@shared';
-import { MAIN_ICONS } from '@shared/assets/images/main';
+import { useLazyGetFirstLaunchFlagQuery } from '@/entities/auth/api/user-meta.api';
+import { isNotEmpty, resetTo, supabase } from '@/shared';
+import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { useCallback, useEffect } from 'react';
 import { Image, SafeAreaView, StatusBar, View } from 'react-native';
 
+import {
+  type UpdateProgressMent,
+  type UpdateProgressStatus,
+} from '../../navigation/hooks/useUpdateProgress';
 import AppBootstrap from '../../provider/AppBootstrap';
 
-const Splash = ({ status, progress }: UpdateProgressProps) => {
+export interface SplashProps {
+  status: UpdateProgressStatus;
+  progress: number;
+  ment: UpdateProgressMent;
+}
+const Splash = () => {
   const [getFirstLaunchFlag] = useLazyGetFirstLaunchFlagQuery();
 
   const flag = useCallback(async () => {
@@ -28,18 +35,13 @@ const Splash = ({ status, progress }: UpdateProgressProps) => {
   }, [getFirstLaunchFlag]);
 
   useEffect(() => {
-    let timer: ReturnType<typeof setTimeout> | null = null;
-
-    if (status === 'UPDATE_PROCESS_COMPLETED') {
-      timer = setTimeout(flag, 2000);
-    }
-
+    const timeout = setTimeout(() => {
+      flag();
+    }, 2000);
     return () => {
-      if (timer) {
-        clearTimeout(timer);
-      }
+      clearTimeout(timeout);
     };
-  }, [status, flag]);
+  }, [flag]);
 
   return (
     <>
@@ -50,13 +52,6 @@ const Splash = ({ status, progress }: UpdateProgressProps) => {
       <SafeAreaView className="bg-primary-300 flex-1 justify-center items-center">
         <View className="absolute">
           <Image source={MAIN_ICONS.logo} />
-        </View>
-
-        <View className="absolute bottom-12 w-full gap-3 items-center">
-          <UpdateContent
-            progress={progress}
-            status={status}
-          />
         </View>
       </SafeAreaView>
 

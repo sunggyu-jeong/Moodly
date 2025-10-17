@@ -1,11 +1,10 @@
-import { setShowToastView } from '@processes/overlay/model/overlaySlice';
-import { goBack } from '@shared';
-import { useAppDispatch } from '@shared/hooks';
-import { useBottomSheet } from '@shared/hooks/useBottomSheet';
-import BottomSheetWrapper from '@shared/ui/elements/BottomSheetWrapper';
-import { H3 } from '@shared/ui/typography/H3';
-import { forwardRef, useImperativeHandle } from 'react';
-import { Keyboard, View } from 'react-native';
+import { BottomSheetView } from '@gorhom/bottom-sheet';
+import { goBack } from '@/shared';
+import { useBottomSheet } from '@/shared/hooks/useBottomSheet';
+import BottomSheetWrapper from '@/shared/ui/elements/BottomSheetWrapper';
+import { H3 } from '@/shared/ui/typography/H3';
+import { forwardRef, useImperativeHandle, useState } from 'react';
+import { Keyboard } from 'react-native';
 
 import { SetNicknameForm } from '../../set-nickname/ui/SetNicknameForm';
 import type { BottomSheetHandler } from './SocialLoginSheet';
@@ -16,7 +15,7 @@ export const ChangeNicknameSheet = forwardRef<BottomSheetHandler>((_, ref) => {
   const { sheetRef, snapPoints, handleSheetChanges } = useBottomSheet({
     snapPoints: [MIN_HEIGHT, '31.3%'],
   });
-  const dispatch = useAppDispatch();
+  const [formKey, setFormKey] = useState(0);
 
   useImperativeHandle(ref, () => ({
     expand: () => sheetRef.current?.expand(),
@@ -25,13 +24,13 @@ export const ChangeNicknameSheet = forwardRef<BottomSheetHandler>((_, ref) => {
   }));
 
   const handleSuccess = () => {
-    dispatch(setShowToastView({ visibility: true, message: '닉네임 변경 요청이 성공했어요.' }));
     goBack();
   };
 
   const handleSheetStateChange = (index: number) => {
     if (index === -1) {
       Keyboard.dismiss();
+      setFormKey(prevKey => prevKey + 1);
     }
     handleSheetChanges(index);
   };
@@ -42,14 +41,15 @@ export const ChangeNicknameSheet = forwardRef<BottomSheetHandler>((_, ref) => {
       snapPoints={snapPoints}
       onChange={handleSheetStateChange}
     >
-      <View className="flex-1 items-center pt-4">
+      <BottomSheetView className="flex-1 items-center pt-4">
         <H3 weight="semibold">닉네임 변경</H3>
 
         <SetNicknameForm
+          key={formKey}
           inputBackgroundColor="white"
           onSuccess={handleSuccess}
         />
-      </View>
+      </BottomSheetView>
     </BottomSheetWrapper>
   );
 });

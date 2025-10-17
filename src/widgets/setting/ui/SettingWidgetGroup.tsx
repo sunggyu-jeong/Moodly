@@ -1,4 +1,4 @@
-import { SkeletonContainer } from '@shared';
+import { SkeletonContainer } from '@/shared';
 import React, { memo, type PropsWithChildren } from 'react';
 import { View } from 'react-native';
 

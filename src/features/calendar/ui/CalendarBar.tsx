@@ -1,6 +1,6 @@
-import type { Diary } from '@entities/diary/model/diary.types';
-import { navigate, toKstDate, useAppDispatch, useAppSelector } from '@shared';
-import { GridList } from '@shared/ui/elements/GridList';
+import type { Diary } from '@/entities/diary/model/diary.types';
+import { formatDate, isEmpty, navigate, now, useAppDispatch, useAppSelector } from '@/shared';
+import { GridList } from '@/shared/ui/elements/GridList';
 import dayjs, { Dayjs } from 'dayjs';
 import { memo, useCallback, useMemo } from 'react';
 import { View } from 'react-native';
@@ -15,13 +15,18 @@ interface CalendarBarProps {
 
 const CalendarBar = ({ monthlyDates, entries }: CalendarBarProps) => {
   const selectedDayStr = useAppSelector(state => state.diarySlice.selectedDay);
-  const selectedDay = useMemo(() => dayjs(selectedDayStr), [selectedDayStr]);
+  const selectedDay = useMemo(() => {
+    if (isEmpty(selectedDayStr)) {
+      return null;
+    }
+    return now(selectedDayStr);
+  }, [selectedDayStr]);
   const dispatch = useAppDispatch();
 
   const entryMap = useMemo(() => {
     const m = new Map<string, number>();
     entries?.forEach(e => {
-      m.set(dayjs(e.recordDate).format('YYYY-MM-DD'), e.iconId ?? -1);
+      m.set(formatDate(dayjs(e.recordDate)), e.iconId ?? -1);
     });
     return m;
   }, [entries]);
@@ -32,21 +37,21 @@ const CalendarBar = ({ monthlyDates, entries }: CalendarBarProps) => {
     () =>
       flatDates.map(date => ({
         date,
-        iconId: date ? (entryMap.get(date.format('YYYY-MM-DD')) ?? null) : null,
+        iconId: date ? (entryMap.get(formatDate(date)) ?? null) : null,
       })),
     [flatDates, entryMap],
   );
 
   const handleSelectDay = useCallback(
     (date: Dayjs) => {
-      dispatch(setSelectedDay(toKstDate(date)));
+      dispatch(setSelectedDay(formatDate(date)));
     },
     [dispatch],
   );
 
   const handleStartEmotionSelection = useCallback(
     (date: Dayjs) => {
-      const emotion: Partial<Diary> = { recordDate: toKstDate(date) };
+      const emotion: Partial<Diary> = { recordDate: formatDate(date) };
       dispatch(setCurrentDiary(emotion));
       navigate('DiaryStack', { screen: 'EmotionSelectionPage' });
     },
@@ -60,7 +65,6 @@ const CalendarBar = ({ monthlyDates, entries }: CalendarBarProps) => {
         if (!item.date) return <View />;
 
         const isSelected = item.date.isSame(selectedDay, 'day');
-
         return (
           <SelectableDayCell
             date={item.date}
