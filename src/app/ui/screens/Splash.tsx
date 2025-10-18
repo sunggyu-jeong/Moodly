@@ -4,17 +4,9 @@ import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { useCallback, useEffect } from 'react';
 import { Image, SafeAreaView, StatusBar, View } from 'react-native';
 
-import {
-  type UpdateProgressMent,
-  type UpdateProgressStatus,
-} from '../../navigation/hooks/useUpdateProgress';
 import AppBootstrap from '../../provider/AppBootstrap';
 
-export interface SplashProps {
-  status: UpdateProgressStatus;
-  progress: number;
-  ment: UpdateProgressMent;
-}
+
 const Splash = () => {
   const [getFirstLaunchFlag] = useLazyGetFirstLaunchFlagQuery();
 

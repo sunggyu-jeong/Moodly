@@ -1,3 +1,4 @@
+import appleAuth from '@invertase/react-native-apple-authentication';
 import { GoogleSignin, type User } from '@react-native-google-signin/google-signin';
 import { isEmpty } from '@/shared';
 import { appApi } from '@/shared/api/AppApi';
