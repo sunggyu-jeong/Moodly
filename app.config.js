@@ -4,10 +4,10 @@ export default {
   expo: {
     name: "무들리",
     slug: "MoodlyFrontend",
-    version: "1.0.1",
+    version: "1.0.2",
     icon: "./assets/icon.png",
     userInterfaceStyle: "light",
-    orientation: "landscape",
+    orientation: "Portrait",
     splash: {
       image: "./assets/splash.png",
       resizeMode: "contain",
@@ -40,7 +40,7 @@ export default {
       },
       package: "com.moodlyfrontend",
       googleServicesFile: "./google-services.json",
-      versionCode: 6
+      versionCode: 7
     },
     plugins: [
       "@react-native-google-signin/google-signin",
