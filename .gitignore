@@ -36,6 +36,7 @@ yarn-error.*
 *.tsbuildinfo
 
 .env
+.env.*
 
 # generated native folders
 /ios
