@@ -1,4 +1,3 @@
-// app.config.ts
 import 'dotenv/config';
 
 const APP_ENV = process.env.APP_ENV ?? 'develop'; // develop | staging | production
@@ -21,11 +20,6 @@ const androidGoogleServiceFile =
   isProd ? './google-services.prod.json'
   : isStg ? './google-services.stg.json'
           : './google-services.dev.json';
-
-const IOS_REVERSED_CLIENT_ID =
-  isProd ? process.env.IOS_REVERSED_CLIENT_ID_PROD
-  : isStg ? process.env.IOS_REVERSED_CLIENT_ID_STG
-          : process.env.IOS_REVERSED_CLIENT_ID_DEV;
 
 export default {
   name: `무들리${suffix}`,
@@ -55,10 +49,6 @@ export default {
       ITSAppUsesNonExemptEncryption: false,
       CFBundleDevelopmentRegion: 'ko',
       CFBundleLocalizations: ['ko'],
-      CFBundleURLTypes: [
-        IOS_REVERSED_CLIENT_ID ? { CFBundleURLSchemes: [IOS_REVERSED_CLIENT_ID] } : {},
-        { CFBundleURLSchemes: [scheme] },
-      ].filter(Boolean) ,
     },
   },
 
