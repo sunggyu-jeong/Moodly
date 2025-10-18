@@ -16,8 +16,7 @@
       },
       "env": {
         "APP_ENV": "development"
-      },
-      "autoIncrement": true
+      }
     },
     "preview": {
       "distribution": "internal",
@@ -29,8 +28,7 @@
       },
       "env": {
         "APP_ENV": "staging"
-      },
-      "autoIncrement": true
+      }
     },
     "production": {
       "channel": "production",
@@ -41,8 +39,7 @@
       },
       "env": {
         "APP_ENV": "production"
-      },
-      "autoIncrement": true
+      }
     }
   }
 }
