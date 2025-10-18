@@ -13,20 +13,20 @@ const androidPackage  = iosBundleId;
 const scheme = isProd ? 'moodly' : isStg ? 'moodlybeta' : 'moodlydev';
 
 const iosGoogleServiceFile =
-  isProd ? './ios/firebase/GoogleService-Info.prod.plist'
-  : isStg ? './ios/firebase/GoogleService-Info.stg.plist'
-          : './ios/firebase/GoogleService-Info.dev.plist';
+  isProd ? './GoogleService-Info.prod.plist'
+  : isStg ? './GoogleService-Info.stg.plist'
+          : './GoogleService-Info.dev.plist';
 
 const androidGoogleServiceFile =
-  isProd ? './android/firebase/google-services.prod.json'
-  : isStg ? './android/firebase/google-services.stg.json'
-          : './android/firebase/google-services.dev.json';
+  isProd ? './google-services.prod.json'
+  : isStg ? './google-services.stg.json'
+          : './google-services.dev.json';
 
 const IOS_REVERSED_CLIENT_ID =
   isProd ? process.env.IOS_REVERSED_CLIENT_ID_PROD
   : isStg ? process.env.IOS_REVERSED_CLIENT_ID_STG
           : process.env.IOS_REVERSED_CLIENT_ID_DEV;
-          
+
 export default {
   name: `무들리${suffix}`,
   slug: 'MoodlyFrontend',
