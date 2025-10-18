@@ -1,67 +1,97 @@
+// app.config.ts
 import 'dotenv/config';
 
+const APP_ENV = process.env.APP_ENV ?? 'develop'; // develop | staging | production
+const isProd  = APP_ENV === 'production';
+const isStg   = APP_ENV === 'staging';
+
+const suffix = isProd ? '' : isStg ? ' 베타' : ' 개발';
+
+const iosBundleId     = isProd ? 'com.moodlyfrontend' : isStg ? 'com.moodlybeta' : 'com.moodlydev';
+const androidPackage  = iosBundleId; 
+
+const scheme = isProd ? 'moodly' : isStg ? 'moodlybeta' : 'moodlydev';
+
+const iosGoogleServiceFile =
+  isProd ? './ios/firebase/GoogleService-Info.prod.plist'
+  : isStg ? './ios/firebase/GoogleService-Info.stg.plist'
+          : './ios/firebase/GoogleService-Info.dev.plist';
+
+const androidGoogleServiceFile =
+  isProd ? './android/firebase/google-services.prod.json'
+  : isStg ? './android/firebase/google-services.stg.json'
+          : './android/firebase/google-services.dev.json';
+
+const IOS_REVERSED_CLIENT_ID =
+  isProd ? process.env.IOS_REVERSED_CLIENT_ID_PROD
+  : isStg ? process.env.IOS_REVERSED_CLIENT_ID_STG
+          : process.env.IOS_REVERSED_CLIENT_ID_DEV;
+          
 export default {
-  expo: {
-    name: "무들리",
-    slug: "MoodlyFrontend",
-    version: "1.0.2",
-    icon: "./assets/icon.png",
-    userInterfaceStyle: "light",
-    orientation: "landscape",
-    splash: {
-      image: "./assets/splash.png",
-      resizeMode: "contain",
-      backgroundColor: "#ffffff"
+  name: `무들리${suffix}`,
+  slug: 'MoodlyFrontend',
+  version: '1.0.2',
+  scheme,
+  userInterfaceStyle: 'light',
+  orientation: 'landscape',
+  splash: {
+    image: './assets/splash.png',
+    resizeMode: 'contain',
+    backgroundColor: '#ffffff',
+  },
+  updates: {
+    url: 'https://u.expo.dev/7a306411-86c9-4e39-8036-de136b0f42a8',
+    fallbackToCacheTimeout: 0,
+    checkAutomatically: 'ON_LOAD',
+  },
+  runtimeVersion: { policy: 'appVersion' },
+  assetBundlePatterns: ['**/*'],
+
+  ios: {
+    buildNumber: '7',
+    bundleIdentifier: iosBundleId,
+    googleServicesFile: iosGoogleServiceFile,
+    infoPlist: {
+      ITSAppUsesNonExemptEncryption: false,
+      CFBundleDevelopmentRegion: 'ko',
+      CFBundleLocalizations: ['ko'],
+      CFBundleURLTypes: [
+        IOS_REVERSED_CLIENT_ID ? { CFBundleURLSchemes: [IOS_REVERSED_CLIENT_ID] } : {},
+        { CFBundleURLSchemes: [scheme] },
+      ].filter(Boolean) ,
     },
-    updates: {
-      fallbackToCacheTimeout: 0,
-      "url": "https://u.expo.dev/7a306411-86c9-4e39-8036-de136b0f42a8"
-    },
-    runtimeVersion: {
-      "policy": "appVersion"
-    },
-    assetBundlePatterns: ["**/*"],
-    ios: {
-      buildNumber: "7",
-      bundleIdentifier: "com.moodlyfrontend",
-      googleServicesFile: "./GoogleService-Info.plist",
-      infoPlist: {
-        ITSAppUsesNonExemptEncryption: false,
-        CFBundleURLTypes: [
-          {
-            CFBundleURLSchemes: [process.env.IOS_REVERSED_CLIENT_ID],
-          },
-        ],
-        infoPlist: {
-          CFBundleDevelopmentRegion: "ko",
-          CFBundleLocalizations: ["ko"],
-        },
+  },
+
+  android: {
+    package: androidPackage,
+    googleServicesFile: androidGoogleServiceFile,
+    versionCode: 7,
+    intentFilters: [
+      {
+        action: 'VIEW',
+        category: ['BROWSABLE', 'DEFAULT'],
+        data: [{ scheme }],
       },
-    },
-    android: {
-      adaptiveIcon: null,
-      splash: {
-        backgroundColor: "#5168DB"
-      },
-      package: "com.moodlyfrontend",
-      googleServicesFile: "./google-services.json",
-      versionCode: 7
-    },
-    plugins: [
-      "@react-native-google-signin/google-signin",
-      ["expo-build-properties", {
+    ],
+  },
+
+  plugins: [
+    '@react-native-google-signin/google-signin',
+    [
+      'expo-build-properties',
+      {
         android: {
-          kotlinVersion: "2.1.20"
+          kotlinVersion: '2.1.20',
         },
         ios: {
-          useFrameworks: "static",
-        }
-      }]
+          useFrameworks: 'static',
+        },
+      },
     ],
-    extra: {
-      eas: {
-        projectId: "7a306411-86c9-4e39-8036-de136b0f42a8"
-      }
-    }
+  ],
+
+  extra: {
+    APP_ENV,
+    eas: { projectId: '7a306411-86c9-4e39-8036-de136b0f42a8' }
   },
 };
