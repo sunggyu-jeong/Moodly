@@ -27,7 +27,7 @@ export default {
   version: '1.0.2',
   scheme,
   userInterfaceStyle: 'light',
-  orientation: 'landscape',
+  orientation: 'portrait',
   splash: {
     image: './assets/splash.png',
     resizeMode: 'contain',
