@@ -1,4 +1,4 @@
-import appleAuth from '@invertase/react-native-apple-authentication';
+import * as AppleAuthentication from 'expo-apple-authentication';
 import { GoogleSignin, type User } from '@react-native-google-signin/google-signin';
 import { isEmpty } from '@/shared';
 import { appApi } from '@/shared/api/AppApi';
@@ -30,17 +30,31 @@ export async function getGoogleToken() {
 }
 
 export async function getAppleToken() {
-  const resp = await appleAuth.performRequest({
-    requestedOperation: appleAuth.Operation.LOGIN,
-    requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+
+  const available = await AppleAuthentication.isAvailableAsync();
+  if (!available) {
+    const err = new Error('이 기기에서는 Apple 로그인이 지원되지 않습니다.');
+    Object.assign(err, { status: 400, code: ApiCode.BAD_REQUEST });
+    throw err;
+  }
+
+  const resp = await AppleAuthentication.signInAsync({
+    requestedScopes: [
+      AppleAuthentication.AppleAuthenticationScope.EMAIL,
+      AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+    ],
   });
+
   if (!resp.identityToken) {
-    console.log('>>>>>>>>Apple 로그인 실패: identityToken 누락');
     const error = new Error('Apple 로그인 요청이 실패했어요.');
     Object.assign(error, { status: 404, code: ApiCode.NOT_FOUND });
     throw error;
   }
-  return { token: resp.identityToken, nonce: resp.nonce };
+
+  return {
+    token: resp.identityToken,
+    nonce: null,
+  };
 }
 
 export const authApi = appApi.injectEndpoints({

@@ -11,7 +11,6 @@
   "dependencies": {
     "@amplitude/plugin-session-replay-react-native": "0.4.3",
     "@gorhom/bottom-sheet": "5.2.6",
-    "@invertase/react-native-apple-authentication": "2.4.1",
     "@react-native-async-storage/async-storage": "2.2.0",
     "@react-native-google-signin/google-signin": "11.0.1",
     "@react-navigation/bottom-tabs": "6.5.20",
@@ -23,7 +22,7 @@
     "crypto-js": "4.2.0",
     "dayjs": "1.11.11",
     "expo": "54.0.13",
-    "expo-apple-authentication": "8.0.7",
+    "expo-apple-authentication": "~8.0.7",
     "expo-application": "7.0.7",
     "expo-build-properties": "1.0.9",
     "expo-constants": "18.0.9",
@@ -53,7 +52,7 @@
     "uuid": "9.0.1"
   },
   "devDependencies": {
-    "@babel/core": "7.20.0",
+    "@babel/core": "7.28.4",
     "@babel/plugin-transform-react-jsx": "7.27.1",
     "@babel/preset-env": "7.28.3",
     "@babel/preset-react": "7.27.1",
@@ -74,5 +73,6 @@
     "overrides": {
       "@react-native-async-storage/async-storage": "2.2.0"
     }
-  }
+  },
+  "packageManager": "pnpm@10.18.3"
 }
