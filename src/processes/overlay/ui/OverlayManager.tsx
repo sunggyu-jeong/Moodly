@@ -1,9 +1,9 @@
-import { isNotEmpty, useAppDispatch, useAppSelector, useNotificationPermission } from '@/shared';
+import { isNotEmpty, navigate, resetTo, useAppDispatch, useAppSelector, useNotificationPermission } from '@/shared';
 import { DropDownAnimation } from '@/widgets/dropdown/animation';
 import { ToastController } from '@/widgets/toast';
+import { PopupContainer } from '@/widgets/popup';
 
-import { PopupContainer } from '../../../widgets/popup';
-import { MODAL_CONFIRM_ACTION_KEY } from '../../key';
+import { MODAL_CANCEL_ACTION_KEY, MODAL_CONFIRM_ACTION_KEY } from '../../key';
 import {
   resetModalPopup,
   setOverlayEventHandler,
@@ -16,7 +16,7 @@ const OverlayManager = () => {
   const showDropDownView = useAppSelector(state => state.overlaySlice.showDropDownView);
   const dispatch = useAppDispatch();
   const { openSettings } = useNotificationPermission();
-
+  
   return (
     <>
       {isNotEmpty(showToastView?.visibility) && <ToastController />}
@@ -39,6 +39,12 @@ const OverlayManager = () => {
               dispatch(resetModalPopup());
             }
           }}
+          onCancel={() => {
+            if (showModalPopup.cancelActionKey === MODAL_CANCEL_ACTION_KEY.GO_MAIN) {
+              resetTo('Main');
+            }
+          }}
+          disableBackdropClose={showModalPopup?.disableBackdropClose}
         />
       )}
 
