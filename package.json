@@ -6,7 +6,10 @@
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "update:dev": "eas update --branch development -m \"dev\"",
+    "update:prev": "eas update --branch preview -m \"preview\"",
+    "update:prod": "eas update --branch production -m \"prod\""
   },
   "dependencies": {
     "@amplitude/plugin-session-replay-react-native": "0.4.3",
@@ -32,7 +35,7 @@
     "expo-linking": "8.0.8",
     "expo-notifications": "0.32.12",
     "expo-status-bar": "3.0.8",
-    "expo-updates": "29.0.12",
+    "expo-updates": "~29.0.12",
     "moti": "0.29.0",
     "nativewind": "4.0.36",
     "react": "19.1.0",

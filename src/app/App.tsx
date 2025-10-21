@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { NavigationContainer } from '@react-navigation/native';
 import 'dayjs/locale/ko';
-import { useCallback, type ProfilerOnRenderCallback } from 'react';
+import { useCallback, useEffect, type ProfilerOnRenderCallback } from 'react';
 import 'react-native-get-random-values';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
@@ -12,7 +12,6 @@ import '../../global.css';
 import { RootStack } from '@/app/navigation';
 import { store } from '@/app/store';
 import { useUpsertPushTokenMutation } from '@/entities/auth/api/auth.api';
-// import { HotUpdater, getUpdateSource } from '@hot-updater/react-native';
 import OverlayManager from '@/processes/overlay/ui/OverlayManager';
 import { isEmpty, navigationRef, useNotificationPermission } from '@/shared';
 import '@/shared/lib/day.util';
@@ -59,6 +58,7 @@ function App() {
     setupListeners: true,
     onTokenUpdate: onTokenUpdate,
   });
+
 
   return (
     <GestureHandlerRootView style={styles.container}>
