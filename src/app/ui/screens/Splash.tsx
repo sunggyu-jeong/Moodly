@@ -10,7 +10,7 @@ import {
 } from '../../navigation/hooks/useUpdateProgress';
 import AppBootstrap from '../../provider/AppBootstrap';
 import * as Updates from 'expo-updates';
-import { MODAL_CANCEL_ACTION_KEY, MODAL_CANCEL_ACTION_KEY, MODAL_CONFIRM_ACTION_KEY } from '@/processes/key';
+import { MODAL_CANCEL_ACTION_KEY, MODAL_CONFIRM_ACTION_KEY } from '@/processes/key';
 import { setShowModalPopup } from '@/processes/overlay/model/overlaySlice';
 import { useVersionCheck } from '@/features/check-app-version/ui';
 
