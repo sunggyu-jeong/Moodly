@@ -1,6 +1,10 @@
-# Moodly
+<div align='center'>
+ <img width="500" height="541" alt="Image" src="https://github.com/user-attachments/assets/8e9563bf-ee27-4b06-9f5f-ee02fe16b90c" />
+ 
+ # Moodly
+</div>
 
-바쁜 일상 속에서 자신의 감정을 쉽게 기록하고 되돌아볼 수 있도록 돕는 모바일 감성 일기 애플리케이션입니다. React Native를 기반으로 iOS와 Android 환경을 모두 지원하며, 사용자의 기록을 안전하게 관리하고 시각적으로 풍부한 경험을 제공하는 것을 목표로 합니다.
+무들리는 바쁜 일상 속에서 자신의 감정을 쉽게 기록하고 되돌아볼 수 있도록 돕는 모바일 감성 일기 애플리케이션입니다. React Native를 기반으로 iOS와 Android 환경을 모두 지원하며, 사용자의 기록을 안전하게 관리하고 시각적으로 풍부한 경험을 제공하는 것을 목표로 합니다.
 
 ## 기술 스택
 
@@ -63,3 +67,4 @@ npx expo run:android
 | :---: | :---: | :---: |
 | **Full-Stack Developer** |정성규 | `https://github.com/sunggyu-jeong` |
 | **UI/UX Designer** |사승연 | `https://github.com/saseungg` |
+</div>
