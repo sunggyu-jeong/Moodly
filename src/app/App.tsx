@@ -5,9 +5,7 @@ import { useCallback, type ProfilerOnRenderCallback } from 'react';
 import 'react-native-get-random-values';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
-import { Provider } from 'react-redux';
-
-import '../../global.css';
+import { Provider } from 'react-redux'
 
 import { RootStack } from '@/app/navigation';
 import { store } from '@/app/store';
