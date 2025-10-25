@@ -1,5 +1,4 @@
 import { useGetUserInfoQuery } from '@/entities/auth/api/auth.api';
-import { KAKAO_OPEN_CHAT_LINK, PRIVACY_POLICY_LINK, TERMS_OF_SERVICE_LINK } from '@env';
 import { useLogout } from '@/features/auth';
 import { SettingRoot } from '@/features/setting';
 import { SETTING_EVENT_TYPE, TEXTS } from '@/features/setting/types';
@@ -17,9 +16,10 @@ import {
   useExternalWebSite,
 } from '@/shared';
 import { COMMON_ICONS } from '@/shared/assets/images/common';
+import { ENV } from '@/shared/lib/env';
 import * as Notifications from 'expo-notifications';
 import { useCallback, useEffect, useState } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 const SettingPage = () => {
   const { openLink } = useExternalWebSite();
@@ -29,6 +29,7 @@ const SettingPage = () => {
   const [notificationStatus, setNotificationStatus] = useState<Notifications.PermissionStatus>(
     Notifications.PermissionStatus.UNDETERMINED
   );
+  const { KAKAO_OPEN_CHAT_LINK, PRIVACY_POLICY_LINK, TERMS_OF_SERVICE_LINK } = ENV;
 
   useEffect(() => {
     const checkNotificationStatus = async () => {

@@ -1,16 +1,16 @@
-import { ENCRYPTION_SECRET_KEY } from '@env';
 import CryptoJS from 'crypto-js';
 
+import { ENV } from '@/shared/lib/env';
 import { isEmpty } from '..';
 
-const SECRET_KEY = ENCRYPTION_SECRET_KEY;
+const { ENCRYPTION_SECRET_KEY } = ENV;
 
 export const encryptData = <T>(data: T) => {
   try {
     if (isEmpty(data)) {
       throw new Error('Data to encrypt cannot be empty');
     }
-    const encrypted = CryptoJS.AES.encrypt(JSON.stringify(data), SECRET_KEY).toString();
+    const encrypted = CryptoJS.AES.encrypt(JSON.stringify(data), ENCRYPTION_SECRET_KEY ?? "").toString();
     return encrypted;
   } catch (error) {
     console.error('Encryption error:', error);
@@ -34,7 +34,7 @@ export const decryptData = (ciphertext: string) => {
   }
 
   try {
-    const bytes = CryptoJS.AES.decrypt(ciphertext, SECRET_KEY);
+    const bytes = CryptoJS.AES.decrypt(ciphertext, ENCRYPTION_SECRET_KEY ?? "");
     const decrypted = bytes.toString(CryptoJS.enc.Utf8);
 
     return JSON.parse(decrypted);

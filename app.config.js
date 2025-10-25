@@ -1,5 +1,3 @@
-import 'dotenv/config';
-
 const APP_ENV = process.env.APP_ENV ?? 'develop'; // develop | staging | production
 const isProd  = APP_ENV === 'production';
 const isStg   = APP_ENV === 'staging';
@@ -21,10 +19,17 @@ const androidGoogleServiceFile =
   : isStg ? './google-services.stg.json'
           : './google-services.dev.json';
 
+const EAS_PROJECT_ID = process.env.EAS_PROJECT_ID;
+
+const EXTRA_EAS = EAS_PROJECT_ID
+  ? { eas: { projectId: EAS_PROJECT_ID }, projectId: EAS_PROJECT_ID }
+  : {};
+
 export default {
   name: `무들리${suffix}`,
-  slug: 'MoodlyFrontend',
+  slug: 'moodly',
   version: '1.0.2',
+  owner: 'sunggyu_jeong',
   scheme,
   userInterfaceStyle: 'light',
   orientation: 'portrait',
@@ -33,11 +38,13 @@ export default {
     resizeMode: 'contain',
     backgroundColor: '#ffffff',
   },
-  updates: {
-    url: 'https://u.expo.dev/7a306411-86c9-4e39-8036-de136b0f42a8',
-    fallbackToCacheTimeout: 0,
-    checkAutomatically: 'ON_LOAD',
-  },
+  ...(EAS_PROJECT_ID ? {
+    updates: {
+      url: `https://u.expo.dev/${EAS_PROJECT_ID}`,
+      fallbackToCacheTimeout: 0,
+      checkAutomatically: 'ON_LOAD',
+    }
+  } : {}),
   runtimeVersion: { policy: 'appVersion' },
   assetBundlePatterns: ['**/*'],
 
@@ -82,6 +89,19 @@ export default {
 
   extra: {
     APP_ENV,
-    eas: { projectId: '7a306411-86c9-4e39-8036-de136b0f42a8' }
+
+    HOT_UPDATER_SUPABASE_ANON_KEY: process.env.HOT_UPDATER_SUPABASE_ANON_KEY,
+    HOT_UPDATER_SUPABASE_BUCKET_NAME: process.env.HOT_UPDATER_SUPABASE_BUCKET_NAME,
+    HOT_UPDATER_SUPABASE_URL: process.env.HOT_UPDATER_SUPABASE_URL,
+    TEAM_ID: process.env.TEAM_ID,
+    CLIENT_ID: process.env.CLIENT_ID,
+    KEY_ID: process.env.KEY_ID,
+    KAKAO_OPEN_CHAT_LINK: process.env.KAKAO_OPEN_CHAT_LINK,
+    GOOGLE_WEB_CLIENT_ID: process.env.GOOGLE_WEB_CLIENT_ID,
+    PRIVACY_POLICY_LINK: process.env.PRIVACY_POLICY_LINK,
+    TERMS_OF_SERVICE_LINK: process.env.TERMS_OF_SERVICE_LINK,
+    AMPLITUDE_API_KEY: process.env.AMPLITUDE_API_KEY,
+    ENCRYPTION_SECRET_KEY: process.env.ENCRYPTION_SECRET_KEY,
+    ...EXTRA_EAS,
   },
 };

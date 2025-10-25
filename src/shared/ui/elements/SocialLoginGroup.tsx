@@ -1,7 +1,6 @@
 import { useLazyGetUserInfoQuery } from '@/entities/auth/api/auth.api';
 import { useUpdateFirstLaunchFlagMutation } from '@/entities/auth/api/user-meta.api';
 import { AUTH_PROVIDERS } from '@/entities/auth/types';
-import { PRIVACY_POLICY_LINK, TERMS_OF_SERVICE_LINK } from '@env';
 import { useSocialLogin } from '@/features/auth/hooks/useSocialLogin';
 import SocialLoginButton from '@/features/auth/ui/SocialLoginButton';
 import { setShowToastView } from '@/processes/overlay/model/overlaySlice';
@@ -12,6 +11,7 @@ import { gray } from '@/shared/styles/colors';
 import { useEffect } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
 
+import { ENV } from '@/shared/lib/env';
 import { Caption } from '../typography/Caption';
 
 export enum SOCIAL_LOGIN_ENTRANCE {
@@ -29,6 +29,7 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
   const dispatch = useAppDispatch();
   const [saveFirstLaunchFlag] = useUpdateFirstLaunchFlagMutation();
   const { openLink } = useExternalWebSite();
+  const { PRIVACY_POLICY_LINK, TERMS_OF_SERVICE_LINK } = ENV
 
   const fetchUserInfo = async () => {
     const response = await getUserInfo();

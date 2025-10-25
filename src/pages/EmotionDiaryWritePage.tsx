@@ -51,6 +51,7 @@ const EmotionDiaryWritePage = () => {
             <TextInput
               className="min-h-32 pb-10"
               multiline
+              maxLength={1000}
               value={text}
               onChangeText={setText}
               scrollEnabled={false}
