@@ -1,14 +1,15 @@
 import { memo } from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
+import { gray } from '@/shared';
 import SettingWidgetGroup from './SettingWidgetGroup';
 import SettingWidgetHeader from './SettingWidgetHeader';
 import SettingWidgetItem from './SettingWidgetItem';
 
 const SettingWidgetSkeleton = () => (
-  <View className="flex-1 bg-gray-100">
-    <View className="flex-1 justify-between pt-[14px]">
-      <View className="flex-1 gap-4">
+  <View style={styles.container}>
+    <View style={styles.inner}>
+      <View style={styles.groups}>
         <SettingWidgetHeader />
         <SettingWidgetGroup>
           <SettingWidgetItem withToggle />
@@ -24,5 +25,21 @@ const SettingWidgetSkeleton = () => (
     </View>
   </View>
 );
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: gray[100],
+  },
+  inner: {
+    flex: 1,
+    justifyContent: 'space-between',
+    paddingTop: 14,
+  },
+  groups: {
+    flex: 1,
+    gap: 16,
+  },
+});
 
 export default memo(SettingWidgetSkeleton);

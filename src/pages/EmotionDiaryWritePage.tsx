@@ -30,32 +30,35 @@ const EmotionDiaryWritePage = () => {
     <>
       <NavigationBar actionButtons={actionButtons} />
       <KeyboardAvoidingView
-        className="flex-1 bg-common-white"
+        style={styles.container}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         keyboardVerticalOffset={40}
       >
         <ScrollView
           ref={scrollRef}
-          style={styles.keyboardAvoiding}
+          style={styles.scroll}
           keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
         >
-          <View className="items-center justify-center bg-common-white">
+          <View style={styles.header}>
             <H2 weight="semibold">왜 이 감정을 느꼈나요?</H2>
             <Image
-              style={styles.emotionImage}
               source={ICON_DATA.find(el => el.id === currentDiary?.iconId)?.iconBig}
+              style={styles.emotionImage}
             />
           </View>
 
-          <View className="flex-1">
+          <View style={styles.inputWrapper}>
             <TextInput
-              className="min-h-32 pb-10"
+              style={styles.textInput}
               multiline
               maxLength={1000}
               value={text}
               onChangeText={setText}
               scrollEnabled={false}
               placeholder="그 감정을 느낀 순간의 생각을 적어보세요"
+              placeholderTextColor="#999999"
+              textAlignVertical="top"
             />
           </View>
         </ScrollView>
@@ -71,16 +74,34 @@ const EmotionDiaryWritePage = () => {
 };
 
 const styles = StyleSheet.create({
-  emotionImage: {
-    height: getScaleSize(190),
-    marginBottom: getScaleSize(32),
-    marginTop: getScaleSize(9),
-    width: getScaleSize(190),
-  },
-  keyboardAvoiding: {
-    backgroundColor: common.white,
+  container: {
     flex: 1,
+    backgroundColor: common.white,
+  },
+  scroll: {
+    flex: 1,
+    backgroundColor: common.white,
     paddingHorizontal: getScaleSize(20),
+  },
+  header: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: common.white,
+  },
+  emotionImage: {
+    width: getScaleSize(190),
+    height: getScaleSize(190),
+    marginTop: getScaleSize(9),
+    marginBottom: getScaleSize(32),
+  },
+  inputWrapper: {
+    flex: 1,
+  },
+  textInput: {
+    minHeight: getScaleSize(128),
+    paddingBottom: getScaleSize(40),
+    fontSize: 16,
+    color: '#000000',
   },
 });
 

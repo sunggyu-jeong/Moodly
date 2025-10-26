@@ -1,6 +1,6 @@
 import Progress from '@/shared/ui/elements/Progress';
 import { useEffect } from 'react';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 export interface UpdateContentProps {
   title: string;
@@ -17,26 +17,65 @@ const UpdateContent = ({ title, subtitle, progress, progressLabel }: UpdateConte
   }, [progress]);
 
   return (
-    <View className="w-full max-w-xs my-6 space-y-6">
-      <View className="items-center mb-4 space-y-1">
-        <Text className="text-common-white text-lg font-semibold">{title}</Text>
-        {subtitle && <Text className="text-common-white/80 text-sm">{subtitle}</Text>}
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.title}>{title}</Text>
+        {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
       </View>
 
-      <View className="space-y-3">
+      <View style={styles.progressWrapper}>
         <Progress
           value={progress}
-          className="w-full h-2 bg-common-white/20"
+          style={styles.progressBar}
         />
-        <View className="flex-row justify-between items-center mt-1">
-          <Text className="text-common-white/90 text-base">{progressLabel}</Text>
-          {showPercent && (
-            <Text className="text-common-white/90 text-base">{Math.round(progress)}%</Text>
-          )}
+        <View style={styles.progressInfo}>
+          <Text style={styles.label}>{progressLabel}</Text>
+          {showPercent && <Text style={styles.label}>{Math.round(progress)}%</Text>}
         </View>
       </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    maxWidth: 320,
+    marginVertical: 24,
+    gap: 24,
+  },
+  header: {
+    alignItems: 'center',
+    marginBottom: 16,
+    gap: 4,
+  },
+  title: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  subtitle: {
+    color: 'rgba(255,255,255,0.8)',
+    fontSize: 14,
+  },
+  progressWrapper: {
+    gap: 12,
+  },
+  progressBar: {
+    width: '100%',
+    height: 8,
+    backgroundColor: 'rgba(255,255,255,0.2)',
+  },
+  progressInfo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 4,
+  },
+  label: {
+    color: 'rgba(255,255,255,0.9)',
+    fontSize: 16,
+  },
+});
 
 export default UpdateContent;

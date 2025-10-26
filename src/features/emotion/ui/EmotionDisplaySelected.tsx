@@ -11,10 +11,7 @@ const EmotionDisplaySelected = () => {
   const { getScaleSize } = useScale();
 
   return (
-    <View
-      className="items-center"
-      style={styles.contentStyle}
-    >
+    <View style={styles.contentStyle}>
       <AnimatedZoomImage
         source={selectedIcon?.iconBigShadow || EMOTION_ICONS.joyBigShadow}
         size={getScaleSize(196)}
@@ -41,6 +38,7 @@ const styles = StyleSheet.create({
     marginTop: getScaleSize(5),
   },
   contentStyle: {
+    alignItems: 'center',
     marginTop: getScaleSize(66),
   },
   h1Style: {

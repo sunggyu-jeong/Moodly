@@ -27,7 +27,7 @@ const SettingPage = () => {
   const dispatch = useAppDispatch();
   const { data: userInfo, isLoading } = useGetUserInfoQuery();
   const [notificationStatus, setNotificationStatus] = useState<Notifications.PermissionStatus>(
-    Notifications.PermissionStatus.UNDETERMINED
+    Notifications.PermissionStatus.UNDETERMINED,
   );
   const { KAKAO_OPEN_CHAT_LINK, PRIVACY_POLICY_LINK, TERMS_OF_SERVICE_LINK } = ENV;
 
@@ -37,10 +37,9 @@ const SettingPage = () => {
         const { status } = await Notifications.getPermissionsAsync();
         setNotificationStatus(status);
       } catch (error) {
-        console.error("알림 권한 확인 중 오류 발생:", error);
+        console.error('알림 권한 확인 중 오류 발생:', error);
       }
     };
-  
     checkNotificationStatus();
   }, []);
 
@@ -74,14 +73,11 @@ const SettingPage = () => {
 
   const headerItem = isNotEmpty(userInfo)
     ? {
+        key: 'user-info',
         leftComponent: (
-          <TouchableOpacity
-            onPress={() => {
-              handlePress(SETTING_EVENT_TYPE.MANAGE_ACCOUNT);
-            }}
-          >
-            <View className="flex-row justify-between">
-              <View className="flex-col gap-2">
+          <TouchableOpacity onPress={() => handlePress(SETTING_EVENT_TYPE.MANAGE_ACCOUNT)}>
+            <View style={styles.headerRow}>
+              <View style={styles.headerCol}>
                 <Body1
                   weight="semibold"
                   style={styles.text}
@@ -97,7 +93,7 @@ const SettingPage = () => {
               </View>
               <Image
                 source={COMMON_ICONS.iconNextGray}
-                className="w-6 h-6"
+                style={styles.icon}
                 accessibilityLabel="의견 보내기"
               />
             </View>
@@ -105,12 +101,14 @@ const SettingPage = () => {
         ),
       }
     : {
+        key: 'empty',
         leftComponent: <></>,
       };
 
   const settingListItems = [
     [
       {
+        key: 'notification',
         title: TEXTS.notificationSettings,
         rightComponent: (
           <Toggle
@@ -133,12 +131,13 @@ const SettingPage = () => {
     ],
     [
       {
+        key: 'feedback',
         title: TEXTS.feedback,
         onPress: () => handlePress(SETTING_EVENT_TYPE.SEND_FEEDBACK),
         rightComponent: (
           <Image
             source={COMMON_ICONS.iconNextGray}
-            className="w-6 h-6"
+            style={{ width: 24, height: 24 }}
             accessibilityLabel="의견 보내기"
           />
         ),
@@ -146,23 +145,25 @@ const SettingPage = () => {
     ],
     [
       {
+        key: 'privacy',
         title: TEXTS.privacyPolicy,
         onPress: () => handlePress(SETTING_EVENT_TYPE.PRIVACY_POLICY),
         rightComponent: (
           <Image
             source={COMMON_ICONS.iconNextGray}
-            className="w-6 h-6"
+            style={{ width: 24, height: 24 }}
             accessibilityLabel="개인정보 처리방침"
           />
         ),
       },
       {
+        key: 'terms',
         title: TEXTS.termsOfService,
         onPress: () => handlePress(SETTING_EVENT_TYPE.TERMS_OF_SERVICE),
         rightComponent: (
           <Image
             source={COMMON_ICONS.iconNextGray}
-            className="w-6 h-6"
+            style={{ width: 24, height: 24 }}
             accessibilityLabel="이용약관"
           />
         ),
@@ -171,19 +172,29 @@ const SettingPage = () => {
   ];
 
   return (
-    <>    
-      <SettingRoot
-        headerItem={headerItem}
-        settingItems={settingListItems}
-        isLoading={useDelay(isLoading) ?? false}
-      />
-    </>
+    <SettingRoot
+      headerItem={headerItem}
+      settingItems={settingListItems}
+      isLoading={useDelay(isLoading) ?? false}
+    />
   );
 };
 
 const styles = StyleSheet.create({
   text: {
     color: gray[500],
+  },
+  icon: {
+    width: 24,
+    height: 24,
+  },
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  headerCol: {
+    flexDirection: 'column',
+    gap: 8,
   },
 });
 

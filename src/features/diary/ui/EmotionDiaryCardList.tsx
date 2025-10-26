@@ -2,8 +2,7 @@ import type { Diary } from '@/entities/diary/model/diary.types';
 import { setSelectedDiary } from '@/features/diary/model/diarySlice';
 import { useAppDispatch } from '@/shared/hooks';
 import { isEmpty, navigate } from '@/shared/lib';
-import { TouchableOpacity, View } from 'react-native';
-
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import EmotionDiaryCardContent from './EmotionDiaryCardContent';
 import EmotionDiaryCardHeader from './EmotionDiaryCardHeader';
 
@@ -25,17 +24,14 @@ const EmotionDiaryCardList = ({ data }: EmotionDiaryCardListProps) => {
 
   return (
     <>
-      <View className="flex-1 justify-start items-stretch w-full">
+      <View style={styles.StyledContainer}>
         <TouchableOpacity
           onPress={() => {
             handleDiaryDetail(data);
           }}
           key={data.emotionId}
         >
-          <View
-            key={data.emotionId}
-            className="bg-common-white py-5 px-[18px] mb-4 rounded-[15px]"
-          >
+          <View style={styles.StyledCard}>
             <EmotionDiaryCardHeader
               iconId={data.iconId}
               recordDate={data.recordDate}
@@ -47,5 +43,21 @@ const EmotionDiaryCardList = ({ data }: EmotionDiaryCardListProps) => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  StyledContainer: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+    width: '100%',
+  },
+  StyledCard: {
+    backgroundColor: '#FFFFFF',
+    paddingVertical: 20,
+    paddingHorizontal: 18,
+    marginBottom: 16,
+    borderRadius: 15,
+  },
+});
 
 export default EmotionDiaryCardList;

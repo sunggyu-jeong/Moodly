@@ -5,7 +5,7 @@ import { useCallback, type ProfilerOnRenderCallback } from 'react';
 import 'react-native-get-random-values';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
 
 import { RootStack } from '@/app/navigation';
 import { store } from '@/app/store';
@@ -30,10 +30,10 @@ export const onRenderCallback: ProfilerOnRenderCallback = (
   actualDuration: number,
   baseDuration: number,
   startTime: number,
-  commitTime: number
+  commitTime: number,
 ) => {
   console.log(
-    `onRenderCallback: ${id}, phase: ${phase}, actualDuration: ${actualDuration}, baseDuration: ${baseDuration}, startTime: ${startTime}, commitTime: ${commitTime}`
+    `onRenderCallback: ${id}, phase: ${phase}, actualDuration: ${actualDuration}, baseDuration: ${baseDuration}, startTime: ${startTime}, commitTime: ${commitTime}`,
   );
 };
 
@@ -50,7 +50,7 @@ function App() {
         console.error('App.tsx: 서버 토큰 업데이트 실패', error);
       }
     },
-    [updateFcmToken]
+    [updateFcmToken],
   );
 
   useNotificationPermission({

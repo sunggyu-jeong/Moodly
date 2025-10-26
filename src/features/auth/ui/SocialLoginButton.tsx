@@ -1,8 +1,8 @@
 import { AUTH_PROVIDER_CONFIG } from '@/entities/auth/config';
 import type { AuthProvider } from '@/entities/auth/types';
 import { Label } from '@/shared';
-import { isNotEmpty } from '@/shared/lib';
-import { Image, TouchableOpacity, View } from 'react-native';
+import { isNotEmpty } from '@/shared/lib'
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 type SocialLoginButtonProps = {
   disabled: boolean;
@@ -14,23 +14,24 @@ const SocialLoginButton = ({ disabled, provider, onPress }: SocialLoginButtonPro
   const { label, backgroundColor, textColor, Icon, borderColor } = AUTH_PROVIDER_CONFIG[provider];
   return (
     <View
-      className="w-full h-[52px] rounded-xl bg-common-transparent"
-      // eslint-disable-next-line react-native/no-inline-styles
-      style={{ borderWidth: isNotEmpty(borderColor) ? 1 : 0, borderColor: borderColor }}
+      style={[
+        styles.StyledContainer,
+        { borderWidth: isNotEmpty(borderColor) ? 1 : 0, borderColor: borderColor },
+      ]}
     >
       <TouchableOpacity
         disabled={disabled}
         onPress={() => onPress(provider)}
-        className={`flex flex-row gap-2 justify-center items-center h-full rounded-xl ${backgroundColor}`}
+        style={[styles.StyledButton, { backgroundColor }]}
       >
         <Image
-          className="w-6 h-6"
+          style={styles.StyledIcon}
           source={Icon}
           resizeMode="contain"
         />
         <Label
           weight="regular"
-          className={`${textColor}`}
+          style={{ color: textColor }}
         >
           {label}
         </Label>
@@ -40,3 +41,24 @@ const SocialLoginButton = ({ disabled, provider, onPress }: SocialLoginButtonPro
 };
 
 export default SocialLoginButton;
+
+const styles = StyleSheet.create({
+  StyledContainer: {
+    width: '100%',
+    height: 52,
+    borderRadius: 12,
+    backgroundColor: 'transparent',
+  },
+  StyledButton: {
+    flexDirection: 'row',
+    gap: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+    borderRadius: 12,
+  },
+  StyledIcon: {
+    width: 24,
+    height: 24,
+  },
+});

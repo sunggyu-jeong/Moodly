@@ -1,7 +1,7 @@
+import { common, gray, primary } from '@/shared/styles';
 import { Dayjs } from 'dayjs';
 import { memo } from 'react';
-import { Image, type ImageSourcePropType, TouchableOpacity, View } from 'react-native';
-
+import { Image, StyleSheet, TouchableOpacity, View, type ImageSourcePropType } from 'react-native';
 import { Caption } from '../typography';
 
 interface DayCellProps {
@@ -15,46 +15,82 @@ interface DayCellProps {
 const DayCell = ({ date, isSelected, isFuture, iconSource, onPress }: DayCellProps) => {
   const renderIcon = () => {
     if (isFuture) {
-      return <View className="w-11 h-11 bg-gray-200 rounded-full" />;
+      return <View style={styles.futureIcon} />;
     }
     if (iconSource) {
       return (
         <Image
           source={iconSource}
-          className="w-10 h-10"
+          style={styles.icon}
           resizeMode="contain"
         />
       );
     }
-    return <View className="w-10 h-10" />;
+    return <View style={styles.icon} />;
   };
-  return (
-    <View className="items-center bg-common-transparent w-full h-full p-1">
-      <>
-        <TouchableOpacity
-          className="w-10 h-10"
-          onPress={onPress}
-        >
-          {renderIcon()}
-        </TouchableOpacity>
 
-        <View
-          className={
-            isSelected
-              ? 'bg-primary-300 rounded-full w-5/6 items-center mt-2'
-              : 'w-full px-2 items-center mt-2'
-          }
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.touchArea}
+        onPress={onPress}
+      >
+        {renderIcon()}
+      </TouchableOpacity>
+
+      <View style={[styles.dateWrapper, isSelected && styles.dateWrapperSelected]}>
+        <Caption
+          weight="regular"
+          style={isSelected ? styles.dateSelected : styles.dateText}
         >
-          <Caption
-            weight="regular"
-            className={isSelected ? 'text-common-white' : 'text-gray-500'}
-          >
-            {date.date() < 10 ? date.format('D') : date.format('DD')}
-          </Caption>
-        </View>
-      </>
+          {date.date() < 10 ? date.format('D') : date.format('DD')}
+        </Caption>
+      </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    width: '100%',
+    height: '100%',
+    padding: 4,
+  },
+  touchArea: {
+    width: 40,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  futureIcon: {
+    width: 44,
+    height: 44,
+    backgroundColor: gray[200],
+    borderRadius: 9999,
+  },
+  icon: {
+    width: 40,
+    height: 40,
+  },
+  dateWrapper: {
+    width: '100%',
+    alignItems: 'center',
+    marginTop: 8,
+    paddingHorizontal: 8,
+  },
+  dateWrapperSelected: {
+    backgroundColor: primary[300],
+    borderRadius: 9999,
+    width: '83%',
+  },
+  dateText: {
+    color: gray[500],
+  },
+  dateSelected: {
+    color: common.white,
+  },
+});
 
 export default memo(DayCell);

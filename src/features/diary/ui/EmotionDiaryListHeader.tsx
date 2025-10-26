@@ -5,15 +5,13 @@ import {
   type DiaryPageModeType,
 } from '@/entities/calendar/diary.type';
 import type { Diary } from '@/entities/diary/model/diary.types';
+import { CalendarBar } from '@/features/calendar';
 import { now } from '@/shared';
 import { generateMonthGrid, generateWeekGrid } from '@/shared/lib/date.util';
 import WeekdayHeader from '@/shared/ui/elements/WeekdayHeader';
 import { AnimatePresence, MotiView } from 'moti';
 import { memo, useMemo } from 'react';
-import { View } from 'react-native';
-
-import { CalendarBar } from '@/features/calendar';
-
+import { StyleSheet, View } from 'react-native';
 import DiarySkeleton from './skeleton/DiaryCardSkeleton';
 
 interface DiaryListHeaderProps {
@@ -23,6 +21,7 @@ interface DiaryListHeaderProps {
   monthData?: Diary[];
   calendarMode?: DiaryCalendarModeType;
 }
+
 const EmotionDiaryListHeader = ({
   showSkeleton,
   diaryMode,
@@ -37,6 +36,7 @@ const EmotionDiaryListHeader = ({
         : generateWeekGrid({ targetDate: now(selectedMonth) }),
     [calendarMode, selectedMonth],
   );
+
   return (
     <AnimatePresence>
       {showSkeleton && (
@@ -59,7 +59,7 @@ const EmotionDiaryListHeader = ({
             exit={{ opacity: 0, translateY: 20 }}
             transition={{ type: 'timing', duration: 250 }}
             exitTransition={{ type: 'timing', duration: 0 }}
-            className="relative mb-8"
+            style={styles.StyledCalendarWrapper}
           >
             <WeekdayHeader />
             <CalendarBar
@@ -67,12 +67,25 @@ const EmotionDiaryListHeader = ({
               monthlyDates={monthlyDates}
               entries={monthData}
             />
-            <View className="-mx-5 mt-8 h-[1px] bg-gray-200" />
+            <View style={styles.StyledDivider} />
           </MotiView>
         </AnimatePresence>
       )}
     </AnimatePresence>
   );
 };
+
+const styles = StyleSheet.create({
+  StyledCalendarWrapper: {
+    position: 'relative',
+    marginBottom: 32,
+  },
+  StyledDivider: {
+    marginHorizontal: -20,
+    marginTop: 32,
+    height: 1,
+    backgroundColor: '#E5E7EB',
+  },
+});
 
 export default memo(EmotionDiaryListHeader);

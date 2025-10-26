@@ -6,12 +6,11 @@ import SocialLoginButton from '@/features/auth/ui/SocialLoginButton';
 import { setShowToastView } from '@/processes/overlay/model/overlaySlice';
 import { useAppDispatch, useExternalWebSite } from '@/shared/hooks';
 import { isEmpty, isNotEmpty, navigate, resetTo } from '@/shared/lib';
+import { ENV } from '@/shared/lib/env';
 import { initUserId } from '@/shared/lib/user.util';
 import { gray } from '@/shared/styles/colors';
 import { useEffect } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
-
-import { ENV } from '@/shared/lib/env';
 import { Caption } from '../typography/Caption';
 
 export enum SOCIAL_LOGIN_ENTRANCE {
@@ -29,36 +28,30 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
   const dispatch = useAppDispatch();
   const [saveFirstLaunchFlag] = useUpdateFirstLaunchFlagMutation();
   const { openLink } = useExternalWebSite();
-  const { PRIVACY_POLICY_LINK, TERMS_OF_SERVICE_LINK } = ENV
+  const { PRIVACY_POLICY_LINK, TERMS_OF_SERVICE_LINK } = ENV;
 
   const fetchUserInfo = async () => {
     const response = await getUserInfo();
     await initUserId();
-    if (isEmpty(response)) {
+
+    if (isEmpty(response) || isEmpty(response.data)) {
       navigate('Nickname');
       return;
-    } else {
-      if (isEmpty(response.data)) {
-        navigate('Nickname');
-        return;
-      }
     }
+
     saveFirstLaunchFlag({ isFirstLoad: false });
     resetTo('Main');
     dispatch(setShowToastView({ visibility: true, message: '로그인이 완료됐어요!' }));
   };
 
   useEffect(() => {
-    if (isLoading) {
-      return;
-    }
-    if (isNotEmpty(data)) {
+    if (!isLoading && isNotEmpty(data)) {
       fetchUserInfo();
     }
   }, [data, isLoading, dispatch, entrance]);
 
   return (
-    <View className="w-full px-9 gap-3 items-center">
+    <View style={styles.container}>
       {Platform.OS === 'ios' && (
         <SocialLoginButton
           disabled={isLoading}
@@ -71,7 +64,7 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
         provider={AUTH_PROVIDERS.GOOGLE}
         onPress={() => handleLogin(AUTH_PROVIDERS.GOOGLE)}
       />
-      <View className="mt-6">
+      <View style={styles.noticeContainer}>
         <Caption
           weight="regular"
           style={styles.captionText}
@@ -79,18 +72,14 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
           로그인 시{' '}
           <Text
             style={styles.textUnderline}
-            onPress={() => {
-              openLink(TERMS_OF_SERVICE_LINK);
-            }}
+            onPress={() => openLink(TERMS_OF_SERVICE_LINK)}
           >
             이용약관
           </Text>
           과{' '}
           <Text
             style={styles.textUnderline}
-            onPress={() => {
-              openLink(PRIVACY_POLICY_LINK);
-            }}
+            onPress={() => openLink(PRIVACY_POLICY_LINK)}
           >
             개인정보 처리 방침
           </Text>
@@ -102,8 +91,18 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    paddingHorizontal: 36,
+    gap: 12,
+    alignItems: 'center',
+  },
+  noticeContainer: {
+    marginTop: 24,
+  },
   captionText: {
     color: gray[400],
+    textAlign: 'center',
   },
   textUnderline: {
     color: gray[400],

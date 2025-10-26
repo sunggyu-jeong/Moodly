@@ -27,20 +27,18 @@ const HomeContent = ({
         count={diaryCount}
         onPress={onNavigateToDiaryList}
       />
-      <View className="bg-common-white w-full justify-center items-center rounded-xl px-5 py-6">
+      <View style={styles.container}>
         <H2
           weight="semibold"
           style={styles.mentStyle}
         >
           {titleText}
         </H2>
-
         <Image
           source={MAIN_ICONS.avatarShadow}
-          className="aspect-square"
           style={styles.imageStyle}
+          resizeMode="contain"
         />
-
         <ActionButton
           onPress={onNavigateToEmotionSelection}
           disabled={hasDiary}
@@ -53,11 +51,21 @@ const HomeContent = ({
 };
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#FFFFFF',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 12,
+    paddingHorizontal: 20,
+    paddingVertical: 24,
+  },
   imageStyle: {
     height: getScaleSize(138),
-    marginBottom: getScaleSize(30),
-    marginTop: getScaleSize(30),
     width: getScaleSize(138),
+    marginTop: getScaleSize(30),
+    marginBottom: getScaleSize(30),
+    aspectRatio: 1,
   },
   mentStyle: {
     marginTop: getScaleSize(36),

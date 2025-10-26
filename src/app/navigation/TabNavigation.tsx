@@ -1,12 +1,12 @@
 import EmotionDiaryListPage from '@/pages/EmotionDiaryListPage';
 import HomePage from '@/pages/HomePage';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import type { NavigatorScreenParams } from '@react-navigation/native';
 import { TabBarIcon, useScale } from '@/shared';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
-import { View } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import type { NavigatorScreenParams } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { StyleSheet, View } from 'react-native';
 import SettingStack, { type SettingStackParamList } from './SettingStack';
 
 export type BottomTabParamList = {
@@ -22,7 +22,7 @@ const TabNavigation = () => {
   const { getScaleSize } = useScale();
 
   return (
-    <View className="flex-1">
+    <View style={styles.container}>
       <Tab.Navigator
         screenOptions={{
           headerShown: false,
@@ -73,5 +73,11 @@ const TabNavigation = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 export default TabNavigation;

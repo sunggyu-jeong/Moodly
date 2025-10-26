@@ -1,6 +1,5 @@
 import type { EmotionIconData } from '@/shared';
-import { View } from 'react-native';
-
+import { StyleSheet, View } from 'react-native';
 import EmotionSelectionIcon from './EmotionSelectionIcon';
 
 interface EmotionListProps {
@@ -9,7 +8,7 @@ interface EmotionListProps {
 
 const EmotionSelectionList = ({ emotionList }: EmotionListProps) => {
   return (
-    <View className="flex flex-row flex-wrap mx-6">
+    <View style={styles.StyledContainer}>
       {emotionList.map(item => (
         <EmotionSelectionIcon
           key={item.id}
@@ -19,5 +18,14 @@ const EmotionSelectionList = ({ emotionList }: EmotionListProps) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  StyledContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginHorizontal: 24,
+  },
+});
 
 export default EmotionSelectionList;

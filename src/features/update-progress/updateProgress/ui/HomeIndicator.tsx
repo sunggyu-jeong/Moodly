@@ -1,9 +1,24 @@
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 export default function HomeIndicator() {
   return (
-    <View className="absolute bottom-2 left-1/2 transform -translate-x-1/2">
-      <View className="w-32 h-1 bg-white/30 rounded-full" />
+    <View style={styles.container}>
+      <View style={styles.bar} />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    position: 'absolute',
+    bottom: 8,
+    left: '50%',
+    transform: [{ translateX: -64 }],
+  },
+  bar: {
+    width: 128,
+    height: 4,
+    backgroundColor: 'rgba(255,255,255,0.3)',
+    borderRadius: 9999,
+  },
+});
