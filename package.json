@@ -35,7 +35,6 @@
     "expo-updates": "29.0.12",
     "isomorphic-ws": "5.0.0",
     "moti": "0.29.0",
-    "nativewind": "2.0.11",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-native": "0.81.5",
@@ -61,7 +60,6 @@
     "@types/uuid": "9.0.8",
     "babel-plugin-module-resolver": "5.0.2",
     "babel-preset-expo": "54.0.4",
-    "tailwindcss": "3.3.2",
     "typescript": "~5.9.3"
   },
   "private": true,
