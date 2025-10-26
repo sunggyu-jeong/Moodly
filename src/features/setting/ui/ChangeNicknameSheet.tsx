@@ -1,11 +1,10 @@
-import { BottomSheetView } from '@gorhom/bottom-sheet';
 import { goBack } from '@/shared';
 import { useBottomSheet } from '@/shared/hooks/useBottomSheet';
 import BottomSheetWrapper from '@/shared/ui/elements/BottomSheetWrapper';
 import { H3 } from '@/shared/ui/typography/H3';
+import { BottomSheetView } from '@gorhom/bottom-sheet';
 import { forwardRef, useImperativeHandle, useState } from 'react';
-import { Keyboard } from 'react-native';
-
+import { Keyboard, StyleSheet } from 'react-native';
 import { SetNicknameForm } from '../../set-nickname/ui/SetNicknameForm';
 import type { BottomSheetHandler } from './SocialLoginSheet';
 
@@ -41,9 +40,8 @@ export const ChangeNicknameSheet = forwardRef<BottomSheetHandler>((_, ref) => {
       snapPoints={snapPoints}
       onChange={handleSheetStateChange}
     >
-      <BottomSheetView className="flex-1 items-center pt-4">
+      <BottomSheetView style={styles.container}>
         <H3 weight="semibold">닉네임 변경</H3>
-
         <SetNicknameForm
           key={formKey}
           inputBackgroundColor="white"
@@ -52,4 +50,12 @@ export const ChangeNicknameSheet = forwardRef<BottomSheetHandler>((_, ref) => {
       </BottomSheetView>
     </BottomSheetWrapper>
   );
+});
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    paddingTop: 16,
+  },
 });

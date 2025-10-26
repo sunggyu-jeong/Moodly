@@ -1,16 +1,16 @@
 import { AppSkeleton, SkeletonContainer } from '@/shared';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 const HomeDiaryCountSkeleton = () => {
   return (
-    <SkeletonContainer className="flex-row justify-between items-center w-full px-4 py-2 rounded-xl mb-4">
-      <View className="flex-row items-center">
+    <SkeletonContainer style={styles.StyledContainer}>
+      <View style={styles.LeftWrapper}>
         <AppSkeleton
           width={36}
           height={36}
           radius="round"
         />
-        <View className="ml-[13px]">
+        <View style={styles.LeftTextWrapper}>
           <AppSkeleton
             width={120}
             height={18}
@@ -18,8 +18,8 @@ const HomeDiaryCountSkeleton = () => {
           />
         </View>
       </View>
-      <View className="flex-row items-center">
-        <View className="mr-[6px]">
+      <View style={styles.RightWrapper}>
+        <View style={styles.RightIconWrapper}>
           <AppSkeleton
             width={28}
             height={24}
@@ -35,5 +35,32 @@ const HomeDiaryCountSkeleton = () => {
     </SkeletonContainer>
   );
 };
+
+const styles = StyleSheet.create({
+  StyledContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 12,
+    marginBottom: 16,
+  },
+  LeftWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  LeftTextWrapper: {
+    marginLeft: 13,
+  },
+  RightWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  RightIconWrapper: {
+    marginRight: 6,
+  },
+});
 
 export default HomeDiaryCountSkeleton;

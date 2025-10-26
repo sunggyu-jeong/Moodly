@@ -1,0 +1,27 @@
+const common = {
+  red: '#FF0000',
+  white: '#FFFFFF',
+  transparent: 'transparent',
+  black: '#000000',
+  overlay: 'rgba(0,0,0,0.4)',
+};
+
+const primary = {
+  50: '#F7F8FF',
+  100: '#DBE0F7',
+  200: '#7083E0',
+  300: '#5168DB',
+};
+
+const gray = {
+  50: '#FAFAFC',
+  100: '#F5F6FA',
+  200: '#E6E7F0',
+  300: '#C6C9D7',
+  400: '#8C92AF',
+  500: '#595F7A',
+  600: '#1A1F3C',
+  900: '#212123',
+};
+
+module.exports = { common, primary, gray };

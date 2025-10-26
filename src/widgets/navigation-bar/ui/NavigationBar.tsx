@@ -1,6 +1,7 @@
-import { getScaleSize } from '@/shared/hooks';
 import { isNotEmpty } from '@/shared/lib';
-import NaviActionButton, { type NaviActionButtonProps } from '@/shared/ui/elements/NaviActionButton';
+import NaviActionButton, {
+  type NaviActionButtonProps,
+} from '@/shared/ui/elements/NaviActionButton';
 import NaviBackButton from '@/shared/ui/elements/NaviBackButton';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -25,19 +26,16 @@ const NavigationBar = ({
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={{ paddingTop: insets.top, backgroundColor }}>
-      <View
-        className={`flex-row items-center h-[40px] px-[10px] ${hasLeftCenter ? 'justify-between' : 'justify-end'}`}
-        style={styles.container}
-      >
+    <View style={[{ paddingTop: insets.top, backgroundColor }]}>
+      <View style={[styles.container, hasLeftCenter ? styles.justifyBetween : styles.justifyEnd]}>
         {showBackButton && (
-          <View className="ml-3">
+          <View style={styles.leftButtonWrapper}>
             <NaviBackButton />
           </View>
         )}
 
         {isNotEmpty(leftComponents) && (
-          <View className="ml-3">
+          <View style={styles.leftButtonWrapper}>
             {leftComponents.map((el, index) => (
               <NaviActionButton
                 key={index}
@@ -46,14 +44,15 @@ const NavigationBar = ({
             ))}
           </View>
         )}
-        <View className="flex-1" />
+
+        <View style={styles.flexOne} />
 
         {centerComponent && <View style={styles.center}>{centerComponent}</View>}
 
-        <View className="flex-1" />
+        <View style={styles.flexOne} />
 
         {isNotEmpty(actionButtons) && (
-          <View className="flex-row mr-[10px] gap-3">
+          <View style={styles.actionButtons}>
             {actionButtons.map((el, index) => (
               <NaviActionButton
                 key={index}
@@ -69,7 +68,22 @@ const NavigationBar = ({
 
 const styles = StyleSheet.create({
   container: {
-    height: getScaleSize(56),
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 40,
+    paddingHorizontal: 10,
+  },
+  justifyBetween: {
+    justifyContent: 'space-between',
+  },
+  justifyEnd: {
+    justifyContent: 'flex-end',
+  },
+  leftButtonWrapper: {
+    marginLeft: 12,
+  },
+  flexOne: {
+    flex: 1,
   },
   center: {
     position: 'absolute',
@@ -79,8 +93,13 @@ const styles = StyleSheet.create({
     right: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    // 이 컨테이너가 다른 버튼의 터치를 막지 않도록 설정
     pointerEvents: 'box-none',
   },
+  actionButtons: {
+    flexDirection: 'row',
+    marginRight: 10,
+    gap: 12,
+  },
 });
+
 export default React.memo(NavigationBar);

@@ -23,7 +23,6 @@ import NaviTitleDisplay from '@/shared/ui/elements/NaviTitle';
 import { NavigationBar } from '@/widgets/navigation-bar';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
-
 import packageJson from '../../package.json';
 import { useGetUserInfoQuery } from '../entities/auth/api/auth.api';
 import { type BottomSheetHandler, SettingList } from '../features/setting';
@@ -41,9 +40,7 @@ const ManageAccountPage = () => {
     try {
       const user = await supabase.auth.getUser();
       const session = await supabase.auth.getSession();
-      if (!user.data.user) {
-        return;
-      }
+      if (!user.data.user) return;
 
       const res = await fetch(`${process.env.HOT_UPDATER_SUPABASE_URL}/functions/v1/smart-api`, {
         method: 'POST',
@@ -55,17 +52,17 @@ const ManageAccountPage = () => {
       });
 
       await res.json();
+
       if (res.ok) {
         await supabase.auth.signOut();
         dispatch(appApi.util.resetApiState());
         dispatch(setRequestWithDrawal(null));
-
         resetTo('Login');
       } else {
         dispatch(setShowToastView({ visibility: true, message: '회원 탈퇴 요청이 실패했어요.' }));
       }
     } catch (err) {
-      console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', err);
+      console.log('회원 탈퇴 요청 중 오류 발생:', err);
     } finally {
       dispatch(resetModalPopup());
     }
@@ -73,32 +70,34 @@ const ManageAccountPage = () => {
 
   const handlePress = useCallback(
     (identifier: SETTING_EVENT_TYPE) => {
-      if (identifier === SETTING_EVENT_TYPE.CHANGE_NICKNAME) {
-        changeNicknameSheetRef.current?.expand();
-      } else if (identifier === SETTING_EVENT_TYPE.LOG_OUT) {
-        signOut();
-      } else if (identifier === SETTING_EVENT_TYPE.DELETE_ACCOUNT) {
-        dispatch(setRequestWithDrawal(null));
-        dispatch(
-          setShowModalPopup({
-            visibility: true,
-            title: '계정 삭제',
-            message:
-              '삭제 시 모든 기록 정보가 완전히 삭제되며,\n복구가 불가능합니다.\n\n정말 삭제하시겠어요?',
-            cancelText: '취소',
-            confirmText: '삭제',
-            confirmActionKey: MODAL_CONFIRM_ACTION_KEY.WITHDRAWAL,
-          }),
-        );
+      switch (identifier) {
+        case SETTING_EVENT_TYPE.CHANGE_NICKNAME:
+          changeNicknameSheetRef.current?.expand();
+          break;
+        case SETTING_EVENT_TYPE.LOG_OUT:
+          signOut();
+          break;
+        case SETTING_EVENT_TYPE.DELETE_ACCOUNT:
+          dispatch(setRequestWithDrawal(null));
+          dispatch(
+            setShowModalPopup({
+              visibility: true,
+              title: '계정 삭제',
+              message:
+                '삭제 시 모든 기록 정보가 완전히 삭제되며,\n복구가 불가능합니다.\n\n정말 삭제하시겠어요?',
+              cancelText: '취소',
+              confirmText: '삭제',
+              confirmActionKey: MODAL_CONFIRM_ACTION_KEY.WITHDRAWAL,
+            }),
+          );
+          break;
       }
     },
     [signOut, dispatch],
   );
 
   useEffect(() => {
-    if (isEmpty(requestWithDrawal)) {
-      return;
-    }
+    if (isEmpty(requestWithDrawal)) return;
     handleAccountDeletion();
   }, [requestWithDrawal, handleAccountDeletion]);
 
@@ -110,17 +109,14 @@ const ManageAccountPage = () => {
           title: '닉네임 변경',
           onPress: () => handlePress(SETTING_EVENT_TYPE.CHANGE_NICKNAME),
           rightComponent: (
-            <View className="flex-row align-middle gap-2">
-              <Body1
-                weight="regular"
-                style={styles.nickname}
-              >
+            <View style={styles.nicknameContainer}>
+              <Body1 weight="regular" style={styles.nickname}>
                 {userInfo?.nickname}
               </Body1>
               <Image
                 source={SETTING_ICONS.modifyNickname}
-                className="w-6 h-6"
-                accessibilityLabel="의견 보내기"
+                style={styles.modifyIcon}
+                accessibilityLabel="닉네임 변경 아이콘"
               />
             </View>
           ),
@@ -147,15 +143,12 @@ const ManageAccountPage = () => {
     <>
       <NavigationBar
         backgroundColor={gray[100]}
-        showBackButton={true}
-        centerComponent={<NaviTitleDisplay title={'계정 관리'} />}
+        showBackButton
+        centerComponent={<NaviTitleDisplay title="계정 관리" />}
       />
-      <View className="bg-gray-100 flex-1 justify-between px-4 rounded-xl pt-[14px]">
+      <View style={styles.container}>
         <SettingList groups={settingListItems} />
-        <Label
-          weight="regular"
-          className="text-gray-400 mb-[13px] text-center"
-        >
+        <Label weight="regular" style={styles.versionLabel}>
           {'앱 버전: ' + packageJson.version}
         </Label>
       </View>
@@ -165,8 +158,30 @@ const ManageAccountPage = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: gray[100],
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingTop: 14,
+    borderRadius: 12,
+  },
+  nicknameContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
   nickname: {
     color: gray[500],
+  },
+  modifyIcon: {
+    width: 24,
+    height: 24,
+  },
+  versionLabel: {
+    color: gray[400],
+    marginBottom: 13,
+    textAlign: 'center',
   },
 });
 

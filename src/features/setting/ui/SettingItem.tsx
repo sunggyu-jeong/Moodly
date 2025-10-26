@@ -1,6 +1,5 @@
 import { Body1, gray } from '@/shared';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-
 import type { SettingItemProps } from '../types';
 
 const SettingItem = ({ titleStyle, ...props }: SettingItemProps) => {
@@ -9,26 +8,43 @@ const SettingItem = ({ titleStyle, ...props }: SettingItemProps) => {
   return (
     <Container
       onPress={props.onPress}
-      className="flex-row items-center p-4"
+      style={styles.container}
     >
-      <View className="flex-row items-center flex-1">
-        {props.leftComponent && <View className="mr-4 w-full">{props.leftComponent}</View>}
+      <View style={styles.row}>
+        {props.leftComponent && <View style={styles.left}>{props.leftComponent}</View>}
         {props.title && (
           <Body1
             weight="regular"
-            style={[styles.mentStyle, titleStyle]}
+            style={[styles.text, titleStyle]}
           >
             {props.title}
           </Body1>
         )}
       </View>
-      {props.rightComponent && <View className="mr-2">{props.rightComponent}</View>}
+      {props.rightComponent && <View style={styles.right}>{props.rightComponent}</View>}
     </Container>
   );
 };
 
 const styles = StyleSheet.create({
-  mentStyle: {
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 16,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  left: {
+    marginRight: 16,
+    width: '100%',
+  },
+  right: {
+    marginRight: 8,
+  },
+  text: {
     color: gray[600],
   },
 });

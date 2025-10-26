@@ -7,8 +7,6 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
 import { Provider } from 'react-redux';
 
-import '../../global.css';
-
 import { RootStack } from '@/app/navigation';
 import { store } from '@/app/store';
 import { useUpsertPushTokenMutation } from '@/entities/auth/api/auth.api';
@@ -31,10 +29,10 @@ export const onRenderCallback: ProfilerOnRenderCallback = (
   actualDuration: number,
   baseDuration: number,
   startTime: number,
-  commitTime: number
+  commitTime: number,
 ) => {
   console.log(
-    `onRenderCallback: ${id}, phase: ${phase}, actualDuration: ${actualDuration}, baseDuration: ${baseDuration}, startTime: ${startTime}, commitTime: ${commitTime}`
+    `onRenderCallback: ${id}, phase: ${phase}, actualDuration: ${actualDuration}, baseDuration: ${baseDuration}, startTime: ${startTime}, commitTime: ${commitTime}`,
   );
 };
 
@@ -51,7 +49,7 @@ function App() {
         console.error('App.tsx: 서버 토큰 업데이트 실패', error);
       }
     },
-    [updateFcmToken]
+    [updateFcmToken],
   );
 
   useNotificationPermission({

@@ -33,20 +33,21 @@ export const SetNicknameForm = ({ onSuccess, inputBackgroundColor }: SetNickname
   };
 
   const styles = StyleSheet.create({
-    viewContainer: {
+    container: {
+      width: '100%',
+      height: '100%',
+      flex: 1,
+      justifyContent: 'space-between',
       paddingLeft: inputBackgroundColor ? 36 : 0,
       paddingRight: inputBackgroundColor ? 36 : 0,
     },
-    buttonStyle: {
+    button: {
       marginBottom: inputBackgroundColor ? 0 : 61,
     },
   });
 
   return (
-    <View
-      className="w-full h-full flex-1 justify-between"
-      style={styles.viewContainer}
-    >
+    <View style={styles.container}>
       <InputWithCounterProps
         value={nickname}
         onChangeText={setNickname}
@@ -57,7 +58,7 @@ export const SetNicknameForm = ({ onSuccess, inputBackgroundColor }: SetNickname
       <ActionButton
         disabled={!isSubmittable || isSettingUser || isSavingFlag}
         onPress={handleSubmit}
-        style={styles.buttonStyle}
+        style={styles.button}
       >
         {inputBackgroundColor ? '완료' : '다음'}
       </ActionButton>

@@ -1,6 +1,5 @@
-import { Image, type ImageSourcePropType, TouchableOpacity } from 'react-native';
-
 import { getScaleSize } from '@/shared/hooks';
+import { Image, StyleSheet, TouchableOpacity, type ImageSourcePropType } from 'react-native';
 
 interface IconButtonAtomProps {
   icon: ImageSourcePropType;
@@ -9,13 +8,27 @@ interface IconButtonAtomProps {
 
 const IconButton = ({ icon, onPress }: IconButtonAtomProps) => {
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={styles.button}
+    >
       <Image
         source={icon}
-        className="float-right"
-        style={{ width: getScaleSize(24), height: getScaleSize(24) }}
+        style={styles.image}
+        resizeMode="contain"
       />
     </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  button: {
+    alignSelf: 'flex-end',
+  },
+  image: {
+    width: getScaleSize(24),
+    height: getScaleSize(24),
+  },
+});
+
 export default IconButton;

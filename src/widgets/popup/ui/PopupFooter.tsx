@@ -1,7 +1,7 @@
 import { isNotEmpty } from '@/shared/lib';
 import { gray, primary } from '@/shared/styles/colors';
 import PopupButton from '@/shared/ui/elements/ModalButton';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 interface PopupFooterProps {
   onCancel: () => void;
@@ -12,7 +12,7 @@ interface PopupFooterProps {
 
 const PopupFooter = ({ onCancel, onConfirm, cancelText, confirmText }: PopupFooterProps) => {
   return (
-    <View className="h-[80px] justify-center items-center flex-row mx-9 gap-2 mt-4 mb-4">
+    <View style={styles.container}>
       {isNotEmpty(cancelText) && (
         <PopupButton
           text={cancelText}
@@ -32,5 +32,18 @@ const PopupFooter = ({ onCancel, onConfirm, cancelText, confirmText }: PopupFoot
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    height: 80,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginHorizontal: 36,
+    gap: 8,
+    marginTop: 16,
+    marginBottom: 16,
+  },
+});
 
 export default PopupFooter;

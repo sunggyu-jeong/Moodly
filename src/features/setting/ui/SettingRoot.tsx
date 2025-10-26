@@ -4,8 +4,7 @@ import { Label } from '@/shared/ui/typography/Label';
 import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
 import SettingWidgetSkeleton from '@/widgets/setting/ui/SettingWidgetSkeleton';
 import { memo } from 'react';
-import { View } from 'react-native';
-
+import { StyleSheet, View } from 'react-native';
 import packageJson from '../../../../package.json';
 import { type SettingItemProps, TEXTS } from '../types';
 import SettingList from './SettingList';
@@ -23,25 +22,39 @@ const SettingRoot = ({ headerItem, settingItems, isLoading }: Props) => (
       showBackButton={false}
       centerComponent={<NaviTitleDisplay title={TEXTS.pageTitle} />}
     />
-    <View className="bg-gray-100 flex-1 justify-between px-4 rounded-xl pt-[14px]">
+    <View style={styles.container}>
       {isLoading ? (
         <SettingWidgetSkeleton />
       ) : (
-        <>
-          <SettingList
-            header={[headerItem].filter(Boolean) as SettingItemProps[]}
-            groups={settingItems}
-          />
-        </>
+        <SettingList
+          header={[headerItem].filter(Boolean) as SettingItemProps[]}
+          groups={settingItems}
+        />
       )}
       <Label
         weight="regular"
-        className="text-gray-400 mb-[13px] text-center"
+        style={styles.versionLabel}
       >
         {TEXTS.appVersionPrefix + packageJson.version}
       </Label>
     </View>
   </>
 );
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: gray[100],
+    flex: 1,
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    borderRadius: 12,
+    paddingTop: 14,
+  },
+  versionLabel: {
+    color: gray[400],
+    marginBottom: 13,
+    textAlign: 'center',
+  },
+});
 
 export default memo(SettingRoot);

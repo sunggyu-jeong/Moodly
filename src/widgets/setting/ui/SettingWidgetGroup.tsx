@@ -1,13 +1,13 @@
-import { SkeletonContainer } from '@/shared';
+import { common, gray, SkeletonContainer } from '@/shared';
 import React, { memo, type PropsWithChildren } from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-const Divider = () => <View className="w-full h-px bg-gray-100 mx-4" />;
+const Divider = () => <View style={styles.divider} />;
 
 const SettingWidgetGroup = ({ children }: PropsWithChildren) => {
   const items = React.Children.toArray(children);
   return (
-    <SkeletonContainer className="bg-common-white rounded-xl overflow-hidden">
+    <SkeletonContainer style={styles.container}>
       {items.map((child, index) => (
         <React.Fragment key={index}>
           {child}
@@ -17,5 +17,19 @@ const SettingWidgetGroup = ({ children }: PropsWithChildren) => {
     </SkeletonContainer>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: common.white,
+    borderRadius: 12,
+    overflow: 'hidden',
+  },
+  divider: {
+    width: '100%',
+    height: 1,
+    backgroundColor: gray[100],
+    marginHorizontal: 16,
+  },
+});
 
 export default memo(SettingWidgetGroup);

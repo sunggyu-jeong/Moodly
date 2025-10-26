@@ -7,9 +7,10 @@ interface PopupHeaderProps {
   title: string;
   message: string;
 }
+
 const PopupHeader = ({ title, message }: PopupHeaderProps) => {
   return (
-    <View className="mt-10">
+    <View style={styles.container}>
       <H2
         weight="semibold"
         style={styles.popupTitle}
@@ -27,6 +28,9 @@ const PopupHeader = ({ title, message }: PopupHeaderProps) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    marginTop: 40,
+  },
   popupContent: {
     color: gray[400],
     marginTop: 9,

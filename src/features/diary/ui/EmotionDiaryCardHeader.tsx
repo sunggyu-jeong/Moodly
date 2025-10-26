@@ -8,9 +8,9 @@ const EmotionDiaryCardHeader = ({ iconId, recordDate }: Partial<Diary>) => {
   const emotionSource = ICON_DATA.find(item => item.id === iconId);
 
   return (
-    <View className="flex-row mb-[15px] items-center">
+    <View style={styles.StyledContainer}>
       <Avatar source={emotionSource?.iconSelected || EMOTION_ICONS.joySmallSelected} />
-      <View className="flex flex-col justify-between">
+      <View style={styles.StyledTextWrapper}>
         <Caption
           weight="semibold"
           style={styles.captionStyle}
@@ -29,6 +29,16 @@ const EmotionDiaryCardHeader = ({ iconId, recordDate }: Partial<Diary>) => {
 };
 
 const styles = StyleSheet.create({
+  StyledContainer: {
+    flexDirection: 'row',
+    marginBottom: 15,
+    alignItems: 'center',
+  },
+  StyledTextWrapper: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
   captionStyle: {
     color: gray[400],
     marginBottom: 4,

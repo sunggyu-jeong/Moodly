@@ -1,18 +1,18 @@
 import { useLazyGetFirstLaunchFlagQuery } from '@/entities/auth/api/user-meta.api';
-import { isNotEmpty, resetTo, supabase, useAppDispatch } from '@/shared';
+import { isNotEmpty, primary, resetTo, supabase, useAppDispatch } from '@/shared';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { useCallback, useEffect } from 'react';
-import { Alert, Image, SafeAreaView, StatusBar, View } from 'react-native';
+import { Image, SafeAreaView, StatusBar, StyleSheet, View } from 'react-native';
 
+import { useVersionCheck } from '@/features/check-app-version/ui';
+import { MODAL_CANCEL_ACTION_KEY, MODAL_CONFIRM_ACTION_KEY } from '@/processes/key';
+import { setShowModalPopup } from '@/processes/overlay/model/overlaySlice';
+import * as Updates from 'expo-updates';
 import {
   type UpdateProgressMent,
   type UpdateProgressStatus,
 } from '../../navigation/hooks/useUpdateProgress';
 import AppBootstrap from '../../provider/AppBootstrap';
-import * as Updates from 'expo-updates';
-import { MODAL_CANCEL_ACTION_KEY, MODAL_CONFIRM_ACTION_KEY } from '@/processes/key';
-import { setShowModalPopup } from '@/processes/overlay/model/overlaySlice';
-import { useVersionCheck } from '@/features/check-app-version/ui';
 
 export interface SplashProps {
   status: UpdateProgressStatus;
@@ -40,7 +40,7 @@ const Splash = () => {
     }
   }, [getFirstLaunchFlag]);
 
-  const handleOTAUpdate = useCallback( async() => {
+  const handleOTAUpdate = useCallback(async () => {
     const response = await Updates.checkForUpdateAsync();
     if (!response.isAvailable) return false;
     await Updates.fetchUpdateAsync();
@@ -55,8 +55,8 @@ const Splash = () => {
     const modal = {
       visibity: true,
       title: '업데이트 알림',
-      disableBackdropClose:true
-    }
+      disableBackdropClose: true,
+    };
 
     if (versionStatus === 'required') {
       dispatch(
@@ -76,9 +76,7 @@ const Splash = () => {
       dispatch(
         setShowModalPopup({
           ...modal,
-          message:
-            versionPolicy?.update_message ||
-            '업데이트 후 더 안정적으로 이용할 수 있습니다.',
+          message: versionPolicy?.update_message || '업데이트 후 더 안정적으로 이용할 수 있습니다.',
           confirmText: '업데이트',
           cancelText: '이용',
           confirmActionKey: MODAL_CONFIRM_ACTION_KEY.MOVE_STORE,
@@ -100,13 +98,12 @@ const Splash = () => {
         const blocked = handleVersionCheck();
         if (blocked) return;
 
-        setTimeout(flag, 1500); 
+        setTimeout(flag, 1500);
       } catch {
         flag();
       }
     })();
   }, [flag, handleOTAUpdate, handleVersionCheck]);
-
 
   return (
     <>
@@ -114,8 +111,8 @@ const Splash = () => {
         translucent
         backgroundColor="transparent"
       />
-      <SafeAreaView className="bg-primary-300 flex-1 justify-center items-center">
-        <View className="absolute">
+      <SafeAreaView style={styles.StyledContainer}>
+        <View style={styles.StyledBox}>
           <Image source={MAIN_ICONS.logo} />
         </View>
       </SafeAreaView>
@@ -124,5 +121,17 @@ const Splash = () => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  StyledContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: primary[300],
+  },
+  StyledBox: {
+    position: 'absolute',
+  },
+});
 
 export default Splash;

@@ -50,7 +50,6 @@ const DropDownAnimation = () => {
         onPress={onClose}
       />
       <Animated.View
-        className="absolute z-[998]"
         style={[
           {
             top: (showDropDownView?.pos?.y ?? 0) - (Platform.OS === 'android' ? 70 : 0),
@@ -67,6 +66,7 @@ const DropDownAnimation = () => {
               },
             ],
           },
+          styles.animate,
         ]}
       >
         <DropDownContainer />
@@ -76,6 +76,10 @@ const DropDownAnimation = () => {
 };
 
 const styles = StyleSheet.create({
+  animate: {
+    position: 'absolute',
+    zIndex: 998,
+  },
   container: {
     position: 'absolute',
     left: 0,

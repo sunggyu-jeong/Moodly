@@ -1,4 +1,6 @@
+import { common } from '@/shared';
 import type { ViewStyle } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
 type KeyboardAwareProviderProps = {
@@ -8,11 +10,15 @@ type KeyboardAwareProviderProps = {
 
 export default function KeyboardAwareProvider({ children, style }: KeyboardAwareProviderProps) {
   return (
-    <KeyboardAwareScrollView
-      className="flex-1 bg-common-white"
-      style={style}
-    >
+    <KeyboardAwareScrollView style={[styles.StyledContainer, style]}>
       {children}
     </KeyboardAwareScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  StyledContainer: {
+    flex: 1,
+    backgroundColor: common.white,
+  },
+});

@@ -1,6 +1,6 @@
 {
   "cli": {
-    "version": ">= 9.0.0",
+    "version": ">= 13.0.0",
     "appVersionSource": "local",
     "requireCommit": true
   },
@@ -21,14 +21,22 @@
     "preview": {
       "distribution": "internal",
       "channel": "preview",
-      "ios": {},
+      "ios": {
+        "buildConfiguration": "Release",
+        "simulator": false,
+        "distribution": "store"
+      },
       "env": {
         "APP_ENV": "staging"
       }
     },
     "production": {
       "channel": "production",
-      "ios": {},
+      "ios": {
+        "buildConfiguration": "Release",
+        "simulator": false,
+        "distribution": "store"
+      },
       "android": {
         "buildType": "app-bundle"
       },

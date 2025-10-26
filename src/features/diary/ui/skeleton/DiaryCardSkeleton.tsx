@@ -1,20 +1,18 @@
 import { MotiView } from 'moti';
 import { Skeleton } from 'moti/skeleton';
-import { SafeAreaView, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 
 const DiarySkeleton = () => {
   const mode = 'light';
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView style={styles.StyledContainer}>
       <Skeleton.Group show={true}>
         <MotiView
-          transition={{
-            type: 'timing',
-          }}
+          transition={{ type: 'timing' }}
           animate={{ backgroundColor: '#ffffff' }}
-          className="bg-gray-400 py-5 px-[18px] mb-4 rounded-[15px] w-full"
+          style={styles.StyledCard}
         >
-          <View className="mb-3">
+          <View style={styles.StyledAvatarWrapper}>
             <Skeleton
               width={40}
               height={40}
@@ -23,7 +21,7 @@ const DiarySkeleton = () => {
             />
           </View>
 
-          <View className="mb-2">
+          <View style={styles.StyledLineShort}>
             <Skeleton
               width="50%"
               height={16}
@@ -31,7 +29,8 @@ const DiarySkeleton = () => {
               colorMode={mode}
             />
           </View>
-          <View className="mb-4">
+
+          <View style={styles.StyledLineMedium}>
             <Skeleton
               width="33%"
               height={16}
@@ -40,7 +39,7 @@ const DiarySkeleton = () => {
             />
           </View>
 
-          <View className="mb-2">
+          <View style={styles.StyledLineFull}>
             <Skeleton
               width="100%"
               height={12}
@@ -48,6 +47,7 @@ const DiarySkeleton = () => {
               colorMode={mode}
             />
           </View>
+
           <Skeleton
             width="80%"
             height={12}
@@ -59,5 +59,31 @@ const DiarySkeleton = () => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  StyledContainer: {
+    flex: 1,
+  },
+  StyledCard: {
+    backgroundColor: '#9CA3AF',
+    paddingVertical: 20,
+    paddingHorizontal: 18,
+    marginBottom: 16,
+    borderRadius: 15,
+    width: '100%',
+  },
+  StyledAvatarWrapper: {
+    marginBottom: 12,
+  },
+  StyledLineShort: {
+    marginBottom: 8,
+  },
+  StyledLineMedium: {
+    marginBottom: 16,
+  },
+  StyledLineFull: {
+    marginBottom: 8,
+  },
+});
 
 export default DiarySkeleton;

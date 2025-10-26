@@ -4,7 +4,7 @@ import { Image, StyleSheet, View } from 'react-native';
 
 const EmotionDiaryEmptyMessage = () => {
   return (
-    <View className="items-center">
+    <View style={styles.StyledContainer}>
       <Image
         source={MAIN_ICONS.avatarEmpty}
         style={styles.imageStyle}
@@ -20,6 +20,9 @@ const EmotionDiaryEmptyMessage = () => {
 };
 
 const styles = StyleSheet.create({
+  StyledContainer: {
+    alignItems: 'center',
+  },
   bodyText: {
     color: colors.gray[400],
     marginTop: 6,

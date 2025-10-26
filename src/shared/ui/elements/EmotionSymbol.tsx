@@ -1,6 +1,5 @@
-import { Image, type ImageSourcePropType, Pressable, StyleSheet, View } from 'react-native';
-
 import { getScaleSize } from '@/shared/hooks';
+import { Image, Pressable, StyleSheet, View, type ImageSourcePropType } from 'react-native';
 
 export interface EmotionSymbolProps {
   icon: ImageSourcePropType;
@@ -8,8 +7,11 @@ export interface EmotionSymbolProps {
 }
 
 const EmotionSymbol = ({ icon, onPress }: EmotionSymbolProps) => (
-  <View className="w-[20%] items-center justify-center h-[50px] aspect-square">
-    <Pressable onPress={onPress}>
+  <View style={styles.container}>
+    <Pressable
+      onPress={onPress}
+      style={styles.pressable}
+    >
       <Image
         source={icon}
         resizeMode="cover"
@@ -20,9 +22,20 @@ const EmotionSymbol = ({ icon, onPress }: EmotionSymbolProps) => (
 );
 
 const styles = StyleSheet.create({
+  container: {
+    width: '20%',
+    height: 50,
+    aspectRatio: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  pressable: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   image: {
-    height: getScaleSize(56),
     width: getScaleSize(56),
+    height: getScaleSize(56),
   },
 });
 

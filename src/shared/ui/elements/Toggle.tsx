@@ -1,10 +1,12 @@
+import { colors } from '@/shared/styles';
 import { useEffect, useState } from 'react';
-import { Animated, Easing, TouchableOpacity } from 'react-native';
+import { Animated, Easing, StyleSheet, TouchableOpacity } from 'react-native';
 
 interface ToggleProps {
   onToggle: () => void;
   isOn: boolean;
 }
+
 const Toggle = ({ onToggle, isOn }: ToggleProps) => {
   const [animatedValue] = useState(new Animated.Value(isOn ? 1 : 0));
 
@@ -25,14 +27,30 @@ const Toggle = ({ onToggle, isOn }: ToggleProps) => {
   return (
     <TouchableOpacity
       onPress={onToggle}
-      className={`w-11 h-6 rounded-full ${isOn ? 'bg-primary-300' : 'bg-gray-300'}`}
+      activeOpacity={0.8}
+      style={[styles.container, { backgroundColor: isOn ? colors.primary[300] : colors.gray[300] }]}
     >
-      <Animated.View
-        className="ml-[1px] mt-[1.5px] w-5 h-5 rounded-full bg-common-white absolute"
-        style={{ transform: [{ translateX }] }}
-      />
+      <Animated.View style={[styles.circle, { transform: [{ translateX }] }]} />
     </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    width: 44,
+    height: 24,
+    borderRadius: 9999,
+    justifyContent: 'center',
+  },
+  circle: {
+    position: 'absolute',
+    width: 20,
+    height: 20,
+    borderRadius: 9999,
+    backgroundColor: colors.common.white,
+    marginLeft: 1,
+    marginTop: 1.5,
+  },
+});
 
 export default Toggle;
