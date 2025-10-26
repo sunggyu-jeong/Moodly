@@ -1,10 +1,9 @@
 const path = require('path');
 const { getDefaultConfig } = require('expo/metro-config');
-const { withNativeWind } = require('nativewind/metro');
 
 const config = getDefaultConfig(__dirname);
 
-config.resolver.sourceExts.push('env', 'css');
+config.resolver.sourceExts.push('env');
 
 const originalResolveRequest = config.resolver.resolveRequest;
 config.resolver.resolveRequest = (context, moduleName, platform) => {
@@ -19,6 +18,4 @@ config.resolver.resolveRequest = (context, moduleName, platform) => {
     : context.resolveRequest(context, moduleName, platform);
 };
 
-module.exports = withNativeWind(config, {
-  input: path.resolve(__dirname, 'global.css'),
-});
+module.exports = config;

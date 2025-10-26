@@ -1,10 +1,12 @@
-const colors = require('./src/shared/styles/colors').default;
-const { typography } = require('./src/shared/styles/typography');
+import type { Config } from 'tailwindcss';
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: ['./index.js', './App.{js,jsx,ts,tsx}', './src/**/*.{js,jsx,ts,tsx}'],
-  presets: [require('nativewind/preset')],
+// @ts-ignore
+const colors = require('./src/shared/styles/colors');
+// @ts-ignore
+const typography = require('./src/shared/styles/typography');
+
+const config: Config = {
+  content: ['./App.{js,jsx,ts,tsx}', './src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
       fontSize: {
@@ -78,3 +80,5 @@ module.exports = {
   },
   plugins: [],
 };
+
+export default config;

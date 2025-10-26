@@ -42,13 +42,7 @@
       "@components/*": [
         "src/components/*"
       ]
-    },
-    "types": [
-      "nativewind/types",
-      "react",
-      "react-native",
-      "expo"
-    ]
+    }
   },
   "include": [
     "App.tsx",
