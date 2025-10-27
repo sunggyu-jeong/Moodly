@@ -8,16 +8,10 @@ import { useVersionCheck } from '@/features/check-app-version/ui';
 import { MODAL_CANCEL_ACTION_KEY, MODAL_CONFIRM_ACTION_KEY } from '@/processes/key';
 import { setShowModalPopup } from '@/processes/overlay/model/overlaySlice';
 import * as Updates from 'expo-updates';
-import {
-  type UpdateProgressMent,
-  type UpdateProgressStatus,
-} from '../../navigation/hooks/useUpdateProgress';
 import AppBootstrap from '../../provider/AppBootstrap';
 
 export interface SplashProps {
-  status: UpdateProgressStatus;
   progress: number;
-  ment: UpdateProgressMent;
 }
 const Splash = () => {
   const [getFirstLaunchFlag] = useLazyGetFirstLaunchFlagQuery();

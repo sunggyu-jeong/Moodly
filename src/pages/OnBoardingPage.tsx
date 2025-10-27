@@ -1,4 +1,6 @@
+import { useUpsertPushTokenMutation } from '@/entities/auth/api/auth.api';
 import { type BottomSheetHandler, SocialLoginSheet } from '@/features/setting/ui/SocialLoginSheet';
+import { isEmpty } from '@/shared';
 import { ONBOARDING_ICONS } from '@/shared/assets/images/onboarding';
 import { useNotificationPermission } from '@/shared/hooks/useNotificationPermission';
 import colors from '@/shared/styles/colors';
@@ -68,7 +70,23 @@ const OnboardingPage = () => {
   const [showAlarmPermission, setShowAlarmPermission] = useState(false);
   const isScrollingRef = useRef(false);
   const socialSheetRef = useRef<BottomSheetHandler>(null);
-  const { requestUserPermission } = useNotificationPermission();
+  const [updateFcmToken] = useUpsertPushTokenMutation();
+  const onTokenUpdate = useCallback(
+    async (token: string | null) => {
+      try {
+        if (isEmpty(token)) return;
+        await updateFcmToken({ token }).unwrap();
+        console.log('App.tsx: 서버 토큰 업데이트 성공');
+      } catch (error) {
+        console.error('App.tsx: 서버 토큰 업데이트 실패', error);
+      }
+    },
+    [updateFcmToken],
+  );
+  const { requestUserPermission } = useNotificationPermission({
+    setupListeners: false,
+    onTokenUpdate: onTokenUpdate,
+  });
 
   useFocusEffect(
     useCallback(() => {
@@ -116,7 +134,7 @@ const OnboardingPage = () => {
 
   const onMomentumScrollEnd = useCallback(
     async (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-      const viewWidth = e.nativeEvent.layoutMeasurement.width;
+      const viewWidth = e.nativeEvent.layoutMeasurement.width; 
       const x = e.nativeEvent.contentOffset.x;
       const ratio = x / viewWidth;
       const next = Math.floor(ratio) + (ratio % 1 > 0.3 ? 1 : 0);
