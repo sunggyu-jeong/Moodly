@@ -4,27 +4,31 @@
 <dict>
 	<key>API_KEY</key>
 	<string>AIzaSyAKnFOKIyGahQtcbvJJSCBC6xa3VC8LikA</string>
-	<key>GCM_SENDER_ID</key>
-	<string>238578355345</string>
-	<key>PLIST_VERSION</key>
-	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.moodlydev</string>
-	<key>PROJECT_ID</key>
-	<string>moodly-dev</string>
-	<key>STORAGE_BUCKET</key>
-	<string>moodly-dev.firebasestorage.app</string>
-	<key>IS_ADS_ENABLED</key>
-	<false></false>
-	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
-	<key>IS_APPINVITE_ENABLED</key>
-	<true></true>
-	<key>IS_GCM_ENABLED</key>
-	<true></true>
-	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
+	<key>CLIENT_ID</key>
+	<string>255648557301-kibukp3l48vnn2p62ijsvkhibe767h48.apps.googleusercontent.com</string>
+	<key>GCM_SENDER_ID</key>
+	<string>238578355345</string>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:238578355345:ios:07852d684e9c81d0678330</string>
+	<key>IS_ADS_ENABLED</key>
+	<false/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>PROJECT_ID</key>
+	<string>moodly-dev</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.255648557301-kibukp3l48vnn2p62ijsvkhibe767h48</string>
+	<key>STORAGE_BUCKET</key>
+	<string>moodly-dev.firebasestorage.app</string>
 </dict>
 </plist>
