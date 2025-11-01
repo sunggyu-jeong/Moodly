@@ -7,8 +7,8 @@ type Extra = {
   KAKAO_OPEN_CHAT_LINK: string;
   PRIVACY_POLICY_LINK: string;
   TERMS_OF_SERVICE_LINK: string;
-  HOT_UPDATER_SUPABASE_ANON_KEY: string;
-  HOT_UPDATER_SUPABASE_URL: string;
+  SUPABASE_ANON_KEY: string;
+  SUPABASE_URL: string;
   GOOGLE_WEB_CLIENT_ID: string;
   AMPLITUDE_API_KEY: string;
   ENCRYPTION_SECRET_KEY: string;
@@ -19,8 +19,8 @@ const KEYS = [
   'KAKAO_OPEN_CHAT_LINK',
   'PRIVACY_POLICY_LINK',
   'TERMS_OF_SERVICE_LINK',
-  'HOT_UPDATER_SUPABASE_ANON_KEY',
-  'HOT_UPDATER_SUPABASE_URL',
+  'SUPABASE_ANON_KEY',
+  'SUPABASE_URL',
   'GOOGLE_WEB_CLIENT_ID',
   'AMPLITUDE_API_KEY',
   'ENCRYPTION_SECRET_KEY',
@@ -33,7 +33,7 @@ function getUpdatesExtra<T extends object = Record<string, unknown>>(): Partial<
 
 function fillEmpty<T extends Record<string, any>, K extends readonly (keyof T)[]>(
   merged: Partial<T>,
-  keys: K
+  keys: K,
 ): T {
   const out = {} as T;
   for (const k of keys) {

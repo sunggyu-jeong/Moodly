@@ -42,7 +42,7 @@ const ManageAccountPage = () => {
       const session = await supabase.auth.getSession();
       if (!user.data.user) return;
 
-      const res = await fetch(`${process.env.HOT_UPDATER_SUPABASE_URL}/functions/v1/smart-api`, {
+      const res = await fetch(`${process.env.SUPABASE_URL}/functions/v1/smart-api`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -110,7 +110,10 @@ const ManageAccountPage = () => {
           onPress: () => handlePress(SETTING_EVENT_TYPE.CHANGE_NICKNAME),
           rightComponent: (
             <View style={styles.nicknameContainer}>
-              <Body1 weight="regular" style={styles.nickname}>
+              <Body1
+                weight="regular"
+                style={styles.nickname}
+              >
                 {userInfo?.nickname}
               </Body1>
               <Image
@@ -148,7 +151,10 @@ const ManageAccountPage = () => {
       />
       <View style={styles.container}>
         <SettingList groups={settingListItems} />
-        <Label weight="regular" style={styles.versionLabel}>
+        <Label
+          weight="regular"
+          style={styles.versionLabel}
+        >
           {'앱 버전: ' + packageJson.version}
         </Label>
       </View>

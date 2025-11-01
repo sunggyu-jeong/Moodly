@@ -1,29 +1,26 @@
 const APP_ENV = process.env.APP_ENV ?? 'develop'; // develop | staging | production
-const isProd  = APP_ENV === 'production';
-const isStg   = APP_ENV === 'staging';
+const isProd = APP_ENV === 'production';
+const isStg = APP_ENV === 'staging';
 
 const suffix = isProd ? '' : isStg ? ' 베타' : ' 개발';
 
-const iosBundleId     = isProd ? 'com.moodlyfrontend' : isStg ? 'com.moodlybeta' : 'com.moodlydev';
-const androidPackage  = iosBundleId; 
-
+const iosBundleId = isProd ? 'com.moodlyfrontend' : isStg ? 'com.moodlybeta' : 'com.moodlydev';
+const androidPackage = iosBundleId;
 const scheme = isProd ? 'moodly' : isStg ? 'moodlybeta' : 'moodlydev';
 
-const iosGoogleServiceFile =
-  isProd ? './GoogleService-Info.prod.plist'
-  : isStg ? './GoogleService-Info.stg.plist'
-          : './GoogleService-Info.dev.plist';
+const iosGoogleServiceFile = isProd
+  ? './GoogleService-Info.prod.plist'
+  : isStg
+    ? './GoogleService-Info.stg.plist'
+    : './GoogleService-Info.dev.plist';
 
-const androidGoogleServiceFile =
-  isProd ? './google-services.prod.json'
-  : isStg ? './google-services.stg.json'
-          : './google-services.dev.json';
+const androidGoogleServiceFile = isProd
+  ? './google-services.prod.json'
+  : isStg
+    ? './google-services.stg.json'
+    : './google-services.dev.json';
 
-const EAS_PROJECT_ID = process.env.EAS_PROJECT_ID;
-
-const EXTRA_EAS = EAS_PROJECT_ID
-  ? { eas: { projectId: EAS_PROJECT_ID }, projectId: EAS_PROJECT_ID }
-  : {};
+const PROJECT_ID = process.env.EAS_PROJECT_ID ?? 'a1dd67f4-01b2-4cc1-9c06-076721195e0b';
 
 export default {
   name: `무들리${suffix}`,
@@ -33,18 +30,19 @@ export default {
   scheme,
   userInterfaceStyle: 'light',
   orientation: 'portrait',
+
   splash: {
     image: './assets/splash.png',
     resizeMode: 'contain',
     backgroundColor: '#ffffff',
   },
-  ...(EAS_PROJECT_ID ? {
-    updates: {
-      url: `https://u.expo.dev/${EAS_PROJECT_ID}`,
-      fallbackToCacheTimeout: 0,
-      checkAutomatically: 'ON_LOAD',
-    }
-  } : {}),
+
+  updates: {
+    url: `https://u.expo.dev/${PROJECT_ID}`,
+    fallbackToCacheTimeout: 0,
+    checkAutomatically: 'ON_LOAD',
+  },
+
   runtimeVersion: { policy: 'appVersion' },
   assetBundlePatterns: ['**/*'],
 
@@ -63,13 +61,7 @@ export default {
     package: androidPackage,
     googleServicesFile: androidGoogleServiceFile,
     versionCode: 7,
-    intentFilters: [
-      {
-        action: 'VIEW',
-        category: ['BROWSABLE', 'DEFAULT'],
-        data: [{ scheme }],
-      },
-    ],
+    intentFilters: [{ action: 'VIEW', category: ['BROWSABLE', 'DEFAULT'], data: [{ scheme }] }],
   },
 
   plugins: [
@@ -77,12 +69,8 @@ export default {
     [
       'expo-build-properties',
       {
-        android: {
-          kotlinVersion: '2.1.20',
-        },
-        ios: {
-          useFrameworks: 'static',
-        },
+        android: { kotlinVersion: '2.1.20' },
+        ios: { useFrameworks: 'static' },
       },
     ],
   ],
@@ -90,9 +78,9 @@ export default {
   extra: {
     APP_ENV,
 
-    HOT_UPDATER_SUPABASE_ANON_KEY: process.env.HOT_UPDATER_SUPABASE_ANON_KEY,
+    SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY,
     HOT_UPDATER_SUPABASE_BUCKET_NAME: process.env.HOT_UPDATER_SUPABASE_BUCKET_NAME,
-    HOT_UPDATER_SUPABASE_URL: process.env.HOT_UPDATER_SUPABASE_URL,
+    SUPABASE_URL: process.env.SUPABASE_URL,
     TEAM_ID: process.env.TEAM_ID,
     CLIENT_ID: process.env.CLIENT_ID,
     KEY_ID: process.env.KEY_ID,
@@ -102,6 +90,7 @@ export default {
     TERMS_OF_SERVICE_LINK: process.env.TERMS_OF_SERVICE_LINK,
     AMPLITUDE_API_KEY: process.env.AMPLITUDE_API_KEY,
     ENCRYPTION_SECRET_KEY: process.env.ENCRYPTION_SECRET_KEY,
-    ...EXTRA_EAS,
+
+    eas: { projectId: PROJECT_ID },
   },
 };
