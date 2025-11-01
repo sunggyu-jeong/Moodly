@@ -70,7 +70,6 @@ export const diaryApi = appApi.injectEndpoints({
           .insert(toInsertRow(input))
           .select('*')
           .single()
-          .overrideTypes<DbDiaryRow, { merge: false }>();
 
         return { data: data, error };
       },

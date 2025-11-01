@@ -55,6 +55,7 @@ const EmotionSelectionPage = () => {
           오늘 느낀 감정을 선택해주세요
         </H2>
         <EmotionDisplaySelected />
+        <View style={{ flex: 1 }} />
         <EmotionSelectionList emotionList={ICON_DATA} />
         <View style={styles.buttonContainer}>
           <ActionButton onPress={handleSelectEmotion}>선택 완료</ActionButton>

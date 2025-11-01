@@ -49,7 +49,6 @@ const styles = StyleSheet.create({
     borderRadius: 9999,
     backgroundColor: colors.common.white,
     marginLeft: 1,
-    marginTop: 1.5,
   },
 });
 

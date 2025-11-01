@@ -1,5 +1,5 @@
 import { SetNicknameForm } from '@/features/set-nickname/ui/SetNicknameForm';
-import { H2, resetTo } from '@/shared';
+import { getScaleSize, H2, resetTo } from '@/shared';
 import { NavigationBar } from '@/widgets/navigation-bar';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: 'left',
-    marginBottom: 40,
+    marginBottom: getScaleSize(40),
   },
 });
 

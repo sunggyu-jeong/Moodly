@@ -134,7 +134,7 @@ const OnboardingPage = () => {
 
   const onMomentumScrollEnd = useCallback(
     async (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-      const viewWidth = e.nativeEvent.layoutMeasurement.width; 
+      const viewWidth = e.nativeEvent.layoutMeasurement.width;
       const x = e.nativeEvent.contentOffset.x;
       const ratio = x / viewWidth;
       const next = Math.floor(ratio) + (ratio % 1 > 0.3 ? 1 : 0);
