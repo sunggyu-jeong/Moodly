@@ -1,38 +1,40 @@
+import { useUpsertPushTokenMutation } from '@/entities/auth/api/auth.api';
 import { type BottomSheetHandler, SocialLoginSheet } from '@/features/setting/ui/SocialLoginSheet';
-import { useFocusEffect } from '@react-navigation/native';
+import { isEmpty } from '@/shared';
 import { ONBOARDING_ICONS } from '@/shared/assets/images/onboarding';
 import { useNotificationPermission } from '@/shared/hooks/useNotificationPermission';
 import colors from '@/shared/styles/colors';
 import ActionButton from '@/shared/ui/elements/ActionButton';
+import { H2 } from '@/shared/ui/typography/H2';
+import { Label } from '@/shared/ui/typography/Label';
+import { useFocusEffect } from '@react-navigation/native';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import {
-  type FlatListProps,
+  FlatList,
+  FlatListProps,
   Image,
-  type ImageSourcePropType,
-  type ListRenderItem,
-  type NativeScrollEvent,
-  type NativeSyntheticEvent,
+  ImageSourcePropType,
+  ListRenderItem,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
   Platform,
   Pressable,
+  StyleSheet,
   useWindowDimensions,
   View,
 } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
-import { H2 } from '../shared/ui/typography/H2';
-import { Label } from '../shared/ui/typography/Label';
 
 interface DotProps {
   active: boolean;
 }
-
 interface SlideProps {
   id: number;
   title: string;
   message: string;
   source: ImageSourcePropType;
 }
+
 const SLIDES: ReadonlyArray<SlideProps> = [
   {
     id: 1,
@@ -56,7 +58,6 @@ const SLIDES: ReadonlyArray<SlideProps> = [
     id: 4,
     title: '감정의 흐름을 파악하세요',
     message: '감정은 달력에 쌓이며\n나를 이해하는 단서가 됩니다.',
-
     source: ONBOARDING_ICONS.onboardingStep4,
   },
 ];
@@ -65,12 +66,27 @@ const OnboardingPage = () => {
   const { width, height } = useWindowDimensions();
   const listRef = useRef<FlatList<SlideProps>>(null);
   const [index, setIndex] = useState<number>(0);
-  const isScrollingRef = useRef(false);
   const [showStartButton, setShowStartButton] = useState(false);
   const [showAlarmPermission, setShowAlarmPermission] = useState(false);
+  const isScrollingRef = useRef(false);
   const socialSheetRef = useRef<BottomSheetHandler>(null);
-
-  const { requestNativeNotificationPermission } = useNotificationPermission();
+  const [updateFcmToken] = useUpsertPushTokenMutation();
+  const onTokenUpdate = useCallback(
+    async (token: string | null) => {
+      try {
+        if (isEmpty(token)) return;
+        await updateFcmToken({ token }).unwrap();
+        console.log('App.tsx: 서버 토큰 업데이트 성공');
+      } catch (error) {
+        console.error('App.tsx: 서버 토큰 업데이트 실패', error);
+      }
+    },
+    [updateFcmToken],
+  );
+  const { requestUserPermission } = useNotificationPermission({
+    setupListeners: false,
+    onTokenUpdate: onTokenUpdate,
+  });
 
   useFocusEffect(
     useCallback(() => {
@@ -79,11 +95,12 @@ const OnboardingPage = () => {
       };
     }, []),
   );
+
   const total = SLIDES.length;
   const isLast = index === total - 1;
 
   const getItemLayout = useCallback<NonNullable<FlatListProps<SlideProps>['getItemLayout']>>(
-    (data, i) => ({
+    (_, i) => ({
       length: width,
       offset: width * i,
       index: i,
@@ -95,23 +112,20 @@ const OnboardingPage = () => {
 
   const renderItem = useCallback<ListRenderItem<SlideProps>>(
     ({ item }) => (
-      <View
-        className="flex-1 justify-center items-center px-[10px] gap-10"
-        style={{ width, height }}
-      >
-        <View className="mb-10 justify-center gap-3">
+      <View style={[styles.slide, { width, height }]}>
+        <View style={styles.textSection}>
           <H2 weight="semibold">{item.title}</H2>
           <Label
             weight="regular"
-            style={{ color: colors.gray[400], textAlign: 'center' }}
+            style={styles.message}
           >
             {item.message}
           </Label>
         </View>
         <Image
-          className="h-[70%] bottom-12 w-full items-center gap-3"
           source={item.source}
           resizeMode="contain"
+          style={styles.image}
         />
       </View>
     ),
@@ -122,34 +136,31 @@ const OnboardingPage = () => {
     async (e: NativeSyntheticEvent<NativeScrollEvent>) => {
       const viewWidth = e.nativeEvent.layoutMeasurement.width;
       const x = e.nativeEvent.contentOffset.x;
-
       const ratio = x / viewWidth;
-
       const next = Math.floor(ratio) + (ratio % 1 > 0.3 ? 1 : 0);
+
       if (next !== index) setIndex(next);
       setShowStartButton(next === total - 1);
+
       if (next === 2 && !showAlarmPermission) {
         setShowAlarmPermission(true);
-        await requestNativeNotificationPermission();
+        await requestUserPermission();
       }
+
       isScrollingRef.current = false;
     },
-    [index, requestNativeNotificationPermission, showAlarmPermission, total],
+    [index, requestUserPermission, showAlarmPermission, total],
   );
 
   const onScroll = useCallback(
     ({ nativeEvent }: NativeSyntheticEvent<NativeScrollEvent>) => {
       if (isScrollingRef.current) return;
-      const viewWidth = width;
-      const ratio = nativeEvent.contentOffset.x / viewWidth;
-
+      const ratio = nativeEvent.contentOffset.x / width;
       const base = Math.floor(ratio);
       const frac = ratio - base;
 
-      if (frac >= 0.2) {
-        if (base === 2 && showStartButton) {
-          setShowStartButton(false);
-        }
+      if (frac >= 0.2 && base === 2 && showStartButton) {
+        setShowStartButton(false);
       }
     },
     [width, showStartButton],
@@ -157,13 +168,10 @@ const OnboardingPage = () => {
 
   const Dots = useMemo(() => {
     const Dot = ({ active }: DotProps) => (
-      <View className={`w-2 h-2 rounded-full ${active ? 'bg-primary-300' : 'bg-gray-200'}`} />
+      <View style={[styles.dot, active ? styles.dotActive : styles.dotInactive]} />
     );
     return () => (
-      <View
-        className="flex-row justify-center gap-2 py-3 mt-[31px]"
-        accessibilityLabel="페이지 인디케이터"
-      >
+      <View style={styles.dotContainer}>
         {SLIDES.map((s, i) => (
           <Dot
             key={s.id}
@@ -184,25 +192,23 @@ const OnboardingPage = () => {
 
   return (
     <SafeAreaView
-      edges={['top', 'left', 'right'] as const}
-      className="flex-1 bg-common-white"
+      style={styles.safeArea}
+      edges={['top', 'left', 'right']}
     >
-      <View className="flex-1 bg-common-white">
-        <View className="absolute top-0 right-0 z-10 w-full h-[56px] justify-center items-end px-5">
+      <View style={styles.container}>
+        <View style={styles.skipWrapper}>
           {!isLast && (
-            <Pressable
-              onPress={onSkip}
-              accessibilityLabel="건너뛰기"
-            >
+            <Pressable onPress={onSkip}>
               <Label
                 weight="regular"
-                style={{ color: colors.gray[300] }}
+                style={styles.skipText}
               >
                 Skip
               </Label>
             </Pressable>
           )}
         </View>
+
         <Dots />
 
         <FlatList
@@ -224,15 +230,90 @@ const OnboardingPage = () => {
           overScrollMode={Platform.OS === 'android' ? 'never' : 'auto'}
           scrollEventThrottle={16}
         />
+
+        {showStartButton && (
+          <View style={[styles.buttonWrapper, { bottom: Platform.OS === 'android' ? 80 : 48 }]}>
+            <ActionButton onPress={startService}>서비스 시작하기</ActionButton>
+          </View>
+        )}
       </View>
-      {showStartButton && (
-        <View className={`absolute ${Platform.OS === 'android' ? 'bottom-20' : 'bottom-12'} w-full items-center gap-3 px-5`}>
-          <ActionButton onPress={startService}>서비스 시작하기</ActionButton>
-        </View>
-      )}
+
       <SocialLoginSheet ref={socialSheetRef} />
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: colors.common.white,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: colors.common.white,
+  },
+  skipWrapper: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    zIndex: 10,
+    width: '100%',
+    height: 56,
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    paddingHorizontal: 20,
+  },
+  skipText: {
+    color: colors.gray[300],
+  },
+  slide: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    gap: 40,
+  },
+  textSection: {
+    marginBottom: 40,
+    justifyContent: 'center',
+    gap: 12,
+  },
+  message: {
+    color: colors.gray[400],
+    textAlign: 'center',
+  },
+  image: {
+    width: '100%',
+    height: '70%',
+    bottom: 48,
+    alignItems: 'center',
+    gap: 12,
+  },
+  dotContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 8,
+    paddingVertical: 12,
+    marginTop: 31,
+  },
+  dot: {
+    width: 8,
+    height: 8,
+    borderRadius: 9999,
+  },
+  dotActive: {
+    backgroundColor: colors.primary[300],
+  },
+  dotInactive: {
+    backgroundColor: colors.gray[200],
+  },
+  buttonWrapper: {
+    position: 'absolute',
+    width: '100%',
+    alignItems: 'center',
+    gap: 12,
+    paddingHorizontal: 20,
+  },
+});
 
 export default OnboardingPage;

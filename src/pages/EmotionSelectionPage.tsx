@@ -24,21 +24,20 @@ const EmotionSelectionPage = () => {
   const selectedDiary = useAppSelector(state => state.diarySlice.selectedDiary);
 
   const handleSelectEmotion = () => {
-    const emotion: Partial<Diary> = {
-      iconId: selectedEmotion?.id,
-    };
+    if (!selectedEmotion) return;
+    const emotion: Partial<Diary> = { iconId: selectedEmotion.id };
     dispatch(setCurrentDiary(emotion));
     navigate('DiaryStack', { screen: 'EmotionDiaryWritePage' });
   };
 
   useEffect(() => {
-    // 수정일 때 사용
     if (isModifyMode && isNotEmpty(selectedDiary)) {
-      dispatch(setSelectedIcon(ICON_DATA.find(el => el.id === selectedDiary.iconId)));
-      const emotion: Partial<Diary> = {
-        iconId: selectedDiary?.iconId,
-      };
-      dispatch(setCurrentDiary(emotion));
+      const foundIcon = ICON_DATA.find(el => el.id === selectedDiary.iconId);
+      if (foundIcon) {
+        dispatch(setSelectedIcon(foundIcon));
+        const emotion: Partial<Diary> = { iconId: selectedDiary.iconId };
+        dispatch(setCurrentDiary(emotion));
+      }
     }
   }, [selectedDiary, dispatch, isModifyMode]);
 
@@ -48,20 +47,17 @@ const EmotionSelectionPage = () => {
         showBackButton={false}
         actionButtons={actionButtons}
       />
-      <SafeAreaView className="bg-common-white items-center flex-1 justify-between">
+      <SafeAreaView style={styles.container}>
         <H2
           weight="semibold"
-          style={styles.textStyle}
+          style={styles.title}
         >
           오늘 느낀 감정을 선택해주세요
         </H2>
         <EmotionDisplaySelected />
+        <View style={{ flex: 1 }} />
         <EmotionSelectionList emotionList={ICON_DATA} />
-
-        <View
-          className="w-full px-5"
-          style={styles.buttonStyle}
-        >
+        <View style={styles.buttonContainer}>
           <ActionButton onPress={handleSelectEmotion}>선택 완료</ActionButton>
         </View>
       </SafeAreaView>
@@ -70,11 +66,19 @@ const EmotionSelectionPage = () => {
 };
 
 const styles = StyleSheet.create({
-  buttonStyle: {
-    marginBottom: getScaleSize(54),
+  container: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
-  textStyle: {
+  title: {
     marginTop: getScaleSize(28),
+  },
+  buttonContainer: {
+    width: '100%',
+    paddingHorizontal: getScaleSize(20),
+    marginBottom: getScaleSize(54),
   },
 });
 

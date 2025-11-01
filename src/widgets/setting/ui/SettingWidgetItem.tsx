@@ -1,10 +1,10 @@
 import { AppSkeleton } from '@/shared';
 import { memo } from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 const SettingWidgetItem = ({ withToggle }: { withToggle?: boolean }) => (
-  <View className="w-full">
-    <View className="flex-row items-center justify-between p-4">
+  <View style={styles.wrapper}>
+    <View style={styles.inner}>
       <AppSkeleton
         width={120}
         height={16}
@@ -26,5 +26,17 @@ const SettingWidgetItem = ({ withToggle }: { withToggle?: boolean }) => (
     </View>
   </View>
 );
+
+const styles = StyleSheet.create({
+  wrapper: {
+    width: '100%',
+  },
+  inner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 16,
+  },
+});
 
 export default memo(SettingWidgetItem);

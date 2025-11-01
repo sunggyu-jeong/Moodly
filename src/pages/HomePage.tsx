@@ -1,16 +1,27 @@
+import { gray } from '@/shared';
 import { HomeWidget } from '@/widgets/home';
-import { StatusBar, View } from 'react-native';
+import { StatusBar, StyleSheet, View } from 'react-native';
 
 const HomePage = () => {
   return (
-    <View className="bg-gray-100 flex-1 px-5 justify-center items-center">
+    <View style={styles.container}>
       <StatusBar
         translucent
-        barStyle="dark-content"
+        backgroundColor="transparent"
       />
       <HomeWidget />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: gray[100],
+    paddingHorizontal: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default HomePage;

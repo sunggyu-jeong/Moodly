@@ -1,19 +1,26 @@
-import { useScale } from '@/shared/hooks';
-import { Image, type ImageSourcePropType } from 'react-native';
+import { getScaleSize } from '@/shared/hooks';
+import { Image, StyleSheet, type ImageSourcePropType } from 'react-native';
 
 export interface AvatarAtomProps {
   source: ImageSourcePropType;
 }
 
 const Avatar = ({ source }: AvatarAtomProps) => {
-  const { getScaleSize } = useScale();
   return (
     <Image
       source={source}
-      style={{ width: getScaleSize(40), height: getScaleSize(40) }}
-      className="mr-[15px]"
+      style={styles.image}
+      resizeMode="cover"
     />
   );
 };
+
+const styles = StyleSheet.create({
+  image: {
+    marginRight: 15,
+    width: getScaleSize(40),
+    height: getScaleSize(40),
+  },
+});
 
 export default Avatar;

@@ -1,12 +1,12 @@
-import { AppSkeleton, SkeletonContainer } from '@/shared';
+import { AppSkeleton, common, SkeletonContainer } from '@/shared';
 import { memo } from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 const SettingWidgetHeader = () => (
-  <SkeletonContainer className="bg-common-white rounded-xl">
-    <View className="flex-row items-center justify-between p-4">
-      <View className="flex-1 mr-4">
-        <View className="mb-2">
+  <SkeletonContainer style={styles.container}>
+    <View style={styles.inner}>
+      <View style={styles.textBlock}>
+        <View style={styles.title}>
           <AppSkeleton
             width={140}
             height={18}
@@ -27,5 +27,25 @@ const SettingWidgetHeader = () => (
     </View>
   </SkeletonContainer>
 );
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: common.white,
+    borderRadius: 12,
+  },
+  inner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 16,
+  },
+  textBlock: {
+    flex: 1,
+    marginRight: 16,
+  },
+  title: {
+    marginBottom: 8,
+  },
+});
 
 export default memo(SettingWidgetHeader);

@@ -36,10 +36,36 @@ yarn-error.*
 *.tsbuildinfo
 
 .env
+.env.*
 
 # generated native folders
 /ios
 /android
 
 *.json
+# *.plist
 *.keystore
+
+# node / editor
+.expo-shared/
+npm-debug.log*
+yarn-error.log*
+.pnpm-store/
+.idea/
+.vscode/
+
+# env & secrets
+.env*
+!.env.example
+
+# iOS/Android 인증 키/프로비저닝
+*.p8
+*.p12
+*.mobileprovision
+*.keystore
+*.jks
+AuthKey_*.p8
+release.keystore
+
+# Expo/EAS 캐시
+.build/

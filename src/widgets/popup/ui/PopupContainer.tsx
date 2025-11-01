@@ -1,8 +1,7 @@
 import { setShowModalPopup } from '@/processes/overlay/model/overlaySlice';
-import { DimmedView, useAppDispatch, useAppSelector } from '@/shared';
-import React, { useEffect, useRef } from 'react';
-import { Animated, Modal, View } from 'react-native';
-
+import { common, DimmedView, useAppDispatch, useAppSelector } from '@/shared';
+import { memo, useEffect, useRef } from 'react';
+import { Animated, Modal, StyleSheet, View } from 'react-native';
 import PopupFooter from './PopupFooter';
 import PopupHeader from './PopupHeader';
 
@@ -12,6 +11,8 @@ interface PopupContainerProps {
   cancelText: string;
   confirmText: string;
   onConfirm: () => void;
+  onCancel?: () => void;
+  disableBackdropClose?: boolean;
 }
 
 const PopupContainer = ({ ...props }: PopupContainerProps) => {
@@ -52,6 +53,9 @@ const PopupContainer = ({ ...props }: PopupContainerProps) => {
   }, [showModalPopup?.visibility, dispatch, opacity, translateY]);
 
   const handleCloseModal = () => {
+    if (props.onCancel) {
+      props.onCancel();
+    }
     dispatch(
       setShowModalPopup({
         visibility: false,
@@ -71,12 +75,11 @@ const PopupContainer = ({ ...props }: PopupContainerProps) => {
       onRequestClose={handleCloseModal}
       animationType="fade"
     >
-      <DimmedView onPress={handleCloseModal}>
+      <DimmedView onPress={props.disableBackdropClose ? undefined : handleCloseModal}>
         <Animated.View
-          style={{ transform: [{ translateY }], opacity: opacity }}
-          className="flex-1 justify-center p-10"
+          style={[styles.animatedContainer, { transform: [{ translateY }], opacity: opacity }]}
         >
-          <View className="w-full bg-common-white rounded-xl items-center">
+          <View style={styles.popupBox}>
             <PopupHeader
               title={props.title}
               message={props.message}
@@ -94,4 +97,18 @@ const PopupContainer = ({ ...props }: PopupContainerProps) => {
   );
 };
 
-export default React.memo(PopupContainer);
+const styles = StyleSheet.create({
+  animatedContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 40,
+  },
+  popupBox: {
+    width: '100%',
+    backgroundColor: common.white,
+    borderRadius: 12,
+    alignItems: 'center',
+  },
+});
+
+export default memo(PopupContainer);

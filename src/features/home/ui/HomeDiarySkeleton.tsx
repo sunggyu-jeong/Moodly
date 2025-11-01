@@ -1,13 +1,13 @@
 import { AppSkeleton, SkeletonContainer } from '@/shared';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 const HomeDiarySkeleton = () => {
   return (
     <>
-      <SkeletonContainer className="px-5 justify-center items-center rounded-xl">
-        <View className="w-full justify-center items-center px-5 py-6 ">
-          <View className="w-full mb-3 items-center">
-            <View className="mb-2 items-center">
+      <SkeletonContainer style={styles.StyledContainer}>
+        <View style={styles.InnerWrapper}>
+          <View style={styles.TitleWrapper}>
+            <View style={styles.SubTitleWrapper}>
               <AppSkeleton
                 width="70%"
                 height={22}
@@ -21,7 +21,7 @@ const HomeDiarySkeleton = () => {
             />
           </View>
 
-          <View className="my-4">
+          <View style={styles.ImageWrapper}>
             <AppSkeleton
               width={180}
               height={180}
@@ -29,7 +29,7 @@ const HomeDiarySkeleton = () => {
             />
           </View>
 
-          <View className="w-full mt-2">
+          <View style={styles.ButtonWrapper}>
             <AppSkeleton
               width="100%"
               height={48}
@@ -41,5 +41,37 @@ const HomeDiarySkeleton = () => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  StyledContainer: {
+    paddingHorizontal: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 12,
+  },
+  InnerWrapper: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 24,
+  },
+  TitleWrapper: {
+    width: '100%',
+    marginBottom: 12,
+    alignItems: 'center',
+  },
+  SubTitleWrapper: {
+    marginBottom: 8,
+    alignItems: 'center',
+  },
+  ImageWrapper: {
+    marginVertical: 16,
+  },
+  ButtonWrapper: {
+    width: '100%',
+    marginTop: 8,
+  },
+});
 
 export default HomeDiarySkeleton;

@@ -12,14 +12,14 @@ interface Props {
 }
 
 const NotificationPermissionUI = ({ onAllow, onSkip }: Props) => (
-  <View className="flex-1 h-full bg-common-white">
-    <View className="flex-1 items-center justify-center pb-20">
+  <View style={styles.container}>
+    <View style={styles.contentWrapper}>
       <Image
         source={MAIN_ICONS.permission}
-        className="w-[297px] h-[257px] mb-11"
+        style={styles.image}
         resizeMode="contain"
       />
-      <View className="items-center gap-4">
+      <View style={styles.textWrapper}>
         <Title
           size={27}
           weight="semibold"
@@ -36,11 +36,11 @@ const NotificationPermissionUI = ({ onAllow, onSkip }: Props) => (
       </View>
     </View>
 
-    <View className="absolute bottom-12 w-full items-center gap-3 px-5">
+    <View style={styles.bottomWrapper}>
       <ActionButton onPress={onAllow}>알림 설정하기</ActionButton>
       <Body2
         weight="semibold"
-        className="text-gray-400"
+        style={styles.skipText}
         onPress={onSkip}
       >
         나중에 하기
@@ -50,8 +50,46 @@ const NotificationPermissionUI = ({ onAllow, onSkip }: Props) => (
 );
 
 const styles = StyleSheet.create({
-  body: { color: gray[400], lineHeight: 24, textAlign: 'center' },
-  title: { lineHeight: 40, textAlign: 'center' },
+  container: {
+    flex: 1,
+    height: '100%',
+    backgroundColor: '#FFFFFF',
+  },
+  contentWrapper: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingBottom: 80,
+  },
+  image: {
+    width: 297,
+    height: 257,
+    marginBottom: 44,
+  },
+  textWrapper: {
+    alignItems: 'center',
+    gap: 16,
+  },
+  title: {
+    lineHeight: 40,
+    textAlign: 'center',
+  },
+  body: {
+    color: gray[400],
+    lineHeight: 24,
+    textAlign: 'center',
+  },
+  bottomWrapper: {
+    position: 'absolute',
+    bottom: 48,
+    width: '100%',
+    alignItems: 'center',
+    gap: 12,
+    paddingHorizontal: 20,
+  },
+  skipText: {
+    color: gray[400],
+  },
 });
 
 export default NotificationPermissionUI;

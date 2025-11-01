@@ -1,19 +1,18 @@
+import { getScaleSize } from '@/shared/hooks';
 import { gray } from '@/shared/styles/colors';
 import { H3 } from '@/shared/ui/typography/H3';
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 
-import { getScaleSize } from '@/shared/hooks';
-
-interface keyboardAccessoryButtonProps {
+interface KeyboardAccessoryButtonProps {
   onPress: () => void;
 }
 
-export const KeyboardAccessoryButton = ({ onPress }: keyboardAccessoryButtonProps) => (
-  <View className="flex-1 h-10 justify-start border-t-[0.5px] border-t-[#C6C9D7] pt-2">
+export const KeyboardAccessoryButton = ({ onPress }: KeyboardAccessoryButtonProps) => (
+  <View style={styles.container}>
     <TouchableWithoutFeedback onPress={onPress}>
       <H3
         weight="semibold"
-        style={accessoryStyles.text}
+        style={styles.text}
       >
         저장
       </H3>
@@ -21,7 +20,15 @@ export const KeyboardAccessoryButton = ({ onPress }: keyboardAccessoryButtonProp
   </View>
 );
 
-const accessoryStyles = StyleSheet.create({
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    height: 40,
+    justifyContent: 'flex-start',
+    borderTopWidth: 0.5,
+    borderTopColor: '#C6C9D7',
+    paddingTop: 12,
+  },
   text: {
     color: gray[600],
     fontWeight: '600',

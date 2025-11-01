@@ -1,8 +1,7 @@
+import { Caption } from '@/shared/ui/typography';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { StyleSheet, TextInput, type TextInputProps, View } from 'react-native';
-
 import { gray } from '../../styles';
-import { Caption } from '../typography';
 
 interface InputWithCounterProps extends TextInputProps {
   value: string;
@@ -16,35 +15,56 @@ export const InputWithCounterProps = ({
   maxLength,
   ...rest
 }: InputWithCounterProps) => {
-  const styles = StyleSheet.create({
-    textLengthStyle: {
-      textAlign: 'right',
-      marginTop: 8,
-    },
-    inputContainer: {
-      backgroundColor: inputBackgroundColor ?? gray[100],
-      marginBottom: inputBackgroundColor ? 80 : 0,
-      marginTop: inputBackgroundColor ? 30 : 0,
-    },
-  });
   const isBottomSheet = !!inputBackgroundColor;
   const InputComponent = isBottomSheet ? BottomSheetTextInput : TextInput;
 
   return (
     <View
-      className="w-full h-[60px] rounded-xl border border-b-gray-200 border-gray-200"
-      style={styles.inputContainer}
+      style={[
+        styles.container,
+        {
+          backgroundColor: inputBackgroundColor ?? gray[100],
+          marginBottom: inputBackgroundColor ? 80 : 0,
+          marginTop: inputBackgroundColor ? 30 : 0,
+        },
+      ]}
     >
       <InputComponent
-        className="w-full h-[60px] ml-[26px]"
         value={value}
         maxLength={maxLength}
+        style={styles.input}
         {...rest}
       />
       <Caption
         weight="regular"
-        style={styles.textLengthStyle}
-      >{`${value.length}/${maxLength}`}</Caption>
+        style={styles.textLength}
+      >
+        {`${value.length}/${maxLength}`}
+      </Caption>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    height: 60,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: gray[200],
+    justifyContent: 'center',
+    position: 'relative',
+  },
+  input: {
+    width: '100%',
+    height: 60,
+    marginLeft: 14,
+  },
+  textLength: {
+    position: 'absolute',
+    right: 0,
+    top: 64,
+    color: gray[400],
+    textAlign: 'right',
+  },
+});

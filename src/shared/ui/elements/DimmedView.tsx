@@ -1,20 +1,30 @@
-import { TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 interface DimmedViewProps {
   children: React.ReactNode;
   onPress?: () => void;
 }
 
-const DimmedView = ({ ...props }: DimmedViewProps) => {
+const DimmedView = ({ children, onPress }: DimmedViewProps) => {
   return (
     <TouchableOpacity
-      onPress={props.onPress}
+      onPress={onPress}
       activeOpacity={1}
-      className="flex-1"
+      style={styles.touchArea}
     >
-      <View className="flex-1 bg-common-black/40">{props.children}</View>
+      <View style={styles.dimmedBackground}>{children}</View>
     </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  touchArea: {
+    flex: 1,
+  },
+  dimmedBackground: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+  },
+});
 
 export default DimmedView;

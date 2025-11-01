@@ -1,4 +1,3 @@
-// shared/ui/BottomSheetWrapper.tsx
 import BottomSheet, {
   BottomSheetBackdrop,
   type BottomSheetProps,

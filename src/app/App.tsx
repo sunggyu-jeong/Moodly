@@ -1,18 +1,15 @@
 /* eslint-disable */
 import { NavigationContainer } from '@react-navigation/native';
 import 'dayjs/locale/ko';
-import { useCallback, type ProfilerOnRenderCallback } from 'react';
+import { useCallback, useEffect, type ProfilerOnRenderCallback } from 'react';
 import 'react-native-get-random-values';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
 import { Provider } from 'react-redux';
 
-import '../../global.css';
-
 import { RootStack } from '@/app/navigation';
 import { store } from '@/app/store';
 import { useUpsertPushTokenMutation } from '@/entities/auth/api/auth.api';
-// import { HotUpdater, getUpdateSource } from '@hot-updater/react-native';
 import OverlayManager from '@/processes/overlay/ui/OverlayManager';
 import { isEmpty, navigationRef, useNotificationPermission } from '@/shared';
 import '@/shared/lib/day.util';
@@ -32,10 +29,10 @@ export const onRenderCallback: ProfilerOnRenderCallback = (
   actualDuration: number,
   baseDuration: number,
   startTime: number,
-  commitTime: number
+  commitTime: number,
 ) => {
   console.log(
-    `onRenderCallback: ${id}, phase: ${phase}, actualDuration: ${actualDuration}, baseDuration: ${baseDuration}, startTime: ${startTime}, commitTime: ${commitTime}`
+    `onRenderCallback: ${id}, phase: ${phase}, actualDuration: ${actualDuration}, baseDuration: ${baseDuration}, startTime: ${startTime}, commitTime: ${commitTime}`,
   );
 };
 
@@ -52,13 +49,14 @@ function App() {
         console.error('App.tsx: 서버 토큰 업데이트 실패', error);
       }
     },
-    [updateFcmToken]
+    [updateFcmToken],
   );
 
   useNotificationPermission({
     setupListeners: true,
     onTokenUpdate: onTokenUpdate,
   });
+
 
   return (
     <GestureHandlerRootView style={styles.container}>

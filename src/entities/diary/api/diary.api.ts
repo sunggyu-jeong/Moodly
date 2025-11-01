@@ -21,7 +21,7 @@ export const diaryApi = appApi.injectEndpoints({
             .lt('record_date', end)
             .eq('user_id', userId)
             .order('record_date', { ascending: false })
-            .overrideTypes<DbDiaryRow[], { merge: false }>();
+            .returns<DbDiaryRow[]>();
 
           const { data, error } = await q;
           return { data: data ? data.map(fromRow) : null, error };
@@ -70,7 +70,6 @@ export const diaryApi = appApi.injectEndpoints({
           .insert(toInsertRow(input))
           .select('*')
           .single()
-          .overrideTypes<DbDiaryRow, { merge: false }>();
 
         return { data: data, error };
       },

@@ -84,7 +84,7 @@ export const DiaryPager = () => {
                   ? DIARY_ICONS.iconDiaryCalendar
                   : DIARY_ICONS.iconDiaryList
               }
-              className="w-6 h-6"
+              style={styles.image}
               resizeMode="stretch"
             />
           </TouchableOpacity>
@@ -119,5 +119,9 @@ export const DiaryPager = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  image: {
+    width: 24,
+    height: 24,
   },
 });

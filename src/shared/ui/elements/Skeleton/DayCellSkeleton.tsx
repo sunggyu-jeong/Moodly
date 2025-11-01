@@ -1,11 +1,11 @@
 import { COLOR_MODE } from '@/shared/constants';
 import { Skeleton } from 'moti/skeleton';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 const DayCellSkeleton = () => {
   return (
-    <View className="items-center justify-center bg-common-transparent w-full h-full p-1">
-      <View className="w-10 h-10">
+    <View style={styles.container}>
+      <View style={styles.iconBox}>
         <Skeleton
           width={40}
           height={40}
@@ -13,8 +13,7 @@ const DayCellSkeleton = () => {
           colorMode={COLOR_MODE}
         />
       </View>
-
-      <View className="ml-2 items-center mt-2">
+      <View style={styles.textBox}>
         <Skeleton
           width="50%"
           height={12}
@@ -25,5 +24,25 @@ const DayCellSkeleton = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+    width: '100%',
+    height: '100%',
+    padding: 4,
+  },
+  iconBox: {
+    width: 40,
+    height: 40,
+  },
+  textBox: {
+    alignItems: 'center',
+    marginTop: 8,
+    marginLeft: 8,
+  },
+});
 
 export default DayCellSkeleton;

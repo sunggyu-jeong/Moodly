@@ -1,9 +1,7 @@
-import React from 'react';
-import { type StyleProp, StyleSheet, TouchableOpacity, type ViewStyle } from 'react-native';
-
 import { ColorKeyEnum, getColor } from '@/shared/constants';
 import { getScaleSize } from '@/shared/hooks';
-
+import React from 'react';
+import { StyleSheet, TouchableOpacity, type StyleProp, type ViewStyle } from 'react-native';
 import { Body2 } from '../typography/Body2';
 
 interface ActionButtonProps {
@@ -17,9 +15,9 @@ const ActionButton = ({ children, disabled, onPress, style }: ActionButtonProps)
   return (
     <TouchableOpacity
       onPress={onPress}
-      className="rounded-xl h-[56px] justify-center items-center w-full px-[25px]"
-      style={[disabled ? styles.buttonDisabled : styles.buttonEnabled, style]}
+      style={[styles.base, disabled ? styles.buttonDisabled : styles.buttonEnabled, style]}
       disabled={disabled}
+      activeOpacity={0.7}
     >
       <Body2
         weight="semibold"
@@ -32,13 +30,19 @@ const ActionButton = ({ children, disabled, onPress, style }: ActionButtonProps)
 };
 
 const styles = StyleSheet.create({
+  base: {
+    borderRadius: getScaleSize(12),
+    height: getScaleSize(56),
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    paddingHorizontal: getScaleSize(25),
+  },
   buttonDisabled: {
     backgroundColor: getColor(ColorKeyEnum.Disabled),
-    height: getScaleSize(56),
   },
   buttonEnabled: {
     backgroundColor: getColor(ColorKeyEnum.Primary),
-    height: getScaleSize(56),
   },
   text: {
     color: getColor(ColorKeyEnum.White),
