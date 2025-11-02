@@ -1,5 +1,6 @@
 import { DiarySaveButton } from '@/features/diary';
 import { common, getScaleSize, H2, ICON_DATA, isNotEmpty, useAppSelector } from '@/shared';
+import { isIphone } from '@/shared/lib/user.util';
 import { NaviDismiss, NavigationBar } from '@/widgets/navigation-bar';
 import { useEffect, useRef, useState } from 'react';
 import {
@@ -31,7 +32,7 @@ const EmotionDiaryWritePage = () => {
       <NavigationBar actionButtons={actionButtons} />
       <KeyboardAvoidingView
         style={styles.container}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        behavior={isIphone() ? 'padding' : undefined}
         keyboardVerticalOffset={40}
       >
         <ScrollView
@@ -65,7 +66,7 @@ const EmotionDiaryWritePage = () => {
       </KeyboardAvoidingView>
 
       <InputAccessoryView
-        spaceHeight={40 + (Platform.OS === 'android' ? 40 : 0)}
+        spaceHeight={40 + (isIphone() ? 0 : 40)}
         extraHeight={0}
         renderView={() => DiarySaveButton(text)}
       />

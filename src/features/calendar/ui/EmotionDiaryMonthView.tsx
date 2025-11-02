@@ -12,6 +12,7 @@ import { FlatList, Platform, StyleSheet, View } from 'react-native';
 
 import DiarySkeleton from '../../diary/ui/skeleton/DiaryCardSkeleton';
 import { selectIsDiaryPagingLoading, selectSelectedDayIso } from '../model';
+import { isIphone } from '@/shared/lib/user.util';
 
 type DiaryListItem = { type: 'DIARY'; data: Diary };
 type SkeletonListItem = { type: 'SKELETON'; id: number };
@@ -59,7 +60,7 @@ const EmotionDiaryMonthView = ({
       case 'DIARY':
         return <EmotionDiaryCardList data={item.data} />;
       case 'SKELETON':
-        if (Platform.OS === 'android') {
+        if (!isIphone()) {
           return null;
         }
         return <DiarySkeleton />;

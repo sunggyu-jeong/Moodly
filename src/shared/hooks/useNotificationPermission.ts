@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { AppState, Linking, Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
+import { isIphone } from '@/shared/lib/user.util';
 
 export const TOKEN_STORAGE_KEY = '@expo_push_token';
 
@@ -95,7 +96,7 @@ export function useNotificationPermission(
   }, [onTokenUpdate]);
 
   const openSettings = useCallback(() => {
-    if (Platform.OS === 'ios') {
+    if (isIphone()) {
       Linking.openURL('app-settings:');
     } else {
       Linking.openSettings();

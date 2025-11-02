@@ -3,6 +3,7 @@ import { type BottomSheetHandler, SocialLoginSheet } from '@/features/setting/ui
 import { isEmpty } from '@/shared';
 import { ONBOARDING_ICONS } from '@/shared/assets/images/onboarding';
 import { useNotificationPermission } from '@/shared/hooks/useNotificationPermission';
+import { isIphone } from '@/shared/lib/user.util';
 import colors from '@/shared/styles/colors';
 import ActionButton from '@/shared/ui/elements/ActionButton';
 import { H2 } from '@/shared/ui/typography/H2';
@@ -17,11 +18,10 @@ import {
   ListRenderItem,
   NativeScrollEvent,
   NativeSyntheticEvent,
-  Platform,
   Pressable,
   StyleSheet,
   useWindowDimensions,
-  View,
+  View
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -227,12 +227,12 @@ const OnboardingPage = () => {
           windowSize={2}
           initialNumToRender={1}
           maxToRenderPerBatch={2}
-          overScrollMode={Platform.OS === 'android' ? 'never' : 'auto'}
+          overScrollMode={isIphone() ? 'auto' : 'never'}
           scrollEventThrottle={16}
         />
 
         {showStartButton && (
-          <View style={[styles.buttonWrapper, { bottom: Platform.OS === 'android' ? 80 : 48 }]}>
+          <View style={[styles.buttonWrapper, { bottom: isIphone() ? 48 : 80 }]}>
             <ActionButton onPress={startService}>서비스 시작하기</ActionButton>
           </View>
         )}

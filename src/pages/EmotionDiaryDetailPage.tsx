@@ -20,6 +20,7 @@ import {
   useAppSelector,
 } from '@/shared';
 import { COMMON_ICONS } from '@/shared/assets/images/common';
+import { isIphone } from '@/shared/lib/user.util';
 import { DropDownEventIdentifier } from '@/widgets/dropdown';
 import { NaviDismiss, NavigationBar } from '@/widgets/navigation-bar';
 import { type RouteProp, useRoute } from '@react-navigation/native';
@@ -61,7 +62,7 @@ const EmotionDiaryDetailPage = () => {
         setShowDropdownView({
           visibility: true,
           dropdownList: dropdownItems,
-          pos: { x, y: y + height + 5 + (Platform.OS === 'ios' ? 0 : 70) },
+          pos: { x, y: y + height + 5 + (isIphone() ? 0 : 70) },
         }),
       );
     });

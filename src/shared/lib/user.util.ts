@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { supabase } from '@/shared/lib/supabase.util';
+import { Platform } from 'react-native';
 
 const STORAGE_KEY = 'current_user_id.v1';
 
@@ -101,3 +102,5 @@ export const unsubscribeAuthChanges = (): void => {
   authUnsubscribe = null;
   subscribed = false;
 };
+
+export const isIphone = () => Platform.OS === 'ios';

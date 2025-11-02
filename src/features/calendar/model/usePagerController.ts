@@ -1,3 +1,4 @@
+import { isIphone } from '@/shared/lib/user.util';
 import { useCallback, useRef } from 'react';
 import {
   Dimensions,
@@ -45,7 +46,7 @@ export const usePagerController = <T>(opts: { onLeft: () => void; onRight: () =>
 
   const onScroll = useCallback(
     ({ nativeEvent }: NativeSyntheticEvent<NativeScrollEvent>) => {
-      if (Platform.OS === 'ios') {
+      if (isIphone()) {
         handlePageChange(nativeEvent);
       }
     },
@@ -54,7 +55,7 @@ export const usePagerController = <T>(opts: { onLeft: () => void; onRight: () =>
 
   const onMomentumScrollEnd = useCallback(
     ({ nativeEvent }: NativeSyntheticEvent<NativeScrollEvent>) => {
-      if (Platform.OS === 'android') {
+      if (!isIphone()) {
         handlePageChange(nativeEvent);
       }
     },

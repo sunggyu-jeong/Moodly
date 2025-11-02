@@ -7,10 +7,10 @@ import { setShowToastView } from '@/processes/overlay/model/overlaySlice';
 import { useAppDispatch, useExternalWebSite } from '@/shared/hooks';
 import { isEmpty, isNotEmpty, navigate, resetTo } from '@/shared/lib';
 import { ENV } from '@/shared/lib/env';
-import { initUserId } from '@/shared/lib/user.util';
+import { initUserId, isIphone } from '@/shared/lib/user.util';
 import { gray } from '@/shared/styles/colors';
 import { useEffect } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Caption } from '../typography/Caption';
 
 export enum SOCIAL_LOGIN_ENTRANCE {
@@ -52,7 +52,7 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
 
   return (
     <View style={styles.container}>
-      {Platform.OS === 'ios' && (
+      {isIphone() && (
         <SocialLoginButton
           disabled={isLoading}
           provider={AUTH_PROVIDERS.APPLE}

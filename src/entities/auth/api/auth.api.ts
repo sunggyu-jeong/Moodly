@@ -7,13 +7,14 @@ import { Platform } from 'react-native';
 import * as Application from 'expo-application';
 
 import type { SetUserInfoInput, SignInProviderInput, UserInfo } from '../model/auth.types';
+import { isIphone } from '@/shared/lib/user.util';
 
 GoogleSignin.configure({
   webClientId: process.env.GOOGLE_WEB_CLIENT_ID!,
 });
 
 async function getDeviceId(): Promise<string> {
-  if (Platform.OS === 'ios') {
+  if (isIphone()) {
     const id = await Application.getIosIdForVendorAsync();
     return id ?? 'unknown-ios-device';
   }
