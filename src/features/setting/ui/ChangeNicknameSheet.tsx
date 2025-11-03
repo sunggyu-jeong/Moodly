@@ -4,7 +4,7 @@ import BottomSheetWrapper from '@/shared/ui/elements/BottomSheetWrapper';
 import { H3 } from '@/shared/ui/typography/H3';
 import { BottomSheetView } from '@gorhom/bottom-sheet';
 import { forwardRef, useImperativeHandle, useState } from 'react';
-import { Keyboard, StyleSheet } from 'react-native';
+import { Keyboard, Pressable, StyleSheet, View } from 'react-native';
 import { SetNicknameForm } from '../../set-nickname/ui/SetNicknameForm';
 import type { BottomSheetHandler } from './SocialLoginSheet';
 
@@ -34,6 +34,10 @@ export const ChangeNicknameSheet = forwardRef<BottomSheetHandler>((_, ref) => {
     handleSheetChanges(index);
   };
 
+  const handleDismissKeyboard = () => {
+    Keyboard.dismiss();
+  };
+
   return (
     <BottomSheetWrapper
       ref={sheetRef}
@@ -41,12 +45,23 @@ export const ChangeNicknameSheet = forwardRef<BottomSheetHandler>((_, ref) => {
       onChange={handleSheetStateChange}
     >
       <BottomSheetView style={styles.container}>
-        <H3 weight="semibold">닉네임 변경</H3>
-        <SetNicknameForm
-          key={formKey}
-          inputBackgroundColor="white"
-          onSuccess={handleSuccess}
+        <Pressable
+          style={StyleSheet.absoluteFill}
+          onPress={handleDismissKeyboard}
         />
+        <H3 weight="semibold">닉네임 변경</H3>
+        <View
+          onStartShouldSetResponder={() => true}
+          onMoveShouldSetResponder={() => true}
+          pointerEvents="auto"
+          style={styles.form}
+        >
+          <SetNicknameForm
+            key={formKey}
+            inputBackgroundColor="white"
+            onSuccess={handleSuccess}
+          />
+        </View>
       </BottomSheetView>
     </BottomSheetWrapper>
   );
@@ -58,4 +73,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 16,
   },
+  form: {
+    
+  }
 });

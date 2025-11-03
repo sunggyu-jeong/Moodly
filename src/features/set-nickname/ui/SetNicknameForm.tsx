@@ -54,6 +54,7 @@ export const SetNicknameForm = ({ onSuccess, inputBackgroundColor }: SetNickname
         inputBackgroundColor={inputBackgroundColor}
         maxLength={MAX_LENGTH}
         placeholder="닉네임을 입력해주세요."
+        returnKeyType='done'
       />
       <ActionButton
         disabled={!isSubmittable || isSettingUser || isSavingFlag}
