@@ -4,8 +4,36 @@ import { getUserId } from '@/shared/lib/user.util';
 
 import { byIdTag, fromRow, toInsertRow, toUpdateRow } from '../lib/diary.mapper';
 import type { CreateDiaryInput, DbDiaryRow, Diary, UpdateDiaryInput } from '../model/diary.types';
+import { VersionPolicy, AppPlatform } from '@/entities/app/model/types';
+import { Platform } from 'react-native';
+import type { SupabaseClient } from '@supabase/supabase-js';
 
 type DiaryDateRangeQuery = { start: string; end: string };
+
+type WeeklySummaryResult = {
+  summary: string;
+  emotion_distribution: {
+    joy: number;
+    sadness: number;
+    depression: number;
+    anxiety: number;
+    anger: number;
+  };
+  weekly_keywords: string[];
+  core_inner_keywords: string[];
+  self_reflection_questions: string[];
+  message_from_moodly: string;
+};
+
+type WeeklySummaryPayload = {
+  model: 'gemini-2.5-flash' | 'gemini-2.5-flash-lite';
+  temperature: number;
+  max_tokens: number;
+  response_mime_type: 'application/json';
+  response_schema: unknown;
+  safety_settings: unknown[];
+  messages: { role: 'system' | 'user' | 'assistant'; content: string }[];
+};
 
 export const diaryApi = appApi.injectEndpoints({
   endpoints: build => ({
@@ -30,6 +58,19 @@ export const diaryApi = appApi.injectEndpoints({
         result && Array.isArray(result)
           ? [...result.map(byIdTag), { type: 'Diary', id: 'LIST' }]
           : [{ type: 'Diary', id: 'LIST' }],
+    }),
+
+    requestAIWeeklySummary: build.mutation<WeeklySummaryResult, WeeklySummaryPayload>({
+      query: payload => async (client: SupabaseClient) => {
+        const { data, error } = await client.functions.invoke('ai-proxy', {
+          body: payload,
+          headers: { 'Content-Type': 'application/json' },
+        });
+        if (error) return { data: null, error };
+        const raw = typeof data === 'string' ? JSON.parse(data) : data;
+
+        return { data: raw, error: null };
+      },
     }),
 
     getDiaryCount: build.query<number, void>({
@@ -69,7 +110,7 @@ export const diaryApi = appApi.injectEndpoints({
           .from('moodly_diary')
           .insert(toInsertRow(input))
           .select('*')
-          .single()
+          .single();
 
         return { data: data, error };
       },
@@ -124,4 +165,5 @@ export const {
   useCreateDiaryMutation,
   useUpdateDiaryMutation,
   useDeleteDiaryMutation,
+  useRequestAIWeeklySummaryMutation,
 } = diaryApi;

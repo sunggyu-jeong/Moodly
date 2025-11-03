@@ -25,9 +25,9 @@ import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import packageJson from '../../package.json';
 import { useGetUserInfoQuery } from '../entities/auth/api/auth.api';
-import { type BottomSheetHandler, SettingList } from '../features/setting';
 import { ChangeNicknameSheet } from '../features/setting/ui/ChangeNicknameSheet';
 import { SETTING_ICONS } from '../shared/assets/images/setting';
+import { BottomSheetHandler, SettingList } from '@/features/setting';
 
 const ManageAccountPage = () => {
   const requestWithDrawal = useAppSelector(state => state.overlaySlice.requestWithDrawal);
