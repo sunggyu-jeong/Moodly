@@ -1,31 +1,31 @@
 import { useDeleteDiaryMutation } from '@/entities/diary/api';
-import { resetDiary, setSelectedDay } from '@/features/diary/model/diarySlice';
+import { setSelectedDay, resetDiary } from '@/features/diary';
 import { MODAL_CONFIRM_ACTION_KEY } from '@/processes/key';
 import {
-  resetModalPopup,
-  setOverlayEventHandler,
   setShowDropdownView,
+  setOverlayEventHandler,
+  resetModalPopup,
 } from '@/processes/overlay/model/overlaySlice';
 import {
-  Body1,
-  common,
+  useAppSelector,
+  useAppDispatch,
+  NaviActionButtonProps,
+  NaviMore,
+  isNotEmpty,
   dismissModalToScreen,
-  getScaleSize,
   goBack,
   ICON_DATA,
-  isNotEmpty,
-  type NaviActionButtonProps,
-  NaviMore,
-  useAppDispatch,
-  useAppSelector,
+  Body1,
+  common,
+  getScaleSize,
 } from '@/shared';
 import { COMMON_ICONS } from '@/shared/assets/images/common';
 import { isIphone } from '@/shared/lib/user.util';
 import { DropDownEventIdentifier } from '@/widgets/dropdown';
 import { NaviDismiss, NavigationBar } from '@/widgets/navigation-bar';
-import { type RouteProp, useRoute } from '@react-navigation/native';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
-import { Image, Platform, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { ScrollView, Image } from 'moti';
+import { useRef, useCallback, useMemo, useEffect } from 'react';
+import { View, TouchableOpacity, StyleSheet } from 'react-native/types';
 
 type DiaryDetailRouteParams = {
   params: {

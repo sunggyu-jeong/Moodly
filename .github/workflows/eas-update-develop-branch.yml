@@ -1,20 +1,38 @@
 name: EAS Update (develop)
-on: { push: { branches: [develop] } }
+
+on:
+  push:
+    branches: [develop]
+
 jobs:
   update:
     runs-on: ubuntu-latest
-    concurrency: { group: update-develop, cancel-in-progress: true }
+    concurrency:
+      group: update-develop
+      cancel-in-progress: true
+
     steps:
       - uses: actions/checkout@v4
+
       - uses: pnpm/action-setup@v4
-        with: { version: 10.18.3 }
+        with:
+          version: 10.18.3
+
       - uses: actions/setup-node@v4
-        with { node-version: 20, cache: 'pnpm' }
+        with:
+          node-version: 20
+          cache: pnpm
+
       - uses: expo/expo-github-action@v8
-        with: { eas-version: latest, token: ${{ secrets.EXPO_TOKEN }}}
-      - run: pnmp install -frozen-lockfile
-      - run: |
-        npx eas update |
-          --branch develop |
-          --message "ci:${GITUB_SHA::7}" |
-          --non-interactive
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: EAS Update (develop)
+        run: |
+          npx eas update \
+            --branch develop \
+            --message "ci:${GITHUB_SHA::7}" \
+            --non-interactive

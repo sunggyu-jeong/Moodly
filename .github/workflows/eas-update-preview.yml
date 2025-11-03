@@ -1,20 +1,37 @@
-name: EAS Update Preview(PR)
-on: [ pull_request ]
+name: EAS Update (preview)
+
+on:
+  pull_request:
+    branches: [develop]
+
 jobs:
   preview:
     runs-on: ubuntu-latest
-    permissions: { contents: read, pull-requests: write }
-    concurrency: { group: pr-${{ github.ref }}-eas-update, cancel in proress: true}
+    concurrency:
+      group: pr-${{ github.ref }}-eas-update
+      cancel-in-progress: true
+
     steps:
       - uses: actions/checkout@v4
+
       - uses: pnpm/action-setup@v4
-        with: { version: 10.18.3 }
+        with:
+          version: 10.18.3
+
       - uses: actions/setup-node@v4
-        with: { node-version: 20, cache: 'pnpm' }
+        with:
+          node-version: 20
+          cache: pnpm
+
       - uses: expo/expo-github-action@v8
-        with: { eas-version: latest, token: ${{ secrets.EXPO_TOKEN }}}
-      - run: pnpm install -frozen-lockfile
-      - name: CREATE PR preview (QR comment)
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Create preview update & comment QR
         uses: expo/expo-github-action/preview@v8
         with:
           command: eas update --auto --branch ${{ github.event.pull_request.head.ref }}
+          token: ${{ secrets.EXPO_TOKEN }}
