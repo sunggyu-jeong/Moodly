@@ -1,6 +1,5 @@
-import { gray } from '@/shared/styles';
-
-import { H3 } from '../typography/H3';
+import { gray } from '@/shared/styles/colors';
+import { H3 } from '@/shared/ui/typography/H3';
 
 interface MonthlyLabelProps {
   label: string;

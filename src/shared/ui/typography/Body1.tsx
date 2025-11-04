@@ -1,6 +1,6 @@
-import { useScale } from '@/shared/hooks';
-import { StyleSheet, Text, type TextProps } from 'react-native';
-import { androidStyle } from './Common';
+import { useScale } from '@/shared/hooks/useScale';
+import { androidStyle } from '@/shared/ui/typography/Common';
+import { TextProps, Text, StyleSheet } from 'react-native';
 
 type Props = TextProps & {
   weight: 'regular' | 'semibold';

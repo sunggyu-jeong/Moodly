@@ -1,5 +1,5 @@
-import { getScaleSize } from '@/shared/hooks';
-import { Image, Pressable, StyleSheet, View, type ImageSourcePropType } from 'react-native';
+import { getScaleSize } from '@/shared/hooks/useScale';
+import { ImageSourcePropType, View, Pressable, Image, StyleSheet } from 'react-native';
 
 export interface EmotionSymbolProps {
   icon: ImageSourcePropType;

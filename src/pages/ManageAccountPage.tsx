@@ -1,33 +1,30 @@
-import { useLogout } from '@/features/auth';
+import { useGetUserInfoQuery } from '@/entities/auth/api/auth.api';
+import { useLogout } from '@/features/auth/hooks/useLogout';
 import { SETTING_EVENT_TYPE } from '@/features/setting/types';
+import { ChangeNicknameSheet } from '@/features/setting/ui/ChangeNicknameSheet';
+import SettingList from '@/features/setting/ui/SettingList';
+import { BottomSheetHandler } from '@/features/setting/ui/SocialLoginSheet';
 import { MODAL_CONFIRM_ACTION_KEY } from '@/processes/key';
-import {
-  resetModalPopup,
-  setRequestWithDrawal,
-  setShowModalPopup,
-  setShowToastView,
-} from '@/processes/overlay/model/overlaySlice';
-import {
-  Body1,
-  common,
-  gray,
-  isEmpty,
-  Label,
-  resetTo,
-  supabase,
-  useAppDispatch,
-  useAppSelector,
-} from '@/shared';
 import { appApi } from '@/shared/api/AppApi';
+import { SETTING_ICONS } from '@/shared/assets/images/setting';
+import { useAppSelector, useAppDispatch } from '@/shared/hooks/useHooks';
+import { resetTo } from '@/shared/lib/navigation.util';
+import { supabase } from '@/shared/lib/supabase.util';
+import { isEmpty } from '@/shared/lib/value.util';
+import { common, gray } from '@/shared/styles/colors';
 import NaviTitleDisplay from '@/shared/ui/elements/NaviTitle';
-import { NavigationBar } from '@/widgets/navigation-bar';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
-import packageJson from '../../package.json';
-import { useGetUserInfoQuery } from '../entities/auth/api/auth.api';
-import { type BottomSheetHandler, SettingList } from '../features/setting';
-import { ChangeNicknameSheet } from '../features/setting/ui/ChangeNicknameSheet';
-import { SETTING_ICONS } from '../shared/assets/images/setting';
+import { Body1 } from '@/shared/ui/typography/Body1';
+import { Label } from '@/shared/ui/typography/Label';
+import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
+import {
+  setRequestWithDrawal,
+  setShowToastView,
+  resetModalPopup,
+  setShowModalPopup,
+} from '@/widgets/overlay/model/overlaySlice';
+import { getPackageJson } from 'expo/config';
+import { useRef, useCallback, useEffect, useMemo } from 'react';
+import { View, Image, StyleSheet } from 'react-native';
 
 const ManageAccountPage = () => {
   const requestWithDrawal = useAppSelector(state => state.overlaySlice.requestWithDrawal);
@@ -155,7 +152,7 @@ const ManageAccountPage = () => {
           weight="regular"
           style={styles.versionLabel}
         >
-          {'앱 버전: ' + packageJson.version}
+          {'앱 버전: ' + getPackageJson.version}
         </Label>
       </View>
       <ChangeNicknameSheet ref={changeNicknameSheetRef} />

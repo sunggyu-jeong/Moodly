@@ -1,7 +1,7 @@
 import { useSetUserInfoMutation } from '@/entities/auth/api/auth.api';
 import { useUpdateFirstLaunchFlagMutation } from '@/entities/auth/api/user-meta.api';
 import type { UserInfo } from '@/entities/auth/model/auth.types';
-import { ActionButton } from '@/shared';
+import { ActionButton } from '@/shared/ui/elements';
 import { InputWithCounterProps } from '@/shared/ui/elements/InputWithCounter';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -54,7 +54,7 @@ export const SetNicknameForm = ({ onSuccess, inputBackgroundColor }: SetNickname
         inputBackgroundColor={inputBackgroundColor}
         maxLength={MAX_LENGTH}
         placeholder="닉네임을 입력해주세요."
-        returnKeyType='done'
+        returnKeyType="done"
       />
       <ActionButton
         disabled={!isSubmittable || isSettingUser || isSavingFlag}

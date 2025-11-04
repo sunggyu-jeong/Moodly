@@ -1,9 +1,11 @@
 import { setModifyMode } from '@/features/diary/model/diarySlice';
 import { MODAL_CONFIRM_ACTION_KEY } from '@/processes/key';
-import { setShowDropdownView, setShowModalPopup } from '@/processes/overlay/model/overlaySlice';
-import { navigateFlow, NavigationFlow, SelectableItem, useAppDispatch } from '@/shared';
+import { useAppDispatch } from '@/shared/hooks/useHooks';
+import { navigateFlow, NavigationFlow } from '@/shared/lib/navigation.util';
+import SelectableItem from '@/shared/ui/elements/SelectableItem';
+import { setShowModalPopup, setShowDropdownView } from '@/widgets/overlay/model/overlaySlice';
 import React, { useCallback } from 'react';
-import type { ImageSourcePropType } from 'react-native';
+import { ImageSourcePropType } from 'react-native';
 
 export const DropDownEventIdentifier = {
   MODIFY_DIARY: 'MODIFY_DIARY',

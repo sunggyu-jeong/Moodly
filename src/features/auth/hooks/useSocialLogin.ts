@@ -1,8 +1,7 @@
-import type { AuthProvider } from '@/entities/auth';
 import { useSignInWithProviderMutation } from '@/entities/auth/api/auth.api';
-import { useAppDispatch } from '@/shared';
-
-import { setRequestLogin } from '../../setting';
+import { AuthProvider } from '@/entities/auth/types';
+import { setRequestLogin } from '@/features/setting/model/settingSlice';
+import { useAppDispatch } from '@/shared/hooks/useHooks';
 
 export function useSocialLogin() {
   const [signInWithProvider, { data, isLoading }] = useSignInWithProviderMutation();

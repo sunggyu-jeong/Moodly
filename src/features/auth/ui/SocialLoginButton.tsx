@@ -1,8 +1,8 @@
 import { AUTH_PROVIDER_CONFIG } from '@/entities/auth/config';
-import type { AuthProvider } from '@/entities/auth/types';
-import { Label } from '@/shared';
-import { isNotEmpty } from '@/shared/lib'
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { AuthProvider } from '@/entities/auth/types';
+import { isNotEmpty } from '@/shared/lib/value.util';
+import { Label } from '@/shared/ui/typography/Label';
+import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
 type SocialLoginButtonProps = {
   disabled: boolean;

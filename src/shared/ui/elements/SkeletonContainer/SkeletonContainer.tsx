@@ -1,6 +1,6 @@
-import { gray } from '@/shared/styles';
+import { gray } from '@/shared/styles/colors';
 import { MotiView } from 'moti';
-import type { ComponentProps } from 'react';
+import { ComponentProps } from 'react';
 import { StyleSheet } from 'react-native';
 
 type SkeletonContainerProps = ComponentProps<typeof MotiView>;

@@ -1,11 +1,12 @@
 import { useSignOutMutation } from '@/entities/auth/api/auth.api';
 import { appApi } from '@/shared/api/AppApi';
-import { useAppDispatch } from '@/shared/hooks';
-import { isNotEmpty, resetTo } from '@/shared/lib';
 import { clearUserIdCache } from '@/shared/lib/user.util';
 import { useEffect } from 'react';
 
 import { setRequestLogin } from '../../setting/model/settingSlice';
+import { useAppDispatch } from '@/shared/hooks/useHooks';
+import { resetTo } from '@/shared/lib/navigation.util';
+import { isNotEmpty } from '@/shared/lib/value.util';
 
 export function useLogout() {
   const [signOut, { data, isLoading }] = useSignOutMutation();

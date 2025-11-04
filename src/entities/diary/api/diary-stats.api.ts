@@ -1,7 +1,7 @@
-import { now } from '@/shared';
 import { appApi } from '@/shared/api/AppApi';
 
 import type { MonthlyQuery } from '../model/diary.types';
+import { now } from '@/shared/lib/day.util';
 
 export type DiaryCountByIcon = { icon_id: string; count: number };
 

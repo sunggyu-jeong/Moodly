@@ -1,7 +1,7 @@
-import { common, gray } from '@/shared';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import type { SettingItemProps } from '../types';
 import SettingItem from './SettingItem';
+import { common, gray } from '@/shared/styles/colors';
 
 interface SettingListProps {
   header?: SettingItemProps[];

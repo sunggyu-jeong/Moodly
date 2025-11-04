@@ -3,16 +3,21 @@ import type { Diary } from '@/entities/diary/model/diary.types';
 import EmotionDiaryCardList from '@/features/diary/ui/EmotionDiaryCardList';
 import EmotionDiaryListEmpty from '@/features/diary/ui/EmotionDiaryListEmpty';
 import EmotionDiaryListHeader from '@/features/diary/ui/EmotionDiaryListHeader';
-import { useAppSelector, useDelay } from '@/shared';
-import { isEmpty } from '@/shared/lib';
+
 import colors from '@/shared/styles/colors';
 import dayjs, { Dayjs } from 'dayjs';
 import { memo, useCallback, useMemo } from 'react';
 import { FlatList, Platform, StyleSheet, View } from 'react-native';
 
 import DiarySkeleton from '../../diary/ui/skeleton/DiaryCardSkeleton';
-import { selectIsDiaryPagingLoading, selectSelectedDayIso } from '../model';
 import { isIphone } from '@/shared/lib/user.util';
+import useDelay from '@/shared/hooks/useDelay';
+import { useAppSelector } from '@/shared/hooks/useHooks';
+import { isEmpty } from '@/shared/lib/value.util';
+import {
+  selectIsDiaryPagingLoading,
+  selectSelectedDayIso,
+} from '@/features/calendar/model/selector';
 
 type DiaryListItem = { type: 'DIARY'; data: Diary };
 type SkeletonListItem = { type: 'SKELETON'; id: number };

@@ -1,6 +1,6 @@
-import { gray } from '@/shared';
+import { gray } from '@/shared/styles/colors';
 import { HomeWidget } from '@/widgets/home';
-import { StatusBar, StyleSheet, View } from 'react-native';
+import { View, StatusBar, StyleSheet } from 'react-native';
 
 const HomePage = () => {
   return (

@@ -5,14 +5,15 @@ import {
   type DiaryPageModeType,
 } from '@/entities/calendar/diary.type';
 import type { Diary } from '@/entities/diary/model/diary.types';
-import { CalendarBar } from '@/features/calendar';
-import { now } from '@/shared';
+
 import { generateMonthGrid, generateWeekGrid } from '@/shared/lib/date.util';
 import WeekdayHeader from '@/shared/ui/elements/WeekdayHeader';
 import { AnimatePresence, MotiView } from 'moti';
 import { memo, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import DiarySkeleton from './skeleton/DiaryCardSkeleton';
+import CalendarBar from '@/features/calendar/ui/CalendarBar';
+import { now } from '@/shared/lib/day.util';
 
 interface DiaryListHeaderProps {
   showSkeleton: boolean;

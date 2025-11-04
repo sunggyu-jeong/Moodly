@@ -1,7 +1,7 @@
-import { getScaleSize } from '@/shared/hooks';
-import { goBack } from '@/shared/lib';
-import { Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { COMMON_ICONS } from '../../assets/images/common';
+import { COMMON_ICONS } from '@/shared/assets/images/common';
+import { getScaleSize } from '@/shared/hooks/useScale';
+import { goBack } from '@/shared/lib/navigation.util';
+import { TouchableOpacity, Image, StyleSheet } from 'react-native';
 
 const NaviBackButton = () => (
   <TouchableOpacity

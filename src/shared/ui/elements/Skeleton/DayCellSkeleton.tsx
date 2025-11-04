@@ -1,6 +1,6 @@
-import { COLOR_MODE } from '@/shared/constants';
+import { COLOR_MODE } from '@/shared/constants/Constants';
 import { Skeleton } from 'moti/skeleton';
-import { StyleSheet, View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 const DayCellSkeleton = () => {
   return (

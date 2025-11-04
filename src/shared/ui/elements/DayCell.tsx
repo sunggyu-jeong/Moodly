@@ -1,8 +1,8 @@
-import { common, gray, primary } from '@/shared/styles';
+import { gray, primary, common } from '@/shared/styles/colors';
+import { Caption } from '@/shared/ui/typography/Caption';
 import { Dayjs } from 'dayjs';
 import { memo } from 'react';
-import { Image, StyleSheet, TouchableOpacity, View, type ImageSourcePropType } from 'react-native';
-import { Caption } from '../typography';
+import { ImageSourcePropType, View, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
 interface DayCellProps {
   date: Dayjs;

@@ -1,5 +1,4 @@
-import { formatDate, now } from '@/shared';
-
+import { formatDate, now } from '@/shared/lib/day.util';
 import type { CreateDiaryInput, DbDiaryRow, Diary, UpdateDiaryInput } from '../model/diary.types';
 import { decryptData, encryptData } from '@/shared/lib/crypto.util';
 

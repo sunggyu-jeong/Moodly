@@ -1,4 +1,4 @@
-import { AppSkeleton, SkeletonContainer } from '@/shared';
+import { SkeletonContainer, AppSkeleton } from '@/shared/ui/elements';
 import { StyleSheet, View } from 'react-native';
 
 const HomeDiarySkeleton = () => {

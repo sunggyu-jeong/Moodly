@@ -1,5 +1,5 @@
-import { getScaleSize } from '@/shared/hooks';
-import { Image, StyleSheet, TouchableOpacity, type ImageSourcePropType } from 'react-native';
+import { getScaleSize } from '@/shared/hooks/useScale';
+import { ImageSourcePropType, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
 interface IconButtonAtomProps {
   icon: ImageSourcePropType;

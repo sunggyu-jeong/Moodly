@@ -1,6 +1,6 @@
 import { diaryApi } from '@/entities/diary/api/diary.api';
 import type { Diary } from '@/entities/diary/model/diary.types';
-import { getMonthRange, getWeekRange } from '@/widgets/diary';
+import { getMonthRange, getWeekRange } from '@/shared/lib/date.util';
 import { Dayjs } from 'dayjs';
 import { useMemo } from 'react';
 

@@ -1,6 +1,6 @@
-import { AppSkeleton } from '@/shared';
+import AppSkeleton from '@/shared/ui/elements/AppSkeleton/AppSkeleton';
 import { memo } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 const SettingWidgetItem = ({ withToggle }: { withToggle?: boolean }) => (
   <View style={styles.wrapper}>

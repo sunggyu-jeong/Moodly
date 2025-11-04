@@ -1,6 +1,6 @@
-import { COLOR_MODE } from '@/shared';
+import { COLOR_MODE } from '@/shared/constants/Constants';
 import { Skeleton } from 'moti/skeleton';
-import type { ComponentProps } from 'react';
+import { ComponentProps } from 'react';
 
 type AppSkeletonProps = Omit<ComponentProps<typeof Skeleton>, 'colorMode'>;
 

@@ -1,14 +1,16 @@
 import {
-  useDeletePushTokenMutation,
   useUpsertPushTokenMutation,
+  useDeletePushTokenMutation,
 } from '@/entities/auth/api/auth.api';
-import { useGetDiaryCountQuery, useHasDiaryForDayQuery } from '@/entities/diary/api/diary.api';
-import { resetDiary } from '@/features/diary';
+import { useHasDiaryForDayQuery, useGetDiaryCountQuery } from '@/entities/diary/api/diary.api';
 import { usePushNavigation } from '@/features/diary/hooks/usePushNavigation';
+import { resetDiary } from '@/features/diary/model/diarySlice';
+import useDelay from '@/shared/hooks/useDelay';
+import { useAppDispatch } from '@/shared/hooks/useHooks';
+import { useNotificationPermission } from '@/shared/hooks/useNotificationPermission';
+import { jumpToTab, navigate } from '@/shared/lib/navigation.util';
 import { useFocusEffect } from '@react-navigation/native';
-import { jumpToTab, navigate, useAppDispatch, useDelay, useNotificationPermission } from '@/shared';
-import { useCallback, useEffect, useState } from 'react';
-
+import { useState, useCallback, useEffect } from 'react';
 import HomeContent from './HomeContent';
 import HomeLoading from './HomeLoading';
 

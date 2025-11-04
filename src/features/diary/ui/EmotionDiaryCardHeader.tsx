@@ -1,6 +1,10 @@
 import type { Diary } from '@/entities/diary/model/diary.types';
-import { Avatar, Caption, gray, ICON_DATA, Label } from '@/shared';
 import { EMOTION_ICONS } from '@/shared/assets/images/emotion';
+import { ICON_DATA } from '@/shared/constants/Icons';
+import { gray } from '@/shared/styles/colors';
+import Avatar from '@/shared/ui/elements/Avatar';
+import { Caption } from '@/shared/ui/typography/Caption';
+import { Label } from '@/shared/ui/typography/Label';
 import dayjs from 'dayjs';
 import { StyleSheet, View } from 'react-native';
 

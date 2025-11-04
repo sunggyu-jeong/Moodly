@@ -5,9 +5,9 @@ import OnboardingPage from '@/pages/OnBoardingPage';
 import type { NavigatorScreenParams } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { Splash } from '../ui';
 import DiaryStack, { type DiaryStackParamList } from './DiaryStack';
 import TabNavigation, { type BottomTabParamList } from './TabNavigation';
+import Splash from '@/app/ui/screens/Splash';
 
 export type RootStackParamList = {
   Splash: undefined;

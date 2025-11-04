@@ -1,25 +1,22 @@
 import { useGetUserInfoQuery } from '@/entities/auth/api/auth.api';
-import { useLogout } from '@/features/auth';
-import { SettingRoot } from '@/features/setting';
+import { useLogout } from '@/features/auth/hooks/useLogout';
 import { SETTING_EVENT_TYPE, TEXTS } from '@/features/setting/types';
+import SettingRoot from '@/features/setting/ui/SettingRoot';
 import { MODAL_CONFIRM_ACTION_KEY } from '@/processes/key';
-import { setShowModalPopup } from '@/processes/overlay/model/overlaySlice';
-import {
-  Body1,
-  gray,
-  isNotEmpty,
-  Label,
-  navigate,
-  Toggle,
-  useAppDispatch,
-  useDelay,
-  useExternalWebSite,
-} from '@/shared';
+import { setShowModalPopup } from '@/widgets/overlay/model/overlaySlice';
 import { COMMON_ICONS } from '@/shared/assets/images/common';
+import useDelay from '@/shared/hooks/useDelay';
+import { useAppDispatch } from '@/shared/hooks/useHooks';
+import { useExternalWebSite } from '@/shared/hooks/useOpenChat';
 import { ENV } from '@/shared/lib/env';
-import * as Notifications from 'expo-notifications';
-import { useCallback, useEffect, useState } from 'react';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { navigate } from '@/shared/lib/navigation.util';
+import { isNotEmpty } from '@/shared/lib/value.util';
+import { gray } from '@/shared/styles/colors';
+import { Body1 } from '@/shared/ui/typography/Body1';
+import { Label } from '@/shared/ui/typography/Label';
+import { useState, useEffect, useCallback } from 'react';
+import { TouchableOpacity, View, Image, StyleSheet } from 'react-native';
+import Toggle from '@/shared/ui/elements/Toggle';
 
 const SettingPage = () => {
   const { openLink } = useExternalWebSite();

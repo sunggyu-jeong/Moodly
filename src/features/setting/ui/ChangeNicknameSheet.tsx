@@ -1,4 +1,3 @@
-import { goBack } from '@/shared';
 import { useBottomSheet } from '@/shared/hooks/useBottomSheet';
 import BottomSheetWrapper from '@/shared/ui/elements/BottomSheetWrapper';
 import { H3 } from '@/shared/ui/typography/H3';
@@ -7,6 +6,7 @@ import { forwardRef, useImperativeHandle, useState } from 'react';
 import { Keyboard, Pressable, StyleSheet, View } from 'react-native';
 import { SetNicknameForm } from '../../set-nickname/ui/SetNicknameForm';
 import type { BottomSheetHandler } from './SocialLoginSheet';
+import { goBack } from '@/shared/lib/navigation.util';
 
 const MIN_HEIGHT = 300;
 
@@ -73,7 +73,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 16,
   },
-  form: {
-    
-  }
+  form: {},
 });

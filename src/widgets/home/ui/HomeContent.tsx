@@ -1,6 +1,10 @@
-import { ActionButton, DiaryCountCard, getScaleSize, gray, H2 } from '@/shared';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
-import { Image, StyleSheet, View } from 'react-native';
+import { getScaleSize } from '@/shared/hooks/useScale';
+import { gray } from '@/shared/styles/colors';
+import ActionButton from '@/shared/ui/elements/ActionButton';
+import DiaryCountCard from '@/shared/ui/elements/DiaryCountCard';
+import { H2 } from '@/shared/ui/typography/H2';
+import { View, Image, StyleSheet } from 'react-native';
 
 interface HomeContentProps {
   diaryCount: number;

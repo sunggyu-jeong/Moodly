@@ -1,9 +1,9 @@
-import { useAppSelector } from '@/shared/hooks';
-import { isNotEmpty } from '@/shared/lib';
+import { useAppSelector } from '@/shared/hooks/useHooks';
+import { isNotEmpty } from '@/shared/lib/value.util';
 import { common } from '@/shared/styles/colors';
-import DropDownItem, { type DropDownItemProps } from '@/widgets/dropdown/ui/DropDownItem';
+import DropDownItem, { DropDownItemProps } from '@/widgets/dropdown/ui/DropDownItem';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 const DropDownContainer = () => {
   const showDropDownView = useAppSelector(state => state.overlaySlice.showDropDownView);

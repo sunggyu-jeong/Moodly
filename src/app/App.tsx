@@ -7,14 +7,16 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
 import { Provider } from 'react-redux';
 
-import { RootStack } from '@/app/navigation';
 import { store } from '@/app/store';
 import { useUpsertPushTokenMutation } from '@/entities/auth/api/auth.api';
-import OverlayManager from '@/processes/overlay/ui/OverlayManager';
-import { isEmpty, navigationRef, useNotificationPermission } from '@/shared';
+import OverlayManager from '@/widgets/overlay/ui/OverlayManager';
 import '@/shared/lib/day.util';
 import { StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import RootStack from '@/app/navigation/RootStack';
+import { useNotificationPermission } from '@/shared/hooks/useNotificationPermission';
+import { navigationRef } from '@/shared/lib/navigation.util';
+import { isEmpty } from '@/shared/lib/value.util';
 
 enableScreens();
 
@@ -56,7 +58,6 @@ function App() {
     setupListeners: true,
     onTokenUpdate: onTokenUpdate,
   });
-
 
   return (
     <GestureHandlerRootView style={styles.container}>

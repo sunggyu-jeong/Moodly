@@ -1,13 +1,13 @@
 import * as AppleAuthentication from 'expo-apple-authentication';
 import { GoogleSignin, type User } from '@react-native-google-signin/google-signin';
-import { isEmpty } from '@/shared';
 import { appApi } from '@/shared/api/AppApi';
-import { ApiCode } from '@/shared/config';
 import { Platform } from 'react-native';
 import * as Application from 'expo-application';
 
 import type { SetUserInfoInput, SignInProviderInput, UserInfo } from '../model/auth.types';
 import { isIphone } from '@/shared/lib/user.util';
+import { ApiCode } from '@/shared/api/Error';
+import { isEmpty } from '@/shared/lib/value.util';
 
 GoogleSignin.configure({
   webClientId: process.env.GOOGLE_WEB_CLIENT_ID!,
@@ -22,7 +22,6 @@ async function getDeviceId(): Promise<string> {
   return id ?? 'unknown-android-device';
 }
 
-
 export async function getGoogleToken() {
   await GoogleSignin.hasPlayServices();
   await GoogleSignin.signIn();
@@ -31,7 +30,6 @@ export async function getGoogleToken() {
 }
 
 export async function getAppleToken() {
-
   const available = await AppleAuthentication.isAvailableAsync();
   if (!available) {
     const err = new Error('이 기기에서는 Apple 로그인이 지원되지 않습니다.');

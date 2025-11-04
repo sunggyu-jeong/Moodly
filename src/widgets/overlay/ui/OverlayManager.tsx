@@ -1,14 +1,16 @@
-import { isNotEmpty, navigate, resetTo, useAppDispatch, useAppSelector, useNotificationPermission } from '@/shared';
-import { DropDownAnimation } from '@/widgets/dropdown/animation';
-import { ToastController } from '@/widgets/toast';
-import { PopupContainer } from '@/widgets/popup';
-
-import { MODAL_CANCEL_ACTION_KEY, MODAL_CONFIRM_ACTION_KEY } from '../../key';
+import { MODAL_CONFIRM_ACTION_KEY, MODAL_CANCEL_ACTION_KEY } from '@/processes/key';
+import { useAppSelector, useAppDispatch } from '@/shared/hooks/useHooks';
+import { useNotificationPermission } from '@/shared/hooks/useNotificationPermission';
+import { resetTo } from '@/shared/lib/navigation.util';
+import { isNotEmpty } from '@/shared/lib/value.util';
+import DropDownAnimation from '@/widgets/dropdown/animation/DropDownAnimation';
 import {
-  resetModalPopup,
   setOverlayEventHandler,
   setRequestWithDrawal,
-} from '../model/overlaySlice';
+  resetModalPopup,
+} from '@/widgets/overlay/model/overlaySlice';
+import PopupContainer from '@/widgets/popup/ui/PopupContainer';
+import ToastController from '@/widgets/toast/ui/ToastController';
 
 const OverlayManager = () => {
   const showToastView = useAppSelector(state => state.overlaySlice.showToastView);
@@ -16,7 +18,7 @@ const OverlayManager = () => {
   const showDropDownView = useAppSelector(state => state.overlaySlice.showDropDownView);
   const dispatch = useAppDispatch();
   const { openSettings } = useNotificationPermission();
-  
+
   return (
     <>
       {isNotEmpty(showToastView?.visibility) && <ToastController />}

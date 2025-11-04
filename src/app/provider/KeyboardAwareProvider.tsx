@@ -1,4 +1,4 @@
-import { common } from '@/shared';
+import { common } from '@/shared/styles/colors';
 import type { ViewStyle } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';

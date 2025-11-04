@@ -1,5 +1,5 @@
 import { COMMON_ICONS } from '@/shared/assets/images/common';
-import { dismissModalToScreen } from '@/shared/lib';
+import { dismissModalToScreen } from '@/shared/lib/navigation.util';
 import IconButton from '@/shared/ui/elements/IconButton';
 
 const NaviDismiss = () => {

@@ -1,31 +1,28 @@
-import { useDeleteDiaryMutation } from '@/entities/diary/api';
-import { setSelectedDay, resetDiary } from '@/features/diary';
+import { useDeleteDiaryMutation } from '@/entities/diary/api/diary.api';
+import { setSelectedDay, resetDiary } from '@/features/diary/model/diarySlice';
 import { MODAL_CONFIRM_ACTION_KEY } from '@/processes/key';
+import { COMMON_ICONS } from '@/shared/assets/images/common';
+import { ICON_DATA } from '@/shared/constants/Icons';
+import { useAppSelector, useAppDispatch } from '@/shared/hooks/useHooks';
+import { getScaleSize } from '@/shared/hooks/useScale';
+import { dismissModalToScreen, goBack } from '@/shared/lib/navigation.util';
+import { isIphone } from '@/shared/lib/user.util';
+import { isNotEmpty } from '@/shared/lib/value.util';
+import { common } from '@/shared/styles/colors';
+import { NaviActionButtonProps } from '@/shared/ui/elements/NaviActionButton';
+import NaviMore from '@/shared/ui/elements/NaviMore';
+import { Body1 } from '@/shared/ui/typography/Body1';
+import { DropDownEventIdentifier } from '@/widgets/dropdown';
+import NaviDismiss from '@/widgets/navigation-bar/ui/NaviDismiss';
+import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
 import {
   setShowDropdownView,
   setOverlayEventHandler,
   resetModalPopup,
-} from '@/processes/overlay/model/overlaySlice';
-import {
-  useAppSelector,
-  useAppDispatch,
-  NaviActionButtonProps,
-  NaviMore,
-  isNotEmpty,
-  dismissModalToScreen,
-  goBack,
-  ICON_DATA,
-  Body1,
-  common,
-  getScaleSize,
-} from '@/shared';
-import { COMMON_ICONS } from '@/shared/assets/images/common';
-import { isIphone } from '@/shared/lib/user.util';
-import { DropDownEventIdentifier } from '@/widgets/dropdown';
-import { NaviDismiss, NavigationBar } from '@/widgets/navigation-bar';
-import { ScrollView, Image } from 'moti';
+} from '@/widgets/overlay/model/overlaySlice';
+import { useRoute, RouteProp } from '@react-navigation/native';
 import { useRef, useCallback, useMemo, useEffect } from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native/types';
+import { View, TouchableOpacity, ScrollView, Image, StyleSheet } from 'react-native';
 
 type DiaryDetailRouteParams = {
   params: {

@@ -1,5 +1,5 @@
-import { getScaleSize } from '@/shared/hooks';
 import { useBottomSheet } from '@/shared/hooks/useBottomSheet';
+import { getScaleSize } from '@/shared/hooks/useScale';
 import BottomSheetWrapper from '@/shared/ui/elements/BottomSheetWrapper';
 import SocialLoginGroup, { SOCIAL_LOGIN_ENTRANCE } from '@/shared/ui/elements/SocialLoginGroup';
 import { H3 } from '@/shared/ui/typography/H3';

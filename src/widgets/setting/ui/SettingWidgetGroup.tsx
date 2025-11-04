@@ -1,6 +1,7 @@
-import { common, gray, SkeletonContainer } from '@/shared';
-import React, { memo, type PropsWithChildren } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { common, gray } from '@/shared/styles/colors';
+import SkeletonContainer from '@/shared/ui/elements/SkeletonContainer/SkeletonContainer';
+import React, { PropsWithChildren, memo } from 'react';
+import { View, StyleSheet } from 'react-native';
 
 const Divider = () => <View style={styles.divider} />;
 

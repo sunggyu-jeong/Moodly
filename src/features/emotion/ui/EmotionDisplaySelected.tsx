@@ -1,5 +1,6 @@
 import { EMOTION_ICONS } from '@/shared/assets/images/emotion';
-import { getScaleSize, useAppSelector, useScale } from '@/shared/hooks';
+import { useAppSelector } from '@/shared/hooks/useHooks';
+import { useScale, getScaleSize } from '@/shared/hooks/useScale';
 import { gray } from '@/shared/styles/colors';
 import AnimatedZoomImage from '@/shared/ui/elements/AnimatedZoomImage';
 import { Body1 } from '@/shared/ui/typography/Body1';

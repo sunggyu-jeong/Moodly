@@ -1,6 +1,7 @@
-import { Body1, gray } from '@/shared';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import type { SettingItemProps } from '../types';
+import { gray } from '@/shared/styles/colors';
+import { Body1 } from '@/shared/ui/typography/Body1';
 
 const SettingItem = ({ titleStyle, ...props }: SettingItemProps) => {
   const Container = props.onPress ? TouchableOpacity : View;

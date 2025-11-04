@@ -1,18 +1,23 @@
-import { DiarySaveButton } from '@/features/diary';
-import { common, getScaleSize, H2, ICON_DATA, isNotEmpty, useAppSelector } from '@/shared';
+import { DiarySaveButton } from '@/features/diary/ui/EmotionDiarySaveButton';
+import { ICON_DATA } from '@/shared/constants/Icons';
+import { useAppSelector } from '@/shared/hooks/useHooks';
+import { getScaleSize } from '@/shared/hooks/useScale';
 import { isIphone } from '@/shared/lib/user.util';
-import { NaviDismiss, NavigationBar } from '@/widgets/navigation-bar';
-import { useEffect, useRef, useState } from 'react';
+import { isNotEmpty } from '@/shared/lib/value.util';
+import { common } from '@/shared/styles/colors';
+import { H2 } from '@/shared/ui/typography/H2';
+import NaviDismiss from '@/widgets/navigation-bar/ui/NaviDismiss';
+import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
+import { useRef, useState, useEffect } from 'react';
 import {
-  Image,
-  KeyboardAvoidingView,
-  Platform,
   ScrollView,
-  StyleSheet,
-  TextInput,
+  KeyboardAvoidingView,
   View,
+  Image,
+  TextInput,
+  InputAccessoryView,
+  StyleSheet,
 } from 'react-native';
-import InputAccessoryView from 'react-native-input-accessory-view';
 
 const actionButtons = [{ item: <NaviDismiss />, disabled: false }];
 

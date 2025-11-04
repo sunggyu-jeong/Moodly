@@ -1,12 +1,11 @@
-// ArrowButton.tsx 수정
-import { getScaleSize } from '@/shared/hooks';
+import { getScaleSize } from '@/shared/hooks/useScale';
 import {
+  ImageSourcePropType,
+  StyleProp,
+  ViewStyle,
+  TouchableOpacity,
   Image,
   StyleSheet,
-  TouchableOpacity,
-  type ImageSourcePropType,
-  type StyleProp,
-  type ViewStyle,
 } from 'react-native';
 
 interface ArrowButtonAtomProps {

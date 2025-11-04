@@ -1,14 +1,14 @@
+import { Label } from '@/shared/ui/typography/Label';
 import { StyleSheet, TouchableOpacity } from 'react-native';
-import { Label } from '../typography/Label';
 
-interface ModalButtonProps {
+interface PopupButtonProps {
   text: string;
   textColor: string;
   bgColor?: string;
   onPress: () => void;
 }
 
-const ModalButton = ({ text, textColor, bgColor, onPress }: ModalButtonProps) => {
+const PopupButton = ({ text, textColor, bgColor, onPress }: PopupButtonProps) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -38,4 +38,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ModalButton;
+export default PopupButton;

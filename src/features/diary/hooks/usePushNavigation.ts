@@ -1,5 +1,5 @@
+import { navigate } from '@/shared/lib/navigation.util';
 import * as Notifications from 'expo-notifications';
-import { navigate } from '@/shared';
 import { useEffect, useRef } from 'react';
 
 interface UsePushNavigationProps {
@@ -8,7 +8,7 @@ interface UsePushNavigationProps {
 
 export const usePushNavigation = ({ hasDiary }: UsePushNavigationProps) => {
   const lastNotificationResponse = Notifications.useLastNotificationResponse();
-  
+
   const didNavigateRef = useRef(false);
   const notificationListener = useRef<Notifications.EventSubscription | null>(null);
   const responseListener = useRef<Notifications.EventSubscription | null>(null);
@@ -17,7 +17,7 @@ export const usePushNavigation = ({ hasDiary }: UsePushNavigationProps) => {
     if (lastNotificationResponse && !didNavigateRef.current && hasDiary !== undefined) {
       const data = lastNotificationResponse.notification.request.content.data;
       const { screen: stackName, params: paramsValue } = data as any;
-      
+
       if (stackName === 'DiaryStack') {
         try {
           const params = typeof paramsValue === 'string' ? JSON.parse(paramsValue) : paramsValue;
@@ -45,7 +45,7 @@ export const usePushNavigation = ({ hasDiary }: UsePushNavigationProps) => {
 
       const data = response.notification.request.content.data;
       const { screen: stackName, params: paramsValue } = data as any;
-      
+
       if (stackName !== 'DiaryStack') return;
 
       try {
@@ -62,7 +62,7 @@ export const usePushNavigation = ({ hasDiary }: UsePushNavigationProps) => {
 
     return () => {
       if (notificationListener.current) {
-        notificationListener.current.remove(); 
+        notificationListener.current.remove();
       }
       if (responseListener.current) {
         responseListener.current.remove();
