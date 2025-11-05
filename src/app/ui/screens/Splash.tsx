@@ -1,15 +1,19 @@
 import { useLazyGetFirstLaunchFlagQuery } from '@/entities/auth/api/user-meta.api';
-import { isNotEmpty, primary, resetTo, supabase, useAppDispatch } from '@/shared';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { useCallback, useEffect } from 'react';
 import { Image, SafeAreaView, StatusBar, StyleSheet, View } from 'react-native';
 
-import { useVersionCheck } from '@/features/check-app-version/ui';
 import {
   MODAL_CANCEL_ACTION_KEY,
   MODAL_CONFIRM_ACTION_KEY,
 } from '@/entities/overlay/model/modalKeys';
+import { useVersionCheck } from '@/features/check-app-version/ui';
+import { useAppDispatch } from '@/shared/hooks/useHooks';
+import { resetTo } from '@/shared/lib/navigation.util';
+import { supabase } from '@/shared/lib/supabase.util';
+import { isNotEmpty } from '@/shared/lib/value.util';
 import { setShowModalPopup } from '@/shared/model/overlaySlice';
+import { primary } from '@/shared/styles/colors';
 import * as Updates from 'expo-updates';
 import AppBootstrap from '../../provider/AppBootstrap';
 

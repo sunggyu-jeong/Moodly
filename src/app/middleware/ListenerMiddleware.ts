@@ -34,7 +34,6 @@ listenerMiddleware.startListening({
       handler(errDetail, listenerApi);
       return;
     }
-    const message = errDetail.data?.message;
     console.log('error handler >>>>>>>>>', payload);
 
     // listenerApi.dispatch(
