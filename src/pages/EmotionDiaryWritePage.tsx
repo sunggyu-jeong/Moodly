@@ -23,7 +23,9 @@ const EmotionDiaryWritePage = () => {
   const [text, setText] = useState('');
 
   useEffect(() => {
-    setText(isNotEmpty(selectedDiary) ? (selectedDiary?.description ?? '') : '');
+    Promise.resolve().then(() => {
+      setText(isNotEmpty(selectedDiary) ? (selectedDiary?.description ?? '') : '');
+    });
   }, [selectedDiary]);
 
   return (

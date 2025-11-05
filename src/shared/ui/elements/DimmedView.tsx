@@ -1,7 +1,8 @@
+import { ReactNode } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 interface DimmedViewProps {
-  children: React.ReactNode;
+  children: ReactNode;
   onPress?: () => void;
 }
 

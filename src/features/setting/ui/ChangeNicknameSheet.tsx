@@ -12,7 +12,7 @@ import type { BottomSheetHandler } from './SocialLoginSheet';
 
 const MIN_HEIGHT = 300;
 
-export const ChangeNicknameSheet = forwardRef<BottomSheetHandler>((_, ref) => {
+const ChangeNicknameSheet = forwardRef<BottomSheetHandler>((_, ref) => {
   const { sheetRef, snapPoints, handleSheetChanges } = useBottomSheet({
     snapPoints: [MIN_HEIGHT, '31.3%'],
   });
@@ -77,3 +77,6 @@ const styles = StyleSheet.create({
   },
   form: {},
 });
+
+ChangeNicknameSheet.displayName = 'ChangeNicknameSheet';
+export default ChangeNicknameSheet;

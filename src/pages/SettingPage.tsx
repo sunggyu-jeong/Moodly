@@ -67,7 +67,7 @@ const SettingPage = () => {
           break;
       }
     },
-    [openLink, signOut],
+    [openLink, signOut, KAKAO_OPEN_CHAT_LINK, PRIVACY_POLICY_LINK, TERMS_OF_SERVICE_LINK],
   );
 
   const headerItem = isNotEmpty(userInfo)

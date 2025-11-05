@@ -18,6 +18,7 @@ export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
     detectSessionInUrl: false,
   },
   global: {
+    // eslint-disable-next-line no-undef
     fetch: async (input: string | URL | Request, init?: RequestInit) => {
       const maxAttempts = 3;
       let lastError: Error | null = null;

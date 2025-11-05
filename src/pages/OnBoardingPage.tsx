@@ -16,7 +16,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useUpsertPushTokenMutation } from '@/entities/auth/api/auth.api';
-import { BottomSheetHandler, SocialLoginSheet } from '@/features/setting/ui/SocialLoginSheet';
+import SocialLoginSheet, { BottomSheetHandler } from '@/features/setting/ui/SocialLoginSheet';
 import { ONBOARDING_ICONS } from '@/shared/assets/images/onboarding';
 import { useNotificationPermission } from '@/shared/hooks/useNotificationPermission';
 import { isIphone } from '@/shared/lib/user.util';
@@ -26,9 +26,6 @@ import ActionButton from '@/shared/ui/elements/ActionButton';
 import { H2 } from '@/shared/ui/typography/H2';
 import { Label } from '@/shared/ui/typography/Label';
 
-interface DotProps {
-  active: boolean;
-}
 interface SlideProps {
   id: number;
   title: string;
@@ -167,21 +164,19 @@ const OnboardingPage = () => {
     [width, showStartButton],
   );
 
-  const Dots = useMemo(() => {
-    const Dot = ({ active }: DotProps) => (
-      <View style={[styles.dot, active ? styles.dotActive : styles.dotInactive]} />
-    );
-    return () => (
+  const dots = useMemo(
+    () => (
       <View style={styles.dotContainer}>
         {SLIDES.map((s, i) => (
-          <Dot
+          <View
             key={s.id}
-            active={i === index}
+            style={[styles.dot, i === index ? styles.dotActive : styles.dotInactive]}
           />
         ))}
       </View>
-    );
-  }, [index]);
+    ),
+    [index],
+  );
 
   const onSkip = () => {
     listRef.current?.scrollToIndex({ index: total - 1, animated: true });
@@ -210,7 +205,7 @@ const OnboardingPage = () => {
           )}
         </View>
 
-        <Dots />
+        {dots}
 
         <FlatList
           ref={listRef}

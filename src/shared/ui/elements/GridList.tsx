@@ -1,9 +1,10 @@
+import { ReactNode } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 
 interface GridListProps<T> {
   data: T[];
   numColumns?: number;
-  renderItem: (item: T, index: number) => React.ReactNode;
+  renderItem: (item: T, index: number) => ReactNode;
   keyExtractor?: (item: T, index: number) => string;
   containerStyle?: object;
   cellStyle?: object;

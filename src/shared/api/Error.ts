@@ -21,7 +21,9 @@ export interface AppError {
 const toStatusCode = (cause: unknown): number | undefined => {
   if (typeof cause === 'object' && cause && 'status' in cause) {
     const s = (cause as { status?: number }).status;
-    if (typeof s === 'number') return s;
+    if (typeof s === 'number') {
+      return s;
+    }
   }
   return undefined;
 };
@@ -32,12 +34,24 @@ export const toAppError = (e: unknown): AppError => {
     const msg = err.message ?? '알 수 없는 오류가 발생했습니다.';
     const status = err.status ?? toStatusCode(e);
 
-    if (status === 401) return { code: ApiCode.UNAUTHORIZED, message: msg, status, cause: e };
-    if (status === 403) return { code: ApiCode.FORBIDDEN, message: msg, status, cause: e };
-    if (status === 404) return { code: ApiCode.NOT_FOUND, message: msg, status, cause: e };
-    if (status === 409) return { code: ApiCode.CONFLICT, message: msg, status, cause: e };
-    if (status === 400) return { code: ApiCode.BAD_REQUEST, message: msg, status, cause: e };
-    if (status === 429) return { code: ApiCode.RATE_LIMIT, message: msg, status, cause: e };
+    if (status === 401) {
+      return { code: ApiCode.UNAUTHORIZED, message: msg, status, cause: e };
+    }
+    if (status === 403) {
+      return { code: ApiCode.FORBIDDEN, message: msg, status, cause: e };
+    }
+    if (status === 404) {
+      return { code: ApiCode.NOT_FOUND, message: msg, status, cause: e };
+    }
+    if (status === 409) {
+      return { code: ApiCode.CONFLICT, message: msg, status, cause: e };
+    }
+    if (status === 400) {
+      return { code: ApiCode.BAD_REQUEST, message: msg, status, cause: e };
+    }
+    if (status === 429) {
+      return { code: ApiCode.RATE_LIMIT, message: msg, status, cause: e };
+    }
 
     return { code: ApiCode.UNKNOWN, message: msg, status, cause: e };
   }

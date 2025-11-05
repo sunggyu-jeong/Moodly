@@ -21,7 +21,7 @@ type AppCodeHandler = (
 ) => void;
 
 const appCodeHandlers: Record<AppCode, AppCodeHandler> = {
-  [AppCode.NOT_LOGIN]: _errDetail => {
+  [AppCode.NOT_LOGIN]: () => {
     resetTo('Login');
   },
 };

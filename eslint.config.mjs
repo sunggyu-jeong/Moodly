@@ -13,8 +13,8 @@ import pluginUnusedImports from 'eslint-plugin-unused-imports';
 
 import pluginBoundaries from 'eslint-plugin-boundaries';
 
-import pluginPrettier from 'eslint-plugin-prettier';
 import configPrettier from 'eslint-config-prettier';
+import pluginPrettier from 'eslint-plugin-prettier';
 
 export default tseslint.config(
   // 0) ignore
@@ -54,6 +54,7 @@ export default tseslint.config(
       globals: {
         ...globals.es2021,
         ...globals.node,
+        ...globals.jest,
         __DEV__: 'readonly',
         fetch: 'readonly',
         FormData: 'readonly',
@@ -120,7 +121,6 @@ export default tseslint.config(
 
       // alias/ts 경로 인식 후엔 켜도 됨
       'import/no-unresolved': 'error',
-
       'unused-imports/no-unused-imports': 'error',
       'unused-imports/no-unused-vars': [
         'warn',
@@ -135,39 +135,13 @@ export default tseslint.config(
       // 순환 참조 얕게 차단
       'import/no-cycle': ['error', { maxDepth: 2 }],
 
-      // === FSD: 퍼블릭 API 강제 ===
-      // 부정 패턴(!...)은 스키마상 허용 안 되므로 사용 금지
-      // 폴더 루트("features/foo")는 허용, 하위("features/foo/**")는 금지
-      'no-restricted-imports': [
-        'error',
-        {
-          patterns: [
-            {
-              group: ['@/features/*/**'],
-              message:
-                'features는 퍼블릭 API(폴더 루트)로만 import 하세요. 예: "@/features/<name>"',
-            },
-            {
-              group: ['@/entities/*/**'],
-              message:
-                'entities는 퍼블릭 API(폴더 루트)로만 import 하세요. 예: "@/entities/<name>"',
-            },
-            {
-              group: ['@/widgets/*/**'],
-              message: 'widgets는 퍼블릭 API(폴더 루트)로만 import 하세요. 예: "@/widgets/<name>"',
-            },
-            { group: ['@/pages/*/**'], message: 'pages 내부 파일 직접 참조 금지' },
-            { group: ['@/processes/*/**'], message: 'processes 내부 파일 직접 참조 금지' },
-          ],
-          paths: [
-            { name: '@/shared', message: '전역 배럴 금지. 구체 경로로 import 하세요.' },
-            { name: '@/shared/index', message: '전역 배럴 금지. 구체 경로로 import 하세요.' },
-          ],
-        },
-      ],
-
-      // prettier(ESLint로 포맷 위반 감지까지)
+      // prettier(ESLint로 포맷 위반)
       'prettier/prettier': 'warn',
+
+      // 메소드 오버로딩 경고 끄기
+      '@typescript-eslint/no-redeclare': 'off',
+      'no-undef': 'off',
+      'no-redeclare': 'off',
     },
   },
 

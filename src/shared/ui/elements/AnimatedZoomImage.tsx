@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Animated, ImageSourcePropType } from 'react-native';
 
 import { useScale } from '@/shared/hooks/useScale';
@@ -9,7 +9,7 @@ interface AnimatedZoomImageProps {
 }
 
 const AnimatedZoomImage = ({ source, size }: AnimatedZoomImageProps) => {
-  const scale = useRef(new Animated.Value(0.8)).current;
+  const scale = useMemo(() => new Animated.Value(0.8), []);
   const { getScaleSize } = useScale();
 
   useEffect(() => {
@@ -20,6 +20,10 @@ const AnimatedZoomImage = ({ source, size }: AnimatedZoomImageProps) => {
       tension: 100,
       useNativeDriver: true,
     }).start();
+
+    return () => {
+      scale.stopAnimation();
+    };
   }, [source, scale]);
 
   return (
@@ -33,4 +37,5 @@ const AnimatedZoomImage = ({ source, size }: AnimatedZoomImageProps) => {
     />
   );
 };
+
 export default AnimatedZoomImage;

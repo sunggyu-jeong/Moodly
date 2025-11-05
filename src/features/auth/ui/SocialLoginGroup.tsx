@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { useLazyGetUserInfoQuery } from '@/entities/auth/api/auth.api';
@@ -33,11 +33,11 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
   const { openLink } = useExternalWebSite();
   const { PRIVACY_POLICY_LINK, TERMS_OF_SERVICE_LINK } = ENV;
 
-  const fetchUserInfo = async () => {
+  const fetchUserInfo = useCallback(async () => {
     const response = await getUserInfo();
     await initUserId();
 
-    if (isEmpty(response) || isEmpty(response.data)) {
+    if (isEmpty(response) || isEmpty((response as any).data)) {
       navigate('Nickname');
       return;
     }
@@ -45,13 +45,13 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
     saveFirstLaunchFlag({ isFirstLoad: false });
     resetTo('Main');
     dispatch(setShowToastView({ visibility: true, message: '로그인이 완료됐어요!' }));
-  };
+  }, [dispatch, getUserInfo, saveFirstLaunchFlag]);
 
   useEffect(() => {
     if (!isLoading && isNotEmpty(data)) {
       fetchUserInfo();
     }
-  }, [data, isLoading, dispatch, entrance]);
+  }, [data, isLoading, dispatch, entrance, fetchUserInfo]);
 
   return (
     <View style={styles.container}>

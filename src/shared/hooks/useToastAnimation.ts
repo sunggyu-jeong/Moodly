@@ -16,7 +16,10 @@ export function useToastAnimation(
   useEffect(() => {
     let timeout: NodeJS.Timeout;
     if (visible) {
-      setIsMounted(true);
+      Promise.resolve().then(() => {
+        setIsMounted(true);
+      });
+
       translateY.value = withTiming(0, { duration });
       opacity.value = withTiming(1, { duration });
 

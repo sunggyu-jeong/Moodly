@@ -6,7 +6,7 @@ import { useGetUserInfoQuery } from '@/entities/auth/api/auth.api';
 import { MODAL_CONFIRM_ACTION_KEY } from '@/entities/overlay/model/modalKeys';
 import { useLogout } from '@/features/auth/hooks/useLogout';
 import { SETTING_EVENT_TYPE } from '@/features/setting/types';
-import { ChangeNicknameSheet } from '@/features/setting/ui/ChangeNicknameSheet';
+import ChangeNicknameSheet from '@/features/setting/ui/ChangeNicknameSheet';
 import SettingList from '@/features/setting/ui/SettingList';
 import { BottomSheetHandler } from '@/features/setting/ui/SocialLoginSheet';
 import { appApi } from '@/shared/api/AppApi';

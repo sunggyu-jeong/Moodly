@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { Animated, Platform, StyleSheet, TouchableOpacity } from 'react-native';
 
 import DropDownContainer from '@/features/overlay/dropdown/DropDownContainer';
@@ -6,7 +6,8 @@ import { useAppDispatch, useAppSelector } from '@/shared/hooks/useHooks';
 import { setShowDropdownView } from '@/shared/model/overlaySlice';
 
 const DropDownAnimation = () => {
-  const animationValue = useRef(new Animated.Value(0)).current;
+  const animation = useMemo(() => new Animated.Value(0), []);
+
   const showDropDownView = useAppSelector(state => state.overlaySlice.showDropDownView);
   const dispatch = useAppDispatch();
 
@@ -15,7 +16,10 @@ const DropDownAnimation = () => {
       setShowDropdownView({
         visibility: false,
         dropdownList: showDropDownView?.dropdownList ?? [],
-        pos: { x: showDropDownView?.pos?.x ?? 0, y: showDropDownView?.pos?.y ?? 0 },
+        pos: {
+          x: showDropDownView?.pos?.x ?? 0,
+          y: showDropDownView?.pos?.y ?? 0,
+        },
       }),
     );
   }, [
@@ -27,11 +31,14 @@ const DropDownAnimation = () => {
 
   useEffect(() => {
     const toValue = showDropDownView?.visibility ? 1 : 0;
-    Animated.timing(animationValue, {
+
+    const anim = Animated.timing(animation, {
       toValue,
       duration: 200,
       useNativeDriver: true,
-    }).start(({ finished }) => {
+    });
+
+    anim.start(({ finished }) => {
       if (!showDropDownView?.visibility && finished) {
         dispatch(
           setShowDropdownView({
@@ -42,7 +49,7 @@ const DropDownAnimation = () => {
         );
       }
     });
-  }, [showDropDownView?.visibility, animationValue, dispatch]);
+  }, [animation, showDropDownView?.visibility, dispatch]);
 
   return (
     <>
@@ -57,10 +64,10 @@ const DropDownAnimation = () => {
             left: (showDropDownView?.pos?.x ?? 0) - 120,
           },
           {
-            opacity: animationValue,
+            opacity: animation,
             transform: [
               {
-                translateY: animationValue.interpolate({
+                translateY: animation.interpolate({
                   inputRange: [0, 1],
                   outputRange: [-10, 0],
                 }),

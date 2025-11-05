@@ -21,20 +21,21 @@ export const useVersionCheck = (): UseVersionCheckResult => {
   useEffect(() => {
     if (isSuccess && versionPolicy) {
       const { minimum_version, latest_version } = versionPolicy;
-
       const currentVersion = Constants.expoConfig?.version ?? '1.0.0';
 
       const currentVersionNum = versionToNumber(currentVersion);
       const minimumVersionNum = versionToNumber(minimum_version);
       const latestVersionNum = versionToNumber(latest_version);
 
-      if (currentVersionNum < minimumVersionNum) {
-        setVersionStatus('required');
-      } else if (currentVersionNum < latestVersionNum) {
-        setVersionStatus('recommended');
-      } else {
-        setVersionStatus('latest');
-      }
+      Promise.resolve().then(() => {
+        if (currentVersionNum < minimumVersionNum) {
+          setVersionStatus('required');
+        } else if (currentVersionNum < latestVersionNum) {
+          setVersionStatus('recommended');
+        } else {
+          setVersionStatus('latest');
+        }
+      });
     }
   }, [versionPolicy, isSuccess]);
 

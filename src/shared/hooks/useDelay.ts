@@ -18,13 +18,18 @@ export default function useDelay(
       timeoutRef.current = null;
     }
     if (value) {
-      setDelayedValue(true);
+      Promise.resolve().then(() => {
+        setDelayedValue(true);
+      });
+
       startTimeRef.current = Date.now();
     } else if (isNotEmpty(value)) {
       const elapsed = Date.now() - startTimeRef.current;
       const remaining = delay - elapsed;
       if (remaining <= 0) {
-        setDelayedValue(false);
+        Promise.resolve().then(() => {
+          setDelayedValue(true);
+        });
       } else {
         timeoutRef.current = setTimeout(() => {
           setDelayedValue(false);

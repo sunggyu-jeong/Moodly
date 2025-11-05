@@ -73,7 +73,7 @@ export const diaryApi = appApi.injectEndpoints({
 
         return { data: data, error };
       },
-      invalidatesTags: (_res, _err) => [
+      invalidatesTags: () => [
         { type: 'Diary', id: 'LIST' },
         { type: 'Diary', id: 'COUNT' },
         { type: 'Diary', id: 'HAS_TODAY' },

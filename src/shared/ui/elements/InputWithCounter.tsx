@@ -10,7 +10,7 @@ interface InputWithCounterProps extends TextInputProps {
   inputBackgroundColor?: string;
 }
 
-export const InputWithCounterProps = ({
+export const InputWithCounter = ({
   value,
   inputBackgroundColor,
   maxLength,
