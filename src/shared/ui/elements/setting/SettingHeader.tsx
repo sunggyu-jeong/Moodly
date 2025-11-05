@@ -1,6 +1,6 @@
 import { common } from '@/shared/styles/colors';
-import AppSkeleton from '@/shared/ui/elements/AppSkeleton/AppSkeleton';
-import SkeletonContainer from '@/shared/ui/elements/SkeletonContainer/SkeletonContainer';
+import AppSkeleton from '@/shared/ui/elements/app-skeleton/AppSkeleton';
+import SkeletonContainer from '@/shared/ui/elements/skeleton-container/SkeletonContainer';
 import { memo } from 'react';
 import { View, StyleSheet } from 'react-native';
 

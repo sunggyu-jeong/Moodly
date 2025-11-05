@@ -2,7 +2,7 @@ import { useToastAnimation } from '@/shared/hooks/useToastAnimation';
 import { StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import ToastBase from '../ui/ToastBase';
+import ToastBase from './ToastBase';
 
 interface ToastAnimatedProps {
   visible: boolean;

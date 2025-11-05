@@ -9,8 +9,8 @@ import { navigate } from '@/shared/lib/navigation.util';
 import { isNotEmpty } from '@/shared/lib/value.util';
 import ActionButton from '@/shared/ui/elements/ActionButton';
 import { H2 } from '@/shared/ui/typography/H2';
-import NaviDismiss from '@/widgets/navigation-bar/ui/NaviDismiss';
-import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
+import NaviDismiss from '@/shared/ui/elements/navigation/NaviDismiss';
+import NavigationBar from '@/shared/ui/elements/navigation/NavigationBar';
 import { useEffect } from 'react';
 import { SafeAreaView, View, StyleSheet } from 'react-native';
 

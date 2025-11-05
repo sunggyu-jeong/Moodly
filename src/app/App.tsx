@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 
 import { store } from '@/app/store';
 import { useUpsertPushTokenMutation } from '@/entities/auth/api/auth.api';
-import OverlayManager from '@/widgets/overlay/ui/OverlayManager';
+import OverlayManager from '@/app/provider/OverlayProvider';
 import '@/shared/lib/day.util';
 import { StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';

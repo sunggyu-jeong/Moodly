@@ -1,4 +1,4 @@
-import { setShowToastView } from '@/widgets/overlay/model/overlaySlice';
+import { setShowToastView } from '@/shared/model/overlaySlice';
 import { COMMON_ICONS } from '@/shared/assets/images/common';
 import { ICON_DATA } from '@/shared/constants/Icons';
 import { useAppDispatch } from '@/shared/hooks/useHooks';

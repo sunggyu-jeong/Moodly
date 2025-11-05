@@ -3,7 +3,7 @@ import { useUpdateFirstLaunchFlagMutation } from '@/entities/auth/api/user-meta.
 import { AUTH_PROVIDERS } from '@/entities/auth/types';
 import { useSocialLogin } from '@/features/auth/hooks/useSocialLogin';
 import SocialLoginButton from '@/features/auth/ui/SocialLoginButton';
-import { setShowToastView } from '@/widgets/overlay/model/overlaySlice';
+import { setShowToastView } from '@/shared/model/overlaySlice';
 import { useAppDispatch } from '@/shared/hooks/useHooks';
 import { useExternalWebSite } from '@/shared/hooks/useOpenChat';
 import { ENV } from '@/shared/lib/env';

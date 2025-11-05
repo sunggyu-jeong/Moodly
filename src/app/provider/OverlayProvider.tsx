@@ -1,18 +1,18 @@
-import { MODAL_CONFIRM_ACTION_KEY, MODAL_CANCEL_ACTION_KEY } from '@/processes/key';
+import { MODAL_CONFIRM_ACTION_KEY, MODAL_CANCEL_ACTION_KEY } from '@/shared/ui/keys/modalKeys';
 import { useAppSelector, useAppDispatch } from '@/shared/hooks/useHooks';
 import { useNotificationPermission } from '@/shared/hooks/useNotificationPermission';
 import { resetTo } from '@/shared/lib/navigation.util';
 import { isNotEmpty } from '@/shared/lib/value.util';
-import DropDownAnimation from '@/widgets/dropdown/animation/DropDownAnimation';
+import DropDownAnimation from '@/shared/ui/elements/dropdown/DropDownAnimation';
 import {
   setOverlayEventHandler,
   setRequestWithDrawal,
   resetModalPopup,
-} from '@/widgets/overlay/model/overlaySlice';
-import PopupContainer from '@/widgets/popup/ui/PopupContainer';
-import ToastController from '@/widgets/toast/ui/ToastController';
+} from '@/shared/model/overlaySlice';
+import PopupContainer from '@/shared/ui/elements/popup/PopupContainer';
+import ToastController from '@/shared/ui/elements/toast/ToastController';
 
-const OverlayManager = () => {
+const OverlayProvider = () => {
   const showToastView = useAppSelector(state => state.overlaySlice.showToastView);
   const showModalPopup = useAppSelector(state => state.overlaySlice.showModalPopup);
   const showDropDownView = useAppSelector(state => state.overlaySlice.showDropDownView);
@@ -55,4 +55,4 @@ const OverlayManager = () => {
   );
 };
 
-export default OverlayManager;
+export default OverlayProvider;

@@ -6,8 +6,8 @@ import { isIphone } from '@/shared/lib/user.util';
 import { isNotEmpty } from '@/shared/lib/value.util';
 import { common } from '@/shared/styles/colors';
 import { H2 } from '@/shared/ui/typography/H2';
-import NaviDismiss from '@/widgets/navigation-bar/ui/NaviDismiss';
-import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
+import NaviDismiss from '@/shared/ui/elements/navigation/NaviDismiss';
+import NavigationBar from '@/shared/ui/elements/navigation/NavigationBar';
 import { useRef, useState, useEffect } from 'react';
 import {
   ScrollView,

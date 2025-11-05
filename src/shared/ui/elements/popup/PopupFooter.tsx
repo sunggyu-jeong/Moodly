@@ -1,6 +1,6 @@
 import { isNotEmpty } from '@/shared/lib/value.util';
 import { gray, primary } from '@/shared/styles/colors';
-import PopupButton from '@/widgets/popup/ui/ModalButton';
+import PopupButton from '@/shared/ui/elements/PopupButton';
 import { View, StyleSheet } from 'react-native';
 
 interface PopupFooterProps {

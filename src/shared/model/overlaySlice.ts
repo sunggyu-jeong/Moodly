@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { type DropDownItemProps } from '@/widgets/dropdown/ui/DropDownItem';
+import { type DropDownItemProps } from '@/shared/ui/elements/dropdown/DropDownItem';
 
 interface DropdownViewPayload {
   visibility?: boolean | null;

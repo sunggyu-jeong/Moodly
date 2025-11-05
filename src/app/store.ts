@@ -1,7 +1,7 @@
 import diarySlice from '@/features/diary/model/diarySlice';
 import settingSlice from '@/features/setting/model/settingSlice';
 import progressSlice from '@/features/update-progress/updateProgress/model/progressSlice';
-import overlaySlice from '@/widgets/overlay/model/overlaySlice';
+import overlaySlice from '@/shared/model/overlaySlice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { appApi } from '@/shared/api/AppApi';
 import { listenerMiddleware } from '@/app/middleware/ListenerMiddleware';

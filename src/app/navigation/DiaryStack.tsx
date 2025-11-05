@@ -2,7 +2,7 @@ import EmotionDiaryCompletePage from '@/pages/EmotionDiaryCompletePage';
 import EmotionDiaryDetailPage from '@/pages/EmotionDiaryDetailPage';
 import EmotionDiaryWritePage from '@/pages/EmotionDiaryWritePage';
 import EmotionSelectionPage from '@/pages/EmotionSelectionPage';
-import OverlayManager from '@/widgets/overlay/ui/OverlayManager';
+import OverlayManager from '@/app/provider/OverlayProvider';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet, View } from 'react-native';
 

@@ -1,7 +1,7 @@
 import { gray } from '@/shared/styles/colors';
-import SettingWidgetGroup from '@/widgets/setting/ui/SettingWidgetGroup';
-import SettingWidgetHeader from '@/widgets/setting/ui/SettingWidgetHeader';
-import SettingWidgetItem from '@/widgets/setting/ui/SettingWidgetItem';
+import SettingWidgetGroup from '@/shared/ui/elements/setting/SettingGroup';
+import SettingWidgetHeader from '@/shared/ui/elements/setting/SettingHeader';
+import SettingWidgetItem from '@/shared/ui/elements/setting/SettingItem';
 import { memo } from 'react';
 import { View, StyleSheet } from 'react-native';
 

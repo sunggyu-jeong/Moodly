@@ -1,8 +1,8 @@
-import { setShowModalPopup } from '@/widgets/overlay/model/overlaySlice';
+import { setShowModalPopup } from '@/shared/model/overlaySlice';
 import { useAppSelector, useAppDispatch } from '@/shared/hooks/useHooks';
 import { common } from '@/shared/styles/colors';
-import PopupFooter from '@/widgets/popup/ui/PopupFooter';
-import PopupHeader from '@/widgets/popup/ui/PopupHeader';
+import PopupFooter from '@/shared/ui/elements/popup/PopupFooter';
+import PopupHeader from '@/shared/ui/elements/popup/PopupHeader';
 import { useRef, useEffect, memo } from 'react';
 import { Animated, Modal, View, StyleSheet } from 'react-native';
 import DimmedView from '@/shared/ui/elements/DimmedView';

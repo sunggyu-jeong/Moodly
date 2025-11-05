@@ -1,9 +1,9 @@
 import { setModifyMode } from '@/features/diary/model/diarySlice';
-import { MODAL_CONFIRM_ACTION_KEY } from '@/processes/key';
+import { MODAL_CONFIRM_ACTION_KEY } from '@/shared/ui/keys/modalKeys';
 import { useAppDispatch } from '@/shared/hooks/useHooks';
 import { navigateFlow, NavigationFlow } from '@/shared/lib/navigation.util';
 import SelectableItem from '@/shared/ui/elements/SelectableItem';
-import { setShowModalPopup, setShowDropdownView } from '@/widgets/overlay/model/overlaySlice';
+import { setShowModalPopup, setShowDropdownView } from '@/shared/model/overlaySlice';
 import React, { useCallback } from 'react';
 import { ImageSourcePropType } from 'react-native';
 

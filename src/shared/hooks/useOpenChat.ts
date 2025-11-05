@@ -1,4 +1,4 @@
-import { setShowToastView } from '@/widgets/overlay/model/overlaySlice';
+import { setShowToastView } from '@/shared/model/overlaySlice';
 import { useCallback } from 'react';
 import { Linking } from 'react-native';
 

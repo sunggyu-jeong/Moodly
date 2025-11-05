@@ -1,4 +1,4 @@
-import AppSkeleton from '@/shared/ui/elements/AppSkeleton/AppSkeleton';
+import AppSkeleton from '@/shared/ui/elements/app-skeleton/AppSkeleton';
 import { memo } from 'react';
 import { View, StyleSheet } from 'react-native';
 

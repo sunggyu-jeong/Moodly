@@ -1,4 +1,4 @@
-import { setShowDropdownView } from '@/widgets/overlay/model/overlaySlice';
+import { setShowDropdownView } from '@/shared/model/overlaySlice';
 import { useAppSelector, useAppDispatch } from '@/shared/hooks/useHooks';
 import { DropDownContainer } from '@/widgets/dropdown/ui';
 import { useRef, useCallback, useEffect } from 'react';

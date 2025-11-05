@@ -1,7 +1,7 @@
 import { useBottomSheet } from '@/shared/hooks/useBottomSheet';
 import { getScaleSize } from '@/shared/hooks/useScale';
 import BottomSheetWrapper from '@/shared/ui/elements/BottomSheetWrapper';
-import SocialLoginGroup, { SOCIAL_LOGIN_ENTRANCE } from '@/shared/ui/elements/SocialLoginGroup';
+import SocialLoginGroup, { SOCIAL_LOGIN_ENTRANCE } from '@/features/auth/ui/SocialLoginGroup';
 import { H3 } from '@/shared/ui/typography/H3';
 import { forwardRef, useImperativeHandle } from 'react';
 import { StyleSheet, View } from 'react-native';

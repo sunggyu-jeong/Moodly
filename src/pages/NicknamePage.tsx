@@ -2,7 +2,7 @@ import { SetNicknameForm } from '@/features/set-nickname/ui/SetNicknameForm';
 import { getScaleSize } from '@/shared/hooks/useScale';
 import { resetTo } from '@/shared/lib/navigation.util';
 import { H2 } from '@/shared/ui/typography/H2';
-import NavigationBar from '@/widgets/navigation-bar/ui/NavigationBar';
+import NavigationBar from '@/shared/ui/elements/navigation/NavigationBar';
 import { SafeAreaView, View, StyleSheet } from 'react-native';
 
 const NicknamePage = () => {
