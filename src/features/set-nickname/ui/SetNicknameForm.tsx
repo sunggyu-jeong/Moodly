@@ -5,7 +5,7 @@ import { useSetUserInfoMutation } from '@/entities/auth/api/auth.api';
 import { useUpdateFirstLaunchFlagMutation } from '@/entities/auth/api/user-meta.api';
 import type { UserInfo } from '@/entities/auth/model/auth.types';
 import ActionButton from '@/shared/ui/elements/ActionButton';
-import { InputWithCounterProps } from '@/shared/ui/elements/InputWithCounter';
+import { InputWithCounter } from '@/shared/ui/elements/InputWithCounter';
 
 const MAX_LENGTH = 8;
 
@@ -49,7 +49,7 @@ export const SetNicknameForm = ({ onSuccess, inputBackgroundColor }: SetNickname
 
   return (
     <View style={styles.container}>
-      <InputWithCounterProps
+      <InputWithCounter
         value={nickname}
         onChangeText={setNickname}
         inputBackgroundColor={inputBackgroundColor}

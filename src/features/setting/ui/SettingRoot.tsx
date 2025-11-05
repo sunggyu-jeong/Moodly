@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { gray } from '@/shared/styles/colors';
 import NavigationBar from '@/shared/ui/elements/navigation/NavigationBar';
 import NaviTitleDisplay from '@/shared/ui/elements/NaviTitle';
-import SettingWidgetSkeleton from '@/shared/ui/elements/skeleton/SettingSkeleton';
+import SettingSkeleton from '@/shared/ui/elements/Skeleton/SettingSkeleton';
 import { Label } from '@/shared/ui/typography/Label';
 
 import packageJson from '../../../../package.json';
@@ -26,7 +26,7 @@ const SettingRoot = ({ headerItem, settingItems, isLoading }: Props) => (
     />
     <View style={styles.container}>
       {isLoading ? (
-        <SettingWidgetSkeleton />
+        <SettingSkeleton />
       ) : (
         <SettingList
           header={[headerItem].filter(Boolean) as SettingItemProps[]}
