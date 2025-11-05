@@ -13,7 +13,6 @@ const reducers = combineReducers({
   // 앱 기능별 리듀서
   overlaySlice,
   diarySlice,
-  progressSlice,
   settingSlice,
 });
 

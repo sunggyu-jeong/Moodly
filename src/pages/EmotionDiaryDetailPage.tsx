@@ -1,6 +1,6 @@
 import { useDeleteDiaryMutation } from '@/entities/diary/api/diary.api';
 import { setSelectedDay, resetDiary } from '@/features/diary/model/diarySlice';
-import { MODAL_CONFIRM_ACTION_KEY } from '@/shared/ui/keys/modalKeys';
+import { MODAL_CONFIRM_ACTION_KEY } from '@/entities/overlay/model/modalKeys';
 import { COMMON_ICONS } from '@/shared/assets/images/common';
 import { ICON_DATA } from '@/shared/constants/Icons';
 import { useAppSelector, useAppDispatch } from '@/shared/hooks/useHooks';

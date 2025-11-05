@@ -5,7 +5,10 @@ import { useCallback, useEffect } from 'react';
 import { Image, SafeAreaView, StatusBar, StyleSheet, View } from 'react-native';
 
 import { useVersionCheck } from '@/features/check-app-version/ui';
-import { MODAL_CANCEL_ACTION_KEY, MODAL_CONFIRM_ACTION_KEY } from '@/shared/ui/keys/modalKeys';
+import {
+  MODAL_CANCEL_ACTION_KEY,
+  MODAL_CONFIRM_ACTION_KEY,
+} from '@/entities/overlay/model/modalKeys';
 import { setShowModalPopup } from '@/shared/model/overlaySlice';
 import * as Updates from 'expo-updates';
 import AppBootstrap from '../../provider/AppBootstrap';

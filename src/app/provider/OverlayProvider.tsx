@@ -1,9 +1,12 @@
-import { MODAL_CONFIRM_ACTION_KEY, MODAL_CANCEL_ACTION_KEY } from '@/shared/ui/keys/modalKeys';
+import {
+  MODAL_CONFIRM_ACTION_KEY,
+  MODAL_CANCEL_ACTION_KEY,
+} from '@/entities/overlay/model/modalKeys';
 import { useAppSelector, useAppDispatch } from '@/shared/hooks/useHooks';
 import { useNotificationPermission } from '@/shared/hooks/useNotificationPermission';
 import { resetTo } from '@/shared/lib/navigation.util';
 import { isNotEmpty } from '@/shared/lib/value.util';
-import DropDownAnimation from '@/shared/ui/elements/dropdown/DropDownAnimation';
+import DropDownAnimation from '@/features/overlay/dropdown/DropDownAnimation';
 import {
   setOverlayEventHandler,
   setRequestWithDrawal,

@@ -4,7 +4,7 @@ import { SETTING_EVENT_TYPE } from '@/features/setting/types';
 import { ChangeNicknameSheet } from '@/features/setting/ui/ChangeNicknameSheet';
 import SettingList from '@/features/setting/ui/SettingList';
 import { BottomSheetHandler } from '@/features/setting/ui/SocialLoginSheet';
-import { MODAL_CONFIRM_ACTION_KEY } from '@/shared/ui/keys/modalKeys';
+import { MODAL_CONFIRM_ACTION_KEY } from '@/entities/overlay/model/modalKeys';
 import { appApi } from '@/shared/api/AppApi';
 import { SETTING_ICONS } from '@/shared/assets/images/setting';
 import { useAppSelector, useAppDispatch } from '@/shared/hooks/useHooks';

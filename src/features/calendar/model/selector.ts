@@ -1,40 +1,56 @@
-import type { RootState } from '@/app/store';
-import { diaryApi } from '@/entities/diary/api/diary.api'; // 추가
-import { getMonthRange } from '@/shared/lib/date.util';
+import { diaryApi } from '@/entities/diary/api/diary.api';
 import { now } from '@/shared/lib/day.util';
 import { createSelector } from '@reduxjs/toolkit';
-
 import dayjs, { Dayjs } from 'dayjs';
 
-const s = (st: RootState) => st.diarySlice;
+type CalendarMode = 'month' | 'week';
+type DiarySliceState = {
+  selectedMonth: string;
+  selectedWeek: string;
+  selectedDay: string;
+  calendarMode: CalendarMode;
+};
+type AppState = { diarySlice: DiarySliceState } & Record<string, unknown>;
 
-export const selectSelectedMonthIso = (st: RootState) => s(st).selectedMonth;
-export const selectSelectedWeekIso = (st: RootState) => s(st).selectedWeek;
-export const selectSelectedDayIso = (st: RootState) => s(st).selectedDay;
-export const selectCalendarMode = (st: RootState) => s(st).calendarMode;
+const s = (st: AppState) => st.diarySlice;
 
-export const selectSelectedMonth = createSelector([selectSelectedMonthIso], iso => now(iso));
+export const selectSelectedMonthIso = (st: AppState): string => s(st).selectedMonth;
+export const selectSelectedWeekIso = (st: AppState): string => s(st).selectedWeek;
+export const selectSelectedDayIso = (st: AppState): string => s(st).selectedDay;
+export const selectCalendarMode = (st: AppState): CalendarMode => s(st).calendarMode;
 
-export const selectSelectedWeek = createSelector([selectSelectedWeekIso], iso => now(iso));
+export const selectSelectedMonth = createSelector(
+  [selectSelectedMonthIso],
+  (iso): Dayjs => now(iso),
+);
 
-const weekRange = (weekStart: Dayjs) => ({
-  start: weekStart.startOf('week').format('YYYY-MM-DD'),
-  end: weekStart.endOf('week').format('YYYY-MM-DD'),
+export const selectSelectedWeek = createSelector([selectSelectedWeekIso], (iso): Dayjs => now(iso));
+
+type PeriodArg = { start: string; end: string };
+
+const monthRange = (d: Dayjs): PeriodArg => ({
+  start: d.startOf('month').format('YYYY-MM-DD'),
+  end: d.endOf('month').format('YYYY-MM-DD'),
 });
 
-const selectIsMonthMode = createSelector([s], slice => slice.calendarMode);
+const weekRange = (d: Dayjs): PeriodArg => ({
+  start: d.startOf('week').format('YYYY-MM-DD'),
+  end: d.endOf('week').format('YYYY-MM-DD'),
+});
+
+const selectIsMonthMode = createSelector([selectCalendarMode], (mode): boolean => mode === 'month');
 
 const selectPeriodArgs = createSelector(
   [selectSelectedMonthIso, selectIsMonthMode],
-  (iso, isMonthMode) => {
-    const periodType = isMonthMode ? 'month' : 'week';
-    const selectedPeriod = dayjs(iso);
+  (iso, isMonthMode): { prevArg: PeriodArg; currArg: PeriodArg; nextArg: PeriodArg } => {
+    const selected = dayjs(iso);
+    const unit: CalendarMode = isMonthMode ? 'month' : 'week';
 
-    const prev = selectedPeriod.add(-1, periodType);
-    const curr = selectedPeriod;
-    const next = selectedPeriod.add(1, periodType);
+    const prev = selected.add(-1, unit);
+    const curr = selected;
+    const next = selected.add(1, unit);
 
-    const rangeFn = isMonthMode ? getMonthRange : weekRange;
+    const rangeFn = isMonthMode ? monthRange : weekRange;
 
     return {
       prevArg: rangeFn(prev),
@@ -45,22 +61,22 @@ const selectPeriodArgs = createSelector(
 );
 
 const selectPrevQueryState = createSelector(
-  [(state: RootState) => state, selectPeriodArgs],
-  (state, { prevArg }) => diaryApi.endpoints.getDiariesByRange.select(prevArg)(state),
+  [(state: AppState) => state, selectPeriodArgs],
+  (state, { prevArg }) => diaryApi.endpoints.getDiariesByRange.select(prevArg)(state as any),
 );
+
 const selectCurrQueryState = createSelector(
-  [(state: RootState) => state, selectPeriodArgs],
-  (state, { currArg }) => diaryApi.endpoints.getDiariesByRange.select(currArg)(state),
+  [(state: AppState) => state, selectPeriodArgs],
+  (state, { currArg }) => diaryApi.endpoints.getDiariesByRange.select(currArg)(state as any),
 );
+
 const selectNextQueryState = createSelector(
-  [(state: RootState) => state, selectPeriodArgs],
-  (state, { nextArg }) => diaryApi.endpoints.getDiariesByRange.select(nextArg)(state),
+  [(state: AppState) => state, selectPeriodArgs],
+  (state, { nextArg }) => diaryApi.endpoints.getDiariesByRange.select(nextArg)(state as any),
 );
 
 export const selectIsDiaryPagingLoading = createSelector(
   [selectPrevQueryState, selectCurrQueryState, selectNextQueryState],
-  (prevQuery, currQuery, nextQuery) => {
-    // return false;
-    return prevQuery?.isLoading || currQuery?.isLoading || nextQuery?.isLoading;
-  },
+  (prevQuery, currQuery, nextQuery): boolean =>
+    Boolean(prevQuery?.isLoading || currQuery?.isLoading || nextQuery?.isLoading),
 );

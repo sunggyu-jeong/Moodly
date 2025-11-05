@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 
-import { formatDate, formatDateTime, now } from '../day.util';
+import { formatDate, formatDateTime, now } from '../src/shared/lib/day.util';
 
 // dayjs에 timezone 플러그인 적용
 dayjs.extend(utc);

@@ -2,7 +2,7 @@ import { useGetUserInfoQuery } from '@/entities/auth/api/auth.api';
 import { useLogout } from '@/features/auth/hooks/useLogout';
 import { SETTING_EVENT_TYPE, TEXTS } from '@/features/setting/types';
 import SettingRoot from '@/features/setting/ui/SettingRoot';
-import { MODAL_CONFIRM_ACTION_KEY } from '@/shared/ui/keys/modalKeys';
+import { MODAL_CONFIRM_ACTION_KEY } from '@/entities/overlay/model/modalKeys';
 import { setShowModalPopup } from '@/shared/model/overlaySlice';
 import { COMMON_ICONS } from '@/shared/assets/images/common';
 import useDelay from '@/shared/hooks/useDelay';
