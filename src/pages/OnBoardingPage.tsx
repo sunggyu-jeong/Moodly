@@ -9,20 +9,20 @@ import ActionButton from '@/shared/ui/elements/ActionButton';
 import { H2 } from '@/shared/ui/typography/H2';
 import { Label } from '@/shared/ui/typography/Label';
 import { useFocusEffect } from '@react-navigation/native';
-import { useRef, useState, useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import {
-  ImageSourcePropType,
-  useWindowDimensions,
   FlatList,
   FlatListProps,
-  ListRenderItem,
-  View,
   Image,
-  NativeSyntheticEvent,
+  ImageSourcePropType,
+  ListRenderItem,
   NativeScrollEvent,
-  SafeAreaView,
+  NativeSyntheticEvent,
   Pressable,
+  SafeAreaView,
   StyleSheet,
+  useWindowDimensions,
+  View,
 } from 'react-native';
 
 interface DotProps {

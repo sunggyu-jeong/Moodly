@@ -1,9 +1,8 @@
 import { useGetUserInfoQuery } from '@/entities/auth/api/auth.api';
+import { MODAL_CONFIRM_ACTION_KEY } from '@/entities/overlay/model/modalKeys';
 import { useLogout } from '@/features/auth/hooks/useLogout';
 import { SETTING_EVENT_TYPE, TEXTS } from '@/features/setting/types';
 import SettingRoot from '@/features/setting/ui/SettingRoot';
-import { MODAL_CONFIRM_ACTION_KEY } from '@/entities/overlay/model/modalKeys';
-import { setShowModalPopup } from '@/shared/model/overlaySlice';
 import { COMMON_ICONS } from '@/shared/assets/images/common';
 import useDelay from '@/shared/hooks/useDelay';
 import { useAppDispatch } from '@/shared/hooks/useHooks';
@@ -11,12 +10,13 @@ import { useExternalWebSite } from '@/shared/hooks/useOpenChat';
 import { ENV } from '@/shared/lib/env';
 import { navigate } from '@/shared/lib/navigation.util';
 import { isNotEmpty } from '@/shared/lib/value.util';
+import { setShowModalPopup } from '@/shared/model/overlaySlice';
 import { gray } from '@/shared/styles/colors';
+import Toggle from '@/shared/ui/elements/Toggle';
 import { Body1 } from '@/shared/ui/typography/Body1';
 import { Label } from '@/shared/ui/typography/Label';
-import { useState, useEffect, useCallback } from 'react';
-import { TouchableOpacity, View, Image, StyleSheet } from 'react-native';
-import Toggle from '@/shared/ui/elements/Toggle';
+import { useCallback, useEffect, useState } from 'react';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 const SettingPage = () => {
   const { openLink } = useExternalWebSite();

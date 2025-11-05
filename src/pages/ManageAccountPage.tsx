@@ -1,30 +1,30 @@
 import { useGetUserInfoQuery } from '@/entities/auth/api/auth.api';
+import { MODAL_CONFIRM_ACTION_KEY } from '@/entities/overlay/model/modalKeys';
 import { useLogout } from '@/features/auth/hooks/useLogout';
 import { SETTING_EVENT_TYPE } from '@/features/setting/types';
 import { ChangeNicknameSheet } from '@/features/setting/ui/ChangeNicknameSheet';
 import SettingList from '@/features/setting/ui/SettingList';
 import { BottomSheetHandler } from '@/features/setting/ui/SocialLoginSheet';
-import { MODAL_CONFIRM_ACTION_KEY } from '@/entities/overlay/model/modalKeys';
 import { appApi } from '@/shared/api/AppApi';
 import { SETTING_ICONS } from '@/shared/assets/images/setting';
-import { useAppSelector, useAppDispatch } from '@/shared/hooks/useHooks';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/useHooks';
 import { resetTo } from '@/shared/lib/navigation.util';
 import { supabase } from '@/shared/lib/supabase.util';
 import { isEmpty } from '@/shared/lib/value.util';
+import {
+  resetModalPopup,
+  setRequestWithDrawal,
+  setShowModalPopup,
+  setShowToastView,
+} from '@/shared/model/overlaySlice';
 import { common, gray } from '@/shared/styles/colors';
+import NavigationBar from '@/shared/ui/elements/navigation/NavigationBar';
 import NaviTitleDisplay from '@/shared/ui/elements/NaviTitle';
 import { Body1 } from '@/shared/ui/typography/Body1';
 import { Label } from '@/shared/ui/typography/Label';
-import NavigationBar from '@/shared/ui/elements/navigation/NavigationBar';
-import {
-  setRequestWithDrawal,
-  setShowToastView,
-  resetModalPopup,
-  setShowModalPopup,
-} from '@/shared/model/overlaySlice';
 import { getPackageJson } from 'expo/config';
-import { useRef, useCallback, useEffect, useMemo } from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { Image, StyleSheet, View } from 'react-native';
 
 const ManageAccountPage = () => {
   const requestWithDrawal = useAppSelector(state => state.overlaySlice.requestWithDrawal);

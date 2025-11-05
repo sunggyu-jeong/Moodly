@@ -1,9 +1,9 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useCallback, useEffect, useState } from 'react';
-import { AppState, Linking, Platform } from 'react-native';
-import * as Notifications from 'expo-notifications';
-import * as Device from 'expo-device';
 import { isIphone } from '@/shared/lib/user.util';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Device from 'expo-device';
+import * as Notifications from 'expo-notifications';
+import { useCallback, useEffect, useState } from 'react';
+import { AppState, Linking } from 'react-native';
 
 export const TOKEN_STORAGE_KEY = '@expo_push_token';
 
@@ -15,7 +15,7 @@ export function useNotificationPermission(
 ) {
   const { setupListeners = false, onTokenUpdate } = options;
   const [status, setStatus] = useState<Notifications.PermissionStatus>(
-    Notifications.PermissionStatus.UNDETERMINED
+    Notifications.PermissionStatus.UNDETERMINED,
   );
 
   useEffect(() => {
@@ -67,7 +67,7 @@ export function useNotificationPermission(
       return false;
     }
 
-    console.log(Device.isDevice)
+    console.log(Device.isDevice);
     if (!Device.isDevice) {
       console.warn('실제 기기에서만 푸시 알림을 사용할 수 있습니다.');
       return false;
@@ -103,9 +103,9 @@ export function useNotificationPermission(
     }
   }, []);
 
-  return { 
-    status, 
-    requestUserPermission, 
-    openSettings 
+  return {
+    status,
+    requestUserPermission,
+    openSettings,
   };
 }

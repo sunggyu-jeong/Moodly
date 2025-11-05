@@ -1,14 +1,14 @@
 import {
-  DiaryPageModeType,
-  DiaryPageMode,
   DiaryCalendarMode,
+  DiaryPageMode,
+  DiaryPageModeType,
 } from '@/entities/calendar/diary.type';
 import { CalendarPage, buildPages } from '@/features/calendar/lib/paging';
-import { moveMonth, moveWeek, setSelectedDay, resetDiary } from '@/features/diary/model/diarySlice';
+import { moveMonth, moveWeek, resetDiary, setSelectedDay } from '@/features/diary/model/diarySlice';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/useHooks';
 import { formatWeekLabel } from '@/shared/lib/date.util';
 import { now } from '@/shared/lib/day.util';
-import { useState, useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import {
   selectCalendarMode,
   selectSelectedDayIso,
