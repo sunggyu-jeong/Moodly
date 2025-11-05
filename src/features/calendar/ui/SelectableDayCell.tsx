@@ -1,12 +1,12 @@
-import { setShowToastView } from '@/shared/model/overlaySlice';
 import { COMMON_ICONS } from '@/shared/assets/images/common';
-import { ICON_DATA } from '@/shared/constants/Icons';
+import { ICON_DATA } from '@/shared/constants/icons';
 import { useAppDispatch } from '@/shared/hooks/useHooks';
 import { now } from '@/shared/lib/day.util';
 import { isEmpty } from '@/shared/lib/value.util';
+import { setShowToastView } from '@/shared/model/overlaySlice';
+import DayCell from '@/shared/ui/elements/DayCell';
 import { Dayjs } from 'dayjs';
 import { memo, useCallback, useMemo } from 'react';
-import DayCell from '@/shared/ui/elements/DayCell';
 
 interface SelectableDayCellProps {
   date: Dayjs;

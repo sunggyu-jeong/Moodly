@@ -1,7 +1,7 @@
 import { useLazyGetFirstLaunchFlagQuery } from '@/entities/auth/api/user-meta.api';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { useCallback, useEffect } from 'react';
-import { Image, SafeAreaView, StatusBar, StyleSheet, View } from 'react-native';
+import { Image, StatusBar, StyleSheet, View } from 'react-native';
 
 import {
   MODAL_CANCEL_ACTION_KEY,
@@ -15,6 +15,7 @@ import { isNotEmpty } from '@/shared/lib/value.util';
 import { setShowModalPopup } from '@/shared/model/overlaySlice';
 import { primary } from '@/shared/styles/colors';
 import * as Updates from 'expo-updates';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import AppBootstrap from '../../provider/AppBootstrap';
 
 export interface SplashProps {

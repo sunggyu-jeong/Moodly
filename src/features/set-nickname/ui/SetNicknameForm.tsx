@@ -1,7 +1,7 @@
 import { useSetUserInfoMutation } from '@/entities/auth/api/auth.api';
 import { useUpdateFirstLaunchFlagMutation } from '@/entities/auth/api/user-meta.api';
 import type { UserInfo } from '@/entities/auth/model/auth.types';
-import { ActionButton } from '@/shared/ui/elements';
+import ActionButton from '@/shared/ui/elements/ActionButton';
 import { InputWithCounterProps } from '@/shared/ui/elements/InputWithCounter';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';

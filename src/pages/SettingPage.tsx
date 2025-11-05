@@ -15,6 +15,7 @@ import { gray } from '@/shared/styles/colors';
 import Toggle from '@/shared/ui/elements/Toggle';
 import { Body1 } from '@/shared/ui/typography/Body1';
 import { Label } from '@/shared/ui/typography/Label';
+import * as Notifications from 'expo-notifications';
 import { useCallback, useEffect, useState } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 

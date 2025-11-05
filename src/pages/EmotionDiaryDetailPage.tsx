@@ -1,36 +1,41 @@
 import { useDeleteDiaryMutation } from '@/entities/diary/api/diary.api';
-import { setSelectedDay, resetDiary } from '@/features/diary/model/diarySlice';
 import { MODAL_CONFIRM_ACTION_KEY } from '@/entities/overlay/model/modalKeys';
+import { resetDiary, setSelectedDay } from '@/features/diary/model/diarySlice';
 import { COMMON_ICONS } from '@/shared/assets/images/common';
-import { ICON_DATA } from '@/shared/constants/Icons';
-import { useAppSelector, useAppDispatch } from '@/shared/hooks/useHooks';
+import { ICON_DATA } from '@/shared/constants/icons';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/useHooks';
 import { getScaleSize } from '@/shared/hooks/useScale';
+import { DropDownEventIdentifier } from '@/shared/keys/dropdownKeys';
 import { dismissModalToScreen, goBack } from '@/shared/lib/navigation.util';
 import { isIphone } from '@/shared/lib/user.util';
 import { isNotEmpty } from '@/shared/lib/value.util';
+import {
+  resetModalPopup,
+  setOverlayEventHandler,
+  setShowDropdownView,
+} from '@/shared/model/overlaySlice';
 import { common } from '@/shared/styles/colors';
 import { NaviActionButtonProps } from '@/shared/ui/elements/NaviActionButton';
-import NaviMore from '@/shared/ui/elements/NaviMore';
-import { Body1 } from '@/shared/ui/typography/Body1';
-import { DropDownEventIdentifier } from '@/widgets/dropdown';
 import NaviDismiss from '@/shared/ui/elements/navigation/NaviDismiss';
 import NavigationBar from '@/shared/ui/elements/navigation/NavigationBar';
-import {
-  setShowDropdownView,
-  setOverlayEventHandler,
-  resetModalPopup,
-} from '@/shared/model/overlaySlice';
-import { useRoute, RouteProp } from '@react-navigation/native';
-import { useRef, useCallback, useMemo, useEffect } from 'react';
-import { View, TouchableOpacity, ScrollView, Image, StyleSheet } from 'react-native';
+import NaviMore from '@/shared/ui/elements/NaviMore';
+import { Body1 } from '@/shared/ui/typography/Body1';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+
+type DiaryDetailOrigin = 'RootStack' | 'DiaryStack' | string;
 
 type DiaryDetailRouteParams = {
-  params: {
-    origin: string;
-  };
+  origin: DiaryDetailOrigin;
 };
 
-const dropdownItems = [
+type DiaryDetailRoute = RouteProp<
+  { EmotionDiaryDetail: DiaryDetailRouteParams },
+  'EmotionDiaryDetail'
+>;
+
+const DROPDOWN_ITEMS = [
   {
     text: '수정하기',
     source: COMMON_ICONS.iconEdit,
@@ -43,62 +48,72 @@ const dropdownItems = [
   },
 ];
 
-const leftComponents = [{ item: <NaviDismiss />, disabled: false }];
+const LEFT_COMPONENTS = [{ item: <NaviDismiss />, disabled: false }];
+
+const DROPDOWN_OFFSET = {
+  TOP_SPACING: 5,
+  ANDROID_STATUS_BAR: 70,
+};
 
 const EmotionDiaryDetailPage = () => {
+  const route = useRoute<DiaryDetailRoute>();
+  const dispatch = useAppDispatch();
+  const dropdownButtonRef = useRef<View>(null);
+
   const selectedDiary = useAppSelector(state => state.diarySlice.selectedDiary);
   const overlayEventHandler = useAppSelector(state => state.overlaySlice.overlayEventHandler);
-  const dispatch = useAppDispatch();
-  const route = useRoute<RouteProp<DiaryDetailRouteParams, 'params'>>();
-  const dropdownButtonRef = useRef<View>(null);
-  const [deleteDiary] = useDeleteDiaryMutation();
+  const [deleteDiary, { isLoading: isDeleting }] = useDeleteDiaryMutation();
+
+  const isFromRootStack = route.params?.origin === 'RootStack';
+  const isFromDiaryStack = route.params?.origin === 'DiaryStack';
+  const emotionIcon = useMemo(
+    () => ICON_DATA.find(item => item.id === selectedDiary?.iconId)?.iconBig,
+    [selectedDiary?.iconId],
+  );
 
   const openDropdown = useCallback(() => {
-    dropdownButtonRef.current?.measureInWindow((x, y, width, height) => {
+    if (!dropdownButtonRef.current) {
+      return;
+    }
+
+    dropdownButtonRef.current.measureInWindow((x, y, _width, height) => {
+      const yOffset = isIphone() ? 0 : DROPDOWN_OFFSET.ANDROID_STATUS_BAR;
+
       dispatch(
         setShowDropdownView({
           visibility: true,
-          dropdownList: dropdownItems,
-          pos: { x, y: y + height + 5 + (isIphone() ? 0 : 70) },
+          dropdownList: DROPDOWN_ITEMS,
+          pos: {
+            x,
+            y: y + height + DROPDOWN_OFFSET.TOP_SPACING + yOffset,
+          },
         }),
       );
     });
   }, [dispatch]);
 
-  const actionButtons: NaviActionButtonProps[] = useMemo(
-    () => [
-      {
-        item: (
-          <TouchableOpacity
-            ref={dropdownButtonRef}
-            onPress={openDropdown}
-          >
-            <NaviMore />
-          </TouchableOpacity>
-        ),
-        disabled: false,
-      },
-    ],
-    [openDropdown],
-  );
-
   const handleRemoveDiary = useCallback(async () => {
+    if (!selectedDiary?.emotionId) {
+      console.warn('삭제할 다이어리 ID가 없습니다');
+      dispatch(resetModalPopup());
+      return;
+    }
+
     try {
-      if (isNotEmpty(selectedDiary?.emotionId)) {
-        await deleteDiary({ id: String(selectedDiary.emotionId) });
-        if (route.params.origin !== 'RootStack') {
-          dismissModalToScreen();
-        }
-        dispatch(setSelectedDay(null));
-        goBack();
+      await deleteDiary({ id: String(selectedDiary.emotionId) }).unwrap();
+      if (!isFromRootStack) {
+        dismissModalToScreen();
       }
+
+      dispatch(setSelectedDay(null));
+      goBack();
     } catch (error) {
-      console.error('다이어리 삭제 요청 실패:', error);
+      console.error('다이어리 삭제 실패:', error);
     } finally {
       dispatch(setOverlayEventHandler(null));
       dispatch(resetModalPopup());
     }
-  }, [deleteDiary, dispatch, route.params.origin, selectedDiary?.emotionId]);
+  }, [deleteDiary, dispatch, isFromRootStack, selectedDiary?.emotionId]);
 
   useEffect(() => {
     if (overlayEventHandler === MODAL_CONFIRM_ACTION_KEY.DELETE_DIARY) {
@@ -112,11 +127,39 @@ const EmotionDiaryDetailPage = () => {
     };
   }, [dispatch]);
 
+  const actionButtons: NaviActionButtonProps[] = useMemo(
+    () => [
+      {
+        item: (
+          <TouchableOpacity
+            ref={dropdownButtonRef}
+            onPress={openDropdown}
+            disabled={isDeleting}
+            activeOpacity={0.7}
+          >
+            <NaviMore />
+          </TouchableOpacity>
+        ),
+        disabled: isDeleting,
+      },
+    ],
+    [openDropdown, isDeleting],
+  );
+
+  const leftComponents = useMemo(
+    () => (isFromDiaryStack ? LEFT_COMPONENTS : null),
+    [isFromDiaryStack],
+  );
+
+  if (!selectedDiary) {
+    return null;
+  }
+
   return (
     <>
       <NavigationBar
-        showBackButton={route.params.origin === 'RootStack'}
-        leftComponents={route.params.origin === 'DiaryStack' ? leftComponents : null}
+        showBackButton={isFromRootStack}
+        leftComponents={leftComponents}
         actionButtons={actionButtons}
       />
 
@@ -124,17 +167,24 @@ const EmotionDiaryDetailPage = () => {
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
         keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
       >
-        <Image
-          source={ICON_DATA.find(item => item.id === selectedDiary?.iconId)?.iconBig}
-          style={styles.emotionImage}
-        />
-        <Body1
-          weight="regular"
-          style={styles.diaryText}
-        >
-          {selectedDiary?.description}
-        </Body1>
+        {emotionIcon && (
+          <Image
+            source={emotionIcon}
+            style={styles.emotionImage}
+            resizeMode="contain"
+          />
+        )}
+
+        {isNotEmpty(selectedDiary.description) && (
+          <Body1
+            weight="regular"
+            style={styles.diaryText}
+          >
+            {selectedDiary.description}
+          </Body1>
+        )}
       </ScrollView>
     </>
   );

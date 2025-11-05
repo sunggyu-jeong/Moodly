@@ -1,6 +1,7 @@
 import { MotiView } from 'moti';
 import { Skeleton } from 'moti/skeleton';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const DiarySkeleton = () => {
   const mode = 'light';

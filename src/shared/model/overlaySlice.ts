@@ -1,5 +1,5 @@
+import { DropDownItemProps } from '@/shared/keys/dropdownKeys';
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { type DropDownItemProps } from '@/features/overlay/dropdown/DropDownItem';
 
 interface DropdownViewPayload {
   visibility?: boolean | null;

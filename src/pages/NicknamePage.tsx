@@ -3,7 +3,8 @@ import { getScaleSize } from '@/shared/hooks/useScale';
 import { resetTo } from '@/shared/lib/navigation.util';
 import { H2 } from '@/shared/ui/typography/H2';
 import NavigationBar from '@/shared/ui/elements/navigation/NavigationBar';
-import { SafeAreaView, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const NicknamePage = () => {
   const handleSuccess = () => {

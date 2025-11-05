@@ -1,7 +1,7 @@
-import { getColor, ColorKeyEnum } from '@/shared/constants/Colors';
+import { ColorKeyEnum, getColor } from '@/shared/constants/colors';
 import { getScaleSize } from '@/shared/hooks/useScale';
 import { Body2 } from '@/shared/ui/typography/Body2';
-import { StyleProp, ViewStyle, StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleProp, StyleSheet, TouchableOpacity, ViewStyle } from 'react-native';
 
 interface ActionButtonProps {
   children: React.ReactNode;

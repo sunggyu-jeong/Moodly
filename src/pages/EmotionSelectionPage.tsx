@@ -2,17 +2,18 @@ import { Diary } from '@/entities/diary/model/diary.types';
 import { setCurrentDiary, setSelectedIcon } from '@/features/diary/model/diarySlice';
 import EmotionDisplaySelected from '@/features/emotion/ui/EmotionDisplaySelected';
 import EmotionSelectionList from '@/features/emotion/ui/EmotionSelectionList';
-import { ICON_DATA } from '@/shared/constants/Icons';
+import { ICON_DATA } from '@/shared/constants/icons';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/useHooks';
 import { getScaleSize } from '@/shared/hooks/useScale';
 import { navigate } from '@/shared/lib/navigation.util';
 import { isNotEmpty } from '@/shared/lib/value.util';
 import ActionButton from '@/shared/ui/elements/ActionButton';
-import { H2 } from '@/shared/ui/typography/H2';
 import NaviDismiss from '@/shared/ui/elements/navigation/NaviDismiss';
 import NavigationBar from '@/shared/ui/elements/navigation/NavigationBar';
+import { H2 } from '@/shared/ui/typography/H2';
 import { useEffect } from 'react';
-import { SafeAreaView, View, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const actionButtons = [{ item: <NaviDismiss />, disabled: false }];
 

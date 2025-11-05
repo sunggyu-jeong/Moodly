@@ -22,7 +22,7 @@ import NavigationBar from '@/shared/ui/elements/navigation/NavigationBar';
 import NaviTitleDisplay from '@/shared/ui/elements/NaviTitle';
 import { Body1 } from '@/shared/ui/typography/Body1';
 import { Label } from '@/shared/ui/typography/Label';
-import { getPackageJson } from 'expo/config';
+import * as Application from 'expo-application';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
@@ -152,7 +152,7 @@ const ManageAccountPage = () => {
           weight="regular"
           style={styles.versionLabel}
         >
-          {'앱 버전: ' + getPackageJson.version}
+          {`앱 버전: ${Application.nativeApplicationVersion ?? '1.0.0'}`}
         </Label>
       </View>
       <ChangeNicknameSheet ref={changeNicknameSheetRef} />

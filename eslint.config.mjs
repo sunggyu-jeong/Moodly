@@ -3,7 +3,6 @@ import js from '@eslint/js';
 import configPrettier from 'eslint-config-prettier';
 import pluginBoundaries from 'eslint-plugin-boundaries';
 import pluginImport from 'eslint-plugin-import';
-import pluginPrettier from 'eslint-plugin-prettier';
 import pluginReact from 'eslint-plugin-react';
 import pluginReactHooks from 'eslint-plugin-react-hooks';
 import pluginReactNative from 'eslint-plugin-react-native';
@@ -29,6 +28,7 @@ export default tseslint.config(
       '.#',
       'babel.config.js',
       'metro.config.js',
+      '.pnpm/',
     ],
   },
 
@@ -60,7 +60,6 @@ export default tseslint.config(
       'simple-import-sort': pluginSimpleImportSort,
       'unused-imports': pluginUnusedImports,
       boundaries: pluginBoundaries,
-      prettier: pluginPrettier,
     },
     settings: {
       react: { version: 'detect' },

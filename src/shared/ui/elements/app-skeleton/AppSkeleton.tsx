@@ -1,4 +1,4 @@
-import { COLOR_MODE } from '@/shared/constants/Constants';
+import { COLOR_MODE } from '@/shared/constants/constants';
 import { Skeleton } from 'moti/skeleton';
 import { ComponentProps } from 'react';
 
