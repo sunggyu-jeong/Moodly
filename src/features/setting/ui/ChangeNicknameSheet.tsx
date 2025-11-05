@@ -1,12 +1,14 @@
-import { useBottomSheet } from '@/shared/hooks/useBottomSheet';
-import BottomSheetWrapper from '@/shared/ui/elements/BottomSheetWrapper';
-import { H3 } from '@/shared/ui/typography/H3';
 import { BottomSheetView } from '@gorhom/bottom-sheet';
 import { forwardRef, useImperativeHandle, useState } from 'react';
 import { Keyboard, Pressable, StyleSheet, View } from 'react-native';
+
+import { useBottomSheet } from '@/shared/hooks/useBottomSheet';
+import { goBack } from '@/shared/lib/navigation.util';
+import BottomSheetWrapper from '@/shared/ui/elements/BottomSheetWrapper';
+import { H3 } from '@/shared/ui/typography/H3';
+
 import { SetNicknameForm } from '../../set-nickname/ui/SetNicknameForm';
 import type { BottomSheetHandler } from './SocialLoginSheet';
-import { goBack } from '@/shared/lib/navigation.util';
 
 const MIN_HEIGHT = 300;
 

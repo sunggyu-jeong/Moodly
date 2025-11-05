@@ -1,12 +1,12 @@
-import { setModifyMode } from '@/features/diary/model/diarySlice';
-import { MODAL_CONFIRM_ACTION_KEY } from '@/entities/overlay/model/modalKeys';
-import { useAppDispatch } from '@/shared/hooks/useHooks';
-import { navigateFlow, NavigationFlow } from '@/shared/lib/navigation.util';
-import SelectableItem from '@/shared/ui/elements/SelectableItem';
-import { setShowModalPopup, setShowDropdownView } from '@/shared/model/overlaySlice';
 import React, { useCallback } from 'react';
-import { ImageSourcePropType } from 'react-native';
-import { DropDownItemProps, DropDownEventIdentifier } from '@/shared/keys/dropdownKeys';
+
+import { MODAL_CONFIRM_ACTION_KEY } from '@/entities/overlay/model/modalKeys';
+import { setModifyMode } from '@/features/diary/model/diarySlice';
+import { useAppDispatch } from '@/shared/hooks/useHooks';
+import { DropDownEventIdentifier, DropDownItemProps } from '@/shared/keys/dropdownKeys';
+import { navigateFlow, NavigationFlow } from '@/shared/lib/navigation.util';
+import { setShowDropdownView, setShowModalPopup } from '@/shared/model/overlaySlice';
+import SelectableItem from '@/shared/ui/elements/SelectableItem';
 
 const DropDownItem = ({ text, source, eventIdentifier }: DropDownItemProps) => {
   const textColor =

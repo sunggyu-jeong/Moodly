@@ -1,12 +1,12 @@
-import { isIphone } from '@/shared/lib/user.util';
 import { useCallback, useRef } from 'react';
 import {
   Dimensions,
   FlatList,
   type NativeScrollEvent,
   type NativeSyntheticEvent,
-  Platform,
 } from 'react-native';
+
+import { isIphone } from '@/shared/lib/user.util';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 

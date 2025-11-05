@@ -1,9 +1,10 @@
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+
 import { listenerMiddleware } from '@/app/middleware/ListenerMiddleware';
 import diarySlice from '@/features/diary/model/diarySlice';
 import settingSlice from '@/features/setting/model/settingSlice';
 import { appApi } from '@/shared/api/AppApi';
 import overlaySlice from '@/shared/model/overlaySlice';
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 const reducers = combineReducers({
   // RTK Query의 API 인스턴스 리듀서

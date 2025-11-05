@@ -1,16 +1,16 @@
 import {
-  MODAL_CONFIRM_ACTION_KEY,
   MODAL_CANCEL_ACTION_KEY,
+  MODAL_CONFIRM_ACTION_KEY,
 } from '@/entities/overlay/model/modalKeys';
-import { useAppSelector, useAppDispatch } from '@/shared/hooks/useHooks';
+import DropDownAnimation from '@/features/overlay/dropdown/DropDownAnimation';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/useHooks';
 import { useNotificationPermission } from '@/shared/hooks/useNotificationPermission';
 import { resetTo } from '@/shared/lib/navigation.util';
 import { isNotEmpty } from '@/shared/lib/value.util';
-import DropDownAnimation from '@/features/overlay/dropdown/DropDownAnimation';
 import {
+  resetModalPopup,
   setOverlayEventHandler,
   setRequestWithDrawal,
-  resetModalPopup,
 } from '@/shared/model/overlaySlice';
 import PopupContainer from '@/shared/ui/elements/popup/PopupContainer';
 import ToastController from '@/shared/ui/elements/toast/ToastController';

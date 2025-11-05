@@ -1,7 +1,7 @@
-import EmotionSymbol from '@/shared/ui/elements/EmotionSymbol';
-
 import { EmotionIconData } from '@/shared/constants/icons';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/useHooks';
+import EmotionSymbol from '@/shared/ui/elements/EmotionSymbol';
+
 import { setSelectedIcon } from '../../diary/model/diarySlice';
 
 const EmotionSelectionIcon = ({ emotion }: { emotion: EmotionIconData }) => {

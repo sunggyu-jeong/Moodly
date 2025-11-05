@@ -1,6 +1,7 @@
+import { StyleSheet, Text, TextProps } from 'react-native';
+
 import { useScale } from '@/shared/hooks/useScale';
 import { androidStyle } from '@/shared/ui/typography/Common';
-import { TextProps, Text, StyleSheet } from 'react-native';
 
 type Props = TextProps & {
   weight?: 'regular' | 'semibold';

@@ -1,3 +1,7 @@
+import * as Notifications from 'expo-notifications';
+import { useCallback, useEffect, useState } from 'react';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+
 import { useGetUserInfoQuery } from '@/entities/auth/api/auth.api';
 import { MODAL_CONFIRM_ACTION_KEY } from '@/entities/overlay/model/modalKeys';
 import { useLogout } from '@/features/auth/hooks/useLogout';
@@ -15,9 +19,6 @@ import { gray } from '@/shared/styles/colors';
 import Toggle from '@/shared/ui/elements/Toggle';
 import { Body1 } from '@/shared/ui/typography/Body1';
 import { Label } from '@/shared/ui/typography/Label';
-import * as Notifications from 'expo-notifications';
-import { useCallback, useEffect, useState } from 'react';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 const SettingPage = () => {
   const { openLink } = useExternalWebSite();

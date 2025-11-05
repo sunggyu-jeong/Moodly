@@ -1,8 +1,9 @@
-import store from '@/app/store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createClient } from '@supabase/supabase-js';
 
+import store from '@/app/store';
 import { ENV } from '@/shared/lib/env';
+
 import { appApi } from '../api/AppApi';
 import { resetTo } from './navigation.util';
 

@@ -1,13 +1,14 @@
+import type { NavigatorScreenParams } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+import Splash from '@/app/ui/screens/Splash';
 import EmotionDiaryDetailPage from '@/pages/EmotionDiaryDetailPage';
 import Login from '@/pages/LoginPage';
 import NicknamePage from '@/pages/NicknamePage';
 import OnboardingPage from '@/pages/OnBoardingPage';
-import type { NavigatorScreenParams } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import DiaryStack, { type DiaryStackParamList } from './DiaryStack';
 import TabNavigation, { type BottomTabParamList } from './TabNavigation';
-import Splash from '@/app/ui/screens/Splash';
 
 export type RootStackParamList = {
   Splash: undefined;

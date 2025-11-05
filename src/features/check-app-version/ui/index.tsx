@@ -1,9 +1,10 @@
-import type { VersionPolicy } from '@/entities/app/model/types';
-import { useEffect, useState } from 'react';
 import Constants from 'expo-constants';
+import { useEffect, useState } from 'react';
+
+import type { VersionPolicy } from '@/entities/app/model/types';
+import { versionToNumber } from '@/shared/lib/number.util';
 
 import { useGetAppVersionPolicyQuery } from '../api/version.api';
-import { versionToNumber } from '@/shared/lib/number.util';
 
 type VersionStatus = 'latest' | 'recommended' | 'required';
 

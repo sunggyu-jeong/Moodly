@@ -1,9 +1,10 @@
-import { isIphone } from '@/shared/lib/user.util';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { useCallback, useEffect, useState } from 'react';
 import { AppState, Linking } from 'react-native';
+
+import { isIphone } from '@/shared/lib/user.util';
 
 export const TOKEN_STORAGE_KEY = '@expo_push_token';
 

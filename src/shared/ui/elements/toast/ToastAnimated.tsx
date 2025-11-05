@@ -1,7 +1,9 @@
-import { useToastAnimation } from '@/shared/hooks/useToastAnimation';
 import { StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import { useToastAnimation } from '@/shared/hooks/useToastAnimation';
+
 import ToastBase from './ToastBase';
 
 interface ToastAnimatedProps {

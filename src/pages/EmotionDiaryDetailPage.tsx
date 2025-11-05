@@ -1,3 +1,7 @@
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+
 import { useDeleteDiaryMutation } from '@/entities/diary/api/diary.api';
 import { MODAL_CONFIRM_ACTION_KEY } from '@/entities/overlay/model/modalKeys';
 import { resetDiary, setSelectedDay } from '@/features/diary/model/diarySlice';
@@ -20,9 +24,6 @@ import NaviDismiss from '@/shared/ui/elements/navigation/NaviDismiss';
 import NavigationBar from '@/shared/ui/elements/navigation/NavigationBar';
 import NaviMore from '@/shared/ui/elements/NaviMore';
 import { Body1 } from '@/shared/ui/typography/Body1';
-import { RouteProp, useRoute } from '@react-navigation/native';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
-import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 type DiaryDetailOrigin = 'RootStack' | 'DiaryStack' | string;
 

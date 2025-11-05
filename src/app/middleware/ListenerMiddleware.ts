@@ -5,10 +5,9 @@ import {
   type TypedStartListening,
 } from '@reduxjs/toolkit';
 
+import type { AppDispatch, RootState } from '@/app/store';
 import { AppCode } from '@/shared/config/errorCodes';
 import { resetTo } from '@/shared/lib/navigation.util';
-
-import type { AppDispatch, RootState } from '@/app/store';
 
 export const listenerMiddleware = createListenerMiddleware();
 

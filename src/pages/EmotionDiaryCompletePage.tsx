@@ -1,15 +1,15 @@
-import { setModifyMode } from '@/features/diary/model/diarySlice';
+import { useFocusEffect } from '@react-navigation/native';
+import React from 'react';
+import { Image, StyleSheet, View } from 'react-native';
 
+import { setModifyMode } from '@/features/diary/model/diarySlice';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
-import { useAppSelector, useAppDispatch } from '@/shared/hooks/useHooks';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/useHooks';
 import { getScaleSize } from '@/shared/hooks/useScale';
 import { dismissModalToScreen, navigate } from '@/shared/lib/navigation.util';
 import { common, gray } from '@/shared/styles/colors';
 import { Body2 } from '@/shared/ui/typography/Body2';
 import { H2 } from '@/shared/ui/typography/H2';
-import { useFocusEffect } from '@react-navigation/native';
-import React from 'react';
-import { Image, StyleSheet, View } from 'react-native';
 
 const EmotionDiaryCompletePage = () => {
   const isModifyMode = useAppSelector(state => state.diarySlice.isModifyMode);

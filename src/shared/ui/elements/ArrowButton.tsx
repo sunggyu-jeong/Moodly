@@ -1,12 +1,13 @@
-import { getScaleSize } from '@/shared/hooks/useScale';
 import {
+  Image,
   ImageSourcePropType,
   StyleProp,
-  ViewStyle,
-  TouchableOpacity,
-  Image,
   StyleSheet,
+  TouchableOpacity,
+  ViewStyle,
 } from 'react-native';
+
+import { getScaleSize } from '@/shared/hooks/useScale';
 
 interface ArrowButtonAtomProps {
   source: ImageSourcePropType;

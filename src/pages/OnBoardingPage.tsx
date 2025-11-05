@@ -1,13 +1,3 @@
-import { useUpsertPushTokenMutation } from '@/entities/auth/api/auth.api';
-import { BottomSheetHandler, SocialLoginSheet } from '@/features/setting/ui/SocialLoginSheet';
-import { ONBOARDING_ICONS } from '@/shared/assets/images/onboarding';
-import { useNotificationPermission } from '@/shared/hooks/useNotificationPermission';
-import { isIphone } from '@/shared/lib/user.util';
-import { isEmpty } from '@/shared/lib/value.util';
-import colors from '@/shared/styles/colors';
-import ActionButton from '@/shared/ui/elements/ActionButton';
-import { H2 } from '@/shared/ui/typography/H2';
-import { Label } from '@/shared/ui/typography/Label';
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import {
@@ -24,6 +14,17 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
+import { useUpsertPushTokenMutation } from '@/entities/auth/api/auth.api';
+import { BottomSheetHandler, SocialLoginSheet } from '@/features/setting/ui/SocialLoginSheet';
+import { ONBOARDING_ICONS } from '@/shared/assets/images/onboarding';
+import { useNotificationPermission } from '@/shared/hooks/useNotificationPermission';
+import { isIphone } from '@/shared/lib/user.util';
+import { isEmpty } from '@/shared/lib/value.util';
+import colors from '@/shared/styles/colors';
+import ActionButton from '@/shared/ui/elements/ActionButton';
+import { H2 } from '@/shared/ui/typography/H2';
+import { Label } from '@/shared/ui/typography/Label';
 
 interface DotProps {
   active: boolean;

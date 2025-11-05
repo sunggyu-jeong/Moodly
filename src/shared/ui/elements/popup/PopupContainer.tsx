@@ -1,11 +1,12 @@
+import { memo, useEffect, useRef } from 'react';
+import { Animated, Modal, StyleSheet, View } from 'react-native';
+
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/useHooks';
 import { setShowModalPopup } from '@/shared/model/overlaySlice';
-import { useAppSelector, useAppDispatch } from '@/shared/hooks/useHooks';
 import { common } from '@/shared/styles/colors';
+import DimmedView from '@/shared/ui/elements/DimmedView';
 import PopupFooter from '@/shared/ui/elements/popup/PopupFooter';
 import PopupHeader from '@/shared/ui/elements/popup/PopupHeader';
-import { useRef, useEffect, memo } from 'react';
-import { Animated, Modal, View, StyleSheet } from 'react-native';
-import DimmedView from '@/shared/ui/elements/DimmedView';
 
 interface PopupContainerProps {
   title: string;

@@ -1,3 +1,7 @@
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback, useEffect, useState } from 'react';
+import { Image, StatusBar, StyleSheet, View } from 'react-native';
+
 import {
   useDeletePushTokenMutation,
   useUpsertPushTokenMutation,
@@ -16,9 +20,6 @@ import ActionButton from '@/shared/ui/elements/ActionButton';
 import DiaryCountCard from '@/shared/ui/elements/DiaryCountCard';
 import HomeLoading from '@/shared/ui/elements/HomeLoading';
 import { H2 } from '@/shared/ui/typography/H2';
-import { useFocusEffect } from '@react-navigation/native';
-import { useCallback, useEffect, useState } from 'react';
-import { Image, StatusBar, StyleSheet, View } from 'react-native';
 
 const POLLING_INTERVAL = 300000;
 

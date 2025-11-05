@@ -1,5 +1,6 @@
-import { Label } from '@/shared/ui/typography/Label';
 import { StyleSheet, TouchableOpacity } from 'react-native';
+
+import { Label } from '@/shared/ui/typography/Label';
 
 interface PopupButtonProps {
   text: string;

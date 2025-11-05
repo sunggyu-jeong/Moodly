@@ -1,3 +1,7 @@
+import { useEffect, useRef, useState } from 'react';
+import { Image, KeyboardAvoidingView, ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import InputAccessoryView from 'react-native-input-accessory-view';
+
 import { DiarySaveButton } from '@/features/diary/ui/EmotionDiarySaveButton';
 import { ICON_DATA } from '@/shared/constants/icons';
 import { useAppSelector } from '@/shared/hooks/useHooks';
@@ -8,9 +12,6 @@ import { common } from '@/shared/styles/colors';
 import NaviDismiss from '@/shared/ui/elements/navigation/NaviDismiss';
 import NavigationBar from '@/shared/ui/elements/navigation/NavigationBar';
 import { H2 } from '@/shared/ui/typography/H2';
-import { useEffect, useRef, useState } from 'react';
-import { Image, KeyboardAvoidingView, ScrollView, StyleSheet, TextInput, View } from 'react-native';
-import InputAccessoryView from 'react-native-input-accessory-view';
 
 const actionButtons = [{ item: <NaviDismiss />, disabled: false }];
 

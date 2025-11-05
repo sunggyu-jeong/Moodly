@@ -1,9 +1,10 @@
+import { useCallback } from 'react';
+
 import { useCreateDiaryMutation, useUpdateDiaryMutation } from '@/entities/diary/api/diary.api';
 import { useAppSelector } from '@/shared/hooks/useHooks';
 import { formatDate, now } from '@/shared/lib/day.util';
 import { getUserId } from '@/shared/lib/user.util';
 import { isEmpty } from '@/shared/lib/value.util';
-import { useCallback } from 'react';
 
 export function useDiaryMutation(text: string) {
   const currentDiary = useAppSelector(state => state.diarySlice.currentDiary);

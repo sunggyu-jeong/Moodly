@@ -1,3 +1,6 @@
+import { useCallback, useEffect, useMemo } from 'react';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+
 import { DiaryCalendarMode, DiaryPageMode } from '@/entities/calendar/diary.type';
 import { CalendarPage } from '@/features/calendar/lib/paging';
 import { selectCalendarMode } from '@/features/calendar/model/selector';
@@ -7,12 +10,10 @@ import { EmotionDiaryMonthPager } from '@/features/calendar/ui/EmotionDiaryMonth
 import { setCalendarMode } from '@/features/diary/model/diarySlice';
 import EmotionDiaryMonthSelector from '@/features/diary/ui/EmotionDiaryMonthSelector';
 import { DIARY_ICONS } from '@/shared/assets/images/diary';
-import { useAppSelector, useAppDispatch } from '@/shared/hooks/useHooks';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/useHooks';
 import colors from '@/shared/styles/colors';
 import DiaryToggle from '@/shared/ui/elements/DiaryToggle';
 import NavigationBar from '@/shared/ui/elements/navigation/NavigationBar';
-import { useEffect, useMemo, useCallback } from 'react';
-import { TouchableOpacity, Image, View, StyleSheet } from 'react-native';
 
 export const EmotionDiaryListPage = () => {
   const { diaryMode, pages, monthLabel, goLeft, goRight, toggleDiaryMode, reset } =

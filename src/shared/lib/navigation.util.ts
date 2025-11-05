@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { RootStackParamList } from '@/app/navigation/RootStack';
-import type { BottomTabParamList } from '@/app/navigation/TabNavigation';
 import {
   CommonActions,
   createNavigationContainerRef,
   StackActions,
   TabActions,
 } from '@react-navigation/native';
+
+import type { RootStackParamList } from '@/app/navigation/RootStack';
+import type { BottomTabParamList } from '@/app/navigation/TabNavigation';
 
 export const navigationRef = createNavigationContainerRef<RootStackParamList>();
 

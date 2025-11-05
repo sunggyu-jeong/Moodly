@@ -1,23 +1,23 @@
-import { type DiaryCalendarModeType, type DiaryPageModeType } from '@/entities/calendar/diary.type';
-import type { Diary } from '@/entities/diary/model/diary.types';
-import EmotionDiaryCardList from '@/features/diary/ui/EmotionDiaryCardList';
-import EmotionDiaryListEmpty from '@/features/diary/ui/EmotionDiaryListEmpty';
-import EmotionDiaryListHeader from '@/features/diary/ui/EmotionDiaryListHeader';
-
-import colors from '@/shared/styles/colors';
 import dayjs, { Dayjs } from 'dayjs';
 import { memo, useCallback, useMemo } from 'react';
-import { FlatList, Platform, StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 
-import DiarySkeleton from '../../diary/ui/skeleton/DiaryCardSkeleton';
-import { isIphone } from '@/shared/lib/user.util';
-import useDelay from '@/shared/hooks/useDelay';
-import { useAppSelector } from '@/shared/hooks/useHooks';
-import { isEmpty } from '@/shared/lib/value.util';
+import { type DiaryCalendarModeType, type DiaryPageModeType } from '@/entities/calendar/diary.type';
+import type { Diary } from '@/entities/diary/model/diary.types';
 import {
   selectIsDiaryPagingLoading,
   selectSelectedDayIso,
 } from '@/features/calendar/model/selector';
+import EmotionDiaryCardList from '@/features/diary/ui/EmotionDiaryCardList';
+import EmotionDiaryListEmpty from '@/features/diary/ui/EmotionDiaryListEmpty';
+import EmotionDiaryListHeader from '@/features/diary/ui/EmotionDiaryListHeader';
+import useDelay from '@/shared/hooks/useDelay';
+import { useAppSelector } from '@/shared/hooks/useHooks';
+import { isIphone } from '@/shared/lib/user.util';
+import { isEmpty } from '@/shared/lib/value.util';
+import colors from '@/shared/styles/colors';
+
+import DiarySkeleton from '../../diary/ui/skeleton/DiaryCardSkeleton';
 
 type DiaryListItem = { type: 'DIARY'; data: Diary };
 type SkeletonListItem = { type: 'SKELETON'; id: number };

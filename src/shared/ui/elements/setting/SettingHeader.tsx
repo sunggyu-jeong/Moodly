@@ -1,8 +1,9 @@
+import { memo } from 'react';
+import { StyleSheet, View } from 'react-native';
+
 import { common } from '@/shared/styles/colors';
 import AppSkeleton from '@/shared/ui/elements/app-skeleton/AppSkeleton';
 import SkeletonContainer from '@/shared/ui/elements/skeleton-container/SkeletonContainer';
-import { memo } from 'react';
-import { View, StyleSheet } from 'react-native';
 
 const SettingWidgetHeader = () => (
   <SkeletonContainer style={styles.container}>

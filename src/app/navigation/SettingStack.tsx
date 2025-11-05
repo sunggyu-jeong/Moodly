@@ -1,6 +1,7 @@
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import ManageAccountPage from '@/pages/ManageAccountPage';
 import SettingPage from '@/pages/SettingPage';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 export type SettingStackParamList = {
   Setting: undefined;

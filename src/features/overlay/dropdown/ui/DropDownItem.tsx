@@ -1,3 +1,5 @@
+import React, { useCallback } from 'react';
+
 import { MODAL_CONFIRM_ACTION_KEY } from '@/entities/overlay/model/modalKeys';
 import { setModifyMode } from '@/features/diary/model/diarySlice';
 import { useAppDispatch } from '@/shared/hooks/useHooks';
@@ -5,7 +7,6 @@ import { DropDownEventIdentifier, DropDownItemProps } from '@/shared/keys/dropdo
 import { navigateFlow, NavigationFlow } from '@/shared/lib/navigation.util';
 import { setShowDropdownView, setShowModalPopup } from '@/shared/model/overlaySlice';
 import SelectableItem from '@/shared/ui/elements/SelectableItem';
-import React, { useCallback } from 'react';
 
 const DropDownItem = ({ text, source, eventIdentifier }: DropDownItemProps) => {
   const textColor =

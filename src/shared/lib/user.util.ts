@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { supabase } from '@/shared/lib/supabase.util';
 import { Platform } from 'react-native';
+
+import { supabase } from '@/shared/lib/supabase.util';
 
 const STORAGE_KEY = 'current_user_id.v1';
 

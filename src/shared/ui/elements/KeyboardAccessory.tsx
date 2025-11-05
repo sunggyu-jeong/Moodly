@@ -1,7 +1,8 @@
+import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+
 import { getScaleSize } from '@/shared/hooks/useScale';
 import { gray } from '@/shared/styles/colors';
 import { H3 } from '@/shared/ui/typography/H3';
-import { View, TouchableWithoutFeedback, StyleSheet } from 'react-native';
 
 interface KeyboardAccessoryButtonProps {
   onPress: () => void;

@@ -1,10 +1,11 @@
+import { StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 import { SetNicknameForm } from '@/features/set-nickname/ui/SetNicknameForm';
 import { getScaleSize } from '@/shared/hooks/useScale';
 import { resetTo } from '@/shared/lib/navigation.util';
-import { H2 } from '@/shared/ui/typography/H2';
 import NavigationBar from '@/shared/ui/elements/navigation/NavigationBar';
-import { View, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { H2 } from '@/shared/ui/typography/H2';
 
 const NicknamePage = () => {
   const handleSuccess = () => {

@@ -1,9 +1,10 @@
+import { memo } from 'react';
+import { StyleSheet, View } from 'react-native';
+
 import { gray } from '@/shared/styles/colors';
 import SettingWidgetGroup from '@/shared/ui/elements/setting/SettingGroup';
 import SettingWidgetHeader from '@/shared/ui/elements/setting/SettingHeader';
 import SettingWidgetItem from '@/shared/ui/elements/setting/SettingItem';
-import { memo } from 'react';
-import { View, StyleSheet } from 'react-native';
 
 const SettingWidgetSkeleton = () => (
   <View style={styles.container}>

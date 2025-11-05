@@ -1,3 +1,7 @@
+import { AnimatePresence, MotiView } from 'moti';
+import { memo, useMemo } from 'react';
+import { StyleSheet, View } from 'react-native';
+
 import {
   DiaryCalendarMode,
   type DiaryCalendarModeType,
@@ -5,15 +9,12 @@ import {
   type DiaryPageModeType,
 } from '@/entities/calendar/diary.type';
 import type { Diary } from '@/entities/diary/model/diary.types';
-
-import { generateMonthGrid, generateWeekGrid } from '@/shared/lib/date.util';
-import WeekdayHeader from '@/shared/ui/elements/WeekdayHeader';
-import { AnimatePresence, MotiView } from 'moti';
-import { memo, useMemo } from 'react';
-import { StyleSheet, View } from 'react-native';
-import DiarySkeleton from './skeleton/DiaryCardSkeleton';
 import CalendarBar from '@/features/calendar/ui/CalendarBar';
+import { generateMonthGrid, generateWeekGrid } from '@/shared/lib/date.util';
 import { now } from '@/shared/lib/day.util';
+import WeekdayHeader from '@/shared/ui/elements/WeekdayHeader';
+
+import DiarySkeleton from './skeleton/DiaryCardSkeleton';
 
 interface DiaryListHeaderProps {
   showSkeleton: boolean;

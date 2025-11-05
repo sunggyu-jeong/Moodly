@@ -1,13 +1,14 @@
-import * as AppleAuthentication from 'expo-apple-authentication';
 import { GoogleSignin, type User } from '@react-native-google-signin/google-signin';
-import { appApi } from '@/shared/api/AppApi';
-import { Platform } from 'react-native';
+import * as AppleAuthentication from 'expo-apple-authentication';
 import * as Application from 'expo-application';
+import { Platform } from 'react-native';
+
+import { appApi } from '@/shared/api/AppApi';
+import { ApiCode } from '@/shared/api/Error';
+import { isIphone } from '@/shared/lib/user.util';
+import { isEmpty } from '@/shared/lib/value.util';
 
 import type { SetUserInfoInput, SignInProviderInput, UserInfo } from '../model/auth.types';
-import { isIphone } from '@/shared/lib/user.util';
-import { ApiCode } from '@/shared/api/Error';
-import { isEmpty } from '@/shared/lib/value.util';
 
 GoogleSignin.configure({
   webClientId: process.env.GOOGLE_WEB_CLIENT_ID!,

@@ -1,15 +1,16 @@
-import type { Diary } from '@/entities/diary/model/diary.types';
-import { GridList } from '@/shared/ui/elements/GridList';
 import dayjs, { Dayjs } from 'dayjs';
 import { memo, useCallback, useMemo } from 'react';
 import { View } from 'react-native';
 
-import SelectableDayCell from './SelectableDayCell';
+import type { Diary } from '@/entities/diary/model/diary.types';
+import { setCurrentDiary, setSelectedDay } from '@/features/diary/model/diarySlice';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/useHooks';
-import { isEmpty } from '@/shared/lib/value.util';
 import { formatDate, now } from '@/shared/lib/day.util';
-import { setSelectedDay, setCurrentDiary } from '@/features/diary/model/diarySlice';
 import { navigate } from '@/shared/lib/navigation.util';
+import { isEmpty } from '@/shared/lib/value.util';
+import { GridList } from '@/shared/ui/elements/GridList';
+
+import SelectableDayCell from './SelectableDayCell';
 
 interface CalendarBarProps {
   monthlyDates: (Dayjs | null)[][];

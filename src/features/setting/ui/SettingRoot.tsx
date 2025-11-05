@@ -1,10 +1,12 @@
-import { gray } from '@/shared/styles/colors';
-import NaviTitleDisplay from '@/shared/ui/elements/NaviTitle';
-import { Label } from '@/shared/ui/typography/Label';
-import NavigationBar from '@/shared/ui/elements/navigation/NavigationBar';
-import SettingWidgetSkeleton from '@/shared/ui/elements/skeleton/SettingSkeleton';
 import { memo } from 'react';
 import { StyleSheet, View } from 'react-native';
+
+import { gray } from '@/shared/styles/colors';
+import NavigationBar from '@/shared/ui/elements/navigation/NavigationBar';
+import NaviTitleDisplay from '@/shared/ui/elements/NaviTitle';
+import SettingWidgetSkeleton from '@/shared/ui/elements/skeleton/SettingSkeleton';
+import { Label } from '@/shared/ui/typography/Label';
+
 import packageJson from '../../../../package.json';
 import { type SettingItemProps, TEXTS } from '../types';
 import SettingList from './SettingList';

@@ -1,7 +1,8 @@
+import { memo, useEffect, useState } from 'react';
+import { Animated, Easing, StyleSheet, TouchableOpacity, View } from 'react-native';
+
 import colors, { gray } from '@/shared/styles/colors';
 import { Caption } from '@/shared/ui/typography/Caption';
-import { useState, useEffect, memo } from 'react';
-import { Animated, Easing, TouchableOpacity, View, StyleSheet } from 'react-native';
 
 interface ToggleProps {
   onToggle?: () => void;

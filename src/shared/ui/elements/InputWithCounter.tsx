@@ -1,7 +1,8 @@
+import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { StyleSheet, TextInput, TextInputProps, View } from 'react-native';
+
 import { gray } from '@/shared/styles/colors';
 import { Caption } from '@/shared/ui/typography/Caption';
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
-import { TextInputProps, TextInput, View, StyleSheet } from 'react-native';
 
 interface InputWithCounterProps extends TextInputProps {
   value: string;

@@ -1,8 +1,9 @@
+import { useCallback, useEffect, useRef } from 'react';
+import { Animated, Platform, StyleSheet, TouchableOpacity } from 'react-native';
+
 import DropDownContainer from '@/features/overlay/dropdown/DropDownContainer';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/useHooks';
 import { setShowDropdownView } from '@/shared/model/overlaySlice';
-import { useCallback, useEffect, useRef } from 'react';
-import { Animated, Platform, StyleSheet, TouchableOpacity } from 'react-native';
 
 const DropDownAnimation = () => {
   const animationValue = useRef(new Animated.Value(0)).current;

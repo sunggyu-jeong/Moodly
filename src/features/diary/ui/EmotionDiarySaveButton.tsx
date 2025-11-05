@@ -1,12 +1,13 @@
-import { fromRow } from '@/entities/diary/lib/diary.mapper';
-import { KeyboardAccessoryButton } from '@/shared/ui/elements/KeyboardAccessory';
 import { useEffect } from 'react';
 
-import { useDiaryMutation } from '../hooks/useDiaryMutation';
-import { setSelectedDiary } from '../model/diarySlice';
+import { fromRow } from '@/entities/diary/lib/diary.mapper';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/useHooks';
 import { navigate } from '@/shared/lib/navigation.util';
 import { isNotEmpty } from '@/shared/lib/value.util';
+import { KeyboardAccessoryButton } from '@/shared/ui/elements/KeyboardAccessory';
+
+import { useDiaryMutation } from '../hooks/useDiaryMutation';
+import { setSelectedDiary } from '../model/diarySlice';
 
 export function DiarySaveButton(text: string) {
   const dispatch = useAppDispatch();

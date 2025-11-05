@@ -1,6 +1,7 @@
+import { StyleSheet, View } from 'react-native';
+
 import { common, gray } from '@/shared/styles/colors';
 import { Body2 } from '@/shared/ui/typography/Body2';
-import { StyleSheet, View } from 'react-native';
 
 interface ToastBaseProps {
   text: string;

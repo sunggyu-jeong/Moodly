@@ -1,6 +1,7 @@
+import { StyleSheet, View } from 'react-native';
+
 import AppSkeleton from '@/shared/ui/elements/app-skeleton/AppSkeleton';
 import SkeletonContainer from '@/shared/ui/elements/skeleton-container/SkeletonContainer';
-import { StyleSheet, View } from 'react-native';
 
 const HomeDiarySkeleton = () => {
   return (

@@ -1,11 +1,12 @@
+import { useMemo } from 'react';
+import { Image, StyleSheet, View } from 'react-native';
+
+import SocialLoginGroup, { SOCIAL_LOGIN_ENTRANCE } from '@/features/auth/ui/SocialLoginGroup';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { getScaleSize } from '@/shared/hooks/useScale';
 import { gray, primary } from '@/shared/styles/colors';
-import SocialLoginGroup, { SOCIAL_LOGIN_ENTRANCE } from '@/features/auth/ui/SocialLoginGroup';
 import { H3 } from '@/shared/ui/typography/H3';
 import { Title } from '@/shared/ui/typography/Title';
-import { useMemo } from 'react';
-import { View, Image, StyleSheet } from 'react-native';
 
 const Login = () => {
   const scaleSize = useMemo(() => getScaleSize(214), []);

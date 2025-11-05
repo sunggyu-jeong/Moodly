@@ -1,19 +1,20 @@
+import { useEffect } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+
 import { useLazyGetUserInfoQuery } from '@/entities/auth/api/auth.api';
 import { useUpdateFirstLaunchFlagMutation } from '@/entities/auth/api/user-meta.api';
 import { AUTH_PROVIDERS } from '@/entities/auth/types';
 import { useSocialLogin } from '@/features/auth/hooks/useSocialLogin';
 import SocialLoginButton from '@/features/auth/ui/SocialLoginButton';
-import { setShowToastView } from '@/shared/model/overlaySlice';
 import { useAppDispatch } from '@/shared/hooks/useHooks';
 import { useExternalWebSite } from '@/shared/hooks/useOpenChat';
 import { ENV } from '@/shared/lib/env';
 import { navigate, resetTo } from '@/shared/lib/navigation.util';
 import { initUserId, isIphone } from '@/shared/lib/user.util';
 import { isEmpty, isNotEmpty } from '@/shared/lib/value.util';
+import { setShowToastView } from '@/shared/model/overlaySlice';
 import { gray } from '@/shared/styles/colors';
 import { Caption } from '@/shared/ui/typography/Caption';
-import { useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
 
 export enum SOCIAL_LOGIN_ENTRANCE {
   LOGIN = 'login',

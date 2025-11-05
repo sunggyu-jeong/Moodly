@@ -1,5 +1,6 @@
+import { useEffect, useRef, useState } from 'react';
+
 import { isNotEmpty } from '@/shared/lib/value.util';
-import { useState, useRef, useEffect } from 'react';
 
 const SKELETON_MIN_DURATION_MS = 700;
 

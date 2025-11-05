@@ -1,6 +1,7 @@
-import { navigate } from '@/shared/lib/navigation.util';
 import * as Notifications from 'expo-notifications';
 import { useEffect, useRef } from 'react';
+
+import { navigate } from '@/shared/lib/navigation.util';
 
 interface UsePushNavigationProps {
   hasDiary: boolean | undefined;

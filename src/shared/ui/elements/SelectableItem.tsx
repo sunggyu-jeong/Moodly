@@ -1,4 +1,5 @@
-import { Image, StyleSheet, TouchableOpacity, View, type ImageSourcePropType } from 'react-native';
+import { Image, type ImageSourcePropType, StyleSheet, TouchableOpacity, View } from 'react-native';
+
 import { Label } from '../typography/Label';
 
 const SelectableItem = ({
