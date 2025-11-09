@@ -38,3 +38,5 @@ export type DbDiaryRow = {
   created_at: string;
   updated_at: string;
 };
+
+export type DiaryDateRangeQuery = { start: string; end: string };
