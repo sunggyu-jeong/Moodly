@@ -3,8 +3,8 @@ import type { NavigatorScreenParams } from '@react-navigation/native';
 import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import AIReportGeneratingPage from '@/pages/AIReportGeneratingPage';
 import EmotionDiaryListPage from '@/pages/EmotionDiaryListPage';
-import WeeklyReportProgressPage from '@/pages/WeeklyReportProgressPage';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { useScale } from '@/shared/hooks/useScale';
 import TabBarIcon from '@/shared/ui/elements/TabBarIcon';
@@ -44,7 +44,7 @@ const TabNavigation = () => {
       >
         <Tab.Screen
           name="Home"
-          component={WeeklyReportProgressPage}
+          component={AIReportGeneratingPage}
           options={{
             tabBarIcon: ({ focused }) => (
               <TabBarIcon source={focused ? MAIN_ICONS.homeActive : MAIN_ICONS.homeInactive} />

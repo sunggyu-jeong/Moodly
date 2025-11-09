@@ -6,3 +6,8 @@ export type WeeklyProgresProps = {
   remainDays: number;
   onConfirm: () => void;
 };
+
+export type AIReportGeneratingProps = {
+  nickname?: string;
+  isLoading?: boolean;
+};
