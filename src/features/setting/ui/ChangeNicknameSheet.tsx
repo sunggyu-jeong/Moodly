@@ -48,7 +48,7 @@ const ChangeNicknameSheet = forwardRef<BottomSheetHandler>((_, ref) => {
     >
       <BottomSheetView style={styles.container}>
         <Pressable
-          style={StyleSheet.absoluteFill}
+          style={styles.overlay}
           onPress={handleDismissKeyboard}
         />
         <H3 weight="semibold">닉네임 변경</H3>
@@ -75,7 +75,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 16,
   },
-  form: {},
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    zIndex: 2,
+  },
+  form: { flex: 1, width: '100%', zIndex: 3 },
 });
 
 ChangeNicknameSheet.displayName = 'ChangeNicknameSheet';
