@@ -1,15 +1,16 @@
-import React from 'react';
+import { isNotEmpty } from '@/shared/lib/value.util';
+import NaviActionButton, {
+  type NaviActionButtonProps,
+} from '@/shared/ui/elements/NaviActionButton';
+import NaviBackButton from '@/shared/ui/elements/NaviBackButton';
+import { ReactNode, memo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
-import { isNotEmpty } from '@/shared/lib/value.util';
-import NaviActionButton, { NaviActionButtonProps } from '@/shared/ui/elements/NaviActionButton';
-import NaviBackButton from '@/shared/ui/elements/NaviBackButton';
 
 export interface NavigationBarConfig {
   showBackButton?: boolean;
   leftComponents?: NaviActionButtonProps[] | null;
-  centerComponent?: React.ReactNode;
+  centerComponent?: ReactNode;
   actionButtons?: NaviActionButtonProps[];
   backgroundColor?: string;
 }
@@ -101,4 +102,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(NavigationBar);
+export default memo(NavigationBar);

@@ -1,7 +1,3 @@
-import * as Application from 'expo-application';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
-
 import { useGetUserInfoQuery } from '@/entities/auth/api/auth.api';
 import { MODAL_CONFIRM_ACTION_KEY } from '@/entities/overlay/model/modalKeys';
 import { useLogout } from '@/features/auth/hooks/useLogout';
@@ -26,6 +22,9 @@ import NavigationBar from '@/shared/ui/elements/navigation/NavigationBar';
 import NaviTitleDisplay from '@/shared/ui/elements/NaviTitle';
 import { Body1 } from '@/shared/ui/typography/Body1';
 import { Label } from '@/shared/ui/typography/Label';
+import * as Application from 'expo-application';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { Image, StyleSheet, View } from 'react-native';
 
 const ManageAccountPage = () => {
   const requestWithDrawal = useAppSelector(state => state.overlaySlice.requestWithDrawal);
