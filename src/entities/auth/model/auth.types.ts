@@ -39,3 +39,16 @@ export interface SignInProviderInput {
 export interface SetUserInfoInput {
   nickname: string;
 }
+
+export interface SignInResult {
+  user: User | null;
+  isNewUser: boolean;
+  provider: AuthProvider;
+}
+
+export const AUTH_PROVIDERS = {
+  GOOGLE: 'google',
+  APPLE: 'apple',
+} as const;
+
+export type AuthProvider = (typeof AUTH_PROVIDERS)[keyof typeof AUTH_PROVIDERS];

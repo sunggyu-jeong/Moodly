@@ -1,8 +1,7 @@
 import type { ImageSourcePropType } from 'react-native';
 
+import { AUTH_PROVIDERS, AuthProvider } from '@/entities/auth/model/auth.types';
 import { AUTH_ICONS } from '@/shared/assets/images/auth';
-
-import { AUTH_PROVIDERS, type AuthProvider } from './types';
 
 type ProviderConfig = {
   label: string;

@@ -7,16 +7,20 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
 import { Provider } from 'react-redux';
 
+import RootStack from '@/app/navigation/RootStack';
+import OverlayManager from '@/app/provider/OverlayProvider';
 import { store } from '@/app/store';
 import { useUpsertPushTokenMutation } from '@/entities/auth/api/auth.api';
-import OverlayManager from '@/app/provider/OverlayProvider';
-import '@/shared/lib/day.util';
-import { StyleSheet, View } from 'react-native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import RootStack from '@/app/navigation/RootStack';
 import { useNotificationPermission } from '@/shared/hooks/useNotificationPermission';
+import '@/shared/lib/day.util';
+import { ENV } from '@/shared/lib/env';
 import { navigationRef } from '@/shared/lib/navigation.util';
 import { isEmpty } from '@/shared/lib/value.util';
+import { StyleSheet, View } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
+import * as amplitude from '@amplitude/analytics-react-native';
+import { SessionReplayPlugin } from '@amplitude/plugin-session-replay-react-native';
 
 enableScreens();
 
@@ -40,6 +44,7 @@ export const onRenderCallback: ProfilerOnRenderCallback = (
 
 function App() {
   const [updateFcmToken] = useUpsertPushTokenMutation();
+  const { AMPLITUDE_API_KEY } = ENV;
 
   const onTokenUpdate = useCallback(
     async (token: string | null) => {
@@ -58,6 +63,22 @@ function App() {
     setupListeners: true,
     onTokenUpdate: onTokenUpdate,
   });
+
+  useEffect(() => {
+    const initializeAmplitude = async () => {
+      try {
+        console.log('Amplitude 초기화를 시작합니다...');
+        await amplitude.init(AMPLITUDE_API_KEY).promise;
+        await amplitude.add(new SessionReplayPlugin()).promise;
+
+        console.log('Amplitude 초기화 및 플러그인 추가 완료.');
+      } catch (error) {
+        console.error('Amplitude 초기화 중 에러가 발생했습니다:', error);
+      }
+    };
+
+    initializeAmplitude();
+  }, []);
 
   return (
     <GestureHandlerRootView style={styles.container}>

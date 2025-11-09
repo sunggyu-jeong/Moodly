@@ -1,4 +1,6 @@
+import * as amplitude from '@amplitude/analytics-react-native';
 import { useCallback } from 'react';
+import { Platform } from 'react-native';
 
 import { useCreateDiaryMutation, useUpdateDiaryMutation } from '@/entities/diary/api/diary.api';
 import { useAppSelector } from '@/shared/hooks/useHooks';
@@ -34,6 +36,12 @@ export function useDiaryMutation(text: string) {
         iconId: currentDiary?.iconId ?? 0,
         recordDate: currentDiary?.recordDate ?? formatDate(now()),
         description: text,
+      });
+      amplitude.track('Diary_Entry_Completed', {
+        entryLength: text.length,
+        emotion: selectedDiary?.emotionId,
+        userId: userId,
+        platform: Platform.OS,
       });
     }
   }, [text, create, update, selectedDiary, currentDiary, isModifyMode]);
