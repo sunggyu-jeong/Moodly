@@ -64,8 +64,13 @@
   ],
   "exclude": [
     "node_modules",
+    "**/.pnpm/**",
+    "dist",
+    "build",
     "android",
-    "ios"
+    "ios",
+    ".expo",
+    "expo"
   ],
   "extends": "expo/tsconfig.base"
 }
