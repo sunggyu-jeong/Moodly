@@ -19,10 +19,12 @@ import { isEmpty } from '@/shared/lib/value.util';
 import { StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+import { registerLogoutHandler } from '@/app/bootstrap/registerLogoutHandler';
 import * as amplitude from '@amplitude/analytics-react-native';
 import { SessionReplayPlugin } from '@amplitude/plugin-session-replay-react-native';
 
 enableScreens();
+registerLogoutHandler();
 
 if (typeof globalThis.structuredClone !== 'function') {
   globalThis.structuredClone = obj => JSON.parse(JSON.stringify(obj));

@@ -1,10 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createClient } from '@supabase/supabase-js';
 
-import store from '@/app/store';
 import { ENV } from '@/shared/lib/env';
+import { requestLogout } from '@/shared/lib/logoutBus.util';
 
-import { appApi } from '../api/AppApi';
 import { resetTo } from './navigation.util';
 
 const nativeFetch = globalThis.fetch.bind(globalThis);
@@ -32,7 +31,7 @@ export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
             return res;
           }
           if (res.status === 401 || res.status === 403) {
-            store.dispatch(appApi.util.resetApiState());
+            requestLogout();
             resetTo('Login');
             throw new Error('인증이 만료되었습니다. 다시 로그인하세요.');
           }

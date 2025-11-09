@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { useLazyGetUserInfoQuery } from '@/entities/auth/api/auth.api';
 import { useUpdateFirstLaunchFlagMutation } from '@/entities/auth/api/user-meta.api';
-import { AUTH_PROVIDERS } from '@/entities/auth/types';
+import { AUTH_PROVIDERS } from '@/entities/auth/model/auth.types';
 import { useSocialLogin } from '@/features/auth/hooks/useSocialLogin';
 import SocialLoginButton from '@/features/auth/ui/SocialLoginButton';
 import { useAppDispatch } from '@/shared/hooks/useHooks';
