@@ -8,5 +8,6 @@ export const appApi = createApi({
   baseQuery: supabaseBaseQuery,
   tagTypes: [...TAGS],
   refetchOnFocus: true,
+  refetchOnReconnect: true,
   endpoints: () => ({}),
 });

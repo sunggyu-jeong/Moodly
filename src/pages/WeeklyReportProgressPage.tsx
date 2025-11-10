@@ -1,4 +1,4 @@
-import { useGetWeeklyProgressQuery } from '@/entities/ai-report/api/aiReport.api';
+import { useGetWeeklyProgressQuery } from '@/entities/ai-report/api';
 import { WeeklyReportProgress } from '@/features/ai-report/ui/WeeklyReportProgress';
 import { goBack } from '@/shared/lib/navigation.util';
 
