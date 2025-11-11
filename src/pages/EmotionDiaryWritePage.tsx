@@ -16,8 +16,8 @@ import { H2 } from '@/shared/ui/typography/H2';
 const actionButtons = [{ item: <NaviDismiss />, disabled: false }];
 
 const EmotionDiaryWritePage = () => {
-  const currentDiary = useAppSelector(state => state.diarySlice.currentDiary);
-  const selectedDiary = useAppSelector(state => state.diarySlice.selectedDiary);
+  const currentDiary = useAppSelector(state => state.diary.currentDiary);
+  const selectedDiary = useAppSelector(state => state.diary.selectedDiary);
   const scrollRef = useRef<ScrollView>(null);
 
   const [text, setText] = useState('');

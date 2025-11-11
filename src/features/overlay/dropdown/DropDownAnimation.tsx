@@ -8,7 +8,7 @@ import { setShowDropdownView } from '@/shared/model/overlaySlice';
 const DropDownAnimation = () => {
   const animation = useMemo(() => new Animated.Value(0), []);
 
-  const showDropDownView = useAppSelector(state => state.overlaySlice.showDropDownView);
+  const showDropDownView = useAppSelector(state => state.overlay.showDropDownView);
   const dispatch = useAppDispatch();
 
   const onClose = useCallback(() => {

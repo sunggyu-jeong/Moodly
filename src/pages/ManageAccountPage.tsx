@@ -29,7 +29,7 @@ import { Body1 } from '@/shared/ui/typography/Body1';
 import { Label } from '@/shared/ui/typography/Label';
 
 const ManageAccountPage = () => {
-  const requestWithDrawal = useAppSelector(state => state.overlaySlice.requestWithDrawal);
+  const requestWithDrawal = useAppSelector(state => state.overlay.requestWithDrawal);
   const { signOut } = useLogout();
   const dispatch = useAppDispatch();
   const { data: userInfo } = useGetUserInfoQuery();

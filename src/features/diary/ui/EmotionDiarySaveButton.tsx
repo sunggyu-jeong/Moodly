@@ -11,7 +11,7 @@ import { setSelectedDiary } from '../model/diarySlice';
 
 export function DiarySaveButton(text: string) {
   const dispatch = useAppDispatch();
-  const currentDiary = useAppSelector(state => state.diarySlice.currentDiary);
+  const currentDiary = useAppSelector(state => state.diary.currentDiary);
   const { save, result } = useDiaryMutation(text);
 
   useEffect(() => {

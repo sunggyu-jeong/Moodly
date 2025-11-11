@@ -140,3 +140,12 @@ export const diaryApi = appApi.injectEndpoints({
   }),
   overrideExisting: true,
 });
+
+export const {
+  useGetDiariesByRangeQuery,
+  useGetDiaryCountQuery,
+  useHasDiaryForDayQuery,
+  useCreateDiaryMutation,
+  useUpdateDiaryMutation,
+  useDeleteDiaryMutation,
+} = diaryApi;

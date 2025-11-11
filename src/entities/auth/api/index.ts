@@ -1,4 +1,3 @@
-// src/features/auth/api/authApi.ts
 import { GoogleSignin, statusCodes, type User } from '@react-native-google-signin/google-signin';
 import dayjs from 'dayjs';
 import * as AppleAuthentication from 'expo-apple-authentication';
@@ -90,7 +89,6 @@ export const authApi = appApi.injectEndpoints({
             ...(nonce ? { nonce } : {}),
           });
           if (error || !data?.user) {
-            // 서버/알수없음 범주로 정규화 유도
             throw {
               ...error,
               code: API_CODE.SERVER_ERROR,
@@ -222,3 +220,15 @@ export const authApi = appApi.injectEndpoints({
     }),
   }),
 });
+
+export const {
+  useSignInWithProviderMutation,
+  useSignOutMutation,
+  useFetchSessionQuery,
+  useLazyFetchSessionQuery,
+  useGetUserInfoQuery,
+  useLazyGetUserInfoQuery,
+  useSetUserInfoMutation,
+  useUpsertPushTokenMutation,
+  useDeletePushTokenMutation,
+} = authApi;

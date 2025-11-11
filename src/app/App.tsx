@@ -10,7 +10,6 @@ import { Provider } from 'react-redux';
 import RootStack from '@/app/navigation/RootStack';
 import OverlayManager from '@/app/provider/OverlayProvider';
 import { store } from '@/app/store';
-import { useUpsertPushTokenMutation } from '@/entities/auth/api';
 import { useNotificationPermission } from '@/shared/hooks/useNotificationPermission';
 import '@/shared/lib/day.util';
 import { ENV } from '@/shared/lib/env';
@@ -20,6 +19,7 @@ import { StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { registerLogoutHandler } from '@/app/bootstrap/registerLogoutHandler';
+import { useUpsertPushTokenMutation } from '@/entities/auth/api';
 import * as amplitude from '@amplitude/analytics-react-native';
 import { SessionReplayPlugin } from '@amplitude/plugin-session-replay-react-native';
 

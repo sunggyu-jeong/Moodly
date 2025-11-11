@@ -9,9 +9,9 @@ import { getUserId } from '@/shared/lib/user.util';
 import { isEmpty } from '@/shared/lib/value.util';
 
 export function useDiaryMutation(text: string) {
-  const currentDiary = useAppSelector(state => state.diarySlice.currentDiary);
-  const selectedDiary = useAppSelector(state => state.diarySlice.selectedDiary);
-  const isModifyMode = useAppSelector(state => state.diarySlice.isModifyMode);
+  const currentDiary = useAppSelector(state => state.diary.currentDiary);
+  const selectedDiary = useAppSelector(state => state.diary.selectedDiary);
+  const isModifyMode = useAppSelector(state => state.diary.isModifyMode);
   const [create, { data: createRes, isLoading: createLoading }] = useCreateDiaryMutation();
   const [update, { data: updateRes, isLoading: updateLoading }] = useUpdateDiaryMutation();
 

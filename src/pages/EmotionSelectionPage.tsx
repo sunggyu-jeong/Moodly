@@ -20,9 +20,9 @@ const actionButtons = [{ item: <NaviDismiss />, disabled: false }];
 
 const EmotionSelectionPage = () => {
   const dispatch = useAppDispatch();
-  const selectedEmotion = useAppSelector(state => state.diarySlice.selectedIcon);
-  const isModifyMode = useAppSelector(state => state.diarySlice.isModifyMode);
-  const selectedDiary = useAppSelector(state => state.diarySlice.selectedDiary);
+  const selectedEmotion = useAppSelector(state => state.diary.selectedIcon);
+  const isModifyMode = useAppSelector(state => state.diary.isModifyMode);
+  const selectedDiary = useAppSelector(state => state.diary.selectedDiary);
 
   const handleSelectEmotion = () => {
     if (!selectedEmotion) return;

@@ -9,7 +9,7 @@ import { Body1 } from '@/shared/ui/typography/Body1';
 import { H1 } from '@/shared/ui/typography/H1';
 
 const EmotionDisplaySelected = () => {
-  const selectedIcon = useAppSelector(state => state.diarySlice.selectedIcon);
+  const selectedIcon = useAppSelector(state => state.diary.selectedIcon);
   const { getScaleSize } = useScale();
 
   return (

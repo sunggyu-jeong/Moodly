@@ -6,7 +6,7 @@ import { setSelectedIcon } from '../../diary/model/diarySlice';
 
 const EmotionSelectionIcon = ({ emotion }: { emotion: EmotionIconData }) => {
   const dispatch = useAppDispatch();
-  const selectedEmotion = useAppSelector(state => state.diarySlice.selectedIcon);
+  const selectedEmotion = useAppSelector(state => state.diary.selectedIcon);
 
   const handleSelectEmotion = () => {
     dispatch(setSelectedIcon(emotion));

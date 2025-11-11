@@ -8,7 +8,7 @@ import { isNotEmpty } from '@/shared/lib/value.util';
 import { common } from '@/shared/styles/colors';
 
 const DropDownContainer = () => {
-  const showDropDownView = useAppSelector(state => state.overlaySlice.showDropDownView);
+  const showDropDownView = useAppSelector(state => state.overlay.showDropDownView);
 
   return (
     <View style={[styles.container, styles.boxStyle]}>

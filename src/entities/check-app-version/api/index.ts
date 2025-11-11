@@ -17,4 +17,5 @@ const versionApi = appApi.injectEndpoints({
     }),
   }),
 });
+
 export const { useGetAppVersionPolicyQuery } = versionApi;

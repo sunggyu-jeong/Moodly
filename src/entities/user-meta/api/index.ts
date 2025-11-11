@@ -34,3 +34,5 @@ export const userMetaApi = appApi.injectEndpoints({
     }),
   }),
 });
+
+export const { useLazyGetFirstLaunchFlagQuery, useUpdateFirstLaunchFlagMutation } = userMetaApi;

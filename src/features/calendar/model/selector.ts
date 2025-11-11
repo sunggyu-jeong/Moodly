@@ -6,7 +6,7 @@ import { diaryApi } from '@/entities/diary/api';
 import { getMonthRange } from '@/shared/lib/date.util';
 import { now } from '@/shared/lib/day.util';
 
-const s = (st: RootState) => st.diarySlice;
+const s = (st: RootState) => st.diary;
 
 export const selectSelectedMonthIso = (st: RootState) => s(st).selectedMonth;
 export const selectSelectedWeekIso = (st: RootState) => s(st).selectedWeek;

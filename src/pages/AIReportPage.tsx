@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 
-import { useAIReport } from '@/entities/ai-report/hooks/useAIReport';
+import { useGetAIReportByDateMockQuery } from '@/entities/ai-report/api';
 import { ReportSection } from '@/features/ai-report/ui/ReportSection';
 import { COMMON_ICONS } from '@/shared/assets/images/common';
 import { gray } from '@/shared/styles/colors';
@@ -19,7 +19,7 @@ import { H2 } from '@/shared/ui/typography/H2';
 const PAGE_DATE = '2025-10-05';
 
 const AIReportPage = () => {
-  const { data, isLoading } = useAIReport(PAGE_DATE);
+  const { data, isLoading } = useGetAIReportByDateMockQuery(PAGE_DATE);
 
   const centerComponents = () => (
     <TouchableWithoutFeedback>

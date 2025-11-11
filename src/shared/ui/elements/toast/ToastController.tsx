@@ -6,7 +6,7 @@ import ToastAnimated from '@/shared/ui/elements/toast/ToastAnimated';
 
 const ToastController = () => {
   const dispatch = useAppDispatch();
-  const showToastView = useAppSelector(state => state.overlaySlice.showToastView, shallowEqual);
+  const showToastView = useAppSelector(state => state.overlay.showToastView, shallowEqual);
 
   return (
     <ToastAnimated

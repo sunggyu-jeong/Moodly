@@ -1,7 +1,4 @@
-import {
-  MODAL_CANCEL_ACTION_KEY,
-  MODAL_CONFIRM_ACTION_KEY,
-} from '@/entities/overlay/model/types';
+import { MODAL_CANCEL_ACTION_KEY, MODAL_CONFIRM_ACTION_KEY } from '@/entities/overlay/model/types';
 import DropDownAnimation from '@/features/overlay/dropdown/DropDownAnimation';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/useHooks';
 import { useNotificationPermission } from '@/shared/hooks/useNotificationPermission';
@@ -16,9 +13,9 @@ import PopupContainer from '@/shared/ui/elements/popup/PopupContainer';
 import ToastController from '@/shared/ui/elements/toast/ToastController';
 
 const OverlayProvider = () => {
-  const showToastView = useAppSelector(state => state.overlaySlice.showToastView);
-  const showModalPopup = useAppSelector(state => state.overlaySlice.showModalPopup);
-  const showDropDownView = useAppSelector(state => state.overlaySlice.showDropDownView);
+  const showToastView = useAppSelector(state => state.overlay.showToastView);
+  const showModalPopup = useAppSelector(state => state.overlay.showModalPopup);
+  const showDropDownView = useAppSelector(state => state.overlay.showDropDownView);
   const dispatch = useAppDispatch();
   const { openSettings } = useNotificationPermission();
 

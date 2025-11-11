@@ -12,7 +12,7 @@ import { Body2 } from '@/shared/ui/typography/Body2';
 import { H2 } from '@/shared/ui/typography/H2';
 
 const EmotionDiaryCompletePage = () => {
-  const isModifyMode = useAppSelector(state => state.diarySlice.isModifyMode);
+  const isModifyMode = useAppSelector(state => state.diary.isModifyMode);
   const dispatch = useAppDispatch();
 
   const handleScreenFocus = React.useCallback(() => {

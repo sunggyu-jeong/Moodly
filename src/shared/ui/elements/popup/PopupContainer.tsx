@@ -19,7 +19,7 @@ interface PopupContainerProps {
 }
 
 const PopupContainer = ({ ...props }: PopupContainerProps) => {
-  const showModalPopup = useAppSelector(s => s.overlaySlice.showModalPopup);
+  const showModalPopup = useAppSelector(s => s.overlay.showModalPopup);
   const dispatch = useAppDispatch();
 
   const translateY = useMemo(() => new Animated.Value(30), []);

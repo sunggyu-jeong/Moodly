@@ -18,7 +18,7 @@ interface CalendarBarProps {
 }
 
 const CalendarBar = ({ monthlyDates, entries }: CalendarBarProps) => {
-  const selectedDayStr = useAppSelector(state => state.diarySlice.selectedDay);
+  const selectedDayStr = useAppSelector(state => state.diary.selectedDay);
   const selectedDay = useMemo(() => {
     if (isEmpty(selectedDayStr)) {
       return null;

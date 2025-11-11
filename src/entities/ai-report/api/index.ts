@@ -1,4 +1,3 @@
-// src/features/ai-report/api/aiReportApi.ts
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 import type {
@@ -96,3 +95,9 @@ export const aiReportApi = appApi.injectEndpoints({
   }),
   overrideExisting: true,
 });
+
+export const {
+  useRequestAIWeeklySummaryMutation,
+  useGetWeeklyProgressQuery,
+  useGetAIReportByDateMockQuery,
+} = aiReportApi;

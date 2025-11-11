@@ -61,8 +61,8 @@ const EmotionDiaryDetailPage = () => {
   const dispatch = useAppDispatch();
   const dropdownButtonRef = useRef<View>(null);
 
-  const selectedDiary = useAppSelector(state => state.diarySlice.selectedDiary);
-  const overlayEventHandler = useAppSelector(state => state.overlaySlice.overlayEventHandler);
+  const selectedDiary = useAppSelector(state => state.diary.selectedDiary);
+  const overlayEventHandler = useAppSelector(state => state.overlay.overlayEventHandler);
   const [deleteDiary, { isLoading: isDeleting }] = useDeleteDiaryMutation();
 
   const isFromRootStack = route.params?.origin === 'RootStack';
