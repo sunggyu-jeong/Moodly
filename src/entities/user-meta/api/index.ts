@@ -1,7 +1,7 @@
 // src/features/user-meta/api/userMetaApi.ts
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { appApi } from '@/shared/api/AppApi';
+import { appApi } from '@/shared/api/appApi';
 import { toAppError } from '@/shared/api/error/mapper';
 
 const IS_FIRST_LAUNCH_KEY = '@userMeta:isFirstLoad';

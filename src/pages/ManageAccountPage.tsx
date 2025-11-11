@@ -9,7 +9,7 @@ import { SETTING_EVENT_TYPE } from '@/features/setting/types';
 import ChangeNicknameSheet from '@/features/setting/ui/ChangeNicknameSheet';
 import SettingList from '@/features/setting/ui/SettingList';
 import { BottomSheetHandler } from '@/features/setting/ui/SocialLoginSheet';
-import { appApi } from '@/shared/api/AppApi';
+import { appApi } from '@/shared/api/appApi';
 import { SETTING_ICONS } from '@/shared/assets/images/setting';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/useHooks';
 import { ENV } from '@/shared/lib/env';

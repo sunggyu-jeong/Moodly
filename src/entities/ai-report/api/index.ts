@@ -5,7 +5,7 @@ import type {
   WeeklySummaryPayload,
   WeeklySummaryResult,
 } from '@/entities/ai-report/model/types';
-import { appApi } from '@/shared/api/AppApi';
+import { appApi } from '@/shared/api/appApi';
 import { API_CODE } from '@/shared/api/error/apiCode';
 
 const parseMaybeString = <T>(x: unknown): T => (typeof x === 'string' ? JSON.parse(x) : x) as T;

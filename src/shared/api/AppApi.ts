@@ -3,8 +3,8 @@ import { createClient } from '@supabase/supabase-js';
 
 import { ENV } from '@/shared/lib/env';
 
-import { supabaseBaseQuery } from './SupabaseBaseQuery';
-import { TAGS } from './TagTypes';
+import { supabaseBaseQuery } from './supabaseBaseQuery';
+import { TAGS } from './tagTypes';
 
 export const supabase = createClient(ENV.SUPABASE_URL, ENV.SUPABASE_ANON_KEY);
 

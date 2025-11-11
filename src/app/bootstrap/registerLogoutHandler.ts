@@ -1,5 +1,5 @@
 import store from '@/app/store';
-import { appApi } from '@/shared/api/AppApi';
+import { appApi } from '@/shared/api/appApi';
 import { setLogoutHandler } from '@/shared/lib/logoutBus.util';
 import { resetTo } from '@/shared/lib/navigation.util';
 

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { useSignOutMutation } from '@/entities/auth/api';
-import { appApi } from '@/shared/api/AppApi';
+import { appApi } from '@/shared/api/appApi';
 import { useAppDispatch } from '@/shared/hooks/useHooks';
 import { resetTo } from '@/shared/lib/navigation.util';
 import { clearUserIdCache } from '@/shared/lib/user.util';

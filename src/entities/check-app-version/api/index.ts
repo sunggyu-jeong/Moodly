@@ -2,7 +2,7 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 import { Platform } from 'react-native';
 
 import type { AppPlatform, VersionPolicy } from '@/entities/app/model/types';
-import { appApi } from '@/shared/api/AppApi';
+import { appApi } from '@/shared/api/appApi';
 
 const versionApi = appApi.injectEndpoints({
   endpoints: builder => ({

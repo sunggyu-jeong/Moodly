@@ -4,7 +4,7 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import { rtkErrorMiddleware } from '@/app/middleware/rtkErrorMiddleware';
 import diaryReducer from '@/features/diary/model/diarySlice';
 import settingReducer from '@/features/setting/model/settingSlice';
-import { appApi } from '@/shared/api/AppApi';
+import { appApi } from '@/shared/api/appApi';
 import overlayReducer from '@/shared/model/overlaySlice';
 
 const reducers = combineReducers({

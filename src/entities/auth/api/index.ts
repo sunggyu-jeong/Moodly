@@ -4,8 +4,8 @@ import * as AppleAuthentication from 'expo-apple-authentication';
 import * as Application from 'expo-application';
 import { Platform } from 'react-native';
 
-import { appApi } from '@/shared/api/AppApi';
-import { API_CODE, AppCode } from '@/shared/api/error/apiCode';
+import { appApi } from '@/shared/api/appApi';
+import { requireUser, withAuth } from '@/shared/api/authGuard';
 import { isIphone } from '@/shared/lib/user.util';
 
 import type { SetUserInfoInput, SignInProviderInput, SignInResult, UserInfo } from '../model/types';
@@ -132,17 +132,7 @@ export const authApi = appApi.injectEndpoints({
 
     getUserInfo: build.query<UserInfo, void>({
       query: () => async client => {
-        const {
-          data: { user },
-        } = await client.auth.getUser();
-        if (!user) {
-          throw {
-            code: API_CODE.UNAUTHORIZED,
-            message: '로그인이 필요합니다.',
-            status: 401,
-            meta: { appCode: AppCode.NOT_LOGIN },
-          };
-        }
+        const user = await requireUser(client);
         const { data, error } = await client
           .from('tb_profiles')
           .select('*')
@@ -155,39 +145,22 @@ export const authApi = appApi.injectEndpoints({
     }),
 
     setUserInfo: build.mutation<boolean, SetUserInfoInput>({
-      query: payload => async client => {
-        const {
-          data: { user },
-        } = await client.auth.getUser();
-        if (!user) {
-          throw {
-            code: API_CODE.UNAUTHORIZED,
-            message: '로그인이 필요합니다.',
-            status: 401,
-            meta: { appCode: AppCode.NOT_LOGIN },
-          };
-        }
-        const { error } = await client.from('tb_profiles').upsert({
-          id: user.id,
-          nickname: payload.nickname,
-          email: user.email,
-        });
-        if (error) throw error;
-        return true;
-      },
+      query: payload =>
+        withAuth(async (client, user) => {
+          const { error } = await client.from('tb_profiles').upsert({
+            id: user.id,
+            nickname: payload.nickname,
+            email: user.email,
+          });
+          if (error) throw error;
+          return true;
+        }),
       invalidatesTags: [{ type: 'User', id: 'ME' }],
     }),
 
     upsertPushToken: build.mutation<boolean, { token: string }>({
-      query:
-        ({ token }) =>
-        async client => {
-          const {
-            data: { user },
-          } = await client.auth.getUser();
-          if (!user) {
-            throw { code: API_CODE.UNAUTHORIZED, message: '로그인이 필요합니다.', status: 401 };
-          }
+      query: ({ token }) =>
+        withAuth(async (client, user) => {
           const deviceId = await getDeviceId();
           const { error } = await client.from('push_tokens').upsert({
             user_id: user.id,
@@ -198,25 +171,20 @@ export const authApi = appApi.injectEndpoints({
           });
           if (error) throw error;
           return true;
-        },
+        }),
     }),
 
     deletePushToken: build.mutation<boolean, void>({
-      query: () => async client => {
-        const {
-          data: { user },
-        } = await client.auth.getUser();
-        if (!user) {
-          throw { code: API_CODE.UNAUTHORIZED, message: '로그인이 필요합니다.', status: 401 };
-        }
-        const deviceId = await getDeviceId();
-        const { error } = await client
-          .from('push_tokens')
-          .delete()
-          .match({ user_id: user.id, device_id: deviceId });
-        if (error) throw error;
-        return true;
-      },
+      query: () =>
+        withAuth(async (client, user) => {
+          const deviceId = await getDeviceId();
+          const { error } = await client
+            .from('push_tokens')
+            .delete()
+            .match({ user_id: user.id, device_id: deviceId });
+          if (error) throw error;
+          return true;
+        }),
     }),
   }),
 });
