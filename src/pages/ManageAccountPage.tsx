@@ -12,6 +12,7 @@ import { BottomSheetHandler } from '@/features/setting/ui/SocialLoginSheet';
 import { appApi } from '@/shared/api/AppApi';
 import { SETTING_ICONS } from '@/shared/assets/images/setting';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/useHooks';
+import { ENV } from '@/shared/lib/env';
 import { resetTo } from '@/shared/lib/navigation.util';
 import { supabase } from '@/shared/lib/supabase.util';
 import { isEmpty } from '@/shared/lib/value.util';
@@ -40,7 +41,7 @@ const ManageAccountPage = () => {
       const session = await supabase.auth.getSession();
       if (!user.data.user) return;
 
-      const res = await fetch(`${process.env.SUPABASE_URL}/functions/v1/smart-api`, {
+      const res = await fetch(`${ENV.SUPABASE_URL}/functions/v1/smart-api`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
