@@ -1,24 +1,17 @@
-import { GoogleSignin, type User } from '@react-native-google-signin/google-signin';
+// src/features/auth/api/authApi.ts
+import { GoogleSignin, statusCodes, type User } from '@react-native-google-signin/google-signin';
 import dayjs from 'dayjs';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import * as Application from 'expo-application';
 import { Platform } from 'react-native';
 
 import { appApi } from '@/shared/api/AppApi';
-import { ApiCode } from '@/shared/api/Error';
+import { API_CODE, AppCode } from '@/shared/api/error/apiCode';
 import { isIphone } from '@/shared/lib/user.util';
-import { isEmpty } from '@/shared/lib/value.util';
 
-import type {
-  SetUserInfoInput,
-  SignInProviderInput,
-  SignInResult,
-  UserInfo,
-} from '../model/types';
+import type { SetUserInfoInput, SignInProviderInput, SignInResult, UserInfo } from '../model/types';
 
-GoogleSignin.configure({
-  webClientId: process.env.GOOGLE_WEB_CLIENT_ID!,
-});
+GoogleSignin.configure({ webClientId: process.env.GOOGLE_WEB_CLIENT_ID! });
 
 async function getDeviceId(): Promise<string> {
   if (isIphone()) {
@@ -30,37 +23,56 @@ async function getDeviceId(): Promise<string> {
 }
 
 export async function getGoogleToken() {
-  await GoogleSignin.hasPlayServices();
-  await GoogleSignin.signIn();
-  const { idToken: token } = await GoogleSignin.getTokens();
-  return { token };
+  try {
+    await GoogleSignin.hasPlayServices();
+    await GoogleSignin.signIn();
+    const { idToken: token } = await GoogleSignin.getTokens();
+    if (!token) {
+      throw { code: API_CODE.UNKNOWN, message: 'Google 토큰을 가져오지 못했습니다.' };
+    }
+    return { token };
+  } catch (e: any) {
+    const c = e?.code;
+    if (c === statusCodes.SIGN_IN_CANCELLED || /CANCE?LLED/i.test(String(c))) {
+      throw { code: API_CODE.LOGIN_CANCELLED, message: '로그인을 취소했어요.' };
+    }
+    if (c === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+      throw {
+        code: API_CODE.BAD_REQUEST,
+        message: 'Google Play 서비스가 필요합니다.',
+        status: 400,
+      };
+    }
+    throw e;
+  }
 }
 
 export async function getAppleToken() {
   const available = await AppleAuthentication.isAvailableAsync();
   if (!available) {
-    const err = new Error('이 기기에서는 Apple 로그인이 지원되지 않습니다.');
-    Object.assign(err, { status: 400, code: ApiCode.BAD_REQUEST });
-    throw err;
+    throw {
+      code: API_CODE.BAD_REQUEST,
+      message: '이 기기에서는 Apple 로그인이 지원되지 않습니다.',
+      status: 400,
+    };
   }
-
-  const resp = await AppleAuthentication.signInAsync({
-    requestedScopes: [
-      AppleAuthentication.AppleAuthenticationScope.EMAIL,
-      AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
-    ],
-  });
-
-  if (!resp.identityToken) {
-    const error = new Error('Apple 로그인 요청이 실패했어요.');
-    Object.assign(error, { status: 404, code: ApiCode.NOT_FOUND });
-    throw error;
+  try {
+    const resp = await AppleAuthentication.signInAsync({
+      requestedScopes: [
+        AppleAuthentication.AppleAuthenticationScope.EMAIL,
+        AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+      ],
+    });
+    if (!resp.identityToken) {
+      throw { code: API_CODE.NOT_FOUND, message: 'Apple 로그인 요청이 실패했어요.', status: 404 };
+    }
+    return { token: resp.identityToken, nonce: null };
+  } catch (e: any) {
+    if (e?.code === 'ERR_REQUEST_CANCELED') {
+      throw { code: API_CODE.LOGIN_CANCELLED, message: '로그인을 취소했어요.' };
+    }
+    throw e;
   }
-
-  return {
-    token: resp.identityToken,
-    nonce: null,
-  };
 }
 
 export const authApi = appApi.injectEndpoints({
@@ -70,26 +82,27 @@ export const authApi = appApi.injectEndpoints({
         ({ provider }) =>
         async client => {
           const getToken = provider === 'google' ? getGoogleToken : getAppleToken;
-          const result = await getToken();
-          const token = result.token;
-          const nonce = (result as { nonce?: string }).nonce;
+          const { token, nonce } = (await getToken()) as { token: string; nonce?: string | null };
 
           const { data, error } = await client.auth.signInWithIdToken({
             provider,
             token,
             ...(nonce ? { nonce } : {}),
           });
-          if (error || !data.user) {
-            return { data: { user: null, isNewUser: false, provider }, error };
+          if (error || !data?.user) {
+            // 서버/알수없음 범주로 정규화 유도
+            throw {
+              ...error,
+              code: API_CODE.SERVER_ERROR,
+              message: error?.message ?? '로그인에 실패했습니다.',
+            };
           }
 
-          const createdAt = dayjs(data.user?.created_at);
-          const lastSignInAt = dayjs(data.user?.last_sign_in_at);
+          const c = dayjs(data.user.created_at);
+          const l = dayjs(data.user.last_sign_in_at);
+          const isNewUser = l.diff(c) < 5000;
 
-          const diffInMs = lastSignInAt.diff(createdAt);
-
-          const isNewUser = diffInMs < 5000;
-          return { data: { user: data.user, isNewUser, provider }, error: null };
+          return { user: data.user, isNewUser, provider };
         },
       invalidatesTags: ['User', 'Session'],
     }),
@@ -97,7 +110,8 @@ export const authApi = appApi.injectEndpoints({
     signOut: build.mutation<boolean, void>({
       query: () => async client => {
         const { error } = await client.auth.signOut();
-        return { data: isEmpty(error), error };
+        if (error) throw { ...error, code: API_CODE.SERVER_ERROR };
+        return true;
       },
       invalidatesTags: ['User', 'Session'],
     }),
@@ -105,13 +119,12 @@ export const authApi = appApi.injectEndpoints({
     fetchSession: build.query<User | null, void>({
       query: () => async client => {
         const { data, error } = await client.auth.getSession();
-        if (!data.session && !error) {
-          return { data: null, error: null };
-        }
-        return { data: data.session?.user ?? null, error };
+        if (error) throw error;
+        return data?.session?.user ?? null;
       },
-      providesTags: result =>
-        result
+      extraOptions: { silentError: true },
+      providesTags: r =>
+        r
           ? [
               { type: 'Session', id: 'CURRENT' },
               { type: 'User', id: 'ME' },
@@ -125,13 +138,11 @@ export const authApi = appApi.injectEndpoints({
           data: { user },
         } = await client.auth.getUser();
         if (!user) {
-          return {
-            error: {
-              message: '로그인이 필요합니다.',
-              status: 401,
-              code: 'NOT_LOGIN',
-            },
-            data: null,
+          throw {
+            code: API_CODE.UNAUTHORIZED,
+            message: '로그인이 필요합니다.',
+            status: 401,
+            meta: { appCode: AppCode.NOT_LOGIN },
           };
         }
         const { data, error } = await client
@@ -139,9 +150,10 @@ export const authApi = appApi.injectEndpoints({
           .select('*')
           .eq('id', user.id)
           .single();
-        return { data, error };
+        if (error) throw error;
+        return data as UserInfo;
       },
-      providesTags: result => (result ? [{ type: 'User', id: 'ME' }] : []),
+      providesTags: r => (r ? [{ type: 'User', id: 'ME' }] : []),
     }),
 
     setUserInfo: build.mutation<boolean, SetUserInfoInput>({
@@ -150,13 +162,11 @@ export const authApi = appApi.injectEndpoints({
           data: { user },
         } = await client.auth.getUser();
         if (!user) {
-          return {
-            error: {
-              message: '로그인이 필요합니다.',
-              status: 401,
-              code: 'NOT_LOGIN',
-            },
-            data: null,
+          throw {
+            code: API_CODE.UNAUTHORIZED,
+            message: '로그인이 필요합니다.',
+            status: 401,
+            meta: { appCode: AppCode.NOT_LOGIN },
           };
         }
         const { error } = await client.from('tb_profiles').upsert({
@@ -164,10 +174,12 @@ export const authApi = appApi.injectEndpoints({
           nickname: payload.nickname,
           email: user.email,
         });
-        return { data: !error, error };
+        if (error) throw error;
+        return true;
       },
       invalidatesTags: [{ type: 'User', id: 'ME' }],
     }),
+
     upsertPushToken: build.mutation<boolean, { token: string }>({
       query:
         ({ token }) =>
@@ -175,8 +187,9 @@ export const authApi = appApi.injectEndpoints({
           const {
             data: { user },
           } = await client.auth.getUser();
-          if (!user) return { data: false, error: '로그인 필요' };
-
+          if (!user) {
+            throw { code: API_CODE.UNAUTHORIZED, message: '로그인이 필요합니다.', status: 401 };
+          }
           const deviceId = await getDeviceId();
           const { error } = await client.from('push_tokens').upsert({
             user_id: user.id,
@@ -185,36 +198,27 @@ export const authApi = appApi.injectEndpoints({
             platform: Platform.OS,
             last_seen_at: new Date().toISOString(),
           });
-          return { data: !error, error };
+          if (error) throw error;
+          return true;
         },
     }),
+
     deletePushToken: build.mutation<boolean, void>({
       query: () => async client => {
         const {
           data: { user },
         } = await client.auth.getUser();
-        if (!user) return { data: false, error: '로그인 필요' };
-
+        if (!user) {
+          throw { code: API_CODE.UNAUTHORIZED, message: '로그인이 필요합니다.', status: 401 };
+        }
         const deviceId = await getDeviceId();
         const { error } = await client
           .from('push_tokens')
           .delete()
           .match({ user_id: user.id, device_id: deviceId });
-
-        return { data: !error, error };
+        if (error) throw error;
+        return true;
       },
     }),
   }),
 });
-
-export const {
-  useSignInWithProviderMutation,
-  useSignOutMutation,
-  useFetchSessionQuery,
-  useLazyFetchSessionQuery,
-  useGetUserInfoQuery,
-  useLazyGetUserInfoQuery,
-  useSetUserInfoMutation,
-  useUpsertPushTokenMutation,
-  useDeletePushTokenMutation,
-} = authApi;

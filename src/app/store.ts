@@ -1,35 +1,47 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore, type UnknownAction } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/query';
 
-import { listenerMiddleware } from '@/app/middleware/ListenerMiddleware';
-import diarySlice from '@/features/diary/model/diarySlice';
-import settingSlice from '@/features/setting/model/settingSlice';
+import { rtkErrorMiddleware } from '@/app/middleware/rtkErrorMiddleware';
+import diaryReducer from '@/features/diary/model/diarySlice';
+import settingReducer from '@/features/setting/model/settingSlice';
 import { appApi } from '@/shared/api/AppApi';
-import overlaySlice from '@/shared/model/overlaySlice';
+import overlayReducer from '@/shared/model/overlaySlice';
 
 const reducers = combineReducers({
-  // RTK Query의 API 인스턴스 리듀서
   [appApi.reducerPath]: appApi.reducer,
-
-  // 앱 기능별 리듀서
-  overlaySlice,
-  diarySlice,
-  settingSlice,
+  overlay: overlayReducer,
+  diary: diaryReducer,
+  setting: settingReducer,
 });
 
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof reducers>;
-type RootAction = Parameters<typeof reducers>[1];
-
-const rootReducer = (state: RootState | undefined, action: RootAction): RootState => {
+const rootReducer = (state: RootState | undefined, action: UnknownAction): RootState => {
   if (action.type === 'RESET_STORE') {
-    return reducers(undefined, action);
+    return reducers(undefined, action) as RootState;
   }
-  return reducers(state, action);
+  return reducers(state, action) as RootState;
 };
+
 export const store = configureStore({
   reducer: rootReducer,
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(appApi.middleware).concat(listenerMiddleware.middleware),
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActionPaths: ['meta.arg', 'meta.baseQueryMeta'],
+        ignoredPaths: [],
+      },
+    })
+      .concat(appApi.middleware)
+      .concat(rtkErrorMiddleware),
+  devTools: __DEV__,
 });
+
+setupListeners(store.dispatch);
+
+export type RootState = ReturnType<typeof reducers>;
+export type AppDispatch = typeof store.dispatch;
+
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+export const useAppDispatch: () => AppDispatch = useDispatch;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export default store;

@@ -1,29 +1,27 @@
 import type { BaseQueryFn } from '@reduxjs/toolkit/query';
+import type { SupabaseClient } from '@supabase/supabase-js';
 
-import { supabase } from '@/shared/lib/supabase.util';
+import { AppError } from '@/shared/api/error/appError';
+import { toAppError } from '@/shared/api/error/mapper';
 
-import { type AppError, toAppError } from './Error';
+type SupaResult<T> = { data: T | null; error: unknown | null; status?: number };
+export type SupabaseHandler<T> =
+  | ((client: SupabaseClient) => Promise<SupaResult<T>>)
+  | ((client: SupabaseClient) => Promise<T>);
 
-interface SupabaseType<T> {
-  data: T | null;
-  error: unknown | null;
-  status?: number;
-}
+export const supabaseBaseQuery =
+  (client: SupabaseClient): BaseQueryFn<SupabaseHandler<unknown>, unknown, AppError> =>
+  async handler => {
+    try {
+      const r = await (handler as any)(client);
 
-export type SupabaseHandler<T> = (client: typeof supabase) => Promise<SupabaseType<T>>;
-
-export const supabaseBaseQuery: BaseQueryFn<
-  SupabaseHandler<unknown>,
-  unknown,
-  AppError
-> = async handler => {
-  try {
-    const { data, error } = await handler(supabase);
-    if (error) {
-      return { error: toAppError(error) };
+      if (r && typeof r === 'object' && 'data' in r && 'error' in r) {
+        const { data, error } = r as SupaResult<unknown>;
+        if (error) return { error: toAppError(error) };
+        return { data };
+      }
+      return { data: r as unknown };
+    } catch (e) {
+      return { error: toAppError(e) };
     }
-    return { data: data as unknown };
-  } catch (e) {
-    return { error: toAppError(e) };
-  }
-};
+  };

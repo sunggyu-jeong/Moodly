@@ -9,21 +9,12 @@ const versionApi = appApi.injectEndpoints({
     getAppVersionPolicy: builder.query<VersionPolicy | null, void>({
       query: () => async (client: SupabaseClient) => {
         const platform: AppPlatform = Platform.OS === 'android' ? 'aos' : 'ios';
-
-        const { data, error } = await client.rpc('get_version_policy', {
-          p_platform: platform,
-        });
-
-        if (error) {
-          return { data: null, error };
-        }
-
-        return { data: (data as VersionPolicy[] | null)?.[0] || null, error: null };
+        const { data, error } = await client.rpc('get_version_policy', { p_platform: platform });
+        if (error) throw error;
+        return (data as VersionPolicy[] | null)?.[0] ?? null;
       },
-      providesTags: result => (result ? [{ type: 'VersionPolicy', id: 'SINGLE' }] : []),
+      providesTags: r => (r ? [{ type: 'VersionPolicy', id: 'SINGLE' }] : []),
     }),
   }),
-  overrideExisting: false,
 });
-
 export const { useGetAppVersionPolicyQuery } = versionApi;

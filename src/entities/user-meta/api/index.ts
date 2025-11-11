@@ -1,7 +1,8 @@
+// src/features/user-meta/api/userMetaApi.ts
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { appApi } from '@/shared/api/AppApi';
-import { toAppError } from '@/shared/api/Error';
+import { toAppError } from '@/shared/api/error/mapper';
 
 const IS_FIRST_LAUNCH_KEY = '@userMeta:isFirstLoad';
 
@@ -10,13 +11,9 @@ export const userMetaApi = appApi.injectEndpoints({
     getFirstLaunchFlag: builder.query<boolean, void>({
       queryFn: async () => {
         try {
-          const storedValue = await AsyncStorage.getItem(IS_FIRST_LAUNCH_KEY);
-
-          if (storedValue === null) {
-            return { data: true };
-          }
-          const isFirstLoad = JSON.parse(storedValue);
-          return { data: isFirstLoad };
+          const stored = await AsyncStorage.getItem(IS_FIRST_LAUNCH_KEY);
+          if (stored === null) return { data: true };
+          return { data: JSON.parse(stored) };
         } catch (err) {
           return { error: toAppError(err) };
         }
@@ -27,8 +24,7 @@ export const userMetaApi = appApi.injectEndpoints({
     updateFirstLaunchFlag: builder.mutation<boolean, { isFirstLoad: boolean }>({
       queryFn: async ({ isFirstLoad }) => {
         try {
-          const valueToStore = JSON.stringify(isFirstLoad);
-          await AsyncStorage.setItem(IS_FIRST_LAUNCH_KEY, valueToStore);
+          await AsyncStorage.setItem(IS_FIRST_LAUNCH_KEY, JSON.stringify(isFirstLoad));
           return { data: true };
         } catch (err) {
           return { error: toAppError(err) };
@@ -38,5 +34,3 @@ export const userMetaApi = appApi.injectEndpoints({
     }),
   }),
 });
-
-export const { useLazyGetFirstLaunchFlagQuery, useUpdateFirstLaunchFlagMutation } = userMetaApi;

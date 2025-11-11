@@ -1,4 +1,6 @@
+// src/features/diary/api/diaryApi.ts
 import { appApi } from '@/shared/api/AppApi';
+import { API_CODE, AppCode } from '@/shared/api/error/apiCode';
 import { formatDate, now } from '@/shared/lib/day.util';
 import { getUserId } from '@/shared/lib/user.util';
 
@@ -19,7 +21,15 @@ export const diaryApi = appApi.injectEndpoints({
         ({ start, end }) =>
         async client => {
           const userId = await getUserId();
-          const q = client
+          if (!userId) {
+            throw {
+              code: API_CODE.UNAUTHORIZED,
+              message: '로그인이 필요합니다.',
+              status: 401,
+              meta: { appCode: AppCode.NOT_LOGIN },
+            };
+          }
+          const { data, error } = await client
             .from('moodly_diary')
             .select('*')
             .gte('record_date', start)
@@ -27,9 +37,8 @@ export const diaryApi = appApi.injectEndpoints({
             .eq('user_id', userId)
             .order('record_date', { ascending: false })
             .returns<DbDiaryRow[]>();
-
-          const { data, error } = await q;
-          return { data: data ? data.map(fromRow) : null, error };
+          if (error) throw error;
+          return (data ?? []).map(fromRow);
         },
       providesTags: result =>
         result && Array.isArray(result)
@@ -40,14 +49,20 @@ export const diaryApi = appApi.injectEndpoints({
     getDiaryCount: build.query<number, void>({
       query: () => async client => {
         const userId = await getUserId();
-
-        const q = client
+        if (!userId) {
+          throw {
+            code: API_CODE.UNAUTHORIZED,
+            message: '로그인이 필요합니다.',
+            status: 401,
+            meta: { appCode: AppCode.NOT_LOGIN },
+          };
+        }
+        const { count, error } = await client
           .from('moodly_diary')
           .select('*', { count: 'exact', head: true })
           .eq('user_id', userId);
-
-        const { count, error } = await q;
-        return { data: (count ?? 0) as number, error };
+        if (error) throw error;
+        return (count ?? 0) as number;
       },
       providesTags: [{ type: 'Diary', id: 'COUNT' }],
     }),
@@ -55,15 +70,22 @@ export const diaryApi = appApi.injectEndpoints({
     hasDiaryForDay: build.query<boolean, void>({
       query: () => async client => {
         const userId = await getUserId();
-        const todayDateString = formatDate(now());
-
-        const q = client
+        if (!userId) {
+          throw {
+            code: API_CODE.UNAUTHORIZED,
+            message: '로그인이 필요합니다.',
+            status: 401,
+            meta: { appCode: AppCode.NOT_LOGIN },
+          };
+        }
+        const today = formatDate(now());
+        const { count, error } = await client
           .from('moodly_diary')
           .select('*', { count: 'exact', head: true })
           .eq('user_id', userId)
-          .eq('record_date', todayDateString);
-        const { count, error } = await q;
-        return { data: ((count ?? 0) > 0) as boolean, error };
+          .eq('record_date', today);
+        if (error) throw error;
+        return ((count ?? 0) > 0) as boolean;
       },
       providesTags: [{ type: 'Diary', id: 'HAS_TODAY' }],
     }),
@@ -75,8 +97,8 @@ export const diaryApi = appApi.injectEndpoints({
           .insert(toInsertRow(input))
           .select('*')
           .single();
-
-        return { data: data, error };
+        if (error) throw error;
+        return data as DbDiaryRow;
       },
       invalidatesTags: () => [
         { type: 'Diary', id: 'LIST' },
@@ -93,8 +115,8 @@ export const diaryApi = appApi.injectEndpoints({
           .eq('emotion_id', input.emotionId)
           .select('*')
           .single();
-
-        return { data: data, error };
+        if (error) throw error;
+        return data as DbDiaryRow;
       },
       invalidatesTags: res =>
         res ? [{ type: 'Diary', id: res.emotion_id }] : [{ type: 'Diary', id: 'LIST' }],
@@ -105,11 +127,8 @@ export const diaryApi = appApi.injectEndpoints({
         ({ id }) =>
         async client => {
           const { error } = await client.from('moodly_diary').delete().eq('emotion_id', id);
-          return {
-            data: error ? null : { id },
-            error,
-            status: (error as { status?: number } | null)?.status,
-          };
+          if (error) throw error;
+          return { id };
         },
       invalidatesTags: (_res, _err, arg) => [
         { type: 'Diary', id: arg.id },
@@ -121,12 +140,3 @@ export const diaryApi = appApi.injectEndpoints({
   }),
   overrideExisting: true,
 });
-
-export const {
-  useGetDiariesByRangeQuery,
-  useGetDiaryCountQuery,
-  useHasDiaryForDayQuery,
-  useCreateDiaryMutation,
-  useUpdateDiaryMutation,
-  useDeleteDiaryMutation,
-} = diaryApi;
