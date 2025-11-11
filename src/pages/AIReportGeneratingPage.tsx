@@ -1,4 +1,4 @@
-import { useGetUserInfoQuery } from '@/entities/auth/api/auth.api';
+import { useGetUserInfoQuery } from '@/entities/auth/api';
 import AIReportGenerating from '@/features/ai-report/ui/AIReportGenerating';
 
 const AIReportGeneratingPage = () => {

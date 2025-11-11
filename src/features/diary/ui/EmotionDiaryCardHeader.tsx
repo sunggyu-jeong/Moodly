@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { StyleSheet, View } from 'react-native';
 
-import type { Diary } from '@/entities/diary/model/diary.types';
+import type { Diary } from '@/entities/diary/model/types';
 import { EMOTION_ICONS } from '@/shared/assets/images/emotion';
 import { ICON_DATA } from '@/shared/constants/icons';
 import { gray } from '@/shared/styles/colors';

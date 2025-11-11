@@ -1,8 +1,8 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import dayjs from 'dayjs';
 
-import { DiaryCalendarModeType } from '@/entities/calendar/diary.type';
-import type { Diary } from '@/entities/diary/model/diary.types';
+import { DiaryCalendarModeType } from '@/entities/calendar/type';
+import type { Diary } from '@/entities/diary/model/types';
 import { EmotionIconData, ICON_DATA } from '@/shared/constants/icons';
 
 interface DiaryState {

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { fromRow } from '@/entities/diary/lib/diary.mapper';
+import { fromRow } from '@/entities/diary/model/mapper';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/useHooks';
 import { navigate } from '@/shared/lib/navigation.util';
 import { isNotEmpty } from '@/shared/lib/value.util';

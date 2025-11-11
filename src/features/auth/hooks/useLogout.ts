@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { useSignOutMutation } from '@/entities/auth/api/auth.api';
+import { useSignOutMutation } from '@/entities/auth/api';
 import { appApi } from '@/shared/api/AppApi';
 import { useAppDispatch } from '@/shared/hooks/useHooks';
 import { resetTo } from '@/shared/lib/navigation.util';

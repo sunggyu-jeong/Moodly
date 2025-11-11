@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 
-import { MODAL_CONFIRM_ACTION_KEY } from '@/entities/overlay/model/modalKeys';
+import { MODAL_CONFIRM_ACTION_KEY } from '@/entities/overlay/model/types';
 import { setModifyMode } from '@/features/diary/model/diarySlice';
 import { useAppDispatch } from '@/shared/hooks/useHooks';
 import { DropDownEventIdentifier, DropDownItemProps } from '@/shared/keys/dropdownKeys';

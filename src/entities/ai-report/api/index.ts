@@ -1,4 +1,3 @@
-// src/entities/ai-report/api/index.ts (또는 기존 파일에 그대로 교체)
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 import type {

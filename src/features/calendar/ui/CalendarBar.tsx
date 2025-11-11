@@ -2,7 +2,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import { memo, useCallback, useMemo } from 'react';
 import { View } from 'react-native';
 
-import type { Diary } from '@/entities/diary/model/diary.types';
+import type { Diary } from '@/entities/diary/model/types';
 import { setCurrentDiary, setSelectedDay } from '@/features/diary/model/diarySlice';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/useHooks';
 import { formatDate, now } from '@/shared/lib/day.util';

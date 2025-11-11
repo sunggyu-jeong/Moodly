@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Diary } from '@/entities/diary/model/diary.types';
+import { Diary } from '@/entities/diary/model/types';
 import { setCurrentDiary, setSelectedIcon } from '@/features/diary/model/diarySlice';
 import EmotionDisplaySelected from '@/features/emotion/ui/EmotionDisplaySelected';
 import EmotionSelectionList from '@/features/emotion/ui/EmotionSelectionList';

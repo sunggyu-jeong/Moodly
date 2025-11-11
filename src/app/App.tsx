@@ -10,7 +10,7 @@ import { Provider } from 'react-redux';
 import RootStack from '@/app/navigation/RootStack';
 import OverlayManager from '@/app/provider/OverlayProvider';
 import { store } from '@/app/store';
-import { useUpsertPushTokenMutation } from '@/entities/auth/api/auth.api';
+import { useUpsertPushTokenMutation } from '@/entities/auth/api';
 import { useNotificationPermission } from '@/shared/hooks/useNotificationPermission';
 import '@/shared/lib/day.util';
 import { ENV } from '@/shared/lib/env';

@@ -1,6 +1,6 @@
 import { Dayjs } from 'dayjs';
 
-import type { Diary } from '@/entities/diary/model/diary.types';
+import type { Diary } from '@/entities/diary/model/types';
 
 export type CalendarPageKey = 'prev' | 'current' | 'next';
 

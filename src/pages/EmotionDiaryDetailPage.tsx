@@ -2,8 +2,8 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 
-import { useDeleteDiaryMutation } from '@/entities/diary/api/diary.api';
-import { MODAL_CONFIRM_ACTION_KEY } from '@/entities/overlay/model/modalKeys';
+import { useDeleteDiaryMutation } from '@/entities/diary/api';
+import { MODAL_CONFIRM_ACTION_KEY } from '@/entities/overlay/model/types';
 import { resetDiary, setSelectedDay } from '@/features/diary/model/diarySlice';
 import { COMMON_ICONS } from '@/shared/assets/images/common';
 import { ICON_DATA } from '@/shared/constants/icons';

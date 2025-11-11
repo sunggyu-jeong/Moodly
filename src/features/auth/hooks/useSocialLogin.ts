@@ -2,8 +2,8 @@ import * as amplitude from '@amplitude/analytics-react-native';
 import { useEffect } from 'react';
 import { Platform } from 'react-native';
 
-import { useSignInWithProviderMutation } from '@/entities/auth/api/auth.api';
-import type { AuthProvider } from '@/entities/auth/model/auth.types';
+import { useSignInWithProviderMutation } from '@/entities/auth/api';
+import type { AuthProvider } from '@/entities/auth/model/types';
 import { setRequestLogin } from '@/features/setting/model/settingSlice';
 import { useAppDispatch } from '@/shared/hooks/useHooks';
 

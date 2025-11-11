@@ -2,8 +2,8 @@ import dayjs, { Dayjs } from 'dayjs';
 import { memo, useCallback, useMemo } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 
-import { type DiaryCalendarModeType, type DiaryPageModeType } from '@/entities/calendar/diary.type';
-import type { Diary } from '@/entities/diary/model/diary.types';
+import { type DiaryCalendarModeType, type DiaryPageModeType } from '@/entities/calendar/type';
+import type { Diary } from '@/entities/diary/model/types';
 import {
   selectIsDiaryPagingLoading,
   selectSelectedDayIso,

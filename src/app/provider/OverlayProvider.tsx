@@ -1,7 +1,7 @@
 import {
   MODAL_CANCEL_ACTION_KEY,
   MODAL_CONFIRM_ACTION_KEY,
-} from '@/entities/overlay/model/modalKeys';
+} from '@/entities/overlay/model/types';
 import DropDownAnimation from '@/features/overlay/dropdown/DropDownAnimation';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/useHooks';
 import { useNotificationPermission } from '@/shared/hooks/useNotificationPermission';

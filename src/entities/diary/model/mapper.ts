@@ -1,7 +1,7 @@
 import { decryptData, encryptData } from '@/shared/lib/crypto.util';
 import { formatDate, now } from '@/shared/lib/day.util';
 
-import type { CreateDiaryInput, DbDiaryRow, Diary, UpdateDiaryInput } from '../model/diary.types';
+import type { CreateDiaryInput, DbDiaryRow, Diary, UpdateDiaryInput } from './types';
 
 // DB row -> Domain
 export const fromRow = (row?: DbDiaryRow | null): Diary => ({
@@ -30,5 +30,3 @@ export const toUpdateRow = (input: UpdateDiaryInput) => ({
   description: encryptData(input.description) ?? undefined,
   updated_at: formatDate(now()),
 });
-
-export const byIdTag = (d: Diary) => ({ type: 'Diary' as const, id: d.emotionId });

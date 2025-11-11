@@ -1,7 +1,7 @@
 import { type Ref, useCallback } from 'react';
 import { Dimensions, FlatList, type FlatListProps, type ListRenderItem, View } from 'react-native';
 
-import { type DiaryCalendarModeType, type DiaryPageModeType } from '@/entities/calendar/diary.type';
+import { type DiaryCalendarModeType, type DiaryPageModeType } from '@/entities/calendar/type';
 import { isNotEmpty } from '@/shared/lib/value.util';
 
 import type { CalendarPage } from '../lib/paging';

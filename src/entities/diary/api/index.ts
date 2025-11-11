@@ -2,14 +2,15 @@ import { appApi } from '@/shared/api/AppApi';
 import { formatDate, now } from '@/shared/lib/day.util';
 import { getUserId } from '@/shared/lib/user.util';
 
-import { byIdTag, fromRow, toInsertRow, toUpdateRow } from '../lib/diary.mapper';
+import { fromRow, toInsertRow, toUpdateRow } from '../model/mapper';
 import type {
   CreateDiaryInput,
   DbDiaryRow,
   Diary,
   DiaryDateRangeQuery,
   UpdateDiaryInput,
-} from '../model/diary.types';
+} from '../model/types';
+import { diaryTag } from './tags';
 
 export const diaryApi = appApi.injectEndpoints({
   endpoints: build => ({
@@ -32,7 +33,7 @@ export const diaryApi = appApi.injectEndpoints({
         },
       providesTags: result =>
         result && Array.isArray(result)
-          ? [...result.map(byIdTag), { type: 'Diary', id: 'LIST' }]
+          ? [...result.map(diaryTag), { type: 'Diary', id: 'LIST' }]
           : [{ type: 'Diary', id: 'LIST' }],
     }),
 

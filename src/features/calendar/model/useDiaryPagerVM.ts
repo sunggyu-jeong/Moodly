@@ -2,11 +2,7 @@ import * as amplitude from '@amplitude/analytics-react-native';
 import { useCallback, useMemo, useState } from 'react';
 import { Platform } from 'react-native';
 
-import {
-  DiaryCalendarMode,
-  DiaryPageMode,
-  DiaryPageModeType,
-} from '@/entities/calendar/diary.type';
+import { DiaryCalendarMode, DiaryPageMode, DiaryPageModeType } from '@/entities/calendar/type';
 import { buildPages, CalendarPage } from '@/features/calendar/lib/paging';
 import { moveMonth, moveWeek, resetDiary, setSelectedDay } from '@/features/diary/model/diarySlice';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/useHooks';

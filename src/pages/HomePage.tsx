@@ -5,8 +5,8 @@ import { Image, StatusBar, StyleSheet, View } from 'react-native';
 import {
   useDeletePushTokenMutation,
   useUpsertPushTokenMutation,
-} from '@/entities/auth/api/auth.api';
-import { useGetDiaryCountQuery, useHasDiaryForDayQuery } from '@/entities/diary/api/diary.api';
+} from '@/entities/auth/api';
+import { useGetDiaryCountQuery, useHasDiaryForDayQuery } from '@/entities/diary/api';
 import { usePushNavigation } from '@/features/diary/hooks/usePushNavigation';
 import { resetDiary } from '@/features/diary/model/diarySlice';
 import { MAIN_ICONS } from '@/shared/assets/images/main';

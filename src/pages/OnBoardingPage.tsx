@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { useUpsertPushTokenMutation } from '@/entities/auth/api/auth.api';
+import { useUpsertPushTokenMutation } from '@/entities/auth/api';
 import SocialLoginSheet, { BottomSheetHandler } from '@/features/setting/ui/SocialLoginSheet';
 import { ONBOARDING_ICONS } from '@/shared/assets/images/onboarding';
 import { useNotificationPermission } from '@/shared/hooks/useNotificationPermission';

@@ -1,7 +1,7 @@
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
-import { AUTH_PROVIDER_CONFIG } from '@/entities/auth/config';
-import type { AuthProvider } from '@/entities/auth/model/auth.types';
+import { AUTH_PROVIDER_CONFIG } from '@/features/auth/ui/provider.config';
+import type { AuthProvider } from '@/entities/auth/model/types';
 import { isNotEmpty } from '@/shared/lib/value.util';
 import { Label } from '@/shared/ui/typography/Label';
 

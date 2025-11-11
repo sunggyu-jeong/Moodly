@@ -2,8 +2,8 @@ import * as Notifications from 'expo-notifications';
 import { useCallback, useEffect, useState } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
-import { useGetUserInfoQuery } from '@/entities/auth/api/auth.api';
-import { MODAL_CONFIRM_ACTION_KEY } from '@/entities/overlay/model/modalKeys';
+import { useGetUserInfoQuery } from '@/entities/auth/api';
+import { MODAL_CONFIRM_ACTION_KEY } from '@/entities/overlay/model/types';
 import { useLogout } from '@/features/auth/hooks/useLogout';
 import { SETTING_EVENT_TYPE, TEXTS } from '@/features/setting/types';
 import SettingRoot from '@/features/setting/ui/SettingRoot';

@@ -7,8 +7,8 @@ import {
   type DiaryCalendarModeType,
   DiaryPageMode,
   type DiaryPageModeType,
-} from '@/entities/calendar/diary.type';
-import type { Diary } from '@/entities/diary/model/diary.types';
+} from '@/entities/calendar/type';
+import type { Diary } from '@/entities/diary/model/types';
 import CalendarBar from '@/features/calendar/ui/CalendarBar';
 import { generateMonthGrid, generateWeekGrid } from '@/shared/lib/date.util';
 import { now } from '@/shared/lib/day.util';

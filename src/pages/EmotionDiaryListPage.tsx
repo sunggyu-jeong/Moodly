@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
-import { DiaryCalendarMode, DiaryPageMode } from '@/entities/calendar/diary.type';
+import { DiaryCalendarMode, DiaryPageMode } from '@/entities/calendar/type';
 import { CalendarPage } from '@/features/calendar/lib/paging';
 import { selectCalendarMode } from '@/features/calendar/model/selector';
 import { useDiaryPagerVM } from '@/features/calendar/model/useDiaryPagerVM';

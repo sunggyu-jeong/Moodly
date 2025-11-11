@@ -2,7 +2,7 @@ import * as amplitude from '@amplitude/analytics-react-native';
 import { useCallback } from 'react';
 import { Platform } from 'react-native';
 
-import { useCreateDiaryMutation, useUpdateDiaryMutation } from '@/entities/diary/api/diary.api';
+import { useCreateDiaryMutation, useUpdateDiaryMutation } from '@/entities/diary/api';
 import { useAppSelector } from '@/shared/hooks/useHooks';
 import { formatDate, now } from '@/shared/lib/day.util';
 import { getUserId } from '@/shared/lib/user.util';

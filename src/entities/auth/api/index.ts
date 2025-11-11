@@ -14,7 +14,7 @@ import type {
   SignInProviderInput,
   SignInResult,
   UserInfo,
-} from '../model/auth.types';
+} from '../model/types';
 
 GoogleSignin.configure({
   webClientId: process.env.GOOGLE_WEB_CLIENT_ID!,

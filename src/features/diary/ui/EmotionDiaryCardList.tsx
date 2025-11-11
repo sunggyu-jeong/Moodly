@@ -1,6 +1,6 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
-import type { Diary } from '@/entities/diary/model/diary.types';
+import type { Diary } from '@/entities/diary/model/types';
 import { setSelectedDiary } from '@/features/diary/model/diarySlice';
 import { useAppDispatch } from '@/shared/hooks/useHooks';
 import { navigate } from '@/shared/lib/navigation.util';

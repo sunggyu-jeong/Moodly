@@ -2,8 +2,8 @@ import * as Application from 'expo-application';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
-import { useGetUserInfoQuery } from '@/entities/auth/api/auth.api';
-import { MODAL_CONFIRM_ACTION_KEY } from '@/entities/overlay/model/modalKeys';
+import { useGetUserInfoQuery } from '@/entities/auth/api';
+import { MODAL_CONFIRM_ACTION_KEY } from '@/entities/overlay/model/types';
 import { useLogout } from '@/features/auth/hooks/useLogout';
 import { SETTING_EVENT_TYPE } from '@/features/setting/types';
 import ChangeNicknameSheet from '@/features/setting/ui/ChangeNicknameSheet';
