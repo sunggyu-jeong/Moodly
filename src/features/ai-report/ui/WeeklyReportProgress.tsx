@@ -1,6 +1,6 @@
 import { Image, StyleSheet, View } from 'react-native';
 
-import type { WeeklyProgresProps } from '@/features/ai-report/model/types';
+import type { WeeklyProgressProps } from '@/features/ai-report/model/types';
 import { COMMON_ICONS } from '@/shared/assets/images/common';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { gray, primary } from '@/shared/styles/colors';
@@ -14,7 +14,7 @@ export const WeeklyReportProgress = ({
   doneDays,
   remainDays,
   onConfirm,
-}: WeeklyProgresProps) => {
+}: WeeklyProgressProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.content}>

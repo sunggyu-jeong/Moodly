@@ -11,9 +11,11 @@ import {
 import { useGetAIReportByDateMockQuery } from '@/entities/ai-report/api';
 import { ReportSection } from '@/features/ai-report/ui/ReportSection';
 import { COMMON_ICONS } from '@/shared/assets/images/common';
+import { EMOTION_ICONS } from '@/shared/assets/images/emotion';
 import { gray } from '@/shared/styles/colors';
 import NavigationBar from '@/shared/ui/elements/navigation/NavigationBar';
 import NaviTitleDisplay from '@/shared/ui/elements/NaviTitle';
+import { Caption } from '@/shared/ui/typography/Caption';
 import { H2 } from '@/shared/ui/typography/H2';
 
 const PAGE_DATE = '2025-10-05';
@@ -62,7 +64,88 @@ const AIReportPage = () => {
           {data.title}
         </H2>
 
-        <ReportSection title="기분 분포"></ReportSection>
+        <ReportSection title="기분 분포">
+          <View
+            style={{
+              width: '100%',
+              height: '100%',
+              flex: 1,
+              justifyContent: 'space-between',
+              flexDirection: 'row',
+            }}
+          >
+            <View style={{ flex: 1, flexDirection: 'column', gap: 8, alignItems: 'center' }}>
+              <Image
+                style={{ width: 38, height: 38 }}
+                source={EMOTION_ICONS.anxietySmallSelected}
+              />
+              <View style={{ backgroundColor: gray[200], borderRadius: 6 }}>
+                <Caption
+                  weight="semibold"
+                  style={{ margin: 4, color: gray[400], textAlign: 'center' }}
+                >
+                  40%
+                </Caption>
+              </View>
+            </View>
+            <View style={{ flex: 1, flexDirection: 'column', gap: 8, alignItems: 'center' }}>
+              <Image
+                style={{ width: 38, height: 38 }}
+                source={EMOTION_ICONS.anxietySmallSelected}
+              />
+              <View style={{ backgroundColor: gray[200], borderRadius: 6 }}>
+                <Caption
+                  weight="semibold"
+                  style={{ margin: 4, color: gray[400], textAlign: 'center' }}
+                >
+                  40%
+                </Caption>
+              </View>
+            </View>
+            <View style={{ flex: 1, flexDirection: 'column', gap: 8, alignItems: 'center' }}>
+              <Image
+                style={{ width: 38, height: 38 }}
+                source={EMOTION_ICONS.anxietySmallSelected}
+              />
+              <View style={{ backgroundColor: gray[200], borderRadius: 6 }}>
+                <Caption
+                  weight="semibold"
+                  style={{ margin: 4, color: gray[400], textAlign: 'center' }}
+                >
+                  40%
+                </Caption>
+              </View>
+            </View>
+            <View style={{ flex: 1, flexDirection: 'column', gap: 8, alignItems: 'center' }}>
+              <Image
+                style={{ width: 38, height: 38 }}
+                source={EMOTION_ICONS.anxietySmallSelected}
+              />
+              <View style={{ backgroundColor: gray[200], borderRadius: 6 }}>
+                <Caption
+                  weight="semibold"
+                  style={{ margin: 4, color: gray[400], textAlign: 'center' }}
+                >
+                  5%
+                </Caption>
+              </View>
+            </View>
+            <View style={{ flex: 1, flexDirection: 'column', gap: 8, alignItems: 'center' }}>
+              <Image
+                style={{ width: 38, height: 38 }}
+                source={EMOTION_ICONS.anxietySmallSelected}
+              />
+              <View style={{ backgroundColor: gray[200], borderRadius: 6 }}>
+                <Caption
+                  weight="semibold"
+                  style={{ margin: 4, color: gray[400], textAlign: 'center' }}
+                >
+                  40%
+                </Caption>
+              </View>
+            </View>
+          </View>
+        </ReportSection>
 
         <ReportSection title="이번 주 키워드"></ReportSection>
 

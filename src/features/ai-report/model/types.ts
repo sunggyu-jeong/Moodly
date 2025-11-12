@@ -1,4 +1,4 @@
-export type WeeklyProgresProps = {
+export type WeeklyProgressProps = {
   isLoading?: boolean;
   isFirst: boolean;
   totalDays: number;
