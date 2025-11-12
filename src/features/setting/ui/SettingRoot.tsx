@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { gray } from '@/shared/styles/colors';
 import NavigationBar from '@/shared/ui/elements/navigation/NavigationBar';
 import NaviTitleDisplay from '@/shared/ui/elements/NaviTitle';
-import SettingSkeleton from '@/shared/ui/elements/skeleton/SettingSkeleton';
+import SettingSkeleton from '@/shared/ui/elements/Skeleton/SettingSkeleton';
 import { Label } from '@/shared/ui/typography/Label';
 
 import packageJson from '../../../../package.json';
