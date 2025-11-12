@@ -6,6 +6,7 @@ import { Platform } from 'react-native';
 
 import { appApi } from '@/shared/api/appApi';
 import { requireUser, withAuth } from '@/shared/api/authGuard';
+import { API_CODE } from '@/shared/api/error/apiCode';
 import { isIphone } from '@/shared/lib/user.util';
 
 import type { SetUserInfoInput, SignInProviderInput, SignInResult, UserInfo } from '../model/types';

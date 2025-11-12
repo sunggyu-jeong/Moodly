@@ -69,3 +69,5 @@ release.keystore
 
 # Expo/EAS 캐시
 .build/
+
+coverage/

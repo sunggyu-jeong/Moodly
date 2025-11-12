@@ -60,8 +60,8 @@
     "babel.config.js",
     "metro.config.js",
     "**/*.ts",
-    "**/*.tsx"
-  ],
+    "**/*.tsx", 
+    "jest.config.ts"  ],
   "exclude": [
     "node_modules",
     "**/.pnpm/**",
