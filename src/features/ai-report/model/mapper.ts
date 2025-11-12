@@ -1,9 +1,5 @@
-import type { EmotionStat, UIEmotionKey } from '@/entities/ai-report/model/ui';
-import type {
-  AIReportDomain,
-  DomainEmotionKey,
-  EmotionDistribution,
-} from '@/features/ai-report/model/domain';
+import type { EmotionDistribution, EmotionStat, UIEmotionKey } from '@/entities/ai-report/model/ui';
+import type { AIReportDomain } from '@/features/ai-report/model/domain';
 import type { WeeklySummaryResultDTO } from '@/features/ai-report/model/dto';
 
 export function dtoToDomain(
@@ -12,10 +8,10 @@ export function dtoToDomain(
 ): AIReportDomain {
   const dist: EmotionDistribution = {
     joy: dto.emotion_distribution.joy ?? 0,
-    sadness: dto.emotion_distribution.sadness ?? 0,
-    depression: dto.emotion_distribution.depression ?? 0,
+    sad: dto.emotion_distribution.sad ?? 0,
+    calm: dto.emotion_distribution.calm ?? 0,
     anxiety: dto.emotion_distribution.anxiety ?? 0,
-    anger: dto.emotion_distribution.anger ?? 0,
+    angry: dto.emotion_distribution.angry ?? 0,
   };
   return {
     date: meta.date,
@@ -29,12 +25,12 @@ export function dtoToDomain(
   };
 }
 
-const DOMAIN_TO_UI: Record<DomainEmotionKey, UIEmotionKey> = {
+const DOMAIN_TO_UI: Record<UIEmotionKey, UIEmotionKey> = {
   joy: 'joy',
-  sadness: 'sad',
-  depression: 'sad',
+  sad: 'sad',
+  calm: 'calm',
   anxiety: 'anxiety',
-  anger: 'angry',
+  angry: 'angry',
 };
 
 export function domainToUIStats(
@@ -42,7 +38,7 @@ export function domainToUIStats(
   iconMap: Record<UIEmotionKey, any>,
 ): EmotionStat[] {
   const acc: Record<UIEmotionKey, number> = { joy: 0, sad: 0, anxiety: 0, angry: 0, calm: 0 };
-  (Object.keys(domain) as DomainEmotionKey[]).forEach(k => {
+  (Object.keys(domain) as UIEmotionKey[]).forEach(k => {
     const uiKey = DOMAIN_TO_UI[k];
     acc[uiKey] += domain[k] || 0;
   });

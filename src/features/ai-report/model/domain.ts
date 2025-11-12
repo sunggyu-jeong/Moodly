@@ -1,7 +1,4 @@
-export const DOMAIN_EMOTIONS = ['joy', 'sadness', 'depression', 'anxiety', 'anger'] as const;
-export type DomainEmotionKey = (typeof DOMAIN_EMOTIONS)[number];
-
-export type EmotionDistribution = Readonly<Record<DomainEmotionKey, number>>;
+import type { EmotionDistribution } from '@/entities/ai-report/model/ui';
 
 export type AIReportDomain = {
   date: string;

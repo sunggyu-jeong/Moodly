@@ -2,10 +2,10 @@ export type WeeklySummaryResultDTO = {
   summary: string;
   emotion_distribution: {
     joy: number;
-    sadness: number;
-    depression: number;
+    sad: number;
+    calm: number;
     anxiety: number;
-    anger: number;
+    angry: number;
   };
   weekly_keywords: string[];
   core_inner_keywords: string[];

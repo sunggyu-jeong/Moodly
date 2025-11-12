@@ -75,7 +75,7 @@ export const aiReportApi = appApi.injectEndpoints({
             title: '불안 속에서도, 연결을 원했던 나',
             summary:
               '이번 주는 대인관계에서의 기대와 실제의 간극이 스트레스로 작용했지만, 스스로를 돌보려는 의지가 뚜렷했습니다. 업무 피로 누적과 수면 리듬의 흔들림이 정서적 예민함을 키웠고, 작은 성취 경험이 완충 역할을 했습니다.',
-            emotion_distribution: { joy: 24, sadness: 18, depression: 12, anxiety: 34, anger: 12 },
+            emotion_distribution: { joy: 24, sad: 18, calm: 12, anxiety: 34, angry: 12 },
             weekly_keywords: ['연결 욕구', '기대-현실 간극', '수면 리듬', '작은 성취'],
             core_inner_keywords: ['관계 안전감', '자기효능감', '휴식 결핍'],
             self_reflection_questions: [

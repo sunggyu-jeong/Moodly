@@ -8,3 +8,5 @@ export type EmotionStat = {
   percent: number;
   icon: ImageSourcePropType;
 };
+
+export type EmotionDistribution = Readonly<Record<UIEmotionKey, number>>;
