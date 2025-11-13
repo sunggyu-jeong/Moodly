@@ -2,7 +2,7 @@ import React, { memo, PropsWithChildren } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { common, gray } from '@/shared/styles/colors';
-import SkeletonContainer from '@/shared/ui/elements/skeleton-container/SkeletonContainer';
+import SkeletonContainer from '@/shared/ui/elements/skeleton/SkeletonContainer';
 
 const Divider = () => <View style={styles.divider} />;
 

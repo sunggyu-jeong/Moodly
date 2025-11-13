@@ -1,10 +1,10 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 
+import type { AIReportDomain } from '@/features/ai-report/model/domain';
 import type {
-  AIReport,
-  WeeklySummaryPayload,
-  WeeklySummaryResult,
-} from '@/entities/ai-report/model/types';
+  WeeklySummaryPayloadDTO,
+  WeeklySummaryResultDTO,
+} from '@/features/ai-report/model/dto';
 import { appApi } from '@/shared/api/appApi';
 import { API_CODE } from '@/shared/api/error/apiCode';
 
@@ -12,7 +12,7 @@ const parseMaybeString = <T>(x: unknown): T => (typeof x === 'string' ? JSON.par
 
 export const aiReportApi = appApi.injectEndpoints({
   endpoints: build => ({
-    requestAIWeeklySummary: build.mutation<WeeklySummaryResult, WeeklySummaryPayload>({
+    requestAIWeeklySummary: build.mutation<WeeklySummaryResultDTO, WeeklySummaryPayloadDTO>({
       query: payload => async (client: SupabaseClient) => {
         const { data, error } = await client.functions.invoke('ai-proxy', {
           body: payload,
@@ -36,7 +36,7 @@ export const aiReportApi = appApi.injectEndpoints({
           };
         }
 
-        return parseMaybeString<WeeklySummaryResult>(data);
+        return parseMaybeString<WeeklySummaryResultDTO>(data);
       },
       invalidatesTags: ['WeeklyProgress'],
       async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
@@ -66,7 +66,7 @@ export const aiReportApi = appApi.injectEndpoints({
       },
     ),
 
-    getAIReportByDateMock: build.query<AIReport, string>({
+    getAIReportByDateMock: build.query<AIReportDomain, string>({
       queryFn: async dateISO => {
         const data = await (async () => {
           await new Promise(r => setTimeout(r, 400));
@@ -75,7 +75,7 @@ export const aiReportApi = appApi.injectEndpoints({
             title: '불안 속에서도, 연결을 원했던 나',
             summary:
               '이번 주는 대인관계에서의 기대와 실제의 간극이 스트레스로 작용했지만, 스스로를 돌보려는 의지가 뚜렷했습니다. 업무 피로 누적과 수면 리듬의 흔들림이 정서적 예민함을 키웠고, 작은 성취 경험이 완충 역할을 했습니다.',
-            emotion_distribution: { joy: 24, sadness: 18, depression: 12, anxiety: 34, anger: 12 },
+            emotion_distribution: { joy: 24, sad: 18, calm: 12, anxiety: 34, angry: 12 },
             weekly_keywords: ['연결 욕구', '기대-현실 간극', '수면 리듬', '작은 성취'],
             core_inner_keywords: ['관계 안전감', '자기효능감', '휴식 결핍'],
             self_reflection_questions: [
@@ -85,7 +85,7 @@ export const aiReportApi = appApi.injectEndpoints({
             ],
             message_from_moodly:
               '완벽한 안정보다 “충분히 안전한 연결”을 목표로 해보세요. 과도한 기대를 1단계 낮추고, 매일의 작은 회복 루틴(수면 고정 시간, 15분 산책)을 고정해두면 불안의 기복이 줄어듭니다.',
-          } as AIReport;
+          } as AIReportDomain;
         })();
         return { data };
       },
