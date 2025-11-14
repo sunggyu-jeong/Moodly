@@ -11,3 +11,9 @@ export type AIReportGeneratingProps = {
   nickname?: string;
   isLoading?: boolean;
 };
+
+export type ChooseReportSheetProps = {
+  dates: string[];
+  selectedDate?: string | null;
+  onSelect: (date: string) => void;
+};

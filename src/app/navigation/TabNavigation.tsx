@@ -4,11 +4,11 @@ import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import EmotionDiaryListPage from '@/pages/EmotionDiaryListPage';
+import WeeklyReportProgressPage from '@/pages/WeeklyReportProgressPage';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { useScale } from '@/shared/hooks/useScale';
 import TabBarIcon from '@/shared/ui/elements/TabBarIcon';
 
-import WeeklyReportProgressPage from '@/pages/WeeklyReportProgressPage';
 import SettingStack, { type SettingStackParamList } from './SettingStack';
 
 export type BottomTabParamList = {

@@ -14,15 +14,17 @@ const WeeklyReportProgressPage = () => {
   const remainDays = Math.max(0, totalDays - doneDays);
 
   return (
-    <View style={styles.container}>
-      <WeeklyReportProgress
-        isFirst={isFirst}
-        totalDays={totalDays}
-        doneDays={doneDays}
-        remainDays={remainDays}
-        onConfirm={goBack}
-      />
-    </View>
+    <>
+      <View style={styles.container}>
+        <WeeklyReportProgress
+          isFirst={isFirst}
+          totalDays={totalDays}
+          doneDays={doneDays}
+          remainDays={remainDays}
+          onConfirm={goBack}
+        />
+      </View>
+    </>
   );
 };
 
