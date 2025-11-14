@@ -1,4 +1,5 @@
 import { useFocusEffect } from '@react-navigation/native';
+import dayjs from 'dayjs';
 import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
@@ -14,21 +15,32 @@ import { H2 } from '@/shared/ui/typography/H2';
 const EmotionDiaryCompletePage = () => {
   const isModifyMode = useAppSelector(state => state.diary.isModifyMode);
   const dispatch = useAppDispatch();
-
+  const selectedDiary = useAppSelector(state => state.diary.selectedDiary);
   const handleScreenFocus = React.useCallback(() => {
     const timer = setTimeout(() => {
       if (isModifyMode) {
         dismissModalToScreen();
         dispatch(setModifyMode(false));
-      } else {
+        return;
+      }
+
+      const recordDate = selectedDiary?.recordDate;
+      const isToday = recordDate !== null && dayjs(recordDate).isSame(dayjs(), 'day');
+
+      if (isToday) {
         navigate('DiaryStack', {
           screen: 'WeeklyReportProgress',
+        });
+      } else {
+        navigate('DiaryStack', {
+          screen: 'EmotionDetailPage',
+          params: { origin: 'DiaryStack' },
         });
       }
     }, 2500);
 
     return () => clearTimeout(timer);
-  }, [dispatch, isModifyMode]);
+  }, [dispatch, isModifyMode, selectedDiary]);
 
   useFocusEffect(handleScreenFocus);
 

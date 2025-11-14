@@ -4,14 +4,10 @@ import { FlatList, StyleSheet, View } from 'react-native';
 
 import { type DiaryCalendarModeType, type DiaryPageModeType } from '@/entities/calendar/type';
 import type { Diary } from '@/entities/diary/model/types';
-import {
-  selectIsDiaryPagingLoading,
-  selectSelectedDayIso,
-} from '@/features/calendar/model/selector';
+import { selectSelectedDayIso } from '@/features/calendar/model/selector';
 import EmotionDiaryCardList from '@/features/diary/ui/EmotionDiaryCardList';
 import EmotionDiaryListEmpty from '@/features/diary/ui/EmotionDiaryListEmpty';
 import EmotionDiaryListHeader from '@/features/diary/ui/EmotionDiaryListHeader';
-import useDelay from '@/shared/hooks/useDelay';
 import { useAppSelector } from '@/shared/hooks/useHooks';
 import { isIphone } from '@/shared/lib/user.util';
 import { isEmpty } from '@/shared/lib/value.util';
@@ -28,7 +24,6 @@ interface EmotionDiaryMonthViewProps {
   monthData: Diary[];
   diaryMode: DiaryPageModeType;
   scrollEnabled: boolean;
-  showSkeleton?: boolean;
   calendarMode?: DiaryCalendarModeType;
 }
 
@@ -36,18 +31,9 @@ const EmotionDiaryMonthView = ({
   monthDate,
   monthData,
   diaryMode,
-  scrollEnabled,
-  showSkeleton,
   calendarMode,
 }: EmotionDiaryMonthViewProps) => {
-  const isDiaryLoading = useAppSelector(selectIsDiaryPagingLoading);
-  const isDelayedLoading = useDelay(isDiaryLoading);
   const selectedDayIso = useAppSelector(selectSelectedDayIso);
-
-  const SKELETON_DATA: SkeletonListItem[] = useMemo(
-    () => Array.from({ length: 4 }, (_, i) => ({ type: 'SKELETON', id: i })),
-    [],
-  );
 
   const realData: Diary[] = useMemo(() => {
     if (!selectedDayIso) {
@@ -56,9 +42,7 @@ const EmotionDiaryMonthView = ({
     return monthData.filter(e => dayjs(e.recordDate).isSame(dayjs(selectedDayIso), 'day'));
   }, [monthData, selectedDayIso]);
 
-  const listData: ListItem[] = isDelayedLoading
-    ? SKELETON_DATA
-    : realData.map(diary => ({ type: 'DIARY', data: diary }));
+  const listData: ListItem[] = realData.map(diary => ({ type: 'DIARY', data: diary }));
 
   const renderItem = useCallback(({ item }: { item: ListItem }) => {
     switch (item.type) {
@@ -93,15 +77,14 @@ const EmotionDiaryMonthView = ({
         data={listData}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
-        scrollEnabled={!isDelayedLoading && scrollEnabled}
         contentContainerStyle={[
           styles.scrollViewContent,
-          !isDelayedLoading && isEmpty(realData) && styles.emptyContainer,
+          isEmpty(realData) && styles.emptyContainer,
         ]}
         ListHeaderComponent={
           diaryMode === 'CALENDARMODE' ? (
             <EmotionDiaryListHeader
-              showSkeleton={showSkeleton ?? false}
+              showSkeleton={false}
               diaryMode={diaryMode}
               selectedMonth={monthDate.toString()}
               monthData={monthData}
@@ -109,8 +92,8 @@ const EmotionDiaryMonthView = ({
             />
           ) : null
         }
-        ListEmptyComponent={isDelayedLoading ? null : <EmotionDiaryListEmpty />}
-        initialNumToRender={listData.length}
+        ListEmptyComponent={<EmotionDiaryListEmpty />}
+        initialNumToRender={4}
       />
     </View>
   );
