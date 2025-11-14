@@ -3,10 +3,7 @@ import { useCallback, useEffect } from 'react';
 import { Image, StatusBar, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import {
-  MODAL_CANCEL_ACTION_KEY,
-  MODAL_CONFIRM_ACTION_KEY,
-} from '@/entities/overlay/model/types';
+import { MODAL_CANCEL_ACTION_KEY, MODAL_CONFIRM_ACTION_KEY } from '@/entities/overlay/model/types';
 import { useLazyGetFirstLaunchFlagQuery } from '@/entities/user-meta/api';
 import { useVersionCheck } from '@/features/check-app-version/hooks/useVersionCheck';
 import { MAIN_ICONS } from '@/shared/assets/images/main';

@@ -5,11 +5,13 @@ import EmotionDiaryCompletePage from '@/pages/EmotionDiaryCompletePage';
 import EmotionDiaryDetailPage from '@/pages/EmotionDiaryDetailPage';
 import EmotionDiaryWritePage from '@/pages/EmotionDiaryWritePage';
 import EmotionSelectionPage from '@/pages/EmotionSelectionPage';
+import WeeklyReportProgressPage from '@/pages/WeeklyReportProgressPage';
 
 export type DiaryStackParamList = {
   EmotionSelectionPage: undefined;
   EmotionDiaryWritePage: undefined;
   Complete: undefined;
+  WeeklyReportProgress: undefined;
   EmotionDetailPage: { origin: string };
 };
 
@@ -33,6 +35,13 @@ const DiaryStack = () => {
         <Stack.Screen
           name="Complete"
           component={EmotionDiaryCompletePage}
+        />
+        <Stack.Screen
+          name="WeeklyReportProgress"
+          component={WeeklyReportProgressPage}
+          options={{
+            gestureEnabled: false,
+          }}
         />
         <Stack.Screen
           name="EmotionDetailPage"

@@ -2,8 +2,8 @@ import { useCallback, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { useLazyGetUserInfoQuery } from '@/entities/auth/api';
-import { useUpdateFirstLaunchFlagMutation } from '@/entities/user-meta/api';
 import { AUTH_PROVIDERS } from '@/entities/auth/model/types';
+import { useUpdateFirstLaunchFlagMutation } from '@/entities/user-meta/api';
 import { useSocialLogin } from '@/features/auth/hooks/useSocialLogin';
 import SocialLoginButton from '@/features/auth/ui/SocialLoginButton';
 import { useAppDispatch } from '@/shared/hooks/useHooks';

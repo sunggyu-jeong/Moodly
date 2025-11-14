@@ -10,10 +10,19 @@ let inflight: Promise<string> | null = null;
 let authUnsubscribe: (() => void) | null = null;
 let subscribed = false;
 
-type Listener = (userId: string) => void;
+export class AuthRequiredError extends Error {
+  code = 'UNAUTHORIZED' as const;
+
+  constructor(message = '로그인이 필요합니다.') {
+    super(message);
+    this.name = 'AuthRequiredError';
+  }
+}
+
+type Listener = (userId: string | null) => void;
 const listeners = new Set<Listener>();
 
-const emit = (userId: string): void => {
+const emit = (userId: string | null): void => {
   listeners.forEach(fn => fn(userId));
 };
 
@@ -26,7 +35,7 @@ const persist = async (userId: string): Promise<void> => {
   try {
     await AsyncStorage.setItem(STORAGE_KEY, userId);
   } catch {
-    console.log('>>>>>> 스토리 저장 요청이 실패했습니다.');
+    console.log('>>>>>> 스토리지 저장 요청이 실패했습니다.');
   }
 };
 
@@ -41,7 +50,21 @@ const readPersisted = async (): Promise<string | null> => {
 const fetchAndCache = async (): Promise<string> => {
   try {
     const { data, error } = await supabase.auth.getUser();
-    const userId = error ? 'local' : (data.user?.id ?? 'local');
+    console.log('[fetchAndCache] getUser error =', error);
+
+    const userId = data?.user?.id;
+
+    if (error || !userId) {
+      cachedUserId = null;
+      try {
+        await AsyncStorage.removeItem(STORAGE_KEY);
+      } catch (err) {
+        console.log('>>>>', err);
+      }
+      emit(null);
+      throw new AuthRequiredError();
+    }
+
     cachedUserId = userId;
     await persist(userId);
     emit(userId);
@@ -51,17 +74,29 @@ const fetchAndCache = async (): Promise<string> => {
   }
 };
 
-export const initUserId = async (): Promise<string> => {
+export const initUserId = async (): Promise<string | null> => {
   await clearUserIdCache();
   const persisted = await readPersisted();
+
   if (persisted) {
     cachedUserId = persisted;
-    // 백그라운드 동기화(대기하지 않음)
-    if (!inflight) inflight = fetchAndCache();
+    if (!inflight)
+      inflight = fetchAndCache().catch(err => {
+        console.log('[initUserId] background sync error =', err);
+        return persisted;
+      });
     return persisted;
   }
-  if (!inflight) inflight = fetchAndCache();
-  return inflight;
+
+  try {
+    if (!inflight) inflight = fetchAndCache();
+    return await inflight;
+  } catch (e) {
+    if (e instanceof AuthRequiredError) {
+      return null;
+    }
+    throw e;
+  }
 };
 
 export const getUserIdSync = (): string | null => cachedUserId;
@@ -76,10 +111,10 @@ export const clearUserIdCache = async (): Promise<void> => {
   cachedUserId = null;
   try {
     await AsyncStorage.removeItem(STORAGE_KEY);
-  } catch {
-    // 무시
+  } catch (err) {
+    console.log('>>>>', err);
   }
-  emit('local');
+  emit(null);
 };
 
 export const subscribeAuthChanges = (): void => {
@@ -87,11 +122,20 @@ export const subscribeAuthChanges = (): void => {
   const {
     data: { subscription },
   } = supabase.auth.onAuthStateChange(async (_event, session) => {
-    const next = session?.user?.id ?? 'local';
+    const next = session?.user?.id ?? null;
+
     if (next !== cachedUserId) {
       cachedUserId = next;
-      await AsyncStorage.setItem('current_user_id.v1', next);
-      listeners.forEach(fn => fn(next));
+      try {
+        if (next) {
+          await AsyncStorage.setItem(STORAGE_KEY, next);
+        } else {
+          await AsyncStorage.removeItem(STORAGE_KEY);
+        }
+      } catch (err) {
+        console.log('>>>>', err);
+      }
+      emit(next);
     }
   });
   authUnsubscribe = () => subscription.unsubscribe();

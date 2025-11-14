@@ -22,8 +22,7 @@ const EmotionDiaryCompletePage = () => {
         dispatch(setModifyMode(false));
       } else {
         navigate('DiaryStack', {
-          screen: 'EmotionDetailPage',
-          params: { origin: 'DiaryStack' },
+          screen: 'WeeklyReportProgress',
         });
       }
     }, 2500);

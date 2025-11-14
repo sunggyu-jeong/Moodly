@@ -2,10 +2,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useCallback, useEffect, useState } from 'react';
 import { Image, StatusBar, StyleSheet, View } from 'react-native';
 
-import {
-  useDeletePushTokenMutation,
-  useUpsertPushTokenMutation,
-} from '@/entities/auth/api';
+import { useDeletePushTokenMutation, useUpsertPushTokenMutation } from '@/entities/auth/api';
 import { useGetDiaryCountQuery, useHasDiaryForDayQuery } from '@/entities/diary/api';
 import { usePushNavigation } from '@/features/diary/hooks/usePushNavigation';
 import { resetDiary } from '@/features/diary/model/diarySlice';
@@ -30,9 +27,6 @@ const TEXTS = {
   BUTTON_WRITE: '작성하러 가기',
 } as const;
 
-// ============================================================
-// Component
-// ============================================================
 const HomePage = () => {
   const dispatch = useAppDispatch();
 
@@ -41,16 +35,14 @@ const HomePage = () => {
   });
   const { data: diaryCount, isLoading: isDiaryCountLoading } = useGetDiaryCountQuery();
 
-  // Mutations
   const [upsertToken] = useUpsertPushTokenMutation();
   const [deleteToken] = useDeletePushTokenMutation();
 
-  // Local state
   const [permissionRequested, setPermissionRequested] = useState(false);
 
   const titleText = hasDiary ? TEXTS.HAS_DIARY : TEXTS.NO_DIARY;
   const buttonText = hasDiary ? TEXTS.BUTTON_COMPLETE : TEXTS.BUTTON_WRITE;
-  const isLoading = isHasDiaryLoading || isDiaryCountLoading;
+  const isLoading = useDelay(isHasDiaryLoading || isDiaryCountLoading);
 
   const handleTokenUpdate = useCallback(
     async (token: string | null) => {
@@ -101,7 +93,9 @@ const HomePage = () => {
     }, [dispatch]),
   );
 
-  if (useDelay(isLoading)) {
+  console.log('>@!$>@!>$', isLoading);
+
+  if (isLoading) {
     return <HomeLoading />;
   }
 
