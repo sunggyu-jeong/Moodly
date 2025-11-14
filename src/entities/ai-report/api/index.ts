@@ -1,5 +1,8 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
+import dayjs from 'dayjs';
 
+import { calcDiaryStreak } from '@/entities/ai-report/lib/calcDiaryStreak';
+import type { DiaryStreakInfo, GetDiaryStreakArgs } from '@/entities/ai-report/model/types';
 import type { AIReportDomain } from '@/features/ai-report/model/domain';
 import type {
   WeeklySummaryPayloadDTO,
@@ -7,11 +10,43 @@ import type {
 } from '@/features/ai-report/model/dto';
 import { appApi } from '@/shared/api/appApi';
 import { API_CODE } from '@/shared/api/error/apiCode';
+import { getUserId } from '@/shared/lib/user.util';
 
 const parseMaybeString = <T>(x: unknown): T => (typeof x === 'string' ? JSON.parse(x) : x) as T;
 
 export const aiReportApi = appApi.injectEndpoints({
   endpoints: build => ({
+    getDiaryStreak: build.query<DiaryStreakInfo, GetDiaryStreakArgs>({
+      query: () => async (client: SupabaseClient) => {
+        const from = dayjs(dayjs().format('YYYY-MM-DD')).subtract(30, 'day').format('YYYY-MM-DD');
+        const today = dayjs().format('YYYY-MM-DD');
+        const userId = await getUserId();
+        const { data, error } = await client
+          .from('moodly_diary')
+          .select('record_date')
+          .eq('user_id', userId)
+          .gte('record_date', from)
+          .lte('record_date', today)
+          .order('record_date', { ascending: false });
+
+        if (error) {
+          throw error;
+        }
+        const { streakCount, dates } = calcDiaryStreak(
+          today,
+          (data ?? []) as { record_date: string }[],
+        );
+
+        const info: DiaryStreakInfo = {
+          baseDate: today,
+          streakCount,
+          dates,
+          reached7: streakCount >= 7,
+        };
+
+        return info;
+      },
+    }),
     requestAIWeeklySummary: build.mutation<WeeklySummaryResultDTO, WeeklySummaryPayloadDTO>({
       query: payload => async (client: SupabaseClient) => {
         const { data, error } = await client.functions.invoke('ai-proxy', {
