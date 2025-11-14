@@ -2,7 +2,7 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 import dayjs from 'dayjs';
 
 import { calcDiaryStreak } from '@/entities/ai-report/lib/calcDiaryStreak';
-import type { DiaryStreakInfo, GetDiaryStreakArgs } from '@/entities/ai-report/model/types';
+import type { DiaryStreakInfo } from '@/entities/ai-report/model/types';
 import type { AIReportDomain } from '@/features/ai-report/model/domain';
 import type {
   WeeklySummaryPayloadDTO,
@@ -16,7 +16,7 @@ const parseMaybeString = <T>(x: unknown): T => (typeof x === 'string' ? JSON.par
 
 export const aiReportApi = appApi.injectEndpoints({
   endpoints: build => ({
-    getDiaryStreak: build.query<DiaryStreakInfo, GetDiaryStreakArgs>({
+    getDiaryStreak: build.query<DiaryStreakInfo, void>({
       query: () => async (client: SupabaseClient) => {
         const from = dayjs(dayjs().format('YYYY-MM-DD')).subtract(30, 'day').format('YYYY-MM-DD');
         const today = dayjs().format('YYYY-MM-DD');
@@ -132,6 +132,7 @@ export const aiReportApi = appApi.injectEndpoints({
 });
 
 export const {
+  useGetDiaryStreakQuery,
   useRequestAIWeeklySummaryMutation,
   useGetWeeklyProgressQuery,
   useGetAIReportByDateMockQuery,
