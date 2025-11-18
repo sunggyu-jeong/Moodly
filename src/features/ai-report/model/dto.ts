@@ -1,3 +1,5 @@
+import type { CoreInnerKeywordsType, KeywordBubble } from '@/features/ai-report/model/domain';
+
 export type WeeklySummaryResultDTO = {
   summary: string;
   emotion_distribution: {
@@ -7,8 +9,8 @@ export type WeeklySummaryResultDTO = {
     anxiety: number;
     angry: number;
   };
-  weekly_keywords: string[];
-  core_inner_keywords: string[];
+  weekly_keywords: KeywordBubble[];
+  core_inner_keywords: CoreInnerKeywordsType[];
   self_reflection_questions: string[];
   message_from_moodly: string;
 };

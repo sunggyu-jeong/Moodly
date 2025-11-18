@@ -111,7 +111,13 @@ export const aiReportApi = appApi.injectEndpoints({
             summary:
               '한 주간 다양한 감정의 흐름을 경험하셨습니다. 남자친구와의 카페 공부를 통해 집중하고 편안함을 느끼며 긍정적인 에너지를 얻으셨던 순간이 있었던 반면, 직장에서는 상급자와의 업무 관련 갈등으로 인해 큰 어려움과 분노를 느끼셨습니다. 상급자의 불합리한 요구와 태도로 인해 자신의 노력이 제대로 인정받지 못하고 부당하게 혼났다는 감정이 당신을 매우 힘들게 했던 것으로 보입니다. 이러한 대조적인 경험들이 한 주간 당신의 내면에서 복합적으로 작용하며 감정의 기복을 만들어냈습니다.',
             emotion_distribution: { joy: 24, sad: 18, calm: 12, anxiety: 34, angry: 12 },
-            weekly_keywords: ['힘듦', '공부', '남자친구', '업무갈등', '상급자'],
+            weekly_keywords: [
+              { label: '힘듦', weight: 1 },
+              { label: '공부', weight: 0.3 },
+              { label: '남자친구', weight: 0.1 },
+              { label: '업무갈등', weight: 0.1 },
+              { label: '상급자', weight: 0.1 },
+            ],
             core_inner_keywords: [
               {
                 title: '관계의 안정감',

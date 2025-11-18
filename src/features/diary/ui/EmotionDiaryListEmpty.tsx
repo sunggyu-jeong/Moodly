@@ -1,4 +1,4 @@
-import React from 'react';
+import { memo } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import EmotionDiaryEmptyMessage from './EmotionDiaryEmptyMessage';
@@ -17,4 +17,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(EmotionDiaryListEmpty);
+export default memo(EmotionDiaryListEmpty);
