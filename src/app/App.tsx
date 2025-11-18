@@ -21,7 +21,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { registerLogoutHandler } from '@/app/bootstrap/registerLogoutHandler';
 import { useUpsertPushTokenMutation } from '@/entities/auth/api';
 import * as amplitude from '@amplitude/analytics-react-native';
-import { SessionReplayPlugin } from '@amplitude/plugin-session-replay-react-native';
+// import { SessionReplayPlugin } from '@amplitude/plugin-session-replay-react-native';
 
 enableScreens();
 registerLogoutHandler();
@@ -71,7 +71,7 @@ function App() {
       try {
         console.log('Amplitude 초기화를 시작합니다...');
         await amplitude.init(AMPLITUDE_API_KEY).promise;
-        await amplitude.add(new SessionReplayPlugin()).promise;
+        // await amplitude.add(new SessionReplayPlugin()).promise;
 
         console.log('Amplitude 초기화 및 플러그인 추가 완료.');
       } catch (error) {

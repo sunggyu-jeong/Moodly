@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 20,
     backgroundColor: gray[50],
-    elevation: 2,
+    // elevation: 2,
   },
   title: { color: gray[500] },
 });
