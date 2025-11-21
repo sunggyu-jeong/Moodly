@@ -4,14 +4,9 @@ import { StyleSheet, View } from 'react-native';
 import SocialLoginGroup, { SOCIAL_LOGIN_ENTRANCE } from '@/features/auth/ui/SocialLoginGroup';
 import { useBottomSheet } from '@/shared/hooks/useBottomSheet';
 import { getScaleSize } from '@/shared/hooks/useScale';
+import type { BottomSheetHandler } from '@/shared/types/bottomSheet';
 import BottomSheetWrapper from '@/shared/ui/elements/BottomSheetWrapper';
 import { H3 } from '@/shared/ui/typography/H3';
-
-export interface BottomSheetHandler {
-  expand: () => void;
-  collapse: () => void;
-  close: () => void;
-}
 
 const MIN_HEIGHT = 300;
 

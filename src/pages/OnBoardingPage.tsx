@@ -16,12 +16,13 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useUpsertPushTokenMutation } from '@/entities/auth/api';
-import SocialLoginSheet, { BottomSheetHandler } from '@/features/setting/ui/SocialLoginSheet';
+import SocialLoginSheet from '@/features/setting/ui/SocialLoginSheet';
 import { ONBOARDING_ICONS } from '@/shared/assets/images/onboarding';
 import { useNotificationPermission } from '@/shared/hooks/useNotificationPermission';
 import { isIphone } from '@/shared/lib/user.util';
 import { isEmpty } from '@/shared/lib/value.util';
 import colors from '@/shared/styles/colors';
+import type { BottomSheetHandler } from '@/shared/types/bottomSheet';
 import ActionButton from '@/shared/ui/elements/ActionButton';
 import { H2 } from '@/shared/ui/typography/H2';
 import { Label } from '@/shared/ui/typography/Label';

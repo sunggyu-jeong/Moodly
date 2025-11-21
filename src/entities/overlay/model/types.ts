@@ -8,3 +8,4 @@ export const MODAL_CONFIRM_ACTION_KEY = {
 export const MODAL_CANCEL_ACTION_KEY = {
   GO_MAIN: 'GO_MAIN',
 } as const;
+

@@ -1,4 +1,3 @@
-// src/features/ai-report/choose-report-sheet/ui/ChooseReportSheet.tsx
 import { forwardRef, useCallback, useImperativeHandle } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
@@ -6,19 +5,15 @@ import { FlatList } from 'react-native-gesture-handler';
 import type { ChooseReportSheetProps } from '@/features/ai-report/model/types';
 import { useBottomSheet } from '@/shared/hooks/useBottomSheet';
 import { common, gray } from '@/shared/styles/colors';
+import type { BottomSheetHandler } from '@/shared/types/bottomSheet';
 import BottomSheetWrapper from '@/shared/ui/elements/BottomSheetWrapper';
 import { Body1 } from '@/shared/ui/typography/Body1';
 import { H3 } from '@/shared/ui/typography/H3';
 
-export interface ChooseReportSheetHandle {
-  expand: () => void;
-  collapse: () => void;
-  close: () => void;
-}
 const MIN_HEIGHT = 300;
 const ITEM_ROW_HEIGHT = 52;
 
-const ChooseReportSheet = forwardRef<ChooseReportSheetHandle, ChooseReportSheetProps>(
+const ChooseReportSheet = forwardRef<BottomSheetHandler, ChooseReportSheetProps>(
   ({ dates, selectedDate, onSelect }, ref) => {
     const { sheetRef, snapPoints, handleSheetChanges } = useBottomSheet({
       snapPoints: [MIN_HEIGHT, '31.3%'],

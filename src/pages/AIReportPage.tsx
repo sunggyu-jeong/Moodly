@@ -1,8 +1,10 @@
+import { useCallback, useRef } from 'react';
 import {
   ActivityIndicator,
   Image,
   ScrollView,
   StyleSheet,
+  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
@@ -11,6 +13,7 @@ import { useGetAIReportByDateMockQuery } from '@/entities/ai-report/api';
 import { EMOTION_ICON_MAP } from '@/entities/ai-report/model/constants';
 import { FormattedTextSection } from '@/entities/ai-report/ui/FormattedTextSection';
 import { domainToUIStats } from '@/features/ai-report/model/mapper';
+import ChooseReportSheet from '@/features/ai-report/ui/ChooseReportSheet';
 import { CoreKeywordsList } from '@/features/ai-report/ui/CoreKeywordsLIst';
 import { EmotionDistribution } from '@/features/ai-report/ui/EmotionDistribution';
 import { ReflectionList } from '@/features/ai-report/ui/ReflectionList';
@@ -18,6 +21,7 @@ import { ReportSection } from '@/features/ai-report/ui/ReportSection';
 import { WeeklyKeywordBubbleChart } from '@/features/ai-report/ui/WeeklyKeywordBubbleChart';
 import { COMMON_ICONS } from '@/shared/assets/images/common';
 import { gray } from '@/shared/styles/colors';
+import type { BottomSheetHandler } from '@/shared/types/bottomSheet';
 import NavigationBar from '@/shared/ui/elements/navigation/NavigationBar';
 import NaviTitleDisplay from '@/shared/ui/elements/NaviTitle';
 import { H2 } from '@/shared/ui/typography/H2';
@@ -26,15 +30,24 @@ const PAGE_DATE = '2025-10-05';
 
 const AIReportPage = () => {
   const { data, isLoading } = useGetAIReportByDateMockQuery(PAGE_DATE);
+  const aiSheetRef = useRef<BottomSheetHandler>(null);
 
-  // Navigation UI (Local Helper)
+  const handleChooseReport = useCallback(() => {
+    aiSheetRef.current?.expand();
+  }, []);
+
   const renderHeaderCenter = () => (
     <TouchableWithoutFeedback>
       <View style={styles.navigationContainer}>
-        <NaviTitleDisplay
-          title={'10월 5일 리포트'}
-          style={styles.naviTitle}
-        />
+        <TouchableOpacity
+          onPress={handleChooseReport}
+          style={{ display: 'flex', flexDirection: 'row' }}
+        >
+          <NaviTitleDisplay
+            title={'10월 5일 리포트'}
+            style={styles.naviTitle}
+          />
+        </TouchableOpacity>
         <Image
           source={COMMON_ICONS.iconDown}
           alt="날짜 선택"
@@ -54,59 +67,68 @@ const AIReportPage = () => {
     );
   }
 
-  // Data Preparation (ViewModel logic could be extracted if it grows)
   const emotionStats = domainToUIStats(data.emotion_distribution, EMOTION_ICON_MAP);
 
   return (
-    <View style={styles.container}>
-      <NavigationBar
-        showBackButton={false}
-        centerComponent={renderHeaderCenter()}
-      />
+    <>
+      <View style={styles.container}>
+        <NavigationBar
+          showBackButton={false}
+          centerComponent={renderHeaderCenter()}
+        />
 
-      <ScrollView
-        style={styles.scrollContainer}
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
-      >
-        <H2
-          weight="semibold"
-          style={styles.title}
+        <ScrollView
+          style={styles.scrollContainer}
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
         >
-          {data.title}
-        </H2>
+          <H2
+            weight="semibold"
+            style={styles.title}
+          >
+            {data.title}
+          </H2>
 
-        {/* 1. 기분 분포 */}
-        <ReportSection title="기분 분포">
-          <EmotionDistribution stats={emotionStats} />
-        </ReportSection>
+          {/* 1. 기분 분포 */}
+          <ReportSection title="기분 분포">
+            <EmotionDistribution stats={emotionStats} />
+          </ReportSection>
 
-        {/* 2. 이번 주 키워드 (Previously Refactored) */}
-        <ReportSection title="이번 주 키워드">
-          <WeeklyKeywordBubbleChart items={data.weekly_keywords} />
-        </ReportSection>
+          {/* 2. 이번 주 키워드 (Previously Refactored) */}
+          <ReportSection title="이번 주 키워드">
+            <WeeklyKeywordBubbleChart items={data.weekly_keywords} />
+          </ReportSection>
 
-        {/* 3. 감정 여정 요약 */}
-        <ReportSection title="🪞 감정 여정 요약">
-          <FormattedTextSection text={data.summary} />
-        </ReportSection>
+          {/* 3. 감정 여정 요약 */}
+          <ReportSection title="🪞 감정 여정 요약">
+            <FormattedTextSection text={data.summary} />
+          </ReportSection>
 
-        {/* 4. 핵심 내면 키워드 */}
-        <ReportSection title="🧠 핵심 내면 키워드 3가지">
-          <CoreKeywordsList items={data.core_inner_keywords} />
-        </ReportSection>
+          {/* 4. 핵심 내면 키워드 */}
+          <ReportSection title="🧠 핵심 내면 키워드 3가지">
+            <CoreKeywordsList items={data.core_inner_keywords} />
+          </ReportSection>
 
-        {/* 5. 자기 성찰 질문지 */}
-        <ReportSection title="🪴 자기 성찰 질문지">
-          <ReflectionList questions={data.self_reflection_questions} />
-        </ReportSection>
+          {/* 5. 자기 성찰 질문지 */}
+          <ReportSection title="🪴 자기 성찰 질문지">
+            <ReflectionList questions={data.self_reflection_questions} />
+          </ReportSection>
 
-        {/* 6. 무들리가 전하고 싶은 말 */}
-        <ReportSection title="🌱 무들리가 전하고 싶은 말">
-          <FormattedTextSection text={data.message_from_moodly} />
-        </ReportSection>
-      </ScrollView>
-    </View>
+          {/* 6. 무들리가 전하고 싶은 말 */}
+          <ReportSection title="🌱 무들리가 전하고 싶은 말">
+            <FormattedTextSection text={data.message_from_moodly} />
+          </ReportSection>
+        </ScrollView>
+      </View>
+      <ChooseReportSheet
+        ref={aiSheetRef}
+        dates={['2024-12-01', '2024-12-02', '2024-12-03']}
+        selectedDate={'2024-12-02'}
+        onSelect={date => {
+          console.log('선택된 날짜:', date);
+        }}
+      />
+    </>
   );
 };
 

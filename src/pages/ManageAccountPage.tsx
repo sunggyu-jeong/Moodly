@@ -8,7 +8,6 @@ import { useLogout } from '@/features/auth/hooks/useLogout';
 import { SETTING_EVENT_TYPE } from '@/features/setting/types';
 import ChangeNicknameSheet from '@/features/setting/ui/ChangeNicknameSheet';
 import SettingList from '@/features/setting/ui/SettingList';
-import { BottomSheetHandler } from '@/features/setting/ui/SocialLoginSheet';
 import { appApi } from '@/shared/api/appApi';
 import { SETTING_ICONS } from '@/shared/assets/images/setting';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/useHooks';
@@ -23,6 +22,7 @@ import {
   setShowToastView,
 } from '@/shared/model/overlaySlice';
 import { common, gray } from '@/shared/styles/colors';
+import type { BottomSheetHandler } from '@/shared/types/bottomSheet';
 import NavigationBar from '@/shared/ui/elements/navigation/NavigationBar';
 import NaviTitleDisplay from '@/shared/ui/elements/NaviTitle';
 import { Body1 } from '@/shared/ui/typography/Body1';
