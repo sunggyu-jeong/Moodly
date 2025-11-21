@@ -1,4 +1,11 @@
-import { ActivityIndicator, Image, ScrollView, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Image,
+  ScrollView,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 
 import { useGetAIReportByDateMockQuery } from '@/entities/ai-report/api';
 import { EMOTION_ICON_MAP } from '@/entities/ai-report/model/constants';
@@ -18,7 +25,6 @@ import { H2 } from '@/shared/ui/typography/H2';
 const PAGE_DATE = '2025-10-05';
 
 const AIReportPage = () => {
-  // Data Fetching
   const { data, isLoading } = useGetAIReportByDateMockQuery(PAGE_DATE);
 
   // Navigation UI (Local Helper)
