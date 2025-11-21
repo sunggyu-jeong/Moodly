@@ -7,24 +7,22 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal",
+      "distribution": "store",
       "channel": "store",
       "ios": {
-        "simulator": true,
-        "buildConfiguration": "Debug",
+        "simulator": false,
+        "buildConfiguration": "Release",
         "prebuildCommand": "npx expo prebuild --clean"
       },
       "env": {
-        "APP_ENV": "development"
+        "APP_ENV": "develop"
       }
     },
     "preview": {
       "distribution": "internal",
       "channel": "preview",
       "ios": {
-        "buildConfiguration": "Release",
-        "simulator": false,
-        "distribution": "store"
+        "simulator": false
       },
       "env": {
         "APP_ENV": "staging"
@@ -33,7 +31,6 @@
     "production": {
       "channel": "production",
       "ios": {
-        "buildConfiguration": "Release",
         "simulator": false,
         "distribution": "store"
       },
@@ -42,6 +39,14 @@
       },
       "env": {
         "APP_ENV": "production"
+      }
+    }
+  },
+  "submit": {
+    "production": {},
+    "development": {
+      "ios": {
+        "appleId": "moodlydeveloper@gmail.com"
       }
     }
   }
