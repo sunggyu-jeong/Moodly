@@ -8,7 +8,7 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal",
-      "channel": "development",
+      "channel": "store",
       "ios": {
         "simulator": true,
         "buildConfiguration": "Debug",
