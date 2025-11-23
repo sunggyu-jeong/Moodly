@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "dev:mobile": "pnpm --filter mobile start",
-    "dev:jobs": "pnpm --filter jobs dev",
     "dev:ios": "pnpm --filter mobile exec -- npx expo run:ios",
     "dev:android": "pnpm --filter mobile exec -- npx expo run:android",
     "build:mobile:android": "pnpm --filter mobile exec -- eas build --platform android",
-    "build:mobile:ios": "pnpm --filter mobile exec -- eas build --platform ios"
+    "build:mobile:ios": "pnpm --filter mobile exec -- eas build --platform ios",
+    "dev:jobs": "pnpm --filter jobs exec -- pnpm dlx trigger.dev@latest dev --env-file .env",
+    "deploy:jobs": "pnpm --filter jobs exec -- npx trigger.dev@latest deploy"
   },
   "pnpm": {
     "overrides": {
