@@ -12,8 +12,7 @@
       "ios": {
         "simulator": false,
         "buildConfiguration": "Release",
-        "prebuildCommand": "npx expo prebuild --clean",
-        "workingDirectory": "apps/mobile"
+        "prebuildCommand": "npx expo prebuild --clean"
       },
       "env": {
         "APP_ENV": "develop"
