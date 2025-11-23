@@ -5,7 +5,7 @@ import { ICON_DATA } from "../util/icons";
 import { ENV } from "./env";
 import { processGeminiJob } from "./process-gemini";
 
-const { SUPABASE_URL, SUPABASE_ANON_KEY } = ENV;
+const { SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY } = ENV;
 
 const WEEKDAYS = ['일', '월', '화', '수', '목', '금', '토'];
 
@@ -14,8 +14,8 @@ export const weeklyDiaryAggregator = schedules.task({
   cron: "0 15 * * 6",
 
   run: async (payload) => {
-    console.log("[Weekly Aggregator] 주간 일기 집계 프로세스 시작...");
-    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    console.log("[Weekly Aggregator] 주간 일기 집계 프로세스 시작....");
+    const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
     const now = new Date(payload.timestamp);
     const endDate = new Date(now);
     const startDate = new Date(now);
@@ -27,27 +27,32 @@ export const weeklyDiaryAggregator = schedules.task({
     console.log(`집계 기간: ${fmtStart} ~ ${fmtEnd}`);
 
     const { data: diaries, error } = await supabase
-      .from("moodly_diary")
-      .select("user_id, description, record_date, created_at, icon_id")
-      .gte("created_at", startDate.toISOString())
-      .lt("created_at", endDate.toISOString())
-      .not("description", "is", null);
+    .from("moodly_diary")
+    .select("user_id, description, record_date, created_at, icon_id")
+    .gte("record_date", fmtStart) 
+    .lte("record_date", fmtEnd)
+    .not("description", "is", null);
 
     if (error) {
       console.error("일기 데이터 조회 중 에러 발생:", error);
       throw error;
     }
 
-    if (!diaries || diaries.length === 0) {
+    const sameDayDiaries = diaries?.filter((diary) => {
+      const createdDateString = diary.created_at.split('T')[0];
+      return diary.record_date === createdDateString;
+    });
+
+    if (!sameDayDiaries || sameDayDiaries.length === 0) {
       console.log("집계할 일기 데이터가 없습니다. 작업을 종료합니다.");
       return { message: "NO_DATA", range: `${fmtStart}~${fmtEnd}` };
     }
 
-    console.log(`조회된 원본 일기 개수: ${diaries.length}건`);
+    console.log(`조회된 원본 일기 개수: ${sameDayDiaries.length}건`);
 
     const userMap = new Map<string, any[]>();
 
-    for (const diary of diaries) {
+    for (const diary of sameDayDiaries) {
       const recordDate = diary.record_date;
       const createDate = diary.created_at.split('T')[0];
 
@@ -98,7 +103,7 @@ export const weeklyDiaryAggregator = schedules.task({
     
         return `[${formattedDate}] (감정: ${moodText}) ${d.content}`;
       })
-      .join("\n\n");
+      .join(",");
     
 
       jobsToInsert.push({
@@ -122,16 +127,16 @@ export const weeklyDiaryAggregator = schedules.task({
     console.log(`생성할 리포트 작업 수: ${jobsToInsert.length}건`);
 
     const { data: insertedJobs, error: insertError } = await supabase
-      .from("tb_ai_jos")
+      .from("tb_ai_jobs")
       .insert(jobsToInsert)
       .select("id");
 
     if (insertError) {
-      console.error("tb_ai_jos 테이블 INSERT 실패:", insertError);
+      console.error("tb_ai_jobs 테이블 INSERT 실패:", insertError);
       throw new Error(`Queue Insert Failed: ${insertError.message}`);
     }
 
-    console.log(`tb_ai_jos 테이블에 ${insertedJobs.length}건 저장 완료.`);
+    console.log(`tb_ai_jobs 테이블에 ${insertedJobs.length}건 저장 완료.`);
 
     const batchPayloads = insertedJobs.map((job) => ({
       payload: { jobId: job.id },
