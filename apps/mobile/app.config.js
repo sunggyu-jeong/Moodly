@@ -12,13 +12,13 @@ const iosGoogleServiceFile = isProd
   ? './GoogleService-Info.prod.plist'
   : isStg
     ? './GoogleService-Info.stg.plist'
-    : './GoogleService-Info.prod.plist';
+    : './GoogleService-Info.dev.plist';
 
 const androidGoogleServiceFile = isProd
   ? './google-services.prod.json'
   : isStg
     ? './google-services.stg.json'
-    : './google-services.prod.json';
+    : './google-services.dev.json';
 
 const PROJECT_ID = process.env.EAS_PROJECT_ID ?? 'a1dd67f4-01b2-4cc1-9c06-076721195e0b';
 
@@ -47,7 +47,7 @@ export default {
   assetBundlePatterns: ['**/*'],
 
   ios: {
-    buildNumber: '11',
+    buildNumber: '13',
     bundleIdentifier: iosBundleId,
     googleServicesFile: iosGoogleServiceFile,
     infoPlist: {
