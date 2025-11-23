@@ -69,11 +69,21 @@ function lightValidateWeeklyObj(o: any) {
 
 async function callGemini(model: string, payload: any) {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${GEMINI_API_KEY}`;
+  
+  console.log(`Requesting Gemini Model: ${model}`);
+
   const resp = await fetch(url, {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify(payload),
   });
+
+  if (!resp.ok) {
+    const errorBody = await resp.text();
+    console.error(`Gemini API Error (${resp.status}):`, errorBody);
+    throw new Error(`Gemini API Error: ${resp.status} - ${errorBody}`);
+  }
+
   const data = await resp.json();
   return { resp, data };
 }
@@ -125,8 +135,12 @@ export const processGeminiJob = task({
         response_schema: {
           type: "OBJECT",
           required: [
-            "summary", "emotion_distribution", "weekly_keywords", 
-            "core_inner_keywords", "self_reflection_questions", "message_from_moodly"
+            "summary",
+            "emotion_distribution",
+            "weekly_keywords",
+            "core_inner_keywords",
+            "self_reflection_questions",
+            "message_from_moodly"
           ],
           properties: {
             summary: { type: "STRING", minLength: 100 },
@@ -147,7 +161,7 @@ export const processGeminiJob = task({
                 type: "OBJECT", required: ["label", "weight"],
                 properties: {
                   label: { type: "STRING", minLength: 1, maxLength: 10 },
-                  weight: { type: "NUMBER", minimum: 0, maximum: 1, multipleOf: 0.01 }
+                  weight: { type: "NUMBER", minimum: 0, maximum: 1 }
                 }
               }
             },
