@@ -10,10 +10,11 @@ import {
   View,
 } from 'react-native';
 
-import { useAppSelector } from '@/app/store';
+import { useAppDispatch, useAppSelector } from '@/app/store';
 import { useGetAIReportQuery } from '@/entities/ai-report/api';
 import { EMOTION_ICON_MAP } from '@/entities/ai-report/model/constants';
 import { FormattedTextSection } from '@/entities/ai-report/ui/FormattedTextSection';
+import { setSelectedReport } from '@/features/ai-report/model/aiReportSlice';
 import { domainToUIStats } from '@/features/ai-report/model/mapper';
 import ChooseReportSheet from '@/features/ai-report/ui/ChooseReportSheet';
 import { CoreKeywordsList } from '@/features/ai-report/ui/CoreKeywordsLIst';
@@ -30,10 +31,11 @@ import NaviTitleDisplay from '@/shared/ui/elements/NaviTitle';
 import { H2 } from '@/shared/ui/typography/H2';
 
 const AIReportPage = () => {
-  const { isLoading } = useGetAIReportQuery();
+  const { isLoading, data } = useGetAIReportQuery();
   const aiSheetRef = useRef<BottomSheetHandler>(null);
   const reportDates = useAppSelector(state => state.aiReport.reportDates);
   const selectedReport = useAppSelector(state => state.aiReport.selectedReport);
+  const dispatch = useAppDispatch();
   const delayedLoading = useDelay(isLoading);
 
   const handleChooseReport = useCallback(() => {
@@ -59,8 +61,6 @@ const AIReportPage = () => {
       </View>
     </TouchableWithoutFeedback>
   );
-
-  console.log('@!>$>!>$@>$>@!', delayedLoading, selectedReport);
 
   if (delayedLoading || !selectedReport) {
     return (
@@ -131,7 +131,7 @@ const AIReportPage = () => {
         dates={reportDates}
         selectedDate={selectedReport.date}
         onSelect={date => {
-          console.log('선택된 날짜:', date);
+          dispatch(setSelectedReport(data?.find(e => e.date === date) ?? null));
         }}
       />
     </>
