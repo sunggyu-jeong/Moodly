@@ -2,7 +2,7 @@ import type { SupabaseClient, User } from '@supabase/supabase-js';
 
 import { API_CODE, AppCode } from '@/shared/api/error/apiCode';
 
-import { isEmpty } from './../lib/value.util';
+import { isEmpty } from '../lib/value.util';
 
 const unauthenticated = () =>
   ({
