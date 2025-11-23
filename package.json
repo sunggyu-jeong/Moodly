@@ -5,6 +5,8 @@
   "scripts": {
     "dev:mobile": "pnpm --filter mobile start",
     "dev:jobs": "pnpm --filter jobs dev",
+    "dev:ios": "pnpm --filter mobile exec -- npx expo run:ios",
+    "dev:android": "pnpm --filter mobile exec -- npx expo run:android",
     "build:mobile:android": "pnpm --filter mobile exec -- eas build --platform android",
     "build:mobile:ios": "pnpm --filter mobile exec -- eas build --platform ios"
   },

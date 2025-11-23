@@ -1,5 +1,7 @@
 import CryptoJS from 'crypto-js';
+import { ENV } from '../trigger/env';
 
+const { ENCRYPTION_SECRET_KEY } = ENV;
 const isBase64 = (str: string) => {
   try {
     return btoa(atob(str)) === str;
@@ -16,7 +18,7 @@ export const decryptData = (ciphertext: string) => {
   }
 
   try {
-    const bytes = CryptoJS.AES.decrypt(ciphertext, process.env.ENCRYPTION_SECRET_KEY!);
+    const bytes = CryptoJS.AES.decrypt(ciphertext, ENCRYPTION_SECRET_KEY);
     const decrypted = bytes.toString(CryptoJS.enc.Utf8);
 
     if (!decrypted) return null;

@@ -1,6 +1,8 @@
 import { createClient } from "@supabase/supabase-js";
 import { task } from "@trigger.dev/sdk/v3";
-import process from "process";
+import { ENV } from "./env";
+
+const { GEMINI_API_KEY, SUPABASE_URL, SUPABASE_ANON_KEY } = ENV;
 
 function safeTrunc(s: any, n = 400) {
   let str = "";
@@ -66,7 +68,7 @@ function lightValidateWeeklyObj(o: any) {
 }
 
 async function callGemini(model: string, payload: any) {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${process.env.GEMINI_API_KEY}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${GEMINI_API_KEY}`;
   const resp = await fetch(url, {
     method: "POST",
     headers: { "content-type": "application/json" },
@@ -76,16 +78,15 @@ async function callGemini(model: string, payload: any) {
   return { resp, data };
 }
 
-const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!, {
-  auth: { persistSession: false },
-});
-
 export const processGeminiJob = task({
   id: "process-gemini-job",
   machine: { preset: "micro" },
   retry: { maxAttempts: 3, minTimeoutInMs: 1000, maxTimeoutInMs: 10000 },
   
   run: async (payload: { jobId: string }) => {
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: { persistSession: false },
+    });
     const { jobId } = payload;
     const startedAt = new Date();
 

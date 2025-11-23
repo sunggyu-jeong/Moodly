@@ -4,12 +4,12 @@ import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import EmotionDiaryListPage from '@/pages/EmotionDiaryListPage';
+import HomePage from '@/pages/HomePage';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { useScale } from '@/shared/hooks/useScale';
 import TabBarIcon from '@/shared/ui/elements/TabBarIcon';
 
 import SettingStack, { type SettingStackParamList } from './SettingStack';
-import AIReportPage from '@/pages/AIReportPage';
 
 export type BottomTabParamList = {
   Home: undefined;
@@ -44,7 +44,7 @@ const TabNavigation = () => {
       >
         <Tab.Screen
           name="Home"
-          component={AIReportPage}
+          component={HomePage}
           options={{
             tabBarIcon: ({ focused }) => (
               <TabBarIcon source={focused ? MAIN_ICONS.homeActive : MAIN_ICONS.homeInactive} />

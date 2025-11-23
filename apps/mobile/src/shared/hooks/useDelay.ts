@@ -28,7 +28,7 @@ export default function useDelay(
       const remaining = delay - elapsed;
       if (remaining <= 0) {
         Promise.resolve().then(() => {
-          setDelayedValue(true);
+          setDelayedValue(false);
         });
       } else {
         timeoutRef.current = setTimeout(() => {

@@ -1,9 +1,13 @@
 import { createClient } from "@supabase/supabase-js";
 import { schedules } from "@trigger.dev/sdk/v3";
 import { decryptData } from "../util/crypto";
+import { ICON_DATA } from "../util/icons";
+import { ENV } from "./env";
 import { processGeminiJob } from "./process-gemini";
 
-const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
+const { SUPABASE_URL, SUPABASE_ANON_KEY } = ENV;
+
+const WEEKDAYS = ['일', '월', '화', '수', '목', '금', '토'];
 
 export const weeklyDiaryAggregator = schedules.task({
   id: "weekly-diary-aggregator",
@@ -11,7 +15,7 @@ export const weeklyDiaryAggregator = schedules.task({
 
   run: async (payload) => {
     console.log("[Weekly Aggregator] 주간 일기 집계 프로세스 시작...");
-
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     const now = new Date(payload.timestamp);
     const endDate = new Date(now);
     const startDate = new Date(now);
@@ -35,11 +39,11 @@ export const weeklyDiaryAggregator = schedules.task({
     }
 
     if (!diaries || diaries.length === 0) {
-      console.log("ℹ집계할 일기 데이터가 없습니다. 작업을 종료합니다.");
+      console.log("집계할 일기 데이터가 없습니다. 작업을 종료합니다.");
       return { message: "NO_DATA", range: `${fmtStart}~${fmtEnd}` };
     }
 
-    console.log(`📦 조회된 원본 일기 개수: ${diaries.length}건`);
+    console.log(`조회된 원본 일기 개수: ${diaries.length}건`);
 
     const userMap = new Map<string, any[]>();
 
@@ -75,19 +79,33 @@ export const weeklyDiaryAggregator = schedules.task({
 
     const jobsToInsert = [];
 
+
+    const moodMap = ICON_DATA.reduce((acc, item) => {
+      acc[item.id] = item.text;
+      return acc;
+    }, {} as Record<number, string>);
+
     for (const [userId, diaryEntries] of userMap) {
       if (diaryEntries.length < 0) continue;
-
       const combinedDiaries = diaryEntries
-        .sort((a, b) => a.date.localeCompare(b.date))
-        .map(d => `[${d.date}] (감정아이콘:${d.mood}) ${d.content}`)
-        .join("\n\n");
+      .sort((a, b) => a.date.localeCompare(b.date))
+      .map(d => {
+        const dateObj = new Date(d.date);
+        
+        const formattedDate = `${dateObj.getFullYear()}년 ${dateObj.getMonth() + 1}월 ${dateObj.getDate()}일 ${WEEKDAYS[dateObj.getDay()]}요일`;
+        
+        const moodText = moodMap[d.mood] || '알 수 없음';
+    
+        return `[${formattedDate}] (감정: ${moodText}) ${d.content}`;
+      })
+      .join("\n\n");
+    
 
       jobsToInsert.push({
         user_id: userId,
         status: 'pending',
         input_payload: {
-          factInput: `다음은 사용자의 지난 일주일간 일기입니다. 이를 분석하여 심리 리포트를 작성해주세요:\n\n${combinedDiaries}`,
+          factInput: `${combinedDiaries}`,
           meta: {
             start_date: fmtStart,
             end_date: fmtEnd
