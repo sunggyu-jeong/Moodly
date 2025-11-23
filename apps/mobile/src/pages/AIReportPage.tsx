@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { useCallback, useRef } from 'react';
 import {
   ActivityIndicator,
@@ -9,7 +10,8 @@ import {
   View,
 } from 'react-native';
 
-import { useGetAIReportByDateMockQuery } from '@/entities/ai-report/api';
+import { useAppSelector } from '@/app/store';
+import { useGetAIReportQuery } from '@/entities/ai-report/api';
 import { EMOTION_ICON_MAP } from '@/entities/ai-report/model/constants';
 import { FormattedTextSection } from '@/entities/ai-report/ui/FormattedTextSection';
 import { domainToUIStats } from '@/features/ai-report/model/mapper';
@@ -20,17 +22,19 @@ import { ReflectionList } from '@/features/ai-report/ui/ReflectionList';
 import { ReportSection } from '@/features/ai-report/ui/ReportSection';
 import { WeeklyKeywordBubbleChart } from '@/features/ai-report/ui/WeeklyKeywordBubbleChart';
 import { COMMON_ICONS } from '@/shared/assets/images/common';
+import useDelay from '@/shared/hooks/useDelay';
 import { gray } from '@/shared/styles/colors';
 import type { BottomSheetHandler } from '@/shared/types/bottomSheet';
 import NavigationBar from '@/shared/ui/elements/navigation/NavigationBar';
 import NaviTitleDisplay from '@/shared/ui/elements/NaviTitle';
 import { H2 } from '@/shared/ui/typography/H2';
 
-const PAGE_DATE = '2025-10-05';
-
 const AIReportPage = () => {
-  const { data, isLoading } = useGetAIReportByDateMockQuery(PAGE_DATE);
+  const { isLoading } = useGetAIReportQuery();
   const aiSheetRef = useRef<BottomSheetHandler>(null);
+  const reportDates = useAppSelector(state => state.aiReport.reportDates);
+  const selectedReport = useAppSelector(state => state.aiReport.selectedReport);
+  const delayedLoading = useDelay(isLoading);
 
   const handleChooseReport = useCallback(() => {
     aiSheetRef.current?.expand();
@@ -44,7 +48,7 @@ const AIReportPage = () => {
           style={{ display: 'flex', flexDirection: 'row' }}
         >
           <NaviTitleDisplay
-            title={'10월 5일 리포트'}
+            title={`${dayjs(selectedReport?.date).format('MM월 DD일')} 리포트`}
             style={styles.naviTitle}
           />
         </TouchableOpacity>
@@ -56,7 +60,9 @@ const AIReportPage = () => {
     </TouchableWithoutFeedback>
   );
 
-  if (isLoading || !data) {
+  console.log('@!>$>!>$@>$>@!', delayedLoading, selectedReport);
+
+  if (delayedLoading || !selectedReport) {
     return (
       <View style={[styles.container, styles.center]}>
         <ActivityIndicator
@@ -67,7 +73,7 @@ const AIReportPage = () => {
     );
   }
 
-  const emotionStats = domainToUIStats(data.emotion_distribution, EMOTION_ICON_MAP);
+  const emotionStats = domainToUIStats(selectedReport.emotion_distribution, EMOTION_ICON_MAP);
 
   return (
     <>
@@ -86,7 +92,7 @@ const AIReportPage = () => {
             weight="semibold"
             style={styles.title}
           >
-            {data.title}
+            {selectedReport.date}
           </H2>
 
           {/* 1. 기분 분포 */}
@@ -96,34 +102,34 @@ const AIReportPage = () => {
 
           {/* 2. 이번 주 키워드 (Previously Refactored) */}
           <ReportSection title="이번 주 키워드">
-            <WeeklyKeywordBubbleChart items={data.weekly_keywords} />
+            <WeeklyKeywordBubbleChart items={selectedReport.weekly_keywords} />
           </ReportSection>
 
           {/* 3. 감정 여정 요약 */}
           <ReportSection title="🪞 감정 여정 요약">
-            <FormattedTextSection text={data.summary} />
+            <FormattedTextSection text={selectedReport.summary} />
           </ReportSection>
 
           {/* 4. 핵심 내면 키워드 */}
           <ReportSection title="🧠 핵심 내면 키워드 3가지">
-            <CoreKeywordsList items={data.core_inner_keywords} />
+            <CoreKeywordsList items={selectedReport.core_inner_keywords} />
           </ReportSection>
 
           {/* 5. 자기 성찰 질문지 */}
           <ReportSection title="🪴 자기 성찰 질문지">
-            <ReflectionList questions={data.self_reflection_questions} />
+            <ReflectionList questions={selectedReport.self_reflection_questions} />
           </ReportSection>
 
           {/* 6. 무들리가 전하고 싶은 말 */}
           <ReportSection title="🌱 무들리가 전하고 싶은 말">
-            <FormattedTextSection text={data.message_from_moodly} />
+            <FormattedTextSection text={selectedReport.message_from_moodly} />
           </ReportSection>
         </ScrollView>
       </View>
       <ChooseReportSheet
         ref={aiSheetRef}
-        dates={['2024-12-01', '2024-12-02', '2024-12-03']}
-        selectedDate={'2024-12-02'}
+        dates={reportDates}
+        selectedDate={selectedReport.date}
         onSelect={date => {
           console.log('선택된 날짜:', date);
         }}

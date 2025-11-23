@@ -2,6 +2,7 @@ import { combineReducers, configureStore, type UnknownAction } from '@reduxjs/to
 import { setupListeners } from '@reduxjs/toolkit/query';
 
 import { rtkErrorMiddleware } from '@/app/middleware/rtkErrorMiddleware';
+import aiReportReducer from '@/features/ai-report/model/aiReportSlice';
 import diaryReducer from '@/features/diary/model/diarySlice';
 import settingReducer from '@/features/setting/model/settingSlice';
 import { appApi } from '@/shared/api/appApi';
@@ -9,6 +10,7 @@ import overlayReducer from '@/shared/model/overlaySlice';
 
 const reducers = combineReducers({
   [appApi.reducerPath]: appApi.reducer,
+  aiReport: aiReportReducer,
   overlay: overlayReducer,
   diary: diaryReducer,
   setting: settingReducer,

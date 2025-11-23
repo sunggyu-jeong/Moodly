@@ -11,8 +11,8 @@ const WEEKDAYS = ['일', '월', '화', '수', '목', '금', '토'];
 
 export const weeklyDiaryAggregator = schedules.task({
   id: "weekly-diary-aggregator",
-  cron: "0 15 * * 6",
-
+  cron: "0 3 * * *",
+  
   run: async (payload) => {
     console.log("[Weekly Aggregator] 주간 일기 집계 프로세스 시작....");
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);

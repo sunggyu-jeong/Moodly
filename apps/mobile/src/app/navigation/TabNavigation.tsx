@@ -3,6 +3,7 @@ import type { NavigatorScreenParams } from '@react-navigation/native';
 import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import AIReportPage from '@/pages/AIReportPage';
 import EmotionDiaryListPage from '@/pages/EmotionDiaryListPage';
 import HomePage from '@/pages/HomePage';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
@@ -14,6 +15,7 @@ import SettingStack, { type SettingStackParamList } from './SettingStack';
 export type BottomTabParamList = {
   Home: undefined;
   DiaryList: undefined;
+  AIReport: undefined;
   SettingStack: NavigatorScreenParams<SettingStackParamList>;
 };
 
@@ -45,6 +47,15 @@ const TabNavigation = () => {
         <Tab.Screen
           name="Home"
           component={HomePage}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <TabBarIcon source={focused ? MAIN_ICONS.homeActive : MAIN_ICONS.homeInactive} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="AIReport"
+          component={AIReportPage}
           options={{
             tabBarIcon: ({ focused }) => (
               <TabBarIcon source={focused ? MAIN_ICONS.homeActive : MAIN_ICONS.homeInactive} />
