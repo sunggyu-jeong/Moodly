@@ -71,3 +71,6 @@ release.keystore
 .build/
 
 coverage/
+
+apps/mobile/ios
+apps/mobile/android

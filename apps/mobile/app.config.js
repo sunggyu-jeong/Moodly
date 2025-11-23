@@ -43,7 +43,7 @@ export default {
     checkAutomatically: 'ON_LOAD',
   },
 
-  runtimeVersion: { policy: 'appVersion' },
+  runtimeVersion: '1.0.2',
   assetBundlePatterns: ['**/*'],
 
   ios: {
