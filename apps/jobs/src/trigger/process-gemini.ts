@@ -2,7 +2,7 @@ import { createClient } from "@supabase/supabase-js";
 import { task } from "@trigger.dev/sdk/v3";
 import { ENV } from "./env";
 
-const { GEMINI_API_KEY, SUPABASE_URL, SUPABASE_ANON_KEY } = ENV;
+const { GEMINI_API_KEY, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY } = ENV;
 
 function safeTrunc(s: any, n = 400) {
   let str = "";
@@ -84,14 +84,14 @@ export const processGeminiJob = task({
   retry: { maxAttempts: 3, minTimeoutInMs: 1000, maxTimeoutInMs: 10000 },
   
   run: async (payload: { jobId: string }) => {
-    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
       auth: { persistSession: false },
     });
     const { jobId } = payload;
     const startedAt = new Date();
 
     const { data: jobData, error } = await supabase
-      .from("tb_ai_jos")
+      .from("tb_ai_jobs")
       .select("*")
       .eq("id", jobId)
       .single();
@@ -99,7 +99,7 @@ export const processGeminiJob = task({
     if (error || !jobData) throw new Error(`Job not found: ${jobId}`);
     if (jobData.status === 'completed') return { message: "Already completed" };
 
-    await supabase.from("tb_ai_jos").update({ status: 'processing', started_at: startedAt.toISOString() }).eq("id", jobId);
+    await supabase.from("tb_ai_jobs").update({ status: 'processing', started_at: startedAt.toISOString() }).eq("id", jobId);
 
     try {
       const factInput = jobData.input_payload.factInput;
@@ -201,6 +201,7 @@ export const processGeminiJob = task({
       let text = extractGeminiText(data1);
       let parsed = parseWeeklyJSON(text);
       let light = parsed.ok ? lightValidateWeeklyObj(parsed.data) : { ok: false, reason: "INVALID_JSON" };
+      console.log(">>>>", finish1, text, parsed, light)
 
       if (!parsed.ok || !light.ok || finish1 === "MAX_TOKENS") {
         const retryPayload = {
@@ -242,7 +243,7 @@ export const processGeminiJob = task({
       }
 
       const completedAt = new Date();
-      await supabase.from("tb_ai_jos").update({
+      await supabase.from("tb_ai_jobs").update({
         status: 'completed',
         result_data: parsed.data,
         usage_info: usage,
@@ -254,7 +255,7 @@ export const processGeminiJob = task({
 
     } catch (error: any) {
       const completedAt = new Date();
-      await supabase.from("tb_ai_jos").update({
+      await supabase.from("tb_ai_jobs").update({
         status: 'failed',
         error_message: error.message || String(error),
         completed_at: completedAt.toISOString(),

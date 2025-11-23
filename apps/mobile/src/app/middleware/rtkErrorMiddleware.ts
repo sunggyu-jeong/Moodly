@@ -31,17 +31,17 @@ export const rtkErrorMiddleware: Middleware = () => next => action => {
         });
 
       if (!silent) {
-        const msg =
-          code === 'UNAUTHORIZED'
-            ? '로그인이 필요합니다.'
-            : code === 'NETWORK'
-              ? '네트워크 오류입니다.'
-              : '요청 처리 중 오류가 발생했습니다.';
+        // const msg =
+        //   code === 'UNAUTHORIZED'
+        //     ? '로그인이 필요합니다.'
+        //     : code === 'NETWORK'
+        //       ? '네트워크 오류입니다.'
+        //       : '요청 처리 중 오류가 발생했습니다.';
 
         store.dispatch(
           setShowToastView({
             visibility: true,
-            message: msg,
+            message: err.message,
           }),
         );
       }
