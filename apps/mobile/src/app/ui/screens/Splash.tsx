@@ -1,5 +1,5 @@
 import * as Updates from 'expo-updates';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { Image, StatusBar, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -19,38 +19,54 @@ import AppBootstrap from '../../provider/AppBootstrap';
 export interface SplashProps {
   progress: number;
 }
+
 const Splash = () => {
   const [getFirstLaunchFlag] = useLazyGetFirstLaunchFlagQuery();
   const { isLoading, versionStatus, versionPolicy } = useVersionCheck();
   const dispatch = useAppDispatch();
 
+  const isLogicStarted = useRef(false);
+
   const flag = useCallback(async () => {
-    const response = await getFirstLaunchFlag();
-    if (response.data) {
-      resetTo('Onboarding');
-      return;
-    }
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (isNotEmpty(user)) {
-      resetTo('Main');
-    } else {
+    try {
+      const response = await getFirstLaunchFlag();
+      if (response.data) {
+        resetTo('Onboarding');
+        return;
+      }
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (isNotEmpty(user)) {
+        resetTo('Main');
+      } else {
+        resetTo('Login');
+      }
+    } catch (error) {
+      console.error('Splash navigation error:', error);
       resetTo('Login');
     }
   }, [getFirstLaunchFlag]);
 
   const handleOTAUpdate = useCallback(async () => {
-    const response = await Updates.checkForUpdateAsync();
-    if (!response.isAvailable) return false;
-    await Updates.fetchUpdateAsync();
-    await Updates.reloadAsync();
+    if (__DEV__) return false;
 
-    return true;
+    try {
+      const response = await Updates.checkForUpdateAsync();
+      if (!response.isAvailable) return false;
+
+      await Updates.fetchUpdateAsync();
+      await Updates.reloadAsync();
+      return true;
+    } catch (e) {
+      console.log('OTA Error:', e);
+      return false;
+    }
   }, []);
 
   const handleVersionCheck = useCallback(() => {
-    if (isLoading || !versionStatus) return false;
+    if (!versionStatus) return false;
 
     const modal = {
       visibity: true,
@@ -87,23 +103,27 @@ const Splash = () => {
     }
 
     return false;
-  }, [isLoading, versionStatus, versionPolicy, dispatch]);
+  }, [versionStatus, versionPolicy, dispatch]);
 
   useEffect(() => {
-    (async () => {
-      try {
-        const updated = await handleOTAUpdate();
-        if (updated) return;
+    if (isLoading) return;
 
-        const blocked = handleVersionCheck();
-        if (blocked) return;
+    if (isLogicStarted.current) return;
 
-        setTimeout(flag, 1500);
-      } catch {
-        flag();
-      }
-    })();
-  }, [flag, handleOTAUpdate, handleVersionCheck]);
+    const init = async () => {
+      isLogicStarted.current = true;
+
+      const updated = await handleOTAUpdate();
+      if (updated) return;
+
+      const blocked = handleVersionCheck();
+      if (blocked) return;
+
+      setTimeout(flag, 1500);
+    };
+
+    init();
+  }, [isLoading, flag, handleOTAUpdate, handleVersionCheck]);
 
   return (
     <>
