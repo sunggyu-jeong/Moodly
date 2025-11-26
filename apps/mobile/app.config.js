@@ -1,8 +1,12 @@
+import 'dotenv/config';
+
 const APP_ENV = process.env.APP_ENV ?? 'develop'; // develop | staging | production
 const isProd = APP_ENV === 'production';
 const isStg = APP_ENV === 'staging';
 
 const suffix = isProd ? '' : isStg ? ' 베타' : ' 개발';
+
+const icon = isProd ? './assets/icon.png' : './assets/icon-dev.png';
 
 const iosBundleId = isProd ? 'com.moodlyfrontend' : isStg ? 'com.moodlybeta' : 'com.moodlydev';
 const androidPackage = iosBundleId;
@@ -30,6 +34,7 @@ export default {
   scheme,
   userInterfaceStyle: 'light',
   orientation: 'portrait',
+  icon,
 
   splash: {
     image: './assets/splash.png',
@@ -61,6 +66,10 @@ export default {
     package: androidPackage,
     googleServicesFile: androidGoogleServiceFile,
     versionCode: 7,
+    adaptiveIcon: {
+      foregroundImage: icon,
+      backgroundColor: '#ffffff',
+    },
     intentFilters: [{ action: 'VIEW', category: ['BROWSABLE', 'DEFAULT'], data: [{ scheme }] }],
   },
 

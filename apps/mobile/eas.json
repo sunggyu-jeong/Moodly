@@ -44,6 +44,9 @@
     "adhoc": {
       "extends": "production",
       "distribution": "internal",
+      "env": {
+        "APP_ENV": "develop"
+      },
       "ios": {
         "simulator": false
       },
