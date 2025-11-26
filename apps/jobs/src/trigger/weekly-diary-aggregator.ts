@@ -17,7 +17,7 @@ export const weeklyDiaryAggregator = schedules.task({
     console.log("[Weekly Aggregator] 주간 일기 집계 프로세스 시작....");
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
     
-    const now = new Date(payload.timestamp);
+    const now = new Date(); 
     
     const endDate = new Date(now);
     
