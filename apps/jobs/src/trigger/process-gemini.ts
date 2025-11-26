@@ -146,6 +146,7 @@ export const processGeminiJob = task({
           ],
           properties: {
             title: { type: "STRING", minLength: 5, maxLength: 15 },
+            summary: { type: "STRING", minLength: 20 }, 
             emotion_distribution: {
               type: "OBJECT",
               required: ["joy", "sad", "calm", "anxiety", "angry"],

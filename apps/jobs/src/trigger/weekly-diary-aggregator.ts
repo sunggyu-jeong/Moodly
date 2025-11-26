@@ -5,9 +5,6 @@ import { ICON_DATA } from "../util/icons";
 import { ENV } from "./env";
 import { processGeminiJob } from "./process-gemini";
 
-// [중요] 여기서 미리 꺼내지 않고 run 함수 내부에서 사용 (에러 방지)
-// const { SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY } = ENV;
-
 const WEEKDAYS = ['일', '월', '화', '수', '목', '금', '토'];
 
 export const weeklyDiaryAggregator = schedules.task({
@@ -43,8 +40,6 @@ export const weeklyDiaryAggregator = schedules.task({
       console.error("일기 데이터 조회 중 에러 발생:", error);
       throw error;
     }
-
-    // ... (이하 로직은 기존과 동일) ...
 
     const sameDayDiaries = diaries?.filter((diary) => {
       const createdDateString = diary.created_at.split('T')[0];
