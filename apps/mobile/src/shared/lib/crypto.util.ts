@@ -1,9 +1,6 @@
 import CryptoJS from 'crypto-js';
 
-import { ENV } from '@/shared/lib/env';
 import { isEmpty } from '@/shared/lib/value.util';
-
-const { ENCRYPTION_SECRET_KEY } = ENV;
 
 export const encryptData = <T>(data: T) => {
   try {
@@ -12,7 +9,7 @@ export const encryptData = <T>(data: T) => {
     }
     const encrypted = CryptoJS.AES.encrypt(
       JSON.stringify(data),
-      ENCRYPTION_SECRET_KEY ?? '',
+      process.env.EXPO_PUBLIC_ENCRYPTION_SECRET_KEY,
     ).toString();
     return encrypted;
   } catch (error) {
@@ -37,7 +34,10 @@ export const decryptData = (ciphertext: string) => {
   }
 
   try {
-    const bytes = CryptoJS.AES.decrypt(ciphertext, ENCRYPTION_SECRET_KEY ?? '');
+    const bytes = CryptoJS.AES.decrypt(
+      ciphertext,
+      process.env.EXPO_PUBLIC_ENCRYPTION_SECRET_KEY ?? '',
+    );
     const decrypted = bytes.toString(CryptoJS.enc.Utf8);
 
     return JSON.parse(decrypted);

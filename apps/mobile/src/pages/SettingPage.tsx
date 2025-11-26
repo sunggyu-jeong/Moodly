@@ -11,7 +11,6 @@ import { COMMON_ICONS } from '@/shared/assets/images/common';
 import useDelay from '@/shared/hooks/useDelay';
 import { useAppDispatch } from '@/shared/hooks/useHooks';
 import { useExternalWebSite } from '@/shared/hooks/useOpenChat';
-import { ENV } from '@/shared/lib/env';
 import { navigate } from '@/shared/lib/navigation.util';
 import { isNotEmpty } from '@/shared/lib/value.util';
 import { setShowModalPopup } from '@/shared/model/overlaySlice';
@@ -28,7 +27,6 @@ const SettingPage = () => {
   const [notificationStatus, setNotificationStatus] = useState<Notifications.PermissionStatus>(
     Notifications.PermissionStatus.UNDETERMINED,
   );
-  const { KAKAO_OPEN_CHAT_LINK, PRIVACY_POLICY_LINK, TERMS_OF_SERVICE_LINK } = ENV;
 
   useEffect(() => {
     const checkNotificationStatus = async () => {
@@ -52,22 +50,28 @@ const SettingPage = () => {
           });
           break;
         case SETTING_EVENT_TYPE.SEND_FEEDBACK:
-          openLink(KAKAO_OPEN_CHAT_LINK);
+          openLink(process.env.EXPO_PUBLIC_KAKAO_OPEN_CHAT_LINK);
           break;
         case SETTING_EVENT_TYPE.LOG_OUT:
           signOut();
           break;
         case SETTING_EVENT_TYPE.PRIVACY_POLICY:
-          openLink(PRIVACY_POLICY_LINK);
+          openLink(process.env.EXPO_PUBLIC_PRIVACY_POLICY_LINK);
           break;
         case SETTING_EVENT_TYPE.TERMS_OF_SERVICE:
-          openLink(TERMS_OF_SERVICE_LINK);
+          openLink(process.env.EXPO_PUBLIC_TERMS_OF_SERVICE_LINK);
           break;
         default:
           break;
       }
     },
-    [openLink, signOut, KAKAO_OPEN_CHAT_LINK, PRIVACY_POLICY_LINK, TERMS_OF_SERVICE_LINK],
+    [
+      openLink,
+      signOut,
+      process.env.EXPO_PUBLIC_KAKAO_OPEN_CHAT_LINK,
+      process.env.EXPO_PUBLIC_PRIVACY_POLICY_LINK,
+      process.env.EXPO_PUBLIC_TERMS_OF_SERVICE_LINK,
+    ],
   );
 
   const headerItem = isNotEmpty(userInfo)

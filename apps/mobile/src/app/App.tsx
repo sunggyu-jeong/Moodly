@@ -12,7 +12,6 @@ import OverlayManager from '@/app/provider/OverlayProvider';
 import { store } from '@/app/store';
 import { useNotificationPermission } from '@/shared/hooks/useNotificationPermission';
 import '@/shared/lib/day.util';
-import { ENV } from '@/shared/lib/env';
 import { navigationRef } from '@/shared/lib/navigation.util';
 import { isEmpty } from '@/shared/lib/value.util';
 import { StyleSheet, View } from 'react-native';
@@ -46,7 +45,6 @@ export const onRenderCallback: ProfilerOnRenderCallback = (
 
 function App() {
   const [updateFcmToken] = useUpsertPushTokenMutation();
-  const { AMPLITUDE_API_KEY } = ENV;
 
   const onTokenUpdate = useCallback(
     async (token: string | null) => {
@@ -70,7 +68,7 @@ function App() {
     const initializeAmplitude = async () => {
       try {
         console.log('Amplitude 초기화를 시작합니다...');
-        await amplitude.init(AMPLITUDE_API_KEY).promise;
+        await amplitude.init(process.env.EXPO_PUBLIC_AMPLITUDE_API_KEY).promise;
         // await amplitude.add(new SessionReplayPlugin()).promise;
 
         console.log('Amplitude 초기화 및 플러그인 추가 완료.');

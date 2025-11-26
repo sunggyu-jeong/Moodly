@@ -6,7 +6,6 @@ import { MODAL_CONFIRM_ACTION_KEY } from '@/entities/overlay/model/types';
 import SocialLoginGroup, { SOCIAL_LOGIN_ENTRANCE } from '@/features/auth/ui/SocialLoginGroup';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { getScaleSize } from '@/shared/hooks/useScale';
-import { ENV } from '@/shared/lib/env';
 import { setShowModalPopup } from '@/shared/model/overlaySlice';
 import { gray, primary } from '@/shared/styles/colors';
 import { H3 } from '@/shared/ui/typography/H3';
@@ -20,7 +19,7 @@ const Login = () => {
       setShowModalPopup({
         visibility: true,
         title: '테스트',
-        message: `${(ENV.SUPABASE_URL, ENV.GOOGLE_WEB_CLIENT_ID)}`,
+        message: `${(process.env.EXPO_PUBLIC_SUPABASE_URL, process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID)}`,
         cancelText: '취소',
         confirmText: '삭제',
         confirmActionKey: MODAL_CONFIRM_ACTION_KEY.DELETE_DIARY,

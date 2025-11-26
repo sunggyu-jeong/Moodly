@@ -8,7 +8,6 @@ import { useSocialLogin } from '@/features/auth/hooks/useSocialLogin';
 import SocialLoginButton from '@/features/auth/ui/SocialLoginButton';
 import { useAppDispatch } from '@/shared/hooks/useHooks';
 import { useExternalWebSite } from '@/shared/hooks/useOpenChat';
-import { ENV } from '@/shared/lib/env';
 import { navigate, resetTo } from '@/shared/lib/navigation.util';
 import { initUserId, isIphone } from '@/shared/lib/user.util';
 import { isEmpty, isNotEmpty } from '@/shared/lib/value.util';
@@ -31,7 +30,6 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
   const dispatch = useAppDispatch();
   const [saveFirstLaunchFlag] = useUpdateFirstLaunchFlagMutation();
   const { openLink } = useExternalWebSite();
-  const { PRIVACY_POLICY_LINK, TERMS_OF_SERVICE_LINK } = ENV;
 
   const fetchUserInfo = useCallback(async () => {
     const response = await getUserInfo();
@@ -75,14 +73,14 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
           로그인 시{' '}
           <Text
             style={styles.textUnderline}
-            onPress={() => openLink(TERMS_OF_SERVICE_LINK)}
+            onPress={() => openLink(process.env.EXPO_PUBLIC_TERMS_OF_SERVICE_LINK)}
           >
             이용약관
           </Text>
           과{' '}
           <Text
             style={styles.textUnderline}
-            onPress={() => openLink(PRIVACY_POLICY_LINK)}
+            onPress={() => openLink(process.env.EXPO_PUBLIC_PRIVACY_POLICY_LINK)}
           >
             개인정보 처리 방침
           </Text>

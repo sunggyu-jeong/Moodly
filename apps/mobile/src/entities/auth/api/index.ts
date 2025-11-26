@@ -11,7 +11,7 @@ import { isIphone } from '@/shared/lib/user.util';
 
 import type { SetUserInfoInput, SignInProviderInput, SignInResult, UserInfo } from '../model/types';
 
-GoogleSignin.configure({ webClientId: process.env.GOOGLE_WEB_CLIENT_ID! });
+GoogleSignin.configure({ webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID! });
 
 async function getDeviceId(): Promise<string> {
   if (isIphone()) {

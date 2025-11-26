@@ -87,19 +87,6 @@ export default {
   extra: {
     APP_ENV,
 
-    SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY,
-    HOT_UPDATER_SUPABASE_BUCKET_NAME: process.env.HOT_UPDATER_SUPABASE_BUCKET_NAME,
-    SUPABASE_URL: process.env.SUPABASE_URL,
-    TEAM_ID: process.env.TEAM_ID,
-    CLIENT_ID: process.env.CLIENT_ID,
-    KEY_ID: process.env.KEY_ID,
-    KAKAO_OPEN_CHAT_LINK: process.env.KAKAO_OPEN_CHAT_LINK,
-    GOOGLE_WEB_CLIENT_ID: process.env.GOOGLE_WEB_CLIENT_ID,
-    PRIVACY_POLICY_LINK: process.env.PRIVACY_POLICY_LINK,
-    TERMS_OF_SERVICE_LINK: process.env.TERMS_OF_SERVICE_LINK,
-    AMPLITUDE_API_KEY: process.env.AMPLITUDE_API_KEY,
-    ENCRYPTION_SECRET_KEY: process.env.ENCRYPTION_SECRET_KEY,
-
     eas: { projectId: PROJECT_ID },
   },
 };
