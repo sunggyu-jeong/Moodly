@@ -40,6 +40,16 @@
       "env": {
         "APP_ENV": "production"
       }
+    },
+    "adhoc": {
+      "extends": "production",
+      "distribution": "internal",
+      "ios": {
+        "simulator": false
+      },
+      "android": {
+        "buildType": "apk"
+      }
     }
   },
   "submit": {
