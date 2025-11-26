@@ -45,6 +45,9 @@
       "extends": "development",
       "distribution": "internal",
       "developmentClient": false,
+      "env": {
+        "APP_ENV": "develop"
+      },
       "ios": {
         "simulator": false
       },
