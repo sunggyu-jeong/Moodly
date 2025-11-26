@@ -136,7 +136,6 @@ export const processGeminiJob = task({
         response_schema: {
           type: "OBJECT",
           required: [
-            "title",
             "summary",
             "emotion_distribution",
             "weekly_keywords",
@@ -145,8 +144,7 @@ export const processGeminiJob = task({
             "message_from_moodly"
           ],
           properties: {
-            title: { type: "STRING", minLength: 5, maxLength: 15 },
-            summary: { type: "STRING", minLength: 20 }, 
+            summary: { type: "STRING", minLength: 100 }, 
             emotion_distribution: {
               type: "OBJECT",
               required: ["joy", "sad", "calm", "anxiety", "angry"],
