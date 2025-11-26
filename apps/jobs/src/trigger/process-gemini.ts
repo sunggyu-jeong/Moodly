@@ -1,8 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { task } from "@trigger.dev/sdk/v3";
+import { encryptData } from "../util/crypto";
 import { ENV } from "./env";
-
-const { GEMINI_API_KEY, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY } = ENV;
 
 function safeTrunc(s: any, n = 400) {
   let str = "";
@@ -67,8 +66,8 @@ function lightValidateWeeklyObj(o: any) {
   }
 }
 
-async function callGemini(model: string, payload: any) {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${GEMINI_API_KEY}`;
+async function callGemini(model: string, payload: any, apiKey: string) {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${apiKey}`;
   
   console.log(`Requesting Gemini Model: ${model}`);
 
@@ -94,6 +93,8 @@ export const processGeminiJob = task({
   retry: { maxAttempts: 3, minTimeoutInMs: 1000, maxTimeoutInMs: 10000 },
   
   run: async (payload: { jobId: string }) => {
+    const { GEMINI_API_KEY, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY } = ENV;
+
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
       auth: { persistSession: false },
     });
@@ -135,6 +136,7 @@ export const processGeminiJob = task({
         response_schema: {
           type: "OBJECT",
           required: [
+            "title",
             "summary",
             "emotion_distribution",
             "weekly_keywords",
@@ -143,7 +145,7 @@ export const processGeminiJob = task({
             "message_from_moodly"
           ],
           properties: {
-            summary: { type: "STRING", minLength: 100 },
+            title: { type: "STRING", minLength: 5, maxLength: 15 },
             emotion_distribution: {
               type: "OBJECT",
               required: ["joy", "sad", "calm", "anxiety", "angry"],
@@ -209,7 +211,7 @@ export const processGeminiJob = task({
         system_instruction: { parts: [{ text: systemInstruction }] },
       };
 
-      let { data: data1 } = await callGemini(body.model, geminiPayload);
+      let { data: data1 } = await callGemini(body.model, geminiPayload, GEMINI_API_KEY);
       
       const finish1 = getFinishReason(data1);
       let text = extractGeminiText(data1);
@@ -225,7 +227,7 @@ export const processGeminiJob = task({
                 parts: [{ text: systemInstruction + "\n\n이전 응답이 불완전했습니다. 완전한 JSON을 출력하세요." }]
             }
         };
-        const { data: data2 } = await callGemini(body.model, retryPayload);
+        const { data: data2 } = await callGemini(body.model, retryPayload, GEMINI_API_KEY);
         const text2 = extractGeminiText(data2);
         const parsed2 = parseWeeklyJSON(text2);
         
@@ -259,7 +261,7 @@ export const processGeminiJob = task({
       const completedAt = new Date();
       await supabase.from("tb_ai_jobs").update({
         status: 'completed',
-        result_data: parsed.data,
+        result_data: encryptData(parsed.data), 
         usage_info: usage,
         completed_at: completedAt.toISOString(),
         execution_time_ms: completedAt.getTime() - startedAt.getTime()

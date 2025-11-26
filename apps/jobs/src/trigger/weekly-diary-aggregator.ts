@@ -5,7 +5,8 @@ import { ICON_DATA } from "../util/icons";
 import { ENV } from "./env";
 import { processGeminiJob } from "./process-gemini";
 
-const { SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY } = ENV;
+// [중요] 여기서 미리 꺼내지 않고 run 함수 내부에서 사용 (에러 방지)
+// const { SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY } = ENV;
 
 const WEEKDAYS = ['일', '월', '화', '수', '목', '금', '토'];
 
@@ -14,17 +15,22 @@ export const weeklyDiaryAggregator = schedules.task({
   cron: "0 3 * * *",
   
   run: async (payload) => {
+    const { SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY } = ENV;
+
     console.log("[Weekly Aggregator] 주간 일기 집계 프로세스 시작....");
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+    
     const now = new Date(payload.timestamp);
+    
     const endDate = new Date(now);
-    const startDate = new Date(now);
+    
+    const startDate = new Date(endDate);
     startDate.setDate(startDate.getDate() - 7);
 
     const fmtStart = startDate.toISOString().split('T')[0];
     const fmtEnd = endDate.toISOString().split('T')[0];
 
-    console.log(`집계 기간: ${fmtStart} ~ ${fmtEnd}`);
+    console.log(`집계 기간: ${fmtStart} ~ ${fmtEnd} (오늘 기준 최근 7일)`);
 
     const { data: diaries, error } = await supabase
     .from("moodly_diary")
@@ -37,6 +43,8 @@ export const weeklyDiaryAggregator = schedules.task({
       console.error("일기 데이터 조회 중 에러 발생:", error);
       throw error;
     }
+
+    // ... (이하 로직은 기존과 동일) ...
 
     const sameDayDiaries = diaries?.filter((diary) => {
       const createdDateString = diary.created_at.split('T')[0];
@@ -84,7 +92,6 @@ export const weeklyDiaryAggregator = schedules.task({
 
     const jobsToInsert = [];
 
-
     const moodMap = ICON_DATA.reduce((acc, item) => {
       acc[item.id] = item.text;
       return acc;
@@ -105,7 +112,6 @@ export const weeklyDiaryAggregator = schedules.task({
       })
       .join(",");
     
-
       jobsToInsert.push({
         user_id: userId,
         status: 'pending',

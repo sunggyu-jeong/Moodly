@@ -33,3 +33,19 @@ export const decryptData = (ciphertext: string) => {
     return ciphertext;
   }
 };
+
+export const encryptData = <T>(data: T) => {
+  try {
+    if (!data) {
+      throw new Error('Data to encrypt cannot be empty');
+    }
+    const encrypted = CryptoJS.AES.encrypt(
+      JSON.stringify(data),
+      ENCRYPTION_SECRET_KEY,
+    ).toString();
+    return encrypted;
+  } catch (error) {
+    console.error('Encryption error:', error);
+    return null;
+  }
+};
