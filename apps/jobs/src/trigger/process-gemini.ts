@@ -1,6 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
 import { task } from "@trigger.dev/sdk/v3";
-import { encryptData } from "../util/crypto";
 import { ENV } from "./env";
 
 function safeTrunc(s: any, n = 400) {
@@ -260,7 +259,7 @@ export const processGeminiJob = task({
       const completedAt = new Date();
       await supabase.from("tb_ai_jobs").update({
         status: 'completed',
-        result_data: encryptData(parsed.data), 
+        result_data: parsed.data, 
         usage_info: usage,
         completed_at: completedAt.toISOString(),
         execution_time_ms: completedAt.getTime() - startedAt.getTime()
