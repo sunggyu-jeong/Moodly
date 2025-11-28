@@ -14,6 +14,19 @@ import { diaryTag } from './tags';
 
 export const diaryApi = appApi.injectEndpoints({
   endpoints: build => ({
+    getUserDiaryCount: build.query<number, void>({
+      query: () =>
+        withAuth(async (client, user) => {
+          const { count, error } = await client
+            .from('moodly_diary')
+            .select('*', { count: 'exact', head: true })
+            .eq('user_id', user.id);
+
+          if (error) throw error;
+          return count ?? 0;
+        }),
+      providesTags: ['DiaryCount'],
+    }),
     getDiariesByRange: build.query<Diary[], DiaryDateRangeQuery>({
       query: ({ start, end }) =>
         withAuth(async (client, user) => {
@@ -114,6 +127,7 @@ export const diaryApi = appApi.injectEndpoints({
 });
 
 export const {
+  useGetUserDiaryCountQuery,
   useGetDiariesByRangeQuery,
   useGetDiaryCountQuery,
   useHasDiaryForDayQuery,

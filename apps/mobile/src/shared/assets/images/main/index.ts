@@ -14,7 +14,7 @@ export const MAIN_ICONS = {
   settingsActive: require('./tab/active/settings-active.png'),
   settingsInactive: require('./tab/inactive/settings-inactive.png'),
   reportActive: require('./tab/active/report-active.png'),
-  reportInactive: require('./tab/inactive/report-inactive.png'),
+  reportInactive: require('./tab/active/report-active.png'),
 } as const;
 
 export type MainIconKey = keyof typeof MAIN_ICONS;

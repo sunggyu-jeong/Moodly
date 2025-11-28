@@ -18,3 +18,16 @@ export const formatDate = (date: Dayjs): string => {
 export const formatDateTime = (date: Dayjs): string => {
   return date.format('YYYY-MM-DD HH:mm:ss');
 };
+
+export const getWeeklyCycleKey = (): string => {
+  const now = dayjs();
+
+  const isSunday = now.day() === 0;
+  const isBeforeNine = now.hour() < 9;
+
+  if (isSunday && isBeforeNine) {
+    return now.subtract(1, 'week').day(0).format('YYYY-MM-DD');
+  }
+
+  return now.day(0).format('YYYY-MM-DD');
+};

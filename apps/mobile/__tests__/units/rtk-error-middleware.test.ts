@@ -1,13 +1,30 @@
+(global as any).__DEV__ = true;
 import { configureStore, createAction } from '@reduxjs/toolkit';
 
 import { rtkErrorMiddleware } from '@/app/middleware/rtkErrorMiddleware';
 import { setShowToastView } from '@/shared/model/overlaySlice';
 
+jest.mock('@/shared/lib/supabase.util', () => ({
+  supabase: {
+    auth: {
+      getSession: jest.fn(),
+      onAuthStateChange: jest.fn(() => ({ data: { subscription: { unsubscribe: jest.fn() } } })),
+    },
+  },
+}));
 jest.mock('@/shared/model/overlaySlice', () => ({
   setShowToastView: jest.fn(payload => ({
     type: 'overlay/setShowToastView',
     payload,
   })),
+}));
+
+jest.mock('@/shared/api/appApi', () => ({
+  appApi: {
+    reducerPath: 'appApi',
+    reducer: (state = {}) => state,
+    middleware: () => (next: any) => (action: any) => next(action),
+  },
 }));
 
 const rejected = createAction('test/rejected', (payload: any, meta?: any) => ({

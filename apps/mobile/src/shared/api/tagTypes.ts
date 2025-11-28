@@ -5,6 +5,9 @@ export const TAGS = [
   'Session',
   'VersionPolicy',
   'WeeklyProgress',
+  'AiJob',
+  'DiaryCount',
+  'WeeklyReportStatus',
 ] as const;
 
 export type TagType = (typeof TAGS)[number];

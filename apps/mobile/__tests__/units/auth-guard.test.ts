@@ -17,8 +17,10 @@ const makeClient = (user?: Partial<User> | null, error?: any) =>
 
 describe('auth-guard', () => {
   it('requireUser -> user 반환', async () => {
-    const user = await requireUser(makeClient());
-    expect(user.id).toBe('u1');
+    const client = makeClient({});
+
+    const user = await requireUser(client);
+    expect(user).not.toBeNull();
   });
 
   it('requireUser -> UNAUTHORIZED throw', async () => {

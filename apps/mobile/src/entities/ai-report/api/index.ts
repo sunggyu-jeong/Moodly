@@ -19,6 +19,21 @@ const parseMaybeString = <T>(x: unknown): T => (typeof x === 'string' ? JSON.par
 
 export const aiReportApi = appApi.injectEndpoints({
   endpoints: build => ({
+    hasWeeklyReport: build.query<boolean, void>({
+      query: () =>
+        withAuth(async (client, user) => {
+          const { count, error } = await client
+            .from('tb_ai_jobs')
+            .select('*', { count: 'exact', head: true })
+            .eq('user_id', user.id)
+            .eq('is_report_read', false)
+            .limit(1);
+
+          if (error) throw error;
+          return (count ?? 0) > 0;
+        }),
+      providesTags: ['WeeklyReportStatus'],
+    }),
     getDiaryStreak: build.query<DiaryStreakInfo, void>({
       query: () => async (client: SupabaseClient) => {
         const from = dayjs(dayjs().format('YYYY-MM-DD')).subtract(30, 'day').format('YYYY-MM-DD');
@@ -50,6 +65,7 @@ export const aiReportApi = appApi.injectEndpoints({
         return info;
       },
     }),
+
     requestAIWeeklySummary: build.mutation<WeeklySummaryResultDTO, WeeklySummaryPayloadDTO>({
       query: payload => async (client: SupabaseClient) => {
         const { data, error } = await client.functions.invoke('ai-proxy', {
@@ -77,32 +93,7 @@ export const aiReportApi = appApi.injectEndpoints({
         return parseMaybeString<WeeklySummaryResultDTO>(data);
       },
       invalidatesTags: ['WeeklyProgress'],
-      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
-        const patch = dispatch(
-          aiReportApi.util.updateQueryData('getWeeklyProgress', undefined, draft => {
-            if (!draft) return;
-            draft.doneDays = Math.min(draft.totalDays, (draft.doneDays ?? 0) + 1);
-            draft.isFirst = false;
-          }),
-        );
-        try {
-          await queryFulfilled;
-        } catch {
-          patch.undo();
-        }
-      },
     }),
-
-    getWeeklyProgress: build.query<{ totalDays: number; doneDays: number; isFirst: boolean }, void>(
-      {
-        queryFn: async () => {
-          await new Promise(r => setTimeout(r, 400));
-          return { data: { totalDays: 7, doneDays: 3, isFirst: false } };
-        },
-        providesTags: ['WeeklyProgress'],
-        keepUnusedDataFor: 300,
-      },
-    ),
 
     getAIReport: build.query<AIReportDomain[], void>({
       queryFn: async () => {
@@ -191,8 +182,8 @@ export const aiReportApi = appApi.injectEndpoints({
 });
 
 export const {
+  useHasWeeklyReportQuery,
   useGetDiaryStreakQuery,
   useRequestAIWeeklySummaryMutation,
-  useGetWeeklyProgressQuery,
   useGetAIReportQuery,
 } = aiReportApi;
