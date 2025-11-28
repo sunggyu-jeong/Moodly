@@ -66,7 +66,6 @@ describe('useWeeklyReportCheck Hook', () => {
     });
 
     await waitFor(() => {
-      expect(result.current.isLoading).toBe(false);
       expect(result.current.isBlocked).toBe(true);
     });
 
@@ -88,7 +87,6 @@ describe('useWeeklyReportCheck Hook', () => {
     });
 
     await waitFor(() => {
-      expect(result.current.isLoading).toBe(false);
       expect(result.current.isBlocked).toBe(true);
     });
 

@@ -1,8 +1,6 @@
-import { getUserId } from '@amplitude/analytics-react-native';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import dayjs from 'dayjs';
 
-import { calcDiaryStreak } from '@/entities/ai-report/lib/calcDiaryStreak';
 import type { DiaryStreakInfo } from '@/entities/ai-report/model/types';
 import { setReportDates, setSelectedReport } from '@/features/ai-report/model/aiReportSlice';
 import type { AIReportDomain } from '@/features/ai-report/model/domain';
@@ -13,6 +11,8 @@ import type {
 import { appApi } from '@/shared/api/appApi';
 import { withAuth } from '@/shared/api/authGuard';
 import { API_CODE } from '@/shared/api/error/apiCode';
+import { decryptData } from '@/shared/lib/crypto.util';
+import { getWeeklyCycleKey } from '@/shared/lib/day.util';
 import { supabase } from '@/shared/lib/supabase.util';
 
 const parseMaybeString = <T>(x: unknown): T => (typeof x === 'string' ? JSON.parse(x) : x) as T;
@@ -34,36 +34,41 @@ export const aiReportApi = appApi.injectEndpoints({
         }),
       providesTags: ['WeeklyReportStatus'],
     }),
+
     getDiaryStreak: build.query<DiaryStreakInfo, void>({
-      query: () => async (client: SupabaseClient) => {
-        const from = dayjs(dayjs().format('YYYY-MM-DD')).subtract(30, 'day').format('YYYY-MM-DD');
-        const today = dayjs().format('YYYY-MM-DD');
-        const userId = await getUserId();
-        const { data, error } = await client
-          .from('moodly_diary')
-          .select('record_date')
-          .eq('user_id', userId)
-          .gte('record_date', from)
-          .lte('record_date', today)
-          .order('record_date', { ascending: false });
+      query: () =>
+        withAuth(async (client, user) => {
+          const startOfWeekStr = getWeeklyCycleKey();
+          const startDate = dayjs(startOfWeekStr);
+          const endDate = startDate.add(6, 'day');
 
-        if (error) {
-          throw error;
-        }
-        const { streakCount, dates } = calcDiaryStreak(
-          today,
-          (data ?? []) as { record_date: string }[],
-        );
+          const { data, error } = await client
+            .from('moodly_diary')
+            .select('record_date')
+            .eq('user_id', user.id)
+            .gte('record_date', startDate.format('YYYY-MM-DD'))
+            .lte('record_date', endDate.format('YYYY-MM-DD'));
 
-        const info: DiaryStreakInfo = {
-          baseDate: today,
-          streakCount,
-          dates,
-          reached7: streakCount >= 7,
-        };
+          if (error) throw error;
 
-        return info;
-      },
+          const records = data ?? [];
+          const dailyStatus = new Array(7).fill(false);
+
+          records.forEach(record => {
+            const dayIndex = dayjs(record.record_date).diff(startDate, 'day');
+            if (dayIndex >= 0 && dayIndex < 7) {
+              dailyStatus[dayIndex] = true;
+            }
+          });
+
+          const weeklyCount = records.length;
+
+          return {
+            weeklyCount,
+            dailyStatus,
+            canReceiveReport: weeklyCount >= 4,
+          };
+        }),
     }),
 
     requestAIWeeklySummary: build.mutation<WeeklySummaryResultDTO, WeeklySummaryPayloadDTO>({
@@ -112,7 +117,7 @@ export const aiReportApi = appApi.injectEndpoints({
             if (!reports) return [];
 
             return reports.map(report => {
-              const rawData = report.result_data as any;
+              const rawData = decryptData(report.result_data);
 
               return {
                 id: report.id,

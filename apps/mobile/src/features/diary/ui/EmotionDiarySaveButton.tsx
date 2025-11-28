@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { useEffect } from 'react';
 
 import { fromRow } from '@/entities/diary/model/mapper';
@@ -22,7 +23,16 @@ export function DiarySaveButton(text: string) {
         description: text,
       };
       dispatch(setSelectedDiary(diary));
-      navigate('DiaryStack', { screen: 'Complete' });
+      const isToday =
+        currentDiary !== null && dayjs(currentDiary.recordDate).isSame(dayjs(), 'day');
+
+      if (isToday) {
+        navigate('DiaryStack', {
+          screen: 'WeeklyReportProgress',
+        });
+      } else {
+        navigate('DiaryStack', { screen: 'Complete' });
+      }
     }
   }, [result, dispatch, text, currentDiary]);
 
