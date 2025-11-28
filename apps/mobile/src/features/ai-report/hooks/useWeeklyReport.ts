@@ -30,19 +30,18 @@ export const useWeeklyReportCheck = () => {
     checkStorage();
   }, []);
 
-  const { data: diaryCount = 0, isLoading: isCountLoading } = useGetUserDiaryCountQuery(undefined, {
+  const { data: diaryCount = 0 } = useGetUserDiaryCountQuery(undefined, {
     skip: !localCheckDone || !shouldCheckServer,
   });
 
   const isNewUser = diaryCount === 0;
 
-  const {
-    data: hasReport = false,
-    isLoading: isReportLoading,
-    isSuccess: isReportCheckSuccess,
-  } = useHasWeeklyReportQuery(undefined, {
-    skip: !localCheckDone || !shouldCheckServer || isNewUser,
-  });
+  const { data: hasReport = false, isSuccess: isReportCheckSuccess } = useHasWeeklyReportQuery(
+    undefined,
+    {
+      skip: !localCheckDone || !shouldCheckServer || isNewUser,
+    },
+  );
 
   useEffect(() => {
     if (isReportCheckSuccess && hasReport) {
@@ -55,7 +54,6 @@ export const useWeeklyReportCheck = () => {
   }, [isReportCheckSuccess, hasReport]);
 
   return {
-    isLoading: !localCheckDone || (shouldCheckServer && (isCountLoading || isReportLoading)),
     hasReport,
     isBlocked: !shouldCheckServer || isNewUser,
   };

@@ -78,11 +78,12 @@ export function dismissModalToScreen() {
     const nestedKey = lastRoute.state.key;
     const popToTopAction = StackActions.popToTop();
     navigationRef.dispatch({ ...popToTopAction, target: nestedKey });
+  }
 
+  if (navigationRef.canGoBack()) {
     navigationRef.dispatch(CommonActions.goBack());
   }
 }
-
 export function navigateFlow(flow: NavigationFlow) {
   if (!navigationRef.isReady()) {
     return;

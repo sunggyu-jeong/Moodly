@@ -4,6 +4,7 @@ import { Image, StatusBar, StyleSheet, View } from 'react-native';
 
 import { useDeletePushTokenMutation, useUpsertPushTokenMutation } from '@/entities/auth/api';
 import { useGetDiaryCountQuery, useHasDiaryForDayQuery } from '@/entities/diary/api';
+import { useWeeklyReportCheck } from '@/features/ai-report/hooks/useWeeklyReport';
 import { usePushNavigation } from '@/features/diary/hooks/usePushNavigation';
 import { resetDiary } from '@/features/diary/model/diarySlice';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
@@ -30,6 +31,8 @@ const TEXTS = {
 const HomePage = () => {
   const dispatch = useAppDispatch();
 
+  const { isBlocked } = useWeeklyReportCheck();
+
   const { data: hasDiary, isLoading: isHasDiaryLoading } = useHasDiaryForDayQuery(undefined, {
     pollingInterval: POLLING_INTERVAL,
   });
@@ -43,6 +46,12 @@ const HomePage = () => {
   const titleText = hasDiary ? TEXTS.HAS_DIARY : TEXTS.NO_DIARY;
   const buttonText = hasDiary ? TEXTS.BUTTON_COMPLETE : TEXTS.BUTTON_WRITE;
   const isLoading = useDelay(isHasDiaryLoading || isDiaryCountLoading);
+
+  useEffect(() => {
+    if (!isBlocked) {
+      navigate('ReportResultPage');
+    }
+  }, [isBlocked]);
 
   const handleTokenUpdate = useCallback(
     async (token: string | null) => {
@@ -92,8 +101,6 @@ const HomePage = () => {
       dispatch(resetDiary());
     }, [dispatch]),
   );
-
-  console.log('>@!$>@!>$', isLoading);
 
   if (isLoading) {
     return <HomeLoading />;

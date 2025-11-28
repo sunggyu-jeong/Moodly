@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import AIReportPage from '@/pages/AIReportPage';
 import EmotionDiaryListPage from '@/pages/EmotionDiaryListPage';
-import ReportResultPage from '@/pages/ReportResultPage';
+import HomePage from '@/pages/HomePage';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { useScale } from '@/shared/hooks/useScale';
 import TabBarIcon from '@/shared/ui/elements/TabBarIcon';
@@ -49,7 +49,7 @@ const TabNavigation = () => {
       >
         <Tab.Screen
           name="Home"
-          component={ReportResultPage}
+          component={HomePage}
           options={{
             tabBarLabel: '홈',
             tabBarIcon: ({ focused }) => (

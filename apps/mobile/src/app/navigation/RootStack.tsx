@@ -6,6 +6,7 @@ import EmotionDiaryDetailPage from '@/pages/EmotionDiaryDetailPage';
 import Login from '@/pages/LoginPage';
 import NicknamePage from '@/pages/NicknamePage';
 import OnboardingPage from '@/pages/OnBoardingPage';
+import ReportResultPage from '@/pages/ReportResultPage';
 
 import DiaryStack, { type DiaryStackParamList } from './DiaryStack';
 import TabNavigation, { type BottomTabParamList } from './TabNavigation';
@@ -15,6 +16,7 @@ export type RootStackParamList = {
   Login: undefined;
   NotificationPermissionPage: undefined;
   Nickname: undefined;
+  ReportResultPage: undefined;
   Onboarding: undefined;
   Main: NavigatorScreenParams<BottomTabParamList>;
   DiaryList: undefined;
@@ -47,6 +49,11 @@ const RootStack = () => {
         <Stack.Screen
           name="Main"
           component={TabNavigation}
+        />
+        <Stack.Screen
+          name="ReportResultPage"
+          component={ReportResultPage}
+          options={{ presentation: 'fullScreenModal', animation: 'slide_from_bottom' }}
         />
         <Stack.Screen
           name="DiaryStack"
