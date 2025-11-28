@@ -30,12 +30,15 @@ const TabNavigation = () => {
       <Tab.Navigator
         screenOptions={{
           headerShown: false,
-          tabBarShowLabel: false,
           tabBarStyle: {
             height: getScaleSize(49) + insets.bottom,
             paddingBottom: 0,
             backgroundColor: '#ffffff',
             elevation: 0,
+          },
+          tabBarLabelStyle: {
+            fontSize: getScaleSize(11),
+            fontWeight: 400,
           },
           tabBarItemStyle: {
             justifyContent: 'flex-start',
@@ -48,15 +51,7 @@ const TabNavigation = () => {
           name="Home"
           component={HomePage}
           options={{
-            tabBarIcon: ({ focused }) => (
-              <TabBarIcon source={focused ? MAIN_ICONS.homeActive : MAIN_ICONS.homeInactive} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="AIReport"
-          component={AIReportPage}
-          options={{
+            tabBarLabel: '홈',
             tabBarIcon: ({ focused }) => (
               <TabBarIcon source={focused ? MAIN_ICONS.homeActive : MAIN_ICONS.homeInactive} />
             ),
@@ -66,15 +61,28 @@ const TabNavigation = () => {
           name="DiaryList"
           component={EmotionDiaryListPage}
           options={{
+            tabBarLabel: '목록',
             tabBarIcon: ({ focused }) => (
               <TabBarIcon source={focused ? MAIN_ICONS.listActive : MAIN_ICONS.listInactive} />
             ),
           }}
         />
         <Tab.Screen
+          name="AIReport"
+          component={AIReportPage}
+          options={{
+            tabBarLabel: '리포트',
+            tabBarIcon: ({ focused }) => (
+              <TabBarIcon source={focused ? MAIN_ICONS.reportActive : MAIN_ICONS.reportInactive} />
+            ),
+          }}
+        />
+
+        <Tab.Screen
           name="SettingStack"
           component={SettingStack}
           options={{
+            tabBarLabel: '설정',
             tabBarIcon: ({ focused }) => (
               <TabBarIcon
                 source={focused ? MAIN_ICONS.settingsActive : MAIN_ICONS.settingsInactive}

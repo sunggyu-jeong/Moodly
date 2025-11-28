@@ -18,8 +18,8 @@ const TabBarIcon = ({ source }: TabbarIconProps) => {
 
 const styles = StyleSheet.create({
   icon: {
-    height: getScaleSize(32),
-    width: getScaleSize(32),
+    height: getScaleSize(26),
+    width: getScaleSize(26),
   },
 });
 
