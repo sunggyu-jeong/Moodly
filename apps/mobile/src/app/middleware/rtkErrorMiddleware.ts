@@ -2,10 +2,9 @@ import { isRejectedWithValue, Middleware } from '@reduxjs/toolkit';
 import { Platform } from 'react-native';
 
 import { store } from '@/app/store';
-import { MODAL_CONFIRM_ACTION_KEY } from '@/entities/overlay/model/types';
 import type { AppError } from '@/shared/api/error/appError';
 import { supabase } from '@/shared/lib/supabase.util';
-import { setShowModalPopup } from '@/shared/model/overlaySlice';
+import { setShowToastView } from '@/shared/model/overlaySlice';
 
 export const rtkErrorMiddleware: Middleware = () => next => action => {
   if (isRejectedWithValue(action)) {
@@ -32,27 +31,29 @@ export const rtkErrorMiddleware: Middleware = () => next => action => {
         });
 
       if (!silent) {
-        // const msg =
-        //   code === 'UNAUTHORIZED'
-        //     ? '로그인이 필요합니다.'
-        //     : code === 'NETWORK'
-        //       ? '네트워크 오류입니다.'
-        //       : '요청 처리 중 오류가 발생했습니다.';
+        const msg =
+          code === 'UNAUTHORIZED'
+            ? '로그인이 필요합니다.'
+            : code === 'NETWORK'
+              ? '네트워크 오류입니다.'
+              : '요청 처리 중 오류가 발생했습니다.';
 
-        store.dispatch(
-          setShowModalPopup({
-            visibility: true,
-            title: '테스트',
-            message: `${errorMessage}`,
-            cancelText: '취소',
-            confirmText: '삭제',
-            confirmActionKey: MODAL_CONFIRM_ACTION_KEY.DELETE_DIARY,
-          }),
-          // setShowToastView({
-          //   visibility: true,
-          //   message: err.message,
-          // }),
-        );
+        if (code === 'UNAUTHORIZED' || code === 'NETWORK') {
+          store.dispatch(
+            // setShowModalPopup({
+            //   visibility: true,
+            //   title: '테스트',
+            //   message: `${errorMessage}`,
+            //   cancelText: '취소',
+            //   confirmText: '삭제',
+            //   confirmActionKey: MODAL_CONFIRM_ACTION_KEY.DELETE_DIARY,
+            // }),
+            setShowToastView({
+              visibility: true,
+              message: msg,
+            }),
+          );
+        }
       }
     }
   }
