@@ -132,7 +132,7 @@ export const processGeminiJob = task({
       const body = {
         model: "gemini-2.5-flash",
         temperature: 0.3,
-        max_tokens: 2500,
+        max_tokens: 4000,
         response_mime_type: "application/json",
         response_schema: {
           type: "OBJECT",

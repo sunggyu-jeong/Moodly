@@ -9,6 +9,7 @@
     "build:mobile:android": "pnpm --filter mobile exec -- eas build --platform android",
     "build:mobile:ios": "pnpm --filter mobile exec -- eas build --platform ios",
     "dev:jobs": "pnpm --filter jobs exec -- pnpm dlx trigger.dev@latest dev --env-file .env",
+    "build:mobile:ios:adhoc": "pnpm --filter mobile exec -- eas build --platform ios --profile preview",
     "deploy:jobs": "pnpm --filter jobs exec -- npx trigger.dev@latest deploy"
   },
   "pnpm": {
