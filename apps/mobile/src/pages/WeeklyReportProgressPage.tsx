@@ -8,10 +8,8 @@ import { common } from '@/shared/styles/colors';
 const WeeklyReportProgressPage = () => {
   const { data } = useGetDiaryStreakQuery();
 
-  const totalDays = 7;
-  const doneDays = data?.streakCount ?? 1;
-  const isFirst = data?.dates.length === 1;
-  const remainDays = Math.max(0, totalDays - doneDays);
+  const weeklyCount = data?.weeklyCount ?? 0;
+  const dailyStatus = data?.dailyStatus ?? new Array(7).fill(false);
 
   const handleGoDetail = () => {
     navigate('DiaryStack', {
@@ -21,17 +19,13 @@ const WeeklyReportProgressPage = () => {
   };
 
   return (
-    <>
-      <View style={styles.container}>
-        <WeeklyReportProgress
-          isFirst={isFirst}
-          totalDays={totalDays}
-          doneDays={doneDays}
-          remainDays={remainDays}
-          onConfirm={handleGoDetail}
-        />
-      </View>
-    </>
+    <View style={styles.container}>
+      <WeeklyReportProgress
+        weeklyCount={weeklyCount}
+        dailyStatus={dailyStatus}
+        onConfirm={handleGoDetail}
+      />
+    </View>
   );
 };
 
