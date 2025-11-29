@@ -37,10 +37,18 @@ const AIReportPage = () => {
   const selectedReport = useAppSelector(state => state.aiReport.selectedReport);
   const dispatch = useAppDispatch();
   const delayedLoading = useDelay(isLoading);
+  const scrollViewRef = useRef<ScrollView>(null);
 
   const handleChooseReport = useCallback(() => {
     aiSheetRef.current?.expand();
   }, []);
+
+  const scrollToTop = () => {
+    scrollViewRef.current?.scrollTo({
+      y: 0,
+      animated: true,
+    });
+  };
 
   const renderHeaderCenter = () => (
     <TouchableWithoutFeedback>
@@ -84,6 +92,7 @@ const AIReportPage = () => {
         />
 
         <ScrollView
+          ref={scrollViewRef}
           style={styles.scrollContainer}
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
@@ -92,7 +101,7 @@ const AIReportPage = () => {
             weight="semibold"
             style={styles.title}
           >
-            {selectedReport.date}
+            {selectedReport.title}
           </H2>
 
           {/* 1. 기분 분포 */}
@@ -131,6 +140,7 @@ const AIReportPage = () => {
         dates={reportDates}
         selectedDate={selectedReport.date}
         onSelect={date => {
+          scrollToTop();
           dispatch(setSelectedReport(data?.find(e => e.date === date) ?? null));
         }}
       />
@@ -167,7 +177,9 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   title: {
+    position: 'relative',
     marginTop: 10,
+    textAlign: 'left',
   },
 });
 

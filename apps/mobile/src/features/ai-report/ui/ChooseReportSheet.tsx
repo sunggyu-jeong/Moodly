@@ -28,8 +28,9 @@ const ChooseReportSheet = forwardRef<BottomSheetHandler, ChooseReportSheetProps>
     const handlePress = useCallback(
       (date: string) => {
         onSelect(date);
+        sheetRef.current?.close?.();
       },
-      [onSelect],
+      [onSelect, sheetRef],
     );
 
     const keyExtractor = useCallback((item: string) => item, []);
