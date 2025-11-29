@@ -126,6 +126,7 @@ export const processGeminiJob = task({
       6) 총 분량은 최소 500자.
       7) 일별/요일별 기술 금지, 오직 ‘한 주간 통합’ 결과만 서술.
       8) weekly_keywords는 한 주의 핵심 키워드 5개를 중요도에 따라 1~5 사이의 weight로 함께 제공하세요.
+      9) title은 한 주를 관통하는 핵심 주제를 10자 이상 20자 이내로 명확하게 작성하세요.
       `;
 
       const body = {
@@ -136,6 +137,7 @@ export const processGeminiJob = task({
         response_schema: {
           type: "OBJECT",
           required: [
+            "title",
             "summary",
             "emotion_distribution",
             "weekly_keywords",
@@ -144,6 +146,11 @@ export const processGeminiJob = task({
             "message_from_moodly"
           ],
           properties: {
+            title: { 
+              type: "STRING", 
+              minLength: 10, 
+              maxLength: 20 
+            },
             summary: { type: "STRING", minLength: 100 }, 
             emotion_distribution: {
               type: "OBJECT",
