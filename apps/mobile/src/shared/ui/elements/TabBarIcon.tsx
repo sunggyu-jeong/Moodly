@@ -11,6 +11,7 @@ const TabBarIcon = ({ source }: TabbarIconProps) => {
       <Image
         source={source}
         style={styles.icon}
+        resizeMode="contain"
       />
     </View>
   );

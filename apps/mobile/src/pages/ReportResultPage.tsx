@@ -1,11 +1,11 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useWeeklyReportCheck } from '@/features/ai-report/hooks/useWeeklyReport';
 import { AI_ICONS } from '@/shared/assets/images/ai-report';
 import { ColorKeyEnum, getColor } from '@/shared/constants/colors';
-import { dismissModalToScreen } from '@/shared/lib/navigation.util';
+import { dismissModalToScreen, navigate } from '@/shared/lib/navigation.util';
 import { common, gray } from '@/shared/styles/colors';
 import ActionButton from '@/shared/ui/elements/ActionButton';
 import { H1 } from '@/shared/ui/typography/H1';
@@ -37,7 +37,13 @@ const ReportResultPage = () => {
 
   const handlePressButton = (isDismiss: Boolean) => {
     if (hasReport) {
-      console.log(isDismiss);
+      if (isDismiss) {
+        dismissModalToScreen();
+      } else {
+        navigate('Main', {
+          screen: 'AIReport',
+        });
+      }
     } else {
       dismissModalToScreen();
     }
