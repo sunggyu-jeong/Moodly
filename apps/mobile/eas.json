@@ -1,0 +1,67 @@
+{
+  "cli": {
+    "version": ">= 13.0.0",
+    "appVersionSource": "local",
+    "requireCommit": true
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "store",
+      "channel": "store",
+      "ios": {
+        "simulator": false,
+        "buildConfiguration": "Release",
+        "prebuildCommand": "npx expo prebuild --clean"
+      },
+      "env": {
+        "APP_ENV": "develop"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "channel": "preview",
+      "ios": {
+        "simulator": false
+      },
+      "env": {
+        "APP_ENV": "staging"
+      }
+    },
+    "production": {
+      "channel": "production",
+      "ios": {
+        "simulator": false,
+        "distribution": "store"
+      },
+      "android": {
+        "buildType": "app-bundle"
+      },
+      "env": {
+        "APP_ENV": "production"
+      }
+    },
+    "adhoc": {
+      "extends": "development",
+      "distribution": "internal",
+      "developmentClient": false,
+      "env": {
+        "APP_ENV": "develop"
+      },
+      "ios": {
+        "simulator": false
+      },
+      "android": {
+        "buildType": "apk"
+      }
+    }
+  },
+  "submit": {
+    "production": {},
+    "development": {
+      "ios": {
+        "appleId": "moodlydeveloper@gmail.com"
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "jobs",
+  "version": "1.0.0",
+  "description": "Trigger.dev background jobs",
+  "main": "index.ts",
+  "scripts": {
+    "dev": "npx trigger.dev@latest dev",
+    "deploy": "npx trigger.dev@latest deploy",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.84.0",
+    "@trigger.dev/sdk": "4.1.2",
+    "@types/crypto-js": "4.2.2",
+    "crypto-js": "4.2.0",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "@trigger.dev/build": "4.1.2",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}

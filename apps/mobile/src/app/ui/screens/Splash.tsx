@@ -1,0 +1,157 @@
+import * as Updates from 'expo-updates';
+import { useCallback, useEffect, useRef } from 'react';
+import { Image, StatusBar, StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+import { MODAL_CANCEL_ACTION_KEY, MODAL_CONFIRM_ACTION_KEY } from '@/entities/overlay/model/types';
+import { useLazyGetFirstLaunchFlagQuery } from '@/entities/user-meta/api';
+import { useVersionCheck } from '@/features/check-app-version/hooks/useVersionCheck';
+import { MAIN_ICONS } from '@/shared/assets/images/main';
+import { useAppDispatch } from '@/shared/hooks/useHooks';
+import { resetTo } from '@/shared/lib/navigation.util';
+import { supabase } from '@/shared/lib/supabase.util';
+import { isNotEmpty } from '@/shared/lib/value.util';
+import { setShowModalPopup } from '@/shared/model/overlaySlice';
+import { primary } from '@/shared/styles/colors';
+
+import AppBootstrap from '../../provider/AppBootstrap';
+
+export interface SplashProps {
+  progress: number;
+}
+
+const Splash = () => {
+  const [getFirstLaunchFlag] = useLazyGetFirstLaunchFlagQuery();
+  const { isLoading, versionStatus, versionPolicy } = useVersionCheck();
+  const dispatch = useAppDispatch();
+
+  const isLogicStarted = useRef(false);
+
+  const flag = useCallback(async () => {
+    try {
+      const response = await getFirstLaunchFlag();
+      if (response.data) {
+        resetTo('Onboarding');
+        return;
+      }
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (isNotEmpty(user)) {
+        resetTo('Main');
+      } else {
+        resetTo('Login');
+      }
+    } catch (error) {
+      console.error('Splash navigation error:', error);
+      resetTo('Login');
+    }
+  }, [getFirstLaunchFlag]);
+
+  const handleOTAUpdate = useCallback(async () => {
+    if (__DEV__) return false;
+
+    try {
+      const response = await Updates.checkForUpdateAsync();
+      if (!response.isAvailable) return false;
+
+      await Updates.fetchUpdateAsync();
+      await Updates.reloadAsync();
+      return true;
+    } catch (e) {
+      console.log('OTA Error:', e);
+      return false;
+    }
+  }, []);
+
+  const handleVersionCheck = useCallback(() => {
+    if (!versionStatus) return false;
+
+    const modal = {
+      visibity: true,
+      title: '업데이트 알림',
+      disableBackdropClose: true,
+    };
+
+    if (versionStatus === 'required') {
+      dispatch(
+        setShowModalPopup({
+          ...modal,
+          message:
+            versionPolicy?.update_message ||
+            '새로운 버전이 출시되었습니다. 업데이트 후 이용해주세요.',
+          confirmText: '업데이트',
+          confirmActionKey: MODAL_CONFIRM_ACTION_KEY.MOVE_STORE,
+        }),
+      );
+      return true;
+    }
+
+    if (versionStatus === 'recommended') {
+      dispatch(
+        setShowModalPopup({
+          ...modal,
+          message: versionPolicy?.update_message || '업데이트 후 더 안정적으로 이용할 수 있습니다.',
+          confirmText: '업데이트',
+          cancelText: '이용',
+          confirmActionKey: MODAL_CONFIRM_ACTION_KEY.MOVE_STORE,
+          cancelActionKey: MODAL_CANCEL_ACTION_KEY.GO_MAIN,
+        }),
+      );
+      return true;
+    }
+
+    return false;
+  }, [versionStatus, versionPolicy, dispatch]);
+
+  useEffect(() => {
+    if (isLoading) return;
+
+    if (isLogicStarted.current) return;
+
+    const init = async () => {
+      isLogicStarted.current = true;
+
+      const updated = await handleOTAUpdate();
+      if (updated) return;
+
+      const blocked = handleVersionCheck();
+      if (blocked) return;
+
+      setTimeout(flag, 1500);
+    };
+
+    init();
+  }, [isLoading, flag, handleOTAUpdate, handleVersionCheck]);
+
+  return (
+    <>
+      <StatusBar
+        translucent
+        backgroundColor="transparent"
+      />
+      <SafeAreaView style={styles.StyledContainer}>
+        <View style={styles.StyledBox}>
+          <Image source={MAIN_ICONS.logo} />
+        </View>
+      </SafeAreaView>
+
+      <AppBootstrap />
+    </>
+  );
+};
+
+const styles = StyleSheet.create({
+  StyledContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: primary[300],
+  },
+  StyledBox: {
+    position: 'absolute',
+  },
+});
+
+export default Splash;

@@ -1,0 +1,1 @@
+module.exports = global.WebSocket || require('isomorphic-ws/browser.js');

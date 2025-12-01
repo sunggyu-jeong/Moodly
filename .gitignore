@@ -42,7 +42,8 @@ yarn-error.*
 /ios
 /android
 
-*.json
+google-services.*.json
+moodly-*.json
 # *.plist
 *.keystore
 
@@ -69,3 +70,10 @@ release.keystore
 
 # Expo/EAS 캐시
 .build/
+
+coverage/
+
+apps/mobile/ios
+apps/mobile/android
+apps/jobs/.github
+apps/jobs/.trigger
