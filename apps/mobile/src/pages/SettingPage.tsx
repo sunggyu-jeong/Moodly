@@ -65,13 +65,7 @@ const SettingPage = () => {
           break;
       }
     },
-    [
-      openLink,
-      signOut,
-      process.env.EXPO_PUBLIC_KAKAO_OPEN_CHAT_LINK,
-      process.env.EXPO_PUBLIC_PRIVACY_POLICY_LINK,
-      process.env.EXPO_PUBLIC_TERMS_OF_SERVICE_LINK,
-    ],
+    [openLink, signOut],
   );
 
   const headerItem = isNotEmpty(userInfo)

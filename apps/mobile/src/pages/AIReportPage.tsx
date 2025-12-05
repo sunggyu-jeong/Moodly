@@ -1,7 +1,6 @@
 import dayjs from 'dayjs';
 import { useCallback, useRef } from 'react';
 import {
-  ActivityIndicator,
   Image,
   ScrollView,
   StyleSheet,
@@ -21,6 +20,7 @@ import { CoreKeywordsList } from '@/features/ai-report/ui/CoreKeywordsLIst';
 import { EmotionDistribution } from '@/features/ai-report/ui/EmotionDistribution';
 import { ReflectionList } from '@/features/ai-report/ui/ReflectionList';
 import { ReportSection } from '@/features/ai-report/ui/ReportSection';
+import { ReportLoadingSkeleton } from '@/features/ai-report/ui/skeleton/ReportLoadingSkeleton';
 import { WeeklyKeywordBubbleChart } from '@/features/ai-report/ui/WeeklyKeywordBubbleChart';
 import { COMMON_ICONS } from '@/shared/assets/images/common';
 import useDelay from '@/shared/hooks/useDelay';
@@ -69,15 +69,18 @@ const AIReportPage = () => {
     </TouchableWithoutFeedback>
   );
 
-  if (delayedLoading || !selectedReport) {
+  if (delayedLoading) {
     return (
-      <View style={[styles.container, styles.center]}>
-        <ActivityIndicator
-          size="large"
-          color={gray[400]}
-        />
-      </View>
+      <>
+        <NavigationBar showBackButton={false} />
+        <View style={styles.container}>
+          <ReportLoadingSkeleton />
+        </View>
+      </>
     );
+  }
+  if (!selectedReport) {
+    return;
   }
 
   const emotionStats = domainToUIStats(selectedReport.emotion_distribution, EMOTION_ICON_MAP);
@@ -145,10 +148,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: 'white',
-  },
-  center: {
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   navigationContainer: {
     flex: 1,

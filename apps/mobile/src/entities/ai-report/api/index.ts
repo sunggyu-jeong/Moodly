@@ -148,7 +148,7 @@ export const aiReportApi = appApi.injectEndpoints({
           });
           const data = await runProtectedLogic(supabase);
 
-          console.log('API 반환 데이터 타입:', Array.isArray(data) ? 'Array' : typeof data);
+          console.log('API 반환 데이터 타입:', Array.isArray(data) ? 'Array' : typeof data, data);
 
           return { data };
         } catch (e: any) {
