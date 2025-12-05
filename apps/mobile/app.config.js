@@ -28,7 +28,7 @@ const PROJECT_ID = process.env.EAS_PROJECT_ID ?? 'f8d839f5-d120-447f-a68e-979128
 
 export default {
   name: `무들리${suffix}`,
-  slug: 'moodly',
+  slug: 'moodly-monorepo',
   version: '1.0.2',
   owner: 'sunggyu_jeong',
   scheme,
