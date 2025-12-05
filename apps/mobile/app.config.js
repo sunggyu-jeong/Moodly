@@ -24,7 +24,7 @@ const androidGoogleServiceFile = isProd
     ? './google-services.stg.json'
     : './google-services.dev.json';
 
-const PROJECT_ID = process.env.EAS_PROJECT_ID ?? 'a1dd67f4-01b2-4cc1-9c06-076721195e0b';
+const PROJECT_ID = process.env.EAS_PROJECT_ID ?? 'f8d839f5-d120-447f-a68e-97912852bbe3';
 
 export default {
   name: `무들리${suffix}`,
