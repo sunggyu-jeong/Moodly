@@ -28,7 +28,6 @@ import { gray } from '@/shared/styles/colors';
 import type { BottomSheetHandler } from '@/shared/types/bottomSheet';
 import NavigationBar from '@/shared/ui/elements/navigation/NavigationBar';
 import NaviTitleDisplay from '@/shared/ui/elements/NaviTitle';
-import { H2 } from '@/shared/ui/typography/H2';
 
 const AIReportPage = () => {
   const { isLoading, data } = useGetAIReportQuery();
@@ -97,13 +96,6 @@ const AIReportPage = () => {
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
         >
-          <H2
-            weight="semibold"
-            style={styles.title}
-          >
-            {selectedReport.title}
-          </H2>
-
           {/* 1. 기분 분포 */}
           <ReportSection title="기분 분포">
             <EmotionDistribution stats={emotionStats} />
@@ -175,11 +167,6 @@ const styles = StyleSheet.create({
     padding: 20,
     gap: 20,
     paddingBottom: 40,
-  },
-  title: {
-    position: 'relative',
-    marginTop: 10,
-    textAlign: 'left',
   },
 });
 
