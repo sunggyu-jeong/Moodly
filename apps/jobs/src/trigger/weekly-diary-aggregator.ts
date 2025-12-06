@@ -9,7 +9,7 @@ const WEEKDAYS = ['일', '월', '화', '수', '목', '금', '토'];
 
 export const weeklyDiaryAggregator = schedules.task({
   id: "weekly-diary-aggregator",
-  cron: "0 3 * * *",
+  cron: "0 0 * * 0",
   
   run: async (payload) => {
     const { SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY } = ENV;
