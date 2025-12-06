@@ -1,11 +1,13 @@
 import 'dotenv/config';
 
+import * as fs from 'fs';
+import * as path from 'path';
+
 const APP_ENV = process.env.APP_ENV ?? 'develop'; // develop | staging | production
 const isProd = APP_ENV === 'production';
 const isStg = APP_ENV === 'staging';
 
 const suffix = isProd ? '' : isStg ? ' 베타' : ' 개발';
-
 const icon = isProd ? './assets/icon.png' : './assets/icon-dev.png';
 
 const iosBundleId = isProd ? 'com.moodlyfrontend' : isStg ? 'com.moodlybeta' : 'com.moodlydev';
@@ -23,6 +25,31 @@ const androidGoogleServiceFile = isProd
   : isStg
     ? './google-services.stg.json'
     : './google-services.dev.json';
+
+const createFileFromSecret = (filename, secretBase64) => {
+  if (!secretBase64) return;
+
+  const filePath = path.resolve(__dirname, filename);
+  if (!fs.existsSync(filePath)) {
+    try {
+      fs.writeFileSync(filePath, Buffer.from(secretBase64, 'base64'));
+      console.log(`Created ${filename} from EAS Secret`);
+    } catch (e) {
+      console.error(`Failed to create ${filename}`, e);
+    }
+  }
+};
+
+if (isProd) {
+  createFileFromSecret(androidGoogleServiceFile, process.env.ANDROID_GOOGLE_SERVICES_PROD_BASE64);
+  createFileFromSecret(iosGoogleServiceFile, process.env.IOS_GOOGLE_SERVICES_PROD_BASE64);
+} else if (isStg) {
+  createFileFromSecret(androidGoogleServiceFile, process.env.ANDROID_GOOGLE_SERVICES_STG_BASE64);
+  createFileFromSecret(iosGoogleServiceFile, process.env.IOS_GOOGLE_SERVICES_STG_BASE64);
+} else {
+  createFileFromSecret(androidGoogleServiceFile, process.env.ANDROID_GOOGLE_SERVICES_DEV_BASE64);
+  createFileFromSecret(iosGoogleServiceFile, process.env.IOS_GOOGLE_SERVICES_DEV_BASE64);
+}
 
 const PROJECT_ID = process.env.EAS_PROJECT_ID ?? 'f8d839f5-d120-447f-a68e-97912852bbe3';
 
@@ -86,7 +113,6 @@ export default {
 
   extra: {
     APP_ENV,
-
     eas: { projectId: PROJECT_ID },
   },
 };
