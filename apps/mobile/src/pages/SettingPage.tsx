@@ -50,16 +50,16 @@ const SettingPage = () => {
           });
           break;
         case SETTING_EVENT_TYPE.SEND_FEEDBACK:
-          openLink(process.env.EXPO_PUBLIC_KAKAO_OPEN_CHAT_LINK);
+          openLink(process.env.EXPO_PUBLIC_KAKAO_OPEN_CHAT_LINK ?? '');
           break;
         case SETTING_EVENT_TYPE.LOG_OUT:
           signOut();
           break;
         case SETTING_EVENT_TYPE.PRIVACY_POLICY:
-          openLink(process.env.EXPO_PUBLIC_PRIVACY_POLICY_LINK);
+          openLink(process.env.EXPO_PUBLIC_PRIVACY_POLICY_LINK ?? '');
           break;
         case SETTING_EVENT_TYPE.TERMS_OF_SERVICE:
-          openLink(process.env.EXPO_PUBLIC_TERMS_OF_SERVICE_LINK);
+          openLink(process.env.EXPO_PUBLIC_TERMS_OF_SERVICE_LINK ?? '');
           break;
         default:
           break;

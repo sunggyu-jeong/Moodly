@@ -73,14 +73,14 @@ const SocialLoginGroup = ({ entrance }: SocialLoginGroupProps) => {
           로그인 시{' '}
           <Text
             style={styles.textUnderline}
-            onPress={() => openLink(process.env.EXPO_PUBLIC_TERMS_OF_SERVICE_LINK)}
+            onPress={() => openLink(process.env.EXPO_PUBLIC_TERMS_OF_SERVICE_LINK ?? '')}
           >
             이용약관
           </Text>
           과{' '}
           <Text
             style={styles.textUnderline}
-            onPress={() => openLink(process.env.EXPO_PUBLIC_PRIVACY_POLICY_LINK)}
+            onPress={() => openLink(process.env.EXPO_PUBLIC_PRIVACY_POLICY_LINK ?? '')}
           >
             개인정보 처리 방침
           </Text>

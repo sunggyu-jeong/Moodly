@@ -9,7 +9,7 @@ export const encryptData = <T>(data: T) => {
     }
     const encrypted = CryptoJS.AES.encrypt(
       JSON.stringify(data),
-      process.env.EXPO_PUBLIC_ENCRYPTION_SECRET_KEY,
+      process.env.EXPO_PUBLIC_ENCRYPTION_SECRET_KEY ?? '',
     ).toString();
     return encrypted;
   } catch (error) {
