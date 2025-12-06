@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import {
   Image,
   ScrollView,
@@ -22,12 +22,14 @@ import { ReflectionList } from '@/features/ai-report/ui/ReflectionList';
 import { ReportSection } from '@/features/ai-report/ui/ReportSection';
 import { ReportLoadingSkeleton } from '@/features/ai-report/ui/skeleton/ReportLoadingSkeleton';
 import { WeeklyKeywordBubbleChart } from '@/features/ai-report/ui/WeeklyKeywordBubbleChart';
+import { AI_ICONS } from '@/shared/assets/images/ai-report';
 import { COMMON_ICONS } from '@/shared/assets/images/common';
 import useDelay from '@/shared/hooks/useDelay';
 import { gray } from '@/shared/styles/colors';
 import type { BottomSheetHandler } from '@/shared/types/bottomSheet';
 import NavigationBar from '@/shared/ui/elements/navigation/NavigationBar';
 import NaviTitleDisplay from '@/shared/ui/elements/NaviTitle';
+import { Body1 } from '@/shared/ui/typography/Body1';
 
 const AIReportPage = () => {
   const { isLoading, data } = useGetAIReportQuery();
@@ -38,16 +40,33 @@ const AIReportPage = () => {
   const delayedLoading = useDelay(isLoading);
   const scrollViewRef = useRef<ScrollView>(null);
 
+  useEffect(() => {
+    if (data && data.length > 0 && !selectedReport) {
+      dispatch(setSelectedReport(data[0]));
+    }
+  }, [data, selectedReport, dispatch]);
+
   const handleChooseReport = useCallback(() => {
     aiSheetRef.current?.expand();
   }, []);
 
-  const scrollToTop = () => {
+  const scrollToTop = useCallback(() => {
     scrollViewRef.current?.scrollTo({
       y: 0,
       animated: true,
     });
-  };
+  }, []);
+
+  const handleSelectDate = useCallback(
+    (date: string) => {
+      scrollToTop();
+      const target = data?.find(e => e.date === date);
+      if (target) {
+        dispatch(setSelectedReport(target));
+      }
+    },
+    [data, dispatch, scrollToTop],
+  );
 
   const renderHeaderCenter = () => (
     <TouchableWithoutFeedback>
@@ -79,8 +98,25 @@ const AIReportPage = () => {
       </>
     );
   }
+
   if (!selectedReport) {
-    return;
+    return (
+      <>
+        <NavigationBar showBackButton={false} />
+        <View style={[styles.container, styles.emptyContainer]}>
+          <Image
+            source={AI_ICONS.iconReportFail}
+            style={styles.emptyImage}
+          />
+          <Body1
+            weight="regular"
+            style={styles.emptyText}
+          >
+            작성된 리포트가 없어요.
+          </Body1>
+        </View>
+      </>
+    );
   }
 
   const emotionStats = domainToUIStats(selectedReport.emotion_distribution, EMOTION_ICON_MAP);
@@ -104,7 +140,7 @@ const AIReportPage = () => {
             <EmotionDistribution stats={emotionStats} />
           </ReportSection>
 
-          {/* 2. 이번 주 키워드 (Previously Refactored) */}
+          {/* 2. 이번 주 키워드 */}
           <ReportSection title="이번 주 키워드">
             <WeeklyKeywordBubbleChart items={selectedReport.weekly_keywords} />
           </ReportSection>
@@ -134,10 +170,7 @@ const AIReportPage = () => {
         ref={aiSheetRef}
         dates={reportDates}
         selectedDate={selectedReport.date}
-        onSelect={date => {
-          scrollToTop();
-          dispatch(setSelectedReport(data?.find(e => e.date === date) ?? null));
-        }}
+        onSelect={handleSelectDate}
       />
     </>
   );
@@ -145,8 +178,7 @@ const AIReportPage = () => {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    height: '100%',
+    flex: 1,
     backgroundColor: 'white',
   },
   navigationContainer: {
@@ -166,6 +198,20 @@ const styles = StyleSheet.create({
     padding: 20,
     gap: 20,
     paddingBottom: 40,
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+  },
+  emptyImage: {
+    width: 90,
+    height: 90,
+    marginBottom: 10,
+  },
+  emptyText: {
+    color: gray[400],
   },
 });
 
