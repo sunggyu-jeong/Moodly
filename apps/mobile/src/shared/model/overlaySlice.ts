@@ -28,6 +28,7 @@ interface OverlayState {
   showModalPopup?: ModalViewPayload;
   showDropDownView?: DropdownViewPayload;
   showToastView?: ToastViewPayload;
+  showLoadingView?: boolean | null;
   overlayEventHandler: string | null;
   requestWithDrawal: boolean | null;
 }
@@ -40,6 +41,7 @@ const initialState: OverlayState = {
     confirmActionKey: '',
   },
   showDropDownView: { visibility: false, dropdownList: null, pos: { x: null, y: null } },
+  showLoadingView: false,
   showToastView: { visibility: null, message: '' },
   overlayEventHandler: null,
   requestWithDrawal: null,
@@ -61,6 +63,9 @@ const overlaySlice = createSlice({
     setOverlayEventHandler: (state, action: PayloadAction<string | null>) => {
       state.overlayEventHandler = action.payload;
     },
+    setShowLoadingView: (state, action: PayloadAction<boolean>) => {
+      state.showLoadingView = action.payload;
+    },
     resetModalPopup: state => {
       state.showModalPopup = initialState.showModalPopup;
     },
@@ -74,6 +79,7 @@ export const {
   setShowModalPopup,
   setShowDropdownView,
   setShowToastView,
+  setShowLoadingView,
   setOverlayEventHandler,
   resetModalPopup,
   setRequestWithDrawal,

@@ -13,7 +13,7 @@ import { Provider } from 'react-redux';
 
 import { registerLogoutHandler } from '@/app/bootstrap/registerLogoutHandler';
 import RootStack from '@/app/navigation/RootStack';
-import OverlayManager from '@/app/provider/OverlayProvider';
+import OverlayProvider from '@/app/provider/OverlayProvider';
 import { store } from '@/app/store';
 import { useUpsertPushTokenMutation } from '@/entities/auth/api';
 import { useNotificationPermission } from '@/shared/hooks/useNotificationPermission';
@@ -47,8 +47,8 @@ export const onRenderCallback: ProfilerOnRenderCallback = (
 function App() {
   const [updateFcmToken] = useUpsertPushTokenMutation();
   useFonts({
-    'Pretendard-Regular': require('./assets/fonts/Pretendard-Regular.otf'),
-    'Pretendard-SemiBold': require('./assets/fonts/Pretendard-SemiBold.otf'),
+    'Pretendard-Regular': require('../../assets/fonts/Pretendard-Regular.otf'),
+    'Pretendard-SemiBold': require('../../assets/fonts/Pretendard-SemiBold.otf'),
   });
 
   const onTokenUpdate = useCallback(
@@ -71,7 +71,6 @@ function App() {
 
   useEffect(() => {
     let authListener: { unsubscribe: () => void } | null = null;
-
     const initializeAmplitude = async () => {
       try {
         console.log('Amplitude 초기화를 시작합니다...');
@@ -133,7 +132,7 @@ function App() {
           <SafeAreaProvider>
             <NavigationContainer ref={navigationRef}>
               <RootStack />
-              <OverlayManager />
+              <OverlayProvider />
             </NavigationContainer>
           </SafeAreaProvider>
         </Provider>

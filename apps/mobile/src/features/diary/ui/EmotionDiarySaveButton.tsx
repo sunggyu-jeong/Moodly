@@ -1,40 +1,56 @@
 import dayjs from 'dayjs';
-import { useEffect } from 'react';
+import { Keyboard } from 'react-native';
 
+import { useLazyGetDiaryStreakQuery } from '@/entities/ai-report/api';
 import { fromRow } from '@/entities/diary/model/mapper';
+import { setSelectedDiary } from '@/features/diary/model/diarySlice';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/useHooks';
 import { navigate } from '@/shared/lib/navigation.util';
-import { isNotEmpty } from '@/shared/lib/value.util';
+import { setShowLoadingView } from '@/shared/model/overlaySlice';
 import { KeyboardAccessoryButton } from '@/shared/ui/elements/KeyboardAccessory';
 
 import { useDiaryMutation } from '../hooks/useDiaryMutation';
-import { setSelectedDiary } from '../model/diarySlice';
 
 export function DiarySaveButton(text: string) {
   const dispatch = useAppDispatch();
   const currentDiary = useAppSelector(state => state.diary.currentDiary);
-  const { save, result } = useDiaryMutation(text);
 
-  useEffect(() => {
-    if (isNotEmpty(result)) {
-      const diary = {
-        ...currentDiary,
-        ...fromRow(result),
-        description: text,
-      };
-      dispatch(setSelectedDiary(diary));
-      const isToday =
-        currentDiary !== null && dayjs(currentDiary.recordDate).isSame(dayjs(), 'day');
+  const [triggerStreak] = useLazyGetDiaryStreakQuery();
 
-      if (isToday) {
-        navigate('DiaryStack', {
-          screen: 'WeeklyReportProgress',
-        });
-      } else {
-        navigate('DiaryStack', { screen: 'Complete' });
+  const { save } = useDiaryMutation(text);
+
+  const handlePress = async () => {
+    try {
+      Keyboard.dismiss();
+      dispatch(setShowLoadingView(true));
+      const result = await save();
+
+      if (result) {
+        const diary = {
+          ...currentDiary,
+          ...fromRow(result),
+          description: text,
+        };
+        dispatch(setSelectedDiary(diary));
+
+        await triggerStreak().unwrap();
+
+        const isToday = currentDiary
+          ? dayjs(currentDiary.recordDate).isSame(dayjs(), 'day')
+          : dayjs().isSame(dayjs(), 'day');
+
+        if (isToday) {
+          navigate('DiaryStack', { screen: 'WeeklyReportProgress' });
+        } else {
+          navigate('DiaryStack', { screen: 'Complete' });
+        }
       }
+    } catch (error) {
+      console.error('Save failed:', error);
+    } finally {
+      dispatch(setShowLoadingView(false));
     }
-  }, [result, dispatch, text, currentDiary]);
+  };
 
-  return <KeyboardAccessoryButton onPress={save} />;
+  return <KeyboardAccessoryButton onPress={handlePress} />;
 }

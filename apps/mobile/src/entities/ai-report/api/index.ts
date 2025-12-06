@@ -189,6 +189,7 @@ export const aiReportApi = appApi.injectEndpoints({
 export const {
   useHasWeeklyReportQuery,
   useGetDiaryStreakQuery,
+  useLazyGetDiaryStreakQuery,
   useRequestAIWeeklySummaryMutation,
   useGetAIReportQuery,
 } = aiReportApi;
