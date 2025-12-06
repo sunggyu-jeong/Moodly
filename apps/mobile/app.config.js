@@ -60,7 +60,7 @@ const PROJECT_ID = process.env.EAS_PROJECT_ID ?? 'f8d839f5-d120-447f-a68e-979128
 export default {
   name: `무들리${suffix}`,
   slug: 'moodly-monorepo',
-  version: '1.0.2',
+  version: '1.2.0',
   owner: 'sunggyu_jeong',
   scheme,
   userInterfaceStyle: 'light',
@@ -79,11 +79,11 @@ export default {
     checkAutomatically: 'ON_LOAD',
   },
 
-  runtimeVersion: '1.0.2',
+  runtimeVersion: '1.2.0',
   assetBundlePatterns: ['**/*'],
 
   ios: {
-    buildNumber: '100',
+    buildNumber: '1',
     bundleIdentifier: iosBundleId,
     googleServicesFile: iosGoogleServiceFile,
     infoPlist: {
