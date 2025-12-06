@@ -59,6 +59,12 @@ const SLIDES: ReadonlyArray<SlideProps> = [
     message: '감정은 달력에 쌓이며\n나를 이해하는 단서가 됩니다.',
     source: ONBOARDING_ICONS.onboardingStep4,
   },
+  {
+    id: 5,
+    title: '감정의 흐름을 파악하세요',
+    message: 'AI가 작성해준 리포트를 통해\n내 마음을 파악해보세요',
+    source: ONBOARDING_ICONS.onboardingStep5,
+  },
 ];
 
 const OnboardingPage = () => {
