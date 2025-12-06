@@ -1,5 +1,6 @@
 /* eslint-disable */
 import * as amplitude from '@amplitude/analytics-react-native';
+import { SessionReplayPlugin } from '@amplitude/plugin-session-replay-react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import 'dayjs/locale/ko';
 import { useCallback, useEffect, type ProfilerOnRenderCallback } from 'react';
@@ -9,7 +10,6 @@ import 'react-native-get-random-values';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
 import { Provider } from 'react-redux';
-import { SessionReplayPlugin } from '@amplitude/plugin-session-replay-react-native';
 
 import { registerLogoutHandler } from '@/app/bootstrap/registerLogoutHandler';
 import RootStack from '@/app/navigation/RootStack';
@@ -21,6 +21,7 @@ import '@/shared/lib/day.util';
 import { navigationRef } from '@/shared/lib/navigation.util';
 import { supabase } from '@/shared/lib/supabase.util';
 import { isEmpty } from '@/shared/lib/value.util';
+import { useFonts } from 'expo-font';
 
 enableScreens();
 registerLogoutHandler();
@@ -45,6 +46,10 @@ export const onRenderCallback: ProfilerOnRenderCallback = (
 
 function App() {
   const [updateFcmToken] = useUpsertPushTokenMutation();
+  useFonts({
+    'Pretendard-Regular': require('./assets/fonts/Pretendard-Regular.otf'),
+    'Pretendard-SemiBold': require('./assets/fonts/Pretendard-SemiBold.otf'),
+  });
 
   const onTokenUpdate = useCallback(
     async (token: string | null) => {

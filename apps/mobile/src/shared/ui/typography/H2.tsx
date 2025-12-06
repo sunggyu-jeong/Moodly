@@ -34,9 +34,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   regular: {
-    fontWeight: '400',
+    fontFamily: 'Pretendard-Regular',
   },
   semibold: {
-    fontWeight: '600',
+    fontFamily: 'Pretendard-SemiBold',
   },
 });

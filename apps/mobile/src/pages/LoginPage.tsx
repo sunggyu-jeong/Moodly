@@ -1,35 +1,15 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
-import store from '@/app/store';
-import { MODAL_CONFIRM_ACTION_KEY } from '@/entities/overlay/model/types';
 import SocialLoginGroup, { SOCIAL_LOGIN_ENTRANCE } from '@/features/auth/ui/SocialLoginGroup';
 import { MAIN_ICONS } from '@/shared/assets/images/main';
 import { getScaleSize } from '@/shared/hooks/useScale';
-import { setShowModalPopup } from '@/shared/model/overlaySlice';
 import { gray, primary } from '@/shared/styles/colors';
 import { H3 } from '@/shared/ui/typography/H3';
 import { Title } from '@/shared/ui/typography/Title';
 
 const Login = () => {
   const scaleSize = useMemo(() => getScaleSize(214), []);
-
-  useEffect(() => {
-    store.dispatch(
-      setShowModalPopup({
-        visibility: true,
-        title: '테스트',
-        message: `${(process.env.EXPO_PUBLIC_SUPABASE_URL, process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID)}`,
-        cancelText: '취소',
-        confirmText: '삭제',
-        confirmActionKey: MODAL_CONFIRM_ACTION_KEY.DELETE_DIARY,
-      }),
-      // setShowToastView({
-      //   visibility: true,
-      //   message: err.message,
-      // }),
-    );
-  }, []);
 
   return (
     <View style={styles.container}>

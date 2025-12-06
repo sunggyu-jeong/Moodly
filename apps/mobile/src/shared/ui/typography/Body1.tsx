@@ -33,9 +33,9 @@ const styles = StyleSheet.create({
     color: '#000000',
   },
   regular: {
-    fontWeight: '400',
+    fontFamily: 'Pretendard-Regular',
   },
   semibold: {
-    fontWeight: '600',
+    fontFamily: 'Pretendard-SemiBold',
   },
 });
