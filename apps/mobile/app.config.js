@@ -10,8 +10,12 @@ const isStg = APP_ENV === 'staging';
 const suffix = isProd ? '' : isStg ? ' 베타' : ' 개발';
 const icon = isProd ? './assets/icon.png' : './assets/icon-dev.png';
 
-const iosBundleId = isProd ? 'com.moodlyfrontend' : isStg ? 'com.moodlybeta' : 'com.moodlydev';
-const androidPackage = iosBundleId;
+const iosBundleId = isProd
+  ? 'com.moodly.diary.emotion'
+  : isStg
+    ? 'com.moodlybeta'
+    : 'com.moodlydev';
+const androidPackage = isProd ? 'com.moodlyfrontend' : isStg ? 'com.moodlybeta' : 'com.moodlydev';
 const scheme = isProd ? 'moodly' : isStg ? 'moodlybeta' : 'moodlydev';
 
 const iosGoogleServiceFile = isProd
