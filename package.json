@@ -10,7 +10,8 @@
     "build:mobile:ios": "pnpm --filter mobile exec -- eas build --platform ios",
     "dev:jobs": "pnpm --filter jobs exec -- pnpm dlx trigger.dev@latest dev --env-file .env",
     "build:mobile:ios:adhoc": "pnpm --filter mobile exec -- eas build --platform ios --profile adhoc --local",
-    "deploy:jobs": "pnpm --filter jobs exec -- npx trigger.dev@latest deploy"
+    "deploy:jobs": "pnpm --filter jobs exec -- npx trigger.dev@latest deploy",
+    "deploy:mobile": "pnpm --filter mobile exec -- pnpm eas build --platform all --profile production --auto-submit"
   },
   "pnpm": {
     "overrides": {
