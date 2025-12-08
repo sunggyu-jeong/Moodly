@@ -22,6 +22,7 @@ import { navigationRef } from '@/shared/lib/navigation.util';
 import { supabase } from '@/shared/lib/supabase.util';
 import { isEmpty } from '@/shared/lib/value.util';
 import { useFonts } from 'expo-font';
+import * as Notification from 'expo-notifications';
 
 enableScreens();
 registerLogoutHandler();
@@ -116,6 +117,8 @@ function App() {
     };
 
     initializeAmplitude();
+
+    Notification.setBadgeCountAsync(0);
 
     // Cleanup: 리스너 해제
     return () => {
