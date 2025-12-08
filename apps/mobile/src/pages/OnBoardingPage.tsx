@@ -268,6 +268,7 @@ const styles = StyleSheet.create({
   },
   skipText: {
     color: colors.gray[300],
+    marginRight: 8,
   },
   slide: {
     flex: 1,

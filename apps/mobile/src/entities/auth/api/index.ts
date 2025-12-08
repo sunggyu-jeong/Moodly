@@ -23,26 +23,52 @@ async function getDeviceId(): Promise<string> {
 }
 
 export async function getGoogleToken() {
+  console.log('[GoogleAuth] 1. getGoogleToken 함수 진입');
+
   try {
+    console.log('[GoogleAuth] 2. PlayServices 확인 중...');
     await GoogleSignin.hasPlayServices();
-    await GoogleSignin.signIn();
-    const { idToken: token } = await GoogleSignin.getTokens();
+    console.log('[GoogleAuth] 3. PlayServices 확인 완료. 로그인 시도...');
+
+    const userInfo = await GoogleSignin.signIn();
+    console.log('[GoogleAuth] 4. 로그인 성공. User Info:', JSON.stringify(userInfo, null, 2));
+
+    console.log('[GoogleAuth] 5. 토큰 요청 중...');
+    const tokens = await GoogleSignin.getTokens();
+    console.log('[GoogleAuth] 6. 토큰 수신 완료. Tokens:', JSON.stringify(tokens, null, 2));
+
+    const { idToken: token } = tokens;
+
     if (!token) {
+      console.error('[GoogleAuth] Error: idToken이 비어 있습니다.');
       throw { code: API_CODE.UNKNOWN, message: 'Google 토큰을 가져오지 못했습니다.' };
     }
+
+    console.log('[GoogleAuth] 7. 최종 토큰 반환 성공');
     return { token };
   } catch (e: any) {
     const c = e?.code;
+    console.error('[GoogleAuth] Exception 발생:', {
+      code: c,
+      message: e?.message,
+      fullError: e,
+    });
+
     if (c === statusCodes.SIGN_IN_CANCELLED || /CANCE?LLED/i.test(String(c))) {
+      console.warn('[GoogleAuth] 사용자가 로그인을 취소함');
       throw { code: API_CODE.LOGIN_CANCELLED, message: '로그인을 취소했어요.' };
     }
+
     if (c === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+      console.error('[GoogleAuth] Play Services 사용 불가');
       throw {
         code: API_CODE.BAD_REQUEST,
         message: 'Google Play 서비스가 필요합니다.',
         status: 400,
       };
     }
+
+    console.error('[GoogleAuth] 처리되지 않은 예외, 상위로 전파');
     throw e;
   }
 }
